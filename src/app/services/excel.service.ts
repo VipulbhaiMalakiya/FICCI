@@ -10,8 +10,6 @@ const EXCEL_EXTENSION = '.xlsx';
 })
 export class AppService {
 
-  readonly apiBaseUrl = "https://localhost:7176";
-  constructor(private router: Router) { }
 
   public exportAsExcelFile(json: any[], excelFileName: string, headers: any[]): void {
     const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(json, { header: headers });
