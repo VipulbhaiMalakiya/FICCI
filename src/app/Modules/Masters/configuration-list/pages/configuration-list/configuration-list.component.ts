@@ -12,9 +12,10 @@ interface DataTableWithButtonsSettings extends DataTables.Settings {
   buttons?: any[]; // Add buttons property to the DataTables settings
 }
 const DEFAULT_CATEGORY_LIST = [
-  { id: 1, category_Name: 'Default Category 1' },
-  { id: 2, category_Name: 'Default Category 2' },
-  { id: 3, category_Name: 'Default Category 3' }
+  { id: 1, category_Name: 'CUSTOMER TYPE' },
+  { id: 2, category_Name: 'USER ROLE' },
+  { id: 3, category_Name: 'MAIL TEMPLATE' },
+  { id: 4, category_Name: 'INVOICE TYPE' }
 ];
 
 @Component({
