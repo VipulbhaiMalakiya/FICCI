@@ -6,11 +6,10 @@ import { AppService } from 'src/app/services/excel.service';
 import { ConfigurationService } from '../../service/configuration.service';
 import { Observable, of } from 'rxjs';
 import { Category } from '../../interface/category';
-declare var $: any; // Declare jQuery
+import { Configuration, addUpdateConfiguration } from '../../interface/configuration';
+import { ToastrService } from 'ngx-toastr';
 
-interface DataTableWithButtonsSettings extends DataTables.Settings {
-  buttons?: any[]; // Add buttons property to the DataTables settings
-}
+
 const DEFAULT_CATEGORY_LIST = [
   { id: 1, category_Name: 'CUSTOMER TYPE' },
   { id: 2, category_Name: 'USER ROLE' },
@@ -24,22 +23,27 @@ const DEFAULT_CATEGORY_LIST = [
   styleUrls: ['./configuration-list.component.css']
 })
 export class ConfigurationListComponent {
-  data: any[] = []; // Assume your data is an array of objects
+  // Assume your data is an array of objects
   dataForm: FormGroup;
   isPatchDataReceived: boolean = false; // Assuming patch data is initially not received
   categoryList$?: Observable<Category[]>;
-
+  data: Configuration[] = [];
+  page: number = 1;
+  count: number = 0;
+  tableSize: number = 2;
+  tableSizes: number[] = [2, 5, 10, 20]; // You can adjust these values as needed
   constructor(private fb: FormBuilder,
     private appService: AppService,
     private modalService: NgbModal,
-    private API: ConfigurationService
+    private API: ConfigurationService,
+    private toastr: ToastrService
 
   ) {
     this.dataForm = this.fb.group({
-      code: ['', Validators.required],
-      value: ['', Validators.required],
-      category: ['', Validators.required],
-      active: [false]
+      c_Code: ['', Validators.required],
+      c_Value: ['', Validators.required],
+      categoryID: ['', Validators.required],
+      isactive: [false]
     });
 
   }
@@ -48,90 +52,84 @@ export class ConfigurationListComponent {
 
   ngOnInit() {
     this.loadCategoryList();
-    // Dummy data for testing
-    this.data = this.generateDummyData(1000)
-    setTimeout(() => {
-      const dataTableSettings: DataTableWithButtonsSettings = {
-        pagingType: 'full_numbers',
-        language: {
-          paginate: {
-            first: '<i class="la la-angle-double-left"></i>',
-            previous: '<i class="la la-angle-left"></i>',
-            next: '<i class="la la-angle-right"></i>',
-            last: '<i class="la la-angle-double-right"></i>'
-          },
-          search: '', // Customizing the search button
-          searchPlaceholder: 'Search by id...',
-          lengthMenu: 'Show _MENU_' // Change the "show" option text
-
-        },
-
-        pageLength: 5,
-        processing: true,
-        lengthMenu: [5, 10, 25],
-        responsive: true,
-        columnDefs: [
-          { targets: [0], searchable: true, orderable: true },  // Enable searching and ordering for the name column
-          { targets: [1, 2, 3, 4], searchable: false, orderable: false }, // Disable searching and ordering for the email and job_title columns
-          // Add more columns as needed
-        ],
-      };
-
-      $('#datatableexample').DataTable(dataTableSettings);
-    }, 1);
+    this.loadConfiguration();
   }
-
-
-
 
   loadCategoryList() {
     this.API.getCategoryList().subscribe({
       next: (response: any) => {
-        // Handle successful response
         this.categoryList$ = of(response.data);
       },
       error: (error) => {
-        // Handle error
-        console.error('Error loading category list:', error);
-        // Optionally, you can set a default value for categoryList$ or perform other error handling actions
         this.categoryList$ = of(DEFAULT_CATEGORY_LIST); // Assuming DEFAULT_CATEGORY_LIST is defined somewhere
       }
     });
   }
 
 
+  loadConfiguration() {
+    this.API.getAll().subscribe({
+      next: (response: any) => {
+        this.data = response.data;
+      },
+      error: (error) => {
+      }
+    });
+  }
 
+
+
+  onTableDataChange(event: any) {
+    this.page = event;
+    this.loadConfiguration();
+  }
+  onTableSizeChange(event: any): void {
+    this.tableSize = event.target.value;
+    this.page = 1;
+    this.loadConfiguration();
+  }
 
   onSubmit() {
     if (this.dataForm.valid) {
+
       const newData = this.dataForm.value;
+
       if (newData.id) {
         //update
       } else {
         //insert
+
+        const newConfig: addUpdateConfiguration = {
+          isUpdate: false,
+          c_Code: newData.c_Code,
+          c_Value: newData.c_Value,
+          categoryID: newData.categoryID,
+          user: "user1",
+          isactive: newData.isactive
+        };
+
+        this.API.create(newConfig).subscribe({
+          next: (res: any) => {
+            this.toastr.success(res.message, 'Success');
+            this.loadConfiguration();
+          },
+          error: (error) => {
+            this.toastr.error(error, 'Error');
+
+          }
+        });
       }
       //show data function
       this.dataForm.reset();
     } else {
-      this.dataForm.controls['code'].markAsTouched();
-      this.dataForm.controls['value'].markAsTouched();
-      this.dataForm.controls['category'].markAsTouched();
+      this.dataForm.controls['c_Code'].markAsTouched();
+    this.dataForm.controls['c_Value'].markAsTouched();
+    this.dataForm.controls['categoryID'].markAsTouched();
     }
 
   }
 
-  private generateDummyData(count: number): any[] {
-    const dummyData = [];
-    for (let i = 1; i <= count; i++) {
-      dummyData.push({
-        code: i,
-        value: `User ${i}`,
-        category: `category ${i}`,
-        active: true
-      });
-    }
-    return dummyData;
-  }
+
 
 
 
@@ -160,21 +158,22 @@ export class ConfigurationListComponent {
   }
 
   onDownload() {
-    const exportData = this.data.map((x) => {
-      return {
-        code: x.code || '',
-        value: x.value || '',
-        category: x.category || '',
-        active: x.active || '',
-      };
-    });
-    const headers = ['code', 'value', 'category', 'active'];
+    const exportData = this.data.map((x) => ({
+      ID: x?.c_ID || '',
+      Code: x?.c_Code || '',
+      Value: x?.c_Value || '',
+      Category: x?.category_Name || '',
+      isActive: x?.isActive || ''
+    }));
+
+    const headers = ['ID', 'Code', 'Value', 'Category', 'isActive'];
     this.appService.exportAsExcelFile(
       exportData,
-      'Configration-list',
+      'Configuration-list',
       headers
     );
   }
+
 
   shouldShowError(controlName: string, errorName: string) {
     return this.dataForm.controls[controlName].touched && this.dataForm.controls[controlName].hasError(errorName);

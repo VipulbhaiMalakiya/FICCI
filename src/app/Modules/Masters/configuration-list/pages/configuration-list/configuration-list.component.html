@@ -2,30 +2,31 @@
   <form [formGroup]="dataForm" (ngSubmit)="onSubmit()">
     <div class="row my-4">
       <div class="col-md-2">
-        <label for="code">Code:</label>
-        <input type="text" id="code" class="form-control" formControlName="code" />
-        <div *ngIf="shouldShowError('code','required')" class="text-danger">This field is required
+        <label for="c_Code">Code:</label>
+        <input type="text" id="c_Code" class="form-control" formControlName="c_Code" />
+        <div *ngIf="shouldShowError('c_Code','required')" class="text-danger">This field is required
         </div>
       </div>
       <div class="col-md-2">
-        <label for="value">Value:</label>
-        <input type="text" id="value" class="form-control" formControlName="value" />
-        <div *ngIf="shouldShowError('value','required')" class="text-danger">This field is required
+        <label for="c_Value">Value:</label>
+        <input type="text" id="c_Value" class="form-control" formControlName="c_Value" />
+        <div *ngIf="shouldShowError('c_Value','required')" class="text-danger">This field is required
         </div>
       </div>
       <div class="col-md-2">
-        <label for="category">Category:</label>
-        <select id="category" class="form-control" formControlName="category">
+        <label for="categoryID">Category:</label>
+        <select id="categoryID" class="form-control" formControlName="categoryID">
           <option value=""> select category</option>
-          <option *ngFor="let category of categoryList$ | async" [value]="category.id">{{ category.category_Name  | titlecase  }}</option>
+          <option *ngFor="let category of categoryList$ | async" [value]="category.id">{{ category.category_Name |
+            titlecase }}</option>
 
         </select>
-        <div *ngIf="shouldShowError('category','required')" class="text-danger">This field is required
+        <div *ngIf="shouldShowError('categoryID','required')" class="text-danger">This field is required
         </div>
       </div>
       <div class="col-md-2">
-        <label for="active">Active:</label>
-        <input type="checkbox" id="active" formControlName="active" />
+        <label for="isactive">Active:</label>
+        <input type="checkbox" id="isactive" formControlName="isactive" />
       </div>
       <div class="col-md-2">
         <button type="submit" class="btn btn-primary">{{ isPatchDataReceived ? 'Update' : 'Save' }}</button>
@@ -38,27 +39,46 @@
     <label>Export Data</label>
     <button (click)="onDownload()" class="gray-btns" type="button"><i class="las la-file-export"></i> Download</button>
   </div>
-
-  <table id="datatableexample" class="display">
+  <div>
+    <label for="itemsPerPageSelect">Items Per Page:</label>
+    <select id="itemsPerPageSelect" [(ngModel)]="tableSize" (change)="onTableSizeChange($event)">
+      <option *ngFor="let size of tableSizes" [value]="size">{{ size }}</option>
+    </select>
+  </div>
+  <table class="table table-striped">
     <thead>
       <tr>
-        <th>code</th>
-        <th>value</th>
-        <th>category</th>
-        <th>status</th>
+        <th>Code</th>
+        <th>Value</th>
+        <th>Category</th>
+        <th>IsActive</th>
         <th>Action</th>
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let item of data">
-        <td>{{ item.code }}</td>
-        <td>{{ item.value }}</td>
-        <td>{{ item.category }}</td>
-        <td>{{ item.active }}</td>
+      <tr *ngFor="let item of data | paginate
+      : {
+          itemsPerPage: tableSize,
+          currentPage: page,
+          totalItems: count
+        };
+  let i = index">
+        <td>{{ item.c_Code }}</td>
+        <td>{{ item.c_Value | titlecase}}</td>
+        <td>{{ item.category_Name | titlecase}}</td>
+        <td>{{ item.isActive }}</td>
         <td> <button class="btn btn-warning" (click)="onEdit(item)">Edit</button>
-          <button class="btn btn-danger ml-2" (click)="onDelete(item.id)">Delete</button>
+          <button class="btn btn-danger ml-2" (click)="onDelete(item.c_ID)">Delete</button>
         </td>
       </tr>
     </tbody>
   </table>
+  <div class="d-flex justify-content-center">
+    <pagination-controls
+      previousLabel="Prev"
+      nextLabel="Next"
+      (pageChange)="onTableDataChange($event)"
+    >
+    </pagination-controls>
+  </div>
 </div>
