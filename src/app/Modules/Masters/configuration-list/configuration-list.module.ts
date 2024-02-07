@@ -18,7 +18,8 @@ import { NgxPaginationModule } from 'ngx-pagination'; // Import ngx-pagination m
     ReactiveFormsModule,
     SharedModule,
     FormsModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+
   ]
 })
 export class ConfigurationListModule { }

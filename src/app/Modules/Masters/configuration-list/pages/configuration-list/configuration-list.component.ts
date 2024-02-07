@@ -43,7 +43,7 @@ export class ConfigurationListComponent {
       c_Code: ['', Validators.required],
       c_Value: ['', Validators.required],
       categoryID: ['', Validators.required],
-      isactive: [false]
+      isActive: [false]
     });
 
   }
@@ -96,7 +96,7 @@ export class ConfigurationListComponent {
           c_Value: newData.c_Value,
           categoryID: newData.categoryID,
           user: "user1",
-          isactive: newData.isactive
+          isactive: newData.isActive
         };
 
         this.API.create(newConfig).subscribe({
@@ -105,7 +105,7 @@ export class ConfigurationListComponent {
             this.loadConfiguration();
           },
           error: (error) => {
-            this.toastr.error(error.error, 'Error');
+            this.toastr.error('Data not created. Please try again later.', 'Error');
           }
         });
       }
@@ -119,18 +119,23 @@ export class ConfigurationListComponent {
 
   }
 
-
-
-
-
   onDelete(id: number) {
+    this.dataForm.reset();
+
     const modalRef = this.modalService.open(ConfirmationDialogModalComponent, { size: "sm", centered: true, backdrop: "static" });
-
-
     var componentInstance = modalRef.componentInstance as ConfirmationDialogModalComponent;
     componentInstance.message = "Are you sure you want to delete this ?";
     modalRef.result.then((canDelete: boolean) => {
       if (canDelete) {
+        this.API.delete(id).subscribe({
+          next: (res: any) => {
+            this.toastr.success(res.message, 'Success');
+            this.loadConfiguration();
+          },
+          error: (error) => {
+            this.toastr.error(error.error, 'Error');
+          }
+        });
 
       }
     }).catch(() => { });
@@ -146,7 +151,7 @@ export class ConfigurationListComponent {
       isActive: data.isActive
     });
 
-    console.log(data,);
+    console.log(data);
 
   }
 

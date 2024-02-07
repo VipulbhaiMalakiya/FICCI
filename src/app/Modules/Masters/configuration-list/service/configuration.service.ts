@@ -22,10 +22,6 @@ export class ConfigurationService {
     return this.http.get<Configuration[]>(`${this.apiUrl}`);
   }
 
-  // getById(id: number): Observable<any> {
-  //   return this.http.get<any>(`${this.apiUrl}/your_endpoint/${id}`);
-  // }
-
   create(data: addUpdateConfiguration): Observable<addUpdateConfiguration> {
     return this.http.post<addUpdateConfiguration>(`${this.apiUrl}`, data);
   }
@@ -35,7 +31,7 @@ export class ConfigurationService {
   }
 
   delete(id: number): Observable<any> {
-    return this.http.delete<any>(`${this.apiUrl}/your_endpoint/${id}`);
+    return this.http.delete<any>(`${this.apiUrl}?C_ID=${id}`);
   }
 
 }
