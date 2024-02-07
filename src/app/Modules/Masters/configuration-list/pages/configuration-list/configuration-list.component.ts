@@ -60,9 +60,12 @@ export class ConfigurationListComponent {
             next: '<i class="la la-angle-right"></i>',
             last: '<i class="la la-angle-double-right"></i>'
           },
-          searchPlaceholder: 'Search by id...', // Add this line to set the search placeholder
+          search: '', // Customizing the search button
+          searchPlaceholder: 'Search by id...',
+          lengthMenu: 'Show _MENU_' // Change the "show" option text
 
         },
+
         pageLength: 5,
         processing: true,
         lengthMenu: [5, 10, 25],
@@ -83,7 +86,7 @@ export class ConfigurationListComponent {
 
   loadCategoryList() {
     this.API.getCategoryList().subscribe({
-      next: (response:any) => {
+      next: (response: any) => {
         // Handle successful response
         this.categoryList$ = of(response.data);
       },
