@@ -48,13 +48,10 @@ export class ConfigurationListComponent {
 
   }
 
-
-
   ngOnInit() {
     this.loadCategoryList();
     this.loadConfiguration();
   }
-
   loadCategoryList() {
     this.API.getCategoryList().subscribe({
       next: (response: any) => {
@@ -65,8 +62,6 @@ export class ConfigurationListComponent {
       }
     });
   }
-
-
   loadConfiguration() {
     this.API.getAll().subscribe({
       next: (response: any) => {
@@ -76,8 +71,6 @@ export class ConfigurationListComponent {
       }
     });
   }
-
-
 
   onTableDataChange(event: any) {
     this.page = event;
@@ -91,14 +84,12 @@ export class ConfigurationListComponent {
 
   onSubmit() {
     if (this.dataForm.valid) {
-
       const newData = this.dataForm.value;
 
       if (newData.id) {
         //update
       } else {
         //insert
-
         const newConfig: addUpdateConfiguration = {
           isUpdate: false,
           c_Code: newData.c_Code,
@@ -114,8 +105,7 @@ export class ConfigurationListComponent {
             this.loadConfiguration();
           },
           error: (error) => {
-            this.toastr.error(error, 'Error');
-
+            this.toastr.error(error.error, 'Error');
           }
         });
       }
@@ -147,14 +137,17 @@ export class ConfigurationListComponent {
 
   }
 
-  onEdit(data: any) {
+  onEdit(data: Configuration) {
     this.isPatchDataReceived = true;
     this.dataForm.patchValue({
-      code: data.code,
-      value: data.value,
-      category: data.category,
-      active: data.active
+      c_Code: data.c_Code,
+      c_Value: data.c_Value,
+      category_Name: data.category_Name,
+      isActive: data.isActive
     });
+
+    console.log(data,);
+
   }
 
   onDownload() {
