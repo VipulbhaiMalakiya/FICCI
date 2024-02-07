@@ -1,0 +1,63 @@
+<div class="container">
+  <form [formGroup]="dataForm" (ngSubmit)="onSubmit()">
+    <div class="row my-4">
+      <div class="col-md-2">
+        <label for="code">Code:</label>
+        <input type="text" id="code" class="form-control" formControlName="code" />
+        <div *ngIf="shouldShowError('code','required')" class="text-danger">This field is required
+        </div>
+      </div>
+      <div class="col-md-2">
+        <label for="value">Value:</label>
+        <input type="text" id="value" class="form-control" formControlName="value" />
+        <div *ngIf="shouldShowError('value','required')" class="text-danger">This field is required
+        </div>
+      </div>
+      <div class="col-md-2">
+        <label for="category">Category:</label>
+        <select id="category" class="form-control" formControlName="category">
+          <option value=""> select category</option>
+          <option *ngFor="let category of categoryList$ | async" [value]="category.id">{{ category.category_Name }}</option>
+
+        </select>
+        <div *ngIf="shouldShowError('category','required')" class="text-danger">This field is required
+        </div>
+      </div>
+      <div class="col-md-2">
+        <label for="active">Active:</label>
+        <input type="checkbox" id="active" formControlName="active" />
+      </div>
+      <div class="col-md-2">
+        <button type="submit" class="btn btn-primary">{{ isPatchDataReceived ? 'Update' : 'Save' }}</button>
+
+      </div>
+    </div>
+
+  </form>
+  <div class="analdrop1">
+    <label>Export Data</label>
+    <button (click)="onDownload()" class="gray-btns" type="button"><i class="las la-file-export"></i> Download</button>
+  </div>
+  <table id="datatableexample" class="display">
+    <thead>
+      <tr>
+        <th>code</th>
+        <th>value</th>
+        <th>category</th>
+        <th>status</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of data">
+        <td>{{ item.code }}</td>
+        <td>{{ item.value }}</td>
+        <td>{{ item.category }}</td>
+        <td>{{ item.active }}</td>
+        <td> <button class="btn btn-warning" (click)="onEdit(item)">Edit</button>
+          <button class="btn btn-danger ml-2" (click)="onDelete(item.id)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
