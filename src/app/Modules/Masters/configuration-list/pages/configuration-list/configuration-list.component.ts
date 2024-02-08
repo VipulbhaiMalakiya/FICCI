@@ -25,13 +25,14 @@ const DEFAULT_CATEGORY_LIST = [
 export class ConfigurationListComponent {
   // Assume your data is an array of objects
   dataForm: FormGroup;
-  isPatchDataReceived: boolean = false; // Assuming patch data is initially not received
+  isedite: boolean = false; // Assuming patch data is initially not received
   categoryList: Category[] = [];
   data: Configuration[] = [];
   page: number = 1;
   count: number = 0;
   tableSize: number = 10;
   tableSizes: number[] = [10,20,50,100]; // You can adjust these values as needed
+
   constructor(private fb: FormBuilder,
     private appService: AppService,
     private modalService: NgbModal,
@@ -91,63 +92,37 @@ export class ConfigurationListComponent {
   onSubmit() {
     if (this.dataForm.valid) {
       const newData = this.dataForm.value;
-      if (newData.id) {
-        //update
-
-        const newConfig: addUpdateConfiguration = {
-          isUpdate: true,
-          c_ID: newData.id,
-          c_Code: newData.c_Code,
-          c_Value: newData.c_Value,
-          categoryID:  newData.categoryID,
-          user:"user1",
-          isactive: !!newData.isActive
-        };
-
-        this.API.create(newConfig).subscribe({
-          next: (res: any) => {
-            this.toastr.success(res.message, 'Success');
-            this.loadConfiguration();
-          },
-          error: (error) => {
-            this.toastr.error(error.error.message, 'Error');
-          }
-        });
-      } else {
-        //insert
-        const newConfig: addUpdateConfiguration = {
-          isUpdate: false,
-          c_Code: newData.c_Code,
-          c_Value: newData.c_Value,
-          categoryID: newData.categoryID,
-          user: "user1",
-          isactive: newData.isActive
-        };
-
-        this.API.create(newConfig).subscribe({
-          next: (res: any) => {
-            this.toastr.success(res.message, 'Success');
-
-            this.loadConfiguration();
-          },
-          error: (error) => {
-            this.toastr.error('Data not created. Please try again later.', 'Error');
-          }
-        });
-      }
-      //show data function
-      this.dataForm.reset();
+      const isUpdate = !!newData.id;
+      const newConfig: addUpdateConfiguration = {
+        isUpdate: isUpdate,
+        c_ID: isUpdate ? newData.id : undefined,
+        c_Code: newData.c_Code,
+        c_Value: newData.c_Value,
+        categoryID: newData.categoryID,
+        user: "user1",
+        isactive: !!newData.isActive
+      };
+      const successMessage = isUpdate ? 'Data updated successfully.' : 'Data created successfully.';
+      this.API.create(newConfig).subscribe({
+        next: (res: any) => {
+          this.toastr.success(successMessage || res.message , 'Success');
+          this.loadConfiguration();
+          this.dataForm.reset();
+        },
+        error: (error) => {
+          this.toastr.error(error.error.message || 'An error occurred. Please try again later.', 'Error');
+        }
+      });
     } else {
-      this.dataForm.controls['c_Code'].markAsTouched();
-      this.dataForm.controls['c_Value'].markAsTouched();
-      this.dataForm.controls['categoryID'].markAsTouched();
+      ['c_Code', 'c_Value', 'categoryID'].forEach(controlName => {
+        this.dataForm.controls[controlName].markAsTouched();
+      });
     }
 
   }
 
   onDelete(id: number) {
     this.dataForm.reset();
-
     const modalRef = this.modalService.open(ConfirmationDialogModalComponent, { size: "sm", centered: true, backdrop: "static" });
     var componentInstance = modalRef.componentInstance as ConfirmationDialogModalComponent;
     componentInstance.message = "Are you sure you want to delete this ?";
@@ -159,7 +134,7 @@ export class ConfigurationListComponent {
             this.loadConfiguration();
           },
           error: (error) => {
-            this.toastr.error(error.error, 'Error');
+            this.toastr.error(error.error.message, 'Error');
           }
         });
 
@@ -169,7 +144,7 @@ export class ConfigurationListComponent {
   }
 
   onEdit(data: Configuration) {
-    this.isPatchDataReceived = true;
+    this.isedite = true;
     const categoryId = this.findCategoryId(data.category_Name);
     this.dataForm.patchValue({
       c_Code: data.c_Code,
