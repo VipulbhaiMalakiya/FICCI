@@ -29,6 +29,7 @@ import { ConfirmationDialogModalComponent } from './Modules/shared/components/co
         timeOut: 3000,
         progressAnimation: 'decreasing',
         preventDuplicates: true,
+
       }
     ),
   ],

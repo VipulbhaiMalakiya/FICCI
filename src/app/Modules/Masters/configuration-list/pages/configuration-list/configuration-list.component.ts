@@ -127,6 +127,7 @@ export class ConfigurationListComponent {
         this.API.create(newConfig).subscribe({
           next: (res: any) => {
             this.toastr.success(res.message, 'Success');
+
             this.loadConfiguration();
           },
           error: (error) => {
