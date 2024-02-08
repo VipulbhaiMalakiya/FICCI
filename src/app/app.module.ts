@@ -24,11 +24,11 @@ import { ConfirmationDialogModalComponent } from './Modules/shared/components/co
     ToastrModule.forRoot(
       {
         progressBar: true,
-            positionClass: 'toast-top-right',
-            closeButton: true,
-            timeOut: 3000,
-            progressAnimation: 'decreasing',
-            preventDuplicates: false,
+        positionClass: 'toast-top-right',
+        closeButton: true,
+        timeOut: 3000,
+        progressAnimation: 'decreasing',
+        preventDuplicates: true,
       }
     ),
   ],
