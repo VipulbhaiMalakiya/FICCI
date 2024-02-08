@@ -41,6 +41,8 @@
     <label>Export Data</label>
     <button (click)="onDownload()" class="gray-btns" type="button"><i class="las la-file-export"></i> Download</button>
   </div>
+  <input *ngIf="data && data.length > 0" type="text" [(ngModel)]="searchText" placeholder="Search by code or category">
+
   <div *ngIf="data && data.length > 0">
     <label for="itemsPerPageSelect">Items Per Page:</label>
     <select id="itemsPerPageSelect" [(ngModel)]="tableSize" (change)="onTableSizeChange($event)">
@@ -58,7 +60,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let item of data | paginate
+      <tr *ngFor="let item of data| searchFilter: searchText | paginate
       : {
           itemsPerPage: tableSize,
           currentPage: page,
@@ -75,8 +77,11 @@
       </tr>
     </tbody>
   </table>
-  <div *ngIf="!data || data.length === 0">
+  <div *ngIf="!data || data.length === 0  ">
     <p>No data found.</p>
+  </div>
+  <div class="text-center" *ngIf="(data | searchFilter: searchText).length === 0 && data.length > 0">
+    <Strong class="text-danger"> No results found.</Strong>
   </div>
   <div class="d-flex justify-content-center" *ngIf="data && data.length > 0">
     <pagination-controls

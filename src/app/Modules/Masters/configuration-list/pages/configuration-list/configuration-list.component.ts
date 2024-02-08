@@ -32,6 +32,7 @@ export class ConfigurationListComponent {
   count: number = 0;
   tableSize: number = 10;
   tableSizes: number[] = [10,20,50,100]; // You can adjust these values as needed
+  searchText: string = '';
 
   constructor(private fb: FormBuilder,
     private appService: AppService,

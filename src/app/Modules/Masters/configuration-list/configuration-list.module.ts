@@ -6,11 +6,13 @@ import { ConfigurationListComponent } from './pages/configuration-list/configura
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../../shared/shared.module';
 import { NgxPaginationModule } from 'ngx-pagination'; // Import ngx-pagination module
+import { SearchFilterPipe } from './pipe/searchFilter';
 
 
 @NgModule({
   declarations: [
-    ConfigurationListComponent
+    ConfigurationListComponent,
+    SearchFilterPipe
   ],
   imports: [
     CommonModule,
