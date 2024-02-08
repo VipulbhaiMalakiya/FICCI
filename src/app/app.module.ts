@@ -27,7 +27,7 @@ import { ConfirmationDialogModalComponent } from './Modules/shared/components/co
         positionClass: 'toast-top-right',
         closeButton: true,
         timeOut: 3000,
-        progressAnimation: 'decreasing',
+        progressAnimation: 'increasing',
         preventDuplicates: true,
 
       }
