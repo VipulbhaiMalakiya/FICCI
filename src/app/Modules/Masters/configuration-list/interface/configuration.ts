@@ -3,7 +3,7 @@ export interface Configuration {
   c_Code: string;
   c_Value: string;
   category_Name: string;
-  isActive: boolean;
+  isActive: string;
 }
 
 export interface addUpdateConfiguration {

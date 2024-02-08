@@ -146,12 +146,14 @@ export class ConfigurationListComponent {
 
   onEdit(data: Configuration) {
     this.isedite = true;
+
     const categoryId = this.findCategoryId(data.category_Name);
+    const isActiveValue = data.isActive.toLowerCase() === 'yes' ? true : false;
     this.dataForm.patchValue({
       c_Code: data.c_Code,
       c_Value: data.c_Value,
       categoryID: categoryId,
-      isActive: data.isActive,
+      isActive: isActiveValue,
       id:data.c_ID
     });
   }
