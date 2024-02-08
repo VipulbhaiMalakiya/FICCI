@@ -1,5 +1,7 @@
 <div class="container">
   <form [formGroup]="dataForm" (ngSubmit)="onSubmit()">
+    <input type="hidden" formControlName="id">
+
     <div class="row my-4">
       <div class="col-md-2">
         <label for="c_Code">Code:</label>
@@ -17,7 +19,7 @@
         <label for="categoryID">Category:</label>
         <select id="categoryID" class="form-control" formControlName="categoryID">
           <option value=""> select category</option>
-          <option *ngFor="let category of categoryList$ | async" [value]="category.id">{{ category.category_Name |
+          <option *ngFor="let category of categoryList" [value]="category.id">{{ category.category_Name |
             titlecase }}</option>
 
         </select>

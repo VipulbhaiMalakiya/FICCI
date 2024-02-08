@@ -26,12 +26,12 @@ export class ConfigurationListComponent {
   // Assume your data is an array of objects
   dataForm: FormGroup;
   isPatchDataReceived: boolean = false; // Assuming patch data is initially not received
-  categoryList$?: Observable<Category[]>;
+  categoryList: Category[] = [];
   data: Configuration[] = [];
   page: number = 1;
   count: number = 0;
-  tableSize: number = 2;
-  tableSizes: number[] = [2, 5, 10, 20]; // You can adjust these values as needed
+  tableSize: number = 10;
+  tableSizes: number[] = [10,20,50,100]; // You can adjust these values as needed
   constructor(private fb: FormBuilder,
     private appService: AppService,
     private modalService: NgbModal,
@@ -40,6 +40,7 @@ export class ConfigurationListComponent {
 
   ) {
     this.dataForm = this.fb.group({
+      id:[''],
       c_Code: ['', Validators.required],
       c_Value: ['', Validators.required],
       categoryID: ['', Validators.required],
@@ -55,12 +56,17 @@ export class ConfigurationListComponent {
   loadCategoryList() {
     this.API.getCategoryList().subscribe({
       next: (response: any) => {
-        this.categoryList$ = of(response.data);
+        this.categoryList = response.data;
       },
       error: (error) => {
-        this.categoryList$ = of(DEFAULT_CATEGORY_LIST); // Assuming DEFAULT_CATEGORY_LIST is defined somewhere
+        this.categoryList = DEFAULT_CATEGORY_LIST; // Assuming DEFAULT_CATEGORY_LIST is defined somewhere
       }
     });
+  }
+
+  findCategoryId(categoryName: string): number | undefined {
+    const category =this.categoryList.find(cat => cat.category_Name === categoryName);
+    return category ? category.id : undefined;
   }
   loadConfiguration() {
     this.API.getAll().subscribe({
@@ -85,9 +91,28 @@ export class ConfigurationListComponent {
   onSubmit() {
     if (this.dataForm.valid) {
       const newData = this.dataForm.value;
-
       if (newData.id) {
         //update
+
+        const newConfig: addUpdateConfiguration = {
+          isUpdate: true,
+          c_ID: newData.id,
+          c_Code: newData.c_Code,
+          c_Value: newData.c_Value,
+          categoryID:  newData.categoryID,
+          user:"user1",
+          isactive: !!newData.isActive
+        };
+
+        this.API.create(newConfig).subscribe({
+          next: (res: any) => {
+            this.toastr.success(res.message, 'Success');
+            this.loadConfiguration();
+          },
+          error: (error) => {
+            this.toastr.error(error.error.message, 'Error');
+          }
+        });
       } else {
         //insert
         const newConfig: addUpdateConfiguration = {
@@ -113,8 +138,8 @@ export class ConfigurationListComponent {
       this.dataForm.reset();
     } else {
       this.dataForm.controls['c_Code'].markAsTouched();
-    this.dataForm.controls['c_Value'].markAsTouched();
-    this.dataForm.controls['categoryID'].markAsTouched();
+      this.dataForm.controls['c_Value'].markAsTouched();
+      this.dataForm.controls['categoryID'].markAsTouched();
     }
 
   }
@@ -144,15 +169,14 @@ export class ConfigurationListComponent {
 
   onEdit(data: Configuration) {
     this.isPatchDataReceived = true;
+    const categoryId = this.findCategoryId(data.category_Name);
     this.dataForm.patchValue({
       c_Code: data.c_Code,
       c_Value: data.c_Value,
-      category_Name: data.category_Name,
-      isActive: data.isActive
+      categoryID: categoryId,
+      isActive: data.isActive,
+      id:data.c_ID
     });
-
-    console.log(data);
-
   }
 
   onDownload() {
