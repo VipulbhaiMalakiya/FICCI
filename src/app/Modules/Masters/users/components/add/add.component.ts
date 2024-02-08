@@ -12,6 +12,16 @@ export class AddComponent {
   dataForm: FormGroup;
   isedite: boolean = false; // Assuming patch data is initially not received
 
+  employees = [
+    { id: 1, username: 'john_doe', name: 'John Doe', email: 'john@example.com' },
+    { id: 2, username: 'jane_smith', name: 'Jane Smith', email: 'jane@example.com' },
+    { id: 3, username: 'alice_johnson', name: 'Alice Johnson', email: 'alice@example.com' },
+    // Add more employees as needed
+  ];
+  selectedEmployee: any;
+
+
+
   constructor(private fb: FormBuilder,
     private modalService: NgbModal,
     private toastr: ToastrService
@@ -20,15 +30,74 @@ export class AddComponent {
     this.dataForm = this.fb.group({
       id: [''],
       employeeId: ['', Validators.required],
-      username: ['', Validators.required],
-      name: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
       role: ['', Validators.required],
+      username: [{ value: '', disabled: true }, Validators.required],
+      name: [{ value: '', disabled: true }, Validators.required],
+      email: [{ value: '', disabled: true }, [Validators.required, Validators.email]],
       isActive: [false] // Assuming default value is true
     });
   }
 
-  onSubmit(){
+  onSelectEmployee() {
+    const selectedId = this.dataForm.get('employeeId')?.value;
 
+    // Check if a valid employee is selected
+    if (selectedId) {
+      this.selectedEmployee = this.employees.find(employee => employee.id == selectedId);
+      // Assign selected employee's properties to form controls
+      if (this.selectedEmployee) {
+        this.dataForm.patchValue({
+          username: this.selectedEmployee.username,
+          name: this.selectedEmployee.name,
+          email: this.selectedEmployee.email
+        });
+      }
+    } else {
+      // Clear form values if no employee is selected
+      this.dataForm.patchValue({
+        username: null,
+        name: null,
+        email: null
+      });
+    }
+  }
+
+
+  onSubmit() {
+    if (this.dataForm.valid) {
+      const newData = this.dataForm.value;
+      console.log(newData );
+
+      const isUpdate = !!newData.id;
+      // const newConfig: addUpdateConfiguration = {
+      //   isUpdate: isUpdate,
+      //   c_ID: isUpdate ? newData.id : undefined,
+      //   c_Code: newData.c_Code,
+      //   c_Value: newData.c_Value,
+      //   categoryID: newData.categoryID,
+      //   user: "user1",
+      //   isactive: !!newData.isActive
+      // };
+      const successMessage = isUpdate ? 'Data updated successfully.' : 'Data created successfully.';
+      // this.API.create(newConfig).subscribe({
+      //   next: (res: any) => {
+      //     this.toastr.success(successMessage || res.message , 'Success');
+      //     this.loadConfiguration();
+      //     this.dataForm.reset();
+      //   },
+      //   error: (error) => {
+      //     this.toastr.error(error.error.message || 'An error occurred. Please try again later.', 'Error');
+      //   }
+      // });
+    } else {
+      ['employeeId','username','name','email','role'].forEach(controlName => {
+        this.dataForm.controls[controlName].markAsTouched();
+      });
+    }
+
+  }
+
+  shouldShowError(controlName: string, errorName: string) {
+    return this.dataForm.controls[controlName].touched && this.dataForm.controls[controlName].hasError(errorName);
   }
 }

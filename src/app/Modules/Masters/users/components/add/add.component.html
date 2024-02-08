@@ -4,23 +4,38 @@
     <div class="row">
       <div class="col-md-4 mb-3">
         <label>Employee ID:</label>
-        <input type="text" class="form-control" formControlName="employeeId">
+        <input type="hidden" formControlName="id">
+        <label for="employeeId">Select Employee:</label>
+        <select class="form-control"  formControlName="employeeId" (change)="onSelectEmployee()">
+          <option value="" disabled selected>Select an employee</option>
+          <option *ngFor="let employee of employees" [value]="employee.id">{{ employee.name }}</option>
+        </select>
+         <div *ngIf="shouldShowError('employeeId','required')" class="text-danger">This field is required
+        </div>
       </div>
       <div class="col-md-4 mb-3">
         <label>Username:</label>
         <input type="text" class="form-control" formControlName="username">
+        <div *ngIf="shouldShowError('username','required')" class="text-danger">This field is required
+        </div>
       </div>
       <div class="col-md-4 mb-3">
         <label>Name:</label>
         <input type="text" class="form-control" formControlName="name">
+        <div *ngIf="shouldShowError('name','required')" class="text-danger">This field is required
+        </div>
       </div>
       <div class="col-md-4 mb-3">
         <label>Email:</label>
         <input type="email" class="form-control" formControlName="email">
+        <div *ngIf="shouldShowError('email','required')" class="text-danger">This field is required
+        </div>
       </div>
       <div class="col-md-4 mb-3">
         <label>Role:</label>
         <input type="text" class="form-control" formControlName="role">
+        <div *ngIf="shouldShowError('role','required')" class="text-danger">This field is required
+        </div>
       </div>
       <div class="col-md-1">
         <label>Is Active:</label>
@@ -32,3 +47,17 @@
     </div>
   </form>
 </div>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>employeeId</th>
+      <th>username</th>
+      <th>name</th>
+      <th>email</th>
+      <th>role</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+  </tbody>
+</table>
