@@ -1,7 +1,15 @@
 /* You can add global styles to this file, and also import other style files */
 /* Vipul Css Start  */
+
+/* Red border for invalid inputs */
 input.ng-invalid.ng-touched,
 select.ng-invalid.ng-touched {
   border-color: #dc3545 !important;
+}
+
+/* Green border for valid inputs */
+input.ng-valid.ng-touched,
+select.ng-valid.ng-touched {
+  border-color: #28a745 !important;
 }
 @import "~@ng-select/ng-select/themes/default.theme.css";

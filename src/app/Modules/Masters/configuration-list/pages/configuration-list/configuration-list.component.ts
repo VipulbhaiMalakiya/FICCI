@@ -8,6 +8,8 @@ import { Observable, of } from 'rxjs';
 import { Category } from '../../interface/category';
 import { Configuration, addUpdateConfiguration } from '../../interface/configuration';
 import { ToastrService } from 'ngx-toastr';
+import { alphanumericValidator } from '../../Validation/alphanumericValidator';
+import { alphanumericWithSpacesValidator } from '../../Validation/alphanumericWithSpacesValidator ';
 
 
 const DEFAULT_CATEGORY_LIST = [
@@ -43,8 +45,8 @@ export class ConfigurationListComponent {
   ) {
     this.dataForm = this.fb.group({
       id:[''],
-      c_Code: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(10)]],
-      c_Value: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(20)]],
+      c_Code: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(10), alphanumericValidator()]],
+      c_Value: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(20),alphanumericWithSpacesValidator()]],
       categoryID: [null, Validators.required],
       isActive: [false]
     });
@@ -97,8 +99,8 @@ export class ConfigurationListComponent {
       const newConfig: addUpdateConfiguration = {
         isUpdate: isUpdate,
         c_ID: isUpdate ? newData.id : undefined,
-        c_Code: newData.c_Code,
-        c_Value: newData.c_Value,
+        c_Code: newData.c_Code.trim(),
+        c_Value: newData.c_Value.trim(),
         categoryID: newData.categoryID,
         user: "user1",
         isactive: !!newData.isActive
