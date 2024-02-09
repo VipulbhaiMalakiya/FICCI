@@ -13,15 +13,25 @@ export class UsersComponent implements OnInit{
   tableSizes: number[] = [10,20,50,100]; // You can adjust these values as needed
   searchText: string = '';
 
-  users = [
+  data = [
     { id: 1,employeeId: 1, userName: 'user1', name: 'John Doe', role: 'Employee', email: 'john@example.com', active: 'Yes' },
   ];
   ngOnInit(): void {
     this.addDummyRecords();
   }
+  onTableDataChange(event: any) {
+    this.page = event;
+    this.data;
+  }
+  onTableSizeChange(event: any): void {
+    this.tableSize = event.target.value;
+    this.page = 1;
+    this.data;
+
+  }
   addDummyRecords() {
     for (let i = 2; i <= 21; i++) {
-      this.users.push({
+      this.data.push({
         id: i,
         employeeId: i,
         userName: 'user' + i,

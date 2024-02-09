@@ -7,12 +7,14 @@ import { AddComponent } from './components/add/add.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { SharedModule } from '../../shared/shared.module';
+import { SearchFilterPipe } from './pipe/searchFilter';
 
 
 @NgModule({
   declarations: [
     UsersComponent,
-    AddComponent
+    AddComponent,
+    SearchFilterPipe
   ],
   imports: [
     CommonModule,
