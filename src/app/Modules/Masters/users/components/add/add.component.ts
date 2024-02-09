@@ -5,6 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 import { UserService } from '../../service/user.service';
 import { ConfirmationDialogModalComponent } from 'src/app/Modules/shared/components/confirmation-dialog-modal/confirmation-dialog-modal.component';
 import { Roles } from '../../interface/role';
+import { ActivatedRoute } from '@angular/router';
 
 const DEFAULT_ROLE_LIST = [
   { id: 1, role_Name: 'Employee' },
@@ -23,17 +24,14 @@ export class AddComponent implements OnInit {
   isedite: boolean = false; // Assuming patch data is initially not received
   selectedEmployee: any;
   roles: Roles[] = [];
+  userData:any;
+
   employees = [
     { id: 1, username: 'john_doe', name: 'John Doe', email: 'john@example.com' },
     { id: 2, username: 'jane_smith', name: 'Jane Smith', email: 'jane@example.com' },
     { id: 3, username: 'alice_johnson', name: 'Alice Johnson', email: 'alice@example.com' },
     // Add more employees as needed
   ];
-
-  users = [
-    { id: 1,employeeId: 1, userName: 'user1', name: 'John Doe', role: 'Employee', email: 'john@example.com', active: 'Yes' },
-  ];
-
 
 
   constructor(private fb: FormBuilder,
@@ -55,6 +53,16 @@ export class AddComponent implements OnInit {
 
   ngOnInit(): void {
     this.getRoles();
+    this.patchFormWithData();
+  }
+
+  patchFormWithData(): void {
+     this.userData = history.state.data; // Assuming history.state.data contains user data
+
+    if (this.userData) {
+      this.onEdit(this.userData);
+    }
+
   }
 
   // Method to fetch roles
@@ -94,28 +102,27 @@ export class AddComponent implements OnInit {
   }
 
   findRoleId(roleName: string): number | undefined {
-    const category =this.roles.find(role => role.role_Name === roleName);
-    return category ? category.id : undefined;
+    const trimmedRoleName = roleName.trim().toLowerCase(); // Normalize role name
+    const role = DEFAULT_ROLE_LIST.find(role => role.role_Name.toLowerCase() === trimmedRoleName);
+    return role ? role.id : undefined;
   }
 
   onEdit(data: any) {
     this.isedite = true;
     const isActiveValue = data.active.toLowerCase() === 'yes' ? true : false;
     const roleId = this.findRoleId(data.role);
-
     this.dataForm.patchValue({
       employeeId: data.employeeId,
-      username:data.userName,
-      name:data.name,
-      email:data.email,
-      role:roleId,
-      isActive:isActiveValue,
-      id:data.id
+      username: data.userName,
+      name: data.name,
+      email: data.email,
+      role: roleId,
+      isActive: isActiveValue,
+      id: data.id
     });
   }
 
   onDelete(id: number) {
-    this.dataForm.reset();
     const modalRef = this.modalService.open(ConfirmationDialogModalComponent, { size: "sm", centered: true, backdrop: "static" });
     var componentInstance = modalRef.componentInstance as ConfirmationDialogModalComponent;
     componentInstance.message = "Are you sure you want to delete this ?";
@@ -130,6 +137,7 @@ export class AddComponent implements OnInit {
         //     this.toastr.error(error.error.message, 'Error');
         //   }
         // });
+        this.dataForm.reset();
 
       }
     }).catch(() => { });

@@ -94,7 +94,9 @@ export class UsersComponent implements OnInit{
 
   onEdit(user: any): void {
     // Assuming user has an 'id' property
-    this.router.navigate(['masters/users/edit', user.id]);
+    // this.router.navigate(['masters/users/edit', { id: user.id, data: user }]);
+    this.router.navigate(['masters/users/edit', user.id], { state: { data: user } });
+
   }
 
 }
