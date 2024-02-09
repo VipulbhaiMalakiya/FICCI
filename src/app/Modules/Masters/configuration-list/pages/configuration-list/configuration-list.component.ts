@@ -4,12 +4,12 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ConfirmationDialogModalComponent } from 'src/app/Modules/shared/components/confirmation-dialog-modal/confirmation-dialog-modal.component';
 import { AppService } from 'src/app/services/excel.service';
 import { ConfigurationService } from '../../service/configuration.service';
-import { Observable, of } from 'rxjs';
 import { Category } from '../../interface/category';
 import { Configuration, addUpdateConfiguration } from '../../interface/configuration';
 import { ToastrService } from 'ngx-toastr';
 import { alphanumericValidator } from '../../Validation/alphanumericValidator';
 import { alphanumericWithSpacesValidator } from '../../Validation/alphanumericWithSpacesValidator ';
+import { toTitleCase } from 'src/app/Helper/toTitleCase';
 
 
 const DEFAULT_CATEGORY_LIST = [
@@ -29,11 +29,12 @@ export class ConfigurationListComponent {
   dataForm: FormGroup;
   isedite: boolean = false; // Assuming patch data is initially not received
   categoryList: Category[] = [];
+
   data: Configuration[] = [];
   page: number = 1;
   count: number = 0;
   tableSize: number = 10;
-  tableSizes: number[] = [10,20,50,100]; // You can adjust these values as needed
+  tableSizes: number[] = [10, 20, 50, 100]; // You can adjust these values as needed
   searchText: string = '';
 
   constructor(private fb: FormBuilder,
@@ -44,9 +45,9 @@ export class ConfigurationListComponent {
 
   ) {
     this.dataForm = this.fb.group({
-      id:[''],
+      id: [''],
       c_Code: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(10), alphanumericValidator()]],
-      c_Value: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(20),alphanumericWithSpacesValidator()]],
+      c_Value: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(20), alphanumericWithSpacesValidator()]],
       categoryID: [null, Validators.required],
       isActive: [false]
     });
@@ -60,7 +61,12 @@ export class ConfigurationListComponent {
   loadCategoryList() {
     this.API.getCategoryList().subscribe({
       next: (response: any) => {
-        this.categoryList = response.data;
+        // this.categoryList = response.data;
+
+        this.categoryList = response.data.map((category: { category_Name: string }) => ({
+          ...category,
+          category_Name: toTitleCase(category.category_Name)
+        }));
       },
       error: (error) => {
         this.categoryList = DEFAULT_CATEGORY_LIST; // Assuming DEFAULT_CATEGORY_LIST is defined somewhere
@@ -68,8 +74,9 @@ export class ConfigurationListComponent {
     });
   }
 
+
   findCategoryId(categoryName: string): number | undefined {
-    const category =this.categoryList.find(cat => cat.category_Name === categoryName);
+    const category = this.categoryList.find(cat => cat.category_Name === categoryName);
     return category ? category.id : undefined;
   }
   loadConfiguration() {
@@ -108,7 +115,7 @@ export class ConfigurationListComponent {
       const successMessage = isUpdate ? 'Data updated successfully.' : 'Data created successfully.';
       this.API.create(newConfig).subscribe({
         next: (res: any) => {
-          this.toastr.success(successMessage || res.message , 'Success');
+          this.toastr.success(successMessage || res.message, 'Success');
           this.loadConfiguration();
           this.dataForm.reset();
         },
@@ -125,7 +132,6 @@ export class ConfigurationListComponent {
   }
 
   onDelete(id: number) {
-    this.dataForm.reset();
     const modalRef = this.modalService.open(ConfirmationDialogModalComponent, { size: "sm", centered: true, backdrop: "static" });
     var componentInstance = modalRef.componentInstance as ConfirmationDialogModalComponent;
     componentInstance.message = "Are you sure you want to delete this ?";
@@ -135,6 +141,7 @@ export class ConfigurationListComponent {
           next: (res: any) => {
             this.toastr.success(res.message, 'Success');
             this.loadConfiguration();
+            this.dataForm.reset();
           },
           error: (error) => {
             this.toastr.error(error.error.message, 'Error');
@@ -148,7 +155,6 @@ export class ConfigurationListComponent {
 
   onEdit(data: Configuration) {
     this.isedite = true;
-
     const categoryId = this.findCategoryId(data.category_Name);
     const isActiveValue = data.isActive.toLowerCase() === 'yes' ? true : false;
     this.dataForm.patchValue({
@@ -156,7 +162,7 @@ export class ConfigurationListComponent {
       c_Value: data.c_Value,
       categoryID: categoryId,
       isActive: isActiveValue,
-      id:data.c_ID
+      id: data.c_ID
     });
   }
 
@@ -165,11 +171,12 @@ export class ConfigurationListComponent {
       ID: x?.c_ID || '',
       Code: x?.c_Code || '',
       Value: x?.c_Value || '',
-      Category: x?.category_Name || '',
+      Category: x?.category_Name ? toTitleCase(x.category_Name) : '',
       isActive: x?.isActive || ''
     }));
 
     const headers = ['ID', 'Code', 'Value', 'Category', 'isActive'];
+
     this.appService.exportAsExcelFile(
       exportData,
       'Configuration-list',
