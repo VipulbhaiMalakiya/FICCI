@@ -43,8 +43,8 @@ export class ConfigurationListComponent {
   ) {
     this.dataForm = this.fb.group({
       id:[''],
-      c_Code: ['', Validators.required],
-      c_Value: ['', Validators.required],
+      c_Code: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(10)]],
+      c_Value: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(20)]],
       categoryID: [null, Validators.required],
       isActive: [false]
     });
