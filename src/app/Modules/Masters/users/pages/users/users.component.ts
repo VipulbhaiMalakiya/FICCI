@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AppService } from 'src/app/services/excel.service';
 
 @Component({
   selector: 'app-users',
@@ -13,6 +14,10 @@ export class UsersComponent implements OnInit{
   tableSizes: number[] = [10,20,50,100]; // You can adjust these values as needed
   searchText: string = '';
 
+  constructor(    private appService: AppService,
+    ){
+
+  }
   data = [
     { id: 1,employeeId: 1, userName: 'user1', name: 'John Doe', role: 'Employee', email: 'john@example.com', active: 'Yes' },
   ];
@@ -41,6 +46,24 @@ export class UsersComponent implements OnInit{
         active: Math.random() < 0.5 ? 'Yes' : 'No'
       });
     }
+  }
+
+  onDownload() {
+    const exportData = this.data.map((x) => ({
+      ID: x?.id || '',
+      "Employee ID": x?.employeeId || '',
+      Name: x?.name || '',
+      Role: x?.role || '',
+      Email: x?.email || '',
+      Active:x?.active || ''
+    }));
+
+    const headers = ['ID', 'Employee ID', 'Name', 'Role', 'Email','Active'];
+    this.appService.exportAsExcelFile(
+      exportData,
+      'Users',
+      headers
+    );
   }
 
 }

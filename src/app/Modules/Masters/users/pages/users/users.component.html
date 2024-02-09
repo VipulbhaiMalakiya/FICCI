@@ -9,7 +9,10 @@
     </select>
   </div>
   <input *ngIf="data && data.length > 0" type="text" [(ngModel)]="searchText" placeholder="Search by name or email">
-
+  <div class="analdrop1" *ngIf="data && data.length > 0">
+    <label>Export Data</label>
+    <button (click)="onDownload()" class="gray-btns" type="button"><i class="las la-file-export"></i> Download</button>
+  </div>
   <table class="table table-striped">
     <thead>
       <tr>
