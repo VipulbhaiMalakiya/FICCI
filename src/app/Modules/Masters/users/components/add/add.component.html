@@ -33,12 +33,8 @@
       </div>
       <div class="col-md-4 mb-3">
         <label>Role:</label>
-        <select id="role" class="form-control" formControlName="role">
-          <option value=""> select role</option>
-          <option *ngFor="let role of roles" [value]="role.id">{{ role.role_Name |
-            titlecase }}</option>
+        <ng-select [items]="roles" formControlName="role" [bindLabel]="'role_Name'" [bindValue]="'id'" placeholder="Select Role"></ng-select>
 
-        </select>
         <div *ngIf="shouldShowError('role','required')" class="text-danger">This field is required
         </div>
       </div>

@@ -44,8 +44,8 @@ export class AddComponent implements OnInit {
   ) {
     this.dataForm = this.fb.group({
       id: [''],
-      employeeId: ['', Validators.required],
-      role: ['', Validators.required],
+      employeeId: [null, Validators.required],
+      role: [, Validators.required],
       username: [{ value: '', disabled: true }, Validators.required],
       name: [{ value: '', disabled: true }, Validators.required],
       email: [{ value: '', disabled: true }, [Validators.required, Validators.email]],
