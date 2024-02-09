@@ -2,8 +2,7 @@
 /* Vipul Css Start  */
 
 /* Red border for invalid inputs */
-input.ng-invalid.ng-touched,
-select.ng-invalid.ng-touched {
+input.ng-invalid.ng-touched,select.ng-invalid.ng-touched {
   border-color: #dc3545 !important;
 }
 
