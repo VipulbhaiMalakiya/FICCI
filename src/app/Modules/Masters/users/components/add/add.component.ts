@@ -148,18 +148,18 @@ export class AddComponent implements OnInit {
   onSubmit() {
     if (this.dataForm.valid) {
       const newData = this.dataForm.value;
-      console.log(newData);
-
       const isUpdate = !!newData.id;
-      // const newConfig: addUpdateConfiguration = {
-      //   isUpdate: isUpdate,
-      //   c_ID: isUpdate ? newData.id : undefined,
-      //   c_Code: newData.c_Code,
-      //   c_Value: newData.c_Value,
-      //   categoryID: newData.categoryID,
-      //   user: "user1",
-      //   isactive: !!newData.isActive
-      // };
+      const newConfig: any = {
+        isUpdate: isUpdate,
+        id: isUpdate ? newData.id : undefined,
+        employeeId: newData.employeeId,
+        role: newData.role,
+        isActive: newData.isActive,
+        user: "user1",
+        isactive: !!newData.isActive
+      };
+      console.log(newConfig);
+
       const successMessage = isUpdate ? 'Data updated successfully.' : 'Data created successfully.';
       // this.API.create(newConfig).subscribe({
       //   next: (res: any) => {
