@@ -4,3 +4,4 @@ input.ng-invalid.ng-touched,
 select.ng-invalid.ng-touched {
   border-color: #dc3545 !important;
 }
+@import "~@ng-select/ng-select/themes/default.theme.css";

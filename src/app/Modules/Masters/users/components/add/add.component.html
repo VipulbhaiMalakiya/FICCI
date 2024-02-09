@@ -5,11 +5,12 @@
         <label>Employee ID:</label>
         <input type="hidden" formControlName="id">
         <label for="employeeId">Select Employee:</label>
-        <select class="form-control"  formControlName="employeeId" (change)="onSelectEmployee()">
-          <option value="" disabled selected>Select an employee</option>
-          <option *ngFor="let employee of employees" [value]="employee.id">{{ employee.name }}</option>
-        </select>
-         <div *ngIf="shouldShowError('employeeId','required')" class="text-danger">This field is required
+
+
+        <ng-select [items]="employees" bindLabel="name" bindValue="id" placeholder="Select an employee"
+          formControlName="employeeId" (change)="onSelectEmployee()">
+        </ng-select>
+        <div *ngIf="shouldShowError('employeeId','required')" class="text-danger">This field is required
         </div>
       </div>
       <div class="col-md-4 mb-3">
@@ -78,4 +79,3 @@
   </table>
 
 </div>
-

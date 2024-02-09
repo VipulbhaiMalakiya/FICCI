@@ -8,6 +8,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { SharedModule } from '../../shared/shared.module';
 import { SearchFilterPipe } from './pipe/searchFilter';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 
 @NgModule({
@@ -23,7 +24,7 @@ import { SearchFilterPipe } from './pipe/searchFilter';
     SharedModule,
     FormsModule,
     NgxPaginationModule,
-
+    NgSelectModule
   ]
 })
 export class UsersModule { }
