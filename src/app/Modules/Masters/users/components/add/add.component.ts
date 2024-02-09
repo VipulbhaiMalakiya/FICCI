@@ -4,6 +4,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { UserService } from '../../service/user.service';
 import { ConfirmationDialogModalComponent } from 'src/app/Modules/shared/components/confirmation-dialog-modal/confirmation-dialog-modal.component';
+import { Roles } from '../../interface/role';
 
 const DEFAULT_ROLE_LIST = [
   { id: 1, role_Name: 'Employee' },
@@ -21,7 +22,7 @@ export class AddComponent implements OnInit {
   dataForm: FormGroup;
   isedite: boolean = false; // Assuming patch data is initially not received
   selectedEmployee: any;
-  roles: any[] = [];
+  roles: Roles[] = [];
   employees = [
     { id: 1, username: 'john_doe', name: 'John Doe', email: 'john@example.com' },
     { id: 2, username: 'jane_smith', name: 'Jane Smith', email: 'jane@example.com' },
