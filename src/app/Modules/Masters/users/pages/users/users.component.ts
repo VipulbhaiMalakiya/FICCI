@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ConfirmationDialogModalComponent } from 'src/app/Modules/shared/components/confirmation-dialog-modal/confirmation-dialog-modal.component';
 import { AppService } from 'src/app/services/excel.service';
 
 @Component({
@@ -15,6 +18,8 @@ export class UsersComponent implements OnInit{
   searchText: string = '';
 
   constructor(    private appService: AppService,
+    private modalService: NgbModal,
+    private router: Router,
     ){
 
   }
@@ -64,6 +69,32 @@ export class UsersComponent implements OnInit{
       'Users',
       headers
     );
+  }
+
+  onDelete(id: number) {
+    const modalRef = this.modalService.open(ConfirmationDialogModalComponent, { size: "sm", centered: true, backdrop: "static" });
+    var componentInstance = modalRef.componentInstance as ConfirmationDialogModalComponent;
+    componentInstance.message = "Are you sure you want to delete this ?";
+    modalRef.result.then((canDelete: boolean) => {
+      if (canDelete) {
+        // this.API.delete(id).subscribe({
+        //   next: (res: any) => {
+        //     this.toastr.success(res.message, 'Success');
+        //     this.loadConfiguration();
+        //   },
+        //   error: (error) => {
+        //     this.toastr.error(error.error.message, 'Error');
+        //   }
+        // });
+
+      }
+    }).catch(() => { });
+
+  }
+
+  onEdit(user: any): void {
+    // Assuming user has an 'id' property
+    this.router.navigate(['masters/users/edit', user.id]);
   }
 
 }
