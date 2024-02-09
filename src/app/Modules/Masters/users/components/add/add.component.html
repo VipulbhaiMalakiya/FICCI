@@ -64,11 +64,19 @@
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <td>1</td>
-        <td></td>
+      <tr *ngFor="let user of users">
+        <td>{{ user.employeeId }}</td>
+        <td>{{ user.userName }}</td>
+        <td>{{ user.name }}</td>
+        <td>{{ user.role }}</td>
+        <td>{{ user.email }}</td>
+        <td>{{ user.active }}</td>
+        <td> <button class="btn btn-warning" (click)="onEdit(user)">Edit</button>
+          <button class="btn btn-danger ml-2" (click)="onDelete(user.id)">Delete</button>
+        </td>
       </tr>
     </tbody>
   </table>
+
 </div>
 

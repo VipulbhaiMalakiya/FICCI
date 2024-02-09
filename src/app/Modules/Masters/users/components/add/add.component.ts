@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { UserService } from '../../service/user.service';
+import { ConfirmationDialogModalComponent } from 'src/app/Modules/shared/components/confirmation-dialog-modal/confirmation-dialog-modal.component';
 
 const DEFAULT_ROLE_LIST = [
   { id: 1, role_Name: 'Employee' },
@@ -28,6 +29,11 @@ export class AddComponent implements OnInit {
     // Add more employees as needed
   ];
 
+  users = [
+    { id: 1,employeeId: 1, userName: 'user1', name: 'John Doe', role: 'Employee', email: 'john@example.com', active: 'Yes' },
+    {id:2, employeeId: 2, userName: 'user2', name: 'Jane Doe', role: 'Approver', email: 'jane@example.com', active: 'No' },
+    // Add more dummy user data as needed
+  ];
 
 
 
@@ -86,6 +92,42 @@ export class AddComponent implements OnInit {
         email: null
       });
     }
+  }
+
+  onEdit(data: any) {
+    this.isedite = true;
+    const isActiveValue = data.active.toLowerCase() === 'yes' ? true : false;
+
+    this.dataForm.patchValue({
+      employeeId: data.employeeId,
+      username:data.userName,
+      name:data.name,
+      email:data.email,
+      isActive:isActiveValue,
+      id:data.id
+    });
+  }
+
+  onDelete(id: number) {
+    this.dataForm.reset();
+    const modalRef = this.modalService.open(ConfirmationDialogModalComponent, { size: "sm", centered: true, backdrop: "static" });
+    var componentInstance = modalRef.componentInstance as ConfirmationDialogModalComponent;
+    componentInstance.message = "Are you sure you want to delete this ?";
+    modalRef.result.then((canDelete: boolean) => {
+      if (canDelete) {
+        // this.API.delete(id).subscribe({
+        //   next: (res: any) => {
+        //     this.toastr.success(res.message, 'Success');
+        //     this.loadConfiguration();
+        //   },
+        //   error: (error) => {
+        //     this.toastr.error(error.error.message, 'Error');
+        //   }
+        // });
+
+      }
+    }).catch(() => { });
+
   }
 
 
