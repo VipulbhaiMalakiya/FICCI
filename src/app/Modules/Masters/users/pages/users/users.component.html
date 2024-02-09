@@ -1,1 +1,33 @@
-<button routerLink="add" type="button" class="btn btn-primary">Add New</button>
+<div class="container">
+  <button routerLink="add" type="button" class="btn btn-primary">
+    Add New
+  </button>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Employee ID</th>
+        <th>UserName</th>
+        <th>Name</th>
+        <th>Role</th>
+        <th>Email</th>
+        <th>Active</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr
+        *ngFor="let user of users| paginate: {itemsPerPage: tableSize,currentPage: page,totalItems: count};let i = index">
+        <td>{{ user.employeeId }}</td>
+        <td>{{ user.userName }}</td>
+        <td>{{ user.name }}</td>
+        <td>{{ user.role }}</td>
+        <td>{{ user.email }}</td>
+        <td>{{ user.active }}</td>
+        <td>
+          <!-- <button class="btn btn-warning" (click)="onEdit(user)">Edit</button>
+        <button class="btn btn-danger ml-2" (click)="onDelete(user.id)">Delete</button> -->
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

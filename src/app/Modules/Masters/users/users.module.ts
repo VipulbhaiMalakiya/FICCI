@@ -5,6 +5,8 @@ import { UsersRoutingModule } from './users-routing.module';
 import { UsersComponent } from './pages/users/users.component';
 import { AddComponent } from './components/add/add.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { SharedModule } from '../../shared/shared.module';
 
 
 @NgModule({
@@ -15,8 +17,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
   imports: [
     CommonModule,
     UsersRoutingModule,
+    ReactiveFormsModule,
+    SharedModule,
     FormsModule,
-    ReactiveFormsModule
+    NgxPaginationModule,
+
   ]
 })
 export class UsersModule { }
