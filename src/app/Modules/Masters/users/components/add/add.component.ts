@@ -1,30 +1,40 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
+import { UserService } from '../../service/user.service';
+
+const DEFAULT_ROLE_LIST = [
+  { id: 1, role_Name: 'Employee' },
+  { id: 2, role_Name: 'Approver' },
+  { id: 3, role_Name: 'Accounts' },
+  { id: 4, role_Name: 'Admin' }
+];
 
 @Component({
   selector: 'app-add',
   templateUrl: './add.component.html',
   styleUrls: ['./add.component.css']
 })
-export class AddComponent {
+export class AddComponent implements OnInit {
   dataForm: FormGroup;
   isedite: boolean = false; // Assuming patch data is initially not received
-
+  selectedEmployee: any;
+  roles: any[] = [];
   employees = [
     { id: 1, username: 'john_doe', name: 'John Doe', email: 'john@example.com' },
     { id: 2, username: 'jane_smith', name: 'Jane Smith', email: 'jane@example.com' },
     { id: 3, username: 'alice_johnson', name: 'Alice Johnson', email: 'alice@example.com' },
     // Add more employees as needed
   ];
-  selectedEmployee: any;
+
 
 
 
   constructor(private fb: FormBuilder,
     private modalService: NgbModal,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private API: UserService,
 
   ) {
     this.dataForm = this.fb.group({
@@ -36,6 +46,22 @@ export class AddComponent {
       email: [{ value: '', disabled: true }, [Validators.required, Validators.email]],
       isActive: [false] // Assuming default value is true
     });
+  }
+
+  ngOnInit(): void {
+    this.getRoles();
+  }
+
+  // Method to fetch roles
+  getRoles() {
+    this.API.getRoles().subscribe(
+      data => {
+        this.roles = data;
+      },
+      error => {
+        this.roles = DEFAULT_ROLE_LIST; // Assuming DEFAULT_ROLE_LIST is defined somewhere
+      }
+    );
   }
 
   onSelectEmployee() {
@@ -66,7 +92,7 @@ export class AddComponent {
   onSubmit() {
     if (this.dataForm.valid) {
       const newData = this.dataForm.value;
-      console.log(newData );
+      console.log(newData);
 
       const isUpdate = !!newData.id;
       // const newConfig: addUpdateConfiguration = {
@@ -90,7 +116,7 @@ export class AddComponent {
       //   }
       // });
     } else {
-      ['employeeId','username','name','email','role'].forEach(controlName => {
+      ['employeeId', 'username', 'name', 'email', 'role'].forEach(controlName => {
         this.dataForm.controls[controlName].markAsTouched();
       });
     }
