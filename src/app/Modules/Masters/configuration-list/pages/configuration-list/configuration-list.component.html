@@ -17,12 +17,12 @@
       </div>
       <div class="col-md-2">
         <label for="categoryID">Category:</label>
-        <select id="categoryID" class="form-control" formControlName="categoryID">
-          <option value=""> select category</option>
-          <option *ngFor="let category of categoryList" [value]="category.id">{{ category.category_Name |
-            titlecase }}</option>
-
-        </select>
+        <ng-select [items]="categoryList" formControlName="categoryID" bindLabel="category_Name" bindValue="id" placeholder="Select Category">
+          <ng-template nsSelectPlaceholder>Select Category</ng-template>
+          <ng-template ng-option-tmp let-item="item">
+            {{ item.category_Name | titlecase }}
+          </ng-template>
+        </ng-select>
         <div *ngIf="shouldShowError('categoryID','required')" class="text-danger">This field is required
         </div>
       </div>

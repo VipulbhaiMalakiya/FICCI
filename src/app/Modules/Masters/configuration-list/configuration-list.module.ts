@@ -7,6 +7,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../../shared/shared.module';
 import { NgxPaginationModule } from 'ngx-pagination'; // Import ngx-pagination module
 import { SearchFilterPipe } from './pipe/searchFilter';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 
 @NgModule({
@@ -21,6 +22,7 @@ import { SearchFilterPipe } from './pipe/searchFilter';
     SharedModule,
     FormsModule,
     NgxPaginationModule,
+    NgSelectModule
 
   ]
 })

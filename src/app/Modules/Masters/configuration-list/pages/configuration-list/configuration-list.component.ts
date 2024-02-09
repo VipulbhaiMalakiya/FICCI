@@ -45,7 +45,7 @@ export class ConfigurationListComponent {
       id:[''],
       c_Code: ['', Validators.required],
       c_Value: ['', Validators.required],
-      categoryID: ['', Validators.required],
+      categoryID: [null, Validators.required],
       isActive: [false]
     });
 
