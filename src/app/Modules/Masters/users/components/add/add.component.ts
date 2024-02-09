@@ -31,8 +31,6 @@ export class AddComponent implements OnInit {
 
   users = [
     { id: 1,employeeId: 1, userName: 'user1', name: 'John Doe', role: 'Employee', email: 'john@example.com', active: 'Yes' },
-    {id:2, employeeId: 2, userName: 'user2', name: 'Jane Doe', role: 'Approver', email: 'jane@example.com', active: 'No' },
-    // Add more dummy user data as needed
   ];
 
 
@@ -94,15 +92,22 @@ export class AddComponent implements OnInit {
     }
   }
 
+  findRoleId(roleName: string): number | undefined {
+    const category =this.roles.find(role => role.role_Name === roleName);
+    return category ? category.id : undefined;
+  }
+
   onEdit(data: any) {
     this.isedite = true;
     const isActiveValue = data.active.toLowerCase() === 'yes' ? true : false;
+    const roleId = this.findRoleId(data.role);
 
     this.dataForm.patchValue({
       employeeId: data.employeeId,
       username:data.userName,
       name:data.name,
       email:data.email,
+      role:roleId,
       isActive:isActiveValue,
       id:data.id
     });
