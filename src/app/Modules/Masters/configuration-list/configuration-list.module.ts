@@ -13,7 +13,8 @@ import { NgSelectModule } from '@ng-select/ng-select';
 @NgModule({
   declarations: [
     ConfigurationListComponent,
-    SearchFilterPipe
+    SearchFilterPipe,
+
   ],
   imports: [
     CommonModule,

@@ -11,6 +11,7 @@ import { alphanumericValidator } from '../../Validation/alphanumericValidator';
 import { alphanumericWithSpacesValidator } from '../../Validation/alphanumericWithSpacesValidator ';
 import { toTitleCase } from 'src/app/Helper/toTitleCase';
 import { Subscription } from 'rxjs';
+import { UtilityService } from 'src/app/services/utility.service';
 
 
 const DEFAULT_CATEGORY_LIST: Category[] = [
@@ -42,7 +43,8 @@ export class ConfigurationListComponent implements OnInit , OnDestroy  {
     private appService: AppService,
     private modalService: NgbModal,
     private API: ConfigurationService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    public utilityService: UtilityService
   ) {
     this.initializeForm();
   }
@@ -148,12 +150,6 @@ export class ConfigurationListComponent implements OnInit , OnDestroy  {
       })
       .catch(() => {});
   }
-
-  trackById(index: number, item: any): number {
-    return item.id; // Assuming your item has a unique identifier property called 'id'
-  }
-
-
   onEdit(data: Configuration): void {
     this.isEdit = true;
     const categoryId = this.findCategoryId(data.category_Name);
