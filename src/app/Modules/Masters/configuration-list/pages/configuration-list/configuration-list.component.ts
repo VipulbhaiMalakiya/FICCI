@@ -12,7 +12,7 @@ import { alphanumericWithSpacesValidator } from '../../Validation/alphanumericWi
 import { toTitleCase } from 'src/app/Helper/toTitleCase';
 
 
-const DEFAULT_CATEGORY_LIST = [
+const DEFAULT_CATEGORY_LIST: Category[] = [
   { id: 1, category_Name: 'CUSTOMER TYPE' },
   { id: 2, category_Name: 'USER ROLE' },
   { id: 3, category_Name: 'MAIL TEMPLATE' },
@@ -35,12 +35,12 @@ export class ConfigurationListComponent {
   tableSizes: number[] = [10, 20, 50, 100]; // You can adjust these values as needed
   searchText: string = '';
 
-  constructor(private fb: FormBuilder,
+  constructor(
+    private fb: FormBuilder,
     private appService: AppService,
     private modalService: NgbModal,
     private API: ConfigurationService,
     private toastr: ToastrService
-
   ) {
     this.dataForm = this.fb.group({
       id: [''],
@@ -49,7 +49,6 @@ export class ConfigurationListComponent {
       categoryID: [null, Validators.required],
       isActive: [false]
     });
-
   }
 
   ngOnInit() {
@@ -59,7 +58,6 @@ export class ConfigurationListComponent {
   loadCategoryList() {
     this.API.getCategoryList().subscribe({
       next: (response: any) => {
-
         this.categoryList = response.data.map((category: { category_Name: string }) => ({
           ...category,
           category_Name: toTitleCase(category.category_Name)
