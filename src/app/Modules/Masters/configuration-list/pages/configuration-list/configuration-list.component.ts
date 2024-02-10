@@ -64,36 +64,45 @@ export class ConfigurationListComponent implements OnInit , OnDestroy  {
   }
 
   loadCategoryList(): void {
-    this.configurationSubscription.add(
-      this.API.getCategoryList().subscribe({
-        next: (response: any) => {
-          this.categoryList = response.data.map((category: { category_Name: string }) => ({
-            ...category,
-            category_Name: toTitleCase(category.category_Name)
-          }));
-        },
-        error: () => {
-          this.categoryList = DEFAULT_CATEGORY_LIST;
-        }
-      })
-    );
+    try {
+      this.configurationSubscription.add(
+        this.API.getCategoryList().subscribe({
+          next: (response: any) => {
+            this.categoryList = response.data.map((category: { category_Name: string }) => ({
+              ...category,
+              category_Name: toTitleCase(category.category_Name)
+            }));
+          },
+          error: () => {
+            this.categoryList = DEFAULT_CATEGORY_LIST;
+          }
+        })
+      );
+    } catch (error) {
+      console.error('Error loading category list:', error);
+    }
   }
 
 
 
 
   loadConfiguration(): void {
-    this.configurationSubscription.add(
-      this.API.getAll().subscribe({
-        next: (response: any) => {
-          this.data = response.data;
-        },
-        error: () => {
-          // Handle error
-        }
-      })
-    );
+    try {
+      this.configurationSubscription.add(
+        this.API.getAll().subscribe({
+          next: (response: any) => {
+            this.data = response.data;
+          },
+          error: () => {
+            // Handle error
+          }
+        })
+      );
+    } catch (error) {
+      console.error('Error loading configuration:', error);
+    }
   }
+
 
   onTableDataChange(event: any) {
     this.page = event;
