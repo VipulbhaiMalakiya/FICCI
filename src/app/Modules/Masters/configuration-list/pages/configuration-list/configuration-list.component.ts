@@ -27,7 +27,7 @@ const DEFAULT_CATEGORY_LIST: Category[] = [
 })
 export class ConfigurationListComponent implements OnInit , OnDestroy  {
   dataForm: FormGroup;
-  isedite: boolean = false; // Assuming patch data is initially not received
+  isEdit: boolean = false; // Assuming patch data is initially not received
   categoryList: Category[] = [];
   data: Configuration[] = [];
   page: number = 1;
@@ -62,18 +62,21 @@ export class ConfigurationListComponent implements OnInit , OnDestroy  {
     this.loadCategoryList();
     this.loadConfiguration();
   }
-  loadCategoryList() {
-    this.API.getCategoryList().subscribe({
-      next: (response: any) => {
-        this.categoryList = response.data.map((category: { category_Name: string }) => ({
-          ...category,
-          category_Name: toTitleCase(category.category_Name)
-        }));
-      },
-      error: (error) => {
-        this.categoryList = DEFAULT_CATEGORY_LIST; // Assuming DEFAULT_CATEGORY_LIST is defined somewhere
-      }
-    });
+
+  loadCategoryList(): void {
+    this.configurationSubscription.add(
+      this.API.getCategoryList().subscribe({
+        next: (response: any) => {
+          this.categoryList = response.data.map((category: { category_Name: string }) => ({
+            ...category,
+            category_Name: toTitleCase(category.category_Name)
+          }));
+        },
+        error: () => {
+          this.categoryList = DEFAULT_CATEGORY_LIST;
+        }
+      })
+    );
   }
 
 
@@ -83,14 +86,17 @@ export class ConfigurationListComponent implements OnInit , OnDestroy  {
     return category ? category.id : undefined;
   }
 
-  loadConfiguration() {
-    this.API.getAll().subscribe({
-      next: (response: any) => {
-        this.data = response.data;
-      },
-      error: (error) => {
-      }
-    });
+  loadConfiguration(): void {
+    this.configurationSubscription.add(
+      this.API.getAll().subscribe({
+        next: (response: any) => {
+          this.data = response.data;
+        },
+        error: () => {
+          // Handle error
+        }
+      })
+    );
   }
 
   onTableDataChange(event: any) {
@@ -103,7 +109,7 @@ export class ConfigurationListComponent implements OnInit , OnDestroy  {
     this.loadConfiguration();
   }
 
-  onSubmit() {
+  onSubmit(): void {
     if (this.dataForm.valid) {
       const newData = this.dataForm.value;
       const isUpdate = !!newData.id;
@@ -117,58 +123,60 @@ export class ConfigurationListComponent implements OnInit , OnDestroy  {
         isactive: !!newData.isActive
       };
       const successMessage = isUpdate ? 'Data updated successfully.' : 'Data created successfully.';
-      this.API.create(newConfig).subscribe({
-        next: (res: any) => {
-          res.status === true
-            ? (
-              this.toastr.success(successMessage || res.message, 'Success'),
-              this.loadConfiguration(),
-              this.dataForm.reset()
-            )
-            : this.toastr.error(res.message, 'Error');
-        },
-        error: (error) => {
-          this.toastr.error(error.error.message || 'An error occurred. Please try again later.', 'Error');
-        }
-      });
+      this.configurationSubscription.add(
+        this.API.create(newConfig).subscribe({
+          next: (res: any) => {
+            if (res.status === true) {
+              this.toastr.success(successMessage || res.message, 'Success');
+              this.loadConfiguration();
+              this.dataForm.reset();
+            } else {
+              this.toastr.error(res.message, 'Error');
+            }
+          },
+          error: (error) => {
+            this.toastr.error(error.error.message || 'An error occurred. Please try again later.', 'Error');
+          }
+        })
+      );
     } else {
       ['c_Code', 'c_Value', 'categoryID'].forEach(controlName => {
         this.dataForm.controls[controlName].markAsTouched();
       });
     }
-
   }
 
-  onDelete(id: number) {
+  onDelete(id: number): void {
     const modalRef = this.modalService.open(ConfirmationDialogModalComponent, { size: "sm", centered: true, backdrop: "static" });
-    var componentInstance = modalRef.componentInstance as ConfirmationDialogModalComponent;
+    const componentInstance = modalRef.componentInstance as ConfirmationDialogModalComponent;
     componentInstance.message = "Are you sure you want to delete this ?";
     modalRef.result.then((canDelete: boolean) => {
       if (canDelete) {
-        this.API.delete(id).subscribe({
-          next: (res: any) => {
-            res.status === true
-              ? (
-                this.toastr.success(res.message, 'Success'),
-                this.loadConfiguration(),
-                this.dataForm.reset()
-              )
-              : this.toastr.error(res.message, 'Error');
-          },
-          error: (error) => {
-            this.toastr.error(error.error.message, 'Error');
-          }
-        });
-
+        this.configurationSubscription.add(
+          this.API.delete(id).subscribe({
+            next: (res: any) => {
+              if (res.status === true) {
+                this.toastr.success(res.message, 'Success');
+                this.loadConfiguration();
+                this.dataForm.reset();
+              } else {
+                this.toastr.error(res.message, 'Error');
+              }
+            },
+            error: (error) => {
+              this.toastr.error(error.error.message, 'Error');
+            }
+          })
+        );
       }
     }).catch(() => { });
-
   }
 
-  onEdit(data: Configuration) {
-    this.isedite = true;
+
+  onEdit(data: Configuration): void {
+    this.isEdit = true;
     const categoryId = this.findCategoryId(data.category_Name);
-    const isActiveValue = data.isActive.toLowerCase() === 'yes' ? true : false;
+    const isActiveValue = data.isActive.toLowerCase() === 'yes';
     this.dataForm.patchValue({
       c_Code: data.c_Code,
       c_Value: data.c_Value,
@@ -177,8 +185,7 @@ export class ConfigurationListComponent implements OnInit , OnDestroy  {
       id: data.c_ID
     });
   }
-
-  onDownload() {
+  onDownload(): void {
     const exportData = this.data.map((x) => ({
       ID: x?.c_ID || '',
       Code: x?.c_Code || '',
@@ -196,11 +203,9 @@ export class ConfigurationListComponent implements OnInit , OnDestroy  {
     );
   }
 
-
-  shouldShowError(controlName: string, errorName: string) {
+  shouldShowError(controlName: string, errorName: string): boolean {
     return this.dataForm.controls[controlName].touched && this.dataForm.controls[controlName].hasError(errorName);
   }
-
 
 
 }
