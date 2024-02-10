@@ -82,10 +82,6 @@ export class ConfigurationListComponent implements OnInit , OnDestroy  {
       console.error('Error loading category list:', error);
     }
   }
-
-
-
-
   loadConfiguration(): void {
     try {
       this.configurationSubscription.add(
@@ -128,40 +124,54 @@ export class ConfigurationListComponent implements OnInit , OnDestroy  {
         isactive: !!newData.isActive
       };
       const successMessage = isUpdate ? 'Data updated successfully.' : 'Data created successfully.';
-      this.configurationSubscription.add(
-        this.API.create(newConfig).subscribe({
-          next: (res: any) => {
-            this.handleApiResponse(res, successMessage);
-          },
-          error: (error) => {
-            this.toastr.error(error.error.message || 'An error occurred. Please try again later.', 'Error');
-          }
-        })
-      );
+
+      try {
+        this.configurationSubscription.add(
+          this.API.create(newConfig).subscribe({
+            next: (res: any) => {
+              this.handleApiResponse(res, successMessage);
+            },
+            error: (error) => {
+              this.toastr.error(error.error.message || 'An error occurred. Please try again later.', 'Error');
+            }
+          })
+        );
+      } catch (error) {
+        console.error('Error submitting data:', error);
+      }
     } else {
       this.markFormControlsAsTouched();
     }
   }
 
+
   onDelete(id: number): void {
     const modalRef = this.modalService.open(ConfirmationDialogModalComponent, { size: "sm", centered: true, backdrop: "static" });
     const componentInstance = modalRef.componentInstance as ConfirmationDialogModalComponent;
     componentInstance.message = "Are you sure you want to delete this ?";
-    modalRef.result.then((canDelete: boolean) => {
-      if (canDelete) {
-        this.configurationSubscription.add(
-          this.API.delete(id).subscribe({
-            next: (res: any) => {
-              this.handleApiResponse(res, 'Data deleted successfully.');
-            },
-            error: (error) => {
-              this.toastr.error(error.error.message, 'Error');
-            }
-          })
-        );
-      }
-    }).catch(() => { });
+
+    modalRef.result
+      .then((canDelete: boolean) => {
+        if (canDelete) {
+          try {
+            this.configurationSubscription.add(
+              this.API.delete(id).subscribe({
+                next: (res: any) => {
+                  this.handleApiResponse(res, 'Data deleted successfully.');
+                },
+                error: (error) => {
+                  this.toastr.error(error.error.message, 'Error');
+                }
+              })
+            );
+          } catch (error) {
+            console.error('Error deleting data:', error);
+          }
+        }
+      })
+      .catch(() => {});
   }
+
 
 
   onEdit(data: Configuration): void {
