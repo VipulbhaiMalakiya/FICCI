@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import {NgbModal,ToastrService,DEFAULT_CATEGORY_LIST,addUpdateConfiguration,alphanumericWithSpacesValidator,ConfirmationDialogModalComponent,AppService,ConfigurationService,Category,Configuration,alphanumericValidator,toTitleCase,UtilityService} from '../../import/index'
@@ -25,7 +25,8 @@ export class ConfigurationListComponent implements OnInit , OnDestroy  {
     private modalService: NgbModal,
     private API: ConfigurationService,
     private toastr: ToastrService,
-    public utilityService: UtilityService
+    public utilityService: UtilityService,
+    private cdr: ChangeDetectorRef
   ) {
     this.initializeForm();
   }
@@ -59,9 +60,13 @@ export class ConfigurationListComponent implements OnInit , OnDestroy  {
               ...category,
               category_Name: toTitleCase(category.category_Name)
             }));
+            this.cdr.detectChanges();
+
           },
           error: () => {
             this.categoryList = DEFAULT_CATEGORY_LIST;
+            this.cdr.detectChanges();
+
           }
         })
       );
