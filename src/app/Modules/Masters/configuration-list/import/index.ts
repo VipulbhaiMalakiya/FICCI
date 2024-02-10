@@ -1,6 +1,9 @@
 // src/app/common/index.ts
 
+import { FormGroup } from '@angular/forms';
 import { Category } from '../interface/category';
+import { Configuration } from '../interface/configuration';
+import { Subscription } from 'rxjs';
 export { Subscription } from 'rxjs';
 // Export all commonly used imports from your project
 export * from 'src/app/services/excel.service';
@@ -25,4 +28,16 @@ export const DEFAULT_CATEGORY_LIST: Category[] = [
   { id: 4, category_Name: 'INVOICE TYPE' }
 ];
 
+export class publicVariable {
+  dataForm!: FormGroup;
+  isEdit: boolean = false;
+  categoryList: Category[] = [];
+  data: Configuration[] = [];
+  page: number = 1;
+  count: number = 0;
+  tableSize: number = 10;
+  tableSizes: number[] = [10, 20, 50, 100];
+  searchText: string = '';
+  configurationSubscription: Subscription = new Subscription();
+}
 

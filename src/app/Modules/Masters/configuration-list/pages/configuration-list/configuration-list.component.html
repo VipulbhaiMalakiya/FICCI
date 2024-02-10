@@ -1,5 +1,5 @@
 <div class="container">
-  <form [formGroup]="dataForm" (ngSubmit)="onSubmit()">
+  <form [formGroup]="publicVariable.dataForm" (ngSubmit)="onSubmit()">
     <input type="hidden" formControlName="id">
 
     <div class="row my-4">
@@ -23,7 +23,7 @@
       </div>
       <div class="col-md-2">
         <label for="categoryID">Category:</label>
-        <ng-select [items]="categoryList" formControlName="categoryID" bindLabel="category_Name" bindValue="id" placeholder="Select Category">
+        <ng-select [items]="publicVariable.categoryList" formControlName="categoryID" bindLabel="category_Name" bindValue="id" placeholder="Select Category">
           <ng-template nsSelectPlaceholder>Select Category</ng-template>
           <ng-template ng-option-tmp let-item="item">
             {{ item.category_Name | titlecase }}
@@ -37,22 +37,22 @@
         <input type="checkbox" id="isActive" formControlName="isActive">
       </div>
       <div class="col-md-2">
-        <button type="submit" class="btn btn-primary">{{ isEdit ? 'Update' : 'Save' }}</button>
+        <button type="submit" class="btn btn-primary">{{ publicVariable.isEdit ? 'Update' : 'Save' }}</button>
 
       </div>
     </div>
 
   </form>
-  <div class="analdrop1" *ngIf="data && data.length > 0">
+  <div class="analdrop1" *ngIf="publicVariable.data && publicVariable.data.length > 0">
     <label>Export Data</label>
     <button (click)="onDownload()" class="gray-btns" type="button"><i class="las la-file-export"></i> Download</button>
   </div>
-  <input *ngIf="data && data.length > 0" type="text" [(ngModel)]="searchText" placeholder="Search by code or category">
+  <input *ngIf="publicVariable.data && publicVariable.data.length > 0" type="text" [(ngModel)]="publicVariable.searchText" placeholder="Search by code or category">
 
-  <div *ngIf="data && data.length > 0">
+  <div *ngIf="publicVariable.data && publicVariable.data.length > 0">
     <label for="itemsPerPageSelect">Items Per Page:</label>
-    <select id="itemsPerPageSelect" [(ngModel)]="tableSize" (change)="onTableSizeChange($event)">
-      <option *ngFor="let size of tableSizes" [value]="size">{{ size }}</option>
+    <select id="itemsPerPageSelect" [(ngModel)]="publicVariable.tableSize" (change)="onTableSizeChange($event)">
+      <option *ngFor="let size of publicVariable.tableSizes" [value]="size">{{ size }}</option>
     </select>
   </div>
   <table class="table table-striped">
@@ -66,7 +66,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let item of data| searchFilter: searchText | paginate: {itemsPerPage: tableSize,currentPage: page,totalItems: count};let i = index;trackBy: utilityService.trackById">
+      <tr *ngFor="let item of publicVariable.data| searchFilter: publicVariable.searchText | paginate: {itemsPerPage: publicVariable.tableSize,currentPage: publicVariable.page,totalItems: publicVariable.count};let i = index;trackBy: utilityService.trackById">
         <td>{{ item.c_Code }}</td>
         <td>{{ item.c_Value | titlecase}}</td>
         <td>{{ item.category_Name | titlecase}}</td>
@@ -77,13 +77,13 @@
       </tr>
     </tbody>
   </table>
-  <div *ngIf="!data || data.length === 0  ">
+  <div *ngIf="!publicVariable.data || publicVariable.data.length === 0  ">
     <p>No data found.</p>
   </div>
-  <div class="text-center" *ngIf="(data | searchFilter: searchText).length === 0 && data.length > 0">
+  <div class="text-center" *ngIf="(publicVariable.data | searchFilter: publicVariable.searchText).length === 0 && publicVariable.data.length > 0">
     <Strong class="text-danger"> No results found.</Strong>
   </div>
-  <div class="d-flex justify-content-center" *ngIf="data && data.length > 0">
+  <div class="d-flex justify-content-center" *ngIf="publicVariable.data && publicVariable.data.length > 0">
     <pagination-controls
       previousLabel="Prev"
       nextLabel="Next"

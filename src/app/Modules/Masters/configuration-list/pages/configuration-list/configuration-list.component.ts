@@ -1,21 +1,13 @@
 import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
-import {NgbModal,Subscription,ToastrService,FormBuilder, FormGroup, Validators,DEFAULT_CATEGORY_LIST,addUpdateConfiguration,alphanumericWithSpacesValidator,ConfirmationDialogModalComponent,AppService,ConfigurationService,Category,Configuration,alphanumericValidator,toTitleCase,UtilityService} from '../../import/index'
+import {NgbModal,Subscription,publicVariable,ToastrService,FormBuilder, FormGroup, Validators,DEFAULT_CATEGORY_LIST,addUpdateConfiguration,alphanumericWithSpacesValidator,ConfirmationDialogModalComponent,AppService,ConfigurationService,Category,Configuration,alphanumericValidator,toTitleCase,UtilityService} from '../../import/index'
 @Component({
   selector: 'app-configuration-list',
   templateUrl: './configuration-list.component.html',
   styleUrls: ['./configuration-list.component.css']
 })
 export class ConfigurationListComponent implements OnInit , OnDestroy  {
-  dataForm!: FormGroup;
-  isEdit: boolean = false; // Assuming patch data is initially not received
-  categoryList: Category[] = [];
-  data: Configuration[] = [];
-  page: number = 1;
-  count: number = 0;
-  tableSize: number = 10;
-  tableSizes: number[] = [10, 20, 50, 100]; // You can adjust these values as needed
-  searchText: string = '';
-  configurationSubscription: Subscription = new Subscription(); // Initialize here
+
+  publicVariable = new publicVariable();
 
   constructor(
     private fb: FormBuilder,
@@ -30,7 +22,7 @@ export class ConfigurationListComponent implements OnInit , OnDestroy  {
   }
 
   private initializeForm(): void {
-    this.dataForm = this.fb.group({
+    this.publicVariable.dataForm = this.fb.group({
       id: [''],
       c_Code: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(10), alphanumericValidator()]],
       c_Value: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(20), alphanumericWithSpacesValidator()]],
@@ -40,8 +32,8 @@ export class ConfigurationListComponent implements OnInit , OnDestroy  {
   }
 
   ngOnDestroy() {
-    if (this.configurationSubscription) {
-      this.configurationSubscription.unsubscribe();
+    if (this.publicVariable.configurationSubscription) {
+      this.publicVariable.configurationSubscription.unsubscribe();
     }
   }
   ngOnInit() {
@@ -51,10 +43,10 @@ export class ConfigurationListComponent implements OnInit , OnDestroy  {
 
   loadCategoryList(): void {
     try {
-      this.configurationSubscription.add(
+      this.publicVariable.configurationSubscription.add(
         this.API.getCategoryList().subscribe({
           next: (response: any) => {
-            this.categoryList = response.data.map((category: { category_Name: string }) => ({
+            this.publicVariable.categoryList = response.data.map((category: { category_Name: string }) => ({
               ...category,
               category_Name: toTitleCase(category.category_Name)
             }));
@@ -62,7 +54,7 @@ export class ConfigurationListComponent implements OnInit , OnDestroy  {
 
           },
           error: () => {
-            this.categoryList = DEFAULT_CATEGORY_LIST;
+            this.publicVariable.categoryList = DEFAULT_CATEGORY_LIST;
                       this.cdr.detectChanges();
 
           }
@@ -74,10 +66,10 @@ export class ConfigurationListComponent implements OnInit , OnDestroy  {
   }
   loadConfiguration(): void {
     try {
-      this.configurationSubscription.add(
+      this.publicVariable.configurationSubscription.add(
         this.API.getAll().subscribe({
           next: (response: any) => {
-            this.data = response.data;
+            this.publicVariable.data = response.data;
           },
           error: () => {
             // Handle error
@@ -91,18 +83,18 @@ export class ConfigurationListComponent implements OnInit , OnDestroy  {
 
 
   onTableDataChange(event: any) {
-    this.page = event;
+    this.publicVariable.page = event;
     this.loadConfiguration();
   }
   onTableSizeChange(event: any): void {
-    this.tableSize = event.target.value;
-    this.page = 1;
+    this.publicVariable.tableSize = event.target.value;
+    this.publicVariable.page = 1;
     this.loadConfiguration();
   }
 
   onSubmit(): void {
-    if (this.dataForm.valid) {
-      const newData = this.dataForm.value;
+    if (this.publicVariable.dataForm.valid) {
+      const newData = this.publicVariable.dataForm.value;
       const isUpdate = !!newData.id;
       const newConfig: addUpdateConfiguration = {
         isUpdate: isUpdate,
@@ -135,10 +127,10 @@ export class ConfigurationListComponent implements OnInit , OnDestroy  {
       .catch(() => {});
   }
   onEdit(data: Configuration): void {
-    this.isEdit = true;
+    this.publicVariable.isEdit = true;
     const categoryId = this.findCategoryId(data.category_Name);
     const isActiveValue = data.isActive.toLowerCase() === 'yes';
-    this.dataForm.patchValue({
+    this.publicVariable.dataForm.patchValue({
       c_Code: data.c_Code,
       c_Value: data.c_Value,
       categoryID: categoryId,
@@ -147,7 +139,7 @@ export class ConfigurationListComponent implements OnInit , OnDestroy  {
     });
   }
   onDownload(): void {
-    const exportData = this.data.map((x) => ({
+    const exportData = this.publicVariable.data.map((x) => ({
       ID: x?.c_ID || '',
       Code: x?.c_Code || '',
       Value: x?.c_Value || '',
@@ -159,30 +151,30 @@ export class ConfigurationListComponent implements OnInit , OnDestroy  {
   }
 
   shouldShowError(controlName: string, errorName: string): boolean {
-    return this.dataForm.controls[controlName].touched && this.dataForm.controls[controlName].hasError(errorName);
+    return this.publicVariable.dataForm.controls[controlName].touched && this.publicVariable.dataForm.controls[controlName].hasError(errorName);
   }
   findCategoryId(categoryName: string): number | undefined {
     const trimmedCategoryName = categoryName.trim().toLowerCase(); // Normalize category name
-    const category = this.categoryList.find(cat => cat.category_Name.toLowerCase() === trimmedCategoryName);
+    const category = this.publicVariable.categoryList.find(cat => cat.category_Name.toLowerCase() === trimmedCategoryName);
     return category ? category.id : undefined;
   }
   handleApiResponse(res: any, successMessage: string): void {
     if (res.status === true) {
       this.toastr.success(successMessage, 'Success');
       this.loadConfiguration();
-      this.dataForm.reset();
+      this.publicVariable.dataForm.reset();
     } else {
       this.toastr.error(res.message, 'Error');
     }
   }
   markFormControlsAsTouched(): void {
     ['c_Code', 'c_Value', 'categoryID'].forEach(controlName => {
-      this.dataForm.controls[controlName].markAsTouched();
+      this.publicVariable.dataForm.controls[controlName].markAsTouched();
     });
   }
   handleApiRequest(apiRequest: any, successMessage: string, errorMessagePrefix: string): void {
     try {
-      this.configurationSubscription.add(
+      this.publicVariable.configurationSubscription.add(
         apiRequest.subscribe({
           next: (res: any) => {
             this.handleApiResponse(res, successMessage);
