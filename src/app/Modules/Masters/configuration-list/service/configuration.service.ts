@@ -16,9 +16,7 @@ export class ConfigurationService {
   constructor(private http: HttpClient) {}
 
   getCategoryList(): Observable<Category[]> {
-    return this.http.get<Category[]>(this.categoryListUrl).pipe(
-      retry(1), // Retry the request up to 2 times in case of failure
-    );
+    return this.http.get<Category[]>(this.categoryListUrl).pipe(this.retry);
   }
   getAll(): Observable<Configuration[]> {
     return this.http.get<Configuration[]>(`${this.apiUrl}`).pipe(this.retry);
