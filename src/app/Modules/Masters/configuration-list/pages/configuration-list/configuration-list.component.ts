@@ -26,7 +26,7 @@ const DEFAULT_CATEGORY_LIST: Category[] = [
   styleUrls: ['./configuration-list.component.css']
 })
 export class ConfigurationListComponent implements OnInit , OnDestroy  {
-  dataForm: FormGroup;
+  dataForm!: FormGroup;
   isEdit: boolean = false; // Assuming patch data is initially not received
   categoryList: Category[] = [];
   data: Configuration[] = [];
@@ -44,6 +44,10 @@ export class ConfigurationListComponent implements OnInit , OnDestroy  {
     private API: ConfigurationService,
     private toastr: ToastrService
   ) {
+    this.initializeForm();
+  }
+
+  private initializeForm(): void {
     this.dataForm = this.fb.group({
       id: [''],
       c_Code: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(10), alphanumericValidator()]],
@@ -124,21 +128,7 @@ export class ConfigurationListComponent implements OnInit , OnDestroy  {
         isactive: !!newData.isActive
       };
       const successMessage = isUpdate ? 'Data updated successfully.' : 'Data created successfully.';
-
-      try {
-        this.configurationSubscription.add(
-          this.API.create(newConfig).subscribe({
-            next: (res: any) => {
-              this.handleApiResponse(res, successMessage);
-            },
-            error: (error) => {
-              this.toastr.error(error.error.message || 'An error occurred. Please try again later.', 'Error');
-            }
-          })
-        );
-      } catch (error) {
-        console.error('Error submitting data:', error);
-      }
+      this.handleApiRequest(this.API.create(newConfig),successMessage,'Error submitting data:');
     } else {
       this.markFormControlsAsTouched();
     }
@@ -153,20 +143,7 @@ export class ConfigurationListComponent implements OnInit , OnDestroy  {
     modalRef.result
       .then((canDelete: boolean) => {
         if (canDelete) {
-          try {
-            this.configurationSubscription.add(
-              this.API.delete(id).subscribe({
-                next: (res: any) => {
-                  this.handleApiResponse(res, 'Data deleted successfully.');
-                },
-                error: (error) => {
-                  this.toastr.error(error.error.message, 'Error');
-                }
-              })
-            );
-          } catch (error) {
-            console.error('Error deleting data:', error);
-          }
+          this.handleApiRequest(this.API.delete(id),'Data deleted successfully.','Error deleting data:');
         }
       })
       .catch(() => {});
@@ -194,14 +171,8 @@ export class ConfigurationListComponent implements OnInit , OnDestroy  {
       Category: x?.category_Name ? toTitleCase(x.category_Name) : '',
       isActive: x?.isActive || ''
     }));
-
     const headers = ['ID', 'Code', 'Value', 'Category', 'isActive'];
-
-    this.appService.exportAsExcelFile(
-      exportData,
-      'Configuration-list',
-      headers
-    );
+    this.appService.exportAsExcelFile(exportData,'Configuration-list',headers);
   }
 
   shouldShowError(controlName: string, errorName: string): boolean {
@@ -225,6 +196,23 @@ export class ConfigurationListComponent implements OnInit , OnDestroy  {
     ['c_Code', 'c_Value', 'categoryID'].forEach(controlName => {
       this.dataForm.controls[controlName].markAsTouched();
     });
+  }
+  handleApiRequest(apiRequest: any, successMessage: string, errorMessagePrefix: string): void {
+    try {
+      this.configurationSubscription.add(
+        apiRequest.subscribe({
+          next: (res: any) => {
+            this.handleApiResponse(res, successMessage);
+          },
+          error: (error:any) => {
+            console.error(errorMessagePrefix, error);
+            this.toastr.error(error.error.message || 'An error occurred. Please try again later.', 'Error');
+          }
+        })
+      );
+    } catch (error) {
+      this.toastr.error('Error handling API request', 'Error');
+    }
   }
 
 }
