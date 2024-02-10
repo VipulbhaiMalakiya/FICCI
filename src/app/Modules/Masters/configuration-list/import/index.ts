@@ -1,7 +1,7 @@
 // src/app/common/index.ts
 
 import { Category } from '../interface/category';
-
+export { Subscription } from 'rxjs';
 // Export all commonly used imports from your project
 export * from 'src/app/services/excel.service';
 export * from '../service/configuration.service';
@@ -24,3 +24,5 @@ export const DEFAULT_CATEGORY_LIST: Category[] = [
   { id: 3, category_Name: 'MAIL TEMPLATE' },
   { id: 4, category_Name: 'INVOICE TYPE' }
 ];
+
+

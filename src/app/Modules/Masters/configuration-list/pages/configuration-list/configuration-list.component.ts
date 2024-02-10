@@ -1,7 +1,5 @@
 import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Subscription } from 'rxjs';
-import {NgbModal,ToastrService,DEFAULT_CATEGORY_LIST,addUpdateConfiguration,alphanumericWithSpacesValidator,ConfirmationDialogModalComponent,AppService,ConfigurationService,Category,Configuration,alphanumericValidator,toTitleCase,UtilityService} from '../../import/index'
+import {NgbModal,Subscription,ToastrService,FormBuilder, FormGroup, Validators,DEFAULT_CATEGORY_LIST,addUpdateConfiguration,alphanumericWithSpacesValidator,ConfirmationDialogModalComponent,AppService,ConfigurationService,Category,Configuration,alphanumericValidator,toTitleCase,UtilityService} from '../../import/index'
 @Component({
   selector: 'app-configuration-list',
   templateUrl: './configuration-list.component.html',
@@ -65,7 +63,7 @@ export class ConfigurationListComponent implements OnInit , OnDestroy  {
           },
           error: () => {
             this.categoryList = DEFAULT_CATEGORY_LIST;
-            this.cdr.detectChanges();
+                      this.cdr.detectChanges();
 
           }
         })
