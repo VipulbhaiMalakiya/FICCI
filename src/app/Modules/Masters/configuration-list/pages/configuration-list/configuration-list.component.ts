@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ConfirmationDialogModalComponent } from 'src/app/Modules/shared/components/confirmation-dialog-modal/confirmation-dialog-modal.component';
@@ -10,6 +10,7 @@ import { ToastrService } from 'ngx-toastr';
 import { alphanumericValidator } from '../../Validation/alphanumericValidator';
 import { alphanumericWithSpacesValidator } from '../../Validation/alphanumericWithSpacesValidator ';
 import { toTitleCase } from 'src/app/Helper/toTitleCase';
+import { Subscription } from 'rxjs';
 
 
 const DEFAULT_CATEGORY_LIST: Category[] = [
@@ -24,7 +25,7 @@ const DEFAULT_CATEGORY_LIST: Category[] = [
   templateUrl: './configuration-list.component.html',
   styleUrls: ['./configuration-list.component.css']
 })
-export class ConfigurationListComponent {
+export class ConfigurationListComponent implements OnInit , OnDestroy  {
   dataForm: FormGroup;
   isedite: boolean = false; // Assuming patch data is initially not received
   categoryList: Category[] = [];
@@ -34,6 +35,7 @@ export class ConfigurationListComponent {
   tableSize: number = 10;
   tableSizes: number[] = [10, 20, 50, 100]; // You can adjust these values as needed
   searchText: string = '';
+  configurationSubscription: Subscription = new Subscription(); // Initialize here
 
   constructor(
     private fb: FormBuilder,
@@ -51,6 +53,11 @@ export class ConfigurationListComponent {
     });
   }
 
+  ngOnDestroy() {
+    if (this.configurationSubscription) {
+      this.configurationSubscription.unsubscribe();
+    }
+  }
   ngOnInit() {
     this.loadCategoryList();
     this.loadConfiguration();
