@@ -1,26 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ConfirmationDialogModalComponent } from 'src/app/Modules/shared/components/confirmation-dialog-modal/confirmation-dialog-modal.component';
-import { AppService } from 'src/app/services/excel.service';
-import { ConfigurationService } from '../../service/configuration.service';
-import { Category } from '../../interface/category';
-import { Configuration, addUpdateConfiguration } from '../../interface/configuration';
-import { ToastrService } from 'ngx-toastr';
-import { alphanumericValidator } from '../../Validation/alphanumericValidator';
-import { alphanumericWithSpacesValidator } from '../../Validation/alphanumericWithSpacesValidator ';
-import { toTitleCase } from 'src/app/Helper/toTitleCase';
 import { Subscription } from 'rxjs';
-import { UtilityService } from 'src/app/services/utility.service';
-
-
-const DEFAULT_CATEGORY_LIST: Category[] = [
-  { id: 1, category_Name: 'CUSTOMER TYPE' },
-  { id: 2, category_Name: 'USER ROLE' },
-  { id: 3, category_Name: 'MAIL TEMPLATE' },
-  { id: 4, category_Name: 'INVOICE TYPE' }
-];
-
+import {NgbModal,ToastrService,DEFAULT_CATEGORY_LIST,addUpdateConfiguration,alphanumericWithSpacesValidator,ConfirmationDialogModalComponent,AppService,ConfigurationService,Category,Configuration,alphanumericValidator,toTitleCase,UtilityService} from '../../import/index'
 @Component({
   selector: 'app-configuration-list',
   templateUrl: './configuration-list.component.html',
