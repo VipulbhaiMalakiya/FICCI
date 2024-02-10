@@ -80,11 +80,7 @@ export class ConfigurationListComponent implements OnInit , OnDestroy  {
   }
 
 
-  findCategoryId(categoryName: string): number | undefined {
-    const trimmedCategoryName = categoryName.trim().toLowerCase(); // Normalize category name
-    const category = this.categoryList.find(cat => cat.category_Name.toLowerCase() === trimmedCategoryName);
-    return category ? category.id : undefined;
-  }
+
 
   loadConfiguration(): void {
     this.configurationSubscription.add(
@@ -126,13 +122,7 @@ export class ConfigurationListComponent implements OnInit , OnDestroy  {
       this.configurationSubscription.add(
         this.API.create(newConfig).subscribe({
           next: (res: any) => {
-            if (res.status === true) {
-              this.toastr.success(successMessage || res.message, 'Success');
-              this.loadConfiguration();
-              this.dataForm.reset();
-            } else {
-              this.toastr.error(res.message, 'Error');
-            }
+            this.handleApiResponse(res, successMessage);
           },
           error: (error) => {
             this.toastr.error(error.error.message || 'An error occurred. Please try again later.', 'Error');
@@ -155,13 +145,7 @@ export class ConfigurationListComponent implements OnInit , OnDestroy  {
         this.configurationSubscription.add(
           this.API.delete(id).subscribe({
             next: (res: any) => {
-              if (res.status === true) {
-                this.toastr.success(res.message, 'Success');
-                this.loadConfiguration();
-                this.dataForm.reset();
-              } else {
-                this.toastr.error(res.message, 'Error');
-              }
+              this.handleApiResponse(res, 'Data deleted successfully.');
             },
             error: (error) => {
               this.toastr.error(error.error.message, 'Error');
@@ -205,6 +189,20 @@ export class ConfigurationListComponent implements OnInit , OnDestroy  {
 
   shouldShowError(controlName: string, errorName: string): boolean {
     return this.dataForm.controls[controlName].touched && this.dataForm.controls[controlName].hasError(errorName);
+  }
+  findCategoryId(categoryName: string): number | undefined {
+    const trimmedCategoryName = categoryName.trim().toLowerCase(); // Normalize category name
+    const category = this.categoryList.find(cat => cat.category_Name.toLowerCase() === trimmedCategoryName);
+    return category ? category.id : undefined;
+  }
+  handleApiResponse(res: any, successMessage: string): void {
+    if (res.status === true) {
+      this.toastr.success(successMessage, 'Success');
+      this.loadConfiguration();
+      this.dataForm.reset();
+    } else {
+      this.toastr.error(res.message, 'Error');
+    }
   }
 
 
