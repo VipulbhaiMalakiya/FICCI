@@ -21,15 +21,15 @@ export class ConfigurationService {
     );
   }
   getAll(): Observable<Configuration[]> {
-    return this.http.get<Configuration[]>(`${this.apiUrl}`);
+    return this.http.get<Configuration[]>(`${this.apiUrl}`).pipe(
+      retry(1),
+    );
   }
 
   create(data: addUpdateConfiguration): Observable<addUpdateConfiguration> {
-    return this.http.post<addUpdateConfiguration>(`${this.apiUrl}`, data);
-  }
-
-  update(id: number, data: any): Observable<any> {
-    return this.http.put<any>(`${this.apiUrl}/your_endpoint/${id}`, data);
+    return this.http.post<addUpdateConfiguration>(`${this.apiUrl}`, data).pipe(
+      retry(1),
+    );
   }
 
   delete(id: number): Observable<any> {
