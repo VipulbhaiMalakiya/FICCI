@@ -130,9 +130,7 @@ export class ConfigurationListComponent implements OnInit , OnDestroy  {
         })
       );
     } else {
-      ['c_Code', 'c_Value', 'categoryID'].forEach(controlName => {
-        this.dataForm.controls[controlName].markAsTouched();
-      });
+      this.markFormControlsAsTouched();
     }
   }
 
@@ -204,6 +202,10 @@ export class ConfigurationListComponent implements OnInit , OnDestroy  {
       this.toastr.error(res.message, 'Error');
     }
   }
-
+  markFormControlsAsTouched(): void {
+    ['c_Code', 'c_Value', 'categoryID'].forEach(controlName => {
+      this.dataForm.controls[controlName].markAsTouched();
+    });
+  }
 
 }
