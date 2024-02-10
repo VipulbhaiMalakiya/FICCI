@@ -25,11 +25,9 @@ const DEFAULT_CATEGORY_LIST = [
   styleUrls: ['./configuration-list.component.css']
 })
 export class ConfigurationListComponent {
-  // Assume your data is an array of objects
   dataForm: FormGroup;
   isedite: boolean = false; // Assuming patch data is initially not received
   categoryList: Category[] = [];
-
   data: Configuration[] = [];
   page: number = 1;
   count: number = 0;
@@ -61,7 +59,6 @@ export class ConfigurationListComponent {
   loadCategoryList() {
     this.API.getCategoryList().subscribe({
       next: (response: any) => {
-        // this.categoryList = response.data;
 
         this.categoryList = response.data.map((category: { category_Name: string }) => ({
           ...category,
@@ -76,9 +73,11 @@ export class ConfigurationListComponent {
 
 
   findCategoryId(categoryName: string): number | undefined {
-    const category = this.categoryList.find(cat => cat.category_Name === categoryName);
+    const trimmedCategoryName = categoryName.trim().toLowerCase(); // Normalize category name
+    const category = this.categoryList.find(cat => cat.category_Name.toLowerCase() === trimmedCategoryName);
     return category ? category.id : undefined;
   }
+
   loadConfiguration() {
     this.API.getAll().subscribe({
       next: (response: any) => {
@@ -115,9 +114,13 @@ export class ConfigurationListComponent {
       const successMessage = isUpdate ? 'Data updated successfully.' : 'Data created successfully.';
       this.API.create(newConfig).subscribe({
         next: (res: any) => {
-          this.toastr.success(successMessage || res.message, 'Success');
-          this.loadConfiguration();
-          this.dataForm.reset();
+          res.status === true
+            ? (
+              this.toastr.success(successMessage || res.message, 'Success'),
+              this.loadConfiguration(),
+              this.dataForm.reset()
+            )
+            : this.toastr.error(res.message, 'Error');
         },
         error: (error) => {
           this.toastr.error(error.error.message || 'An error occurred. Please try again later.', 'Error');
@@ -139,9 +142,13 @@ export class ConfigurationListComponent {
       if (canDelete) {
         this.API.delete(id).subscribe({
           next: (res: any) => {
-            this.toastr.success(res.message, 'Success');
-            this.loadConfiguration();
-            this.dataForm.reset();
+            res.status === true
+              ? (
+                this.toastr.success(res.message, 'Success'),
+                this.loadConfiguration(),
+                this.dataForm.reset()
+              )
+              : this.toastr.error(res.message, 'Error');
           },
           error: (error) => {
             this.toastr.error(error.error.message, 'Error');
@@ -188,5 +195,7 @@ export class ConfigurationListComponent {
   shouldShowError(controlName: string, errorName: string) {
     return this.dataForm.controls[controlName].touched && this.dataForm.controls[controlName].hasError(errorName);
   }
+
+
 
 }
