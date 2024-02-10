@@ -1,11 +1,11 @@
 import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
-import {NgbModal,publicVariable,ToastrService,FormBuilder, Validators,DEFAULT_CATEGORY_LIST,addUpdateConfiguration,alphanumericWithSpacesValidator,ConfirmationDialogModalComponent,AppService,ConfigurationService,Configuration,alphanumericValidator,toTitleCase,UtilityService} from '../../import/index'
+import { NgbModal, publicVariable, ToastrService, FormBuilder, Validators, DEFAULT_CATEGORY_LIST, addUpdateConfiguration, alphanumericWithSpacesValidator, ConfirmationDialogModalComponent, AppService, ConfigurationService, Configuration, alphanumericValidator, toTitleCase, UtilityService } from '../../import/index'
 @Component({
   selector: 'app-configuration-list',
   templateUrl: './configuration-list.component.html',
   styleUrls: ['./configuration-list.component.css']
 })
-export class ConfigurationListComponent implements OnInit , OnDestroy  {
+export class ConfigurationListComponent implements OnInit, OnDestroy {
 
   publicVariable = new publicVariable();
 
@@ -55,7 +55,7 @@ export class ConfigurationListComponent implements OnInit , OnDestroy  {
           },
           error: () => {
             this.publicVariable.categoryList = DEFAULT_CATEGORY_LIST;
-                      this.cdr.detectChanges();
+            this.cdr.detectChanges();
 
           }
         })
@@ -106,13 +106,11 @@ export class ConfigurationListComponent implements OnInit , OnDestroy  {
         isactive: !!newData.isActive
       };
       const successMessage = isUpdate ? 'Data updated successfully.' : 'Data created successfully.';
-      this.handleApiRequest(this.API.create(newConfig),successMessage,'Error submitting data:');
+      this.handleApiRequest(this.API.create(newConfig), successMessage, 'Error submitting data:');
     } else {
       this.markFormControlsAsTouched();
     }
   }
-
-
   onDelete(id: number): void {
     const modalRef = this.modalService.open(ConfirmationDialogModalComponent, { size: "sm", centered: true, backdrop: "static" });
     const componentInstance = modalRef.componentInstance as ConfirmationDialogModalComponent;
@@ -121,10 +119,10 @@ export class ConfigurationListComponent implements OnInit , OnDestroy  {
     modalRef.result
       .then((canDelete: boolean) => {
         if (canDelete) {
-          this.handleApiRequest(this.API.delete(id),'Data deleted successfully.','Error deleting data:');
+          this.handleApiRequest(this.API.delete(id), 'Data deleted successfully.', 'Error deleting data:');
         }
       })
-      .catch(() => {});
+      .catch(() => { });
   }
   onEdit(data: Configuration): void {
     this.publicVariable.isEdit = true;
@@ -147,7 +145,7 @@ export class ConfigurationListComponent implements OnInit , OnDestroy  {
       isActive: x?.isActive || ''
     }));
     const headers = ['ID', 'Code', 'Value', 'Category', 'isActive'];
-    this.appService.exportAsExcelFile(exportData,'Configuration-list',headers);
+    this.appService.exportAsExcelFile(exportData, 'Configuration-list', headers);
   }
 
   shouldShowError(controlName: string, errorName: string): boolean {
@@ -179,7 +177,7 @@ export class ConfigurationListComponent implements OnInit , OnDestroy  {
           next: (res: any) => {
             this.handleApiResponse(res, successMessage);
           },
-          error: (error:any) => {
+          error: (error: any) => {
             console.error(errorMessagePrefix, error);
             this.toastr.error(error.error.message || 'An error occurred. Please try again later.', 'Error');
           }
