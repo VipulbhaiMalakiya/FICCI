@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
-import {NgbModal,Subscription,publicVariable,ToastrService,FormBuilder, FormGroup, Validators,DEFAULT_CATEGORY_LIST,addUpdateConfiguration,alphanumericWithSpacesValidator,ConfirmationDialogModalComponent,AppService,ConfigurationService,Category,Configuration,alphanumericValidator,toTitleCase,UtilityService} from '../../import/index'
+import {NgbModal,publicVariable,ToastrService,FormBuilder, Validators,DEFAULT_CATEGORY_LIST,addUpdateConfiguration,alphanumericWithSpacesValidator,ConfirmationDialogModalComponent,AppService,ConfigurationService,Configuration,alphanumericValidator,toTitleCase,UtilityService} from '../../import/index'
 @Component({
   selector: 'app-configuration-list',
   templateUrl: './configuration-list.component.html',
