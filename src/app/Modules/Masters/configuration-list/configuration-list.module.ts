@@ -9,7 +9,6 @@ import { NgxPaginationModule } from 'ngx-pagination'; // Import ngx-pagination m
 import { SearchFilterPipe } from './pipe/searchFilter';
 import { NgSelectModule } from '@ng-select/ng-select';
 
-
 @NgModule({
   declarations: [
     ConfigurationListComponent,

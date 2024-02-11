@@ -20,7 +20,6 @@ export * from '@angular/forms';
 export * from '@ng-bootstrap/ng-bootstrap';
 export * from 'src/app/Modules/shared/components/confirmation-dialog-modal/confirmation-dialog-modal.component';
 
-
 export const DEFAULT_CATEGORY_LIST: Category[] = [
   { id: 1, category_Name: 'CUSTOMER TYPE' },
   { id: 2, category_Name: 'USER ROLE' },
