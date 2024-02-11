@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-
-import {AppService,ConfirmationDialogModalComponent,NgbModal} from '../../import/index'
+import {AppService,Router,ConfirmationDialogModalComponent,NgbModal} from '../../import/index'
 
 @Component({
   selector: 'app-users',

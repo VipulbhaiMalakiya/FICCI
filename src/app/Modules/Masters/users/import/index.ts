@@ -7,6 +7,7 @@ export  { UserService } from '../service/user.service';
 export  { ConfirmationDialogModalComponent } from 'src/app/Modules/shared/components/confirmation-dialog-modal/confirmation-dialog-modal.component';
 export  { Roles } from '../interface/role';
 export { AppService } from 'src/app/services/excel.service';
+export { Router } from '@angular/router';
 
 export const DEFAULT_ROLE_LIST:Roles[]  = [
   { id: 1, role_Name: 'Employee' },
