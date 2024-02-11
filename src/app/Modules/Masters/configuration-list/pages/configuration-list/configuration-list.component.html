@@ -43,46 +43,51 @@
     </div>
 
   </form>
-  <div class="analdrop1" *ngIf="publicVariable.data && publicVariable.data.length > 0">
-    <label>Export Data</label>
-    <button (click)="onDownload()" class="gray-btns" type="button"><i class="las la-file-export"></i> Download</button>
-  </div>
-  <input *ngIf="publicVariable.data && publicVariable.data.length > 0" type="text" [(ngModel)]="publicVariable.searchText" placeholder="Search by code or category">
+  <ng-container *ngIf="publicVariable.data && publicVariable.data.length > 0">
+    <div class="analdrop1">
+      <label>Export Data</label>
+      <button (click)="onDownload()" class="gray-btns" type="button"><i class="las la-file-export"></i> Download</button>
+    </div>
+    <input type="text" [(ngModel)]="publicVariable.searchText" placeholder="Search by code or category">
 
-  <div *ngIf="publicVariable.data && publicVariable.data.length > 0">
     <label for="itemsPerPageSelect">Items Per Page:</label>
     <select id="itemsPerPageSelect" [(ngModel)]="publicVariable.tableSize" (change)="onTableSizeChange($event)">
       <option *ngFor="let size of publicVariable.tableSizes" [value]="size">{{ size }}</option>
     </select>
-  </div>
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        <th>Code</th>
-        <th>Value</th>
-        <th>Category</th>
-        <th>IsActive</th>
-        <th>Action</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let item of publicVariable.data| searchFilter: publicVariable.searchText | paginate: {itemsPerPage: publicVariable.tableSize,currentPage: publicVariable.page,totalItems: publicVariable.count};let i = index;trackBy: utilityService.trackById">
-        <td>{{ item.c_Code }}</td>
-        <td>{{ item.c_Value | titlecase}}</td>
-        <td>{{ item.category_Name | titlecase}}</td>
-        <td>{{ item.isActive }}</td>
-        <td> <button class="btn btn-warning" (click)="onEdit(item)">Edit</button>
-          <button class="btn btn-danger ml-2" (click)="onDelete(item.c_ID)">Delete</button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-  <div *ngIf="!publicVariable.data || publicVariable.data.length === 0  ">
+
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Code</th>
+          <th>Value</th>
+          <th>Category</th>
+          <th>IsActive</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of publicVariable.data | searchFilter: publicVariable.searchText | paginate: {itemsPerPage: publicVariable.tableSize, currentPage: publicVariable.page, totalItems: publicVariable.count}; let i = index; trackBy: utilityService.trackById">
+          <td>{{ item.c_Code }}</td>
+          <td>{{ item.c_Value | titlecase }}</td>
+          <td>{{ item.category_Name | titlecase }}</td>
+          <td>{{ item.isActive }}</td>
+          <td>
+            <button class="btn btn-warning" (click)="onEdit(item)">Edit</button>
+            <button class="btn btn-danger ml-2" (click)="onDelete(item.c_ID)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </ng-container>
+
+  <!-- <div *ngIf="!publicVariable.data || publicVariable.data.length === 0">
     <p>No data found.</p>
-  </div>
+  </div> -->
+
   <div class="text-center" *ngIf="(publicVariable.data | searchFilter: publicVariable.searchText).length === 0 && publicVariable.data.length > 0">
-    <Strong class="text-danger"> No results found.</Strong>
+    <strong class="text-danger">No results found.</strong>
   </div>
+
   <div class="d-flex justify-content-center" *ngIf="publicVariable.data && publicVariable.data.length > 0">
     <pagination-controls
       previousLabel="Prev"
@@ -91,4 +96,5 @@
     >
     </pagination-controls>
   </div>
+
 </div>
