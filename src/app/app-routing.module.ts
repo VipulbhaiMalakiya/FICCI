@@ -9,7 +9,8 @@ const sidebarLayoutRoutes = [
     component: SidebarLayoutComponent,
     children: [
       { path: 'configuration-list', loadChildren: () => import('./Modules/Masters/configuration-list/configuration-list.module').then(m => m.ConfigurationListModule) },
-      { path: 'users', loadChildren: () => import('./Modules/Masters/users/users.module').then(m => m.UsersModule) }
+      { path: 'users', loadChildren: () => import('./Modules/Masters/users/users.module').then(m => m.UsersModule) },
+      { path: 'new-customer', loadChildren: () => import('./Modules/customers/customers.module').then(m => m.CustomersModule) }
     ]
   }
 ];
@@ -23,7 +24,7 @@ const routes: Routes = [
 
   { path: 'masters', children: sidebarLayoutRoutes },
   { path: 'customer', children: sidebarLayoutRoutes },
-  { path: 'invoice', children: sidebarLayoutRoutes }
+  { path: 'invoice', children: sidebarLayoutRoutes },
 ];
 
 @NgModule({
