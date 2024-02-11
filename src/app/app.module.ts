@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { ToastrModule } from 'ngx-toastr';
-
 import {AppComponent,BrowserModule,AppRoutingModule,HttpClientModule,BrowserAnimationsModule,FormsModule, ReactiveFormsModule } from './import/app'
 @NgModule({
   declarations: [
