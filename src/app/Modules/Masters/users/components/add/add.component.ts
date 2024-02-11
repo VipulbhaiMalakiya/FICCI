@@ -1,18 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ToastrService } from 'ngx-toastr';
-import { UserService } from '../../service/user.service';
-import { ConfirmationDialogModalComponent } from 'src/app/Modules/shared/components/confirmation-dialog-modal/confirmation-dialog-modal.component';
-import { Roles } from '../../interface/role';
-import { ActivatedRoute } from '@angular/router';
-
-const DEFAULT_ROLE_LIST = [
-  { id: 1, role_Name: 'Employee' },
-  { id: 2, role_Name: 'Approver' },
-  { id: 3, role_Name: 'Accounts' },
-  { id: 4, role_Name: 'Admin' }
-];
+import { Roles,DEFAULT_ROLE_LIST,UserService,ConfirmationDialogModalComponent,ToastrService,NgbModal,FormBuilder, FormGroup, Validators } from '../../import/index';
 
 @Component({
   selector: 'app-add',
