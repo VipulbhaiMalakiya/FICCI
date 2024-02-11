@@ -4,11 +4,11 @@
   </button>
   <div *ngIf="data && data.length > 0">
     <label for="itemsPerPageSelect">Items Per Page:</label>
-    <select id="itemsPerPageSelect" [(ngModel)]="tableSize" (change)="onTableSizeChange($event)">
-      <option *ngFor="let size of tableSizes" [value]="size">{{ size }}</option>
+    <select id="itemsPerPageSelect" [(ngModel)]="publicVariable.tableSize" (change)="onTableSizeChange($event)">
+      <option *ngFor="let size of publicVariable.tableSizes" [value]="size">{{ size }}</option>
     </select>
   </div>
-  <input *ngIf="data && data.length > 0" type="text" [(ngModel)]="searchText" placeholder="Search by name or email">
+  <input *ngIf="data && data.length > 0" type="text" [(ngModel)]="publicVariable.searchText" placeholder="Search by name or email">
   <div class="analdrop1" *ngIf="data && data.length > 0">
     <label>Export Data</label>
     <button (click)="onDownload()" class="gray-btns" type="button"><i class="las la-file-export"></i> Download</button>
@@ -28,7 +28,7 @@
     </thead>
     <tbody>
       <tr
-        *ngFor="let user of data | searchFilter: searchText| paginate: {itemsPerPage: tableSize,currentPage: page,totalItems: count};let i = index">
+        *ngFor="let user of data | searchFilter: publicVariable.searchText| paginate: {itemsPerPage: publicVariable.tableSize,currentPage: publicVariable.page,totalItems: publicVariable.count};let i = index">
         <td>{{i + 1}}</td>
         <td>{{ user.employeeId }}</td>
         <td>{{ user.userName }}</td>

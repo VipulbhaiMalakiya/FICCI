@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {AppService,Router,ConfirmationDialogModalComponent,NgbModal} from '../../import/index'
+import {AppService,publicVariable,Router,ConfirmationDialogModalComponent,NgbModal} from '../../import/index'
 
 @Component({
   selector: 'app-users',
@@ -7,12 +7,9 @@ import {AppService,Router,ConfirmationDialogModalComponent,NgbModal} from '../..
   styleUrls: ['./users.component.css']
 })
 export class UsersComponent implements OnInit{
+  publicVariable = new publicVariable();
 
-  page: number = 1;
-  count: number = 0;
-  tableSize: number = 10;
-  tableSizes: number[] = [10,20,50,100]; // You can adjust these values as needed
-  searchText: string = '';
+
 
   constructor(    private appService: AppService,
     private modalService: NgbModal,
@@ -27,12 +24,12 @@ export class UsersComponent implements OnInit{
     this.addDummyRecords();
   }
   onTableDataChange(event: any) {
-    this.page = event;
+    this.publicVariable.page = event;
     this.data;
   }
   onTableSizeChange(event: any): void {
-    this.tableSize = event.target.value;
-    this.page = 1;
+    this.publicVariable.tableSize = event.target.value;
+    this.publicVariable.page = 1;
     this.data;
 
   }
