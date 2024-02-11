@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ConfirmationDialogModalComponent } from 'src/app/Modules/shared/components/confirmation-dialog-modal/confirmation-dialog-modal.component';
-import { AppService } from 'src/app/services/excel.service';
+
+import {AppService,ConfirmationDialogModalComponent,NgbModal} from '../../import/index'
 
 @Component({
   selector: 'app-users',
