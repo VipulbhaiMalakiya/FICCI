@@ -102,7 +102,7 @@ export class ConfigurationListComponent implements OnInit, OnDestroy {
         c_Code: newData.c_Code.trim(),
         c_Value: newData.c_Value.trim(),
         categoryID: newData.categoryID,
-        user: "user1",
+        user: "user1".trim(),
         isactive: !!newData.isActive
       };
       const successMessage = isUpdate ? 'Data updated successfully.' : 'Data created successfully.';
