@@ -26,6 +26,7 @@ export class publicVariable {
   dataForm!: FormGroup;
   isEdit: boolean = false;
   page: number = 1;
+  roleId:any;
   count: number = 0;
   tableSize: number = 10;
   employeeList : Employees[] = []

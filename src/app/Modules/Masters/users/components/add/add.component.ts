@@ -32,9 +32,9 @@ export class AddComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.patchFormWithData();
-    this.loadEmpoyeeList();
     this.getRoles();
+    this.loadEmpoyeeList();
+    this.patchFormWithData();
   }
   onSelectEmployee() {
     const selectedId = this.publicVariable.dataForm.get('empId')?.value;
@@ -57,27 +57,6 @@ export class AddComponent implements OnInit {
   }
 
 
-  onEdit(data: any) {
-
-    this.publicVariable.isEdit = true;
-    let isActiveValue;
-    if (data.isActive === true || data.isActive === 'Yes') {
-      isActiveValue = true;
-    }
-    else {
-      isActiveValue = false;
-    }
-    this.publicVariable.dataForm.patchValue({
-      empId: data.imeM_EmpId,
-      username: data.imeM_Username,
-      name: data.imeM_Name,
-      email: data.imeM_Email,
-      roleId: data.roleName,
-      isActive: isActiveValue,
-      id: data.imeM_ID
-    });
-
-  }
 
   onDelete(id: number) {
     const modalRef = this.modalService.open(ConfirmationDialogModalComponent, { size: "sm", centered: true, backdrop: "static" });
@@ -135,6 +114,87 @@ export class AddComponent implements OnInit {
 
   }
 
+
+
+  // Method to fetch roles
+
+  getRoles() {
+    this.API.getRoles().subscribe({
+      next: (data: any) => {
+        this.publicVariable.roles = data.data.map((role: { roleName: string }) => ({
+          ...role,
+        }));
+        this.cdr.detectChanges();
+      },
+      error: (error: any) => {
+        this.publicVariable.roles = DEFAULT_ROLE_LIST; // Assuming DEFAULT_ROLE_LIST is defined somewhere
+      }
+    });
+  }
+
+  getRolesAndFindRoleId(roleNameToFind: string): void {
+    this.API.getRoles().subscribe({
+      next: (data: any) => {
+        this.publicVariable.roles = data.data.map((role: { roleName: string, role_id: number }) => ({
+          ...role,
+        }));
+        const roleId = this.getRoleIdFromRoleName(roleNameToFind);
+        this.cdr.detectChanges();
+
+      },
+      error: (error: any) => {
+        this.publicVariable.roles = DEFAULT_ROLE_LIST; // Assuming DEFAULT_ROLE_LIST is defined somewhere
+      }
+    });
+  }
+
+  getRoleIdFromRoleName(roleName: string): number | undefined {
+    const role = this.publicVariable.roles.find((r: any) => r.roleName === roleName);
+    this.cdr.detectChanges();
+    return role ? role.role_id : undefined;
+
+  }
+
+    // Method to Patch data edite time
+    patchFormWithData(): void {
+      this.publicVariable.userData = history.state.data;
+      if (this.publicVariable.userData) {
+        this.onEdit(this.publicVariable.userData);
+        this.cdr.detectChanges();
+
+      }
+    }
+
+  onEdit(data: any) {
+
+    this.publicVariable.isEdit = true;
+    let isActiveValue;
+    if (data.isActive === true || data.isActive === 'Yes') {
+      isActiveValue = true;
+    }
+    else {
+      isActiveValue = false;
+    }
+    if (!this.publicVariable.roles || this.publicVariable.roles.length === 0) {
+      this.getRolesAndFindRoleId(data.roleName);
+
+    } else {
+      this.publicVariable.roleId = this.getRoleIdFromRoleName(data.roleName);
+      this.cdr.detectChanges();
+
+    }
+    this.publicVariable.dataForm.patchValue({
+      empId: data.imeM_EmpId,
+      username: data.imeM_Username,
+      name: data.imeM_Name,
+      email: data.imeM_Email,
+      roleId: this.publicVariable.roleId,
+      isActive: isActiveValue,
+      id: data.imeM_ID
+    });
+
+  }
+
   // Method to fetch employess
 
   loadEmpoyeeList(): void {
@@ -156,27 +216,6 @@ export class AddComponent implements OnInit {
   }
 
 
-  // Method to fetch roles
-
-  getRoles() {
-    this.API.getRoles().subscribe({
-      next: (data: any) => {
-        this.publicVariable.roles = data.data;
-      },
-      error: (error: any) => {
-        this.publicVariable.roles = DEFAULT_ROLE_LIST; // Assuming DEFAULT_ROLE_LIST is defined somewhere
-      }
-    });
-  }
-
-  // Method to Patch data edite time
-  patchFormWithData(): void {
-    this.publicVariable.userData = history.state.data;
-    if (this.publicVariable.userData) {
-      this.onEdit(this.publicVariable.userData);
-    }
-  }
-
 
   //handleApiResponse
   handleApiResponse(res: any, successMessage: string): void {
@@ -195,6 +234,7 @@ export class AddComponent implements OnInit {
       this.publicVariable.Subscription.add(
         apiRequest.subscribe({
           next: (res: any) => {
+            this.publicVariable.userData = res.data
             this.handleApiResponse(res, successMessage);
           },
           error: (error: any) => {
