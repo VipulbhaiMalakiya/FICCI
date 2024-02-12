@@ -9,11 +9,11 @@ export interface Employees{
 
 export interface addUpdateEmployees{
   isUpdate:boolean;
-  id:number;
-  empId:string;
-  username:string;
-  name:string;
-  email:string;
+  imeM_ID:number;
+  imeM_EmpId:string;
+  imeM_Username:string;
+  imeM_Name:string;
+  imeM_Email:string;
   roleId:string;
   isActive:boolean;
 }

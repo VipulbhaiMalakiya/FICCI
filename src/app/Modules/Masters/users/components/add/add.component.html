@@ -5,7 +5,7 @@
         <label>Employee :</label>
         <input type="hidden" formControlName="id">
         <label for="employeeId">Select Employee:</label>
-        <ng-select [items]="publicVariable.employeeList" bindLabel="imeM_EmpId" bindValue="imeM_ID" placeholder="Select an employee"
+        <ng-select [items]="publicVariable.employeeList" bindLabel="imeM_EmpId" bindValue="imeM_EmpId" placeholder="Select an employee"
           formControlName="empId" (change)="onSelectEmployee()">
         </ng-select>
         <div *ngIf="shouldShowError('empId','required')" class="text-danger">This field is required

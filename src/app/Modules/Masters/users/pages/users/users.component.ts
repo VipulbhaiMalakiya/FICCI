@@ -62,8 +62,9 @@ export class UsersComponent implements OnInit{
       EmpId: x?.imeM_EmpId || '',
       Name: x?.imeM_Name || '',
       Username: x?.imeM_Username || '',
+      Email:x?.imeM_Email || '',
       Active:x?.isActive || '',
-      roleName:x?.roleName || ''
+      Role:x?.roleName || ''
     }));
 
     const headers = ['ID', 'Employee ID', 'Name', 'Email', 'Username','Active','Role'];

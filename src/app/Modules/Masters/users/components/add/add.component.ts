@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { publicVariable, DEFAULT_ROLE_LIST,addUpdateEmployees, UserService, ConfirmationDialogModalComponent, ToastrService, NgbModal, FormBuilder, FormGroup, Validators } from '../../import/index';
+import { publicVariable, DEFAULT_ROLE_LIST, addUpdateEmployees, UserService, ConfirmationDialogModalComponent, ToastrService, NgbModal, FormBuilder, FormGroup, Validators } from '../../import/index';
 
 @Component({
   selector: 'app-add',
@@ -38,7 +38,7 @@ export class AddComponent implements OnInit {
   onSelectEmployee() {
     const selectedId = this.publicVariable.dataForm.get('empId')?.value;
     if (selectedId) {
-      this.publicVariable.selectedEmployee = this.publicVariable.employeeList.find(employee => employee.imeM_ID == selectedId);
+      this.publicVariable.selectedEmployee = this.publicVariable.employeeList.find(employee => employee.imeM_EmpId == selectedId);
       if (this.publicVariable.selectedEmployee) {
         this.publicVariable.dataForm.patchValue({
           username: this.publicVariable.selectedEmployee.imeM_Username,
@@ -61,8 +61,8 @@ export class AddComponent implements OnInit {
     // const isActiveValue = data.active.toLowerCase() === 'yes' ? true : false;
     const roleId = this.findRoleId(data.roleName);
     this.publicVariable.dataForm.patchValue({
-      empId: parseInt(data.imeM_EmpId , 10),
-      username: data.imeM_Username || "Vipul Malakiya",
+      empId: parseInt(data.imeM_EmpId, 10),
+      username: data.imeM_Username ,
       name: data.imeM_Name,
       email: data.imeM_Email,
       roleId: roleId,
@@ -101,21 +101,25 @@ export class AddComponent implements OnInit {
     if (this.publicVariable.dataForm.valid) {
       //Check if a valid employee is selected
       const newData = this.publicVariable.dataForm.value;
+      console.log(newData.imeM_EmpId);
+
       const selectedId = newData.id;
       if (selectedId) {
         this.publicVariable.selectedEmployee = this.publicVariable.employeeList.find(employee => employee.imeM_ID == selectedId);
 
       }
+
+
       const isUpdate = !!newData.id;
       const newConfig: addUpdateEmployees = {
         isUpdate: isUpdate,
-        id: isUpdate ? newData.id : undefined,
-        empId: newData.empId,
-        username: this.publicVariable.selectedEmployee.imeM_Username,
-        name: this.publicVariable.selectedEmployee.imeM_Name,
-        email:this.publicVariable.selectedEmployee.imeM_Email,
-        roleId:newData.roleId,
-        isActive: !!newData.isActive
+        imeM_ID: isUpdate ? newData.id : undefined,
+        imeM_EmpId: newData.empId,
+        imeM_Username: this.publicVariable.selectedEmployee.imeM_Username,
+        imeM_Name: this.publicVariable.selectedEmployee.imeM_Name,
+        imeM_Email: this.publicVariable.selectedEmployee.imeM_Email,
+        roleId: newData.roleId,
+        isActive: newData.isActive
       };
 
       const successMessage = isUpdate ? 'Data updated successfully.' : 'Data created successfully.';
@@ -174,11 +178,16 @@ export class AddComponent implements OnInit {
   }
 
   //Fine role name to roleId
+
+
   findRoleId(roleName: string): number | undefined {
-    const trimmedRoleName = roleName;
-    const role = DEFAULT_ROLE_LIST.find(role => role.roleName === trimmedRoleName);
-    return role ? role.role_id : undefined;
-  }
+    const trimmedRoleName = roleName.trim(); // trim the roleName
+
+    const role = this.publicVariable.roles.find(role => role.roleName === trimmedRoleName);
+    console.log(role !== undefined ? role.role_id : undefined);
+
+    return role !== undefined ? role.role_id : undefined;
+}
 
   //handleApiResponse
   handleApiResponse(res: any, successMessage: string): void {
