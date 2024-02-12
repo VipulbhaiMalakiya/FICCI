@@ -61,11 +61,11 @@
     <tbody>
       <tr>
         <td>{{ publicVariable.userData.id }}</td>
-        <td>{{ publicVariable.userData.employeeId }}</td>
-        <td>{{ publicVariable.userData.userName }}</td>
+        <td>{{ publicVariable.userData.empId }}</td>
+        <td>{{ publicVariable.userData.username }}</td>
         <td>{{ publicVariable.userData.name }}</td>
         <td>{{ publicVariable.userData.email }}</td>
-        <td>{{ publicVariable.userData.role }}</td>
+        <td>{{ publicVariable.userData.roleId }}</td>
         <td>{{ publicVariable.userData.active }}</td>
         <td> <button class="btn btn-warning" (click)="onEdit(publicVariable.userData)">Edit</button>
           <button class="btn btn-danger ml-2" (click)="onDelete(publicVariable.userData.id)">Delete</button>

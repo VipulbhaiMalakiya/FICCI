@@ -25,7 +25,7 @@ export class AddComponent implements OnInit {
       username: [{ value: '', disabled: true }, Validators.required],
       name: [{ value: '', disabled: true }, Validators.required],
       email: [{ value: '', disabled: true }, [Validators.required, Validators.email]],
-      isActive: [false] // Assuming default value is true
+      isActive: [true] // Assuming default value is true
     });
   }
 
@@ -119,8 +119,7 @@ export class AddComponent implements OnInit {
       const successMessage = isUpdate ? 'Data updated successfully.' : 'Data created successfully.';
       this.API.create(newConfig).subscribe({
         next: (res: any) => {
-          this.toastr.success(successMessage || res.message , 'Success');
-          this.publicVariable.dataForm.reset();
+          this.handleApiRequest(this.API.create(newConfig), successMessage, 'Error submitting data:');
         },
         error: (error) => {
           this.toastr.error(error.error.message || 'An error occurred. Please try again later.', 'Error');
@@ -183,7 +182,9 @@ export class AddComponent implements OnInit {
   handleApiResponse(res: any, successMessage: string): void {
     if (res.status === true) {
       this.toastr.success(successMessage, 'Success');
-      // this.loadConfiguration();
+      this.publicVariable.userData = res.data;
+      console.log(this.publicVariable);
+
       this.publicVariable.dataForm.reset();
     } else {
       this.toastr.error(res.message, 'Error');
