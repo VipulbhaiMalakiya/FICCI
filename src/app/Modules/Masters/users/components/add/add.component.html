@@ -2,13 +2,13 @@
   <form [formGroup]="publicVariable.dataForm" (ngSubmit)="onSubmit()">
     <div class="row">
       <div class="col-md-4 mb-3">
-        <label>Employee ID:</label>
+        <label>Employee :</label>
         <input type="hidden" formControlName="id">
         <label for="employeeId">Select Employee:</label>
         <ng-select [items]="publicVariable.employeeList" bindLabel="imeM_EmpId" bindValue="imeM_ID" placeholder="Select an employee"
-          formControlName="employeeId" (change)="onSelectEmployee()">
+          formControlName="empId" (change)="onSelectEmployee()">
         </ng-select>
-        <div *ngIf="shouldShowError('employeeId','required')" class="text-danger">This field is required
+        <div *ngIf="shouldShowError('empId','required')" class="text-danger">This field is required
         </div>
       </div>
       <div class="col-md-4 mb-3">
@@ -31,9 +31,9 @@
       </div>
       <div class="col-md-4 mb-3">
         <label>Role:</label>
-        <ng-select [items]="publicVariable.roles" formControlName="role" [bindLabel]="'roleName'" [bindValue]="'role_id'" placeholder="Select Role"></ng-select>
+        <ng-select [items]="publicVariable.roles" formControlName="roleId" [bindLabel]="'roleName'" [bindValue]="'role_id'" placeholder="Select Role"></ng-select>
 
-        <div *ngIf="shouldShowError('role','required')" class="text-danger">This field is required
+        <div *ngIf="shouldShowError('roleId','required')" class="text-danger">This field is required
         </div>
       </div>
       <div class="col-md-1">

@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { publicVariable, DEFAULT_ROLE_LIST, UserService, ConfirmationDialogModalComponent, ToastrService, NgbModal, FormBuilder, FormGroup, Validators } from '../../import/index';
+import { publicVariable, DEFAULT_ROLE_LIST,addUpdateEmployees, UserService, ConfirmationDialogModalComponent, ToastrService, NgbModal, FormBuilder, FormGroup, Validators } from '../../import/index';
 
 @Component({
   selector: 'app-add',
@@ -20,8 +20,8 @@ export class AddComponent implements OnInit {
   private initializeForm(): void {
     this.publicVariable.dataForm = this.fb.group({
       id: [''],
-      employeeId: [null, Validators.required],
-      role: [, Validators.required],
+      empId: [null, Validators.required],
+      roleId: [, Validators.required],
       username: [{ value: '', disabled: true }, Validators.required],
       name: [{ value: '', disabled: true }, Validators.required],
       email: [{ value: '', disabled: true }, [Validators.required, Validators.email]],
@@ -36,7 +36,7 @@ export class AddComponent implements OnInit {
     this.getRoles();
   }
   onSelectEmployee() {
-    const selectedId = this.publicVariable.dataForm.get('employeeId')?.value;
+    const selectedId = this.publicVariable.dataForm.get('empId')?.value;
     //Check if a valid employee is selected
     if (selectedId) {
       this.publicVariable.selectedEmployee = this.publicVariable.employeeList.find(employee => employee.imeM_ID == selectedId);
@@ -64,8 +64,8 @@ export class AddComponent implements OnInit {
     const isActiveValue = data.active.toLowerCase() === 'yes' ? true : false;
     const roleId = this.findRoleId(data.role);
     this.publicVariable.dataForm.patchValue({
-      employeeId: data.employeeId,
-      username: data.userName,
+      empId: data.empId,
+      username: data.username,
       name: data.name,
       email: data.email,
       role: roleId,
@@ -99,29 +99,33 @@ export class AddComponent implements OnInit {
 
   onSubmit() {
     if (this.publicVariable.dataForm.valid) {
+      //Check if a valid employee is selected
       const newData = this.publicVariable.dataForm.value;
+      const selectedId = newData.id;
+      if (selectedId) {
+        this.publicVariable.selectedEmployee = this.publicVariable.employeeList.find(employee => employee.imeM_ID == selectedId);
+      }
       const isUpdate = !!newData.id;
-      const newConfig: any = {
+      const newConfig: addUpdateEmployees = {
         isUpdate: isUpdate,
         id: isUpdate ? newData.id : undefined,
-        employeeId: newData.employeeId,
-        role: newData.role,
-        isActive: newData.isActive,
-        user: "user1",
-        isactive: !!newData.isActive
+        empId: newData.empId,
+        username: this.publicVariable.selectedEmployee.imeM_Username,
+        name: this.publicVariable.selectedEmployee.imeM_Name,
+        email: this.publicVariable.selectedEmployee.imeM_Email,
+        roleId:newData.roleId,
+        isActive: !!newData.isActive
       };
-
       const successMessage = isUpdate ? 'Data updated successfully.' : 'Data created successfully.';
-      // this.API.create(newConfig).subscribe({
-      //   next: (res: any) => {
-      //     this.toastr.success(successMessage || res.message , 'Success');
-      //     this.loadConfiguration();
-      //     this.dataForm.reset();
-      //   },
-      //   error: (error) => {
-      //     this.toastr.error(error.error.message || 'An error occurred. Please try again later.', 'Error');
-      //   }
-      // });
+      this.API.create(newConfig).subscribe({
+        next: (res: any) => {
+          this.toastr.success(successMessage || res.message , 'Success');
+          this.publicVariable.dataForm.reset();
+        },
+        error: (error) => {
+          this.toastr.error(error.error.message || 'An error occurred. Please try again later.', 'Error');
+        }
+      });
     } else {
       this.markFormControlsAsTouched();
     }
@@ -135,7 +139,7 @@ export class AddComponent implements OnInit {
       this.publicVariable.Subscription.add(
         this.API.getEmployee().subscribe({
           next: (response: any) => {
-            this.publicVariable.employeeList = response.employees
+            this.publicVariable.employeeList = response.data
             this.cdr.detectChanges();
           },
           error: () => {
@@ -152,7 +156,7 @@ export class AddComponent implements OnInit {
   getRoles() {
     this.API.getRoles().subscribe({
       next: (data: any) => {
-        this.publicVariable.roles = data.roles;
+        this.publicVariable.roles = data.data;
       },
       error: (error: any) => {
         this.publicVariable.roles = DEFAULT_ROLE_LIST; // Assuming DEFAULT_ROLE_LIST is defined somewhere
@@ -206,7 +210,7 @@ export class AddComponent implements OnInit {
   }
   //Filed Define to show error in sumit time
   markFormControlsAsTouched(): void {
-    ['employeeId', 'username', 'name', 'email', 'role'].forEach(controlName => {
+    ['empId', 'username', 'name', 'email', 'role'].forEach(controlName => {
       this.publicVariable.dataForm.controls[controlName].markAsTouched();
     });
   }

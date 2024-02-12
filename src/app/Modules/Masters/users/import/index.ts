@@ -2,6 +2,7 @@ import { FormGroup } from '@angular/forms';
 import { Roles } from '../interface/role';
 import { Subscription } from 'rxjs';
 import { Employees } from '../interface/employee';
+export { Employees, addUpdateEmployees } from '../interface/employee';
 
 export  { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export  { NgbModal } from '@ng-bootstrap/ng-bootstrap';
