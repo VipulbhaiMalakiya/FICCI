@@ -45,25 +45,26 @@ export class AddComponent implements OnInit {
   onSelectEmployee() {
     const selectedId = this.publicVariable.dataForm.get('employeeId')?.value;
 
-    // Check if a valid employee is selected
-    // if (selectedId) {
-    //   this.publicVariable.selectedEmployee = this.employees.find(employee => employee.id == selectedId);
-    //   // Assign selected employee's properties to form controls
-    //   if (this.publicVariable.selectedEmployee) {
-    //     this.publicVariable.dataForm.patchValue({
-    //       username: this.publicVariable.selectedEmployee.username,
-    //       name: this.publicVariable.selectedEmployee.name,
-    //       email: this.publicVariable.selectedEmployee.email
-    //     });
-    //   }
-    // } else {
-    //   // Clear form values if no employee is selected
-    //   this.publicVariable.dataForm.patchValue({
-    //     username: null,
-    //     name: null,
-    //     email: null
-    //   });
-    // }
+
+    //Check if a valid employee is selected
+    if (selectedId) {
+      this.publicVariable.selectedEmployee = this.publicVariable.employeeList.find(employee => employee.imeM_ID == selectedId);
+      // Assign selected employee's properties to form controls
+      if (this.publicVariable.selectedEmployee) {
+        this.publicVariable.dataForm.patchValue({
+          username: this.publicVariable.selectedEmployee.imeM_Username,
+          name: this.publicVariable.selectedEmployee.imeM_Name,
+          email: this.publicVariable.selectedEmployee.imeM_Email
+        });
+      }
+    } else {
+      // Clear form values if no employee is selected
+      this.publicVariable.dataForm.patchValue({
+        username: null,
+        name: null,
+        email: null
+      });
+    }
   }
 
 
