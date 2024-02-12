@@ -14,13 +14,9 @@ export class AddComponent implements OnInit {
     private toastr: ToastrService,
     private API: UserService,
     private cdr: ChangeDetectorRef
-
-
   ) {
     this.initializeForm();
-
   }
-
   private initializeForm(): void {
     this.publicVariable.dataForm = this.fb.group({
       id: [''],
@@ -39,13 +35,8 @@ export class AddComponent implements OnInit {
     this.loadEmpoyeeList();
     this.getRoles();
   }
-
-
-
   onSelectEmployee() {
     const selectedId = this.publicVariable.dataForm.get('employeeId')?.value;
-
-
     //Check if a valid employee is selected
     if (selectedId) {
       this.publicVariable.selectedEmployee = this.publicVariable.employeeList.find(employee => employee.imeM_ID == selectedId);
