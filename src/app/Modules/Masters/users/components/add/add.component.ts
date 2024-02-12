@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Roles,publicVariable,DEFAULT_ROLE_LIST,UserService,ConfirmationDialogModalComponent,ToastrService,NgbModal,FormBuilder, FormGroup, Validators } from '../../import/index';
+import { Roles, publicVariable, DEFAULT_ROLE_LIST, UserService, ConfirmationDialogModalComponent, ToastrService, NgbModal, FormBuilder, FormGroup, Validators } from '../../import/index';
 
 @Component({
   selector: 'app-add',
@@ -24,6 +24,11 @@ export class AddComponent implements OnInit {
     private API: UserService,
 
   ) {
+    this.initializeForm();
+
+  }
+
+  private initializeForm(): void {
     this.publicVariable.dataForm = this.fb.group({
       id: [''],
       employeeId: [null, Validators.required],
@@ -35,32 +40,11 @@ export class AddComponent implements OnInit {
     });
   }
 
+
   ngOnInit(): void {
     this.getRoles();
     this.patchFormWithData();
   }
-
-  patchFormWithData(): void {
-     this.publicVariable.userData = history.state.data; // Assuming history.state.data contains user data
-
-    if (this.publicVariable.userData) {
-      this.onEdit(this.publicVariable.userData);
-    }
-
-  }
-
-  // Method to fetch roles
-  getRoles() {
-    this.API.getRoles().subscribe(
-      data => {
-        this.publicVariable.roles = data;
-      },
-      error => {
-        this.publicVariable.roles = DEFAULT_ROLE_LIST; // Assuming DEFAULT_ROLE_LIST is defined somewhere
-      }
-    );
-  }
-
   onSelectEmployee() {
     const selectedId = this.publicVariable.dataForm.get('employeeId')?.value;
 
@@ -85,11 +69,6 @@ export class AddComponent implements OnInit {
     }
   }
 
-  findRoleId(roleName: string): number | undefined {
-    const trimmedRoleName = roleName.trim().toLowerCase(); // Normalize role name
-    const role = DEFAULT_ROLE_LIST.find(role => role.role_Name.toLowerCase() === trimmedRoleName);
-    return role ? role.id : undefined;
-  }
 
   onEdit(data: any) {
     this.publicVariable.isEdit = true;
@@ -160,6 +139,34 @@ export class AddComponent implements OnInit {
 
   }
 
+  // Method to fetch roles
+  getRoles() {
+    this.API.getRoles().subscribe({
+      next: (data: any) => {
+        this.publicVariable.roles = data;
+      },
+      error: (error: any) => {
+        this.publicVariable.roles = DEFAULT_ROLE_LIST; // Assuming DEFAULT_ROLE_LIST is defined somewhere
+      }
+    });
+  }
+
+  // Method to Patch data edite time
+  patchFormWithData(): void {
+    this.publicVariable.userData = history.state.data; // Assuming history.state.data contains user data
+    if (this.publicVariable.userData) {
+      this.onEdit(this.publicVariable.userData);
+    }
+  }
+
+  //Fine role name to roleId
+  findRoleId(roleName: string): number | undefined {
+    const trimmedRoleName = roleName.trim().toLowerCase(); // Normalize role name
+    const role = DEFAULT_ROLE_LIST.find(role => role.role_Name.toLowerCase() === trimmedRoleName);
+    return role ? role.id : undefined;
+  }
+
+  //handleApiResponse
   handleApiResponse(res: any, successMessage: string): void {
     if (res.status === true) {
       this.toastr.success(successMessage, 'Success');
@@ -170,6 +177,7 @@ export class AddComponent implements OnInit {
     }
   }
 
+  //handleApiRequest
   handleApiRequest(apiRequest: any, successMessage: string, errorMessagePrefix: string): void {
     try {
       this.publicVariable.Subscription.add(
@@ -187,12 +195,14 @@ export class AddComponent implements OnInit {
       this.toastr.error('Error handling API request', 'Error');
     }
   }
+  //Filed Define to show error in sumit time
   markFormControlsAsTouched(): void {
     ['employeeId', 'username', 'name', 'email', 'role'].forEach(controlName => {
       this.publicVariable.dataForm.controls[controlName].markAsTouched();
     });
   }
 
+  //Error Function
   shouldShowError(controlName: string, errorName: string) {
     return this.publicVariable.dataForm.controls[controlName].touched && this.publicVariable.dataForm.controls[controlName].hasError(errorName);
   }
