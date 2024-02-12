@@ -1,5 +1,6 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { publicVariable, DEFAULT_ROLE_LIST, addUpdateEmployees, UserService, ConfirmationDialogModalComponent, ToastrService, NgbModal, FormBuilder, FormGroup, Validators, Router } from '../../import/index';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-add',
@@ -8,12 +9,14 @@ import { publicVariable, DEFAULT_ROLE_LIST, addUpdateEmployees, UserService, Con
 })
 export class AddComponent implements OnInit {
   publicVariable = new publicVariable();
+  userId!: number;
   constructor(private fb: FormBuilder,
     private modalService: NgbModal,
     private toastr: ToastrService,
     private API: UserService,
     private cdr: ChangeDetectorRef,
     private router: Router,
+    private route: ActivatedRoute
 
   ) {
     this.initializeForm();
@@ -34,7 +37,25 @@ export class AddComponent implements OnInit {
   ngOnInit(): void {
     this.getRoles();
     this.loadEmpoyeeList();
-    this.patchFormWithData();
+    this.route.paramMap.subscribe(params => {
+      if (params && params.get('id')) {
+        this.userId = +params.get('id')!;
+        this.fetchUserData(this.userId);
+      }
+    });
+
+  }
+
+  fetchUserData(userId: number): void {
+    this.API.getUserById(userId).subscribe(data => {
+      this.publicVariable.userData = data.data[0];
+      // Store the fetched user data
+      if (this.publicVariable.userData) {
+        this.onEdit(this.publicVariable.userData);
+        this.cdr.detectChanges();
+
+      }
+    });
   }
   onSelectEmployee() {
     const selectedId = this.publicVariable.dataForm.get('empId')?.value;
@@ -55,8 +76,6 @@ export class AddComponent implements OnInit {
       });
     }
   }
-
-
 
   onDelete(id: number) {
     const modalRef = this.modalService.open(ConfirmationDialogModalComponent, { size: "sm", centered: true, backdrop: "static" });
@@ -79,14 +98,11 @@ export class AddComponent implements OnInit {
 
   }
 
-
   onSubmit() {
 
     if (this.publicVariable.dataForm.valid) {
       //Check if a valid employee is selected
       const newData = this.publicVariable.dataForm.value;
-      console.log(newData);
-
       const isUpdate = !!newData.id;
       const newConfig: addUpdateEmployees = {
         isUpdate: isUpdate,
@@ -113,8 +129,6 @@ export class AddComponent implements OnInit {
     }
 
   }
-
-
 
   // Method to fetch roles
 
@@ -155,18 +169,7 @@ export class AddComponent implements OnInit {
 
   }
 
-    // Method to Patch data edite time
-    patchFormWithData(): void {
-      this.publicVariable.userData = history.state.data;
-      if (this.publicVariable.userData) {
-        this.onEdit(this.publicVariable.userData);
-        this.cdr.detectChanges();
-
-      }
-    }
-
   onEdit(data: any) {
-
     this.publicVariable.isEdit = true;
     let isActiveValue;
     if (data.isActive === true || data.isActive === 'Yes') {
@@ -214,8 +217,6 @@ export class AddComponent implements OnInit {
       console.error('Error loading category list:', error);
     }
   }
-
-
 
   //handleApiResponse
   handleApiResponse(res: any, successMessage: string): void {

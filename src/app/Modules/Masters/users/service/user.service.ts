@@ -20,6 +20,9 @@ export class UserService {
   public getRoles(): Observable<any[]> {
     return this.http.get<any[]>(`${this.RolesList}`).pipe(this.retry);
   }
+  getUserById(userId: number): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}?IMEM_ID=${userId}`);
+  }
   getEmployee(): Observable<any[]> {
     return this.http.get<any[]>(`${this.EmployeeList}`).pipe(this.retry);
   }
