@@ -61,11 +61,11 @@ export class AddComponent implements OnInit {
 
     this.publicVariable.isEdit = true;
     let isActiveValue;
-    if(data.isActive === true ||  data.isActive === 'Yes'){
-      isActiveValue  = true;
+    if (data.isActive === true || data.isActive === 'Yes') {
+      isActiveValue = true;
     }
-    else{
-      isActiveValue  = false;
+    else {
+      isActiveValue = false;
     }
     this.publicVariable.dataForm.patchValue({
       empId: data.imeM_EmpId,
