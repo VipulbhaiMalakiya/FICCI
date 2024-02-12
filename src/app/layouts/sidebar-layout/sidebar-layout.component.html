@@ -1,6 +1,3 @@
-
-
-
 <div class="outer-bg">
 
   <header class="main-header">
@@ -50,13 +47,13 @@
               <div id="accordion">
 
                 <div class="left-men">
-                  <h3><a href="#"><img src="../assets/images/dashboard-icon.png" alt=""> Dashboard</a></h3>
+                  <h3><a routerLink=""><img src="../assets/images/dashboard-icon.png" alt=""> Dashboard</a></h3>
                 </div>
 
-                <div class="left-men active">
-                  <h3><img src="../assets/images/master-icon.png" alt=""> Masters</h3>
-                  <a href="#" class="menu-list-title">Configuration List</a>
-                  <a href="#" class="menu-list-title">User Master</a>
+                <div class="left-men" routerLinkActive="active">
+                  <h3><img src="../assets/images/master-icon.png" alt="" > Masters</h3>
+                  <a routerLink="/masters/configuration-list" class="menu-list-title" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Configuration List</a>
+                  <a routerLink="/masters/users" class="menu-list-title" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">User Master</a>
                 </div>
 
                 <div class="left-men">
