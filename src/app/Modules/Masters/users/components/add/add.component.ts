@@ -21,7 +21,7 @@ export class AddComponent implements OnInit {
     this.publicVariable.dataForm = this.fb.group({
       id: [''],
       empId: [null, Validators.required],
-      roleId: [, Validators.required],
+      roleId: [null, Validators.required],
       username: [{ value: '', disabled: true }, Validators.required],
       name: [{ value: '', disabled: true }, Validators.required],
       email: [{ value: '', disabled: true }, [Validators.required, Validators.email]],
@@ -37,10 +37,8 @@ export class AddComponent implements OnInit {
   }
   onSelectEmployee() {
     const selectedId = this.publicVariable.dataForm.get('empId')?.value;
-    //Check if a valid employee is selected
     if (selectedId) {
       this.publicVariable.selectedEmployee = this.publicVariable.employeeList.find(employee => employee.imeM_ID == selectedId);
-      // Assign selected employee's properties to form controls
       if (this.publicVariable.selectedEmployee) {
         this.publicVariable.dataForm.patchValue({
           username: this.publicVariable.selectedEmployee.imeM_Username,
@@ -49,7 +47,6 @@ export class AddComponent implements OnInit {
         });
       }
     } else {
-      // Clear form values if no employee is selected
       this.publicVariable.dataForm.patchValue({
         username: null,
         name: null,
@@ -61,18 +58,20 @@ export class AddComponent implements OnInit {
 
   onEdit(data: any) {
     this.publicVariable.isEdit = true;
-    const isActiveValue = data.active.toLowerCase() === 'yes' ? true : false;
-    const roleId = this.findRoleId(data.role);
+    // const isActiveValue = data.active.toLowerCase() === 'yes' ? true : false;
+    const roleId = this.findRoleId(data.roleName);
     this.publicVariable.dataForm.patchValue({
-      empId: data.empId,
-      username: data.username,
-      name: data.name,
-      email: data.email,
-      role: roleId,
-      isActive: isActiveValue,
+      empId: parseInt(data.imeM_EmpId , 10),
+      username: data.imeM_Username || "Vipul Malakiya",
+      name: data.imeM_Name,
+      email: data.imeM_Email,
+      roleId: roleId,
+      isActive: true,
       id: data.id
     });
+
   }
+
 
   onDelete(id: number) {
     const modalRef = this.modalService.open(ConfirmationDialogModalComponent, { size: "sm", centered: true, backdrop: "static" });
@@ -98,12 +97,14 @@ export class AddComponent implements OnInit {
 
 
   onSubmit() {
+
     if (this.publicVariable.dataForm.valid) {
       //Check if a valid employee is selected
       const newData = this.publicVariable.dataForm.value;
       const selectedId = newData.id;
       if (selectedId) {
         this.publicVariable.selectedEmployee = this.publicVariable.employeeList.find(employee => employee.imeM_ID == selectedId);
+
       }
       const isUpdate = !!newData.id;
       const newConfig: addUpdateEmployees = {
@@ -112,10 +113,11 @@ export class AddComponent implements OnInit {
         empId: newData.empId,
         username: this.publicVariable.selectedEmployee.imeM_Username,
         name: this.publicVariable.selectedEmployee.imeM_Name,
-        email: this.publicVariable.selectedEmployee.imeM_Email,
+        email:this.publicVariable.selectedEmployee.imeM_Email,
         roleId:newData.roleId,
         isActive: !!newData.isActive
       };
+
       const successMessage = isUpdate ? 'Data updated successfully.' : 'Data created successfully.';
       this.API.create(newConfig).subscribe({
         next: (res: any) => {
@@ -165,7 +167,7 @@ export class AddComponent implements OnInit {
 
   // Method to Patch data edite time
   patchFormWithData(): void {
-    this.publicVariable.userData = history.state.data; // Assuming history.state.data contains user data
+    this.publicVariable.userData = history.state.data;
     if (this.publicVariable.userData) {
       this.onEdit(this.publicVariable.userData);
     }
@@ -173,8 +175,8 @@ export class AddComponent implements OnInit {
 
   //Fine role name to roleId
   findRoleId(roleName: string): number | undefined {
-    const trimmedRoleName = roleName.trim().toLowerCase(); // Normalize role name
-    const role = DEFAULT_ROLE_LIST.find(role => role.roleName.toLowerCase() === trimmedRoleName);
+    const trimmedRoleName = roleName;
+    const role = DEFAULT_ROLE_LIST.find(role => role.roleName === trimmedRoleName);
     return role ? role.role_id : undefined;
   }
 

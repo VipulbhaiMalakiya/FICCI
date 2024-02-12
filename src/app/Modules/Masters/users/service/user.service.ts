@@ -33,4 +33,8 @@ export class UserService {
     return this.http.post<addUpdateConfiguration>(`${this.apiUrl}`, data).pipe(this.retry);
   }
 
+  delete(id: number): Observable<any> {
+    return this.http.delete<any>(`${this.apiUrl}?id=${id}`).pipe(this.retry);
+  }
+
 }

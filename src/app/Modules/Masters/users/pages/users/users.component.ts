@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import {AppService,publicVariable,Router,ConfirmationDialogModalComponent,NgbModal, UserService} from '../../import/index'
+import {AppService,publicVariable,Router,ConfirmationDialogModalComponent,NgbModal, UserService, ToastrService} from '../../import/index'
 
 @Component({
   selector: 'app-users',
@@ -15,7 +15,9 @@ export class UsersComponent implements OnInit{
     private modalService: NgbModal,
     private router: Router,
     private API: UserService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private toastr: ToastrService,
+
     ){
 
   }
@@ -77,15 +79,15 @@ export class UsersComponent implements OnInit{
     componentInstance.message = "Are you sure you want to delete this ?";
     modalRef.result.then((canDelete: boolean) => {
       if (canDelete) {
-        // this.API.delete(id).subscribe({
-        //   next: (res: any) => {
-        //     this.toastr.success(res.message, 'Success');
-        //     this.loadConfiguration();
-        //   },
-        //   error: (error) => {
-        //     this.toastr.error(error.error.message, 'Error');
-        //   }
-        // });
+        this.API.delete(id).subscribe({
+          next: (res: any) => {
+            this.toastr.success(res.message, 'Success');
+            this.loadUserList();
+          },
+          error: (error) => {
+            this.toastr.error(error.error.message, 'Error');
+          }
+        });
 
       }
     }).catch(() => { });
@@ -93,8 +95,11 @@ export class UsersComponent implements OnInit{
   }
 
   onEdit(user: any): void {
-    this.router.navigate(['masters/users/edit', user.id], { state: { data: user } });
-
+    if (user.imeM_ID) {
+      this.router.navigate(['masters/users/edit', user.imeM_ID], { state: { data: user } });
+    } else {
+      console.error('User ID is undefined or null');
+    }
   }
 
 }
