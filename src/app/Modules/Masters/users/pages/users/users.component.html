@@ -43,6 +43,9 @@
       </tr>
     </tbody>
   </table>
+  <div class="text-center" *ngIf="(publicVariable.userlist | searchFilter: publicVariable.searchText).length === 0 && publicVariable.userlist.length > 0">
+    <strong class="text-danger">No results found.</strong>
+  </div>
   <div class="d-flex justify-content-center" *ngIf=" this.publicVariable.userlist &&  this.publicVariable.userlist.length > 0">
     <pagination-controls
       previousLabel="Prev"
