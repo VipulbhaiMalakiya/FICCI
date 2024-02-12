@@ -168,8 +168,6 @@ export class AddComponent implements OnInit {
   // Method to Patch data edite time
   patchFormWithData(): void {
     this.publicVariable.userData = history.state.data;
-    console.log(this.publicVariable.userData);
-
     if (this.publicVariable.userData) {
       this.onEdit(this.publicVariable.userData);
     }
