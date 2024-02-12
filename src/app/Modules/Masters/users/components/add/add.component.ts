@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { publicVariable, DEFAULT_ROLE_LIST, addUpdateEmployees, UserService, ConfirmationDialogModalComponent, ToastrService, NgbModal, FormBuilder, FormGroup, Validators } from '../../import/index';
+import { publicVariable, DEFAULT_ROLE_LIST, addUpdateEmployees, UserService, ConfirmationDialogModalComponent, ToastrService, NgbModal, FormBuilder, FormGroup, Validators, Router } from '../../import/index';
 
 @Component({
   selector: 'app-add',
@@ -12,7 +12,9 @@ export class AddComponent implements OnInit {
     private modalService: NgbModal,
     private toastr: ToastrService,
     private API: UserService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private router: Router,
+
   ) {
     this.initializeForm();
   }
@@ -59,16 +61,12 @@ export class AddComponent implements OnInit {
 
     this.publicVariable.isEdit = true;
     let isActiveValue;
-
     if(data.isActive === true ||  data.isActive === 'Yes'){
       isActiveValue  = true;
     }
-
     else{
       isActiveValue  = false;
     }
-
-
     this.publicVariable.dataForm.patchValue({
       empId: data.imeM_EmpId,
       username: data.imeM_Username,
@@ -81,23 +79,21 @@ export class AddComponent implements OnInit {
 
   }
 
-
   onDelete(id: number) {
     const modalRef = this.modalService.open(ConfirmationDialogModalComponent, { size: "sm", centered: true, backdrop: "static" });
     var componentInstance = modalRef.componentInstance as ConfirmationDialogModalComponent;
     componentInstance.message = "Are you sure you want to delete this ?";
     modalRef.result.then((canDelete: boolean) => {
       if (canDelete) {
-        // this.API.delete(id).subscribe({
-        //   next: (res: any) => {
-        //     this.toastr.success(res.message, 'Success');
-        //     this.loadConfiguration();
-        //   },
-        //   error: (error) => {
-        //     this.toastr.error(error.error.message, 'Error');
-        //   }
-        // });
-        this.publicVariable.dataForm.reset();
+        this.API.delete(id).subscribe({
+          next: (res: any) => {
+            this.toastr.success(res.message, 'Success');
+            this.router.navigate(['/masters/users']);
+          },
+          error: (error) => {
+            this.toastr.error(error.error.message, 'Error');
+          }
+        });
 
       }
     }).catch(() => { });
