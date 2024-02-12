@@ -1,7 +1,5 @@
 <div class="inner-content">
-
   <h3 class="content-title">Configuration List</h3>
-
   <div class="mastersform-sec">
     <form [formGroup]="publicVariable.dataForm" (ngSubmit)="onSubmit()">
       <div class="row">
@@ -47,8 +45,10 @@
         <div class="col-md-2 col-sm-6">
           <div class="form-group">
             <label>Active</label>
-            <input type="checkbox" id="isActive" formControlName="isActive">
-
+            <select id="isActive" formControlName="isActive" class="form-select">
+              <option [ngValue]="true">Yes</option>
+              <option [ngValue]="false">No</option>
+            </select>
           </div>
         </div>
         <div class="col-md-2 text-end">
