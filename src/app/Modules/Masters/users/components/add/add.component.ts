@@ -8,7 +8,6 @@ import { publicVariable, DEFAULT_ROLE_LIST, addUpdateEmployees, UserService, Con
 })
 export class AddComponent implements OnInit {
   publicVariable = new publicVariable();
-
   constructor(private fb: FormBuilder,
     private modalService: NgbModal,
     private toastr: ToastrService,
@@ -22,9 +21,9 @@ export class AddComponent implements OnInit {
       id: [''],
       empId: [null, Validators.required],
       roleId: [null, Validators.required],
-      username: [{ value: '', disabled: true }, Validators.required],
-      name: [{ value: '', disabled: true }, Validators.required],
-      email: [{ value: '', disabled: true }, [Validators.required, Validators.email]],
+      username: ['', Validators.required],
+      name: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
       isActive: [true] // Assuming default value is true
     });
   }
@@ -57,17 +56,27 @@ export class AddComponent implements OnInit {
 
 
   onEdit(data: any) {
+
     this.publicVariable.isEdit = true;
-    // const isActiveValue = data.active.toLowerCase() === 'yes' ? true : false;
-    const roleId = this.findRoleId(data.roleName);
+    let isActiveValue;
+
+    if(data.isActive === true ||  data.isActive === 'Yes'){
+      isActiveValue  = true;
+    }
+
+    else{
+      isActiveValue  = false;
+    }
+
+
     this.publicVariable.dataForm.patchValue({
-      empId: parseInt(data.imeM_EmpId, 10),
-      username: data.imeM_Username ,
+      empId: data.imeM_EmpId,
+      username: data.imeM_Username,
       name: data.imeM_Name,
       email: data.imeM_Email,
-      roleId: roleId,
-      isActive: true,
-      id: data.id
+      roleId: data.roleName,
+      isActive: isActiveValue,
+      id: data.imeM_ID
     });
 
   }
@@ -101,23 +110,16 @@ export class AddComponent implements OnInit {
     if (this.publicVariable.dataForm.valid) {
       //Check if a valid employee is selected
       const newData = this.publicVariable.dataForm.value;
-      console.log(newData.imeM_EmpId);
-
-      const selectedId = newData.id;
-      if (selectedId) {
-        this.publicVariable.selectedEmployee = this.publicVariable.employeeList.find(employee => employee.imeM_ID == selectedId);
-
-      }
-
+      console.log(newData);
 
       const isUpdate = !!newData.id;
       const newConfig: addUpdateEmployees = {
         isUpdate: isUpdate,
         imeM_ID: isUpdate ? newData.id : undefined,
         imeM_EmpId: newData.empId,
-        imeM_Username: this.publicVariable.selectedEmployee.imeM_Username,
-        imeM_Name: this.publicVariable.selectedEmployee.imeM_Name,
-        imeM_Email: this.publicVariable.selectedEmployee.imeM_Email,
+        imeM_Username: newData.username,
+        imeM_Name: newData.name,
+        imeM_Email: newData.email,
         roleId: newData.roleId,
         isActive: newData.isActive
       };
@@ -157,7 +159,9 @@ export class AddComponent implements OnInit {
     }
   }
 
+
   // Method to fetch roles
+
   getRoles() {
     this.API.getRoles().subscribe({
       next: (data: any) => {
@@ -177,25 +181,12 @@ export class AddComponent implements OnInit {
     }
   }
 
-  //Fine role name to roleId
-
-
-  findRoleId(roleName: string): number | undefined {
-    const trimmedRoleName = roleName.trim(); // trim the roleName
-
-    const role = this.publicVariable.roles.find(role => role.roleName === trimmedRoleName);
-    console.log(role !== undefined ? role.role_id : undefined);
-
-    return role !== undefined ? role.role_id : undefined;
-}
 
   //handleApiResponse
   handleApiResponse(res: any, successMessage: string): void {
     if (res.status === true) {
       this.toastr.success(successMessage, 'Success');
       this.publicVariable.userData = res.data;
-      console.log(this.publicVariable);
-
       this.publicVariable.dataForm.reset();
     } else {
       this.toastr.error(res.message, 'Error');

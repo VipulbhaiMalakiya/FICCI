@@ -17,7 +17,7 @@ export class UserService {
 
   constructor(private http: HttpClient) { }
 
-  getRoles(): Observable<any[]> {
+  public getRoles(): Observable<any[]> {
     return this.http.get<any[]>(`${this.RolesList}`).pipe(this.retry);
   }
   getEmployee(): Observable<any[]> {

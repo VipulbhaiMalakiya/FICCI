@@ -33,7 +33,7 @@ export class publicVariable {
   searchText: string = '';
   Subscription: Subscription = new Subscription();
   selectedEmployee: any;
-  roles: Roles[] = [];
+ public roles: Roles[] = [];
   userlist:UserMaster[] = [];
   userData:any;
 }
