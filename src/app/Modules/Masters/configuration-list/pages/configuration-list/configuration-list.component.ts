@@ -27,7 +27,7 @@ export class ConfigurationListComponent implements OnInit, OnDestroy {
       c_Code: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(10), alphanumericValidator()]],
       c_Value: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(20), alphanumericWithSpacesValidator()]],
       categoryID: [null, Validators.required],
-      isActive: [false]
+      isActive: [true]
     });
   }
 

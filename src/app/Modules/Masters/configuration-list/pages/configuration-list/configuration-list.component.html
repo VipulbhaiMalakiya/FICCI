@@ -6,7 +6,7 @@
       <div class="col-md-2">
         <label for="c_Code">Code:</label>
         <input type="text" id="c_Code" class="form-control" formControlName="c_Code" />
-        <div *ngIf="shouldShowError('c_Code','required')" class="text-danger">Code is required.</div>
+        <div *ngIf="shouldShowError('c_Code','required')" class="text-danger">Please enter the Code.</div>
         <div *ngIf="shouldShowError('c_Code','minlength')" class="text-danger">Code must be at least 3 characters long.</div>
         <div *ngIf="shouldShowError('c_Code','maxlength')" class="text-danger">Code cannot be more than 10 characters long.</div>
         <div *ngIf="shouldShowError('c_Code','alphanumeric')" class="text-danger">Code can only contain letters and numbers.</div>
@@ -15,7 +15,7 @@
       <div class="col-md-2">
         <label for="c_Value">Value:</label>
         <input type="text" id="c_Value" class="form-control" formControlName="c_Value" />
-        <div *ngIf="shouldShowError('c_Value','required')" class="text-danger">Value is required.</div>
+        <div *ngIf="shouldShowError('c_Value','required')" class="text-danger">Please enter Value.</div>
         <div *ngIf="shouldShowError('c_Value','minlength')" class="text-danger">Value must be at least 5 characters long.</div>
         <div *ngIf="shouldShowError('c_Value','maxlength')" class="text-danger"> Value cannot be more than 20 characters long.</div>
         <div *ngIf="shouldShowError('c_Value','alphanumericWithSpacesValidator')" class="text-danger">Value can only contain letters and numbers.</div>
@@ -29,8 +29,7 @@
             {{ item.category_Name | titlecase }}
           </ng-template>
         </ng-select>
-        <div *ngIf="shouldShowError('categoryID','required')" class="text-danger">Category is required
-        </div>
+        <div *ngIf="shouldShowError('categoryID','required')" class="text-danger">Please Select the Category</div>
       </div>
       <div class="col-md-2">
         <label for="isActive">Active:</label>
@@ -38,7 +37,6 @@
       </div>
       <div class="col-md-2">
         <button type="submit" class="btn btn-primary">{{ publicVariable.isEdit ? 'Update' : 'Save' }}</button>
-
       </div>
     </div>
 
