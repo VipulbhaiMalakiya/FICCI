@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import {AppService,publicVariable,Router,ConfirmationDialogModalComponent,NgbModal} from '../../import/index'
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import {AppService,publicVariable,Router,ConfirmationDialogModalComponent,NgbModal, UserService} from '../../import/index'
 
 @Component({
   selector: 'app-users',
@@ -14,47 +14,53 @@ export class UsersComponent implements OnInit{
   constructor(    private appService: AppService,
     private modalService: NgbModal,
     private router: Router,
+    private API: UserService,
+    private cdr: ChangeDetectorRef
     ){
 
   }
-  data = [
-    { id: 1,employeeId: 1, userName: 'user1', name: 'John Doe', role: 'Employee', email: 'john@example.com', active: 'Yes' },
-  ];
   ngOnInit(): void {
-    this.addDummyRecords();
+    this.loadUserList();
   }
+
+  loadUserList(): void {
+    try {
+      this.publicVariable.Subscription.add(
+        this.API.getUsers().subscribe({
+          next: (response: any) => {
+            this.publicVariable.userlist = response.data
+            this.cdr.detectChanges();
+          },
+          error: () => {
+            this.cdr.detectChanges();
+          }
+        })
+      );
+    } catch (error) {
+      console.error('Error loading category list:', error);
+    }
+  }
+
+
   onTableDataChange(event: any) {
     this.publicVariable.page = event;
-    this.data;
+    this.publicVariable.userlist
   }
   onTableSizeChange(event: any): void {
     this.publicVariable.tableSize = event.target.value;
     this.publicVariable.page = 1;
-    this.data;
+    this.publicVariable.userlist
 
-  }
-  addDummyRecords() {
-    for (let i = 2; i <= 21; i++) {
-      this.data.push({
-        id: i,
-        employeeId: i,
-        userName: 'user' + i,
-        name: 'Dummy User ' + (i - 1),
-        role: 'Employee',
-        email: 'user' + i + '@example.com',
-        active: Math.random() < 0.5 ? 'Yes' : 'No'
-      });
-    }
   }
 
   onDownload() {
-    const exportData = this.data.map((x) => ({
-      ID: x?.id || '',
-      "Employee ID": x?.employeeId || '',
-      Name: x?.name || '',
-      Role: x?.role || '',
-      Email: x?.email || '',
-      Active:x?.active || ''
+    const exportData = this.publicVariable.userlist.map((x) => ({
+      // ID: x?.id || '',
+      // "Employee ID": x?.employeeId || '',
+      // Name: x?.name || '',
+      // Role: x?.role || '',
+      // Email: x?.email || '',
+      // Active:x?.active || ''
     }));
 
     const headers = ['ID', 'Employee ID', 'Name', 'Role', 'Email','Active'];
@@ -87,8 +93,6 @@ export class UsersComponent implements OnInit{
   }
 
   onEdit(user: any): void {
-    // Assuming user has an 'id' property
-    // this.router.navigate(['masters/users/edit', { id: user.id, data: user }]);
     this.router.navigate(['masters/users/edit', user.id], { state: { data: user } });
 
   }

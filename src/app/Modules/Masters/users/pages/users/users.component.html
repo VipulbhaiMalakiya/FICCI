@@ -2,14 +2,14 @@
   <button routerLink="add" type="button" class="btn btn-primary">
     Add New
   </button>
-  <div *ngIf="data && data.length > 0">
+  <div *ngIf=" this.publicVariable.userlist &&  this.publicVariable.userlist.length > 0">
     <label for="itemsPerPageSelect">Items Per Page:</label>
     <select id="itemsPerPageSelect" [(ngModel)]="publicVariable.tableSize" (change)="onTableSizeChange($event)">
       <option *ngFor="let size of publicVariable.tableSizes" [value]="size">{{ size }}</option>
     </select>
   </div>
-  <input *ngIf="data && data.length > 0" type="text" [(ngModel)]="publicVariable.searchText" placeholder="Search by name or email">
-  <div class="analdrop1" *ngIf="data && data.length > 0">
+  <input *ngIf=" this.publicVariable.userlist &&  this.publicVariable.userlist.length > 0" type="text" [(ngModel)]="publicVariable.searchText" placeholder="Search by name or email">
+  <div class="analdrop1" *ngIf=" this.publicVariable.userlist &&  this.publicVariable.userlist.length > 0">
     <label>Export Data</label>
     <button (click)="onDownload()" class="gray-btns" type="button"><i class="las la-file-export"></i> Download</button>
   </div>
@@ -18,32 +18,32 @@
       <tr>
         <th>#</th>
         <th>Employee ID</th>
-        <th>UserName</th>
         <th>Name</th>
-        <th>Role</th>
         <th>Email</th>
+        <th>Username</th>
+        <th>Role</th>
         <th>Active</th>
         <th>Action</th>
       </tr>
     </thead>
     <tbody>
       <tr
-        *ngFor="let user of data | searchFilter: publicVariable.searchText| paginate: {itemsPerPage: publicVariable.tableSize,currentPage: publicVariable.page,totalItems: publicVariable.count};let i = index">
+        *ngFor="let user of  this.publicVariable.userlist | searchFilter: publicVariable.searchText| paginate: {itemsPerPage: publicVariable.tableSize,currentPage: publicVariable.page,totalItems: publicVariable.count};let i = index">
         <td>{{i + 1}}</td>
-        <td>{{ user.employeeId }}</td>
-        <td>{{ user.userName }}</td>
-        <td>{{ user.name }}</td>
-        <td>{{ user.role }}</td>
-        <td>{{ user.email }}</td>
-        <td>{{ user.active }}</td>
+        <td>{{ user.imeM_EmpId }}</td>
+        <td>{{ user.imeM_Name }}</td>
+        <td>{{ user.imeM_Email }}</td>
+        <td>{{ user.imeM_Username || 'Null'}}</td>
+        <td>{{ user.roleName   }}</td>
+        <td>{{ user.isActive || 'No'  }}</td>
         <td>
           <button class="btn btn-warning" (click)="onEdit(user)">Edit</button>
-        <button class="btn btn-danger ml-2" (click)="onDelete(user.id)">Delete</button>
+        <button class="btn btn-danger ml-2" (click)="onDelete(user.imeM_ID)">Delete</button>
         </td>
       </tr>
     </tbody>
   </table>
-  <div class="d-flex justify-content-center" *ngIf="data && data.length > 0">
+  <div class="d-flex justify-content-center" *ngIf=" this.publicVariable.userlist &&  this.publicVariable.userlist.length > 0">
     <pagination-controls
       previousLabel="Prev"
       nextLabel="Next"

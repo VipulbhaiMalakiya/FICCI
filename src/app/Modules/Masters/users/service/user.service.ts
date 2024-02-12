@@ -24,6 +24,11 @@ export class UserService {
     return this.http.get<any[]>(`${this.EmployeeList}`).pipe(this.retry);
   }
 
+  getUsers(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}`).pipe(this.retry);
+  }
+
+
   create(data: addUpdateEmployees): Observable<addUpdateConfiguration> {
     return this.http.post<addUpdateConfiguration>(`${this.apiUrl}`, data).pipe(this.retry);
   }

@@ -17,3 +17,13 @@ export interface addUpdateEmployees{
   roleId:string;
   isActive:boolean;
 }
+
+export interface UserMaster {
+  imeM_ID:number;
+  imeM_EmpId:number;
+  imeM_Name:string;
+  imeM_Email:string;
+  imeM_Username:string;
+  isActive:string;
+  roleName:string;
+}

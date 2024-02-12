@@ -1,7 +1,7 @@
 import { FormGroup } from '@angular/forms';
 import { Roles } from '../interface/role';
 import { Subscription } from 'rxjs';
-import { Employees } from '../interface/employee';
+import { Employees, UserMaster } from '../interface/employee';
 export { Employees, addUpdateEmployees } from '../interface/employee';
 
 export  { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -34,5 +34,6 @@ export class publicVariable {
   Subscription: Subscription = new Subscription();
   selectedEmployee: any;
   roles: Roles[] = [];
+  userlist:UserMaster[] = [];
   userData:any;
 }
