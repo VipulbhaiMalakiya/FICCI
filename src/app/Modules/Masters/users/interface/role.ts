@@ -1,4 +1,5 @@
 export interface Roles{
-    id:number;
-    role_Name:string ;
+  role_id:number;
+  roleName:string ;
+  isActive:string;
   }

@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { Roles, publicVariable, DEFAULT_ROLE_LIST, UserService, ConfirmationDialogModalComponent, ToastrService, NgbModal, FormBuilder, FormGroup, Validators } from '../../import/index';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { publicVariable, DEFAULT_ROLE_LIST, UserService, ConfirmationDialogModalComponent, ToastrService, NgbModal, FormBuilder, FormGroup, Validators } from '../../import/index';
 
 @Component({
   selector: 'app-add',
@@ -9,19 +9,12 @@ import { Roles, publicVariable, DEFAULT_ROLE_LIST, UserService, ConfirmationDial
 export class AddComponent implements OnInit {
   publicVariable = new publicVariable();
 
-
-  employees = [
-    { id: 1, username: 'john_doe', name: 'John Doe', email: 'john@example.com' },
-    { id: 2, username: 'jane_smith', name: 'Jane Smith', email: 'jane@example.com' },
-    { id: 3, username: 'alice_johnson', name: 'Alice Johnson', email: 'alice@example.com' },
-    // Add more employees as needed
-  ];
-
-
   constructor(private fb: FormBuilder,
     private modalService: NgbModal,
     private toastr: ToastrService,
     private API: UserService,
+    private cdr: ChangeDetectorRef
+
 
   ) {
     this.initializeForm();
@@ -42,31 +35,35 @@ export class AddComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.getRoles();
     this.patchFormWithData();
+    this.loadEmpoyeeList();
+    this.getRoles();
   }
+
+
+
   onSelectEmployee() {
     const selectedId = this.publicVariable.dataForm.get('employeeId')?.value;
 
     // Check if a valid employee is selected
-    if (selectedId) {
-      this.publicVariable.selectedEmployee = this.employees.find(employee => employee.id == selectedId);
-      // Assign selected employee's properties to form controls
-      if (this.publicVariable.selectedEmployee) {
-        this.publicVariable.dataForm.patchValue({
-          username: this.publicVariable.selectedEmployee.username,
-          name: this.publicVariable.selectedEmployee.name,
-          email: this.publicVariable.selectedEmployee.email
-        });
-      }
-    } else {
-      // Clear form values if no employee is selected
-      this.publicVariable.dataForm.patchValue({
-        username: null,
-        name: null,
-        email: null
-      });
-    }
+    // if (selectedId) {
+    //   this.publicVariable.selectedEmployee = this.employees.find(employee => employee.id == selectedId);
+    //   // Assign selected employee's properties to form controls
+    //   if (this.publicVariable.selectedEmployee) {
+    //     this.publicVariable.dataForm.patchValue({
+    //       username: this.publicVariable.selectedEmployee.username,
+    //       name: this.publicVariable.selectedEmployee.name,
+    //       email: this.publicVariable.selectedEmployee.email
+    //     });
+    //   }
+    // } else {
+    //   // Clear form values if no employee is selected
+    //   this.publicVariable.dataForm.patchValue({
+    //     username: null,
+    //     name: null,
+    //     email: null
+    //   });
+    // }
   }
 
 
@@ -139,11 +136,31 @@ export class AddComponent implements OnInit {
 
   }
 
+  // Method to fetch employess
+
+  loadEmpoyeeList(): void {
+    try {
+      this.publicVariable.Subscription.add(
+        this.API.getEmployee().subscribe({
+          next: (response: any) => {
+            this.publicVariable.employeeList = response.employees
+            this.cdr.detectChanges();
+          },
+          error: () => {
+            this.cdr.detectChanges();
+          }
+        })
+      );
+    } catch (error) {
+      console.error('Error loading category list:', error);
+    }
+  }
+
   // Method to fetch roles
   getRoles() {
     this.API.getRoles().subscribe({
       next: (data: any) => {
-        this.publicVariable.roles = data;
+        this.publicVariable.roles = data.roles;
       },
       error: (error: any) => {
         this.publicVariable.roles = DEFAULT_ROLE_LIST; // Assuming DEFAULT_ROLE_LIST is defined somewhere
@@ -162,8 +179,8 @@ export class AddComponent implements OnInit {
   //Fine role name to roleId
   findRoleId(roleName: string): number | undefined {
     const trimmedRoleName = roleName.trim().toLowerCase(); // Normalize role name
-    const role = DEFAULT_ROLE_LIST.find(role => role.role_Name.toLowerCase() === trimmedRoleName);
-    return role ? role.id : undefined;
+    const role = DEFAULT_ROLE_LIST.find(role => role.roleName.toLowerCase() === trimmedRoleName);
+    return role ? role.role_id : undefined;
   }
 
   //handleApiResponse
