@@ -8,7 +8,10 @@ import { NgbModal, publicVariable, ToastrService, FormBuilder, Validators, DEFAU
 export class ConfigurationListComponent implements OnInit, OnDestroy {
 
   publicVariable = new publicVariable();
-
+  dropdownOptions = [
+    { value: true, label: 'Yes' },
+    { value: false, label: 'No' }
+  ];
   constructor(
     private fb: FormBuilder,
     private appService: AppService,
@@ -128,6 +131,9 @@ export class ConfigurationListComponent implements OnInit, OnDestroy {
     this.publicVariable.isEdit = true;
     const categoryId = this.findCategoryId(data.category_Name);
     const isActiveValue = data.isActive.toLowerCase() === 'yes';
+
+    console.log(isActiveValue);
+
     this.publicVariable.dataForm.patchValue({
       c_Code: data.c_Code,
       c_Value: data.c_Value,

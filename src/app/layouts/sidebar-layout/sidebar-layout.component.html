@@ -1,2 +1,98 @@
-<router-outlet></router-outlet>
 
+
+
+<div class="outer-bg">
+
+  <header class="main-header">
+    <div class="container-fluid">
+      <div class="row align-items-center">
+
+        <div class="col-lg-8 col-sm-6">
+          <div class="main-logo"><a routerLink=""><img src="../assets/images/logo.png" alt=""></a></div>
+        </div>
+
+        <div class="col-lg-4 col-sm-6">
+
+          <div class="top-noti-user">
+
+            <div class="top-user-profile">
+              <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true"
+                aria-expanded="false"><img src="../assets/images/profile.jpg" alt="">
+                <p>Hemant <small>Admin</small></p>
+              </a>
+
+              <ul class="dropdown-menu">
+                <li><a href="#">Logout</a></li>
+              </ul>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </header>
+
+  <div class="main-wrapper">
+    <div class="container-fluid">
+      <div class="row">
+
+        <div class="col-lg-3 p-0 custom-3wdt">
+          <aside class="left-menu">
+
+            <div class="left-mobile-menu">Menu</div>
+
+            <div class="side-filters menu-list">
+
+              <div id="accordion">
+
+                <div class="left-men">
+                  <h3><a href="#"><img src="../assets/images/dashboard-icon.png" alt=""> Dashboard</a></h3>
+                </div>
+
+                <div class="left-men active">
+                  <h3><img src="../assets/images/master-icon.png" alt=""> Masters</h3>
+                  <a href="#" class="menu-list-title">Configuration List</a>
+                  <a href="#" class="menu-list-title">User Master</a>
+                </div>
+
+                <div class="left-men">
+                  <h3><img src="../assets/images/customer-icon.png" alt=""> Customer</h3>
+                  <a href="#" class="menu-list-title">New Customer</a>
+                  <a href="#" class="menu-list-title">Customer Status</a>
+                  <a href="#" class="menu-list-title">Approval Inbox</a>
+                  <a href="#" class="menu-list-title">Accounts Inbox</a>
+                </div>
+
+                <div class="left-men">
+                  <h3><img src="../assets/images/invoice-icon.png" alt=""> Purchase Invoice</h3>
+                  <a href="#" class="menu-list-title">New Purchase Invoice</a>
+                  <a href="#" class="menu-list-title">Invoice Status</a>
+                  <a href="#" class="menu-list-title">Approval Inbox</a>
+                  <a href="#" class="menu-list-title">Accounts Inbox</a>
+                </div>
+
+              </div>
+
+            </div>
+
+          </aside>
+
+        </div>
+
+
+        <div class="col-lg-9 custom-9wdt">
+          <div class="content-wrapper white-bg">
+            <router-outlet></router-outlet>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</div>

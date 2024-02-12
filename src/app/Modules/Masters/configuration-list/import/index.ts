@@ -27,6 +27,7 @@ export const DEFAULT_CATEGORY_LIST: Category[] = [
   { id: 4, category_Name: 'INVOICE TYPE' }
 ];
 
+
 export class publicVariable {
   dataForm!: FormGroup;
   isEdit: boolean = false;

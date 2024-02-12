@@ -150,15 +150,16 @@ a:hover { color:#482B8F; }
 	font-size: 14px;
 	background:#F26100;
 	color: #fff;
-	padding:15px 36px;
+	padding:12px 36px;
 	display: inline-block;
 	text-decoration: none;
 	cursor: pointer;
 	line-height: 1;
-	border-radius:6px;
+	border-radius:4px;
 	border:0;
 	font-weight:600;
 	text-align: center;
+	width: 100%;
 } 
 
 .title {
@@ -171,9 +172,19 @@ a:hover { color:#482B8F; }
 .title-col{ text-align:left; margin-bottom:10px; }
 
 .form-control {
-  border-radius:10px;
-  border-color:1px solid #ccc;
-  min-height:35px; 
+ 	border-radius: 5px;
+    font-size: 14px;
+    border: 1px solid #a5a5a5;
+    padding: 0px 15px;
+    height: calc(1.8em + 0.75rem + 2px);
+}
+
+.form-select{
+	border-radius: 5px;
+    font-size: 14px;
+    border: 1px solid #a5a5a5;
+    padding: 0px 15px;
+    height: calc(1.8em + 0.75rem + 2px);
 }
 
 :focus {
@@ -320,7 +331,7 @@ header.main-header {
 }
 
 .content-wrapper.white-bg {
-    min-height: 535px;
+    min-height: 480px;
 }
 
 .left-mobile-menu{ display: none; }
@@ -331,6 +342,8 @@ header.main-header {
 }
 
 .left-men h3{ font-size:15px; padding: 13px 25px 5px; font-weight: 500; color:#fff; margin-bottom: 0px;  }
+
+.left-men h3 a{ padding:0px; }
 
 .left-men a {
     font-size: 13px;
@@ -352,3 +365,131 @@ header.main-header {
 .left-men.active{ background:#F26100; border-top-right-radius: 10px; border-bottom-right-radius: 10px; }
 
 .left-men { margin-bottom:5px; padding-bottom: 8px; }
+
+.content-title{
+	font-size: 21px;
+    color: #1f1917;
+    font-weight: 600;
+    position: relative;
+}
+
+.mastersform-sec .form-group label {
+    width: 100%;
+    font-weight:500;
+    margin-bottom: 5px;
+    font-size: 13px;
+    color: #111;
+}
+
+.mastersform-sec { margin: 20px 0px 40px; }
+
+.page-btns-col {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.dt-buttons {
+    display: flex;
+    margin-left: auto;
+    margin-right: 10px;
+}
+
+.gray-btns{ border: none; background:none; }
+.gray-btns img{ max-height:26px; }
+
+.table-responsive { margin-bottom: 20px; }
+.table { margin-bottom: 0px; border: 1px solid #e7e9ed; }
+
+.dasboard-table thead th {
+    vertical-align: top;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 0.6rem 0.75rem;
+}
+
+.table thead th {
+    border-bottom: 1px solid #e7e9ed;
+    border-top: 1px solid #e7e9ed;
+	background: #f5f8fa;
+    color: #111;
+	font-weight:600;
+}
+
+.table td {
+    font-size: 13px;
+    color: #444;
+    vertical-align: middle;
+    background: #fff;
+	padding: 0.6rem 0.75rem;
+}
+
+.status {
+    font-size: 30px;
+    margin:1px 0px 0 0;
+    display: inline-block;
+    vertical-align: top;
+    line-height: 16px;
+}
+
+.bg-success {
+    background: #4ec524;
+}
+
+.table-btns a{ margin-right:4px;  }
+.table-btns a img{ max-height:24px; }
+
+.hint-text {
+    float: left;
+    margin-top:8px;
+    font-size: 13px;
+    color: #000;
+}
+
+.pagination {
+    float: right;
+    margin:0px;
+    border-radius: 0px;
+    overflow: hidden;
+}
+
+.pagination li a {
+    font-size: 13px;
+    min-width: 30px;
+    min-height: 30px;
+    color: #000;
+    margin: 0 7px;
+    line-height: 30px;
+    border-radius: 5px;
+    text-align: center;
+    padding: 1px 12px;
+    background: none;
+    border: 1px solid #ccc;
+}
+
+.page-item.active .page-link {
+    z-index: 1;
+    color: #fff;
+    background-color: #FF8201;
+    border-color: #fff;
+}
+
+.topbr-btns .form-control{  font-size: 13px; height: calc(1.2em + 0.75rem + 2px); }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
