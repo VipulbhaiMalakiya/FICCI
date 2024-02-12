@@ -19,6 +19,7 @@ export const DEFAULT_ROLE_LIST:Roles[]  = [
 ];
 
 
+
 export class publicVariable {
   dataForm!: FormGroup;
   isEdit: boolean = false;
@@ -27,5 +28,8 @@ export class publicVariable {
   tableSize: number = 10;
   tableSizes: number[] = [10, 20, 50, 100];
   searchText: string = '';
-  configurationSubscription: Subscription = new Subscription();
+  Subscription: Subscription = new Subscription();
+  selectedEmployee: any;
+  roles: Roles[] = [];
+  userData:any;
 }

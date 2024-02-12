@@ -1,5 +1,5 @@
 <div class="container">
-  <form [formGroup]="dataForm" (ngSubmit)="onSubmit()">
+  <form [formGroup]="publicVariable.dataForm" (ngSubmit)="onSubmit()">
     <div class="row">
       <div class="col-md-4 mb-3">
         <label>Employee ID:</label>
@@ -31,7 +31,7 @@
       </div>
       <div class="col-md-4 mb-3">
         <label>Role:</label>
-        <ng-select [items]="roles" formControlName="role" [bindLabel]="'role_Name'" [bindValue]="'id'" placeholder="Select Role"></ng-select>
+        <ng-select [items]="publicVariable.roles" formControlName="role" [bindLabel]="'role_Name'" [bindValue]="'id'" placeholder="Select Role"></ng-select>
 
         <div *ngIf="shouldShowError('role','required')" class="text-danger">This field is required
         </div>
@@ -41,11 +41,11 @@
         <input type="checkbox" formControlName="isActive">
       </div>
       <div class="col-md-3">
-        <button type="submit" class="btn btn-primary">{{ isedite ? 'Update' : 'Save' }}</button>
+        <button type="submit" class="btn btn-primary">{{ publicVariable.isEdit ? 'Update' : 'Save' }}</button>
       </div>
     </div>
   </form>
-  <table class="table table-striped" *ngIf="userData">
+  <table class="table table-striped" *ngIf="publicVariable.userData">
     <thead>
       <tr>
         <th>ID</th>
@@ -60,15 +60,15 @@
     </thead>
     <tbody>
       <tr>
-        <td>{{ userData.id }}</td>
-        <td>{{ userData.employeeId }}</td>
-        <td>{{ userData.userName }}</td>
-        <td>{{ userData.name }}</td>
-        <td>{{ userData.email }}</td>
-        <td>{{ userData.role }}</td>
-        <td>{{ userData.active }}</td>
-        <td> <button class="btn btn-warning" (click)="onEdit(userData)">Edit</button>
-          <button class="btn btn-danger ml-2" (click)="onDelete(userData.id)">Delete</button>
+        <td>{{ publicVariable.userData.id }}</td>
+        <td>{{ publicVariable.userData.employeeId }}</td>
+        <td>{{ publicVariable.userData.userName }}</td>
+        <td>{{ publicVariable.userData.name }}</td>
+        <td>{{ publicVariable.userData.email }}</td>
+        <td>{{ publicVariable.userData.role }}</td>
+        <td>{{ publicVariable.userData.active }}</td>
+        <td> <button class="btn btn-warning" (click)="onEdit(publicVariable.userData)">Edit</button>
+          <button class="btn btn-danger ml-2" (click)="onDelete(publicVariable.userData.id)">Delete</button>
         </td>
       </tr>
     </tbody>
