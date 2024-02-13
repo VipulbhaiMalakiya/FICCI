@@ -1,11 +1,14 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { publicVariable, DEFAULT_ROLE_LIST, addUpdateEmployees, UserService, ConfirmationDialogModalComponent, ToastrService, NgbModal, FormBuilder, FormGroup, Validators, Router } from '../../import/index';
 import { ActivatedRoute } from '@angular/router';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'app-add',
   templateUrl: './add.component.html',
-  styleUrls: ['./add.component.css']
+  styleUrls: ['./add.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
+
 })
 export class AddComponent implements OnInit {
   publicVariable = new publicVariable();
@@ -15,7 +18,8 @@ export class AddComponent implements OnInit {
     private toastr: ToastrService,
     private API: UserService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private cd: ChangeDetectorRef,
 
   ) {
     this.initializeForm();
@@ -36,7 +40,10 @@ export class AddComponent implements OnInit {
   ngOnInit(): void {
     this.getRoles();
     this.loadEmpoyeeList();
-    this.route.paramMap.subscribe(params => {
+    this.publicVariable.isProcess = false;
+    this.route.paramMap.pipe(
+      take(1) // Take only the first emitted value
+    ).subscribe(params => {
       if (params && params.get('id')) {
         this.userId = +params.get('id')!;
         this.fetchUserData(this.userId);
@@ -46,13 +53,20 @@ export class AddComponent implements OnInit {
   }
 
   fetchUserData(userId: number): void {
-    this.API.getUserById(userId).subscribe(data => {
-      this.publicVariable.userData = data.data[0];
-      if (this.publicVariable.userData) {
-        this.onEdit(this.publicVariable.userData);
+  this.API.getUserById(userId).subscribe({
+    next: (data: any) => {
+      const userData = data.data[0];
+      if (userData) {
+        this.cd.detectChanges();
+        this.publicVariable.userData = userData;
+        this.onEdit(userData);
       }
-    });
-  }
+    },
+    complete: () => {
+      this.publicVariable.isProcess = false;
+    }
+  });
+}
 
   getRoles(): void {
     this.API.getRoles().subscribe({
@@ -137,8 +151,6 @@ export class AddComponent implements OnInit {
     if (this.publicVariable.dataForm.valid) {
       const newData = this.publicVariable.dataForm.value;
       const isUpdate = !!newData.id;
-      this.publicVariable.isProcess = true;
-
       const selectedEmployee = this.publicVariable.employeeList.find(employee => employee.imeM_EmpId === newData.empId) || this.publicVariable.userData;
 
       const newConfig: addUpdateEmployees = {
@@ -151,7 +163,6 @@ export class AddComponent implements OnInit {
         roleId: newData.roleId,
         isActive: newData.isActive
       };
-
       const successMessage = isUpdate ? 'Data updated successfully.' : 'Data created successfully.';
       this.handleApiRequest(this.API.create(newConfig), successMessage, 'Error submitting data:');
     } else {
@@ -175,21 +186,29 @@ export class AddComponent implements OnInit {
   }
 
   getRoleIdByRoleName(roleName: string): number | undefined {
+    this.cd.detectChanges();
+
     const role = this.publicVariable.roles.find(role => role.roleName === roleName);
     return role ? role.role_id : undefined;
   }
 
   handleApiRequest(apiRequest: any, successMessage: string, errorMessagePrefix: string): void {
+
     try {
+
       this.publicVariable.Subscription.add(
         apiRequest.subscribe({
+
           next: (res: any) => {
             this.publicVariable.userData = res.data;
-            this.publicVariable.isProcess = false;
             this.handleApiResponse(res, successMessage);
+            this.publicVariable.isProcess = false;
+            this.cd.detectChanges();
+
           },
           error: (error: any) => {
             this.publicVariable.isProcess = false;
+            this.cd.detectChanges();
             this.toastr.error(error.error.message || 'An error occurred. Please try again later.', 'Error');
           }
         })
@@ -204,9 +223,15 @@ export class AddComponent implements OnInit {
     if (res.status === true) {
       this.toastr.success(successMessage, 'Success');
       this.publicVariable.userData = res.data;
+      this.cd.detectChanges();
       this.publicVariable.dataForm.reset();
+      this.publicVariable.isProcess = false;
+
     } else {
+      this.cd.detectChanges();
+      this.publicVariable.isProcess = false;
       this.toastr.error(res.message, 'Error');
+
     }
   }
 
