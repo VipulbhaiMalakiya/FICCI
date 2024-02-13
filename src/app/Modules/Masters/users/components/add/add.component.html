@@ -5,8 +5,8 @@
         <label>Employee :</label>
         <input type="hidden" formControlName="id">
         <label for="employeeId">Select Employee:</label>
-        <ng-select [items]="publicVariable.employeeList" bindLabel="imeM_EmpId" bindValue="imeM_EmpId" placeholder="Select an employee"
-          formControlName="empId" (change)="onSelectEmployee()">
+        <ng-select [items]="publicVariable.employeeList" bindLabel="imeM_EmpId" bindValue="imeM_EmpId"
+          placeholder="Select an employee" formControlName="empId" (change)="onSelectEmployee()">
         </ng-select>
         <div *ngIf="shouldShowError('empId','required')" class="text-danger">This field is required
         </div>
@@ -20,7 +20,7 @@
       <div class="col-md-4 mb-3">
         <label>Name:</label>
         <input type="text" class="form-control" formControlName="name" readonly>
-        <div *ngIf="shouldShowError('name','required')" class="text-danger" >This field is required
+        <div *ngIf="shouldShowError('name','required')" class="text-danger">This field is required
         </div>
       </div>
       <div class="col-md-4 mb-3">
@@ -31,7 +31,8 @@
       </div>
       <div class="col-md-4 mb-3">
         <label>Role:</label>
-        <ng-select [items]="publicVariable.roles" formControlName="roleId" [bindLabel]="'roleName'" [bindValue]="'role_id'" placeholder="Select Role"></ng-select>
+        <ng-select [items]="publicVariable.roles" formControlName="roleId" [bindLabel]="'roleName'"
+          [bindValue]="'role_id'" placeholder="Select Role"></ng-select>
 
         <div *ngIf="shouldShowError('roleId','required')" class="text-danger">This field is required
         </div>
@@ -78,3 +79,119 @@
 
 </div>
 
+<div class="inner-content">
+
+  <h3 class="content-title">Add New User Master</h3>
+
+  <div class="mastersform-sec">
+    <div class="row">
+
+      <div class="col-md-3 col-sm-6">
+        <div class="form-group">
+          <label>Employee ID</label>
+          <input type="text" value="" class="form-control" required="">
+        </div>
+      </div>
+
+      <div class="col-md-3 col-sm-6">
+        <div class="form-group">
+          <label>Username</label>
+          <input type="text" value="" class="form-control" required="">
+        </div>
+      </div>
+
+      <div class="col-md-3 col-sm-6">
+        <div class="form-group">
+          <label>Name</label>
+          <input type="text" value="" class="form-control" required="">
+        </div>
+      </div>
+
+      <div class="col-md-3 col-sm-6">
+        <div class="form-group">
+          <label>Email</label>
+          <input type="text" value="" class="form-control" required="">
+        </div>
+      </div>
+
+      <div class="col-md-3 col-sm-6">
+        <div class="form-group">
+          <label>Role</label>
+          <select class="form-select" required="">
+            <option value="">Select</option>
+            <option value="">Role 1</option>
+            <option value="">Role 2</option>
+            <option value="">Role 3</option>
+            <option value="">Role 4</option>
+            <option value="">Role 5</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="col-md-3 col-sm-6">
+        <div class="form-group">
+          <label>Active</label>
+          <select class="form-select" required="">
+            <option value="">Yes</option>
+            <option value="">No</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="col-md-3 col-sm-6">
+        <div class="form-group mb-0">
+          <label>&nbsp;</label>
+          <button type="submit" class="common-btn">Submit</button>
+        </div>
+      </div>
+
+
+    </div>
+
+  </div><!--mastersform-sec-->
+
+  <div class="inner-middle-content">
+    <div class="dasboard-table">
+
+      <div class="table-responsive">
+
+        <table class="table" *ngIf="publicVariable.userData">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Employee ID</th>
+              <th>Username</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Role</th>
+              <th>Active</th>
+              <th class="action-cl">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>{{ publicVariable.userData.imeM_ID }}</td>
+              <td>{{ publicVariable.userData.imeM_EmpId }}</td>
+              <td>{{ publicVariable.userData.imeM_Username }}</td>
+              <td>{{ publicVariable.userData.imeM_Name }}</td>
+              <td>{{ publicVariable.userData.imeM_Email }}</td>
+              <td>{{ publicVariable.userData.roleName }}</td>
+              <td *ngIf="publicVariable.userData.isActive === true"><span class="status text-success">•</span> Yes</td>
+              <td *ngIf="publicVariable.userData.isActive === false"><span class="status text-danger">•</span> No</td>
+
+              <td>
+                <span class="table-btns">
+                  <a (click)="onEdit(publicVariable.userData)"><img src="../assets/images/edit-icon.svg" alt=""></a>
+                  <a (click)="onDelete(publicVariable.userData.imeM_ID)"><img src="../assets/images/delete-icon.svg" alt=""></a>
+                </span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+      </div>
+
+    </div>
+  </div>
+
+</div>
