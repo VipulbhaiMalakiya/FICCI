@@ -26,9 +26,9 @@ export class AddComponent implements OnInit {
       id: [''],
       empId: [null, Validators.required],
       roleId: [null, Validators.required],
-      username: ['', Validators.required],
-      name: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
+      username: [{value: '', disabled: true},, Validators.required],
+      name: [{value: '', disabled: true},, Validators.required],
+      email: [{value: '', disabled: true},, [Validators.required, Validators.email]],
       isActive: [true] // Assuming default value is true
     });
   }
@@ -104,13 +104,14 @@ export class AddComponent implements OnInit {
       //Check if a valid employee is selected
       const newData = this.publicVariable.dataForm.value;
       const isUpdate = !!newData.id;
+      this.publicVariable.selectedEmployee = this.publicVariable.employeeList.find(employee => employee.imeM_EmpId == newData.empId);
       const newConfig: addUpdateEmployees = {
         isUpdate: isUpdate,
         imeM_ID: isUpdate ? newData.id : undefined,
         imeM_EmpId: newData.empId,
-        imeM_Username: newData.username,
-        imeM_Name: newData.name,
-        imeM_Email: newData.email,
+        imeM_Username: this.publicVariable.selectedEmployee.imeM_Username,
+        imeM_Name: this.publicVariable.selectedEmployee.imeM_Name,
+        imeM_Email: this.publicVariable.selectedEmployee.imeM_Email,
         roleId: newData.roleId,
         isActive: newData.isActive
       };
