@@ -177,6 +177,8 @@ export class ConfigurationListComponent implements OnInit, OnDestroy {
       this.publicVariable.dataForm.reset();
     } else {
       this.toastr.error(res.message, 'Error');
+      this.publicVariable.isProcess =false;
+
     }
   }
   markFormControlsAsTouched(): void {
