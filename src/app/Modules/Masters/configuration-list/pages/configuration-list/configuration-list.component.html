@@ -121,7 +121,7 @@
         </div>
       </div>
       <div class="clearfix">
-        <div class="hint-text">Showing <b>1</b> out of <b>10</b> entries</div>
+        <div class="hint-text">Showing <b>{{this.publicVariable.tableSize}}</b> out of <b>{{ publicVariable.count }}</b> entries</div>
         <pagination-controls previousLabel="Prev" class="pagination"
           *ngIf="publicVariable.data && publicVariable.data.length > 0" nextLabel="Next"
           (pageChange)="onTableDataChange($event)">

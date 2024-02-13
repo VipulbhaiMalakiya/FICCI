@@ -8,6 +8,7 @@ import { NgbModal, publicVariable, ToastrService, FormBuilder, Validators, DEFAU
 export class ConfigurationListComponent implements OnInit, OnDestroy {
 
   publicVariable = new publicVariable();
+
   dropdownOptions = [
     { value: true, label: 'Yes' },
     { value: false, label: 'No' }
@@ -73,6 +74,7 @@ export class ConfigurationListComponent implements OnInit, OnDestroy {
         this.API.getAll().subscribe({
           next: (response: any) => {
             this.publicVariable.data = response.data;
+            this.publicVariable.count =  response.data.length;
           },
           error: () => {
             // Handle error
@@ -94,6 +96,8 @@ export class ConfigurationListComponent implements OnInit, OnDestroy {
     this.publicVariable.page = 1;
     this.loadConfiguration();
   }
+
+
 
   onSubmit(): void {
     if (this.publicVariable.dataForm.valid) {
