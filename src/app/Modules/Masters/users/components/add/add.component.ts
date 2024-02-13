@@ -90,7 +90,6 @@ export class AddComponent implements OnInit {
             this.toastr.success(res.message, 'Success');
             this.router.navigate(['/masters/users']);
             this.publicVariable.isProcess =false;
-
           },
           error: (error) => {
             this.toastr.error(error.error.message, 'Error');
@@ -107,6 +106,8 @@ export class AddComponent implements OnInit {
     if (this.publicVariable.dataForm.valid) {
       const newData = this.publicVariable.dataForm.value;
       const isUpdate = !!newData.id;
+      this.publicVariable.isProcess =true;
+
       this.publicVariable.selectedEmployee = this.publicVariable.employeeList.find(employee => employee.imeM_EmpId == newData.empId);
       const newConfig: addUpdateEmployees = {
         isUpdate: isUpdate,
@@ -125,6 +126,7 @@ export class AddComponent implements OnInit {
           this.handleApiRequest(this.API.create(newConfig), successMessage, 'Error submitting data:');
         },
         error: (error) => {
+          this.publicVariable.isProcess =false;
           this.toastr.error(error.error.message || 'An error occurred. Please try again later.', 'Error');
         }
       });
@@ -143,8 +145,11 @@ export class AddComponent implements OnInit {
           ...role,
         }));
         this.cdr.detectChanges();
+        this.publicVariable.isProcess =false;
+
       },
       error: (error: any) => {
+        this.publicVariable.isProcess =false;
         this.publicVariable.roles = DEFAULT_ROLE_LIST; // Assuming DEFAULT_ROLE_LIST is defined somewhere
       }
     });
@@ -158,7 +163,6 @@ export class AddComponent implements OnInit {
         }));
         const roleId = this.getRoleIdFromRoleName(roleNameToFind);
         this.cdr.detectChanges();
-
       },
       error: (error: any) => {
         this.publicVariable.roles = DEFAULT_ROLE_LIST; // Assuming DEFAULT_ROLE_LIST is defined somewhere
@@ -233,17 +237,18 @@ export class AddComponent implements OnInit {
         apiRequest.subscribe({
           next: (res: any) => {
             this.publicVariable.userData = res.data
-            console.log(this.publicVariable.userData);
+            this.publicVariable.isProcess =false;
 
             this.handleApiResponse(res, successMessage);
           },
           error: (error: any) => {
-            console.error(errorMessagePrefix, error);
+            this.publicVariable.isProcess =false;
             this.toastr.error(error.error.message || 'An error occurred. Please try again later.', 'Error');
           }
         })
       );
     } catch (error) {
+      this.publicVariable.isProcess =false;
       this.toastr.error('Error handling API request', 'Error');
     }
   }
