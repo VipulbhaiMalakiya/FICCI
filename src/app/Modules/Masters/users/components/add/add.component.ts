@@ -172,6 +172,7 @@ export class AddComponent implements OnInit {
 
   onEdit(data: any): void {
     this.publicVariable.isEdit = true;
+    this.cd.detectChanges();
     const RoleId: any = this.getRoleIdByRoleName(data.roleName);
     this.publicVariable.dataForm.patchValue({
       empId: data.imeM_EmpId,
@@ -186,7 +187,6 @@ export class AddComponent implements OnInit {
   }
 
   getRoleIdByRoleName(roleName: string): number | undefined {
-    this.cd.detectChanges();
 
     const role = this.publicVariable.roles.find(role => role.roleName === roleName);
     return role ? role.role_id : undefined;
