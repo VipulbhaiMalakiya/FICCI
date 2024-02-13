@@ -28,6 +28,7 @@ export class publicVariable {
   page: number = 1;
   roleId:any;
   count: number = 0;
+  isProcess:boolean = true;
   tableSize: number = 10;
   employeeList : Employees[] = []
   tableSizes: number[] = [10, 20, 50, 100];

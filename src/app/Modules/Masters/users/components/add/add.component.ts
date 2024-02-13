@@ -52,6 +52,7 @@ export class AddComponent implements OnInit {
       // Store the fetched user data
       if (this.publicVariable.userData) {
         this.onEdit(this.publicVariable.userData);
+        this.publicVariable.isProcess =false;
         this.cdr.detectChanges();
       }
     });
@@ -82,11 +83,14 @@ export class AddComponent implements OnInit {
     var componentInstance = modalRef.componentInstance as ConfirmationDialogModalComponent;
     componentInstance.message = "Do you really want to delete these records? This process cannot be undone ?";
     modalRef.result.then((canDelete: boolean) => {
+      this.publicVariable.isProcess =true;
       if (canDelete) {
         this.API.delete(id).subscribe({
           next: (res: any) => {
             this.toastr.success(res.message, 'Success');
             this.router.navigate(['/masters/users']);
+            this.publicVariable.isProcess =false;
+
           },
           error: (error) => {
             this.toastr.error(error.error.message, 'Error');

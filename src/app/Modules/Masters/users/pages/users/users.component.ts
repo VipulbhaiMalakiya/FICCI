@@ -32,7 +32,7 @@ export class UsersComponent implements OnInit{
           next: (response: any) => {
             this.publicVariable.userlist = response.data;
             this.publicVariable.count =  response.data.length;
-
+            this.publicVariable.isProcess =false;
             this.cdr.detectChanges();
           },
           error: () => {
@@ -83,12 +83,18 @@ export class UsersComponent implements OnInit{
     componentInstance.message = "Do you really want to delete these records? This process cannot be undone ?";
     modalRef.result.then((canDelete: boolean) => {
       if (canDelete) {
+        this.publicVariable.isProcess =true;
+
         this.API.delete(id).subscribe({
           next: (res: any) => {
             this.toastr.success(res.message, 'Success');
+            this.publicVariable.isProcess =false;
+
             this.loadUserList();
           },
           error: (error) => {
+            this.publicVariable.isProcess =false;
+
             this.toastr.error(error.error.message, 'Error');
           }
         });
