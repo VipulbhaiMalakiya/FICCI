@@ -53,20 +53,20 @@ export class AddComponent implements OnInit {
   }
 
   fetchUserData(userId: number): void {
-  this.API.getUserById(userId).subscribe({
-    next: (data: any) => {
-      const userData = data.data[0];
-      if (userData) {
-        this.cd.detectChanges();
-        this.publicVariable.userData = userData;
-        this.onEdit(userData);
+    this.API.getUserById(userId).subscribe({
+      next: (data: any) => {
+        const userData = data.data[0];
+        if (userData) {
+          this.cd.detectChanges();
+          this.publicVariable.userData = userData;
+          this.onEdit(userData);
+        }
+      },
+      complete: () => {
+        this.publicVariable.isProcess = false;
       }
-    },
-    complete: () => {
-      this.publicVariable.isProcess = false;
-    }
-  });
-}
+    });
+  }
 
   getRoles(): void {
     this.API.getRoles().subscribe({
@@ -193,29 +193,30 @@ export class AddComponent implements OnInit {
   }
 
   handleApiRequest(apiRequest: any, successMessage: string, errorMessagePrefix: string): void {
-
     try {
+      // Start the spinner
+      this.publicVariable.isProcess = true;
 
       this.publicVariable.Subscription.add(
         apiRequest.subscribe({
-
           next: (res: any) => {
-            this.publicVariable.userData = res.data;
             this.handleApiResponse(res, successMessage);
-            this.publicVariable.isProcess = false;
             this.cd.detectChanges();
-
           },
           error: (error: any) => {
-            this.publicVariable.isProcess = false;
-            this.cd.detectChanges();
             this.toastr.error(error.error.message || 'An error occurred. Please try again later.', 'Error');
+            this.handleErrorResponse();
+            this.cd.detectChanges();
+          },
+          complete: () => {
+            // Hide the spinner regardless of success or error
+            this.publicVariable.isProcess = false;
           }
         })
       );
     } catch (error) {
-      this.publicVariable.isProcess = false;
       this.toastr.error('Error handling API request', 'Error');
+      this.handleErrorResponse();
     }
   }
 
@@ -223,16 +224,17 @@ export class AddComponent implements OnInit {
     if (res.status === true) {
       this.toastr.success(successMessage, 'Success');
       this.publicVariable.userData = res.data;
-      this.cd.detectChanges();
-      this.publicVariable.dataForm.reset();
       this.publicVariable.isProcess = false;
+      this.publicVariable.dataForm.reset();
 
     } else {
-      this.cd.detectChanges();
-      this.publicVariable.isProcess = false;
-      this.toastr.error(res.message, 'Error');
 
+      this.toastr.error(res.message, 'Error');
     }
+  }
+
+  handleErrorResponse(): void {
+    this.publicVariable.isProcess = false;
   }
 
   markFormControlsAsTouched(): void {
