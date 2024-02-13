@@ -34,6 +34,7 @@ export class publicVariable {
   categoryList: Category[] = [];
   data: Configuration[] = [];
   page: number = 1;
+  isProcess:boolean = true;
   count: number = 0;
   tableSize: number = 10;
   tableSizes: number[] = [10, 20, 50, 100];

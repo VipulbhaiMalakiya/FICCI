@@ -17,7 +17,8 @@ import {  ConfigurationListRoutingModule,ConfigurationListComponent,SharedModule
     SharedModule,
     FormsModule,
     NgxPaginationModule,
-    NgSelectModule
+    NgSelectModule,
+
 
   ]
 })

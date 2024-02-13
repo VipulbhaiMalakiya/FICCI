@@ -76,6 +76,7 @@ export class ConfigurationListComponent implements OnInit, OnDestroy {
           next: (response: any) => {
             this.publicVariable.data = response.data;
             this.publicVariable.count =  response.data.length;
+            this.publicVariable.isProcess =false;
           },
           error: () => {
             // Handle error
@@ -104,6 +105,8 @@ export class ConfigurationListComponent implements OnInit, OnDestroy {
     if (this.publicVariable.dataForm.valid) {
       const newData = this.publicVariable.dataForm.value;
       const isUpdate = !!newData.id;
+      this.publicVariable.isProcess =true;
+
       const newConfig: addUpdateConfiguration = {
         isUpdate: isUpdate,
         c_ID: isUpdate ? newData.id : undefined,
@@ -127,6 +130,7 @@ export class ConfigurationListComponent implements OnInit, OnDestroy {
     modalRef.result
       .then((canDelete: boolean) => {
         if (canDelete) {
+          this.publicVariable.isProcess =true;
           this.handleApiRequest(this.API.delete(id), 'Data deleted successfully.', 'Error deleting data:');
         }
       })
@@ -136,9 +140,6 @@ export class ConfigurationListComponent implements OnInit, OnDestroy {
     this.publicVariable.isEdit = true;
     const categoryId = this.findCategoryId(data.category_Name);
     const isActiveValue = data.isActive.toLowerCase() === 'yes';
-
-    console.log(isActiveValue);
-
     this.publicVariable.dataForm.patchValue({
       c_Code: data.c_Code,
       c_Value: data.c_Value,
@@ -171,6 +172,8 @@ export class ConfigurationListComponent implements OnInit, OnDestroy {
     if (res.status === true) {
       this.toastr.success(successMessage, 'Success');
       this.loadConfiguration();
+      this.publicVariable.isProcess =false;
+
       this.publicVariable.dataForm.reset();
     } else {
       this.toastr.error(res.message, 'Error');
