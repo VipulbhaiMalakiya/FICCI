@@ -139,12 +139,11 @@ export class ConfigurationListComponent implements OnInit, OnDestroy {
   onEdit(data: Configuration): void {
     this.publicVariable.isEdit = true;
     const categoryId = this.findCategoryId(data.category_Name);
-    const isActiveValue = data.isActive.toLowerCase() === 'yes';
     this.publicVariable.dataForm.patchValue({
       c_Code: data.c_Code,
       c_Value: data.c_Value,
       categoryID: categoryId,
-      isActive: isActiveValue,
+      isActive:  data.isActive,
       id: data.c_ID
     });
   }
@@ -154,7 +153,7 @@ export class ConfigurationListComponent implements OnInit, OnDestroy {
       Code: x?.c_Code || '',
       Value: x?.c_Value || '',
       Category: x?.category_Name ? toTitleCase(x.category_Name) : '',
-      isActive: x?.isActive || ''
+      isActive:  x && x.isActive ? 'Yes' : 'No'
     }));
     const headers = ['ID', 'Code', 'Value', 'Category', 'isActive'];
     this.appService.exportAsExcelFile(exportData, 'Configuration-list', headers);

@@ -105,8 +105,8 @@
                 <td>{{ item.c_Code }}</td>
                 <td>{{ item.c_Value | titlecase }}</td>
                 <td>{{ item.category_Name | titlecase }}</td>
-                <td *ngIf="item.isActive === 'Yes'"><span class="status text-success">•</span> Yes</td>
-                <td *ngIf="item.isActive === 'No'"><span class="status text-danger">•</span> No</td>
+                <td *ngIf="item.isActive === true"><span class="status text-success">•</span> Yes</td>
+                <td *ngIf="item.isActive === false"><span class="status text-danger">•</span> No</td>
 
                 <td>
                   <span class="table-btns">
