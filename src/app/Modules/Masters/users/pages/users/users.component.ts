@@ -65,7 +65,7 @@ export class UsersComponent implements OnInit{
       Name: x?.imeM_Name || '',
       Username: x?.imeM_Username || '',
       Email:x?.imeM_Email || '',
-      Active:x?.isActive || '',
+      Active:x && x.isActive ? 'Yes' : 'No',
       Role:x?.roleName || ''
     }));
 
