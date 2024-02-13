@@ -99,8 +99,9 @@
               <td>{{ publicVariable.userData.imeM_Name }}</td>
               <td>{{ publicVariable.userData.imeM_Email }}</td>
               <td>{{ publicVariable.userData.roleName }}</td>
-              <td *ngIf="publicVariable.userData.isActive === true"><span class="status text-success">•</span> Yes</td>
-              <td *ngIf="publicVariable.userData.isActive === false"><span class="status text-danger">•</span> No</td>
+              <td [ngClass]="{'text-success': publicVariable.userData.isActive, 'text-danger': !publicVariable.userData.isActive}">
+                <span class="status">•</span> {{ publicVariable.userData.isActive ? 'Yes' : 'No' }}
+              </td>
 
               <td>
                 <span class="table-btns">

@@ -99,8 +99,6 @@ export class ConfigurationListComponent implements OnInit, OnDestroy {
     this.publicVariable.isProcess = false;
   }
 
-
-
   onTableDataChange(event: any) {
     this.publicVariable.page = event;
     this.loadConfiguration();
@@ -110,8 +108,6 @@ export class ConfigurationListComponent implements OnInit, OnDestroy {
     this.publicVariable.page = 1;
     this.loadConfiguration();
   }
-
-
 
   onSubmit(): void {
     if (this.publicVariable.dataForm.valid) {

@@ -66,7 +66,8 @@
   <div class="page-btns-col" *ngIf="publicVariable.data && publicVariable.data.length > 0">
     <div class="tblsort">
       <label class="col-form-label">Show</label>
-      <select class="form-select" id="itemsPerPageSelect" [(ngModel)]="publicVariable.tableSize" (change)="onTableSizeChange($event)">
+      <select class="form-select" id="itemsPerPageSelect" [(ngModel)]="publicVariable.tableSize"
+        (change)="onTableSizeChange($event)">
         <option *ngFor="let size of publicVariable.tableSizes" [value]="size">{{ size }}</option>
       </select>
     </div>
@@ -105,9 +106,9 @@
                 <td>{{ item.c_Code }}</td>
                 <td>{{ item.c_Value | titlecase }}</td>
                 <td>{{ item.category_Name | titlecase }}</td>
-                <td *ngIf="item.isActive === true"><span class="status text-success">•</span> Yes</td>
-                <td *ngIf="item.isActive === false"><span class="status text-danger">•</span> No</td>
-
+                <td [ngClass]="{'text-success': item.isActive, 'text-danger': !item.isActive}">
+                  <span class="status">•</span> {{ item.isActive ? 'Yes' : 'No' }}
+                </td>
                 <td>
                   <span class="table-btns">
                     <a (click)="onEdit(item)"><img src="../assets/images/edit-icon.svg" alt=""></a>

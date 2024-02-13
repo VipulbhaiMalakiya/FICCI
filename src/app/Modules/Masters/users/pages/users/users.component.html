@@ -59,8 +59,9 @@
               <td>{{ user.imeM_Email }}</td>
               <td>{{ user.imeM_Username || 'Null'}}</td>
               <td>{{ user.roleName }}</td>
-              <td *ngIf="user.isActive === true"><span class="status text-success">•</span> Yes</td>
-              <td *ngIf="user.isActive === false"><span class="status text-danger">•</span> No</td>
+              <td [ngClass]="{'text-success': user.isActive, 'text-danger': !user.isActive}">
+                <span class="status">•</span> {{ user.isActive ? 'Yes' : 'No' }}
+              </td>
               <td>
                 <span class="table-btns">
                   <a (click)="onEdit(user)"><img src="../assets/images/edit-icon.svg" alt=""></a>
