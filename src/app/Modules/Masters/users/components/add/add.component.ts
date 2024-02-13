@@ -41,6 +41,7 @@ export class AddComponent implements OnInit {
       if (params && params.get('id')) {
         this.userId = +params.get('id')!;
         this.fetchUserData(this.userId);
+        this.cdr.markForCheck();
       }
     });
 
