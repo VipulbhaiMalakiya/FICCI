@@ -49,11 +49,12 @@ export class AddComponent implements OnInit {
   fetchUserData(userId: number): void {
     this.API.getUserById(userId).subscribe(data => {
       this.publicVariable.userData = data.data[0];
-      // Store the fetched user data
+      this.cdr.detectChanges();
       if (this.publicVariable.userData) {
         this.onEdit(this.publicVariable.userData);
         this.publicVariable.isProcess =false;
-        this.cdr.detectChanges();
+
+
       }
     });
   }
@@ -121,15 +122,8 @@ export class AddComponent implements OnInit {
       };
 
       const successMessage = isUpdate ? 'Data updated successfully.' : 'Data created successfully.';
-      this.API.create(newConfig).subscribe({
-        next: (res: any) => {
-          this.handleApiRequest(this.API.create(newConfig), successMessage, 'Error submitting data:');
-        },
-        error: (error) => {
-          this.publicVariable.isProcess =false;
-          this.toastr.error(error.error.message || 'An error occurred. Please try again later.', 'Error');
-        }
-      });
+      this.handleApiRequest(this.API.create(newConfig), successMessage, 'Error submitting data:');
+
     } else {
       this.markFormControlsAsTouched();
     }
@@ -144,55 +138,30 @@ export class AddComponent implements OnInit {
         this.publicVariable.roles = data.data.map((role: { roleName: string }) => ({
           ...role,
         }));
-        this.cdr.detectChanges();
         this.publicVariable.isProcess =false;
-
       },
       error: (error: any) => {
         this.publicVariable.isProcess =false;
-        this.publicVariable.roles = DEFAULT_ROLE_LIST; // Assuming DEFAULT_ROLE_LIST is defined somewhere
+        this.publicVariable.roles = DEFAULT_ROLE_LIST;
       }
     });
   }
 
-  getRolesAndFindRoleId(roleNameToFind: string): void {
-    this.API.getRoles().subscribe({
-      next: (data: any) => {
-        this.publicVariable.roles = data.data.map((role: { roleName: string, role_id: number }) => ({
-          ...role,
-        }));
-        const roleId = this.getRoleIdFromRoleName(roleNameToFind);
-        this.cdr.detectChanges();
-      },
-      error: (error: any) => {
-        this.publicVariable.roles = DEFAULT_ROLE_LIST; // Assuming DEFAULT_ROLE_LIST is defined somewhere
-      }
-    });
-  }
-
-  getRoleIdFromRoleName(roleName: string): number | undefined {
-    const role = this.publicVariable.roles.find((r: any) => r.roleName === roleName);
-    this.cdr.detectChanges();
+  getRoleIdByRoleName(roleName: string): number | undefined {
+    const role = this.publicVariable.roles.find(role => role.roleName === roleName);
     return role ? role.role_id : undefined;
-
   }
+
+
 
   onEdit(data: any) {
     this.publicVariable.isEdit = true;
-    if (!this.publicVariable.roles || this.publicVariable.roles.length === 0) {
-      this.getRolesAndFindRoleId(data.roleName);
-
-    } else {
-      this.publicVariable.roleId = this.getRoleIdFromRoleName(data.roleName);
-      this.cdr.detectChanges();
-
-    }
     this.publicVariable.dataForm.patchValue({
       empId: data.imeM_EmpId,
       username: data.imeM_Username,
       name: data.imeM_Name,
       email: data.imeM_Email,
-      roleId: this.publicVariable.roleId,
+      roleId: this.getRoleIdByRoleName(data.roleName),
       isActive: data.isActive,
       id: data.imeM_ID
     });
@@ -207,10 +176,10 @@ export class AddComponent implements OnInit {
         this.API.getEmployee().subscribe({
           next: (response: any) => {
             this.publicVariable.employeeList = response.data
-            this.cdr.detectChanges();
+
           },
           error: () => {
-            this.cdr.detectChanges();
+
           }
         })
       );
@@ -254,7 +223,7 @@ export class AddComponent implements OnInit {
   }
   //Filed Define to show error in sumit time
   markFormControlsAsTouched(): void {
-    ['empId', 'username', 'name', 'email', 'role'].forEach(controlName => {
+    ['empId', 'username', 'name', 'email', 'roleId'].forEach(controlName => {
       this.publicVariable.dataForm.controls[controlName].markAsTouched();
     });
   }
