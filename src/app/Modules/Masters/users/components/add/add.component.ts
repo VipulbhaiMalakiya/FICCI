@@ -49,10 +49,11 @@ export class AddComponent implements OnInit {
   fetchUserData(userId: number): void {
     this.API.getUserById(userId).subscribe(data => {
       this.publicVariable.userData = data.data[0];
-      this.cdr.detectChanges();
+
       if (this.publicVariable.userData) {
+        this.cdr.detectChanges();
         this.onEdit(this.publicVariable.userData);
-        this.publicVariable.isProcess =false;
+        this.publicVariable.isProcess = false;
       }
     });
   }
@@ -82,21 +83,24 @@ export class AddComponent implements OnInit {
     var componentInstance = modalRef.componentInstance as ConfirmationDialogModalComponent;
     componentInstance.message = "Do you really want to delete these records? This process cannot be undone ?";
     modalRef.result.then((canDelete: boolean) => {
-      this.publicVariable.isProcess =true;
+
       if (canDelete) {
+        this.publicVariable.isProcess = true;
         this.API.delete(id).subscribe({
           next: (res: any) => {
             this.toastr.success(res.message, 'Success');
             this.router.navigate(['/masters/users']);
-            this.publicVariable.isProcess =false;
+            this.publicVariable.isProcess = false;
           },
           error: (error) => {
             this.toastr.error(error.error.message, 'Error');
+
           }
         });
 
       }
-    }).catch(() => { });
+    }).catch(() => {
+    });
 
   }
 
@@ -106,7 +110,7 @@ export class AddComponent implements OnInit {
     if (this.publicVariable.dataForm.valid) {
       const newData = this.publicVariable.dataForm.value;
       const isUpdate = !!newData.id;
-      this.publicVariable.isProcess =true;
+      this.publicVariable.isProcess = true;
       this.publicVariable.selectedEmployee = this.publicVariable.employeeList.find(employee => employee.imeM_EmpId == newData.empId || this.publicVariable.userData.imeM_EmpId);
       const newConfig: addUpdateEmployees = {
         isUpdate: isUpdate,
@@ -136,10 +140,10 @@ export class AddComponent implements OnInit {
         this.publicVariable.roles = data.data.map((role: { roleName: string }) => ({
           ...role,
         }));
-        this.publicVariable.isProcess =false;
+        this.publicVariable.isProcess = false;
       },
       error: (error: any) => {
-        this.publicVariable.isProcess =false;
+        this.publicVariable.isProcess = false;
         this.publicVariable.roles = DEFAULT_ROLE_LIST;
       }
     });
@@ -154,12 +158,13 @@ export class AddComponent implements OnInit {
 
   onEdit(data: any) {
     this.publicVariable.isEdit = true;
+    const RoleId: any = this.getRoleIdByRoleName(data.roleName);
     this.publicVariable.dataForm.patchValue({
       empId: data.imeM_EmpId,
       username: data.imeM_Username,
       name: data.imeM_Name,
       email: data.imeM_Email,
-      roleId: this.getRoleIdByRoleName(data.roleName),
+      roleId: RoleId,
       isActive: data.isActive,
       id: data.imeM_ID
     });
@@ -203,18 +208,18 @@ export class AddComponent implements OnInit {
         apiRequest.subscribe({
           next: (res: any) => {
             this.publicVariable.userData = res.data
-            this.publicVariable.isProcess =false;
+            this.publicVariable.isProcess = false;
 
             this.handleApiResponse(res, successMessage);
           },
           error: (error: any) => {
-            this.publicVariable.isProcess =false;
+            this.publicVariable.isProcess = false;
             this.toastr.error(error.error.message || 'An error occurred. Please try again later.', 'Error');
           }
         })
       );
     } catch (error) {
-      this.publicVariable.isProcess =false;
+      this.publicVariable.isProcess = false;
       this.toastr.error('Error handling API request', 'Error');
     }
   }
