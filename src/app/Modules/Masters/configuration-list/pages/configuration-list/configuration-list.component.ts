@@ -120,9 +120,9 @@ export class ConfigurationListComponent implements OnInit, OnDestroy {
     }
   }
   onDelete(id: number): void {
-    const modalRef = this.modalService.open(ConfirmationDialogModalComponent, { size: "sm", centered: true, backdrop: "static" });
+    const modalRef = this.modalService.open(ConfirmationDialogModalComponent, { size: "md", centered: true, backdrop: "static" });
     const componentInstance = modalRef.componentInstance as ConfirmationDialogModalComponent;
-    componentInstance.message = "Are you sure you want to delete this ?";
+    componentInstance.message = "Do you really want to delete these records? This process cannot be undone ?";
 
     modalRef.result
       .then((canDelete: boolean) => {
