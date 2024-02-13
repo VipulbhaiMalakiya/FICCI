@@ -172,13 +172,6 @@ export class AddComponent implements OnInit {
 
   onEdit(data: any) {
     this.publicVariable.isEdit = true;
-    let isActiveValue;
-    if (data.isActive === true || data.isActive === 'Yes') {
-      isActiveValue = true;
-    }
-    else {
-      isActiveValue = false;
-    }
     if (!this.publicVariable.roles || this.publicVariable.roles.length === 0) {
       this.getRolesAndFindRoleId(data.roleName);
 
@@ -193,7 +186,7 @@ export class AddComponent implements OnInit {
       name: data.imeM_Name,
       email: data.imeM_Email,
       roleId: this.publicVariable.roleId,
-      isActive: isActiveValue,
+      isActive: data.isActive,
       id: data.imeM_ID
     });
 
