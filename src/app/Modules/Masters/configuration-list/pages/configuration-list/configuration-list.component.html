@@ -63,19 +63,22 @@
 
   </div>
   <div class="page-btns-col" *ngIf="publicVariable.data && publicVariable.data.length > 0">
+    <div class="tblsort">
+      <label class="col-form-label">Show</label>
+      <select class="form-select" id="itemsPerPageSelect" [(ngModel)]="publicVariable.tableSize" (change)="onTableSizeChange($event)">
+        <option *ngFor="let size of publicVariable.tableSizes" [value]="size">{{ size }}</option>
+      </select>
+    </div>
     <div class="dt-buttons">
       <button class="gray-btns" type="button" (click)="onDownload()"><img src="../assets/images/excel-icon.png"
           alt=""></button>
     </div>
-    <label for="itemsPerPageSelect">Items Per Page:</label>
-    <select id="itemsPerPageSelect" [(ngModel)]="publicVariable.tableSize" (change)="onTableSizeChange($event)">
-      <option *ngFor="let size of publicVariable.tableSizes" [value]="size">{{ size }}</option>
-    </select>
+
     <!-- Example single danger button -->
     <div class="topbr-btns">
       <div class="btn-group">
         <div class="table-search"><input type="text" class="form-control" [(ngModel)]="publicVariable.searchText"
-            name="name" id="name" placeholder="Search here" ></div>
+            name="name" id="name" placeholder="Search here"></div>
       </div>
     </div>
   </div>
@@ -123,7 +126,8 @@
         </div>
       </div>
       <div class="clearfix">
-        <div class="hint-text">Showing <b>{{this.publicVariable.tableSize}}</b> out of <b>{{ publicVariable.count }}</b> entries</div>
+        <div class="hint-text">Showing <b>{{this.publicVariable.tableSize}}</b> out of <b>{{ publicVariable.count }}</b>
+          entries</div>
         <pagination-controls previousLabel="Prev" class="pagination"
           *ngIf="publicVariable.data && publicVariable.data.length > 0" nextLabel="Next"
           (pageChange)="onTableDataChange($event)">
