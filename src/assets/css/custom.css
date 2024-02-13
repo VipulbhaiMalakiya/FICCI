@@ -157,7 +157,7 @@ a:hover { color:#482B8F; }
 	text-decoration: none;
 	cursor: pointer;
 	line-height: 1;
-	border-radius:4px;
+	border-radius:6px;
 	border:0;
 	font-weight:600;
 	text-align: center;
@@ -533,7 +533,8 @@ header.main-header {
 .btn {
     border-radius: 6px;
     font-size: 14px;
-    padding: 8px 20px;
+    padding: 8px 28px;
+	font-weight: 600;
 }
 
 .twocol-btns button{ margin:0px 2px; min-width: 120px; } 
@@ -552,5 +553,8 @@ header.main-header {
 
 .mastersform-sec .form-group{ margin-bottom:10px; }
 
-
+.table-btns {
+    width: 100px;
+    display: block;
+}
 
