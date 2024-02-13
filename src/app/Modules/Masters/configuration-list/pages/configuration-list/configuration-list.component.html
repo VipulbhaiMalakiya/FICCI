@@ -74,7 +74,7 @@
     <div class="topbr-btns">
       <div class="btn-group">
         <div class="table-search"><input type="text" class="form-control" [(ngModel)]="publicVariable.searchText"
-            name="name" id="name" placeholder="Search here" required=""></div>
+            name="name" id="name" placeholder="Search here" ></div>
       </div>
     </div>
   </div>
@@ -85,6 +85,7 @@
           <table class="table">
             <thead>
               <tr>
+                <th>#</th>
                 <th>Code</th>
                 <th>Value</th>
                 <th>Category</th>
@@ -95,10 +96,10 @@
             <tbody>
               <tr
                 *ngFor="let item of publicVariable.data | searchFilter: publicVariable.searchText | paginate: {itemsPerPage: publicVariable.tableSize, currentPage: publicVariable.page, totalItems: publicVariable.count}; let i = index; trackBy: utilityService.trackById">
+                <td>{{i+1}}</td>
                 <td>{{ item.c_Code }}</td>
                 <td>{{ item.c_Value | titlecase }}</td>
                 <td>{{ item.category_Name | titlecase }}</td>
-                <td>{{ item.isActive }}</td>
                 <td *ngIf="item.isActive === 'Yes'"><span class="status text-success">•</span> Yes</td>
                 <td *ngIf="item.isActive === 'No'"><span class="status text-danger">•</span> No</td>
 
