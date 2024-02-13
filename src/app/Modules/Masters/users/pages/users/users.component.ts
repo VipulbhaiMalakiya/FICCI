@@ -30,7 +30,9 @@ export class UsersComponent implements OnInit{
       this.publicVariable.Subscription.add(
         this.API.getUsers().subscribe({
           next: (response: any) => {
-            this.publicVariable.userlist = response.data
+            this.publicVariable.userlist = response.data;
+            this.publicVariable.count =  response.data.length;
+
             this.cdr.detectChanges();
           },
           error: () => {
