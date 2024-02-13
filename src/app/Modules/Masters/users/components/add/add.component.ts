@@ -237,6 +237,8 @@ export class AddComponent implements OnInit {
         apiRequest.subscribe({
           next: (res: any) => {
             this.publicVariable.userData = res.data
+            console.log(this.publicVariable.userData);
+
             this.handleApiResponse(res, successMessage);
           },
           error: (error: any) => {
