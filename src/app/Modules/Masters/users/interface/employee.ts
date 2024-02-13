@@ -4,7 +4,7 @@ export interface Employees{
   imeM_Name:string;
   imeM_Email:string;
   imeM_Username:string;
-  isActive:string
+  isActive:boolean
 }
 
 export interface addUpdateEmployees{
