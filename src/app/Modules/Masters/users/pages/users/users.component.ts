@@ -1,24 +1,24 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import {AppService,publicVariable,Router,ConfirmationDialogModalComponent,NgbModal, UserService, ToastrService} from '../../import/index'
+import { AppService, publicVariable, Router, ConfirmationDialogModalComponent, NgbModal, UserService, ToastrService } from '../../import/index'
 
 @Component({
   selector: 'app-users',
   templateUrl: './users.component.html',
   styleUrls: ['./users.component.css']
 })
-export class UsersComponent implements OnInit{
+export class UsersComponent implements OnInit {
   publicVariable = new publicVariable();
 
 
 
-  constructor(    private appService: AppService,
+  constructor(private appService: AppService,
     private modalService: NgbModal,
     private router: Router,
     private API: UserService,
     private cdr: ChangeDetectorRef,
     private toastr: ToastrService,
 
-    ){
+  ) {
 
   }
   ngOnInit(): void {
@@ -31,8 +31,8 @@ export class UsersComponent implements OnInit{
         this.API.getUsers().subscribe({
           next: (response: any) => {
             this.publicVariable.userlist = response.data;
-            this.publicVariable.count =  response.data.length;
-            this.publicVariable.isProcess =false;
+            this.publicVariable.count = response.data.length;
+            this.publicVariable.isProcess = false;
             this.cdr.detectChanges();
           },
           error: () => {
@@ -64,12 +64,12 @@ export class UsersComponent implements OnInit{
       EmpId: x?.imeM_EmpId || '',
       Name: x?.imeM_Name || '',
       Username: x?.imeM_Username || '',
-      Email:x?.imeM_Email || '',
-      Active:x && x.isActive ? 'Yes' : 'No',
-      Role:x?.roleName || ''
+      Email: x?.imeM_Email || '',
+      Active: x && x.isActive ? 'Yes' : 'No',
+      Role: x?.roleName || ''
     }));
 
-    const headers = ['ID', 'Employee ID', 'Name', 'Email', 'Username','Active','Role'];
+    const headers = ['ID', 'Employee ID', 'Name', 'Email', 'Username', 'Active', 'Role'];
     this.appService.exportAsExcelFile(
       exportData,
       'Users',
@@ -83,18 +83,15 @@ export class UsersComponent implements OnInit{
     componentInstance.message = "Do you really want to delete these records? This process cannot be undone ?";
     modalRef.result.then((canDelete: boolean) => {
       if (canDelete) {
-        this.publicVariable.isProcess =true;
-
+        this.publicVariable.isProcess = true;
         this.API.delete(id).subscribe({
           next: (res: any) => {
             this.toastr.success(res.message, 'Success');
-            this.publicVariable.isProcess =false;
-
+            this.publicVariable.isProcess = false;
             this.loadUserList();
           },
           error: (error) => {
-            this.publicVariable.isProcess =false;
-
+            this.publicVariable.isProcess = false;
             this.toastr.error(error.error.message, 'Error');
           }
         });

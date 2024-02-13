@@ -53,8 +53,6 @@ export class AddComponent implements OnInit {
       if (this.publicVariable.userData) {
         this.onEdit(this.publicVariable.userData);
         this.publicVariable.isProcess =false;
-
-
       }
     });
   }
@@ -104,16 +102,16 @@ export class AddComponent implements OnInit {
 
   onSubmit() {
 
+
     if (this.publicVariable.dataForm.valid) {
       const newData = this.publicVariable.dataForm.value;
       const isUpdate = !!newData.id;
       this.publicVariable.isProcess =true;
-
-      this.publicVariable.selectedEmployee = this.publicVariable.employeeList.find(employee => employee.imeM_EmpId == newData.empId);
+      this.publicVariable.selectedEmployee = this.publicVariable.employeeList.find(employee => employee.imeM_EmpId == newData.empId || this.publicVariable.userData.imeM_EmpId);
       const newConfig: addUpdateEmployees = {
         isUpdate: isUpdate,
         imeM_ID: isUpdate ? newData.id : undefined,
-        imeM_EmpId: newData.empId,
+        imeM_EmpId: newData.empId || this.publicVariable.userData.imeM_EmpId,
         imeM_Username: this.publicVariable.selectedEmployee.imeM_Username,
         imeM_Name: this.publicVariable.selectedEmployee.imeM_Name,
         imeM_Email: this.publicVariable.selectedEmployee.imeM_Email,
@@ -165,7 +163,7 @@ export class AddComponent implements OnInit {
       isActive: data.isActive,
       id: data.imeM_ID
     });
-
+    this.publicVariable.dataForm.controls["empId"].disable();
   }
 
   // Method to fetch employess
@@ -176,7 +174,6 @@ export class AddComponent implements OnInit {
         this.API.getEmployee().subscribe({
           next: (response: any) => {
             this.publicVariable.employeeList = response.data
-
           },
           error: () => {
 
