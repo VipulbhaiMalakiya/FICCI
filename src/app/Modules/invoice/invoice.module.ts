@@ -7,6 +7,8 @@ import { NewPurchaseInvoiceComponent } from './component/new-purchase-invoice/ne
 import { ApprovalInboxComponent } from './component/approval-inbox/approval-inbox.component';
 import { AccountsInboxComponent } from './component/accounts-inbox/accounts-inbox.component';
 import { ViewInvoiceStatusComponent } from './View/view-invoice-status/view-invoice-status.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NumberToWordsPipe } from './Pipe/numberToWords';
 
 
 @NgModule({
@@ -16,11 +18,13 @@ import { ViewInvoiceStatusComponent } from './View/view-invoice-status/view-invo
     ApprovalInboxComponent,
     AccountsInboxComponent,
     ViewInvoiceStatusComponent,
-    
+    NumberToWordsPipe 
   ],
   imports: [
     CommonModule,
-    InvoiceRoutingModule
+    InvoiceRoutingModule,
+    ReactiveFormsModule,
+    FormsModule
   ]
 })
 export class InvoiceModule { }

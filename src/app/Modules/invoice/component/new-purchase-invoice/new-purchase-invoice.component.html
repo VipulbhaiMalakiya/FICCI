@@ -1,248 +1,245 @@
-<div class="inner-content">	
-			
-    <h3 class="content-title">PI New Purchase Invoice</h3>	
-      
-    <div class="pipage-radio">
-      <div class="form-check">
-        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" checked>
-        <label class="form-check-label" for="flexRadioDefault1">
-          Proforma Invoice
-        </label>
+<div class="inner-content">
+  <h3 class="content-title">PI New Purchase Invoice</h3>
+
+  <div class="pipage-radio">
+    <div class="form-check">
+      <input
+        class="form-check-input"
+        type="radio"
+        name="flexRadioDefault"
+        id="flexRadioDefault1"
+        checked
+      />
+      <label class="form-check-label" for="flexRadioDefault1">
+        Proforma Invoice
+      </label>
+    </div>
+
+    <div class="form-check">
+      <input
+        class="form-check-input"
+        type="radio"
+        name="flexRadioDefault"
+        id="flexRadioDefault2"
+      />
+      <label class="form-check-label" for="flexRadioDefault2">
+        Tax Invoice
+      </label>
+    </div>
+  </div>
+  <!--pipage-sec-->
+
+  <div class="mastersform-sec mb-0">
+    <div class="row">
+      <div class="col-md-4 col-sm-6">
+        <div class="form-group">
+          <label>Project Code</label>
+          <input type="text" value="" class="form-control" required="" />
+        </div>
       </div>
 
-      <div class="form-check">
-        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2">
-        <label class="form-check-label" for="flexRadioDefault2">
-          Tax Invoice
-        </label>
-    </div>
-      
-    </div><!--pipage-sec-->
-      
-    <div class="mastersform-sec mb-0">
-         <div class="row">
-                    
-          <div class="col-md-4 col-sm-6">
-            <div class="form-group">
-              <label>Project Code</label>  
-              <input type="text" value="" class="form-control" required="">
-            </div>	  
-          </div>
+      <div class="col-md-4 col-sm-6">
+        <div class="form-group">
+          <label>Department</label>
+          <input type="text" value="" class="form-control" required="" />
+        </div>
+      </div>
 
-          <div class="col-md-4 col-sm-6">
-            <div class="form-group">
-              <label>Department</label>  
-              <input type="text" value="" class="form-control" required="">
-            </div>	  
-          </div>
-            
-          <div class="col-md-4 col-sm-6">
-            <div class="form-group">
-              <label>Division</label>  
-              <input type="text" value="" class="form-control" required="">
-            </div>	  
-          </div>
-            
-          <div class="col-md-4 col-sm-6">
-            <div class="form-group">
-              <label>PAN No</label>  
-              <input type="text" value="" class="form-control" required="">
-            </div>	  
-          </div>
-            
-          <div class="col-md-4 col-sm-6">
-            <div class="form-group">
-              <label>GST No</label>  
-              <input type="text" value="" class="form-control" required="">
-            </div>	  
-          </div>  
-            
-            <!--show tax-invoice-only
+      <div class="col-md-4 col-sm-6">
+        <div class="form-group">
+          <label>Division</label>
+          <input type="text" value="" class="form-control" required="" />
+        </div>
+      </div>
+
+      <div class="col-md-4 col-sm-6">
+        <div class="form-group">
+          <label>PAN No</label>
+          <input type="text" value="" class="form-control" required="" />
+        </div>
+      </div>
+
+      <div class="col-md-4 col-sm-6">
+        <div class="form-group">
+          <label>GST No</label>
+          <input type="text" value="" class="form-control" required="" />
+        </div>
+      </div>
+
+      <!--show tax-invoice-only
             <div class="col-md-4 col-sm-6">
               <div class="form-group">
                 <label>GST No</label>  
                 <input type="text" value="" class="form-control" required="">
               </div>	  
             </div>
-            --> 
-
-        </div>
-
+            -->
     </div>
-      
-    <div class="pi-pagetitle">Customer Details</div>	
-      
-    <div class="mastersform-sec mb-0">
-         <div class="row">
-                    
-          <div class="col-md-4 col-sm-6">
-            <div class="form-group">
-              <label>Customer Name</label>
-              <div class="flex-field">  
-                <input type="text" value="" class="form-control" required="">
-                <div class="add-btn"><a href="#">+</a></div>  
-                  </div>
-              </div> 
-          </div>
-
-          <div class="col-md-4 col-sm-6">
-            <div class="form-group">
-              <label>Address</label>  
-              <input type="text" value="" class="form-control" required="">
-            </div>	  
-          </div>
-            
-          <div class="col-md-4 col-sm-6">
-            <div class="form-group">
-              <label>City</label>  
-              <select class="form-select" required="">
-               <option value="">Select</option>
-               <option value="">City 1</option>
-               <option value="">City 2</option>
-               <option value="">City 3</option>
-               <option value="">City 4</option>
-               <option value="">City 5</option>
-              </select>
-            </div>	  
-          </div>
-            
-          <div class="col-md-4 col-sm-6">
-            <div class="form-group">
-              <label>State</label>  
-              <select class="form-select" required="">
-               <option value="">Select</option>
-               <option value="">City 1</option>
-               <option value="">City 2</option>
-               <option value="">City 3</option>
-               <option value="">City 4</option>
-               <option value="">City 5</option>
-              </select>
-            </div>	  
-          </div>
-            
-          <div class="col-md-4 col-sm-6">
-            <div class="form-group">
-              <label>Pincode</label>  
-              <input type="text" value="" class="form-control" required="">
-            </div>	  
-          </div>
-            
-          <div class="col-md-4 col-sm-6">
-            <div class="form-group">
-              <label>GST Number</label>  
-              <input type="text" value="" class="form-control" required="">
-            </div>	  
-          </div>  
-            
-           <div class="col-md-4 col-sm-6">
-            <div class="form-group">
-              <label>Contact Person</label>  
-              <input type="text" value="" class="form-control" required="">
-            </div>	  
-          </div>
-            
-          <div class="col-md-4 col-sm-6">
-            <div class="form-group">
-              <label>Email ID</label>  
-              <input type="text" value="" class="form-control" required="">
-            </div>	  
-          </div>
-            
-          <div class="col-md-4 col-sm-6">
-            <div class="form-group">
-              <label>Phone No.</label>  
-              <input type="text" value="" class="form-control" required="">
-            </div>	  
-          </div> 
-
-        </div>
-
-    </div>
-      
-    <div class="dasboard-table pi-table">
-                   
-    <div class="table-responsive">
-
-      <table class="table table-bordered">
-  <thead>
-      <tr>
-          <th width="38%">Particulars</th>						
-          <th>Unit</th>
-          <th>Discount</th>
-          <th>Rate/Unit(INR)</th>
-          <th>Amount(INR)</th>
-          <th>Action</th>
-      </tr>
-  </thead>
-  <tbody>
-
-      <tr>
-          <td><input class="form-control" name="name" type="text" required=""></td>
-          <td><input class="form-control" name="name" type="text" required=""></td>
-          <td><input class="form-control" name="name" type="text" required=""></td>
-          <td><input class="form-control" name="name" type="text" required=""></td>
-          <td><input class="form-control" name="name" type="text" required=""></td>
-          <td><span class="table-btns">
-               <a href="#"><img src="../assets/images/plus-icon.svg" alt=""></a>	
-               <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#deleterecord-modal"><img src="../assets/images/delete-icon.svg" alt=""></a>	
-              </span>
-          </td>
-      </tr>
-      
-      <tr>
-       <td colspan="4" class="text-end">Total</td>
-       <td colspan="2" class="text-end"><b>3,000.00</b></td>	
-      </tr>
-      
-      <tr>
-       <td colspan="4" class="text-start">Total Amount Receivable In Word: THREE THOUSAND FIVE HUNDRED FORTY AND ZERO ONLY</td>
-       <td colspan="2" class="text-end"><b>3,540.00</b></td>	
-      </tr>
-
-  </tbody>
-</table>
-
-    </div>
-
-  </div>	
-      
-    <div class="col-md-9 col-xs-12 col-sm-12 attach-col">
-          <div class="row align-items-center">
-              <div class="col-sm-2"><b>Attachment</b></div> 
-              <div class="col-sm-3 text-sm-end">Upload Document</div> 
-              <div class="col-sm-6">
-                <div class="input-group">
-                  <input type="file" class="form-control" id="inputGroupFile02">
-                  <label class="input-group-text" for="inputGroupFile02">Upload</label>
-              </div>
-              </div> 
-          </div>
-   </div>
-      
-  <div class="mastersform-sec mb-3">	
-      
-   <div class="col-md-9 mt-4">
-     <div class="form-group">
-       <label>Payment Terms</label>  
-       <textarea class="form-control h-100" cols="2" rows="3"></textarea>
-     </div>	  
-   </div>
-      
-   <div class="col-md-9 mt-3">
-     <div class="form-group">
-       <label>Remarks</label>  
-       <textarea class="form-control h-100" cols="2" rows="3"></textarea>
-     </div>	  
-   </div>
-      
-   <div class="col-md-12">
-    <div class="form-group mb-0 mt-4">
-      <button type="submit" class="btn btn-secondary w-auto me-2">Save as Draft</button>  
-      <button type="submit" class="common-btn w-auto">Submit</button>
-    </div>	  
-  </div>	
-      
-  </div>	
-      
-      
   </div>
+
+  <div class="pi-pagetitle">Customer Details</div>
+
+  <div class="mastersform-sec mb-0">
+    <div class="row">
+      <div class="col-md-4 col-sm-6">
+        <div class="form-group">
+          <label>Customer Name</label>
+          <div class="flex-field">
+            <input type="text" value="" class="form-control" required="" />
+            <div class="add-btn"><a href="#">+</a></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4 col-sm-6">
+        <div class="form-group">
+          <label>Address</label>
+          <input type="text" value="" class="form-control" required="" />
+        </div>
+      </div>
+
+      <div class="col-md-4 col-sm-6">
+        <div class="form-group">
+          <label>City</label>
+          <select class="form-select" required="">
+            <option value="">Select</option>
+            <option value="">City 1</option>
+            <option value="">City 2</option>
+            <option value="">City 3</option>
+            <option value="">City 4</option>
+            <option value="">City 5</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="col-md-4 col-sm-6">
+        <div class="form-group">
+          <label>State</label>
+          <select class="form-select" required="">
+            <option value="">Select</option>
+            <option value="">City 1</option>
+            <option value="">City 2</option>
+            <option value="">City 3</option>
+            <option value="">City 4</option>
+            <option value="">City 5</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="col-md-4 col-sm-6">
+        <div class="form-group">
+          <label>Pincode</label>
+          <input type="text" value="" class="form-control" required="" />
+        </div>
+      </div>
+
+      <div class="col-md-4 col-sm-6">
+        <div class="form-group">
+          <label>GST Number</label>
+          <input type="text" value="" class="form-control" required="" />
+        </div>
+      </div>
+
+      <div class="col-md-4 col-sm-6">
+        <div class="form-group">
+          <label>Contact Person</label>
+          <input type="text" value="" class="form-control" required="" />
+        </div>
+      </div>
+
+      <div class="col-md-4 col-sm-6">
+        <div class="form-group">
+          <label>Email ID</label>
+          <input type="text" value="" class="form-control" required="" />
+        </div>
+      </div>
+
+      <div class="col-md-4 col-sm-6">
+        <div class="form-group">
+          <label>Phone No.</label>
+          <input type="text" value="" class="form-control" required="" />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="dasboard-table pi-table">
+    <div class="table-responsive">
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th width="38%">Particulars</th>
+            <th>Unit</th>
+            <th>Discount</th>
+            <th>Rate/Unit(INR)</th>
+            <th>Amount(INR)</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of items; let i = index">
+            <td><input class="form-control" name="name{{i}}" type="text" required [(ngModel)]="item.name" /></td>
+            <td><input class="form-control" name="unit{{i}}" type="text" required [(ngModel)]="item.unit" /></td>
+            <td><input class="form-control" name="discount{{i}}" type="text" required [(ngModel)]="item.discount" /></td>
+            <td><input class="form-control" name="rate{{i}}" type="text" required [(ngModel)]="item.rate" /></td>
+            <td><input class="form-control" name="amount{{i}}" type="text" required [(ngModel)]="item.amount" /></td>
+            <td>
+              <span class="table-btns">
+                <a (click)="addRow()"><img src="../assets/images/plus-icon.svg" alt="" /></a>
+                <a (click)="removeRow(i)"><img src="../assets/images/delete-icon.svg" alt="" /></a>
+              </span>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="4" class="text-end">Total</td>
+            <td colspan="2" class="text-end"><b>{{ totalAmount | currency: 'INR' }}</b></td>
+          </tr>
+          <tr>
+            <td colspan="4" class="text-start">Total Amount Receivable In Word: {{ totalAmount | numberToWords  }}</td>
+            <td colspan="2" class="text-end"><b>{{ totalAmount | currency: 'INR' }}</b></td>
+          </tr>
+        </tbody>
+      </table>
+      
+      
+    </div>
+  </div>
+
+  <div class="col-md-9 col-xs-12 col-sm-12 attach-col">
+    <div class="row align-items-center">
+      <div class="col-sm-2"><b>Attachment</b></div>
+      <div class="col-sm-3 text-sm-end">Upload Document</div>
+      <div class="col-sm-6">
+        <div class="input-group">
+          <input type="file" class="form-control" id="inputGroupFile02" />
+          <label class="input-group-text" for="inputGroupFile02">Upload</label>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mastersform-sec mb-3">
+    <div class="col-md-9 mt-4">
+      <div class="form-group">
+        <label>Payment Terms</label>
+        <textarea class="form-control h-100" cols="2" rows="3"></textarea>
+      </div>
+    </div>
+
+    <div class="col-md-9 mt-3">
+      <div class="form-group">
+        <label>Remarks</label>
+        <textarea class="form-control h-100" cols="2" rows="3"></textarea>
+      </div>
+    </div>
+
+    <div class="col-md-12">
+      <div class="form-group mb-0 mt-4">
+        <button type="submit" class="btn btn-secondary w-auto me-2">
+          Save as Draft
+        </button>
+        <button type="submit" class="common-btn w-auto">Submit</button>
+      </div>
+    </div>
+  </div>
+</div>
