@@ -154,7 +154,7 @@
                     <div class="form-group">
                         <label>P.A.N. No.</label>
                         <input type="text" class="form-control" formControlName="PANNo" placeholder="P.A.N. No.">
-                   
+
                         <div *ngIf="shouldShowError('PANNo','invalidPAN')" class="text-danger">Please enter a valid PAN
                             Number.</div>
 
@@ -162,10 +162,11 @@
                 </div>
                 <div class="col-md-12">
                     <div class="form-group mb-0 mt-2">
-                        <button type="button" class="common-btn w-auto me-2">Darft</button>
+                        <button type="submit" class="btn btn-secondary w-auto me-2">Save as Draft</button>
                         <button type="submit" class="common-btn w-auto">Submit</button>
                     </div>
                 </div>
+
             </div>
         </form>
     </div><!--mastersform-sec-->
