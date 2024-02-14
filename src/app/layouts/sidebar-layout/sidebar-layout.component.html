@@ -50,7 +50,11 @@
                   <h3><a routerLink=""><img src="../assets/images/dashboard-icon.png" alt=""> Dashboard</a></h3>
                 </div>
 
-
+                <div class="left-men" routerLinkActive="active">
+                  <h3><img src="../assets/images/master-icon.png" alt="" > Masters</h3>
+                  <a routerLink="/masters/configuration-list" class="menu-list-title" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Configuration List</a>
+                  <a routerLink="/masters/users" class="menu-list-title" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">User Master</a>
+                </div>
 
                 <div class="left-men" routerLinkActive="active">
                   <h3><img src="../assets/images/customer-icon.png" alt=""> Customer</h3>
@@ -68,11 +72,7 @@
                   <a href="#" class="menu-list-title">Accounts Inbox</a>
                 </div>
 
-                <div class="left-men" routerLinkActive="active">
-                  <h3><img src="../assets/images/master-icon.png" alt="" > Masters</h3>
-                  <a routerLink="/masters/configuration-list" class="menu-list-title" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Configuration List</a>
-                  <a routerLink="/masters/users" class="menu-list-title" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">User Master</a>
-                </div>
+              
 
               </div>
 
