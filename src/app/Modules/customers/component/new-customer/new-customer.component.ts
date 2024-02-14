@@ -1,12 +1,5 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
-import { publicVariable } from '../../Export/new-customer';
-import { FormBuilder, Validators } from '@angular/forms';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ToastrService } from 'ngx-toastr';
-import { Router } from '@angular/router';
-import { panValidator } from '../../Validation/panValidator';
-import { alphanumericWithSpacesValidator } from '../../Validation/alphanumericWithSpacesValidator';
-import { gstValidator } from '../../Validation/gstValidator';
+import { FormBuilder, NgbModal, Router, ToastrService, Validators, alphanumericWithSpacesValidator, gstValidator, panValidator, publicVariable } from '../../Export/new-customer';
 @Component({
   selector: 'app-new-customer',
   templateUrl: './new-customer.component.html',

@@ -1,6 +1,13 @@
 import { FormGroup } from "@angular/forms";
 import { Subscription } from "rxjs";
 
+export { FormBuilder, Validators } from '@angular/forms';
+export { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+export { ToastrService } from 'ngx-toastr';
+export { Router } from '@angular/router';
+export { panValidator } from '../Validation/panValidator';
+export { alphanumericWithSpacesValidator } from '../Validation/alphanumericWithSpacesValidator';
+export { gstValidator } from '../Validation/gstValidator';
 export class publicVariable {
   dataForm!: FormGroup;
   isEdit: boolean = false;
