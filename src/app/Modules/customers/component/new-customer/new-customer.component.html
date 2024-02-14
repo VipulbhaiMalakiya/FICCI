@@ -15,7 +15,8 @@
                     <div class="form-group">
                         <label>Name</label>
                         <input type="text" class="form-control" placeholder="Name" formControlName="name">
-                        <div *ngIf="shouldShowError('name','required')" class="text-danger"> Name is required.</div>
+                        <div *ngIf="shouldShowError('name','alphanumericWithSpaces')" class="text-danger"> Please enter
+                            a valid alphanumeric value.</div>
 
                     </div>
                 </div>
@@ -29,7 +30,8 @@
                     <div class="form-group">
                         <label>Address</label>
                         <input type="text" class="form-control" placeholder="Address" formControlName="address">
-                        <div *ngIf="shouldShowError('address','required')" class="text-danger">This field is required</div>
+                        <div *ngIf="shouldShowError('address','required')" class="text-danger">This field is required
+                        </div>
 
                     </div>
                 </div>
@@ -42,7 +44,7 @@
                 <div class="col-md-3 col-sm-6">
                     <div class="form-group">
                         <label>Country/Region Code</label>
-                        <select class="form-select" formControlName="country" > 
+                        <select class="form-select" formControlName="country">
                             <option value="IND">List 1</option>
                             <option value="">List 2</option>
                             <option value="">List 3</option>
@@ -85,16 +87,20 @@
                 <div class="col-md-3 col-sm-6">
                     <div class="form-group">
                         <label>Post Code</label>
-                        <input type="text" class="form-control" placeholder="Post Code" formControlName="postCode" (input)="onInputChange($event)">
-                        <div *ngIf="shouldShowError('postCode','required')" class="text-danger"> Post Code is required.</div>
-                        <div *ngIf="shouldShowError('postCode','pattern')" class="text-danger"> Please enter a valid 6-digit Post Code.</div>
+                        <input type="text" class="form-control" placeholder="Post Code" formControlName="postCode"
+                            (input)="onInputChange($event)">
+                        <div *ngIf="shouldShowError('postCode','required')" class="text-danger"> Post Code is required.
+                        </div>
+                        <div *ngIf="shouldShowError('postCode','pattern')" class="text-danger"> Please enter a valid
+                            6-digit Post Code.</div>
 
                     </div>
                 </div>
                 <div class="col-md-3 col-sm-6">
                     <div class="form-group">
                         <label>GST Registration No.</label>
-                        <input type="text" class="form-control" placeholder="GST Registration No." formControlName="GSTRegistrationNo">
+                        <input type="text" class="form-control" placeholder="GST Registration No."
+                            formControlName="GSTRegistrationNo">
                         <div *ngIf="shouldShowError('GSTRegistrationNo','required')" class="text-danger">This field is
                             required</div>
                     </div>
@@ -119,13 +125,15 @@
                         <label>E-Mail</label>
                         <input type="text" class="form-control" formControlName="email" placeholder="email">
                         <div *ngIf="shouldShowError('email','required')" class="text-danger">Email is required.</div>
-                        <div *ngIf="shouldShowError('email','email')" class="text-danger">  Please enter a valid email address.</div>
+                        <div *ngIf="shouldShowError('email','email')" class="text-danger"> Please enter a valid email
+                            address.</div>
                     </div>
                 </div>
                 <div class="col-md-3 col-sm-6">
                     <div class="form-group">
                         <label>Primary Contact No.</label>
-                        <input type="text" class="form-control" formControlName="PrimaryContactNo" placeholder="Primary Contact No" (input)="onInputChange($event)">
+                        <input type="text" class="form-control" formControlName="PrimaryContactNo"
+                            placeholder="Primary Contact No" (input)="onInputChange($event)">
                         <div *ngIf="shouldShowError('PrimaryContactNo','required')" class="text-danger">This field is
                             required</div>
                     </div>
@@ -133,7 +141,8 @@
                 <div class="col-md-3 col-sm-6">
                     <div class="form-group">
                         <label>Contact</label>
-                        <input type="text" class="form-control" formControlName="contact" placeholder="Contact" (input)="onInputChange($event)">
+                        <input type="text" class="form-control" formControlName="contact" placeholder="Contact"
+                            (input)="onInputChange($event)">
                         <div *ngIf="shouldShowError('contact','required')" class="text-danger">This field is required
                         </div>
                     </div>
@@ -142,8 +151,10 @@
                     <div class="form-group">
                         <label>P.A.N. No.</label>
                         <input type="text" class="form-control" formControlName="PANNo" placeholder="P.A.N. No.">
-                        <div *ngIf="shouldShowError('PANNo','required')" class="text-danger">PAN Number is required.</div>
-                        <div *ngIf="shouldShowError('PANNo','invalidPAN')" class="text-danger">Please enter a valid PAN Number.</div>
+                        <div *ngIf="shouldShowError('PANNo','required')" class="text-danger">PAN Number is required.
+                        </div>
+                        <div *ngIf="shouldShowError('PANNo','invalidPAN')" class="text-danger">Please enter a valid PAN
+                            Number.</div>
 
                     </div>
                 </div>

@@ -5,6 +5,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 import { panValidator } from '../../Validation/panValidator';
+import { alphanumericWithSpacesValidator } from '../../Validation/alphanumericWithSpacesValidator';
 @Component({
   selector: 'app-new-customer',
   templateUrl: './new-customer.component.html',
@@ -24,7 +25,7 @@ export class NewCustomerComponent {
   private initializeForm(): void {
     this.publicVariable.dataForm = this.fb.group({
       customerNo: [''],
-      name: ['', Validators.required],
+      name: ['', [Validators.required, alphanumericWithSpacesValidator()]] ,// Use the custom validator function
       name2: [''],
       address: ['', Validators.required],
       address2: [''],
@@ -50,20 +51,20 @@ export class NewCustomerComponent {
       const newData = this.publicVariable.dataForm.value;
       const newConfig: any = {
         customerNo: newData.customerNo,
-        name: newData.name,
-        name2: newData.name2,
-        address: newData.address,
-        address2: newData.address2,
+        name: newData.name.trim(),
+        name2: newData.name2.trim(),
+        address: newData.address.trim(),
+        address2: newData.address2.trim(),
         country: newData.country,
         state: newData.state,
         city: newData.city,
-        postCode: newData.postCode,
-        GSTRegistrationNo: newData.GSTRegistrationNo,
+        postCode: newData.postCode.trim(),
+        GSTRegistrationNo: newData.GSTRegistrationNo.trim(),
         GSTCustomerType: newData.GSTCustomerType,
-        email: newData.email,
-        PrimaryContactNo: newData.PrimaryContactNo,
-        contact: newData.contact,
-        PANNo: newData.PANNo
+        email: newData.email.trim(),
+        PrimaryContactNo: newData.PrimaryContactNo.trim(),
+        contact: newData.contact.trim(),
+        PANNo: newData.PANNo.trim()
       };
       console.log(newConfig);
 
