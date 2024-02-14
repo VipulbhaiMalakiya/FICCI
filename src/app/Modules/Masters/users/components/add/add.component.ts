@@ -57,7 +57,7 @@ export class AddComponent implements OnInit {
       next: (data: any) => {
         const userData = data.data[0];
         if (userData) {
-          this.cd.detectChanges();
+          this.publicVariable.roleId = this.getRoleIdByRoleName(userData.roleName);          
           this.publicVariable.userData = userData;
           this.onEdit(userData);
         }
@@ -173,13 +173,12 @@ export class AddComponent implements OnInit {
   onEdit(data: any): void {
     this.publicVariable.isEdit = true;
     this.cd.detectChanges();
-    const RoleId: any = this.getRoleIdByRoleName(data.roleName);
     this.publicVariable.dataForm.patchValue({
       empId: data.imeM_EmpId,
       username: data.imeM_Username,
       name: data.imeM_Name,
       email: data.imeM_Email,
-      roleId: RoleId,
+      roleId: data.roleId ||  this.publicVariable.roleId ,
       isActive: data.isActive,
       id: data.imeM_ID
     });
@@ -194,9 +193,7 @@ export class AddComponent implements OnInit {
 
   handleApiRequest(apiRequest: any, successMessage: string, errorMessagePrefix: string): void {
     try {
-      // Start the spinner
       this.publicVariable.isProcess = true;
-
       this.publicVariable.Subscription.add(
         apiRequest.subscribe({
           next: (res: any) => {
@@ -219,7 +216,6 @@ export class AddComponent implements OnInit {
       this.handleErrorResponse();
     }
   }
-
   handleApiResponse(res: any, successMessage: string): void {
     if (res.status === true) {
       this.toastr.success(successMessage, 'Success');
