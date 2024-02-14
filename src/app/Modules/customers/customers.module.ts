@@ -7,6 +7,7 @@ import { StatusCustomerComponent } from './component/status-customer/status-cust
 import { ApprovalCustomerComponent } from './component/approval-customer/approval-customer.component';
 import { AccountsCustomerComponent } from './component/accounts-customer/accounts-customer.component';
 import { CustomerStatusComponent } from './View/customer-status/customer-status.component';
+import { ApprovalRemarksComponent } from './Remarks/approval-remarks/approval-remarks.component';
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import { CustomerStatusComponent } from './View/customer-status/customer-status.
     StatusCustomerComponent,
     ApprovalCustomerComponent,
     AccountsCustomerComponent,
-    CustomerStatusComponent
+    CustomerStatusComponent,
+    ApprovalRemarksComponent
   ],
   imports: [
     CommonModule,
