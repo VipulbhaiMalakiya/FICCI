@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { NgbModal, publicVariable, ToastrService, DEFAULT_CATEGORY_LIST, addUpdateConfiguration, alphanumericWithSpacesValidator, ConfirmationDialogModalComponent, AppService, ConfigurationService, Configuration, alphanumericValidator, toTitleCase, UtilityService } from '../../import/index'
 import { FormBuilder, Validators } from '@angular/forms';
-import { catchError, throwError, timeout } from 'rxjs';
+import { catchError, finalize, throwError, timeout } from 'rxjs';
 @Component({
   selector: 'app-configuration-list',
   templateUrl: './configuration-list.component.html',
@@ -57,7 +57,6 @@ export class ConfigurationListComponent implements OnInit, OnDestroy {
               category_Name: toTitleCase(category.category_Name)
             }));
             this.cdr.detectChanges();
-
           },
           error: () => {
             this.publicVariable.categoryList = DEFAULT_CATEGORY_LIST;
@@ -72,32 +71,25 @@ export class ConfigurationListComponent implements OnInit, OnDestroy {
   }
   loadConfiguration(): void {
     this.publicVariable.configurationSubscription.add(
-      this.API.getAll()
-        .pipe(
-          timeout(40000),
-          catchError((error) => {
-            this.handleError(error, 'Error loading configuration:');
-            return throwError(error); // Re-throw the error after handling
-          })
-        )
-        .subscribe({
-          next: (response: any) => {
-            this.publicVariable.data = response.data;
-            this.publicVariable.count = response.data.length;
-            this.publicVariable.isProcess = false;
-          }
+      this.API.getAll().pipe(
+        timeout(40000),
+        catchError((error) => {          
+          this.toastr.error('Operation timed out after 40 seconds', error.name);
+          return throwError(() => error); // Pass a function that returns the error
+        }),
+        finalize(() => {
+          this.publicVariable.isProcess = false;
         })
+      ).subscribe({
+        next: (response: any) => {
+          this.publicVariable.data = response.data;
+          this.publicVariable.count = response.data.length;
+        }
+      })
     );
   }
 
-  private handleError(error: any, errorMessage: string): void {
-    if (error.name === 'TimeoutError') {
-      this.toastr.error('Operation timed out after 40 seconds', error.name);
-    } else {
-      this.toastr.error(errorMessage, error.name);
-    }
-    this.publicVariable.isProcess = false;
-  }
+  
 
   onTableDataChange(event: any) {
     this.publicVariable.page = event;
@@ -175,18 +167,7 @@ export class ConfigurationListComponent implements OnInit, OnDestroy {
     const category = this.publicVariable.categoryList.find(cat => cat.category_Name.toLowerCase() === trimmedCategoryName);
     return category ? category.id : undefined;
   }
-  handleApiResponse(res: any, successMessage: string): void {
-    if (res.status === true) {
-      this.toastr.success(successMessage, 'Success');
-      this.loadConfiguration();
-      this.publicVariable.isProcess = false;
-      this.publicVariable.dataForm.reset();
-    } else {
-      this.toastr.error(res.message, 'Error');
-      this.publicVariable.isProcess = false;
 
-    }
-  }
   markFormControlsAsTouched(): void {
     ['c_Code', 'c_Value', 'categoryID'].forEach(controlName => {
       this.publicVariable.dataForm.controls[controlName].markAsTouched();
@@ -201,7 +182,6 @@ export class ConfigurationListComponent implements OnInit, OnDestroy {
           },
           error: (error: any) => {
             this.publicVariable.isProcess = false;
-
             this.toastr.error(error.error.message || 'An error occurred. Please try again later.', 'Error');
           }
         })
@@ -213,6 +193,17 @@ export class ConfigurationListComponent implements OnInit, OnDestroy {
     }
   }
 
+  handleApiResponse(res: any, successMessage: string): void {
+    if (res.status === true) {
+      this.toastr.success(successMessage, 'Success');
+      this.loadConfiguration();
+      this.publicVariable.isProcess = false;
+      this.publicVariable.dataForm.reset();
+    } else {
+      this.toastr.error(res.message, 'Error');
+      this.publicVariable.isProcess = false;
 
+    }
+  }
 
 }
