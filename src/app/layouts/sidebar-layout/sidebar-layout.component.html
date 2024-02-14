@@ -46,21 +46,17 @@
 
               <div id="accordion">
 
-                <div class="left-men" >
+                <div class="left-men">
                   <h3><a routerLink=""><img src="../assets/images/dashboard-icon.png" alt=""> Dashboard</a></h3>
                 </div>
-
-                <div class="left-men" routerLinkActive="active">
-                  <h3><img src="../assets/images/master-icon.png" alt="" > Masters</h3>
-                  <a routerLink="/masters/configuration-list" class="menu-list-title" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Configuration List</a>
-                  <a routerLink="/masters/users" class="menu-list-title" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">User Master</a>
-                </div>
-
                 <div class="left-men" routerLinkActive="active">
                   <h3><img src="../assets/images/customer-icon.png" alt=""> Customer</h3>
-                  <a routerLink="/customer/new" class="menu-list-title" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">New Customer</a>
-                  <a routerLink="/customer/status"class="menu-list-title"  routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Customer Status</a>
-                  <a routerLink="/customer/approval"class="menu-list-title"  routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Approval Inbox</a>
+                  <a routerLink="/customer/new" class="menu-list-title" routerLinkActive="active"
+                    [routerLinkActiveOptions]="{ exact: true }">New Customer</a>
+                  <a routerLink="/customer/status" class="menu-list-title" routerLinkActive="active"
+                    [routerLinkActiveOptions]="{ exact: true }">Customer Status</a>
+                  <a routerLink="/customer/approval" class="menu-list-title" routerLinkActive="active"
+                    [routerLinkActiveOptions]="{ exact: true }">Approval Inbox</a>
                   <a routerLink="/customer/accounts" class="menu-list-title">Accounts Inbox</a>
                 </div>
 
@@ -71,8 +67,14 @@
                   <a href="#" class="menu-list-title">Approval Inbox</a>
                   <a href="#" class="menu-list-title">Accounts Inbox</a>
                 </div>
+                <div class="left-men" routerLinkActive="active">
+                  <h3><img src="../assets/images/master-icon.png" alt=""> Masters</h3>
+                  <a routerLink="/masters/configuration-list" class="menu-list-title" routerLinkActive="active"
+                    [routerLinkActiveOptions]="{ exact: true }">Configuration List</a>
+                  <a routerLink="/masters/users" class="menu-list-title" routerLinkActive="active"
+                    [routerLinkActiveOptions]="{ exact: true }">User Master</a>
+                </div>
 
-              
 
               </div>
 
