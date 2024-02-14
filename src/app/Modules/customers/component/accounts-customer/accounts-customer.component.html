@@ -6,10 +6,10 @@
 
         <div class="tblsort">
             <label class="col-form-label">Show</label>
-            <select class="form-select" required="">
-                <option value="">10</option>
-                <option value="">20</option>
-            </select>
+            <select id="itemsPerPageSelect" class="form-select" [(ngModel)]="publicVariable.tableSize"
+            (change)="onTableSizeChange($event)">
+            <option *ngFor="let size of publicVariable.tableSizes" [value]="size">{{ size }}</option>
+          </select>
         </div>
 
         <div class="dt-buttons">
