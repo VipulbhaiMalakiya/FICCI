@@ -124,7 +124,7 @@
                 <div class="col-md-3 col-sm-6">
                     <div class="form-group">
                         <label>Primary Contact No.</label>
-                        <input type="text" class="form-control" formControlName="PrimaryContactNo" placeholder="Primary Contact No">
+                        <input type="text" class="form-control" formControlName="PrimaryContactNo" placeholder="Primary Contact No" (input)="onInputChange($event)">
                         <div *ngIf="shouldShowError('PrimaryContactNo','required')" class="text-danger">This field is
                             required</div>
                     </div>
@@ -132,7 +132,7 @@
                 <div class="col-md-3 col-sm-6">
                     <div class="form-group">
                         <label>Contact</label>
-                        <input type="text" class="form-control" formControlName="contact" placeholder="Contact">
+                        <input type="text" class="form-control" formControlName="contact" placeholder="Contact" (input)="onInputChange($event)">
                         <div *ngIf="shouldShowError('contact','required')" class="text-danger">This field is required
                         </div>
                     </div>

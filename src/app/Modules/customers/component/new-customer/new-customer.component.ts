@@ -42,7 +42,6 @@ export class NewCustomerComponent {
 
   onInputChange(event: any) {
     const inputValue = event.target.value; event.target.value = inputValue.replace(/[^0-9]/g, ''); // Allow only numeric input
-    this.publicVariable.dataForm.patchValue({ postCode: event.target.value }); // Update the form control value
   }
 
   onSubmit(): void {
