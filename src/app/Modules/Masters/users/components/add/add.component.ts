@@ -214,8 +214,6 @@ export class AddComponent implements OnInit {
     return role ? role.role_id : undefined;
   }
 
-
-
   markFormControlsAsTouched(): void {
     ['empId', 'username', 'name', 'email', 'roleId'].forEach(controlName => {
       this.publicVariable.dataForm.controls[controlName].markAsTouched();
