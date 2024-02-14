@@ -6,6 +6,7 @@ import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 import { panValidator } from '../../Validation/panValidator';
 import { alphanumericWithSpacesValidator } from '../../Validation/alphanumericWithSpacesValidator';
+import { gstValidator } from '../../Validation/gstValidator';
 @Component({
   selector: 'app-new-customer',
   templateUrl: './new-customer.component.html',
@@ -26,14 +27,14 @@ export class NewCustomerComponent {
     this.publicVariable.dataForm = this.fb.group({
       customerNo: [''],
       name: ['', [Validators.required, alphanumericWithSpacesValidator()]] ,// Use the custom validator function
-      name2: [''],
-      address: ['', Validators.required],
-      address2: [''],
+      name2: ['', alphanumericWithSpacesValidator()],
+      address: ['', Validators.required, ],
+      address2: ['', ],
       country: ['', Validators.required],
       state: ['', Validators.required],
       city: ['', Validators.required],
       postCode: ['', [Validators.required, Validators.pattern(/^\d{6}$/)]],
-      GSTRegistrationNo: ['', Validators.required],
+      GSTRegistrationNo: ['', [Validators.required, gstValidator()]],
       GSTCustomerType: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       PrimaryContactNo: ['', Validators.required],

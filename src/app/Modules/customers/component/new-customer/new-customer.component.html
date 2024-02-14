@@ -24,6 +24,8 @@
                     <div class="form-group">
                         <label>Name 2</label>
                         <input type="text" class="form-control" placeholder="Name 2" formControlName="name2">
+                        <div *ngIf="shouldShowError('name2','alphanumericWithSpaces')" class="text-danger"> Please enter
+                            a valid alphanumeric value.</div>
                     </div>
                 </div>
                 <div class="col-md-3 col-sm-6">
@@ -101,8 +103,9 @@
                         <label>GST Registration No.</label>
                         <input type="text" class="form-control" placeholder="GST Registration No."
                             formControlName="GSTRegistrationNo">
-                        <div *ngIf="shouldShowError('GSTRegistrationNo','required')" class="text-danger">This field is
-                            required</div>
+                        <div *ngIf="shouldShowError('GSTRegistrationNo','invalidGST')" class="text-danger"> Please enter
+                            a valid GST Registration Number. (05AAACF1282E1Z5)
+                        </div>
                     </div>
                 </div>
                 <div class="col-md-3 col-sm-6">
