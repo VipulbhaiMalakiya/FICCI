@@ -553,8 +553,76 @@ header.main-header {
 
 .mastersform-sec .form-group{ margin-bottom:10px; }
 
-.table-btns {
-    width: 100px;
-    display: block;
+.table-btns { width: 100px; display: block; }
+
+.pipage-radio {
+    display: flex;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 10px;
+    margin-bottom:0px;
+	margin-top: 25px;
 }
+
+.pipage-radio .form-check{ margin-right:30px; } 
+.pipage-radio .form-check-label{ font-size:15px; font-weight: 600; color:#1F1917; margin-left:4px; cursor: pointer; }
+.pipage-radio .form-check-input:checked{ background-color:#E05717; border-color:#E05717; }
+.pipage-radio .form-check-input{ border-color: #aaa; width:20px; height:20px; margin-top: 2px; }
+
+.pi-pagetitle{
+	font-size:16px;
+    color: #1f1917;
+    font-weight:500;
+	margin-top: 10px;
+}
+
+.flex-field { display: flex; align-items: center; }
+
+.add-btn{ margin-left: 10px; }
+
+.add-btn a {
+    background: #139C47;
+    height: 100%;
+    padding: 2px 10px;
+    font-size: 24px;
+    color: #fff;
+    border-radius: 5px;
+}
+
+.add-btn a:hover{ background: #10813b; }
+
+.pi-table{ margin-top: 30px; text-align: center; margin-bottom: 30px; }
+.pi-table .form-control {
+    text-align: center;
+    padding: 5px;
+    height: auto;
+}
+
+.pi-table th:first-child{ text-align: left; }
+.pi-table td:first-child input{ text-align: left; }
+
+.attach-col{ font-size:13px; }
+.attach-col b{ font-weight: 500; font-size:16px; }
+.attach-col .form-control{ height: auto; font-size: 13px; padding: 0.375rem 0.75rem; }
+.attach-col .input-group-text{  font-size: 14px;}
+
+.btn.btn-secondary {
+    background: #888;
+    border-color: #888;
+}
+
+.btn.btn-secondary:hover{ background:#666; border-color:#666;  }
+
+textarea.form-control{ padding-top: 10px; padding-bottom: 10px; }
+.pi-table td { background: #f5f5f5; }
+.pi-table td .form-control {
+    border-color: #d8d8d8;
+    font-size: 13px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+
+
+
+
 
