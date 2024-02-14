@@ -149,13 +149,12 @@ export class ConfigurationListComponent implements OnInit, OnDestroy {
   }
   onDownload(): void {
     const exportData = this.publicVariable.data.map((x) => ({
-      //ID: x?.c_ID || '',
       Code: x?.c_Code || '',
       Value: x?.c_Value || '',
       Category: x?.category_Name ? toTitleCase(x.category_Name) : '',
-      isActive: x && x.isActive ? 'Yes' : 'No'
+      Active: x && x.isActive ? 'Yes' : 'No'
     }));
-    const headers = ['Code', 'Value', 'Category', 'isActive'];
+    const headers = ['Code', 'Value', 'Category', 'Active'];
     this.appService.exportAsExcelFile(exportData, 'Configuration-list', headers);
   }
 

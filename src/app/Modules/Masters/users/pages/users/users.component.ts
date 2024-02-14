@@ -64,7 +64,7 @@ export class UsersComponent implements OnInit, OnDestroy {
 
   onDownload() {
     const exportData = this.publicVariable.userlist.map((x) => ({
-      EmpId: x?.imeM_EmpId || '',
+      "Employee ID	": x?.imeM_EmpId || '',
       Name: x?.imeM_Name || '',
       Username: x?.imeM_Username || '',
       Email: x?.imeM_Email || '',
@@ -72,7 +72,7 @@ export class UsersComponent implements OnInit, OnDestroy {
       Role: x?.roleName || ''
     }));
 
-    const headers = ['EmpId', 'Name', 'Email', 'Username', 'Active', 'Role'];
+    const headers = ['Employee ID	', 'Name', 'Email', 'Username','Role', 'Active'];
     this.appService.exportAsExcelFile(
       exportData,
       'Users',
