@@ -22,13 +22,63 @@ export class NewCustomerComponent {
   }
   private initializeForm(): void {
     this.publicVariable.dataForm = this.fb.group({
-      id: [''],
-      customerNo: [null, Validators.required],
-      Name: [null, Validators.required],
-      username: [{ value: '', disabled: true }, , Validators.required],
-      name: [{ value: '', disabled: true }, , Validators.required],
-      email: [{ value: '', disabled: true }, , [Validators.required, Validators.email]],
-      isActive: [true] // Assuming default value is true
+      customerNo: [''],
+      name: ['', Validators.required],
+      name2: [''],
+      address: ['', Validators.required],
+      address2: [''],
+      country: ['', Validators.required],
+      state: ['', Validators.required],
+      city: ['', Validators.required],
+      postCode: ['', [Validators.required, Validators.pattern(/^\d{6}$/)]],
+      GSTRegistrationNo: ['', Validators.required],
+      GSTCustomerType: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      PrimaryContactNo: ['', Validators.required],
+      contact: ['', Validators.required],
+      PANNo: ['', Validators.required],
     });
+  }
+
+  onInputChange(event: any) {
+    const inputValue = event.target.value; event.target.value = inputValue.replace(/[^0-9]/g, ''); // Allow only numeric input
+    this.publicVariable.dataForm.patchValue({ postCode: event.target.value }); // Update the form control value
+  }
+
+  onSubmit(): void {
+    if (this.publicVariable.dataForm.valid) {
+      const newData = this.publicVariable.dataForm.value;
+      const newConfig: any = {
+        customerNo: newData.customerNo,
+        name: newData.name,
+        name2: newData.name2,
+        address: newData.address,
+        address2: newData.address2,
+        country: newData.country,
+        state: newData.state,
+        city: newData.city,
+        postCode: newData.postCode,
+        GSTRegistrationNo: newData.GSTRegistrationNo,
+        GSTCustomerType: newData.GSTCustomerType,
+        email: newData.email,
+        PrimaryContactNo: newData.PrimaryContactNo,
+        contact: newData.contact,
+        PANNo: newData.PANNo
+      };
+      console.log(newConfig);
+
+    } else {
+      this.markFormControlsAsTouched();
+    }
+  }
+
+  markFormControlsAsTouched(): void {
+    ['name', 'address', 'country', 'state', 'city', 'postCode', 'GSTRegistrationNo', 'GSTCustomerType', 'email', 'PrimaryContactNo', 'contact', 'PANNo'].forEach(controlName => {
+      this.publicVariable.dataForm.controls[controlName].markAsTouched();
+    });
+  }
+
+  shouldShowError(controlName: string, errorName: string): boolean {
+    return this.publicVariable.dataForm.controls[controlName].touched && this.publicVariable.dataForm.controls[controlName].hasError(errorName);
   }
 }

@@ -9,6 +9,7 @@ import { AccountsCustomerComponent } from './component/accounts-customer/account
 import { CustomerStatusComponent } from './View/customer-status/customer-status.component';
 import { ApprovalRemarksComponent } from './Remarks/approval-remarks/approval-remarks.component';
 import { AccountsRemarksComponent } from './Remarks/accounts-remarks/accounts-remarks.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -23,7 +24,9 @@ import { AccountsRemarksComponent } from './Remarks/accounts-remarks/accounts-re
   ],
   imports: [
     CommonModule,
-    CustomersRoutingModule
+    CustomersRoutingModule,
+    ReactiveFormsModule,
+    FormsModule
   ]
 })
 export class CustomersModule { }
