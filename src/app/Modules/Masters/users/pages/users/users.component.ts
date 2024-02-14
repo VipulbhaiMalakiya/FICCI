@@ -50,8 +50,7 @@ export class UsersComponent implements OnInit, OnDestroy {
   
     this.publicVariable.Subscription.add(subscription);
   }
-
-
+  
   onTableDataChange(event: any) {
     this.publicVariable.page = event;
     this.publicVariable.userlist
