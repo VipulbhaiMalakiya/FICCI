@@ -4,6 +4,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
+import { panValidator } from '../../Validation/panValidator';
 @Component({
   selector: 'app-new-customer',
   templateUrl: './new-customer.component.html',
@@ -36,7 +37,7 @@ export class NewCustomerComponent {
       email: ['', [Validators.required, Validators.email]],
       PrimaryContactNo: ['', Validators.required],
       contact: ['', Validators.required],
-      PANNo: ['', Validators.required],
+      PANNo: ['', [Validators.required, panValidator()]] // Use the custom validator function
     });
   }
 

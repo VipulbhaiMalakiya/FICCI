@@ -15,7 +15,8 @@
                     <div class="form-group">
                         <label>Name</label>
                         <input type="text" class="form-control" placeholder="Name" formControlName="name">
-                        <div *ngIf="shouldShowError('name','required')" class="text-danger">This field is required</div>
+                        <div *ngIf="shouldShowError('name','required')" class="text-danger"> Name is required.</div>
+
                     </div>
                 </div>
                 <div class="col-md-3 col-sm-6">
@@ -141,8 +142,9 @@
                     <div class="form-group">
                         <label>P.A.N. No.</label>
                         <input type="text" class="form-control" formControlName="PANNo" placeholder="P.A.N. No.">
-                        <div *ngIf="shouldShowError('PANNo','required')" class="text-danger">This field is required
-                        </div>
+                        <div *ngIf="shouldShowError('PANNo','required')" class="text-danger">PAN Number is required.</div>
+                        <div *ngIf="shouldShowError('PANNo','invalidPAN')" class="text-danger">Please enter a valid PAN Number.</div>
+
                     </div>
                 </div>
                 <div class="col-md-12">
