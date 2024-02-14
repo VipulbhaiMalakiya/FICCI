@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { AppService, publicVariable, Router, ConfirmationDialogModalComponent, NgbModal, UserService, ToastrService } from '../../import/index'
-import { timeout } from 'rxjs';
+import { finalize, timeout } from 'rxjs';
 
 @Component({
   selector: 'app-users',
@@ -27,14 +27,17 @@ export class UsersComponent implements OnInit, OnDestroy {
       this.publicVariable.Subscription.unsubscribe();
     }
   }
+
   loadUserList(): void {
     const subscription = this.API.getUsers().pipe(
-      timeout(40000) // Timeout set to 40 seconds (40000 milliseconds)
+      timeout(40000), // Timeout set to 40 seconds (40000 milliseconds)
+      finalize(() => {
+        this.publicVariable.isProcess = false;
+      })
     ).subscribe({
       next: (response: any) => {
         this.publicVariable.userlist = response.data;
         this.publicVariable.count = response.data.length;
-        this.publicVariable.isProcess = false;
       },
       error: (error: any) => {
         if (error.name === 'TimeoutError') {
@@ -42,13 +45,11 @@ export class UsersComponent implements OnInit, OnDestroy {
         } else {
           this.toastr.error('Error loading user list', error.name);
         }
-        this.publicVariable.isProcess = false;
       }
     });
-
+  
     this.publicVariable.Subscription.add(subscription);
   }
-
 
 
   onTableDataChange(event: any) {
