@@ -57,7 +57,7 @@ export class AddComponent implements OnInit {
       next: (data: any) => {
         const userData = data.data[0];
         if (userData) {
-          this.publicVariable.roleId = this.getRoleIdByRoleName(userData.roleName);          
+          this.publicVariable.roleId = this.getRoleIdByRoleName(userData.roleName);
           this.publicVariable.userData = userData;
           this.onEdit(userData);
         }
@@ -119,33 +119,23 @@ export class AddComponent implements OnInit {
 
     modalRef.result.then((canDelete: boolean) => {
       if (canDelete) {
-        this.deleteRecord(id);
+        this.publicVariable.isProcess = true;
+        this.API.delete(id).subscribe({
+          next: (res: any) => {
+            this.toastr.success(res.message, 'Success');
+            this.router.navigate(['/masters/users']);
+          },
+          error: (error: any) => {
+            this.toastr.error(error.error.message, 'Error');
+          },
+          complete: () => {
+            this.publicVariable.isProcess = false;
+          }
+        });
       }
     }).catch(() => { });
   }
 
-  deleteRecord(id: number): void {
-    this.publicVariable.isProcess = true;
-    this.API.delete(id).subscribe({
-      next: (res: any) => {
-        this.handleDeleteSuccess(res);
-      },
-      error: (error: any) => {
-        this.handleDeleteError(error);
-      }
-    });
-  }
-
-  handleDeleteSuccess(response: any): void {
-    this.toastr.success(response.message, 'Success');
-    this.router.navigate(['/masters/users']);
-    this.publicVariable.isProcess = false;
-  }
-
-  handleDeleteError(error: any): void {
-    this.toastr.error(error.error.message, 'Error');
-    this.publicVariable.isProcess = false;
-  }
 
   onSubmit(): void {
     if (this.publicVariable.dataForm.valid) {
@@ -178,7 +168,7 @@ export class AddComponent implements OnInit {
       username: data.imeM_Username,
       name: data.imeM_Name,
       email: data.imeM_Email,
-      roleId: data.roleId ||  this.publicVariable.roleId ,
+      roleId: data.roleId || this.publicVariable.roleId,
       isActive: data.isActive,
       id: data.imeM_ID
     });
@@ -197,40 +187,31 @@ export class AddComponent implements OnInit {
       this.publicVariable.Subscription.add(
         apiRequest.subscribe({
           next: (res: any) => {
-            this.handleApiResponse(res, successMessage);
+            if (res.status === true) {
+              this.toastr.success(successMessage, 'Success');
+              this.publicVariable.userData = res.data;
+              this.publicVariable.isProcess = false;
+              this.publicVariable.dataForm.reset();
+            } else {
+              this.toastr.error(res.message, 'Error');
+              this.publicVariable.isProcess = false;
+            }
             this.cd.detectChanges();
           },
           error: (error: any) => {
             this.toastr.error(error.error.message || 'An error occurred. Please try again later.', 'Error');
-            this.handleErrorResponse();
+            this.publicVariable.isProcess = false;
             this.cd.detectChanges();
           },
           complete: () => {
-            // Hide the spinner regardless of success or error
             this.publicVariable.isProcess = false;
           }
         })
       );
     } catch (error) {
       this.toastr.error('Error handling API request', 'Error');
-      this.handleErrorResponse();
-    }
-  }
-  handleApiResponse(res: any, successMessage: string): void {
-    if (res.status === true) {
-      this.toastr.success(successMessage, 'Success');
-      this.publicVariable.userData = res.data;
       this.publicVariable.isProcess = false;
-      this.publicVariable.dataForm.reset();
-
-    } else {
-
-      this.toastr.error(res.message, 'Error');
     }
-  }
-
-  handleErrorResponse(): void {
-    this.publicVariable.isProcess = false;
   }
 
   markFormControlsAsTouched(): void {
