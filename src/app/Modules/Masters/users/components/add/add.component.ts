@@ -42,7 +42,7 @@ export class AddComponent implements OnInit {
     this.loadEmpoyeeList();
     this.publicVariable.isProcess = false;
     this.route.paramMap.pipe(
-      take(1) // Take only the first emitted value
+      // take(1) // Take only the first emitted value
     ).subscribe(params => {
       if (params && params.get('id')) {
         this.userId = +params.get('id')!;
@@ -58,6 +58,8 @@ export class AddComponent implements OnInit {
         const userData = data.data[0];
         if (userData) {
           this.publicVariable.roleId = this.getRoleIdByRoleName(userData.roleName);
+          console.log(this.publicVariable.roleId);
+          
           this.publicVariable.userData = userData;
           this.onEdit(userData);
         }
