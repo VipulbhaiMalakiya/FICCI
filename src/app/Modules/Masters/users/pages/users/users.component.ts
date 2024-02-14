@@ -81,7 +81,7 @@ export class UsersComponent implements OnInit, OnDestroy {
   }
 
   onDelete(id: number) {
-    const modalRef = this.modalService.open(ConfirmationDialogModalComponent, { size: "md", centered: true, backdrop: "static" });
+    const modalRef = this.modalService.open(ConfirmationDialogModalComponent, { size: "sm", centered: true, backdrop: "static" });
     var componentInstance = modalRef.componentInstance as ConfirmationDialogModalComponent;
     componentInstance.message = "Do you really want to delete these records? This process cannot be undone ?";
     modalRef.result.then((canDelete: boolean) => {

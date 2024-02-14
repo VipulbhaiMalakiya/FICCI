@@ -19,3 +19,6 @@ select.ng-valid.ng-touched {
   background-color: #FF8201 !important;
   border-color: #fff;
 }
+.modal-sm {
+  --bs-modal-width: 400px !important;
+}

@@ -113,7 +113,7 @@ export class AddComponent implements OnInit {
   }
 
   onDelete(id: number): void {
-    const modalRef = this.modalService.open(ConfirmationDialogModalComponent, { size: "md", centered: true, backdrop: "static" });
+    const modalRef = this.modalService.open(ConfirmationDialogModalComponent, { size: "sm", centered: true, backdrop: "static" });
     const componentInstance = modalRef.componentInstance as ConfirmationDialogModalComponent;
     componentInstance.message = "Do you really want to delete these records? This process cannot be undone ?";
 
