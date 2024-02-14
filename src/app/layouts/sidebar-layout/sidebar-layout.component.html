@@ -57,15 +57,20 @@
                     [routerLinkActiveOptions]="{ exact: true }">Customer Status</a>
                   <a routerLink="/customer/approval" class="menu-list-title" routerLinkActive="active"
                     [routerLinkActiveOptions]="{ exact: true }">Approval Inbox</a>
-                  <a routerLink="/customer/accounts" class="menu-list-title">Accounts Inbox</a>
+                  <a routerLink="/customer/accounts" class="menu-list-title" routerLinkActive="active"
+                    [routerLinkActiveOptions]="{ exact: true }">Accounts Inbox</a>
                 </div>
 
-                <div class="left-men">
+                <div class="left-men" routerLinkActive="active">
                   <h3><img src="../assets/images/invoice-icon.png" alt=""> Purchase Invoice</h3>
-                  <a href="#" class="menu-list-title">New Purchase Invoice</a>
-                  <a href="#" class="menu-list-title">Invoice Status</a>
-                  <a href="#" class="menu-list-title">Approval Inbox</a>
-                  <a href="#" class="menu-list-title">Accounts Inbox</a>
+                  <a routerLink="/invoice/new" class="menu-list-title" routerLinkActive="active"
+                    [routerLinkActiveOptions]="{ exact: true }">New Purchase Invoice</a>
+                  <a routerLink="/invoice/status" class="menu-list-title" routerLinkActive="active"
+                    [routerLinkActiveOptions]="{ exact: true }">Invoice Status</a>
+                  <a routerLink="/invoice/approval" class="menu-list-title" routerLinkActive="active"
+                    [routerLinkActiveOptions]="{ exact: true }">Approval Inbox</a>
+                  <a routerLink="/invoice/accounts" class="menu-list-title" routerLinkActive="active"
+                    [routerLinkActiveOptions]="{ exact: true }">Accounts Inbox</a>
                 </div>
                 <div class="left-men" routerLinkActive="active">
                   <h3><img src="../assets/images/master-icon.png" alt=""> Masters</h3>

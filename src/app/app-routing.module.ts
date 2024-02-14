@@ -17,14 +17,19 @@ const routes: Routes = [
     ]
 
   },
-  { path: 'customer', 
-    component:SidebarLayoutComponent,
-    children:[
+  {
+    path: 'customer',
+    component: SidebarLayoutComponent,
+    children: [
       { path: '', loadChildren: () => import('./Modules/customers/customers.module').then(m => m.CustomersModule) }
-
     ]
   },
-  // { path: 'invoice', children: sidebarLayoutRoutes },
+  {
+    path: 'invoice', component: SidebarLayoutComponent,
+    children: [
+      { path: '', loadChildren: () => import('./Modules/invoice/invoice.module').then(m => m.InvoiceModule) },
+    ]
+  },
 ];
 
 @NgModule({
