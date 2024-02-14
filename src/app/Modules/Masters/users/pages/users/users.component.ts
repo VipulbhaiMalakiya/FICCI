@@ -27,32 +27,28 @@ export class UsersComponent implements OnInit, OnDestroy {
       this.publicVariable.Subscription.unsubscribe();
     }
   }
-
   loadUserList(): void {
     const subscription = this.API.getUsers().pipe(
       timeout(40000) // Timeout set to 40 seconds (40000 milliseconds)
     ).subscribe({
-      next: response => this.handleUserListResponse(response),
-      error: error => this.handleUserListError(error)
+      next: (response: any) => {
+        this.publicVariable.userlist = response.data;
+        this.publicVariable.count = response.data.length;
+        this.publicVariable.isProcess = false;
+      },
+      error: (error: any) => {
+        if (error.name === 'TimeoutError') {
+          this.toastr.error('Operation timed out after 40 seconds', error.name);
+        } else {
+          this.toastr.error('Error loading user list', error.name);
+        }
+        this.publicVariable.isProcess = false;
+      }
     });
 
     this.publicVariable.Subscription.add(subscription);
   }
 
-  handleUserListResponse(response: any): void {
-    this.publicVariable.userlist = response.data;
-    this.publicVariable.count = response.data.length;
-    this.publicVariable.isProcess = false;
-  }
-
-  handleUserListError(error: any): void {
-    if (error.name === 'TimeoutError') {
-      this.toastr.error('Operation timed out after 40 seconds', error.name);
-    } else {
-      this.toastr.error('Error loading user list', error.name);
-    }
-    this.publicVariable.isProcess = false;
-  }
 
 
   onTableDataChange(event: any) {
