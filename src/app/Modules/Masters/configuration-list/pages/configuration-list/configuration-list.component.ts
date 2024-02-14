@@ -199,6 +199,7 @@ export class ConfigurationListComponent implements OnInit, OnDestroy {
       this.loadConfiguration();
       this.publicVariable.isProcess = false;
       this.publicVariable.dataForm.reset();
+      this.publicVariable.dataForm.patchValue({ isActive: true }); 
     } else {
       this.toastr.error(res.message, 'Error');
       this.publicVariable.isProcess = false;
