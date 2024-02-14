@@ -6,6 +6,7 @@ import { InvoiceStatusComponent } from './component/invoice-status/invoice-statu
 import { NewPurchaseInvoiceComponent } from './component/new-purchase-invoice/new-purchase-invoice.component';
 import { ApprovalInboxComponent } from './component/approval-inbox/approval-inbox.component';
 import { AccountsInboxComponent } from './component/accounts-inbox/accounts-inbox.component';
+import { ViewInvoiceStatusComponent } from './View/view-invoice-status/view-invoice-status.component';
 
 
 @NgModule({
@@ -13,7 +14,9 @@ import { AccountsInboxComponent } from './component/accounts-inbox/accounts-inbo
     InvoiceStatusComponent,
     NewPurchaseInvoiceComponent,
     ApprovalInboxComponent,
-    AccountsInboxComponent
+    AccountsInboxComponent,
+    ViewInvoiceStatusComponent,
+    
   ],
   imports: [
     CommonModule,

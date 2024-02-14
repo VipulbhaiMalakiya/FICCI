@@ -4,6 +4,7 @@ import { InvoiceStatusComponent } from './component/invoice-status/invoice-statu
 import { NewPurchaseInvoiceComponent } from './component/new-purchase-invoice/new-purchase-invoice.component';
 import { ApprovalInboxComponent } from './component/approval-inbox/approval-inbox.component';
 import { AccountsInboxComponent } from './component/accounts-inbox/accounts-inbox.component';
+import { ViewInvoiceStatusComponent } from './View/view-invoice-status/view-invoice-status.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'status', pathMatch: 'full' },
@@ -11,7 +12,7 @@ const routes: Routes = [
   { path: 'new', component: NewPurchaseInvoiceComponent },
   { path: 'approval', component: ApprovalInboxComponent },
   { path: 'accounts', component: AccountsInboxComponent },
-  // { path: 'status/view/:id', component: CustomerStatusComponent },
+  { path: 'status/view/:id', component: ViewInvoiceStatusComponent },
   // { path: 'approval/remarks/:id', component: ApprovalRemarksComponent },
   // { path: 'accounts/remarks/:id', component: AccountsRemarksComponent }
 ];
