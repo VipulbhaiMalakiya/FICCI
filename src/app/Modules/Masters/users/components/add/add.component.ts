@@ -57,9 +57,7 @@ export class AddComponent implements OnInit {
       next: (data: any) => {
         const userData = data.data[0];
         if (userData) {
-          this.publicVariable.roleId = this.getRoleIdByRoleName(userData.roleName);
-          console.log(this.publicVariable.roleId);
-          
+          this.publicVariable.roleId = this.getRoleIdByRoleName(userData.roleName);          
           this.publicVariable.userData = userData;
           this.onEdit(userData);
         }
