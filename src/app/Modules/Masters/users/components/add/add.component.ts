@@ -160,27 +160,6 @@ export class AddComponent implements OnInit {
     }
   }
 
-  onEdit(data: any): void {
-    this.publicVariable.isEdit = true;
-    this.cd.detectChanges();
-    this.publicVariable.dataForm.patchValue({
-      empId: data.imeM_EmpId,
-      username: data.imeM_Username,
-      name: data.imeM_Name,
-      email: data.imeM_Email,
-      roleId: data.roleId || this.publicVariable.roleId,
-      isActive: data.isActive,
-      id: data.imeM_ID
-    });
-    this.publicVariable.dataForm.controls["empId"].disable();
-  }
-
-  getRoleIdByRoleName(roleName: string): number | undefined {
-
-    const role = this.publicVariable.roles.find(role => role.roleName === roleName);
-    return role ? role.role_id : undefined;
-  }
-
   handleApiRequest(apiRequest: any, successMessage: string, errorMessagePrefix: string): void {
     try {
       this.publicVariable.isProcess = true;
@@ -213,6 +192,29 @@ export class AddComponent implements OnInit {
       this.publicVariable.isProcess = false;
     }
   }
+
+  onEdit(data: any): void {
+    this.publicVariable.isEdit = true;
+    this.cd.detectChanges();
+    this.publicVariable.dataForm.patchValue({
+      empId: data.imeM_EmpId,
+      username: data.imeM_Username,
+      name: data.imeM_Name,
+      email: data.imeM_Email,
+      roleId: data.roleId || this.publicVariable.roleId,
+      isActive: data.isActive,
+      id: data.imeM_ID
+    });
+    this.publicVariable.dataForm.controls["empId"].disable();
+  }
+
+  getRoleIdByRoleName(roleName: string): number | undefined {
+
+    const role = this.publicVariable.roles.find(role => role.roleName === roleName);
+    return role ? role.role_id : undefined;
+  }
+
+
 
   markFormControlsAsTouched(): void {
     ['empId', 'username', 'name', 'email', 'roleId'].forEach(controlName => {
