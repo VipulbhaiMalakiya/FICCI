@@ -8,6 +8,7 @@ import { ApprovalCustomerComponent } from './component/approval-customer/approva
 import { AccountsCustomerComponent } from './component/accounts-customer/accounts-customer.component';
 import { CustomerStatusComponent } from './View/customer-status/customer-status.component';
 import { ApprovalRemarksComponent } from './Remarks/approval-remarks/approval-remarks.component';
+import { AccountsRemarksComponent } from './Remarks/accounts-remarks/accounts-remarks.component';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import { ApprovalRemarksComponent } from './Remarks/approval-remarks/approval-re
     ApprovalCustomerComponent,
     AccountsCustomerComponent,
     CustomerStatusComponent,
-    ApprovalRemarksComponent
+    ApprovalRemarksComponent,
+    AccountsRemarksComponent
   ],
   imports: [
     CommonModule,

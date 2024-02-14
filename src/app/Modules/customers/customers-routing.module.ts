@@ -6,6 +6,7 @@ import { ApprovalCustomerComponent } from './component/approval-customer/approva
 import { AccountsCustomerComponent } from './component/accounts-customer/accounts-customer.component';
 import { CustomerStatusComponent } from './View/customer-status/customer-status.component';
 import { ApprovalRemarksComponent } from './Remarks/approval-remarks/approval-remarks.component';
+import { AccountsRemarksComponent } from './Remarks/accounts-remarks/accounts-remarks.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'status', pathMatch: 'full' },
@@ -14,7 +15,8 @@ const routes: Routes = [
   { path: 'approval', component: ApprovalCustomerComponent },
   { path: 'accounts', component: AccountsCustomerComponent },
   { path: 'status/view/:id', component: CustomerStatusComponent },
-  { path: 'approval/remarks/:id', component: ApprovalRemarksComponent }
+  { path: 'approval/remarks/:id', component: ApprovalRemarksComponent },
+  { path: 'accounts/remarks/:id', component: AccountsRemarksComponent }
 ];
 
 @NgModule({
