@@ -154,8 +154,7 @@
                     <div class="form-group">
                         <label>P.A.N. No.</label>
                         <input type="text" class="form-control" formControlName="PANNo" placeholder="P.A.N. No.">
-                        <div *ngIf="shouldShowError('PANNo','required')" class="text-danger">PAN Number is required.
-                        </div>
+                   
                         <div *ngIf="shouldShowError('PANNo','invalidPAN')" class="text-danger">Please enter a valid PAN
                             Number.</div>
 
