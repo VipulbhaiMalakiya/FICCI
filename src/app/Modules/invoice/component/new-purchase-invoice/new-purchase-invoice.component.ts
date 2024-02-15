@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { AppService, FormBuilder, NgbModal, Router, ToastrService, Validators, publicVariable } from '../../Export/invoce';
+import { AppService, FormBuilder, NgbModal, Router, ToastrService, Validators, gstValidator, panValidator, publicVariable } from '../../Export/invoce';
 import { FormArray } from '@angular/forms';
+
 
 @Component({
   selector: 'app-new-purchase-invoice',
@@ -28,21 +29,21 @@ export class NewPurchaseInvoiceComponent implements OnInit {
     this.publicVariable.dataForm = this.fb.group({
       id: [''],
       invoiceType: ['Proforma Invoice', Validators.required],
-      projectCode: ['', Validators.required],
-      department: ['', Validators.required],
-      division: ['', Validators.required],
-      PANNo: ['', Validators.required],
-      GSTNo: ['', Validators.required],
+      projectCode: ['', [Validators.required]],
+      department:  ['', [Validators.required]],
+      division:  ['', [Validators.required]],
+      PANNo: ['', [Validators.required, panValidator()]], // Use the custom validator function
+      GSTNo: ['', [Validators.required,gstValidator()]],
       PINO: [''],
-      CustomerName: ['', Validators.required],
-      address: ['', Validators.required],
-      state: ['', Validators.required],
-      city: ['', Validators.required],
-      pincode: ['', Validators.required],
-      GSTNumber: ['', Validators.required],
-      ContactPerson: ['', Validators.required],
-      EmailID: ['', Validators.required],
-      PhoneNo: ['', Validators.required],
+      CustomerName:  ['', [Validators.required]],
+      address:  ['', [Validators.required]],
+      state:  ['', [Validators.required]],
+      city:  ['', [Validators.required]],
+      pincode:  ['', [Validators.required]],
+      GSTNumber: ['',[ Validators.required,gstValidator()]],
+      ContactPerson:  ['', [Validators.required]],
+      EmailID: ['', [Validators.required, Validators.email]],
+      PhoneNo:  ['', [Validators.required]],
       items: this.fb.array([]),
       file: [],
       PaymentTerms: [],
