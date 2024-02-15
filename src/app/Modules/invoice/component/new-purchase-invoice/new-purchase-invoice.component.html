@@ -208,7 +208,7 @@
               <td><input class="form-control" (input)="onDiscountInput($event)" formControlName="impiLineDiscount" type="text"
                   placeholder="Discount" required />
               </td>
-              <td><input class="form-control" (input)="priceValidator($event)" formControlName="rate" type="text"
+              <td><input class="form-control" (input)="priceValidator($event)" formControlName="impiLineUnitPrice" type="text"
                   placeholder="Rate/Unit(INR)" required /></td>
               <td><input class="form-control" formControlName="amount" type="text" placeholder="Amount(INR)"
                   [value]="calculateAmount(item.value)" readonly /></td>
