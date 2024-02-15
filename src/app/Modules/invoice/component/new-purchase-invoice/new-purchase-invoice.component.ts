@@ -13,7 +13,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
 
   publicVariable = new publicVariable();
   items: any[] = [
-    { impiLineDescription: 'I phone 15 Pro Max', impiLineQuantity: '100', impiLineDiscount: '10', impiLineUnitPrice: '150000', amount: 0 }
+    { impiLineDescription: 'I phone 15 Pro Max', impiLineQuantity: '100', impiLineDiscount: '10', impiLineUnitPrice: '150000', calculateAmount: 0 }
   ];
 
   constructor(private appService: AppService,
@@ -120,7 +120,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
       impiLineQuantity: [item.impiLineQuantity, Validators.required],
       impiLineDiscount: [item.impiLineDiscount, [Validators.required, Validators.min(0), Validators.max(100)]],
       impiLineUnitPrice: [item.impiLineUnitPrice, Validators.required],
-      amount: [this.calculateAmount(item), Validators.required]
+      calculateAmount: [this.calculateAmount(item), Validators.required]
     }));
   }
 

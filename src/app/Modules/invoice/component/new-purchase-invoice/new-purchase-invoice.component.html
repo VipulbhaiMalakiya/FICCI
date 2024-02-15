@@ -210,7 +210,7 @@
               </td>
               <td><input class="form-control" (input)="priceValidator($event)" formControlName="impiLineUnitPrice" type="text"
                   placeholder="Rate/Unit(INR)" required /></td>
-              <td><input class="form-control" formControlName="amount" type="text" placeholder="Amount(INR)"
+              <td><input class="form-control" formControlName="calculateAmount" type="text" placeholder="Amount(INR)"
                   [value]="calculateAmount(item.value)" readonly /></td>
               <td>
                 <span class="table-btns">
