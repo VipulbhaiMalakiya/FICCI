@@ -23,8 +23,8 @@
       <div class="row">
         <div class="col-md-4 col-sm-6">
           <div class="form-group">
-            <label>Project Code</label>
-            <input type="text" placeholder="Project Code" class="form-control" formControlName="projectCode" />
+            <label for="projectCode">Project Code</label>
+            <input type="text" id="projectCode" placeholder="Project Code" class="form-control" formControlName="projectCode" />
             <div *ngIf="shouldShowError('projectCode','required')" class="text-danger">This field is required</div>
 
           </div>
@@ -32,8 +32,8 @@
 
         <div class="col-md-4 col-sm-6">
           <div class="form-group">
-            <label>Department</label>
-            <input type="text" placeholder="Department" formControlName="department" class="form-control" />
+            <label for="department">Department</label>
+            <input type="text" id="department" placeholder="Department" formControlName="department" class="form-control" />
             <div *ngIf="shouldShowError('department','required')" class="text-danger">This field is required</div>
 
           </div>
@@ -41,8 +41,8 @@
 
         <div class="col-md-4 col-sm-6">
           <div class="form-group">
-            <label>Division</label>
-            <input type="text" placeholder="Division" formControlName="division" class="form-control" />
+            <label for="division">Division</label>
+            <input type="text" id="division" placeholder="Division" formControlName="division" class="form-control" />
             <div *ngIf="shouldShowError('division','required')" class="text-danger">This field is required</div>
 
           </div>
@@ -50,8 +50,8 @@
 
         <div class="col-md-4 col-sm-6">
           <div class="form-group">
-            <label>PAN No</label>
-            <input type="text" class="form-control" placeholder="PAN No" formControlName="PANNo" />
+            <label for="PANNo">PAN No</label>
+            <input type="text" id="PANNo" class="form-control" placeholder="PAN No" formControlName="PANNo" />
             <div *ngIf="shouldShowError('PANNo','required')" class="text-danger">This field is required</div>
 
           </div>
@@ -84,9 +84,9 @@
       <div class="row">
         <div class="col-md-4 col-sm-6">
           <div class="form-group">
-            <label>Customer Name</label>
+            <label for="CustomerName">Customer Name</label>
             <div class="flex-field">
-              <input type="text" formControlName="CustomerName" placeholder="Customer Name" class="form-control" />
+              <input type="text" id="CustomerName" formControlName="CustomerName" placeholder="Customer Name" class="form-control" />
               <div class="add-btn"><a routerLink="/customer/new">+</a></div>
             </div>
             <div *ngIf="shouldShowError('CustomerName','required')" class="text-danger">This field is required</div>
@@ -95,15 +95,15 @@
 
         <div class="col-md-4 col-sm-6">
           <div class="form-group">
-            <label>Address</label>
-            <input type="text" placeholder="Address" formControlName="address" class="form-control" />
+            <label for="address">Address</label>
+            <input type="text" id="address" placeholder="Address" formControlName="address" class="form-control" />
             <div *ngIf="shouldShowError('address','required')" class="text-danger">This field is required</div>
 
           </div>
         </div>
         <div class="col-md-4 col-sm-6">
           <div class="form-group">
-            <label>State</label>
+            <label for="state">State</label>
             <select class="form-select" formControlName="state">
               <option value="">Select State</option>
               <option value="haryana">Haryana</option>
@@ -114,7 +114,7 @@
         </div>
         <div class="col-md-4 col-sm-6">
           <div class="form-group">
-            <label>City</label>
+            <label for="city">City</label>
             <select class="form-select" formControlName="city">
               <option value="">Select City</option>
               <option value="gurugram">gurugram</option>
@@ -125,7 +125,7 @@
         </div>
         <div class="col-md-4 col-sm-6">
           <div class="form-group">
-            <label>Pincode</label>
+            <label for="pincode">Pincode</label>
             <input type="text" formControlName="pincode" placeholder="Pincode" class="form-control" />
             <div *ngIf="shouldShowError('pincode','required')" class="text-danger">This field is required</div>
 
@@ -134,8 +134,8 @@
 
         <div class="col-md-4 col-sm-6">
           <div class="form-group">
-            <label>GST Number</label>
-            <input type="text" class="form-control" placeholder="GST Number" formControlName="GSTNumber" />
+            <label for="GSTNumber">GST Number</label>
+            <input type="text" class="form-control" id="GSTNumber" placeholder="GST Number" formControlName="GSTNumber" />
             <div *ngIf="shouldShowError('GSTNumber','required')" class="text-danger">This field is required</div>
 
           </div>
@@ -143,8 +143,8 @@
 
         <div class="col-md-4 col-sm-6">
           <div class="form-group">
-            <label>Contact Person</label>
-            <input type="text" placeholder="Contact Person" formControlName="ContactPerson" class="form-control" />
+            <label for="ContactPerson">Contact Person</label>
+            <input type="text" placeholder="Contact Person" id="ContactPerson" formControlName="ContactPerson" class="form-control" />
             <div *ngIf="shouldShowError('ContactPerson','required')" class="text-danger">This field is required</div>
 
           </div>
@@ -152,8 +152,8 @@
 
         <div class="col-md-4 col-sm-6">
           <div class="form-group">
-            <label>Email ID</label>
-            <input type="text" placeholder="Email ID" formControlName="EmailID" class="form-control" />
+            <label for="EmailID">Email ID</label>
+            <input type="text" placeholder="Email ID" id="EmailID" formControlName="EmailID" class="form-control" />
             <div *ngIf="shouldShowError('EmailID','required')" class="text-danger">This field is required</div>
 
           </div>
@@ -161,8 +161,8 @@
 
         <div class="col-md-4 col-sm-6">
           <div class="form-group">
-            <label>Phone No.</label>
-            <input type="text" class="form-control" placeholder="Phone No" formControlName="PhoneNo" />
+            <label for="PhoneNo">Phone No.</label>
+            <input type="text" class="form-control" id="PhoneNo" placeholder="Phone No" formControlName="PhoneNo" />
             <div *ngIf="shouldShowError('PhoneNo','required')" class="text-danger">This field is required</div>
 
           </div>
@@ -223,7 +223,7 @@
         <div class="col-sm-3 text-sm-end">Upload Document</div>
         <div class="col-sm-6">
           <div class="input-group">
-            <input type="file" class="form-control" id="inputGroupFile02" formControlName="file" />
+            <input type="file" class="form-control"  id="inputGroupFile02" formControlName="file" />
             <label class="input-group-text" for="inputGroupFile02">Upload</label>
           </div>
         </div>
@@ -234,15 +234,15 @@
     <div class="mastersform-sec mb-3">
       <div class="col-md-9 mt-4">
         <div class="form-group">
-          <label>Payment Terms</label>
-          <textarea class="form-control h-100" cols="2" rows="3" formControlName="PaymentTerms"></textarea>
+          <label for="PaymentTerms">Payment Terms</label>
+          <textarea class="form-control h-100" cols="2" rows="3" id="PaymentTerms" formControlName="PaymentTerms"></textarea>
         </div>
       </div>
 
       <div class="col-md-9 mt-3">
         <div class="form-group">
-          <label>Remarks</label>
-          <textarea class="form-control h-100" cols="2" rows="3" formControlName="Remarks"></textarea>
+          <label for="Remarks">Remarks</label>
+          <textarea class="form-control h-100" cols="2" rows="3" id="Remarks" formControlName="Remarks"></textarea>
         </div>
       </div>
 

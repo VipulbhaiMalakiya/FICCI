@@ -124,6 +124,9 @@ export class NewPurchaseInvoiceComponent implements OnInit {
       if (newData.invoiceType === 'Tax Invoice') {
         newConfig.PINO = newData.PINO;
       }
+
+      console.log(newConfig);
+
       // const successMessage = isUpdate ? 'Data updated successfully.' : 'Data created successfully.';
       // this.handleApiRequest(this.API.create(newConfig), successMessage, 'Error submitting data:');
     } else {
