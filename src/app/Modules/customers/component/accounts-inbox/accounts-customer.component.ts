@@ -19,6 +19,7 @@ export class AccountsCustomerComponent {
   }
 
 
+
   onDownload() {
     // const exportData = this.publicVariable.userlist.map((x) => ({
     //   "Cust. No.": x?.imeM_EmpId || '',

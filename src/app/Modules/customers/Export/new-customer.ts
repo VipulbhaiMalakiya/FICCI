@@ -9,6 +9,7 @@ export { panValidator } from '../Validation/panValidator';
 export { alphanumericWithSpacesValidator } from '../Validation/alphanumericWithSpacesValidator';
 export { gstValidator } from '../Validation/gstValidator';
 export { AppService } from 'src/app/services/excel.service';
+export  { ConfirmationDialogModalComponent } from 'src/app/Modules/shared/components/confirmation-dialog-modal/confirmation-dialog-modal.component';
 
 export class publicVariable {
   dataForm!: FormGroup;

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import{AppService, NgbModal, Router, ToastrService, publicVariable} from '../../Export/new-customer'
+import{AppService, ConfirmationDialogModalComponent, NgbModal, Router, ToastrService, publicVariable} from '../../Export/new-customer'
 @Component({
   selector: 'app-status-customer',
   templateUrl: './status-customer.component.html',
@@ -19,6 +19,29 @@ export class StatusCustomerComponent {
   }
 
 
+  onDelete(id: number) {
+    const modalRef = this.modalService.open(ConfirmationDialogModalComponent, { size: "sm", centered: true, backdrop: "static" });
+    var componentInstance = modalRef.componentInstance as ConfirmationDialogModalComponent;
+    componentInstance.message = "Do you really want to delete these records? This process cannot be undone ?";
+    modalRef.result.then((canDelete: boolean) => {
+      if (canDelete) {
+        this.publicVariable.isProcess = true;
+        // this.API.delete(id).subscribe({
+        //   next: (res: any) => {
+        //     this.toastr.success(res.message, 'Success');
+        //     this.publicVariable.isProcess = false;
+        //     this.loadUserList();
+        //   },
+        //   error: (error) => {
+        //     this.publicVariable.isProcess = false;
+        //     this.toastr.error(error.error.message, 'Error');
+        //   }
+        // });
+
+      }
+    }).catch(() => { });
+
+  }
   onDownload() {
     // const exportData = this.publicVariable.userlist.map((x) => ({
     //   "Cust. No.": x?.imeM_EmpId || '',
