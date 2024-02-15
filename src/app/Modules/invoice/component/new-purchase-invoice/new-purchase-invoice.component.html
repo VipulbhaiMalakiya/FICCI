@@ -24,8 +24,9 @@
         <div class="col-md-4 col-sm-6">
           <div class="form-group">
             <label for="projectCode">Project Code</label>
-            <input type="text" id="projectCode" placeholder="Project Code" class="form-control"
-              formControlName="projectCode" />
+            <ng-select [items]="publicVariable.projectList" bindLabel="projectCode" bindValue="projectCode"
+              placeholder="Select in Project Code" formControlName="projectCode">
+            </ng-select>
             <div *ngIf="shouldShowError('projectCode','required')" class="text-danger">This field is required</div>
 
           </div>
@@ -131,11 +132,12 @@
         <div class="col-md-4 col-sm-6">
           <div class="form-group">
             <label for="pincode">Pincode</label>
-            <input type="text" formControlName="pincode" placeholder="Pincode" (input)="onInputChange($event)" class="form-control" />
+            <input type="text" formControlName="pincode" placeholder="Pincode" (input)="onInputChange($event)"
+              class="form-control" />
             <div *ngIf="shouldShowError('pincode','required')" class="text-danger"> Pin Code is required.
             </div>
             <div *ngIf="shouldShowError('pincode','pattern')" class="text-danger"> Please enter a valid
-                6-digit Pin Code.</div>
+              6-digit Pin Code.</div>
           </div>
         </div>
 
@@ -242,7 +244,8 @@
               accept=".pdf,.xlsx,.csv" (change)="onFileSelected($event)" />
             <label class="input-group-text" for="inputGroupFile02">Upload</label>
 
-            <div *ngIf="shouldShowError('file','fileType')" class="text-danger">Invalid file type. Please upload a PDF, Excel, or CSV file.</div>
+            <div *ngIf="shouldShowError('file','fileType')" class="text-danger">Invalid file type. Please upload a PDF,
+              Excel, or CSV file.</div>
             <div *ngIf="shouldShowError('file','maxSize')" class="text-danger">File size exceeds the limit of 5MB.</div>
 
           </div>
@@ -269,9 +272,9 @@
 
       <div class="col-md-12">
         <div class="form-group mb-0 mt-4">
-         <input type="checkbox" class="btn-check" id="btn-check" autocomplete="off">
-         <label class="btn btn-secondary w-auto mb-0 me-2" for="btn-check">Save as Draft</label>
-        <button type="submit" class="common-btn w-auto">Submit</button>
+          <input type="checkbox" class="btn-check" id="btn-check" autocomplete="off">
+          <label class="btn btn-secondary w-auto mb-0 me-2" for="btn-check">Save as Draft</label>
+          <button type="submit" class="common-btn w-auto">Submit</button>
         </div>
       </div>
     </div>

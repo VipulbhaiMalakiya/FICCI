@@ -11,6 +11,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NumberToWordsPipe } from './Pipe/numberToWords';
 import { ViewPiApprovalComponent } from './View/view-pi-approval/view-pi-approval.component';
 import { ViewPiAccountsInboxComponent } from './View/view-pi-accounts-inbox/view-pi-accounts-inbox.component';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 
 @NgModule({
@@ -22,13 +23,14 @@ import { ViewPiAccountsInboxComponent } from './View/view-pi-accounts-inbox/view
     ViewInvoiceStatusComponent,
     NumberToWordsPipe,
     ViewPiApprovalComponent,
-    ViewPiAccountsInboxComponent 
+    ViewPiAccountsInboxComponent
   ],
   imports: [
     CommonModule,
     InvoiceRoutingModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    NgSelectModule
   ]
 })
 export class InvoiceModule { }

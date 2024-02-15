@@ -30,7 +30,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
     this.publicVariable.dataForm = this.fb.group({
       id: [''],
       invoiceType: ['Proforma Invoice', Validators.required],
-      projectCode: ['', [Validators.required]],
+      projectCode: [null, [Validators.required]],
       department: ['', [Validators.required]],
       division: ['', [Validators.required]],
       PANNo: ['', [Validators.required, panValidator()]], // Use the custom validator function
