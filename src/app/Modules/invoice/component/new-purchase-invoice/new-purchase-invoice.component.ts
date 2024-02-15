@@ -43,7 +43,8 @@ export class NewPurchaseInvoiceComponent implements OnInit {
       GSTNumber: ['',[ Validators.required,gstValidator()]],
       ContactPerson:  ['', [Validators.required]],
       EmailID: ['', [Validators.required, Validators.email]],
-      PhoneNo:  ['', [Validators.required]],
+      PhoneNo: ['', [Validators.required, Validators.pattern(/^[6-9]\d{9}$/)]],
+
       items: this.fb.array([]),
       file: [],
       PaymentTerms: [],
