@@ -43,9 +43,10 @@ export class NewPurchaseInvoiceComponent implements OnInit {
       ContactPerson: ['', Validators.required],
       EmailID: ['', Validators.required],
       PhoneNo: ['', Validators.required],
-      items: this.fb.array([])
-
-
+      items: this.fb.array([]),
+      file: [],
+      PaymentTerms: [],
+      Remarks: [],
     });
     // Initialize items form array
     this.items.forEach(item => this.addItem(item));
@@ -89,24 +90,40 @@ export class NewPurchaseInvoiceComponent implements OnInit {
     return total;
   }
 
-
-
   onSubmit(): void {
     if (this.publicVariable.dataForm.valid) {
       const newData = this.publicVariable.dataForm.value;
       const isUpdate = !!newData.id;
-      // const selectedEmployee = this.publicVariable.employeeList.find(employee => employee.imeM_EmpId === newData.empId) || this.publicVariable.userData;
 
-      // const newConfig: addUpdateEmployees = {
-      //   isUpdate: isUpdate,
-      //   imeM_ID: isUpdate ? newData.id : undefined,
-      //   imeM_EmpId: newData.empId || this.publicVariable.userData.imeM_EmpId,
-      //   imeM_Username: selectedEmployee.imeM_Username,
-      //   imeM_Name: selectedEmployee.imeM_Name,
-      //   imeM_Email: selectedEmployee.imeM_Email,
-      //   roleId: newData.roleId,
-      //   isActive: newData.isActive
-      // };
+
+      const newConfig: any = {
+        isUpdate: isUpdate,
+        // imeM_ID: isUpdate ? newData.id : undefined,
+        invoiceType: newData.invoiceType,
+        projectCode: newData.projectCode,
+        department: newData.department,
+        division: newData.division,
+        PANNo: newData.PANNo,
+        GSTNo: newData.GSTNo,
+        PINO: newData.PINO,
+        CustomerName: newData.CustomerName,
+        address:newData.address,
+        state:newData.state,
+        city:newData.city,
+        pincode:newData.pincode,
+        GSTNumber:newData.GSTNumber,
+        ContactPerson:newData.ContactPerson,
+        EmailID:newData.EmailID,
+        PhoneNo:newData.PhoneNo,
+        items:newData.items,
+        file:newData.file,
+        PaymentTerms:newData.PaymentTerms,
+        Remarks:newData.Remarks
+      };
+      // Check if invoiceType is Tax Invoice, then include PINO
+      if (newData.invoiceType === 'Tax Invoice') {
+        newConfig.PINO = newData.PINO;
+      }
       // const successMessage = isUpdate ? 'Data updated successfully.' : 'Data created successfully.';
       // this.handleApiRequest(this.API.create(newConfig), successMessage, 'Error submitting data:');
     } else {
