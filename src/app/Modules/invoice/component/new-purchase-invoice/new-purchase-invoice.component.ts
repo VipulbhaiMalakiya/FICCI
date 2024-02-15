@@ -13,7 +13,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
 
   publicVariable = new publicVariable();
   items: any[] = [
-    { impiLineDescription: 'I phone 15 Pro Max', impiLineQuantity: '100', discount: '10', rate: '150000', amount: 0 }
+    { impiLineDescription: 'I phone 15 Pro Max', impiLineQuantity: '100', impiLineDiscount: '10', rate: '150000', amount: 0 }
   ];
 
   constructor(private appService: AppService,
@@ -114,11 +114,11 @@ export class NewPurchaseInvoiceComponent implements OnInit {
     return this.publicVariable.dataForm.get('items') as FormArray;
   }
   addItem(item?: any): void {
-    item = item || { impiLineDescription: '', unit: '', discount: '', rate: '', amount: 0 };
+    item = item || { impiLineDescription: '', impiLineQuantity: '', impiLineDiscount: '', rate: '', amount: 0 };
     this.itemsFormArray.push(this.fb.group({
       impiLineDescription: [item.impiLineDescription, Validators.required],
       impiLineQuantity: [item.impiLineQuantity, Validators.required],
-      discount: [item.discount, [Validators.required, Validators.min(0), Validators.max(100)]],
+      impiLineDiscount: [item.impiLineDiscount, [Validators.required, Validators.min(0), Validators.max(100)]],
       rate: [item.rate, Validators.required],
       amount: [this.calculateAmount(item), Validators.required]
     }));
@@ -130,9 +130,9 @@ export class NewPurchaseInvoiceComponent implements OnInit {
 
   calculateAmount(item: any): number {
     const impiLineQuantity = parseFloat(item.impiLineQuantity) || 0;
-    const discount = parseFloat(item.discount) || 0;
+    const impiLineDiscount = parseFloat(item.impiLineDiscount) || 0;
     const rate = parseFloat(item.rate) || 0;
-    const amount = impiLineQuantity * rate * (1 - discount / 100);
+    const amount = impiLineQuantity * rate * (1 - impiLineDiscount / 100);
     return isNaN(amount) ? 0 : amount;
   }
 
