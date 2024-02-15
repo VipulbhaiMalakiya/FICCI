@@ -171,7 +171,8 @@ export class NewPurchaseInvoiceComponent implements OnInit {
         ImpiHeaderAttachment: newData.file,
         ImpiHeaderPaymentTerms: newData.ImpiHeaderPaymentTerms,
         ImpiHeaderRemarks: newData.ImpiHeaderRemarks,
-        IsDraft:newData.IsDraft
+        IsDraft:newData.IsDraft,
+        ImpiHeaderTotalInvoiceAmount:this.calculateTotalAmount()
       };
       // Check if ImpiHeaderInvoiceType is Tax Invoice, then include PINO
       if (newData.ImpiHeaderInvoiceType === 'Tax Invoice') {
