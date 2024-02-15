@@ -13,7 +13,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
 
   publicVariable = new publicVariable();
   items: any[] = [
-    { name: 'I phone 15 Pro Max', unit: '100', discount: '10', rate: '150000', amount: 0 }
+    { impiLineDescription: 'I phone 15 Pro Max', unit: '100', discount: '10', rate: '150000', amount: 0 }
   ];
 
   constructor(private appService: AppService,
@@ -114,9 +114,9 @@ export class NewPurchaseInvoiceComponent implements OnInit {
     return this.publicVariable.dataForm.get('items') as FormArray;
   }
   addItem(item?: any): void {
-    item = item || { name: '', unit: '', discount: '', rate: '', amount: 0 };
+    item = item || { impiLineDescription: '', unit: '', discount: '', rate: '', amount: 0 };
     this.itemsFormArray.push(this.fb.group({
-      name: [item.name, Validators.required],
+      impiLineDescription: [item.impiLineDescription, Validators.required],
       unit: [item.unit, Validators.required],
       discount: [item.discount, [Validators.required, Validators.min(0), Validators.max(100)]],
       rate: [item.rate, Validators.required],

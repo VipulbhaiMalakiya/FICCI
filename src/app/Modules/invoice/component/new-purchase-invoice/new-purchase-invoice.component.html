@@ -201,7 +201,7 @@
           </thead>
           <tbody formArrayName="items">
             <tr *ngFor="let item of itemsFormArray.controls; let i = index" [formGroupName]="i">
-              <td><input class="form-control" formControlName="name" placeholder="Particulars" type="text" required />
+              <td><input class="form-control" formControlName="impiLineDescription" placeholder="Particulars" type="text" required />
               </td>
               <td><input class="form-control" (input)="onInputChange($event)" formControlName="unit" type="text"
                   placeholder="Unit" required /></td>
