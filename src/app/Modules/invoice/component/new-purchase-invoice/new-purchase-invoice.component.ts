@@ -28,28 +28,32 @@ export class NewPurchaseInvoiceComponent implements OnInit {
 
   private initializeForm(): void {
     this.publicVariable.dataForm = this.fb.group({
-      id: [''],
-      invoiceType: ['Proforma Invoice', Validators.required],
-      projectCode: [null, [Validators.required]],
-      department: ['', [Validators.required]],
-      division: ['', [Validators.required]],
-      PANNo: ['', [Validators.required, panValidator()]], // Use the custom validator function
-      GSTNo: ['', [Validators.required, gstValidator()]],
-      PINO: [''],
-      CustomerName: ['', [Validators.required]],
-      address: ['', [Validators.required]],
-      state: ['', [Validators.required]],
-      city: ['', [Validators.required]],
-      pincode: ['', [Validators.required, Validators.pattern(/^\d{6}$/)]],
-      GSTNumber: ['', [Validators.required, gstValidator()]],
-      ContactPerson: ['', [Validators.required]],
-      EmailID: ['', [Validators.required, Validators.email]],
-      PhoneNo: ['', [Validators.required, Validators.pattern(/^[6-9]\d{9}$/)]],
-
+      headerid: [''],
+      ImpiHeaderInvoiceType: ['Proforma Invoice', Validators.required],
+      ImpiHeaderProjectCode: [null, [Validators.required]],
+      ImpiHeaderDepartment: ['', [Validators.required]],
+      ImpiHeaderDivison: ['', [Validators.required]],
+      ImpiHeaderPanNo: ['', [Validators.required, panValidator()]], // Use the custom validator function
+      ImpiHeaderGstNo: ['', [Validators.required, gstValidator()]],
+      PINO: [''], //api missing
+      ImpiHeaderCustomerName: ['', [Validators.required]],
+      ImpiHeaderCustomerCode:[''] , //new filed
+      ImpiHeaderCustomerAddress: ['', [Validators.required]],
+      ImpiHeaderCustomerState: ['', [Validators.required]],
+      ImpiHeaderCustomerCity: ['', [Validators.required]],
+      ImpiHeaderCustomerPinCode: ['', [Validators.required, Validators.pattern(/^\d{6}$/)]],
+      ImpiHeaderCustomerGstNo: ['', [Validators.required, gstValidator()]],
+      ImpiHeaderCustomerContactPerson: ['', [Validators.required]],
+      ImpiHeaderCustomerEmailId: ['', [Validators.required, Validators.email]],
+      ImpiHeaderCustomerPhoneNo: ['', [Validators.required, Validators.pattern(/^[6-9]\d{9}$/)]],
+      ImpiHeaderCreatedBy :[''],
+      ImpiHeaderTotalInvoiceAmount:[],
+       //api new filed
       items: this.fb.array([]),
-      file: ['', this.fileValidator],
-      PaymentTerms: [],
-      Remarks: [],
+      file: [''],
+      ImpiHeaderPaymentTerms: [],
+      ImpiHeaderRemarks: [],
+      IsDraft:[false]
     });
     // Initialize items form array
     this.items.forEach(item => this.addItem(item));
@@ -109,47 +113,6 @@ export class NewPurchaseInvoiceComponent implements OnInit {
     (event.target as HTMLInputElement).value = numericValue;
   }
 
-  onFileSelected(event: any) {
-    const fileInput = event.target as HTMLInputElement;
-    if (!fileInput || !fileInput.files || fileInput.files.length === 0) {
-      return;
-    }
-
-    const file = fileInput.files[0];
-    const allowedTypes = ['application/pdf', 'application/vnd.ms-excel', 'text/csv'];
-    const maxSize = 5 * 1024 * 1024; // 5MB
-
-    const fileControl = this.publicVariable.dataForm.get('file');
-    if (!fileControl) {
-      return;
-    }
-
-    if (!allowedTypes.includes(file.type)) {
-      fileControl.setErrors({ fileType: true });
-    } else if (file.size > maxSize) {
-      fileControl.setErrors({ maxSize: true });
-    } else {
-      fileControl.setErrors(null); // Reset any previous errors
-      this.publicVariable.dataForm.patchValue({
-        file: file
-      });
-    }
-  }
-
-  fileValidator(control: any) {
-    const file = control.value;
-    if (file) {
-      const allowedTypes = ['application/pdf', 'application/vnd.ms-excel', 'text/csv'];
-      if (!allowedTypes.includes(file.type)) {
-        return { fileType: true };
-      }
-      const maxSize = 5 * 1024 * 1024; // 5MB
-      if (file.size > maxSize) {
-        return { maxSize: true };
-      }
-    }
-    return null;
-  }
 
   get itemsFormArray(): FormArray {
     return this.publicVariable.dataForm.get('items') as FormArray;
@@ -188,41 +151,42 @@ export class NewPurchaseInvoiceComponent implements OnInit {
   onSubmit(): void {
     if (this.publicVariable.dataForm.valid) {
       const newData = this.publicVariable.dataForm.value;
-      const isUpdate = !!newData.id;
+      const isupdate = !!newData.id;
 
 
       const newConfig: any = {
-        isUpdate: isUpdate,
-        // imeM_ID: isUpdate ? newData.id : undefined,
-        invoiceType: newData.invoiceType,
-        projectCode: newData.projectCode,
-        department: newData.department,
-        division: newData.division,
-        PANNo: newData.PANNo,
-        GSTNo: newData.GSTNo,
+        isupdate: isupdate,
+        headerid: isupdate ? newData.headerid : undefined,
+        ImpiHeaderInvoiceType: newData.ImpiHeaderInvoiceType,
+        ImpiHeaderProjectCode: newData.ImpiHeaderProjectCode,
+        ImpiHeaderDepartment: newData.ImpiHeaderDepartment,
+        ImpiHeaderDivison: newData.ImpiHeaderDivison,
+        ImpiHeaderPanNo: newData.ImpiHeaderPanNo,
+        ImpiHeaderGstNo: newData.ImpiHeaderGstNo,
         PINO: newData.PINO,
-        CustomerName: newData.CustomerName,
-        address: newData.address,
-        state: newData.state,
-        city: newData.city,
-        pincode: newData.pincode,
-        GSTNumber: newData.GSTNumber,
-        ContactPerson: newData.ContactPerson,
-        EmailID: newData.EmailID,
-        PhoneNo: newData.PhoneNo,
+        ImpiHeaderCustomerName: newData.ImpiHeaderCustomerName,
+        ImpiHeaderCustomerAddress: newData.ImpiHeaderCustomerAddress,
+        ImpiHeaderCustomerState: newData.ImpiHeaderCustomerState,
+        ImpiHeaderCustomerCity: newData.ImpiHeaderCustomerCity,
+        ImpiHeaderCustomerPinCode: newData.ImpiHeaderCustomerPinCode,
+        ImpiHeaderCustomerGstNo: newData.ImpiHeaderCustomerGstNo,
+        ImpiHeaderCustomerContactPerson: newData.ImpiHeaderCustomerContactPerson,
+        ImpiHeaderCustomerEmailId: newData.ImpiHeaderCustomerEmailId,
+        ImpiHeaderCustomerPhoneNo: newData.ImpiHeaderCustomerPhoneNo,
         items: newData.items,
-        file: newData.file,
-        PaymentTerms: newData.PaymentTerms,
-        Remarks: newData.Remarks
+        ImpiHeaderAttachment: newData.file,
+        ImpiHeaderPaymentTerms: newData.ImpiHeaderPaymentTerms,
+        ImpiHeaderRemarks: newData.ImpiHeaderRemarks,
+        IsDraft:newData.IsDraft
       };
-      // Check if invoiceType is Tax Invoice, then include PINO
-      if (newData.invoiceType === 'Tax Invoice') {
+      // Check if ImpiHeaderInvoiceType is Tax Invoice, then include PINO
+      if (newData.ImpiHeaderInvoiceType === 'Tax Invoice') {
         newConfig.PINO = newData.PINO;
       }
 
       console.log(newConfig);
 
-      // const successMessage = isUpdate ? 'Data updated successfully.' : 'Data created successfully.';
+      // const successMessage = isupdate ? 'Data updated successfully.' : 'Data created successfully.';
       // this.handleApiRequest(this.API.create(newConfig), successMessage, 'Error submitting data:');
     } else {
       this.markFormControlsAsTouched();
@@ -230,9 +194,9 @@ export class NewPurchaseInvoiceComponent implements OnInit {
   }
 
   markFormControlsAsTouched(): void {
-    ['invoiceType', 'projectCode', 'department', 'division', 'PANNo', 'GSTNo',
-      'CustomerName', 'address', 'state', 'city', 'pincode', 'EmailID',
-      'GSTNumber', 'ContactPerson', 'PhoneNo', 'items'].forEach(controlName => {
+    ['ImpiHeaderInvoiceType', 'ImpiHeaderProjectCode', 'ImpiHeaderDepartment', 'ImpiHeaderDivison', 'ImpiHeaderPanNo', 'ImpiHeaderGstNo',
+      'ImpiHeaderCustomerName', 'ImpiHeaderCustomerAddress', 'ImpiHeaderCustomerState', 'ImpiHeaderCustomerCity', 'ImpiHeaderCustomerPinCode', 'ImpiHeaderCustomerEmailId',
+      'ImpiHeaderCustomerGstNo', 'ImpiHeaderCustomerContactPerson', 'ImpiHeaderCustomerPhoneNo', 'items'].forEach(controlName => {
         this.publicVariable.dataForm.controls[controlName].markAsTouched();
       });
   }
