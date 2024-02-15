@@ -46,7 +46,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
       PhoneNo: ['', [Validators.required, Validators.pattern(/^[6-9]\d{9}$/)]],
 
       items: this.fb.array([]),
-      file: [],
+      file: ['',this.fileValidator],
       PaymentTerms: [],
       Remarks: [],
     });
@@ -85,6 +85,50 @@ export class NewPurchaseInvoiceComponent implements OnInit {
 
     (event.target as HTMLInputElement).value = numericValue;
   }
+
+  onFileSelected(event: any) {
+    const fileInput = event.target as HTMLInputElement;
+    if (!fileInput || !fileInput.files || fileInput.files.length === 0) {
+      return;
+    }
+
+    const file = fileInput.files[0];
+    const allowedTypes = ['application/pdf', 'application/vnd.ms-excel', 'text/csv'];
+    const maxSize = 5 * 1024 * 1024; // 5MB
+
+    const fileControl = this.publicVariable.dataForm.get('file');
+    if (!fileControl) {
+      return;
+    }
+
+    if (!allowedTypes.includes(file.type)) {
+      fileControl.setErrors({ fileType: true });
+    } else if (file.size > maxSize) {
+      fileControl.setErrors({ maxSize: true });
+    } else {
+      fileControl.setErrors(null); // Reset any previous errors
+      this.publicVariable.dataForm.patchValue({
+        file: file
+      });
+    }
+  }
+
+  fileValidator(control: any) {
+    const file = control.value;
+    if (file) {
+      const allowedTypes = ['application/pdf', 'application/vnd.ms-excel', 'text/csv'];
+      if (!allowedTypes.includes(file.type)) {
+        return { fileType: true };
+      }
+      const maxSize = 5 * 1024 * 1024; // 5MB
+      if (file.size > maxSize) {
+        return { maxSize: true };
+      }
+    }
+    return null;
+  }
+
+
 
   get itemsFormArray(): FormArray {
     return this.publicVariable.dataForm.get('items') as FormArray;

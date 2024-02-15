@@ -24,7 +24,8 @@
         <div class="col-md-4 col-sm-6">
           <div class="form-group">
             <label for="projectCode">Project Code</label>
-            <input type="text" id="projectCode" placeholder="Project Code" class="form-control" formControlName="projectCode" />
+            <input type="text" id="projectCode" placeholder="Project Code" class="form-control"
+              formControlName="projectCode" />
             <div *ngIf="shouldShowError('projectCode','required')" class="text-danger">This field is required</div>
 
           </div>
@@ -33,7 +34,8 @@
         <div class="col-md-4 col-sm-6">
           <div class="form-group">
             <label for="department">Department</label>
-            <input type="text" id="department" placeholder="Department" formControlName="department" class="form-control" />
+            <input type="text" id="department" placeholder="Department" formControlName="department"
+              class="form-control" />
             <div *ngIf="shouldShowError('department','required')" class="text-danger">This field is required</div>
 
           </div>
@@ -52,7 +54,8 @@
           <div class="form-group">
             <label for="PANNo">PAN No</label>
             <input type="text" id="PANNo" class="form-control" placeholder="PAN No" formControlName="PANNo" />
-            <div *ngIf="shouldShowError('PANNo','invalidPAN')" class="text-danger">Please enter a valid PAN Number.</div>
+            <div *ngIf="shouldShowError('PANNo','invalidPAN')" class="text-danger">Please enter a valid PAN Number.
+            </div>
           </div>
         </div>
 
@@ -87,7 +90,8 @@
           <div class="form-group">
             <label for="CustomerName">Customer Name</label>
             <div class="flex-field">
-              <input type="text" id="CustomerName" formControlName="CustomerName" placeholder="Customer Name" class="form-control" />
+              <input type="text" id="CustomerName" formControlName="CustomerName" placeholder="Customer Name"
+                class="form-control" />
               <div class="add-btn"><a routerLink="/customer/new">+</a></div>
             </div>
             <div *ngIf="shouldShowError('CustomerName','required')" class="text-danger">This field is required</div>
@@ -136,7 +140,8 @@
         <div class="col-md-4 col-sm-6">
           <div class="form-group">
             <label for="GSTNumber">GST Number</label>
-            <input type="text" class="form-control" id="GSTNumber" placeholder="GST Number" formControlName="GSTNumber" />
+            <input type="text" class="form-control" id="GSTNumber" placeholder="GST Number"
+              formControlName="GSTNumber" />
             <div *ngIf="shouldShowError('GSTNumber','invalidGST')" class="text-danger"> Please enter
               a valid GST Registration Number. (05AAACF1282E1Z5)</div>
           </div>
@@ -145,7 +150,8 @@
         <div class="col-md-4 col-sm-6">
           <div class="form-group">
             <label for="ContactPerson">Contact Person</label>
-            <input type="text" placeholder="Contact Person" id="ContactPerson" formControlName="ContactPerson" class="form-control" />
+            <input type="text" placeholder="Contact Person" id="ContactPerson" formControlName="ContactPerson"
+              class="form-control" />
             <div *ngIf="shouldShowError('ContactPerson','required')" class="text-danger">This field is required</div>
 
           </div>
@@ -157,14 +163,15 @@
             <input type="text" placeholder="Email ID" id="EmailID" formControlName="EmailID" class="form-control" />
             <div *ngIf="shouldShowError('EmailID','required')" class="text-danger">Email is required.</div>
             <div *ngIf="shouldShowError('EmailID','email')" class="text-danger"> Please enter a valid email
-                address.</div>
+              address.</div>
           </div>
         </div>
 
         <div class="col-md-4 col-sm-6">
           <div class="form-group">
             <label for="PhoneNo">Phone No.</label>
-            <input type="text" class="form-control" id="PhoneNo" (input)="onInputChange($event)" placeholder="Phone No" formControlName="PhoneNo" />
+            <input type="text" class="form-control" id="PhoneNo" (input)="onInputChange($event)" placeholder="Phone No"
+              formControlName="PhoneNo" />
             <div *ngIf="shouldShowError('PhoneNo','required')" class="text-danger">Phone number is required.</div>
             <div *ngIf="shouldShowError('PhoneNo','pattern')" class="text-danger">Invalid phone number.</div>
 
@@ -191,11 +198,13 @@
             <tr *ngFor="let item of itemsFormArray.controls; let i = index" [formGroupName]="i">
               <td><input class="form-control" formControlName="name" placeholder="Particulars" type="text" required />
               </td>
-              <td><input class="form-control" (input)="onInputChange($event)" formControlName="unit" type="text" placeholder="Unit" required /></td>
-              <td><input class="form-control" (input)="onDiscountInput($event)" formControlName="discount" type="text" placeholder="Discount" required />
+              <td><input class="form-control" (input)="onInputChange($event)" formControlName="unit" type="text"
+                  placeholder="Unit" required /></td>
+              <td><input class="form-control" (input)="onDiscountInput($event)" formControlName="discount" type="text"
+                  placeholder="Discount" required />
               </td>
-              <td><input class="form-control" (input)="priceValidator($event)" formControlName="rate" type="text" placeholder="Rate/Unit(INR)"
-                  required /></td>
+              <td><input class="form-control" (input)="priceValidator($event)" formControlName="rate" type="text"
+                  placeholder="Rate/Unit(INR)" required /></td>
               <td><input class="form-control" formControlName="amount" type="text" placeholder="Amount(INR)"
                   [value]="calculateAmount(item.value)" readonly /></td>
               <td>
@@ -226,8 +235,13 @@
         <div class="col-sm-3 text-sm-end">Upload Document</div>
         <div class="col-sm-6">
           <div class="input-group">
-            <input type="file" class="form-control"  id="inputGroupFile02" formControlName="file" />
+            <input type="file" class="form-control" id="inputGroupFile02" formControlName="file"
+              accept=".pdf,.xlsx,.csv" (change)="onFileSelected($event)" />
             <label class="input-group-text" for="inputGroupFile02">Upload</label>
+
+            <div *ngIf="shouldShowError('file','fileType')" class="text-danger">Invalid file type. Please upload a PDF, Excel, or CSV file.</div>
+            <div *ngIf="shouldShowError('file','maxSize')" class="text-danger">File size exceeds the limit of 5MB.</div>
+
           </div>
         </div>
       </div>
@@ -238,7 +252,8 @@
       <div class="col-md-9 mt-4">
         <div class="form-group">
           <label for="PaymentTerms">Payment Terms</label>
-          <textarea class="form-control h-100" cols="2" rows="3" id="PaymentTerms" formControlName="PaymentTerms"></textarea>
+          <textarea class="form-control h-100" cols="2" rows="3" id="PaymentTerms"
+            formControlName="PaymentTerms"></textarea>
         </div>
       </div>
 
