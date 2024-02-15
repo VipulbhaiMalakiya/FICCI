@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AppService, NgbModal, Router, ToastrService, publicVariable } from '../../Export/invoce';
+import { AppService, FormBuilder, NgbModal, Router, ToastrService, Validators, publicVariable } from '../../Export/invoce';
 
 @Component({
   selector: 'app-new-purchase-invoice',
@@ -15,11 +15,21 @@ export class NewPurchaseInvoiceComponent implements OnInit {
     private modalService: NgbModal,
     private router: Router,
     private toastr: ToastrService,
+    private fb: FormBuilder
 
   ) {
+    this.initializeForm();
 
   }
 
+  private initializeForm(): void {
+    this.publicVariable.dataForm = this.fb.group({
+      id: [''],
+      invoiceType: ['Proforma Invoice', Validators.required],
+      projectCode:['', Validators.required],
+      department:['', Validators.required],
+    });
+  }
 
 
   ngOnInit(): void {
@@ -49,5 +59,39 @@ export class NewPurchaseInvoiceComponent implements OnInit {
       total += this.calculateAmount(item);
     }
     return total;
+  }
+
+
+  onSubmit(): void {
+    if (this.publicVariable.dataForm.valid) {
+      const newData = this.publicVariable.dataForm.value;
+      const isUpdate = !!newData.id;
+      // const selectedEmployee = this.publicVariable.employeeList.find(employee => employee.imeM_EmpId === newData.empId) || this.publicVariable.userData;
+
+      // const newConfig: addUpdateEmployees = {
+      //   isUpdate: isUpdate,
+      //   imeM_ID: isUpdate ? newData.id : undefined,
+      //   imeM_EmpId: newData.empId || this.publicVariable.userData.imeM_EmpId,
+      //   imeM_Username: selectedEmployee.imeM_Username,
+      //   imeM_Name: selectedEmployee.imeM_Name,
+      //   imeM_Email: selectedEmployee.imeM_Email,
+      //   roleId: newData.roleId,
+      //   isActive: newData.isActive
+      // };
+      // const successMessage = isUpdate ? 'Data updated successfully.' : 'Data created successfully.';
+      // this.handleApiRequest(this.API.create(newConfig), successMessage, 'Error submitting data:');
+    } else {
+      this.markFormControlsAsTouched();
+    }
+  }
+
+  markFormControlsAsTouched(): void {
+    ['invoiceType','projectCode','department'].forEach(controlName => {
+      this.publicVariable.dataForm.controls[controlName].markAsTouched();
+    });
+  }
+
+  shouldShowError(controlName: string, errorName: string): boolean {
+    return this.publicVariable.dataForm.controls[controlName].touched && this.publicVariable.dataForm.controls[controlName].hasError(errorName);
   }
 }

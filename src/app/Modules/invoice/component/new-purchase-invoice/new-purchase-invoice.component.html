@@ -1,81 +1,77 @@
 <div class="inner-content">
   <h3 class="content-title">PI New Purchase Invoice</h3>
 
-  <div class="pipage-radio">
-    <div class="form-check">
-      <input
-        class="form-check-input"
-        type="radio"
-        name="flexRadioDefault"
-        id="flexRadioDefault1"
-        checked
-      />
-      <label class="form-check-label" for="flexRadioDefault1">
-        Proforma Invoice
-      </label>
-    </div>
+  <form [formGroup]="publicVariable.dataForm" (ngSubmit)="onSubmit()">
+    <div class="pipage-radio">
+      <div class="form-check">
+        <input class="form-check-input" formControlName="invoiceType" type="radio" name="invoiceType" id="flexRadioDefault1" value="Proforma Invoice" />
+        <label class="form-check-label" for="flexRadioDefault1">
+          Proforma Invoice
+        </label>
+      </div>
 
-    <div class="form-check">
-      <input
-        class="form-check-input"
-        type="radio"
-        name="flexRadioDefault"
-        id="flexRadioDefault2"
-      />
-      <label class="form-check-label" for="flexRadioDefault2">
-        Tax Invoice
-      </label>
+      <div class="form-check">
+        <input class="form-check-input" formControlName="invoiceType" type="radio" name="invoiceType" id="flexRadioDefault2" value="Tax Invoice" />
+        <label class="form-check-label" for="flexRadioDefault2">
+          Tax Invoice
+        </label>
+      </div>
     </div>
-  </div>
+    <div class="mastersform-sec mb-0">
+      <div class="row">
+        <div class="col-md-4 col-sm-6">
+          <div class="form-group">
+            <label>Project Code</label>
+            <input type="text" placeholder="Project Code" class="form-control" formControlName="projectCode" />
+            <div *ngIf="shouldShowError('projectCode','required')" class="text-danger">This field is required</div>
+
+          </div>
+        </div>
+
+        <div class="col-md-4 col-sm-6">
+          <div class="form-group">
+            <label>Department</label>
+            <input type="text" placeholder="Department" formControlName="department" class="form-control" />
+            <div *ngIf="shouldShowError('department','required')" class="text-danger">This field is required</div>
+
+          </div>
+        </div>
+
+        <div class="col-md-4 col-sm-6">
+          <div class="form-group">
+            <label>Division</label>
+            <input type="text" value="" class="form-control" required="" />
+          </div>
+        </div>
+
+        <div class="col-md-4 col-sm-6">
+          <div class="form-group">
+            <label>PAN No</label>
+            <input type="text" value="" class="form-control" required="" />
+          </div>
+        </div>
+
+        <div class="col-md-4 col-sm-6">
+          <div class="form-group">
+            <label>GST No</label>
+            <input type="text" value="" class="form-control" required="" />
+          </div>
+        </div>
+
+        <!--show tax-invoice-only
+              <div class="col-md-4 col-sm-6">
+                <div class="form-group">
+                  <label>GST No</label>
+                  <input type="text" value="" class="form-control" required="">
+                </div>
+              </div>
+              -->
+      </div>
+    </div>
+  </form>
   <!--pipage-sec-->
 
-  <div class="mastersform-sec mb-0">
-    <div class="row">
-      <div class="col-md-4 col-sm-6">
-        <div class="form-group">
-          <label>Project Code</label>
-          <input type="text" value="" class="form-control" required="" />
-        </div>
-      </div>
 
-      <div class="col-md-4 col-sm-6">
-        <div class="form-group">
-          <label>Department</label>
-          <input type="text" value="" class="form-control" required="" />
-        </div>
-      </div>
-
-      <div class="col-md-4 col-sm-6">
-        <div class="form-group">
-          <label>Division</label>
-          <input type="text" value="" class="form-control" required="" />
-        </div>
-      </div>
-
-      <div class="col-md-4 col-sm-6">
-        <div class="form-group">
-          <label>PAN No</label>
-          <input type="text" value="" class="form-control" required="" />
-        </div>
-      </div>
-
-      <div class="col-md-4 col-sm-6">
-        <div class="form-group">
-          <label>GST No</label>
-          <input type="text" value="" class="form-control" required="" />
-        </div>
-      </div>
-
-      <!--show tax-invoice-only
-            <div class="col-md-4 col-sm-6">
-              <div class="form-group">
-                <label>GST No</label>
-                <input type="text" value="" class="form-control" required="">
-              </div>
-            </div>
-            -->
-    </div>
-  </div>
 
   <div class="pi-pagetitle">Customer Details</div>
 
@@ -178,11 +174,16 @@
         </thead>
         <tbody>
           <tr *ngFor="let item of items; let i = index">
-            <td><input class="form-control" name="name{{i}}" placeholder="Particulars" type="text" required [(ngModel)]="item.name" /></td>
-            <td><input class="form-control" name="unit{{i}}" type="text" placeholder="Unit" required [(ngModel)]="item.unit" /></td>
-            <td><input class="form-control" name="discount{{i}}" type="text" placeholder="Discount" required [(ngModel)]="item.discount" /></td>
-            <td><input class="form-control" name="rate{{i}}" type="text" placeholder="Rate/Unit(INR)" required [(ngModel)]="item.rate" /></td>
-            <td><input class="form-control" name="amount{{i}}" type="text" placeholder="Amount(INR)" [value]="calculateAmount(item)" readonly /></td>
+            <td><input class="form-control" name="name{{i}}" placeholder="Particulars" type="text" required
+                [(ngModel)]="item.name" /></td>
+            <td><input class="form-control" name="unit{{i}}" type="text" placeholder="Unit" required
+                [(ngModel)]="item.unit" /></td>
+            <td><input class="form-control" name="discount{{i}}" type="text" placeholder="Discount" required
+                [(ngModel)]="item.discount" /></td>
+            <td><input class="form-control" name="rate{{i}}" type="text" placeholder="Rate/Unit(INR)" required
+                [(ngModel)]="item.rate" /></td>
+            <td><input class="form-control" name="amount{{i}}" type="text" placeholder="Amount(INR)"
+                [value]="calculateAmount(item)" readonly /></td>
             <td>
               <span class="table-btns">
                 <a (click)="addRow()"><img src="../assets/images/plus-icon.svg" alt="" /></a>
@@ -195,7 +196,8 @@
             <td colspan="2" class="text-end"><b>{{ calculateTotalAmount() | currency: 'INR' }}</b></td>
           </tr>
           <tr>
-            <td colspan="4" class="text-start">Total Amount Receivable In Word: {{ calculateTotalAmount() | numberToWords  }}</td>
+            <td colspan="4" class="text-start">Total Amount Receivable In Word: {{ calculateTotalAmount() |
+              numberToWords }}</td>
             <td colspan="2" class="text-end"><b>{{ calculateTotalAmount() | currency: 'INR' }}</b></td>
           </tr>
         </tbody>
@@ -242,4 +244,6 @@
       </div>
     </div>
   </div>
+
+
 </div>
