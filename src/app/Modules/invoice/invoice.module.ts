@@ -10,6 +10,7 @@ import { ViewInvoiceStatusComponent } from './View/view-invoice-status/view-invo
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NumberToWordsPipe } from './Pipe/numberToWords';
 import { ViewPiApprovalComponent } from './View/view-pi-approval/view-pi-approval.component';
+import { ViewPiAccountsInboxComponent } from './View/view-pi-accounts-inbox/view-pi-accounts-inbox.component';
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import { ViewPiApprovalComponent } from './View/view-pi-approval/view-pi-approva
     AccountsInboxComponent,
     ViewInvoiceStatusComponent,
     NumberToWordsPipe,
-    ViewPiApprovalComponent 
+    ViewPiApprovalComponent,
+    ViewPiAccountsInboxComponent 
   ],
   imports: [
     CommonModule,

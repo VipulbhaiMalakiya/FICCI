@@ -6,6 +6,7 @@ import { ApprovalInboxComponent } from './component/approval-inbox/approval-inbo
 import { AccountsInboxComponent } from './component/accounts-inbox/accounts-inbox.component';
 import { ViewInvoiceStatusComponent } from './View/view-invoice-status/view-invoice-status.component';
 import { ViewPiApprovalComponent } from './View/view-pi-approval/view-pi-approval.component';
+import { ViewPiAccountsInboxComponent } from './View/view-pi-accounts-inbox/view-pi-accounts-inbox.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'status', pathMatch: 'full' },
@@ -15,7 +16,7 @@ const routes: Routes = [
   { path: 'accounts', component: AccountsInboxComponent },
   { path: 'status/view/:id', component: ViewInvoiceStatusComponent },
   { path: 'approval/view/:id', component: ViewPiApprovalComponent },
-  // { path: 'accounts/remarks/:id', component: AccountsRemarksComponent }
+  { path: 'accounts/view/:id', component: ViewPiAccountsInboxComponent }
 ];
 
 @NgModule({
