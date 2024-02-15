@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AppService, FormBuilder, NgbModal, Router, ToastrService, Validators, gstValidator, panValidator, publicVariable } from '../../Export/invoce';
 import { FormArray } from '@angular/forms';
+import { InvoicesService } from '../../service/invoices.service';
 
 
 @Component({
@@ -19,8 +20,8 @@ export class NewPurchaseInvoiceComponent implements OnInit {
     private modalService: NgbModal,
     private router: Router,
     private toastr: ToastrService,
-    private fb: FormBuilder
-
+    private fb: FormBuilder,
+    private API: InvoicesService
   ) {
     this.initializeForm();
   }
@@ -30,23 +31,23 @@ export class NewPurchaseInvoiceComponent implements OnInit {
       id: [''],
       invoiceType: ['Proforma Invoice', Validators.required],
       projectCode: ['', [Validators.required]],
-      department:  ['', [Validators.required]],
-      division:  ['', [Validators.required]],
+      department: ['', [Validators.required]],
+      division: ['', [Validators.required]],
       PANNo: ['', [Validators.required, panValidator()]], // Use the custom validator function
-      GSTNo: ['', [Validators.required,gstValidator()]],
+      GSTNo: ['', [Validators.required, gstValidator()]],
       PINO: [''],
-      CustomerName:  ['', [Validators.required]],
-      address:  ['', [Validators.required]],
-      state:  ['', [Validators.required]],
-      city:  ['', [Validators.required]],
+      CustomerName: ['', [Validators.required]],
+      address: ['', [Validators.required]],
+      state: ['', [Validators.required]],
+      city: ['', [Validators.required]],
       pincode: ['', [Validators.required, Validators.pattern(/^\d{6}$/)]],
-      GSTNumber: ['',[ Validators.required,gstValidator()]],
-      ContactPerson:  ['', [Validators.required]],
+      GSTNumber: ['', [Validators.required, gstValidator()]],
+      ContactPerson: ['', [Validators.required]],
       EmailID: ['', [Validators.required, Validators.email]],
       PhoneNo: ['', [Validators.required, Validators.pattern(/^[6-9]\d{9}$/)]],
 
       items: this.fb.array([]),
-      file: ['',this.fileValidator],
+      file: ['', this.fileValidator],
       PaymentTerms: [],
       Remarks: [],
     });
@@ -55,14 +56,36 @@ export class NewPurchaseInvoiceComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.loadProjectList()
 
   }
+
+  loadProjectList(): void {
+    try {
+      const subscription = this.API.getProjects().subscribe({
+        next: (response: any) => {
+          this.publicVariable.projectList = response.data;
+        },
+        error: (error) => {
+          console.error('Error loading project list:', error);
+        }
+      });
+
+      this.publicVariable.Subscription.add(subscription);
+    } catch (error) {
+      console.error('Error loading project list:', error);
+    }
+  }
+
+
+
+
 
   onInputChange(event: any) {
     const inputValue = event.target.value; event.target.value = inputValue.replace(/[^0-9]/g, ''); // Allow only numeric input
   }
   onDiscountInput(event: Event) {
-    const inputValue = (event.target as HTMLInputElement).value;    let numericValue = inputValue.replace(/[^0-9.]/g, ''); // Allow only numeric input and '.'
+    const inputValue = (event.target as HTMLInputElement).value; let numericValue = inputValue.replace(/[^0-9.]/g, ''); // Allow only numeric input and '.'
     const decimalParts = numericValue.split('.');
     if (decimalParts.length > 1 && decimalParts[1].length > 2) {
       numericValue = decimalParts[0] + '.' + decimalParts[1].substring(0, 2);
@@ -179,18 +202,18 @@ export class NewPurchaseInvoiceComponent implements OnInit {
         GSTNo: newData.GSTNo,
         PINO: newData.PINO,
         CustomerName: newData.CustomerName,
-        address:newData.address,
-        state:newData.state,
-        city:newData.city,
-        pincode:newData.pincode,
-        GSTNumber:newData.GSTNumber,
-        ContactPerson:newData.ContactPerson,
-        EmailID:newData.EmailID,
-        PhoneNo:newData.PhoneNo,
-        items:newData.items,
-        file:newData.file,
-        PaymentTerms:newData.PaymentTerms,
-        Remarks:newData.Remarks
+        address: newData.address,
+        state: newData.state,
+        city: newData.city,
+        pincode: newData.pincode,
+        GSTNumber: newData.GSTNumber,
+        ContactPerson: newData.ContactPerson,
+        EmailID: newData.EmailID,
+        PhoneNo: newData.PhoneNo,
+        items: newData.items,
+        file: newData.file,
+        PaymentTerms: newData.PaymentTerms,
+        Remarks: newData.Remarks
       };
       // Check if invoiceType is Tax Invoice, then include PINO
       if (newData.invoiceType === 'Tax Invoice') {

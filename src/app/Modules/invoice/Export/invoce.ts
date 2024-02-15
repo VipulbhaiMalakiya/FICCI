@@ -1,5 +1,6 @@
 import { FormGroup } from "@angular/forms";
 import { Subscription } from "rxjs";
+import { projectModel } from "../interface/invoice";
 
 export { FormBuilder, Validators } from '@angular/forms';
 export { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -24,4 +25,5 @@ export class publicVariable {
   Subscription: Subscription = new Subscription();
   selectedEmployee: any;
   userData:any;
+  projectList:projectModel[] = [];
 }
