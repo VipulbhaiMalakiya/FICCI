@@ -69,9 +69,9 @@
       <!--show tax-invoice-only
             <div class="col-md-4 col-sm-6">
               <div class="form-group">
-                <label>GST No</label>  
+                <label>GST No</label>
                 <input type="text" value="" class="form-control" required="">
-              </div>	  
+              </div>
             </div>
             -->
     </div>
@@ -182,7 +182,7 @@
             <td><input class="form-control" name="unit{{i}}" type="text" required [(ngModel)]="item.unit" /></td>
             <td><input class="form-control" name="discount{{i}}" type="text" required [(ngModel)]="item.discount" /></td>
             <td><input class="form-control" name="rate{{i}}" type="text" required [(ngModel)]="item.rate" /></td>
-            <td><input class="form-control" name="amount{{i}}" type="text" required [(ngModel)]="item.amount" /></td>
+            <td><input class="form-control" name="amount{{i}}" type="text" [value]="calculateAmount(item)" readonly /></td>
             <td>
               <span class="table-btns">
                 <a (click)="addRow()"><img src="../assets/images/plus-icon.svg" alt="" /></a>
@@ -192,16 +192,16 @@
           </tr>
           <tr>
             <td colspan="4" class="text-end">Total</td>
-            <td colspan="2" class="text-end"><b>{{ totalAmount | currency: 'INR' }}</b></td>
+            <td colspan="2" class="text-end"><b>{{ calculateTotalAmount() | currency: 'INR' }}</b></td>
           </tr>
           <tr>
-            <td colspan="4" class="text-start">Total Amount Receivable In Word: {{ totalAmount | numberToWords  }}</td>
-            <td colspan="2" class="text-end"><b>{{ totalAmount | currency: 'INR' }}</b></td>
+            <td colspan="4" class="text-start">Total Amount Receivable In Word: {{ calculateTotalAmount() | numberToWords  }}</td>
+            <td colspan="2" class="text-end"><b>{{ calculateTotalAmount() | currency: 'INR' }}</b></td>
           </tr>
         </tbody>
       </table>
-      
-      
+
+
     </div>
   </div>
 
