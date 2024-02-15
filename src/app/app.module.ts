@@ -2,10 +2,12 @@ import { NgModule } from '@angular/core';
 import { ToastrModule } from 'ngx-toastr';
 import {AppComponent,SidebarLayoutComponent,BrowserModule,AppRoutingModule,HttpClientModule,BrowserAnimationsModule } from './import/app';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NotFoundComponent } from './layouts/not-found/not-found.component';
 @NgModule({
   declarations: [
     AppComponent,
     SidebarLayoutComponent,
+    NotFoundComponent,
   ],
   imports: [
     BrowserModule,
