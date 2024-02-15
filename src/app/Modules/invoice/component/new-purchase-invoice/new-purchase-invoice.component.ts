@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AppService, FormBuilder, NgbModal, Router, ToastrService, Validators, publicVariable } from '../../Export/invoce';
+import { FormArray } from '@angular/forms';
 
 @Component({
   selector: 'app-new-purchase-invoice',
@@ -9,7 +10,9 @@ import { AppService, FormBuilder, NgbModal, Router, ToastrService, Validators, p
 export class NewPurchaseInvoiceComponent implements OnInit {
 
   publicVariable = new publicVariable();
-
+  items: any[] = [
+    { name: '', unit: '', discount: '', rate: '', amount: '' }
+  ];
 
   constructor(private appService: AppService,
     private modalService: NgbModal,
@@ -36,27 +39,34 @@ export class NewPurchaseInvoiceComponent implements OnInit {
       state:['', Validators.required],
       city:['', Validators.required],
       pincode:['', Validators.required],
+      GSTNumber:['', Validators.required],
+      ContactPerson:['', Validators.required],
+      EmailID:['', Validators.required],
+      PhoneNo:['', Validators.required],
+      items: this.fb.array([])
+
+
     });
+      // Initialize items form array
+      this.items.forEach(item => this.addItem(item));
   }
-
-
-
-
 
   ngOnInit(): void {
 
   }
 
-  //
-  items: any[] = [
-    { name: 'I phone 15 Pro Max', unit: '100', discount: '10', rate: '150000', amount: 0 }
-  ];
-  addRow(): void {
-    this.items.push({ name: '', unit: '', discount: '', rate: '', amount: 0 });
+  get itemsFormArray(): FormArray {
+    return this.publicVariable.dataForm.get('items') as FormArray;
   }
-  removeRow(index: number): void {
-    this.items.splice(index, 1);
+  addItem(item?: any): void {
+    item = item || { name: '', unit: '', discount: '', rate: '', amount: 0 };
+    this.itemsFormArray.push(this.fb.group(item));
   }
+
+  removeItem(index: number): void {
+    this.itemsFormArray.removeAt(index);
+  }
+
   calculateAmount(item: any): number {
     const unit = parseFloat(item.unit) || 0;
     const discount = parseFloat(item.discount) || 0;
@@ -64,13 +74,15 @@ export class NewPurchaseInvoiceComponent implements OnInit {
     const amount = unit * rate * (1 - discount / 100);
     return isNaN(amount) ? 0 : amount;
   }
+
   calculateTotalAmount(): number {
     let total = 0;
-    for (let item of this.items) {
-      total += this.calculateAmount(item);
-    }
+    this.itemsFormArray.controls.forEach(control => {
+      total += this.calculateAmount(control.value);
+    });
     return total;
   }
+
 
 
   onSubmit(): void {
@@ -98,7 +110,8 @@ export class NewPurchaseInvoiceComponent implements OnInit {
 
   markFormControlsAsTouched(): void {
     ['invoiceType', 'projectCode', 'department', 'division', 'PANNo', 'GSTNo',
-     'CustomerName', 'address','state','city','pincode'].forEach(controlName => {
+     'CustomerName', 'address','state','city','pincode','EmailID',
+    'GSTNumber','ContactPerson','PhoneNo'].forEach(controlName => {
       this.publicVariable.dataForm.controls[controlName].markAsTouched();
     });
   }
