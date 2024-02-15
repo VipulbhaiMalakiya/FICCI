@@ -8,6 +8,8 @@ export { Router } from '@angular/router';
 export { panValidator } from '../Validation/panValidator';
 export { alphanumericWithSpacesValidator } from '../Validation/alphanumericWithSpacesValidator';
 export { gstValidator } from '../Validation/gstValidator';
+export { AppService } from 'src/app/services/excel.service';
+
 export class publicVariable {
   dataForm!: FormGroup;
   isEdit: boolean = false;
