@@ -384,7 +384,7 @@ header.main-header {
     font-weight:500;
     margin-bottom: 5px;
     font-size: 13px;
-    color: #111;
+    color: #555;
 }
 
 .mastersform-sec { margin: 20px 0px 40px; }
@@ -606,8 +606,8 @@ header.main-header {
 .attach-col .input-group-text{  font-size: 14px;}
 
 .btn.btn-secondary {
-    background: #888;
-    border-color: #888;
+    background: #cecece;
+    border-color: #cecece;
 }
 
 .btn.btn-secondary:hover{ background:#666; border-color:#666;  }
@@ -620,6 +620,42 @@ textarea.form-control{ padding-top: 10px; padding-bottom: 10px; }
     padding-left: 10px;
     padding-right: 10px;
 }
+
+.mailer-piaccount {
+    max-width: 500px;
+    width: 100%;
+	margin-top: 20px;
+	margin-bottom:30px; 
+}
+
+.attach-col2 .form-control {
+    height: auto;
+    font-size: 13px;
+    padding:0.5rem 0.75rem;
+}
+
+.mailer-piaccount .col-form-label{
+	font-weight: 500;
+    font-size: 13px;
+}
+
+
+.inner-staticwrap{ text-align: center; }
+.gif img{ max-height:71vh; }
+
+.inner-staticwrap h2{ font-weight: 700; font-size:34px; }
+
+.gif2 img{ max-height:65vh; }
+
+.gif-content{ max-width:40%; flex:0 0 40%; }
+
+
+
+
+
+
+
+
 
 
 
