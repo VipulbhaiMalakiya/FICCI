@@ -164,7 +164,7 @@
         <div class="col-md-4 col-sm-6">
           <div class="form-group">
             <label for="PhoneNo">Phone No.</label>
-            <input type="text" class="form-control" id="PhoneNo" placeholder="Phone No" formControlName="PhoneNo" />
+            <input type="text" class="form-control" id="PhoneNo" (input)="onInputChange($event)" placeholder="Phone No" formControlName="PhoneNo" />
             <div *ngIf="shouldShowError('PhoneNo','required')" class="text-danger">Phone number is required.</div>
             <div *ngIf="shouldShowError('PhoneNo','pattern')" class="text-danger">Invalid phone number.</div>
 
@@ -191,10 +191,10 @@
             <tr *ngFor="let item of itemsFormArray.controls; let i = index" [formGroupName]="i">
               <td><input class="form-control" formControlName="name" placeholder="Particulars" type="text" required />
               </td>
-              <td><input class="form-control" formControlName="unit" type="text" placeholder="Unit" required /></td>
-              <td><input class="form-control" formControlName="discount" type="text" placeholder="Discount" required />
+              <td><input class="form-control" (input)="onInputChange($event)" formControlName="unit" type="text" placeholder="Unit" required /></td>
+              <td><input class="form-control" (input)="onDiscountInput($event)" formControlName="discount" type="text" placeholder="Discount" required />
               </td>
-              <td><input class="form-control" formControlName="rate" type="text" placeholder="Rate/Unit(INR)"
+              <td><input class="form-control" (input)="priceValidator($event)" formControlName="rate" type="text" placeholder="Rate/Unit(INR)"
                   required /></td>
               <td><input class="form-control" formControlName="amount" type="text" placeholder="Amount(INR)"
                   [value]="calculateAmount(item.value)" readonly /></td>

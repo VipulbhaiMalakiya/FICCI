@@ -58,6 +58,34 @@ export class NewPurchaseInvoiceComponent implements OnInit {
 
   }
 
+  onInputChange(event: any) {
+    const inputValue = event.target.value; event.target.value = inputValue.replace(/[^0-9]/g, ''); // Allow only numeric input
+  }
+  onDiscountInput(event: Event) {
+    const inputValue = (event.target as HTMLInputElement).value;    let numericValue = inputValue.replace(/[^0-9.]/g, ''); // Allow only numeric input and '.'
+    const decimalParts = numericValue.split('.');
+    if (decimalParts.length > 1 && decimalParts[1].length > 2) {
+      numericValue = decimalParts[0] + '.' + decimalParts[1].substring(0, 2);
+    }
+    if (decimalParts[0].length > 2) {
+      numericValue = numericValue.substring(0, 2) + '.' + numericValue.substring(2);
+    }
+    (event.target as HTMLInputElement).value = numericValue;
+
+  }
+  priceValidator(event: Event) {
+    const inputValue = (event.target as HTMLInputElement).value;
+    let numericValue = inputValue.replace(/[^0-9.]/g, '');
+    const decimalParts = numericValue.split('.');
+    if (decimalParts.length > 1) {
+      const integerPart = decimalParts[0];
+      const decimalPart = decimalParts[1].slice(0, 2);
+      numericValue = integerPart + '.' + decimalPart;
+    }
+
+    (event.target as HTMLInputElement).value = numericValue;
+  }
+
   get itemsFormArray(): FormArray {
     return this.publicVariable.dataForm.get('items') as FormArray;
   }
@@ -66,7 +94,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
     this.itemsFormArray.push(this.fb.group({
       name: [item.name, Validators.required],
       unit: [item.unit, Validators.required],
-      discount: [item.discount, Validators.required],
+      discount: [item.discount, [Validators.required, Validators.min(0), Validators.max(100)]],
       rate: [item.rate, Validators.required],
       amount: [this.calculateAmount(item), Validators.required]
     }));
