@@ -128,8 +128,6 @@ export class NewPurchaseInvoiceComponent implements OnInit {
     return null;
   }
 
-
-
   get itemsFormArray(): FormArray {
     return this.publicVariable.dataForm.get('items') as FormArray;
   }
