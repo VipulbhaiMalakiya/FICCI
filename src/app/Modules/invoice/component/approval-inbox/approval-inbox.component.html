@@ -6,22 +6,26 @@
 
     <div class="tblsort">
       <label class="col-form-label">Show</label>
-      <select class="form-select" required="">
-        <option value="">10</option>
-        <option value="">20</option>
+      <select id="itemsPerPageSelect" class="form-select" [(ngModel)]="publicVariable.tableSize"
+        (change)="onTableSizeChange($event)">
+        <option *ngFor="let size of publicVariable.tableSizes" [value]="size">
+          {{ size }}
+        </option>
       </select>
     </div>
 
     <div class="dt-buttons">
-      <button class="gray-btns" type="button"><img src="../assets/images/csv.png" alt=""></button>
-      <button class="gray-btns" type="button"><img src="../assets/images/excel-icon.png" alt=""></button>
+      <button class="gray-btns" (click)="onDownload()" type="button"><img src="../assets/images/excel-icon.png"
+          alt=""></button>
     </div>
 
     <!-- Example single danger button -->
     <div class="topbr-btns">
       <div class="btn-group">
-        <div class="table-search"><input type="text" class="form-control" name="name" id="name"
-            placeholder="Search here" required=""></div>
+        <div class="table-search">
+          <input type="text" class="form-control" [(ngModel)]="publicVariable.searchText" name="name" id="name"
+            placeholder="Search here" />
+        </div>
       </div>
     </div>
 
