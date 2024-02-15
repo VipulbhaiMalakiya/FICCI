@@ -39,7 +39,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
       address:  ['', [Validators.required]],
       state:  ['', [Validators.required]],
       city:  ['', [Validators.required]],
-      pincode:  ['', [Validators.required]],
+      pincode: ['', [Validators.required, Validators.pattern(/^\d{6}$/)]],
       GSTNumber: ['',[ Validators.required,gstValidator()]],
       ContactPerson:  ['', [Validators.required]],
       EmailID: ['', [Validators.required, Validators.email]],

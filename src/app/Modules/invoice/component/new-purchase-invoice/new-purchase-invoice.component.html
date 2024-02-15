@@ -131,9 +131,11 @@
         <div class="col-md-4 col-sm-6">
           <div class="form-group">
             <label for="pincode">Pincode</label>
-            <input type="text" formControlName="pincode" placeholder="Pincode" class="form-control" />
-            <div *ngIf="shouldShowError('pincode','required')" class="text-danger">This field is required</div>
-
+            <input type="text" formControlName="pincode" placeholder="Pincode" (input)="onInputChange($event)" class="form-control" />
+            <div *ngIf="shouldShowError('pincode','required')" class="text-danger"> Pin Code is required.
+            </div>
+            <div *ngIf="shouldShowError('pincode','pattern')" class="text-danger"> Please enter a valid
+                6-digit Pin Code.</div>
           </div>
         </div>
 
