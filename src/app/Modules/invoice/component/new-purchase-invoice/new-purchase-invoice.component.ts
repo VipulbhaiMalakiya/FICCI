@@ -19,17 +19,26 @@ export class NewPurchaseInvoiceComponent implements OnInit {
 
   ) {
     this.initializeForm();
-
   }
 
   private initializeForm(): void {
     this.publicVariable.dataForm = this.fb.group({
       id: [''],
       invoiceType: ['Proforma Invoice', Validators.required],
-      projectCode:['', Validators.required],
-      department:['', Validators.required],
+      projectCode: ['', Validators.required],
+      department: ['', Validators.required],
+      division: ['', Validators.required],
+      PANNo: ['', Validators.required],
+      GSTNo: ['', Validators.required],
+      PINO: [''],
+      CustomerName:['', Validators.required],
+
+
     });
   }
+
+
+
 
 
   ngOnInit(): void {
@@ -86,7 +95,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
   }
 
   markFormControlsAsTouched(): void {
-    ['invoiceType','projectCode','department'].forEach(controlName => {
+    ['invoiceType', 'projectCode', 'department', 'division', 'PANNo', 'GSTNo','CustomerName'].forEach(controlName => {
       this.publicVariable.dataForm.controls[controlName].markAsTouched();
     });
   }
