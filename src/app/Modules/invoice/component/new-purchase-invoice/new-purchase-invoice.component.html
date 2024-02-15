@@ -90,49 +90,47 @@
               <div class="add-btn"><a routerLink="/customer/new">+</a></div>
             </div>
             <div *ngIf="shouldShowError('CustomerName','required')" class="text-danger">This field is required</div>
-
           </div>
         </div>
 
         <div class="col-md-4 col-sm-6">
           <div class="form-group">
             <label>Address</label>
-            <input type="text" value="" class="form-control" required="" />
+            <input type="text" placeholder="Address" formControlName="address" class="form-control" />
+            <div *ngIf="shouldShowError('address','required')" class="text-danger">This field is required</div>
+
           </div>
         </div>
-
-        <div class="col-md-4 col-sm-6">
-          <div class="form-group">
-            <label>City</label>
-            <select class="form-select" required="">
-              <option value="">Select</option>
-              <option value="">City 1</option>
-              <option value="">City 2</option>
-              <option value="">City 3</option>
-              <option value="">City 4</option>
-              <option value="">City 5</option>
-            </select>
-          </div>
-        </div>
-
         <div class="col-md-4 col-sm-6">
           <div class="form-group">
             <label>State</label>
-            <select class="form-select" required="">
-              <option value="">Select</option>
-              <option value="">City 1</option>
-              <option value="">City 2</option>
-              <option value="">City 3</option>
-              <option value="">City 4</option>
-              <option value="">City 5</option>
+            <select class="form-select" formControlName="state">
+              <option value="">Select State</option>
+              <option value="haryana">Haryana</option>
             </select>
+            <div *ngIf="shouldShowError('state','required')" class="text-danger">This field is required</div>
+
           </div>
         </div>
+        <div class="col-md-4 col-sm-6">
+          <div class="form-group">
+            <label>City</label>
+            <select class="form-select" formControlName="city">
+              <option value="">Select City</option>
+              <option value="gurugram">gurugram</option>
+
+            </select>
+            <div *ngIf="shouldShowError('city','required')" class="text-danger">This field is required</div>
+
+          </div>
+        </div>
+
+
 
         <div class="col-md-4 col-sm-6">
           <div class="form-group">
             <label>Pincode</label>
-            <input type="text" value="" class="form-control" required="" />
+            <input type="text" formControlName="pincode" placeholder="Pincode" class="form-control"/>
           </div>
         </div>
 

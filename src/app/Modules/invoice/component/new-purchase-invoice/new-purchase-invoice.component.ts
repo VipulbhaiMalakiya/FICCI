@@ -31,9 +31,11 @@ export class NewPurchaseInvoiceComponent implements OnInit {
       PANNo: ['', Validators.required],
       GSTNo: ['', Validators.required],
       PINO: [''],
-      CustomerName:['', Validators.required],
-
-
+      CustomerName: ['', Validators.required],
+      address: ['', Validators.required],
+      state:['', Validators.required],
+      city:['', Validators.required],
+      pincode:['', Validators.required],
     });
   }
 
@@ -95,7 +97,8 @@ export class NewPurchaseInvoiceComponent implements OnInit {
   }
 
   markFormControlsAsTouched(): void {
-    ['invoiceType', 'projectCode', 'department', 'division', 'PANNo', 'GSTNo','CustomerName'].forEach(controlName => {
+    ['invoiceType', 'projectCode', 'department', 'division', 'PANNo', 'GSTNo',
+     'CustomerName', 'address','state','city','pincode'].forEach(controlName => {
       this.publicVariable.dataForm.controls[controlName].markAsTouched();
     });
   }
