@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AppService, NgbModal, Router, ToastrService, publicVariable } from '../../Export/invoce';
 
 @Component({
   selector: 'app-new-purchase-invoice',
@@ -6,6 +7,19 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./new-purchase-invoice.component.css']
 })
 export class NewPurchaseInvoiceComponent implements OnInit {
+
+  publicVariable = new publicVariable();
+
+
+  constructor(private appService: AppService,
+    private modalService: NgbModal,
+    private router: Router,
+    private toastr: ToastrService,
+
+  ) {
+
+  }
+
 
 
   ngOnInit(): void {
