@@ -11,7 +11,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
 
   publicVariable = new publicVariable();
   items: any[] = [
-    { name: '', unit: '', discount: '', rate: '', amount: '' }
+    { name: 'I phone 15 Pro Max', unit: '100', discount: '10', rate: '150000', amount: 0 }
   ];
 
   constructor(private appService: AppService,
@@ -36,19 +36,19 @@ export class NewPurchaseInvoiceComponent implements OnInit {
       PINO: [''],
       CustomerName: ['', Validators.required],
       address: ['', Validators.required],
-      state:['', Validators.required],
-      city:['', Validators.required],
-      pincode:['', Validators.required],
-      GSTNumber:['', Validators.required],
-      ContactPerson:['', Validators.required],
-      EmailID:['', Validators.required],
-      PhoneNo:['', Validators.required],
+      state: ['', Validators.required],
+      city: ['', Validators.required],
+      pincode: ['', Validators.required],
+      GSTNumber: ['', Validators.required],
+      ContactPerson: ['', Validators.required],
+      EmailID: ['', Validators.required],
+      PhoneNo: ['', Validators.required],
       items: this.fb.array([])
 
 
     });
-      // Initialize items form array
-      this.items.forEach(item => this.addItem(item));
+    // Initialize items form array
+    this.items.forEach(item => this.addItem(item));
   }
 
   ngOnInit(): void {
@@ -60,7 +60,13 @@ export class NewPurchaseInvoiceComponent implements OnInit {
   }
   addItem(item?: any): void {
     item = item || { name: '', unit: '', discount: '', rate: '', amount: 0 };
-    this.itemsFormArray.push(this.fb.group(item));
+    this.itemsFormArray.push(this.fb.group({
+      name: [item.name, Validators.required],
+      unit: [item.unit, Validators.required],
+      discount: [item.discount, Validators.required],
+      rate: [item.rate, Validators.required],
+      amount: [this.calculateAmount(item), Validators.required]
+    }));
   }
 
   removeItem(index: number): void {
@@ -110,10 +116,10 @@ export class NewPurchaseInvoiceComponent implements OnInit {
 
   markFormControlsAsTouched(): void {
     ['invoiceType', 'projectCode', 'department', 'division', 'PANNo', 'GSTNo',
-     'CustomerName', 'address','state','city','pincode','EmailID',
-    'GSTNumber','ContactPerson','PhoneNo'].forEach(controlName => {
-      this.publicVariable.dataForm.controls[controlName].markAsTouched();
-    });
+      'CustomerName', 'address', 'state', 'city', 'pincode', 'EmailID',
+      'GSTNumber', 'ContactPerson', 'PhoneNo', 'items'].forEach(controlName => {
+        this.publicVariable.dataForm.controls[controlName].markAsTouched();
+      });
   }
 
   shouldShowError(controlName: string, errorName: string): boolean {
