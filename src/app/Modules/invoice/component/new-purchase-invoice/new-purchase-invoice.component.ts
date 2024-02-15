@@ -167,7 +167,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
         ImpiHeaderCustomerContactPerson: newData.ImpiHeaderCustomerContactPerson,
         ImpiHeaderCustomerEmailId: newData.ImpiHeaderCustomerEmailId,
         ImpiHeaderCustomerPhoneNo: newData.ImpiHeaderCustomerPhoneNo,
-        items: newData.items,
+        lineItem_Requests: newData.items,
         ImpiHeaderAttachment: newData.file,
         ImpiHeaderPaymentTerms: newData.ImpiHeaderPaymentTerms,
         ImpiHeaderRemarks: newData.ImpiHeaderRemarks,
