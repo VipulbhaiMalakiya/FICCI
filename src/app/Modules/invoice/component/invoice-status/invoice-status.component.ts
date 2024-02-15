@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AppService, NgbModal, Router, ToastrService, publicVariable } from '../../Export/invoce';
 
 @Component({
   selector: 'app-invoice-status',
@@ -6,5 +7,41 @@ import { Component } from '@angular/core';
   styleUrls: ['./invoice-status.component.css']
 })
 export class InvoiceStatusComponent {
+  publicVariable = new publicVariable();
 
+
+  constructor(private appService: AppService,
+    private modalService: NgbModal,
+    private router: Router,
+    private toastr: ToastrService,
+
+  ) {
+
+  }
+
+
+  onDownload() {
+    // const exportData = this.publicVariable.userlist.map((x) => ({
+    //   "Cust. No.": x?.imeM_EmpId || '',
+    //   Name: x?.imeM_Name || '',
+    //   Address: x?.imeM_Username || '',
+    //   City: x?.imeM_Email || '',
+    //   Contact: x && x.isActive ? 'Yes' : 'No',
+    //   Email: x?.roleName || ''
+    // }));
+
+    // const headers = ['Cust. No.','Name', 'Address', 'City','Contact', 'Email'];
+    // this.appService.exportAsExcelFile(exportData,'Customer Status',headers);
+  }
+
+  onTableDataChange(event: any) {
+    this.publicVariable.page = event;
+    // this.publicVariable.userlist
+  }
+  onTableSizeChange(event: any): void {
+    this.publicVariable.tableSize = event.target.value;
+    this.publicVariable.page = 1;
+    // this.publicVariable.userlist
+
+  }
 }
