@@ -241,8 +241,8 @@
         <div class="col-sm-3 text-sm-end">Upload Document</div>
         <div class="col-sm-6">
           <div class="input-group">
-            <input type="file" class="form-control" id="inputGroupFile02" formControlName="file"
-              accept=".pdf,.xlsx,.csv"  />
+            <input type="file" class="form-control" id="inputGroupFile02"
+              accept=".pdf,.xlsx,.csv"  (change)="onFileSelected($event)"/>
             <label class="input-group-text" for="inputGroupFile02">Upload</label>
           </div>
         </div>

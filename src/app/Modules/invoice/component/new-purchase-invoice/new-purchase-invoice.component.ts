@@ -15,6 +15,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
   items: any[] = [
     { impiLineDescription: 'I phone 15 Pro Max', impiLineQuantity: '100', impiLineDiscount: '10', impiLineUnitPrice: '150000', calculateAmount: 0 }
   ];
+  ImpiHeaderAttachment:any;
 
   constructor(private appService: AppService,
     private modalService: NgbModal,
@@ -37,7 +38,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
       ImpiHeaderGstNo: ['', [Validators.required, gstValidator()]],
       PINO: [''], //api missing
       ImpiHeaderCustomerName: ['', [Validators.required]],
-      ImpiHeaderCustomerCode:[''] , //new filed
+      ImpiHeaderCustomerCode: [''], //new filed
       ImpiHeaderCustomerAddress: ['', [Validators.required]],
       ImpiHeaderCustomerState: ['', [Validators.required]],
       ImpiHeaderCustomerCity: ['', [Validators.required]],
@@ -46,14 +47,12 @@ export class NewPurchaseInvoiceComponent implements OnInit {
       ImpiHeaderCustomerContactPerson: ['', [Validators.required]],
       ImpiHeaderCustomerEmailId: ['', [Validators.required, Validators.email]],
       ImpiHeaderCustomerPhoneNo: ['', [Validators.required, Validators.pattern(/^[6-9]\d{9}$/)]],
-      ImpiHeaderCreatedBy :[''],
-      ImpiHeaderTotalInvoiceAmount:[],
-       //api new filed
+      ImpiHeaderCreatedBy: [''],
+      ImpiHeaderTotalInvoiceAmount: [''],//api new filed
       items: this.fb.array([]),
-      file: [''],
-      ImpiHeaderPaymentTerms: [],
-      ImpiHeaderRemarks: [],
-      IsDraft:[false]
+      ImpiHeaderPaymentTerms: [''],
+      ImpiHeaderRemarks: [''],
+      IsDraft: [false]
     });
     // Initialize items form array
     this.items.forEach(item => this.addItem(item));
@@ -144,49 +143,75 @@ export class NewPurchaseInvoiceComponent implements OnInit {
     return total;
   }
 
+  onFileSelected(event: any) {
+    const file: File = event.target.files[0];
+    this.ImpiHeaderAttachment = file;
+
+  }
+
   onSubmit(): void {
     if (this.publicVariable.dataForm.valid) {
       const newData = this.publicVariable.dataForm.value;
-      const isupdate = !!newData.headerid;
-      const newConfig: any = {
-        isupdate: isupdate,
-        headerid: isupdate ? newData.headerid : undefined,
-        ImpiHeaderInvoiceType: newData.ImpiHeaderInvoiceType,
-        ImpiHeaderProjectCode: newData.ImpiHeaderProjectCode,
-        ImpiHeaderDepartment: newData.ImpiHeaderDepartment,
-        ImpiHeaderDivison: newData.ImpiHeaderDivison,
-        ImpiHeaderPanNo: newData.ImpiHeaderPanNo,
-        ImpiHeaderGstNo: newData.ImpiHeaderGstNo,
-        PINO: newData.PINO,
-        ImpiHeaderCustomerName: newData.ImpiHeaderCustomerName,
-        ImpiHeaderCustomerAddress: newData.ImpiHeaderCustomerAddress,
-        ImpiHeaderCustomerState: newData.ImpiHeaderCustomerState,
-        ImpiHeaderCustomerCity: newData.ImpiHeaderCustomerCity,
-        ImpiHeaderCustomerPinCode: newData.ImpiHeaderCustomerPinCode,
-        ImpiHeaderCustomerGstNo: newData.ImpiHeaderCustomerGstNo,
-        ImpiHeaderCustomerContactPerson: newData.ImpiHeaderCustomerContactPerson,
-        ImpiHeaderCustomerEmailId: newData.ImpiHeaderCustomerEmailId,
-        ImpiHeaderCustomerPhoneNo: newData.ImpiHeaderCustomerPhoneNo,
-        lineItem_Requests: newData.items,
-        ImpiHeaderAttachment: newData.file,
-        ImpiHeaderPaymentTerms: newData.ImpiHeaderPaymentTerms,
-        ImpiHeaderRemarks: newData.ImpiHeaderRemarks,
-        IsDraft:newData.IsDraft,
-        ImpiHeaderTotalInvoiceAmount:this.calculateTotalAmount()
-      };
+      const isUpdate = !!newData.headerid;
+
+      const formData = new FormData();
+      formData.append('ImpiHeaderAttachment', this.ImpiHeaderAttachment);
+      formData.append('isupdate', String(isUpdate));
+      formData.append('ImpiHeaderInvoiceType', newData.ImpiHeaderInvoiceType);
+      formData.append('ImpiHeaderProjectCode', newData.ImpiHeaderProjectCode);
+      formData.append('ImpiHeaderDepartment', newData.ImpiHeaderDepartment);
+      formData.append('ImpiHeaderDivison', newData.ImpiHeaderDivison);
+      formData.append('ImpiHeaderPanNo', newData.ImpiHeaderPanNo);
+      formData.append('ImpiHeaderGstNo', newData.ImpiHeaderGstNo);
+      formData.append('PINO', newData.PINO);
+      formData.append('ImpiHeaderCustomerName', newData.ImpiHeaderCustomerName);
+      formData.append('ImpiHeaderCustomerAddress', newData.ImpiHeaderCustomerAddress);
+      formData.append('ImpiHeaderCustomerState', newData.ImpiHeaderCustomerState);
+      formData.append('ImpiHeaderCustomerCity', newData.ImpiHeaderCustomerCity);
+      formData.append('ImpiHeaderCustomerPinCode', newData.ImpiHeaderCustomerPinCode);
+      formData.append('ImpiHeaderCustomerGstNo', newData.ImpiHeaderCustomerGstNo);
+      formData.append('ImpiHeaderCustomerContactPerson', newData.ImpiHeaderCustomerContactPerson);
+      formData.append('ImpiHeaderCustomerEmailId', newData.ImpiHeaderCustomerEmailId);
+      formData.append('ImpiHeaderCustomerPhoneNo', newData.ImpiHeaderCustomerPhoneNo);
+      formData.append('lineItem_Requests', newData.items);
+      formData.append('ImpiHeaderPaymentTerms', newData.ImpiHeaderPaymentTerms);
+      formData.append('ImpiHeaderRemarks', newData.ImpiHeaderRemarks);
+      formData.append('IsDraft', newData.IsDraft);
+      formData.append('ImpiHeaderTotalInvoiceAmount', String(this.calculateTotalAmount()));
+      formData.append('ImpiHeaderCustomerCode', 'dummy');
+      formData.append('ImpiHeaderCreatedBy', 'dummy');
+
       // Check if ImpiHeaderInvoiceType is Tax Invoice, then include PINO
       if (newData.ImpiHeaderInvoiceType === 'Tax Invoice') {
-        newConfig.PINO = newData.PINO;
+        formData.append('PINO', newData.PINO);
       }
 
-      console.log(newConfig);
-
-      // const successMessage = isupdate ? 'Data updated successfully.' : 'Data created successfully.';
-      // this.handleApiRequest(this.API.create(newConfig), successMessage, 'Error submitting data:');
+      // Submit the formData
+      this.publicVariable.Subscription.add(
+        this.API.create(formData).subscribe({
+          next: (res: any) => {
+            if (res.status === true) {
+              this.toastr.success(res.message, 'Success');
+              this.publicVariable.dataForm.reset();
+            } else {
+              this.toastr.error(res.message, 'Error');
+            }
+          },
+          error: (error: any) => {
+            this.toastr.error(error.error.message || 'An error occurred. Please try again later.', 'Error');
+          },
+          complete: () => {
+            this.publicVariable.isProcess = false;
+          }
+        })
+      );
     } else {
       this.markFormControlsAsTouched();
     }
   }
+
+
+
 
   markFormControlsAsTouched(): void {
     ['ImpiHeaderInvoiceType', 'ImpiHeaderProjectCode', 'ImpiHeaderDepartment', 'ImpiHeaderDivison', 'ImpiHeaderPanNo', 'ImpiHeaderGstNo',
