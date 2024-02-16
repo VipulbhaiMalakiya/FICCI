@@ -36,6 +36,7 @@
                 <table class="table text-nowrap">
                     <thead>
                         <tr>
+                          <th>#</th>
                             <th>Cust. No.</th>
                             <th>Name</th>
                             <th>Address</th>
@@ -48,6 +49,7 @@
                     <tbody>
 
                         <tr  *ngFor="let d of  this.publicVariable.customerStatusList | searchFilter: publicVariable.searchText| paginate: {itemsPerPage: publicVariable.tableSize,currentPage: publicVariable.page,totalItems: publicVariable.count};let i = index">
+                          <td>{{i + 1}}</td>
                             <td>{{d.customerCode}}</td>
                             <td>{{d.customerName |titlecase }}</td>
                             <td>{{d.address}}</td>
@@ -56,9 +58,9 @@
                             <td>{{d.email}}</td>
 
                             <td><span class="table-btns">
-                                    <a routerLink="view/id"><img src="../assets/images/view-icon.svg" alt=""></a>
+                                    <a (click)="onView(d)"><img src="../assets/images/view-icon.svg" alt=""></a>
                                     <a href="#"><img src="../assets/images/edit-icon.svg" alt=""></a>
-                                    <a (click)="onDelete(1)"><img src="../assets/images/delete-icon.svg"
+                                    <a (click)="onDelete(d.customerId)"><img src="../assets/images/delete-icon.svg"
                                             alt=""></a>
                                 </span>
                             </td>

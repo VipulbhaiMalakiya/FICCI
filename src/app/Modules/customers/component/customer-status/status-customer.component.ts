@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import{AppService, ConfirmationDialogModalComponent, CustomersService, NgbModal, Router, ToastrService, publicVariable} from '../../Export/new-customer'
+import{AppService, ConfirmationDialogModalComponent, CustomersService, NgbModal, Router, ToastrService, customerStatusListModel, publicVariable} from '../../Export/new-customer'
 import { finalize, timeout } from 'rxjs';
 @Component({
   selector: 'app-status-customer',
@@ -54,17 +54,17 @@ export class StatusCustomerComponent implements OnInit{
     modalRef.result.then((canDelete: boolean) => {
       if (canDelete) {
         this.publicVariable.isProcess = true;
-        // this.API.delete(id).subscribe({
-        //   next: (res: any) => {
-        //     this.toastr.success(res.message, 'Success');
-        //     this.publicVariable.isProcess = false;
-        //     this.loadUserList();
-        //   },
-        //   error: (error) => {
-        //     this.publicVariable.isProcess = false;
-        //     this.toastr.error(error.error.message, 'Error');
-        //   }
-        // });
+        this.API.delete(id).subscribe({
+          next: (res: any) => {
+            this.toastr.success(res.message, 'Success');
+            this.publicVariable.isProcess = false;
+            this.loadCustomerStatusList();
+          },
+          error: (error) => {
+            this.publicVariable.isProcess = false;
+            this.toastr.error(error.error.message, 'Error');
+          }
+        });
 
       }
     }).catch(() => { });
@@ -99,5 +99,13 @@ export class StatusCustomerComponent implements OnInit{
     this.publicVariable.page = 1;
     this.publicVariable.customerStatusList
 
+  }
+
+  onView(data: customerStatusListModel): void {
+    if (data.customerId) {
+      this.router.navigate(['customer/status/view',data.customerId], { state: { data: data } });
+    } else {
+      console.error('User ID is undefined or null');
+    }
   }
 }

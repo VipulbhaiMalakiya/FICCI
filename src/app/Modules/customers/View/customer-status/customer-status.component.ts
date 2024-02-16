@@ -1,10 +1,21 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-customer-status',
   templateUrl: './customer-status.component.html',
   styleUrls: ['./customer-status.component.css']
 })
-export class CustomerStatusComponent {
+export class CustomerStatusComponent  implements OnInit{
+  customerId?: number;
+  data: any;
 
+  constructor(private route: ActivatedRoute) { }
+
+  ngOnInit() {
+    this.route.params.subscribe(params => {
+      this.customerId = +params['id'];
+    });
+    this.data = history.state.data;
+  }
 }

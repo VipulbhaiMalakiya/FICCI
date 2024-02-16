@@ -42,6 +42,6 @@ export class CustomersService {
   }
 
   delete(id: number): Observable<any> {
-    return this.http.delete<any>(`${this.apiUrl}?id=${id}`).pipe(this.retry);
+    return this.http.delete<any>(`${this.apiUrl}/${id}`).pipe(this.retry);
   }
 }
