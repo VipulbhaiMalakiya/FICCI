@@ -149,10 +149,10 @@ export class NewPurchaseInvoiceComponent implements OnInit {
   }
 
   onSubmit(): void {
+
     if (this.publicVariable.dataForm.valid) {
       const newData = this.publicVariable.dataForm.value;
       const isUpdate = !!newData.headerid;
-
       const formData = new FormData();
       formData.append('ImpiHeaderAttachment', this.ImpiHeaderAttachment);
       formData.append('isupdate', String(isUpdate));
