@@ -1,11 +1,12 @@
-import { Component } from '@angular/core';
-import{AppService, ConfirmationDialogModalComponent, NgbModal, Router, ToastrService, publicVariable} from '../../Export/new-customer'
+import { Component, OnInit } from '@angular/core';
+import{AppService, ConfirmationDialogModalComponent, CustomersService, NgbModal, Router, ToastrService, publicVariable} from '../../Export/new-customer'
+import { finalize, timeout } from 'rxjs';
 @Component({
   selector: 'app-status-customer',
   templateUrl: './status-customer.component.html',
   styleUrls: ['./status-customer.component.css']
 })
-export class StatusCustomerComponent {
+export class StatusCustomerComponent implements OnInit{
   publicVariable = new publicVariable();
 
 
@@ -13,11 +14,38 @@ export class StatusCustomerComponent {
     private modalService: NgbModal,
     private router: Router,
     private toastr: ToastrService,
+    private API: CustomersService
 
   ) {
 
   }
 
+  ngOnInit(): void {
+      this.loadCustomerStatusList();
+  }
+
+  loadCustomerStatusList(): void {
+    const subscription = this.API.getCustomerStatus().pipe(
+      timeout(40000), // Timeout set to 40 seconds (40000 milliseconds)
+      finalize(() => {
+        this.publicVariable.isProcess = false;
+      })
+    ).subscribe({
+      next: (response: any) => {
+        this.publicVariable.customerStatusList = response.data;
+        this.publicVariable.count = response.data.length;
+      },
+      error: (error: any) => {
+        if (error.name === 'TimeoutError') {
+          this.toastr.error('Operation timed out after 40 seconds', error.name);
+        } else {
+          this.toastr.error('Error loading user list', error.name);
+        }
+      }
+    });
+
+    this.publicVariable.Subscription.add(subscription);
+  }
 
   onDelete(id: number) {
     const modalRef = this.modalService.open(ConfirmationDialogModalComponent, { size: "sm", centered: true, backdrop: "static" });

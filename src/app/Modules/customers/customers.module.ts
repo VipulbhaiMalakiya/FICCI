@@ -11,6 +11,7 @@ import { ApprovalRemarksComponent } from './Remarks/approval-remarks/approval-re
 import { AccountsRemarksComponent } from './Remarks/accounts-remarks/accounts-remarks.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { SharedModule } from '../shared/shared.module';
 
 
 @NgModule({
@@ -28,7 +29,8 @@ import { NgSelectModule } from '@ng-select/ng-select';
     CustomersRoutingModule,
     ReactiveFormsModule,
     FormsModule,
-    NgSelectModule
+    NgSelectModule,
+    SharedModule
   ]
 })
 export class CustomersModule { }

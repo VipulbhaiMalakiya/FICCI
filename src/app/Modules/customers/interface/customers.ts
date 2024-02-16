@@ -41,3 +41,44 @@ export interface addUpdateCustomer {
   pan: string
   gstCustomerType: number
 }
+
+export interface customerStatusListModel {
+  customerId: number
+  customerCode: string
+  customerName: string
+  address: string
+  phoneNumber: string
+  email: string
+  pincode: string
+  customerLastName: string
+  address2: string
+  contact: string
+  gstNumber: string
+  pan: string
+  city: City
+  state: State
+  country: Country
+  gstType: GstType
+}
+
+export interface City {
+  cityId: number
+  cityName: string
+  state: any
+}
+
+export interface State {
+  stateId: number
+  stateName: string
+  country: any
+}
+
+export interface Country {
+  countryId: number
+  countryName: string
+}
+
+export interface GstType {
+  gstTypeId: number
+  gstTypeName: string
+}
