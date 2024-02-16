@@ -176,8 +176,6 @@ export class NewPurchaseInvoiceComponent implements OnInit {
 
 
   onSubmit(): void {
-    console.log(this.publicVariable.dataForm.value.items);
-
     if (this.publicVariable.dataForm.valid) {
       const newData = this.publicVariable.dataForm.value;
       const isUpdate = !!newData.headerid;
