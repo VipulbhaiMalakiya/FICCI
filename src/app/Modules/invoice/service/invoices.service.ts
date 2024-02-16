@@ -12,6 +12,7 @@ export class InvoicesService {
 
   private apiUrl = `${environment.apiURL}PurchaseInvoice_New` ;
   private Projectapi = `${environment.apiURL}Project/0` ;
+  private PurchaseInvoice_New = `${environment.apiURL}PurchaseInvoice_New?headerid=0` ;
   private  retry:any =  retry(1); // Retry the request up to 2 times in case of failure
 
 
@@ -19,13 +20,12 @@ export class InvoicesService {
     return this.http.get<any[]>(`${this.Projectapi}`).pipe(this.retry);
   }
 
-  create(formData: FormData): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}`, formData, {
-      headers: new HttpHeaders({
-        'Accept': 'application/json',
-      })
+  getPurchaseInvoice_New(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.PurchaseInvoice_New}`).pipe(this.retry);
+  }
 
-    }).pipe(this.retry);
+  create(formData: FormData): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}`, formData).pipe(this.retry);
   }
   // delete(id: number): Observable<any> {
   //   return this.http.delete<any>(`${this.apiUrl}?id=${id}`).pipe(this.retry);

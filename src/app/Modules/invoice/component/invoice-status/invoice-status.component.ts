@@ -1,12 +1,12 @@
-import { Component } from '@angular/core';
-import { AppService, NgbModal, Router, ToastrService, publicVariable } from '../../Export/invoce';
+import { Component, OnInit } from '@angular/core';
+import { AppService, InvoicesService, NgbModal, Router, ToastrService, publicVariable } from '../../Export/invoce';
 
 @Component({
   selector: 'app-invoice-status',
   templateUrl: './invoice-status.component.html',
   styleUrls: ['./invoice-status.component.css']
 })
-export class InvoiceStatusComponent {
+export class InvoiceStatusComponent implements OnInit{
   publicVariable = new publicVariable();
 
 
@@ -14,11 +14,31 @@ export class InvoiceStatusComponent {
     private modalService: NgbModal,
     private router: Router,
     private toastr: ToastrService,
+    private API: InvoicesService
 
   ) {
 
   }
 
+  ngOnInit(): void {
+      this.loadPurchaseInvoiceList();
+  }
+  loadPurchaseInvoiceList(): void {
+    try {
+      const subscription = this.API.getPurchaseInvoice_New().subscribe({
+        next: (response: any) => {
+          this.publicVariable.listData = response.data;
+        },
+        error: (error) => {
+          console.error('Error loading project list:', error);
+        }
+      });
+
+      this.publicVariable.Subscription.add(subscription);
+    } catch (error) {
+      console.error('Error loading project list:', error);
+    }
+  }
 
   onDownload() {
     // const exportData = this.publicVariable.userlist.map((x) => ({

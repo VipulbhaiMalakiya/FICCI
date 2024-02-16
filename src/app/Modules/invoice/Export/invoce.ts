@@ -27,4 +27,5 @@ export class publicVariable {
   selectedEmployee: any;
   userData:any;
   projectList:projectModel[] = [];
+  listData:any[] = [];
 }

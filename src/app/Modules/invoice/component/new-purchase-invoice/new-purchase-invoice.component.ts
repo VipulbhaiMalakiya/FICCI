@@ -14,7 +14,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
   items: any[] = [
     { impiLineDescription: 'I phone 15 Pro Max', impiLineQuantity: '100', impiLineDiscount: '10', impiLineUnitPrice: '150000', calculateAmount: 0 }
   ];
-  ImpiHeaderAttachment:any;
+  ImpiHeaderAttachment: any;
 
   constructor(private appService: AppService,
     private modalService: NgbModal,
