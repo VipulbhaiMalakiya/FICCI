@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, retry } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { addUpdateCustomers } from '../interface/customers';
+import { addUpdateCustomer } from '../interface/customers';
 
 @Injectable({
   providedIn: 'root'
@@ -35,8 +35,8 @@ export class CustomersService {
   getCustomers(): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}`).pipe(this.retry);
   }
-  create(data: addUpdateCustomers): Observable<addUpdateCustomers> {
-    return this.http.post<addUpdateCustomers>(`${this.apiUrl}`, data).pipe(this.retry);
+  create(data: addUpdateCustomer): Observable<addUpdateCustomer> {
+    return this.http.post<addUpdateCustomer>(`${this.apiUrl}`, data).pipe(this.retry);
   }
 
   delete(id: number): Observable<any> {

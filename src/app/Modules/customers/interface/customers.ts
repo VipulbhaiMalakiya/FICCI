@@ -1,8 +1,3 @@
-export interface addUpdateCustomers{
-
-}
-
-
 export interface CountryList{
   countryId:number,
   countryName:string,
@@ -28,3 +23,21 @@ export interface GstCustomerTypeList{
 }
 
 
+export interface addUpdateCustomer {
+  isupdate: boolean
+  customerId: number
+  customerCode: string
+  customerName: string
+  customerLastName: string
+  address: string
+  address2: string
+  contact: string
+  phone: string
+  pinCode: string
+  email: string
+  cityid: number
+  isDraft: boolean
+  gstNumber: string
+  pan: string
+  gstCustomerType: number
+}
