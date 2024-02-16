@@ -126,8 +126,7 @@
         <div class="col-md-3 col-sm-6">
           <div class="form-group">
             <label>Contact</label>
-            <input type="text" class="form-control" formControlName="contact" placeholder="Contact"
-              (input)="onInputChange($event)">
+            <input type="text" class="form-control" formControlName="contact" placeholder="Contact">
             <div *ngIf="shouldShowError('contact','required')" class="text-danger">This field is required
             </div>
           </div>

@@ -24,7 +24,7 @@
     <div class="topbr-btns">
       <div class="btn-group">
         <div class="table-search"><input type="text" class="form-control" [(ngModel)]="publicVariable.searchText"
-          name="name" id="name" placeholder="Search here"></div>
+            name="name" id="name" placeholder="Search here"></div>
       </div>
     </div>
 
@@ -75,9 +75,9 @@
           <p>No data found.</p>
         </div>
         <div class="text-center"
-        *ngIf="(publicVariable.userlist | searchFilter: publicVariable.searchText).length === 0 && publicVariable.userlist.length > 0">
-        <strong class="text-danger">No results found.</strong>
-      </div>
+          *ngIf="(publicVariable.userlist | searchFilter: publicVariable.searchText).length === 0 && publicVariable.userlist.length > 0">
+          <strong class="text-danger">No results found.</strong>
+        </div>
       </div>
 
       <div class="clearfix">

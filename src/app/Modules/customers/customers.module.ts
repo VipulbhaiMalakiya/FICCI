@@ -12,6 +12,8 @@ import { AccountsRemarksComponent } from './Remarks/accounts-remarks/accounts-re
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { SharedModule } from '../shared/shared.module';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { SearchFilterPipe } from './pipe/searchFilter';
 
 
 @NgModule({
@@ -22,7 +24,8 @@ import { SharedModule } from '../shared/shared.module';
     AccountsCustomerComponent,
     CustomerStatusComponent,
     ApprovalRemarksComponent,
-    AccountsRemarksComponent
+    AccountsRemarksComponent,
+    SearchFilterPipe
   ],
   imports: [
     CommonModule,
@@ -30,7 +33,8 @@ import { SharedModule } from '../shared/shared.module';
     ReactiveFormsModule,
     FormsModule,
     NgSelectModule,
-    SharedModule
+    SharedModule,
+    NgxPaginationModule
   ]
 })
 export class CustomersModule { }

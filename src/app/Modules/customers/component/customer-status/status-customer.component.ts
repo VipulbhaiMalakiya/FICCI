@@ -71,26 +71,33 @@ export class StatusCustomerComponent implements OnInit{
 
   }
   onDownload() {
-    // const exportData = this.publicVariable.userlist.map((x) => ({
-    //   "Cust. No.": x?.imeM_EmpId || '',
-    //   Name: x?.imeM_Name || '',
-    //   Address: x?.imeM_Username || '',
-    //   City: x?.imeM_Email || '',
-    //   Contact: x && x.isActive ? 'Yes' : 'No',
-    //   Email: x?.roleName || ''
-    // }));
+    const exportData = this.publicVariable.customerStatusList.map((x) => ({
+      "Cust. No.": x?.customerCode || '',
+      Name: x?.customerName || '',
+      Address: x?.address || '',
+      State:x?.state.stateName,
+      Country:x.country?.countryName,
+      City: x?.city.cityName || '',
+      Pincode:x?.pincode,
+      Contact: x && x.phoneNumber ? 'Yes' : 'No',
+      Email: x?.email || '',
+      gstNumber:x.gstNumber || '',
+      'PAN Card' : x.pan || '',
+      'gstType' : x.gstType.gstTypeName
 
-    // const headers = ['Cust. No.','Name', 'Address', 'City','Contact', 'Email'];
-    // this.appService.exportAsExcelFile(exportData,'Customer Status',headers);
+    }));
+
+    const headers = ['Cust. No.','Name', 'Address','Country', 'State','City','Pincode','Contact', 'Email','gstNumber','PAN Card','gstType'];
+    this.appService.exportAsExcelFile(exportData,'Customer Status',headers);
   }
   onTableDataChange(event: any) {
     this.publicVariable.page = event;
-    // this.publicVariable.userlist
+    this.publicVariable.customerStatusList
   }
   onTableSizeChange(event: any): void {
     this.publicVariable.tableSize = event.target.value;
     this.publicVariable.page = 1;
-    // this.publicVariable.userlist
+    this.publicVariable.customerStatusList
 
   }
 }
