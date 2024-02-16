@@ -112,7 +112,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
     return this.publicVariable.dataForm.get('items') as FormArray;
   }
   addItem(item?: any): void {
-    item = item || { impiLineDescription: '', impiLineQuantity: '', impiLineDiscount: '', impiLineUnitPrice: '', amount: 0 };
+    item = item || { impiLineDescription: '', impiLineQuantity: '', impiLineDiscount: '', impiLineUnitPrice: '', calculateAmount: '' };
     this.itemsFormArray.push(this.fb.group({
       impiLineDescription: [item.impiLineDescription, Validators.required],
       impiLineQuantity: [item.impiLineQuantity, Validators.required],
@@ -176,6 +176,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
 
 
   onSubmit(): void {
+    console.log(this.publicVariable.dataForm.value.items);
 
     if (this.publicVariable.dataForm.valid) {
       const newData = this.publicVariable.dataForm.value;
