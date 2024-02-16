@@ -142,11 +142,38 @@ export class NewPurchaseInvoiceComponent implements OnInit {
     return total;
   }
 
+
   onFileSelected(event: any) {
-    const file: File = event.target.files[0];
-    this.ImpiHeaderAttachment = file;
+    const selectedFile = event.target.files[0];
+    const allowedTypes = ['application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', // .xlsx
+                          'application/vnd.ms-excel', // .xls
+                          'application/msword', // .doc
+                          'text/csv', // .csv
+                          'application/pdf']; // .pdf
+    const maxSize = 5 * 1024 * 1024; // 5MB in bytes
+
+    if (!selectedFile) {
+      // No file selected
+      return;
+    }
+
+    if (!allowedTypes.includes(selectedFile.type)) {
+      alert('Only .doc, .csv, .xlsx, and .pdf files are allowed.');
+      // Clear the file input
+      event.target.value = null;
+      return;
+    }
+
+    if (selectedFile.size > maxSize) {
+      alert('File size exceeds the maximum limit of 5MB.');
+      // Clear the file input
+      event.target.value = null;
+      return;
+    }
+    this.ImpiHeaderAttachment = selectedFile;
 
   }
+
 
   onSubmit(): void {
 
