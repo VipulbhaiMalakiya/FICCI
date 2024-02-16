@@ -12,7 +12,9 @@ export class UserService {
 
   private RolesList = `${environment.apiURL}DropDown/GetRole` ;
   private EmployeeList = `${environment.apiURL}DropDown/GetEmployeeList` ;
-  private apiUrl = `${environment.apiURL}FICCI_User_Master` ;
+  private apiUrl = `${environment.apiURL}FICCI_User_Master/0` ;
+  private deleteapiUrl = `${environment.apiURL}FICCI_User_Master` ;
+  private postAPIURL = `${environment.apiURL}FICCI_User_Master` ;
   private  retry:any =  retry(1); // Retry the request up to 2 times in case of failure
 
   constructor(private http: HttpClient) { }
@@ -33,11 +35,11 @@ export class UserService {
 
 
   create(data: addUpdateEmployees): Observable<addUpdateConfiguration> {
-    return this.http.post<addUpdateConfiguration>(`${this.apiUrl}`, data).pipe(this.retry);
+    return this.http.post<addUpdateConfiguration>(`${this.postAPIURL}`, data).pipe(this.retry);
   }
 
   delete(id: number): Observable<any> {
-    return this.http.delete<any>(`${this.apiUrl}?id=${id}`).pipe(this.retry);
+    return this.http.delete<any>(`${this.deleteapiUrl}/${id}`).pipe(this.retry);
   }
 
 }
