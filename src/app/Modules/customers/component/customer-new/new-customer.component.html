@@ -1,176 +1,172 @@
 <div class="inner-content">
 
-    <h3 class="content-title">Add New Customer</h3>
+  <h3 class="content-title">Add New Customer</h3>
 
-    <div class="mastersform-sec">
-        <form [formGroup]="publicVariable.dataForm" (ngSubmit)="onSubmit()">
-            <div class="row">
-                <div class="col-md-3 col-sm-6">
-                    <div class="form-group">
-                        <label>Customer No.</label>
-                        <input type="text" class="form-control" placeholder="Customer No" formControlName="customerNo">
-                    </div>
-                </div>
-                <div class="col-md-3 col-sm-6">
-                    <div class="form-group">
-                        <label>Name</label>
-                        <input type="text" class="form-control" placeholder="Name" formControlName="name">
-                        <div *ngIf="shouldShowError('name','alphanumericWithSpaces')" class="text-danger"> Please enter
-                            a valid alphanumeric value.</div>
+  <div class="mastersform-sec">
+    <form [formGroup]="publicVariable.dataForm" (ngSubmit)="onSubmit()">
+      <div class="row">
+        <div class="col-md-3 col-sm-6">
+          <div class="form-group">
+            <label>Customer No.</label>
+            <input type="text" class="form-control" placeholder="Customer No" formControlName="customerNo">
+          </div>
+        </div>
+        <div class="col-md-3 col-sm-6">
+          <div class="form-group">
+            <label>Name</label>
+            <input type="text" class="form-control" placeholder="Name" formControlName="name">
+            <div *ngIf="shouldShowError('name','alphanumericWithSpaces')" class="text-danger"> Please enter
+              a valid alphanumeric value.</div>
 
-                    </div>
-                </div>
-                <div class="col-md-3 col-sm-6">
-                    <div class="form-group">
-                        <label>Name 2</label>
-                        <input type="text" class="form-control" placeholder="Name 2" formControlName="name2">
-                        <div *ngIf="shouldShowError('name2','alphanumericWithSpaces')" class="text-danger"> Please enter
-                            a valid alphanumeric value.</div>
-                    </div>
-                </div>
-                <div class="col-md-3 col-sm-6">
-                    <div class="form-group">
-                        <label>Address</label>
-                        <input type="text" class="form-control" placeholder="Address" formControlName="address">
-                        <div *ngIf="shouldShowError('address','required')" class="text-danger">This field is required
-                        </div>
-
-                    </div>
-                </div>
-                <div class="col-md-3 col-sm-6">
-                    <div class="form-group">
-                        <label>Address 2</label>
-                        <input type="text" class="form-control" placeholder="Address 2" formControlName="address2">
-                    </div>
-                </div>
-                <div class="col-md-3 col-sm-6">
-                    <div class="form-group">
-                        <label>Country/Region Code</label>
-                        <select class="form-select" formControlName="country">
-                            <option value="IND">List 1</option>
-                            <option value="">List 2</option>
-                            <option value="">List 3</option>
-                            <option value="">List 4</option>
-                            <option value="">List 5</option>
-                        </select>
-                        <div *ngIf="shouldShowError('country','required')" class="text-danger">This field is required
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3 col-sm-6">
-                    <div class="form-group">
-                        <label>State</label>
-                        <select class="form-select" formControlName="state">
-                            <option value="">Select</option>
-                            <option value="HRN">List 1</option>
-                            <option value="">List 2</option>
-                            <option value="">List 3</option>
-                            <option value="">List 4</option>
-                            <option value="">List 5</option>
-                        </select>
-                        <div *ngIf="shouldShowError('state','required')" class="text-danger">This field is required
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3 col-sm-6">
-                    <div class="form-group">
-                        <label>City</label>
-                        <select class="form-select" formControlName="city">
-                            <option value="">Select</option>
-                            <option value="GNN">City 1</option>
-                            <option value="">City 2</option>
-                            <option value="">City 3</option>
-                            <option value="">City 4</option>
-                            <option value="">City 5</option>
-                        </select>
-                        <div *ngIf="shouldShowError('city','required')" class="text-danger">This field is required</div>
-                    </div>
-                </div>
-                <div class="col-md-3 col-sm-6">
-                    <div class="form-group">
-                        <label>Post Code</label>
-                        <input type="text" class="form-control" placeholder="Post Code" formControlName="postCode"
-                            (input)="onInputChange($event)">
-                        <div *ngIf="shouldShowError('postCode','required')" class="text-danger"> Post Code is required.
-                        </div>
-                        <div *ngIf="shouldShowError('postCode','pattern')" class="text-danger"> Please enter a valid
-                            6-digit Post Code.</div>
-
-                    </div>
-                </div>
-                <div class="col-md-3 col-sm-6">
-                    <div class="form-group">
-                        <label>GST Registration No.</label>
-                        <input type="text" class="form-control" placeholder="GST Registration No."
-                            formControlName="GSTRegistrationNo">
-                        <div *ngIf="shouldShowError('GSTRegistrationNo','invalidGST')" class="text-danger"> Please enter
-                            a valid GST Registration Number. (05AAACF1282E1Z5)
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3 col-sm-6">
-                    <div class="form-group">
-                        <label>GST Customer Type</label>
-                        <select class="form-select" formControlName="GSTCustomerType">
-                            <option value="">Select</option>
-                            <option value="1">List 1</option>
-                            <option value="">List 2</option>
-                            <option value="">List 3</option>
-                            <option value="">List 4</option>
-                            <option value="">List 5</option>
-                        </select>
-                        <div *ngIf="shouldShowError('GSTCustomerType','required')" class="text-danger">This field is
-                            required</div>
-                    </div>
-                </div>
-                <div class="col-md-3 col-sm-6">
-                    <div class="form-group">
-                        <label>E-Mail</label>
-                        <input type="text" class="form-control" formControlName="email" placeholder="email">
-                        <div *ngIf="shouldShowError('email','required')" class="text-danger">Email is required.</div>
-                        <div *ngIf="shouldShowError('email','email')" class="text-danger"> Please enter a valid email
-                            address.</div>
-                    </div>
-                </div>
-                <div class="col-md-3 col-sm-6">
-                    <div class="form-group">
-                        <label>Primary Contact No.</label>
-                        <input type="text" class="form-control" formControlName="PrimaryContactNo"
-                            placeholder="Primary Contact No" (input)="onInputChange($event)">
-                        <div *ngIf="shouldShowError('PrimaryContactNo','required')" class="text-danger">This field is
-                            required</div>
-                    </div>
-                </div>
-                <div class="col-md-3 col-sm-6">
-                    <div class="form-group">
-                        <label>Contact</label>
-                        <input type="text" class="form-control" formControlName="contact" placeholder="Contact"
-                            (input)="onInputChange($event)">
-                        <div *ngIf="shouldShowError('contact','required')" class="text-danger">This field is required
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3 col-sm-6">
-                    <div class="form-group">
-                        <label>P.A.N. No.</label>
-                        <input type="text" class="form-control" formControlName="PANNo" placeholder="P.A.N. No.">
-
-                        <div *ngIf="shouldShowError('PANNo','invalidPAN')" class="text-danger">Please enter a valid PAN
-                            Number.</div>
-
-                    </div>
-                </div>
-                <div class="col-md-12">
-                  <div class="form-group mb-0 mt-4">
-
-                   <input type="checkbox" class="btn-check" id="btn-check" autocomplete="off">
-                   <label class="btn btn-secondary w-auto mb-0 me-2" for="btn-check">Save as Draft</label>
-                  <button type="submit" class="common-btn w-auto">Submit</button>
-                  </div>
-                </div>
-
+          </div>
+        </div>
+        <div class="col-md-3 col-sm-6">
+          <div class="form-group">
+            <label>Name 2</label>
+            <input type="text" class="form-control" placeholder="Name 2" formControlName="name2">
+            <div *ngIf="shouldShowError('name2','alphanumericWithSpaces')" class="text-danger"> Please enter
+              a valid alphanumeric value.</div>
+          </div>
+        </div>
+        <div class="col-md-3 col-sm-6">
+          <div class="form-group">
+            <label>Address</label>
+            <input type="text" class="form-control" placeholder="Address" formControlName="address">
+            <div *ngIf="shouldShowError('address','required')" class="text-danger">This field is required
             </div>
-        </form>
-    </div><!--mastersform-sec-->
+
+          </div>
+        </div>
+        <div class="col-md-3 col-sm-6">
+          <div class="form-group">
+            <label>Address 2</label>
+            <input type="text" class="form-control" placeholder="Address 2" formControlName="address2">
+          </div>
+        </div>
+        <div class="col-md-3 col-sm-6">
+          <div class="form-group">
+            <label>Country/Region Code</label>
+            <ng-select [items]="publicVariable.countryList" bindLabel="countryName" bindValue="countryId"
+              placeholder="Select an employee" formControlName="country" (change)="onSelectCountry($event)">
+            </ng-select>
+            <div *ngIf="shouldShowError('country','required')" class="text-danger">This field is required
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3 col-sm-6">
+          <div class="form-group">
+            <label>State</label>
+            <select class="form-select" formControlName="state">
+              <option value="">Select</option>
+              <option value="HRN">List 1</option>
+              <option value="">List 2</option>
+              <option value="">List 3</option>
+              <option value="">List 4</option>
+              <option value="">List 5</option>
+            </select>
+            <div *ngIf="shouldShowError('state','required')" class="text-danger">This field is required
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3 col-sm-6">
+          <div class="form-group">
+            <label>City</label>
+            <select class="form-select" formControlName="city">
+              <option value="">Select</option>
+              <option value="GNN">City 1</option>
+              <option value="">City 2</option>
+              <option value="">City 3</option>
+              <option value="">City 4</option>
+              <option value="">City 5</option>
+            </select>
+            <div *ngIf="shouldShowError('city','required')" class="text-danger">This field is required</div>
+          </div>
+        </div>
+        <div class="col-md-3 col-sm-6">
+          <div class="form-group">
+            <label>Post Code</label>
+            <input type="text" class="form-control" placeholder="Post Code" formControlName="postCode"
+              (input)="onInputChange($event)">
+            <div *ngIf="shouldShowError('postCode','required')" class="text-danger"> Post Code is required.
+            </div>
+            <div *ngIf="shouldShowError('postCode','pattern')" class="text-danger"> Please enter a valid
+              6-digit Post Code.</div>
+
+          </div>
+        </div>
+        <div class="col-md-3 col-sm-6">
+          <div class="form-group">
+            <label>GST Registration No.</label>
+            <input type="text" class="form-control" placeholder="GST Registration No."
+              formControlName="GSTRegistrationNo">
+            <div *ngIf="shouldShowError('GSTRegistrationNo','invalidGST')" class="text-danger"> Please enter
+              a valid GST Registration Number. (05AAACF1282E1Z5)
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3 col-sm-6">
+          <div class="form-group">
+            <label>GST Customer Type</label>
+            <select class="form-select" formControlName="GSTCustomerType">
+              <option value="">Select</option>
+              <option value="1">List 1</option>
+              <option value="">List 2</option>
+              <option value="">List 3</option>
+              <option value="">List 4</option>
+              <option value="">List 5</option>
+            </select>
+            <div *ngIf="shouldShowError('GSTCustomerType','required')" class="text-danger">This field is
+              required</div>
+          </div>
+        </div>
+        <div class="col-md-3 col-sm-6">
+          <div class="form-group">
+            <label>E-Mail</label>
+            <input type="text" class="form-control" formControlName="email" placeholder="email">
+            <div *ngIf="shouldShowError('email','required')" class="text-danger">Email is required.</div>
+            <div *ngIf="shouldShowError('email','email')" class="text-danger"> Please enter a valid email
+              address.</div>
+          </div>
+        </div>
+        <div class="col-md-3 col-sm-6">
+          <div class="form-group">
+            <label>Primary Contact No.</label>
+            <input type="text" class="form-control" formControlName="PrimaryContactNo" placeholder="Primary Contact No"
+              (input)="onInputChange($event)">
+            <div *ngIf="shouldShowError('PrimaryContactNo','required')" class="text-danger">This field is
+              required</div>
+          </div>
+        </div>
+        <div class="col-md-3 col-sm-6">
+          <div class="form-group">
+            <label>Contact</label>
+            <input type="text" class="form-control" formControlName="contact" placeholder="Contact"
+              (input)="onInputChange($event)">
+            <div *ngIf="shouldShowError('contact','required')" class="text-danger">This field is required
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3 col-sm-6">
+          <div class="form-group">
+            <label>P.A.N. No.</label>
+            <input type="text" class="form-control" formControlName="PANNo" placeholder="P.A.N. No.">
+
+            <div *ngIf="shouldShowError('PANNo','invalidPAN')" class="text-danger">Please enter a valid PAN
+              Number.</div>
+
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="form-group mb-0 mt-4">
+
+            <input type="checkbox" class="btn-check" id="btn-check" autocomplete="off">
+            <label class="btn btn-secondary w-auto mb-0 me-2" for="btn-check">Save as Draft</label>
+            <button type="submit" class="common-btn w-auto">Submit</button>
+          </div>
+        </div>
+
+      </div>
+    </form>
+  </div><!--mastersform-sec-->
 
 </div>

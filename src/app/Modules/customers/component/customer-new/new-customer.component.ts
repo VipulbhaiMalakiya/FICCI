@@ -1,17 +1,18 @@
-import { ChangeDetectorRef, Component } from '@angular/core';
-import { FormBuilder, NgbModal, Router, ToastrService, Validators, alphanumericWithSpacesValidator, gstValidator, panValidator, publicVariable } from '../../Export/new-customer';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { CustomersService, FormBuilder, NgbModal, Router, ToastrService, Validators, alphanumericWithSpacesValidator, gstValidator, panValidator, publicVariable } from '../../Export/new-customer';
 @Component({
   selector: 'app-new-customer',
   templateUrl: './new-customer.component.html',
   styleUrls: ['./new-customer.component.css']
 })
-export class NewCustomerComponent {
+export class NewCustomerComponent implements OnInit{
   publicVariable = new publicVariable();
   constructor(private fb: FormBuilder,
     private modalService: NgbModal,
     private toastr: ToastrService,
     private router: Router,
     private cd: ChangeDetectorRef,
+    private API: CustomersService
 
   ) {
     this.initializeForm();
@@ -23,7 +24,7 @@ export class NewCustomerComponent {
       name2: ['', alphanumericWithSpacesValidator()],
       address: ['', Validators.required, ],
       address2: ['', ],
-      country: ['', Validators.required],
+      country: [null, Validators.required],
       state: ['', Validators.required],
       city: ['', Validators.required],
       postCode: ['', [Validators.required, Validators.pattern(/^\d{6}$/)]],
@@ -35,6 +36,53 @@ export class NewCustomerComponent {
       PANNo: ['', [Validators.required, panValidator()]] // Use the custom validator function
     });
   }
+
+  ngOnInit(): void {
+    this.loadCountryList();
+  }
+
+  loadCountryList(): void {
+    try {
+      const subscription = this.API.getCountryList().subscribe({
+        next: (response: any) => {
+          this.publicVariable.countryList = response.data;
+        },
+        error: (error) => {
+          console.error('Error loading project list:', error);
+        }
+      });
+
+      this.publicVariable.Subscription.add(subscription);
+    } catch (error) {
+      console.error('Error loading project list:', error);
+    }
+  }
+
+  onSelectCountry(event: any){
+    const selectedCountry = event;
+    const countryId = selectedCountry ? selectedCountry.countryId : null;
+
+    try {
+      const subscription = this.API.getStateList(countryId).subscribe({
+        next: (response: any) => {
+          this.publicVariable.stateList = response.data;
+          console.log(this.publicVariable.stateList);
+
+        },
+        error: (error) => {
+          console.error('Error loading project list:', error);
+        }
+      });
+
+      this.publicVariable.Subscription.add(subscription);
+    } catch (error) {
+      console.error('Error loading project list:', error);
+    }
+
+
+  }
+
+
 
   onInputChange(event: any) {
     const inputValue = event.target.value; event.target.value = inputValue.replace(/[^0-9]/g, ''); // Allow only numeric input

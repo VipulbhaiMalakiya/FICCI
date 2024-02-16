@@ -10,6 +10,7 @@ import { CustomerStatusComponent } from './View/customer-status/customer-status.
 import { ApprovalRemarksComponent } from './Remarks/approval-remarks/approval-remarks.component';
 import { AccountsRemarksComponent } from './Remarks/accounts-remarks/accounts-remarks.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 
 @NgModule({
@@ -26,7 +27,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     CommonModule,
     CustomersRoutingModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    NgSelectModule
   ]
 })
 export class CustomersModule { }

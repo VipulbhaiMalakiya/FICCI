@@ -1,5 +1,6 @@
 import { FormGroup } from "@angular/forms";
 import { Subscription } from "rxjs";
+import { CountryList, StateList } from "../interface/customers";
 
 export { FormBuilder, Validators } from '@angular/forms';
 export { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -10,6 +11,7 @@ export { alphanumericWithSpacesValidator } from '../Validation/alphanumericWithS
 export { gstValidator } from '../Validation/gstValidator';
 export { AppService } from 'src/app/services/excel.service';
 export  { ConfirmationDialogModalComponent } from 'src/app/Modules/shared/components/confirmation-dialog-modal/confirmation-dialog-modal.component';
+export { CustomersService } from '../service/customers.service';
 
 export class publicVariable {
   dataForm!: FormGroup;
@@ -24,4 +26,6 @@ export class publicVariable {
   Subscription: Subscription = new Subscription();
   selectedEmployee: any;
   userData:any;
+  countryList:CountryList[] = [];
+  stateList :StateList[] = [];
 }
