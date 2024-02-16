@@ -149,7 +149,26 @@ export class NewCustomerComponent implements OnInit {
         gstCustomerType: newData.GSTCustomerType,
         pan: newData.PANNo.trim()
       };
-      console.log(newConfig);
+      this.publicVariable.isProcess = true;
+      this.publicVariable.Subscription.add(
+        this.API.create(newConfig).subscribe({
+          next: (res: any) => {
+            if (res.status === true) {
+              this.toastr.success(res.message, 'Success');
+              this.router.navigate(['customer/status']);
+              this.publicVariable.dataForm.reset();
+            } else {
+              this.toastr.error(res.message, 'Error');
+            }
+          },
+          error: (error: any) => {
+            this.toastr.error(error.error.message || 'An error occurred. Please try again later.', 'Error');
+          },
+          complete: () => {
+            this.publicVariable.isProcess = false;
+          }
+        })
+      );
 
     } else {
       this.markFormControlsAsTouched();

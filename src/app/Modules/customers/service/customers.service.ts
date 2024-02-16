@@ -11,7 +11,7 @@ export class CustomersService {
 
   constructor(private http: HttpClient) { }
 
-  private apiUrl = `${environment.apiURL}FICCI_User_Master` ;
+  private apiUrl = `${environment.apiURL}Customer` ;
   private countryListURL = `${environment.apiURL}DropDown/GetCountryList` ;
   private GetStateURl = `${environment.apiURL}DropDown/GetStateByCountryId` ;
   private GetCityURl = `${environment.apiURL}DropDown/GetCityByStateId` ;
