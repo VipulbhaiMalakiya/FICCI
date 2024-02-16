@@ -5,7 +5,7 @@ import { CustomersService, FormBuilder, NgbModal, Router, ToastrService, Validat
   templateUrl: './new-customer.component.html',
   styleUrls: ['./new-customer.component.css']
 })
-export class NewCustomerComponent implements OnInit{
+export class NewCustomerComponent implements OnInit {
   publicVariable = new publicVariable();
   constructor(private fb: FormBuilder,
     private modalService: NgbModal,
@@ -19,12 +19,12 @@ export class NewCustomerComponent implements OnInit{
   }
   private initializeForm(): void {
     this.publicVariable.dataForm = this.fb.group({
-      customerId:[''],
+      customerId: [''],
       customerNo: [''],
-      name: ['', [Validators.required, alphanumericWithSpacesValidator()]] ,// Use the custom validator function
+      name: ['', [Validators.required, alphanumericWithSpacesValidator()]],// Use the custom validator function
       name2: ['', alphanumericWithSpacesValidator()],
-      address: ['', Validators.required, ],
-      address2: ['', ],
+      address: ['', Validators.required,],
+      address2: ['',],
       country: [null, Validators.required],
       state: [null, Validators.required],
       city: [null, Validators.required],
@@ -35,7 +35,7 @@ export class NewCustomerComponent implements OnInit{
       PrimaryContactNo: ['', Validators.required],
       contact: ['', Validators.required],
       PANNo: ['', [Validators.required, panValidator()]], // Use the custom validator function
-      isDraft:['true']
+      isDraft: ['true']
     });
   }
 
@@ -61,7 +61,6 @@ export class NewCustomerComponent implements OnInit{
     }
   }
 
-
   loadGstCustomerType(): void {
     try {
       const subscription = this.API.getGstCustomerType().subscribe({
@@ -80,8 +79,7 @@ export class NewCustomerComponent implements OnInit{
     }
   }
 
-
-  onSelectState(event: any){
+  onSelectState(event: any) {
     const selectedCountry = event;
     const countryId = selectedCountry ? selectedCountry.countryId : null;
 
@@ -103,7 +101,7 @@ export class NewCustomerComponent implements OnInit{
 
   }
 
-  onSelectCity(event: any){
+  onSelectCity(event: any) {
     const selectedState = event;
     const stateId = selectedState ? selectedState.stateId : null;
     try {
@@ -125,7 +123,6 @@ export class NewCustomerComponent implements OnInit{
   }
 
 
-
   onInputChange(event: any) {
     const inputValue = event.target.value; event.target.value = inputValue.replace(/[^0-9]/g, ''); // Allow only numeric input
   }
@@ -143,12 +140,12 @@ export class NewCustomerComponent implements OnInit{
         address: newData.address.trim(),
         address2: newData.address2.trim(),
         contact: newData.contact.trim(),
-        phone:newData.PrimaryContactNo.trim(),
-        pinCode:newData.postCode.trim(),
-        email:newData.email.trim(),
-        cityid:newData.city,
-        isDraft:newData.isDraft,
-        gstNumber : newData.GSTRegistrationNo.trim(),
+        phone: newData.PrimaryContactNo.trim(),
+        pinCode: newData.postCode.trim(),
+        email: newData.email.trim(),
+        cityid: newData.city,
+        isDraft: newData.isDraft,
+        gstNumber: newData.GSTRegistrationNo.trim(),
         gstCustomerType: newData.GSTCustomerType,
         pan: newData.PANNo.trim()
       };
