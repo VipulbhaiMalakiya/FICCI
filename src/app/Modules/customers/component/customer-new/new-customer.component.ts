@@ -19,6 +19,7 @@ export class NewCustomerComponent implements OnInit{
   }
   private initializeForm(): void {
     this.publicVariable.dataForm = this.fb.group({
+      customerId:[''],
       customerNo: [''],
       name: ['', [Validators.required, alphanumericWithSpacesValidator()]] ,// Use the custom validator function
       name2: ['', alphanumericWithSpacesValidator()],
@@ -33,7 +34,8 @@ export class NewCustomerComponent implements OnInit{
       email: ['', [Validators.required, Validators.email]],
       PrimaryContactNo: ['', Validators.required],
       contact: ['', Validators.required],
-      PANNo: ['', [Validators.required, panValidator()]] // Use the custom validator function
+      PANNo: ['', [Validators.required, panValidator()]], // Use the custom validator function
+      isDraft:['true']
     });
   }
 
@@ -110,22 +112,24 @@ export class NewCustomerComponent implements OnInit{
   onSubmit(): void {
     if (this.publicVariable.dataForm.valid) {
       const newData = this.publicVariable.dataForm.value;
+      const isUpdate = !!newData.customerId;
       const newConfig: any = {
-        customerNo: newData.customerNo,
-        name: newData.name.trim(),
-        name2: newData.name2.trim(),
+        isUpdate: isUpdate,
+        customerId: isUpdate ? newData.customerId : undefined,
+        customerCode: newData.customerNo,
+        customerName: newData.name.trim(),
+        customerLastName: newData.name2.trim(),
         address: newData.address.trim(),
         address2: newData.address2.trim(),
-        country: newData.country,
-        state: newData.state,
-        city: newData.city,
-        postCode: newData.postCode.trim(),
-        GSTRegistrationNo: newData.GSTRegistrationNo.trim(),
-        GSTCustomerType: newData.GSTCustomerType,
-        email: newData.email.trim(),
-        PrimaryContactNo: newData.PrimaryContactNo.trim(),
         contact: newData.contact.trim(),
-        PANNo: newData.PANNo.trim()
+        phone:newData.PrimaryContactNo.trim(),
+        pinCode:newData.postCode.trim(),
+        email:newData.email.trim(),
+        cityid:newData.city,
+        isDraft:newData.isDraft,
+        gstNumber : newData.GSTRegistrationNo.trim(),
+        gstCustomerType: newData.GSTCustomerType,
+        pan: newData.PANNo.trim()
       };
       console.log(newConfig);
 
