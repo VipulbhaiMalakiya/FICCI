@@ -73,7 +73,7 @@ export class ConfigurationListComponent implements OnInit, OnDestroy {
     this.publicVariable.configurationSubscription.add(
       this.API.getAll().pipe(
         timeout(40000),
-        catchError((error) => {          
+        catchError((error) => {
           this.toastr.error('Operation timed out after 40 seconds', error.name);
           return throwError(() => error); // Pass a function that returns the error
         }),
@@ -89,7 +89,7 @@ export class ConfigurationListComponent implements OnInit, OnDestroy {
     );
   }
 
-  
+
 
   onTableDataChange(event: any) {
     this.publicVariable.page = event;
@@ -193,12 +193,14 @@ export class ConfigurationListComponent implements OnInit, OnDestroy {
   }
 
   handleApiResponse(res: any, successMessage: string): void {
+    console.log(res);
+
     if (res.status === true) {
       this.toastr.success(successMessage, 'Success');
       this.loadConfiguration();
       this.publicVariable.isProcess = false;
       this.publicVariable.dataForm.reset();
-      this.publicVariable.dataForm.patchValue({ isActive: true }); 
+      this.publicVariable.dataForm.patchValue({ isActive: true });
     } else {
       this.toastr.error(res.message, 'Error');
       this.publicVariable.isProcess = false;

@@ -10,8 +10,10 @@ import { Category } from '../interface/category';
 })
 export class ConfigurationService {
 
-  private apiUrl = `${environment.apiURL}Configuration_CRUD` ;
-  private categoryListUrl = `${environment.apiURL}Drp_CategoryList` ;
+  private apiUrl = `${environment.apiURL}Configuration/0` ;
+  private categoryListUrl = `${environment.apiURL}DropDown/GetCategory` ;
+  private postURL = `${environment.apiURL}Configuration`;
+  private deleteURL = `${environment.apiURL}Configuration`;
   private  retry:any =  retry(1); // Retry the request up to 2 times in case of failure
   constructor(private http: HttpClient) {}
 
@@ -23,11 +25,11 @@ export class ConfigurationService {
   }
 
   create(data: addUpdateConfiguration): Observable<addUpdateConfiguration> {
-    return this.http.post<addUpdateConfiguration>(`${this.apiUrl}`, data).pipe(this.retry);
+    return this.http.post<addUpdateConfiguration>(`${this.postURL}`, data).pipe(this.retry);
   }
 
   delete(id: number): Observable<any> {
-    return this.http.delete<any>(`${this.apiUrl}?C_ID=${id}`).pipe(this.retry);
+    return this.http.delete<any>(`${this.deleteURL}/${id}`).pipe(this.retry);
   }
 
 }
