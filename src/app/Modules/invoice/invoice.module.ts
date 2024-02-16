@@ -12,6 +12,7 @@ import { NumberToWordsPipe } from './Pipe/numberToWords';
 import { ViewPiApprovalComponent } from './View/view-pi-approval/view-pi-approval.component';
 import { ViewPiAccountsInboxComponent } from './View/view-pi-accounts-inbox/view-pi-accounts-inbox.component';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { SharedModule } from '../shared/shared.module';
 
 
 @NgModule({
@@ -30,7 +31,8 @@ import { NgSelectModule } from '@ng-select/ng-select';
     InvoiceRoutingModule,
     ReactiveFormsModule,
     FormsModule,
-    NgSelectModule
+    NgSelectModule,
+    SharedModule
   ]
 })
 export class InvoiceModule { }

@@ -8,6 +8,7 @@ export { ToastrService } from 'ngx-toastr';
 export { Router } from '@angular/router';
 export { AppService } from 'src/app/services/excel.service';
 export  { ConfirmationDialogModalComponent } from 'src/app/Modules/shared/components/confirmation-dialog-modal/confirmation-dialog-modal.component';
+export { InvoicesService } from '../service/invoices.service';
 
 export { panValidator } from '../Validation/panValidator';
 export { alphanumericWithSpacesValidator } from '../Validation/alphanumericWithSpacesValidator';

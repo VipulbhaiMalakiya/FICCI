@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { AppService, FormBuilder, NgbModal, Router, ToastrService, Validators, gstValidator, panValidator, publicVariable } from '../../Export/invoce';
+import { AppService, FormBuilder, InvoicesService, NgbModal, Router, ToastrService, Validators, gstValidator, panValidator, publicVariable } from '../../Export/invoce';
 import { FormArray } from '@angular/forms';
-import { InvoicesService } from '../../service/invoices.service';
 
 
 @Component({
@@ -59,8 +58,8 @@ export class NewPurchaseInvoiceComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.loadProjectList()
-
+    this.loadProjectList();
+    this.publicVariable.isProcess = false;
   }
 
   loadProjectList(): void {
@@ -185,13 +184,14 @@ export class NewPurchaseInvoiceComponent implements OnInit {
       if (newData.ImpiHeaderInvoiceType === 'Tax Invoice') {
         formData.append('PINO', newData.PINO);
       }
-
+      this.publicVariable.isProcess = true;
       // Submit the formData
       this.publicVariable.Subscription.add(
         this.API.create(formData).subscribe({
           next: (res: any) => {
             if (res.status === true) {
               this.toastr.success(res.message, 'Success');
+              this.router.navigate(['invoice/status']);
               this.publicVariable.dataForm.reset();
             } else {
               this.toastr.error(res.message, 'Error');
@@ -209,9 +209,6 @@ export class NewPurchaseInvoiceComponent implements OnInit {
       this.markFormControlsAsTouched();
     }
   }
-
-
-
 
   markFormControlsAsTouched(): void {
     ['ImpiHeaderInvoiceType', 'ImpiHeaderProjectCode', 'ImpiHeaderDepartment', 'ImpiHeaderDivison', 'ImpiHeaderPanNo', 'ImpiHeaderGstNo',
