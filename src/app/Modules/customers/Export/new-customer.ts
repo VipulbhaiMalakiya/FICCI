@@ -1,6 +1,6 @@
 import { FormGroup } from "@angular/forms";
 import { Subscription } from "rxjs";
-import { CountryList, StateList } from "../interface/customers";
+import { CityList, CountryList, StateList } from "../interface/customers";
 
 export { FormBuilder, Validators } from '@angular/forms';
 export { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -28,4 +28,5 @@ export class publicVariable {
   userData:any;
   countryList:CountryList[] = [];
   stateList :StateList[] = [];
+  cityList : CityList[] = [];
 }

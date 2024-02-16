@@ -15,3 +15,9 @@ export interface StateList{
   stateName:string,
   country:string
 }
+
+export interface CityList{
+  cityId:number,
+  cityName:string,
+  state:string
+}

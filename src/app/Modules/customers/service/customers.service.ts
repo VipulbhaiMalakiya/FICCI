@@ -14,6 +14,8 @@ export class CustomersService {
   private apiUrl = `${environment.apiURL}FICCI_User_Master` ;
   private countryListURL = `${environment.apiURL}DropDown/GetCountryList` ;
   private GetStateURl = `${environment.apiURL}DropDown/GetStateByCountryId` ;
+  private GetCityURl = `${environment.apiURL}DropDown/GetCityByStateId` ;
+
   private  retry:any =  retry(1); // Retry the request up to 2 times in case of failure
 
 
@@ -25,6 +27,9 @@ export class CustomersService {
     return this.http.get<any>(`${this.GetStateURl}?counrtyId=${counrtyId}`);
   }
 
+  getCityList(stateId: number): Observable<any[]> {
+    return this.http.get<any>(`${this.GetCityURl}?stateId=${stateId}`);
+  }
   getCustomers(): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}`).pipe(this.retry);
   }

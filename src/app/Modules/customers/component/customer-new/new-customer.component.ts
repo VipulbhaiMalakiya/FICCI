@@ -25,8 +25,8 @@ export class NewCustomerComponent implements OnInit{
       address: ['', Validators.required, ],
       address2: ['', ],
       country: [null, Validators.required],
-      state: ['', Validators.required],
-      city: ['', Validators.required],
+      state: [null, Validators.required],
+      city: [null, Validators.required],
       postCode: ['', [Validators.required, Validators.pattern(/^\d{6}$/)]],
       GSTRegistrationNo: ['', [Validators.required, gstValidator()]],
       GSTCustomerType: ['', Validators.required],
@@ -58,7 +58,7 @@ export class NewCustomerComponent implements OnInit{
     }
   }
 
-  onSelectCountry(event: any){
+  onSelectState(event: any){
     const selectedCountry = event;
     const countryId = selectedCountry ? selectedCountry.countryId : null;
 
@@ -66,8 +66,27 @@ export class NewCustomerComponent implements OnInit{
       const subscription = this.API.getStateList(countryId).subscribe({
         next: (response: any) => {
           this.publicVariable.stateList = response.data;
-          console.log(this.publicVariable.stateList);
+        },
+        error: (error) => {
+          console.error('Error loading project list:', error);
+        }
+      });
 
+      this.publicVariable.Subscription.add(subscription);
+    } catch (error) {
+      console.error('Error loading project list:', error);
+    }
+
+
+  }
+
+  onSelectCity(event: any){
+    const selectedState = event;
+    const stateId = selectedState ? selectedState.stateId : null;
+    try {
+      const subscription = this.API.getCityList(stateId).subscribe({
+        next: (response: any) => {
+          this.publicVariable.cityList = response.data;
         },
         error: (error) => {
           console.error('Error loading project list:', error);

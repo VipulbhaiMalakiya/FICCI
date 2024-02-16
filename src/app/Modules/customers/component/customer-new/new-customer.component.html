@@ -47,7 +47,7 @@
           <div class="form-group">
             <label>Country/Region Code</label>
             <ng-select [items]="publicVariable.countryList" bindLabel="countryName" bindValue="countryId"
-              placeholder="Select an employee" formControlName="country" (change)="onSelectCountry($event)">
+              placeholder="Select" formControlName="country" (change)="onSelectState($event)">
             </ng-select>
             <div *ngIf="shouldShowError('country','required')" class="text-danger">This field is required
             </div>
@@ -56,14 +56,9 @@
         <div class="col-md-3 col-sm-6">
           <div class="form-group">
             <label>State</label>
-            <select class="form-select" formControlName="state">
-              <option value="">Select</option>
-              <option value="HRN">List 1</option>
-              <option value="">List 2</option>
-              <option value="">List 3</option>
-              <option value="">List 4</option>
-              <option value="">List 5</option>
-            </select>
+            <ng-select [items]="publicVariable.stateList" bindLabel="stateName" bindValue="stateId"
+            placeholder="Select " formControlName="state" (change)="onSelectCity($event)">
+          </ng-select>
             <div *ngIf="shouldShowError('state','required')" class="text-danger">This field is required
             </div>
           </div>
@@ -71,14 +66,9 @@
         <div class="col-md-3 col-sm-6">
           <div class="form-group">
             <label>City</label>
-            <select class="form-select" formControlName="city">
-              <option value="">Select</option>
-              <option value="GNN">City 1</option>
-              <option value="">City 2</option>
-              <option value="">City 3</option>
-              <option value="">City 4</option>
-              <option value="">City 5</option>
-            </select>
+            <ng-select [items]="publicVariable.cityList" bindLabel="cityName" bindValue="cityId"
+            placeholder="Select" formControlName="city" >
+          </ng-select>
             <div *ngIf="shouldShowError('city','required')" class="text-danger">This field is required</div>
           </div>
         </div>
