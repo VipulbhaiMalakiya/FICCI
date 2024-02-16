@@ -97,14 +97,10 @@
         <div class="col-md-3 col-sm-6">
           <div class="form-group">
             <label>GST Customer Type</label>
-            <select class="form-select" formControlName="GSTCustomerType">
-              <option value="">Select</option>
-              <option value="1">List 1</option>
-              <option value="">List 2</option>
-              <option value="">List 3</option>
-              <option value="">List 4</option>
-              <option value="">List 5</option>
-            </select>
+
+            <ng-select [items]="publicVariable.customerTypeList" bindLabel="gstTypeName" bindValue="gstTypeId"
+            placeholder="Select" formControlName="GSTCustomerType" >
+          </ng-select>
             <div *ngIf="shouldShowError('GSTCustomerType','required')" class="text-danger">This field is
               required</div>
           </div>

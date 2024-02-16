@@ -15,10 +15,12 @@ export class CustomersService {
   private countryListURL = `${environment.apiURL}DropDown/GetCountryList` ;
   private GetStateURl = `${environment.apiURL}DropDown/GetStateByCountryId` ;
   private GetCityURl = `${environment.apiURL}DropDown/GetCityByStateId` ;
-
+  private gustomerTypeURL = `${environment.apiURL}DropDown/GstCustomerType` ;
   private  retry:any =  retry(1); // Retry the request up to 2 times in case of failure
 
-
+  getGstCustomerType(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.gustomerTypeURL}`).pipe(this.retry);
+  }
   getCountryList(): Observable<any[]> {
     return this.http.get<any[]>(`${this.countryListURL}`).pipe(this.retry);
   }

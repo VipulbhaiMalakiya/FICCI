@@ -21,3 +21,10 @@ export interface CityList{
   cityName:string,
   state:string
 }
+
+export interface GstCustomerTypeList{
+  gstTypeId:number,
+  gstTypeName:string,
+}
+
+

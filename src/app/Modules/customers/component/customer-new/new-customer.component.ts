@@ -30,7 +30,7 @@ export class NewCustomerComponent implements OnInit{
       city: [null, Validators.required],
       postCode: ['', [Validators.required, Validators.pattern(/^\d{6}$/)]],
       GSTRegistrationNo: ['', [Validators.required, gstValidator()]],
-      GSTCustomerType: ['', Validators.required],
+      GSTCustomerType: [null, Validators.required],
       email: ['', [Validators.required, Validators.email]],
       PrimaryContactNo: ['', Validators.required],
       contact: ['', Validators.required],
@@ -41,6 +41,7 @@ export class NewCustomerComponent implements OnInit{
 
   ngOnInit(): void {
     this.loadCountryList();
+    this.loadGstCustomerType();
   }
 
   loadCountryList(): void {
@@ -59,6 +60,26 @@ export class NewCustomerComponent implements OnInit{
       console.error('Error loading project list:', error);
     }
   }
+
+
+  loadGstCustomerType(): void {
+    try {
+      const subscription = this.API.getGstCustomerType().subscribe({
+        next: (response: any) => {
+
+          this.publicVariable.customerTypeList = response.data;
+        },
+        error: (error) => {
+          console.error('Error loading project list:', error);
+        }
+      });
+
+      this.publicVariable.Subscription.add(subscription);
+    } catch (error) {
+      console.error('Error loading project list:', error);
+    }
+  }
+
 
   onSelectState(event: any){
     const selectedCountry = event;
