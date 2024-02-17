@@ -70,6 +70,22 @@ export class StatusCustomerComponent implements OnInit{
     }).catch(() => { });
 
   }
+
+  onEdit(data: customerStatusListModel): void {
+    if (data.customerId) {
+      this.router.navigate(['customer/status/edit', data.customerId], { state: { data: data } });
+    } else {
+      console.error('ID is undefined or null');
+    }
+  }
+
+  onView(data: customerStatusListModel): void {
+    if (data.customerId) {
+      this.router.navigate(['customer/status/view',data.customerId], { state: { data: data } });
+    } else {
+      console.error('ID is undefined or null');
+    }
+  }
   onDownload() {
     const exportData = this.publicVariable.customerStatusList.map((x) => ({
       "Cust. No.": x?.customerCode || '',
@@ -101,11 +117,5 @@ export class StatusCustomerComponent implements OnInit{
 
   }
 
-  onView(data: customerStatusListModel): void {
-    if (data.customerId) {
-      this.router.navigate(['customer/status/view',data.customerId], { state: { data: data } });
-    } else {
-      console.error('User ID is undefined or null');
-    }
-  }
+
 }

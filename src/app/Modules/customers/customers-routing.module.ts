@@ -15,6 +15,7 @@ const routes: Routes = [
   { path: 'approval', component: ApprovalCustomerComponent },
   { path: 'accounts', component: AccountsCustomerComponent },
   { path: 'status/view/:id', component: CustomerStatusComponent },
+  { path: 'status/edit/:id', component: NewCustomerComponent },
   { path: 'approval/remarks/:id', component: ApprovalRemarksComponent },
   { path: 'accounts/remarks/:id', component: AccountsRemarksComponent }
 ];
