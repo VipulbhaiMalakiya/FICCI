@@ -649,6 +649,55 @@ textarea.form-control{ padding-top: 10px; padding-bottom: 10px; }
 
 .gif-content{ max-width:40%; flex:0 0 40%; }
 
+/*------------new dashboard-----------*/
+
+.data-tabs .nav-link{ background:url(../images/tabbg-1.png) no-repeat; width:132px; height:76px; color:#fff; background-size: 100% 100% !important; margin:0px 2px; }
+
+.data-tabs .nav-pills .nav-link.active{ background-color:#fff; position: relative;  }
+.data-tabs .nav-pills .nav-link.active:after {
+    content: "";
+    width: 0;
+    height: 0;
+    border-left: 13px solid transparent;
+    border-right: 13px solid transparent;
+    border-top: 13px solid #b575f6;
+    position: absolute;
+    bottom: -11px;
+    margin: auto;
+    left: 0;
+    right: 0;
+}
+
+.data-tabs .nav-link.tabbg-2{ background:url(../images/tabbg-2.png) no-repeat; }
+.data-tabs .nav-link.tabbg-3{ background:url(../images/tabbg-3.png) no-repeat; }
+.data-tabs .nav-link.tabbg-4{ background:url(../images/tabbg-4.png) no-repeat; }
+.data-tabs .nav-link.tabbg-5{ background:url(../images/tabbg-5.png) no-repeat; }
+.data-tabs .nav-link.tabbg-6{ background:url(../images/tabbg-6.png) no-repeat; }
+.data-tabs .nav-link.tabbg-7{ background:url(../images/tabbg-7.png) no-repeat; }
+
+.data-tabs .nav-pills .nav-link.tabbg-2.active:after {border-top: 13px solid #6989e6; }
+.data-tabs .nav-pills .nav-link.tabbg-3.active:after {border-top: 13px solid #ffa48a; }
+.data-tabs .nav-pills .nav-link.tabbg-4.active:after {border-top: 13px solid #ed6857; }
+.data-tabs .nav-pills .nav-link.tabbg-5.active:after {border-top: 13px solid #486a93; }
+.data-tabs .nav-pills .nav-link.tabbg-6.active:after {border-top: 13px solid #19d3a3; }
+.data-tabs .nav-pills .nav-link.tabbg-7.active:after {border-top: 13px solid #efb519; }
+
+.data-tabs-content{ margin-top:14px; }
+
+.data-tabs .nav-link small{ display: block; font-size:12px; text-transform:uppercase; line-height: 1.2; }
+.data-tabs .nav-link span {
+    display: block;
+    font-size: 27px;
+    font-weight:600;
+    line-height: 1.4;
+	min-height: 28px;
+}
+
+.main-data-nav1 .nav-item{ margin-right: 20px; }
+
+.main-data-nav1 .nav-item .nav-link{ font-weight:500; font-size: 16px; color:#555; background: #fff; border-radius:0px;  width: 100%; padding-left: 0px; padding-right: 0px; padding-top: 0px; }
+
+.main-data-nav1 .nav-item .nav-link.active{ font-weight: 700; color:#F26100; border-bottom: 3px solid #F26100; }
 
 
 
@@ -657,8 +706,4 @@ textarea.form-control{ padding-top: 10px; padding-bottom: 10px; }
 
 
 
-
-
-
-
-
+/*------------end new dashboard---------*/
