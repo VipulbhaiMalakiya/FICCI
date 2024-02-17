@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AppService, InvoicesService, NgbModal, Router, ToastrService, formatDate, publicVariable } from '../../Export/invoce';
-import { customerStatusListModel } from 'src/app/Modules/customers/Export/new-customer';
+import { AppService, ConfirmationDialogModalComponent, InvoicesService, NgbModal, Router, ToastrService, formatDate, publicVariable } from '../../Export/invoce';
 import { invoiceStatusModule } from '../../interface/invoice';
 
 @Component({
@@ -54,6 +53,30 @@ export class InvoiceStatusComponent implements OnInit {
         } else {
             console.error('ID is undefined or null');
         }
+    }
+
+    onDelete(id: number) {
+        const modalRef = this.modalService.open(ConfirmationDialogModalComponent, { size: "sm", centered: true, backdrop: "static" });
+        var componentInstance = modalRef.componentInstance as ConfirmationDialogModalComponent;
+        componentInstance.message = "Do you really want to delete these records? This process cannot be undone ?";
+        modalRef.result.then((canDelete: boolean) => {
+            if (canDelete) {
+                this.publicVariable.isProcess = true;
+                this.API.delete(id).subscribe({
+                    next: (res: any) => {
+                        this.toastr.success(res.message, 'Success');
+                        this.publicVariable.isProcess = false;
+                        this.loadPurchaseInvoiceList();
+                    },
+                    error: (error) => {
+                        this.publicVariable.isProcess = false;
+                        this.toastr.error(error.error.message, 'Error');
+                    }
+                });
+
+            }
+        }).catch(() => { });
+
     }
 
     onDownload() {

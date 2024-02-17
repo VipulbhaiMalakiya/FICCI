@@ -16,6 +16,7 @@ export { ActivatedRoute } from 'src/app/Modules/customers/Export/new-customer';
 export { panValidator } from '../Validation/panValidator';
 export { alphanumericWithSpacesValidator } from '../Validation/alphanumericWithSpacesValidator';
 export { gstValidator } from '../Validation/gstValidator';
+
 export class publicVariable {
     dataForm!: FormGroup;
     isEdit: boolean = false;

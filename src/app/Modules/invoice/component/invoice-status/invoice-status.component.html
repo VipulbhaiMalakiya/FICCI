@@ -68,9 +68,10 @@
 
                             <td>
                                 <span class="table-btns">
-                                    <a href="javascript:void(0);" (click)="onView(d)"><img src="../assets/images/view-icon.svg" alt="" /></a>
+                                    <a href="javascript:void(0);" (click)="onView(d)"><img
+                                            src="../assets/images/view-icon.svg" alt="" /></a>
                                     <a href="#"><img src="../assets/images/edit-icon.svg" alt="" /></a>
-                                    <a href="javascript:void(0)" data-bs-toggle="modal"
+                                    <a href="javascript:void(0)" (click)="onDelete(d.headerId)" data-bs-toggle="modal"
                                         data-bs-target="#deleterecord-modal"><img src="../assets/images/delete-icon.svg"
                                             alt="" /></a>
                                 </span>
