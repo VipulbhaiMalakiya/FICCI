@@ -86,24 +86,29 @@ export class StatusCustomerComponent implements OnInit{
       console.error('ID is undefined or null');
     }
   }
+
+  toTitleCase(str: string): string {
+    return str.toLowerCase().split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+  }
   onDownload() {
     const exportData = this.publicVariable.customerStatusList.map((x) => ({
       "Cust. No.": x?.customerCode || '',
-      Name: x?.customerName || '',
+      Name: x?.customerName  ? this.toTitleCase(x.customerName) : '',
       Address: x?.address || '',
-      State:x?.state.stateName,
+      State: x?.state.stateName ? this.toTitleCase(x.state.stateName) : '',
       Country:x.country?.countryName,
-      City: x?.city.cityName || '',
+      City: x?.city.cityName ? this.toTitleCase(x.city.cityName ) : '',
       Pincode:x?.pincode,
-      Contact: x && x.phoneNumber ? 'Yes' : 'No',
+      Contact: x && x.phoneNumber ,
       Email: x?.email || '',
       gstNumber:x.gstNumber || '',
       'PAN Card' : x.pan || '',
-      'gstType' : x.gstType.gstTypeName
+      'GST Customer Type' : x.gstType.gstTypeName ? this.toTitleCase(x.gstType.gstTypeName ) : '',
+      'Save as Draft' : x.isActive ? 'yes' : 'no'
 
     }));
 
-    const headers = ['Cust. No.','Name', 'Address','Country', 'State','City','Pincode','Contact', 'Email','gstNumber','PAN Card','gstType'];
+    const headers = ['Cust. No.','Name', 'Address','Country', 'State','City','Pincode','Contact', 'Email','gstNumber','PAN Card','GST Customer Type','Save as Draft'];
     this.appService.exportAsExcelFile(exportData,'Customer Status',headers);
   }
   onTableDataChange(event: any) {
