@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AppService, CustomersService, FormBuilder, InvoicesService, NgbModal, Router, ToastrService, Validators, gstValidator, panValidator, publicVariable } from '../../Export/invoce';
+import { ActivatedRoute, AppService, CustomersService, FormBuilder, InvoicesService, NgbModal, Router, ToastrService, Validators, gstValidator, panValidator, publicVariable } from '../../Export/invoce';
 import { FormArray } from '@angular/forms';
 import { finalize, timeout } from 'rxjs';
 
@@ -16,6 +16,8 @@ export class NewPurchaseInvoiceComponent implements OnInit {
         { impiLineDescription: '', impiLineQuantity: '', impiLineDiscount: '', impiLineUnitPrice: '', calculateAmount: 0 }
     ];
     ImpiHeaderAttachment: any;
+    headerId?: number;
+    data: any;
 
     constructor(private appService: AppService,
         private modalService: NgbModal,
@@ -23,7 +25,8 @@ export class NewPurchaseInvoiceComponent implements OnInit {
         private toastr: ToastrService,
         private fb: FormBuilder,
         private API: InvoicesService,
-        private CAPI: CustomersService
+        private CAPI: CustomersService,
+        private route: ActivatedRoute
 
     ) {
         this.initializeForm();
@@ -65,6 +68,49 @@ export class NewPurchaseInvoiceComponent implements OnInit {
     ngOnInit(): void {
         this.loadProjectList();
         this.loadCustomerStatusList();
+
+        this.route.params.subscribe(params => {
+            this.headerId = +params['id'];
+        });
+        if (this.data = history.state.data) {
+            // this.onSelectState(this.data.country);
+            // this.onSelectCity(this.data.state);
+            this.patchFormData(this.data);
+        }
+
+    }
+
+    patchFormData(data: any): void {
+        this.publicVariable.dataForm.patchValue({
+            headerId: data.headerId,
+            ImpiHeaderInvoiceType: data.impiHeaderInvoiceType,
+            ImpiHeaderProjectCode: data.impiHeaderProjectCode,
+            ImpiHeaderDepartment: data.impiHeaderDepartment,
+            ImpiHeaderDivison: data.impiHeaderDivison,
+            ImpiHeaderPanNo: data.impiHeaderPanNo,
+            ImpiHeaderGstNo: data.impiHeaderGstNo,
+            PINO: [''], //api missing
+            ImpiHeaderCustomerName: data.impiHeaderCustomerName,
+            ImpiHeaderCustomerCode: data.impiHeaderCustomerCode,
+            ImpiHeaderCustomerAddress: data.impiHeaderCustomerAddress,
+            ImpiHeaderCustomerState: data.impiHeaderCustomerState,
+            ImpiHeaderCustomerCity: data.impiHeaderCustomerCity,
+            ImpiHeaderCustomerPinCode: data.impiHeaderCustomerPinCode,
+            ImpiHeaderCustomerGstNo: data.impiHeaderCustomerGstNo,
+            ImpiHeaderCustomerContactPerson: data.impiHeaderCustomerContactPerson,
+            ImpiHeaderCustomerEmailId: data.impiHeaderCustomerEmailId,
+             ImpiHeaderCustomerPhoneNo:data.impiHeaderCustomerPhoneNo,
+            ImpiHeaderCreatedBy: data.impiHeaderCreatedBy,
+            ImpiHeaderTotalInvoiceAmount: data.impiHeaderTotalInvoiceAmount,
+            // items: this.fb.array([]),
+            ImpiHeaderPaymentTerms: data.impiHeaderPaymentTerms,
+            ImpiHeaderRemarks: data.impiHeaderRemarks,
+            IsDraft: data.isDraft
+
+        });
+
+
+
     }
 
     loadProjectList(): void {
