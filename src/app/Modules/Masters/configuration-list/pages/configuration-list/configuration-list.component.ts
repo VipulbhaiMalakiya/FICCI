@@ -72,7 +72,7 @@ export class ConfigurationListComponent implements OnInit, OnDestroy {
   loadConfiguration(): void {
     this.publicVariable.configurationSubscription.add(
       this.API.getAll().pipe(
-        timeout(40000),
+        timeout(120000), // Timeout set to 2 minutes (120000 milliseconds)
         catchError((error) => {
           this.toastr.error('Operation timed out after 40 seconds', error.name);
           return throwError(() => error); // Pass a function that returns the error

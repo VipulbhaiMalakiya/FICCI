@@ -30,7 +30,7 @@ export class UsersComponent implements OnInit, OnDestroy {
 
   loadUserList(): void {
     const subscription = this.API.getUsers().pipe(
-      timeout(40000), // Timeout set to 40 seconds (40000 milliseconds)
+      timeout(120000), // Timeout set to 2 minutes (120000 milliseconds)
       finalize(() => {
         this.publicVariable.isProcess = false;
       })
@@ -47,10 +47,10 @@ export class UsersComponent implements OnInit, OnDestroy {
         }
       }
     });
-  
+
     this.publicVariable.Subscription.add(subscription);
   }
-  
+
   onTableDataChange(event: any) {
     this.publicVariable.page = event;
     this.publicVariable.userlist
