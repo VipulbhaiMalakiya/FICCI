@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { AppService, FormBuilder, InvoicesService, NgbModal, Router, ToastrService, Validators, gstValidator, panValidator, publicVariable } from '../../Export/invoce';
+import { AppService, CustomersService, FormBuilder, InvoicesService, NgbModal, Router, ToastrService, Validators, gstValidator, panValidator, publicVariable } from '../../Export/invoce';
 import { FormArray } from '@angular/forms';
+import { finalize, timeout } from 'rxjs';
 
 
 @Component({
@@ -21,7 +22,9 @@ export class NewPurchaseInvoiceComponent implements OnInit {
     private router: Router,
     private toastr: ToastrService,
     private fb: FormBuilder,
-    private API: InvoicesService
+    private API: InvoicesService,
+    private CAPI: CustomersService
+
   ) {
     this.initializeForm();
   }
@@ -36,7 +39,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
       ImpiHeaderPanNo: ['', [Validators.required, panValidator()]], // Use the custom validator function
       ImpiHeaderGstNo: ['', [Validators.required, gstValidator()]],
       PINO: [''], //api missing
-      ImpiHeaderCustomerName: ['', [Validators.required]],
+      ImpiHeaderCustomerName: [null, [Validators.required]],
       ImpiHeaderCustomerCode: [''], //new filed
       ImpiHeaderCustomerAddress: ['', [Validators.required]],
       ImpiHeaderCustomerState: ['', [Validators.required]],
@@ -61,7 +64,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadProjectList();
-    this.publicVariable.isProcess = false;
+    this.loadCustomerStatusList();
   }
 
   loadProjectList(): void {
@@ -81,6 +84,55 @@ export class NewPurchaseInvoiceComponent implements OnInit {
     }
   }
 
+  loadCustomerStatusList(): void {
+    const subscription = this.CAPI.getCustomerStatus().pipe(
+      timeout(120000), // Timeout set to 2 minutes (120000 milliseconds)
+      finalize(() => {
+        this.publicVariable.isProcess = false;
+      })
+    ).subscribe({
+      next: (response: any) => {
+        this.publicVariable.customerStatusList = response.data;
+      },
+      error: (error: any) => {
+        if (error.name === 'TimeoutError') {
+          this.toastr.error('Operation timed out after 40 seconds', error.name);
+        } else {
+          this.toastr.error('Error loading user list', error.name);
+        }
+      }
+    });
+
+    this.publicVariable.Subscription.add(subscription);
+  }
+  onSelectCustomer():void{
+    const selectedId = this.publicVariable.dataForm.get('ImpiHeaderCustomerName')?.value;
+    if (selectedId) {
+      this.publicVariable.selectCustomer = this.publicVariable.customerStatusList.find(customer => customer.customerName == selectedId);
+      console.log(this.publicVariable.selectCustomer);
+
+      if (this.publicVariable.selectCustomer) {
+        this.publicVariable.dataForm.patchValue({
+          ImpiHeaderCustomerAddress: this.publicVariable.selectCustomer.address,
+          ImpiHeaderCustomerPinCode: this.publicVariable.selectCustomer.pincode,
+          ImpiHeaderCustomerGstNo:this.publicVariable.selectCustomer.gstNumber,
+          ImpiHeaderCustomerContactPerson:this.publicVariable.selectCustomer.contact,
+          ImpiHeaderCustomerEmailId:this.publicVariable.selectCustomer.email,
+          ImpiHeaderCustomerPhoneNo:this.publicVariable.selectCustomer.phoneNumber,
+
+        });
+      }
+    } else {
+      this.publicVariable.dataForm.patchValue({
+        ImpiHeaderCustomerAddress: null,
+        ImpiHeaderCustomerPinCode: null,
+        ImpiHeaderCustomerGstNo: null,
+        ImpiHeaderCustomerContactPerson:null,
+        ImpiHeaderCustomerEmailId:null,
+        ImpiHeaderCustomerPhoneNo:null
+      });
+    }
+  }
   onSelectProject() {
     const selectedId = this.publicVariable.dataForm.get('ImpiHeaderProjectCode')?.value;
     if (selectedId) {
@@ -93,9 +145,8 @@ export class NewPurchaseInvoiceComponent implements OnInit {
       }
     } else {
       this.publicVariable.dataForm.patchValue({
-        username: null,
-        name: null,
-        email: null
+        ImpiHeaderDepartment: null,
+        ImpiHeaderDivison: null,
       });
     }
   }
@@ -127,7 +178,6 @@ export class NewPurchaseInvoiceComponent implements OnInit {
 
     (event.target as HTMLInputElement).value = numericValue;
   }
-
 
   get itemsFormArray(): FormArray {
     return this.publicVariable.dataForm.get('items') as FormArray;

@@ -6,16 +6,16 @@
   <form [formGroup]="publicVariable.dataForm" (ngSubmit)="onSubmit()">
     <div class="pipage-radio">
       <div class="form-check">
-        <input class="form-check-input" formControlName="ImpiHeaderInvoiceType" type="radio" name="ImpiHeaderInvoiceType"
-          id="flexRadioDefault1" value="Proforma Invoice" />
+        <input class="form-check-input" formControlName="ImpiHeaderInvoiceType" type="radio"
+          name="ImpiHeaderInvoiceType" id="flexRadioDefault1" value="Proforma Invoice" />
         <label class="form-check-label" for="flexRadioDefault1">
           Proforma Invoice
         </label>
       </div>
 
       <div class="form-check">
-        <input class="form-check-input" formControlName="ImpiHeaderInvoiceType" type="radio" name="ImpiHeaderInvoiceType"
-          id="flexRadioDefault2" value="Tax Invoice" />
+        <input class="form-check-input" formControlName="ImpiHeaderInvoiceType" type="radio"
+          name="ImpiHeaderInvoiceType" id="flexRadioDefault2" value="Tax Invoice" />
         <label class="form-check-label" for="flexRadioDefault2">
           Tax Invoice
         </label>
@@ -28,10 +28,10 @@
           <div class="form-group">
             <label for="projectCode">Project Code</label>
             <ng-select [items]="publicVariable.projectList" bindLabel="projectCode" bindValue="projectCode"
-              placeholder="Select in Project Code" formControlName="ImpiHeaderProjectCode"
-              (change)="onSelectProject()">
+              placeholder="Select in Project Code" formControlName="ImpiHeaderProjectCode" (change)="onSelectProject()">
             </ng-select>
-            <div *ngIf="shouldShowError('ImpiHeaderProjectCode','required')" class="text-danger">This field is required</div>
+            <div *ngIf="shouldShowError('ImpiHeaderProjectCode','required')" class="text-danger">This field is required
+            </div>
 
           </div>
         </div>
@@ -41,7 +41,8 @@
             <label for="department">Department</label>
             <input type="text" id="department" placeholder="Department" formControlName="ImpiHeaderDepartment"
               class="form-control" />
-            <div *ngIf="shouldShowError('ImpiHeaderDepartment','required')" class="text-danger">This field is required</div>
+            <div *ngIf="shouldShowError('ImpiHeaderDepartment','required')" class="text-danger">This field is required
+            </div>
 
           </div>
         </div>
@@ -49,8 +50,10 @@
         <div class="col-md-4 col-sm-6">
           <div class="form-group">
             <label for="division">Division</label>
-            <input type="text" id="division" placeholder="Division" formControlName="ImpiHeaderDivison" class="form-control" />
-            <div *ngIf="shouldShowError('ImpiHeaderDivison','required')" class="text-danger">This field is required</div>
+            <input type="text" id="division" placeholder="Division" formControlName="ImpiHeaderDivison"
+              class="form-control" />
+            <div *ngIf="shouldShowError('ImpiHeaderDivison','required')" class="text-danger">This field is required
+            </div>
 
           </div>
         </div>
@@ -59,7 +62,8 @@
           <div class="form-group">
             <label for="PANNo">PAN No</label>
             <input type="text" id="PANNo" class="form-control" placeholder="PAN No" formControlName="ImpiHeaderPanNo" />
-            <div *ngIf="shouldShowError('ImpiHeaderPanNo','invalidPAN')" class="text-danger">Please enter a valid PAN Number.
+            <div *ngIf="shouldShowError('ImpiHeaderPanNo','invalidPAN')" class="text-danger">Please enter a valid PAN
+              Number.
             </div>
           </div>
         </div>
@@ -77,7 +81,8 @@
         </div>
 
         <!-- show tax-invoice-only -->
-        <div class="col-md-4 col-sm-6" *ngIf="publicVariable.dataForm.get('ImpiHeaderInvoiceType')?.value === 'Tax Invoice'">
+        <div class="col-md-4 col-sm-6"
+          *ngIf="publicVariable.dataForm.get('ImpiHeaderInvoiceType')?.value === 'Tax Invoice'">
           <div class="form-group">
             <label>PI No</label>
             <input type="text" placeholder="PI No" class="form-control" formControlName="PINO" />
@@ -95,19 +100,24 @@
           <div class="form-group">
             <label for="CustomerName">Customer Name</label>
             <div class="flex-field">
-              <input type="text" id="CustomerName" formControlName="ImpiHeaderCustomerName" placeholder="Customer Name"
-                class="form-control" />
+              <ng-select [items]="publicVariable.customerStatusList" class="w-100" bindLabel="customerName" bindValue="customerName"
+                placeholder="Select customer " formControlName="ImpiHeaderCustomerName"
+                (change)="onSelectCustomer()">
+              </ng-select>
               <div class="add-btn"><a routerLink="/customer/new">+</a></div>
             </div>
-            <div *ngIf="shouldShowError('ImpiHeaderCustomerName','required')" class="text-danger">This field is required</div>
+            <div *ngIf="shouldShowError('ImpiHeaderCustomerName','required')" class="text-danger">This field is required
+            </div>
           </div>
         </div>
 
         <div class="col-md-4 col-sm-6">
           <div class="form-group">
             <label for="address">Address</label>
-            <input type="text" id="address" placeholder="Address" formControlName="ImpiHeaderCustomerAddress" class="form-control" />
-            <div *ngIf="shouldShowError('ImpiHeaderCustomerAddress','required')" class="text-danger">This field is required</div>
+            <input type="text" id="address" placeholder="Address" formControlName="ImpiHeaderCustomerAddress"
+              class="form-control" />
+            <div *ngIf="shouldShowError('ImpiHeaderCustomerAddress','required')" class="text-danger">This field is
+              required</div>
 
           </div>
         </div>
@@ -118,7 +128,8 @@
               <option value="">Select State</option>
               <option value="haryana">Haryana</option>
             </select>
-            <div *ngIf="shouldShowError('ImpiHeaderCustomerState','required')" class="text-danger">This field is required</div>
+            <div *ngIf="shouldShowError('ImpiHeaderCustomerState','required')" class="text-danger">This field is
+              required</div>
 
           </div>
         </div>
@@ -129,18 +140,21 @@
               <option value="">Select City</option>
               <option value="gurugram">gurugram</option>
             </select>
-            <div *ngIf="shouldShowError('ImpiHeaderCustomerCity','required')" class="text-danger">This field is required</div>
+            <div *ngIf="shouldShowError('ImpiHeaderCustomerCity','required')" class="text-danger">This field is required
+            </div>
 
           </div>
         </div>
         <div class="col-md-4 col-sm-6">
           <div class="form-group">
             <label for="pincode">Pincode</label>
-            <input type="text" formControlName="ImpiHeaderCustomerPinCode" placeholder="Pincode" (input)="onInputChange($event)"
-              class="form-control" />
-            <div *ngIf="shouldShowError('ImpiHeaderCustomerPinCode','required')" class="text-danger"> Pin Code is required.
+            <input type="text" formControlName="ImpiHeaderCustomerPinCode" placeholder="Pincode"
+              (input)="onInputChange($event)" class="form-control" />
+            <div *ngIf="shouldShowError('ImpiHeaderCustomerPinCode','required')" class="text-danger"> Pin Code is
+              required.
             </div>
-            <div *ngIf="shouldShowError('ImpiHeaderCustomerPinCode','pattern')" class="text-danger"> Please enter a valid
+            <div *ngIf="shouldShowError('ImpiHeaderCustomerPinCode','pattern')" class="text-danger"> Please enter a
+              valid
               6-digit Pin Code.</div>
           </div>
         </div>
@@ -158,9 +172,10 @@
         <div class="col-md-4 col-sm-6">
           <div class="form-group">
             <label for="ContactPerson">Contact Person</label>
-            <input type="text" placeholder="Contact Person" id="ContactPerson" formControlName="ImpiHeaderCustomerContactPerson"
-              class="form-control" />
-            <div *ngIf="shouldShowError('ImpiHeaderCustomerContactPerson','required')" class="text-danger">This field is required</div>
+            <input type="text" placeholder="Contact Person" id="ContactPerson"
+              formControlName="ImpiHeaderCustomerContactPerson" class="form-control" />
+            <div *ngIf="shouldShowError('ImpiHeaderCustomerContactPerson','required')" class="text-danger">This field is
+              required</div>
 
           </div>
         </div>
@@ -168,9 +183,12 @@
         <div class="col-md-4 col-sm-6">
           <div class="form-group">
             <label for="EmailID">Email ID</label>
-            <input type="text" placeholder="Email ID" id="EmailID" formControlName="ImpiHeaderCustomerEmailId" class="form-control" />
-            <div *ngIf="shouldShowError('ImpiHeaderCustomerEmailId','required')" class="text-danger">Email is required.</div>
-            <div *ngIf="shouldShowError('ImpiHeaderCustomerEmailId','email')" class="text-danger"> Please enter a valid email
+            <input type="text" placeholder="Email ID" id="EmailID" formControlName="ImpiHeaderCustomerEmailId"
+              class="form-control" />
+            <div *ngIf="shouldShowError('ImpiHeaderCustomerEmailId','required')" class="text-danger">Email is required.
+            </div>
+            <div *ngIf="shouldShowError('ImpiHeaderCustomerEmailId','email')" class="text-danger"> Please enter a valid
+              email
               address.</div>
           </div>
         </div>
@@ -180,8 +198,10 @@
             <label for="PhoneNo">Phone No.</label>
             <input type="text" class="form-control" id="PhoneNo" (input)="onInputChange($event)" placeholder="Phone No"
               formControlName="ImpiHeaderCustomerPhoneNo" />
-            <div *ngIf="shouldShowError('ImpiHeaderCustomerPhoneNo','required')" class="text-danger">Phone number is required.</div>
-            <div *ngIf="shouldShowError('ImpiHeaderCustomerPhoneNo','pattern')" class="text-danger">Invalid phone number.</div>
+            <div *ngIf="shouldShowError('ImpiHeaderCustomerPhoneNo','required')" class="text-danger">Phone number is
+              required.</div>
+            <div *ngIf="shouldShowError('ImpiHeaderCustomerPhoneNo','pattern')" class="text-danger">Invalid phone
+              number.</div>
 
           </div>
         </div>
@@ -203,17 +223,18 @@
           </thead>
           <tbody formArrayName="items">
             <tr *ngFor="let item of itemsFormArray.controls; let i = index" [formGroupName]="i">
-              <td><input class="form-control" formControlName="impiLineDescription" placeholder="Particulars" type="text" required />
+              <td><input class="form-control" formControlName="impiLineDescription" placeholder="Particulars"
+                  type="text" required />
               </td>
-              <td><input class="form-control" (input)="onInputChange($event)" formControlName="impiLineQuantity" type="text"
-                  placeholder="Unit" required /></td>
-              <td><input class="form-control" (input)="onDiscountInput($event)" formControlName="impiLineDiscount" type="text"
-                  placeholder="Discount" required />
+              <td><input class="form-control" (input)="onInputChange($event)" formControlName="impiLineQuantity"
+                  type="text" placeholder="Unit" required /></td>
+              <td><input class="form-control" (input)="onDiscountInput($event)" formControlName="impiLineDiscount"
+                  type="text" placeholder="Discount" required />
               </td>
-              <td><input class="form-control" (input)="priceValidator($event)" formControlName="impiLineUnitPrice" type="text"
-                  placeholder="Rate/Unit(INR)" required /></td>
+              <td><input class="form-control" (input)="priceValidator($event)" formControlName="impiLineUnitPrice"
+                  type="text" placeholder="Rate/Unit(INR)" required /></td>
               <td><input class="form-control" formControlName="calculateAmount" type="text" placeholder="Amount(INR)"
-                [value]="item.value !== 0 ? calculateAmount(item.value) : ''" readonly /></td>
+                  [value]="item.value !== 0 ? calculateAmount(item.value) : ''" readonly /></td>
               <td>
                 <span class="table-btns">
                   <a (click)="addItem()"><img src="../assets/images/plus-icon.svg" alt="" /></a>
@@ -243,8 +264,8 @@
         <div class="col-sm-3 text-sm-end">Upload Document</div>
         <div class="col-sm-6">
           <div class="input-group">
-            <input type="file" class="form-control" id="inputGroupFile02"
-              accept=".pdf,.xlsx,.csv"  (change)="onFileSelected($event)"/>
+            <input type="file" class="form-control" id="inputGroupFile02" accept=".pdf,.xlsx,.csv"
+              (change)="onFileSelected($event)" />
             <label class="input-group-text" for="inputGroupFile02">Upload</label>
           </div>
         </div>
@@ -264,7 +285,8 @@
       <div class="col-md-9 mt-3">
         <div class="form-group">
           <label for="Remarks">Remarks</label>
-          <textarea class="form-control h-100" cols="2" rows="3" id="Remarks" formControlName="ImpiHeaderRemarks"></textarea>
+          <textarea class="form-control h-100" cols="2" rows="3" id="Remarks"
+            formControlName="ImpiHeaderRemarks"></textarea>
         </div>
       </div>
 

@@ -1,6 +1,7 @@
 import { FormGroup } from "@angular/forms";
 import { Subscription } from "rxjs";
 import { projectModel } from "../interface/invoice";
+import { customerStatusListModel } from "../../customers/interface/customers";
 
 export { FormBuilder, Validators } from '@angular/forms';
 export { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -9,6 +10,7 @@ export { Router } from '@angular/router';
 export { AppService } from 'src/app/services/excel.service';
 export  { ConfirmationDialogModalComponent } from 'src/app/Modules/shared/components/confirmation-dialog-modal/confirmation-dialog-modal.component';
 export { InvoicesService } from '../service/invoices.service';
+export { CustomersService } from 'src/app/Modules/customers/Export/new-customer';
 
 export { panValidator } from '../Validation/panValidator';
 export { alphanumericWithSpacesValidator } from '../Validation/alphanumericWithSpacesValidator';
@@ -25,7 +27,10 @@ export class publicVariable {
   searchText: string = '';
   Subscription: Subscription = new Subscription();
   selectedProjet: any;
+  selectCustomer:any;
   userData:any;
   projectList:projectModel[] = [];
   listData:any[] = [];
+  customerStatusList:customerStatusListModel[] = [];
+
 }
