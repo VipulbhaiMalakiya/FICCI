@@ -50,15 +50,29 @@ export class InvoiceStatusComponent implements OnInit {
       "PO No.": x?.impiHeaderProjectCode || '',
       "PO Date": x?.impiHeaderSubmittedDate ? formatDate(x.impiHeaderSubmittedDate, 'medium', 'en-IN', 'IST') : '',
       Department: x?.impiHeaderDepartment ? this.toTitleCase(x.impiHeaderDepartment) : '',
+      Divison: x?.impiHeaderDivison ? this.toTitleCase(x.impiHeaderDivison) : '',
       Category: x?.impiHeaderInvoiceType ? this.toTitleCase(x.impiHeaderInvoiceType) : '',
+      "PAN No": x?.impiHeaderPanNo || '',
+      "GST No": x?.impiHeaderGstNo || '',
+      "State": x?.impiHeaderCustomerState ? this.toTitleCase(x.impiHeaderCustomerState) : '',
+      "City": x?.impiHeaderCustomerCity ? this.toTitleCase(x.impiHeaderCustomerCity) : '',
+      "Pincode": x?.impiHeaderCustomerPinCode || '',
       "Vendor Name": x && x.impiHeaderCustomerName ? this.toTitleCase(x.impiHeaderCustomerName) : '',
+      "Address": x?.impiHeaderCustomerAddress,
+      'Customer  GST Number': x?.impiHeaderCustomerGstNo || '',
+      'Contact Person': x?.impiHeaderCustomerContactPerson || '',
+      'Phone No':x?.impiHeaderCustomerPhoneNo || '',
+      "Email ID": x?.impiHeaderCustomerEmailId || '',
       Amount: x?.impiHeaderTotalInvoiceAmount != null ? (x.impiHeaderTotalInvoiceAmount).toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '',
       Status: '',
       Approver: '',
       "Update Date": x?.impiHeaderModifiedDate ? formatDate(x.impiHeaderModifiedDate, 'medium', 'en-IN', 'IST') : '',
     }));
 
-    const headers = ['PO No.', 'PO Date', 'Department', 'Category', 'Vendor Name', 'Amount', 'Status', 'Approver', 'Update Date'];
+    const headers = [
+      'PO No.', 'PO Date', 'Department', 'Divison', 'Category', 'PAN No', 'GST No',
+      'Vendor Name', 'Address', 'State', 'City', 'Pincode', 'Customer  GST Number', 'Contact Person','Phone No', 'Amount', 'Status', 'City', 'Approver', 'Update Date', 'State'
+    ];
     this.appService.exportAsExcelFile(exportData, 'PI Invoice Status', headers);
   }
 
