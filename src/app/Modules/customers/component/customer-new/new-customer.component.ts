@@ -25,7 +25,7 @@ export class NewCustomerComponent implements OnInit {
     this.publicVariable.dataForm = this.fb.group({
       customerId: [''],
       customerNo: [''],
-      name: ['', [Validators.required, alphanumericWithSpacesValidator()]],// Use the custom validator function
+      name: ['', [Validators.required, alphanumericWithSpacesValidator()]],
       name2: ['', alphanumericWithSpacesValidator()],
       address: ['', Validators.required,],
       address2: ['',],
@@ -38,7 +38,7 @@ export class NewCustomerComponent implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       PrimaryContactNo: ['', Validators.required],
       contact: ['', Validators.required],
-      PANNo: ['', [Validators.required, panValidator()]], // Use the custom validator function
+      PANNo: ['', [Validators.required, panValidator()]],
       isDraft: ['true']
     });
   }
@@ -77,7 +77,7 @@ export class NewCustomerComponent implements OnInit {
       PrimaryContactNo: data.phoneNumber,
       contact: data.contact,
       PANNo: data.pan,
-      isDraft: data.isDraft
+      isDraft: data.isActive
     });
 
   }
@@ -164,7 +164,7 @@ export class NewCustomerComponent implements OnInit {
 
 
   onInputChange(event: any) {
-    const inputValue = event.target.value; event.target.value = inputValue.replace(/[^0-9]/g, ''); // Allow only numeric input
+    const inputValue = event.target.value; event.target.value = inputValue.replace(/[^0-9]/g, '');
   }
 
   onSubmit(): void {
