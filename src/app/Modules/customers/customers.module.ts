@@ -17,24 +17,24 @@ import { SearchFilterPipe } from './pipe/searchFilter';
 
 
 @NgModule({
-  declarations: [
-    NewCustomerComponent,
-    StatusCustomerComponent,
-    ApprovalCustomerComponent,
-    AccountsCustomerComponent,
-    CustomerStatusComponent,
-    ApprovalRemarksComponent,
-    AccountsRemarksComponent,
-    SearchFilterPipe
-  ],
-  imports: [
-    CommonModule,
-    CustomersRoutingModule,
-    ReactiveFormsModule,
-    FormsModule,
-    NgSelectModule,
-    SharedModule,
-    NgxPaginationModule
-  ]
+    declarations: [
+        NewCustomerComponent,
+        StatusCustomerComponent,
+        ApprovalCustomerComponent,
+        AccountsCustomerComponent,
+        CustomerStatusComponent,
+        ApprovalRemarksComponent,
+        AccountsRemarksComponent,
+        SearchFilterPipe
+    ],
+    imports: [
+        CommonModule,
+        CustomersRoutingModule,
+        ReactiveFormsModule,
+        FormsModule,
+        NgSelectModule,
+        SharedModule,
+        NgxPaginationModule
+    ]
 })
 export class CustomersModule { }
