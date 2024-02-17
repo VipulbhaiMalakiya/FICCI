@@ -27,7 +27,9 @@ export class InvoiceStatusComponent implements OnInit{
     try {
       const subscription = this.API.getPurchaseInvoice_New().subscribe({
         next: (response: any) => {
-          this.publicVariable.listData = response.data;
+          this.publicVariable.invoiceStatuslistData = response.data;
+          this.publicVariable.count = response.data.length;
+
         },
         error: (error) => {
           console.error('Error loading project list:', error);
@@ -59,12 +61,12 @@ export class InvoiceStatusComponent implements OnInit{
 
   onTableDataChange(event: any) {
     this.publicVariable.page = event;
-    // this.publicVariable.userlist
+    this.publicVariable.invoiceStatuslistData
   }
   onTableSizeChange(event: any): void {
     this.publicVariable.tableSize = event.target.value;
     this.publicVariable.page = 1;
-    // this.publicVariable.userlist
+    this.publicVariable.invoiceStatuslistData
 
   }
 }

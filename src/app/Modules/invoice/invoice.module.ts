@@ -13,6 +13,8 @@ import { ViewPiApprovalComponent } from './View/view-pi-approval/view-pi-approva
 import { ViewPiAccountsInboxComponent } from './View/view-pi-accounts-inbox/view-pi-accounts-inbox.component';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { SharedModule } from '../shared/shared.module';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { SearchFilterPipe } from './Pipe/searchFilter';
 
 
 @NgModule({
@@ -24,7 +26,8 @@ import { SharedModule } from '../shared/shared.module';
     ViewInvoiceStatusComponent,
     NumberToWordsPipe,
     ViewPiApprovalComponent,
-    ViewPiAccountsInboxComponent
+    ViewPiAccountsInboxComponent,
+    SearchFilterPipe
   ],
   imports: [
     CommonModule,
@@ -32,7 +35,8 @@ import { SharedModule } from '../shared/shared.module';
     ReactiveFormsModule,
     FormsModule,
     NgSelectModule,
-    SharedModule
+    SharedModule,
+    NgxPaginationModule
   ]
 })
 export class InvoiceModule { }

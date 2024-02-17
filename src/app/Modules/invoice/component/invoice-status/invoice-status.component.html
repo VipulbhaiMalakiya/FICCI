@@ -39,6 +39,7 @@
         <table class="table text-nowrap">
           <thead>
             <tr>
+              <th>#</th>
               <th>PO No.</th>
               <th>PO Date</th>
               <th>Department</th>
@@ -52,17 +53,18 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>C00007</td>
-              <td>10-Jan-2024</td>
-              <td>FINANCE</td>
-              <td>Performa Invoice</td>
-              <td>Mohan Mutha Export Private Limited</td>
-              <td>3,540.00</td>
+            <tr *ngFor="let d of  this.publicVariable.invoiceStatuslistData | searchFilter: publicVariable.searchText| paginate: {itemsPerPage: publicVariable.tableSize,currentPage: publicVariable.page,totalItems: publicVariable.count};let i = index">
+              <td>{{i + 1}}</td>
+              <td>{{d.impiHeaderProjectCode}}</td>
+              <td>{{d.impiHeaderSubmittedDate | date:'medium':'IST'}}</td>
+              <td>{{d.impiHeaderDepartment | titlecase}}</td>
+              <td>{{d.impiHeaderInvoiceType | titlecase}}</td>
+              <td>{{d.impiHeaderCustomerName | titlecase}}</td>
+              <td>{{d.impiHeaderTotalInvoiceAmount | number:'1.2-2' }}</td>
 
-              <td>Approved By Matrix</td>
-              <td>aditya.agarwal@ficci.com</td>
-              <td>10-Mar-2024</td>
+              <td></td>
+              <td></td>
+              <td>{{d.impiHeaderModifiedDate | date:'medium':'IST' }}</td>
 
               <td>
                 <span class="table-btns">
@@ -73,179 +75,24 @@
                 </span>
               </td>
             </tr>
-
-            <tr>
-              <td>C00007</td>
-              <td>10-Jan-2024</td>
-              <td>FINANCE</td>
-              <td>Performa Invoice</td>
-              <td>Mohan Mutha Export Private Limited</td>
-              <td>3,540.00</td>
-
-              <td>Approved By Matrix</td>
-              <td>aditya.agarwal@ficci.com</td>
-              <td>10-Mar-2024</td>
-
-              <td>
-                <span class="table-btns">
-                  <a href="view-pi-customerstatus.html"><img src="../assets/images/view-icon.svg" alt="" /></a>
-                  <a href="#"><img src="../assets/images/edit-icon.svg" alt="" /></a>
-                  <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#deleterecord-modal"><img
-                      src="../assets/images/delete-icon.svg" alt="" /></a>
-                </span>
-              </td>
-            </tr>
-
-            <tr>
-              <td>C00007</td>
-              <td>10-Jan-2024</td>
-              <td>FINANCE</td>
-              <td>Performa Invoice</td>
-              <td>Mohan Mutha Export Private Limited</td>
-              <td>3,540.00</td>
-
-              <td>Approved By Matrix</td>
-              <td>aditya.agarwal@ficci.com</td>
-              <td>10-Mar-2024</td>
-
-              <td>
-                <span class="table-btns">
-                  <a href="view-pi-customerstatus.html"><img src="../assets/images/view-icon.svg" alt="" /></a>
-                  <a href="#"><img src="../assets/images/edit-icon.svg" alt="" /></a>
-                  <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#deleterecord-modal"><img
-                      src="../assets/images/delete-icon.svg" alt="" /></a>
-                </span>
-              </td>
-            </tr>
-
-            <tr>
-              <td>C00007</td>
-              <td>10-Jan-2024</td>
-              <td>FINANCE</td>
-              <td>Performa Invoice</td>
-              <td>Mohan Mutha Export Private Limited</td>
-              <td>3,540.00</td>
-
-              <td>Approved By Matrix</td>
-              <td>aditya.agarwal@ficci.com</td>
-              <td>10-Mar-2024</td>
-
-              <td>
-                <span class="table-btns">
-                  <a href="view-pi-customerstatus.html"><img src="../assets/images/view-icon.svg" alt="" /></a>
-                  <a href="#"><img src="../assets/images/edit-icon.svg" alt="" /></a>
-                  <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#deleterecord-modal"><img
-                      src="../assets/images/delete-icon.svg" alt="" /></a>
-                </span>
-              </td>
-            </tr>
-
-            <tr>
-              <td>C00007</td>
-              <td>10-Jan-2024</td>
-              <td>FINANCE</td>
-              <td>Performa Invoice</td>
-              <td>Mohan Mutha Export Private Limited</td>
-              <td>3,540.00</td>
-
-              <td>Approved By Matrix</td>
-              <td>aditya.agarwal@ficci.com</td>
-              <td>10-Mar-2024</td>
-
-              <td>
-                <span class="table-btns">
-                  <a href="view-pi-customerstatus.html"><img src="../assets/images/view-icon.svg" alt="" /></a>
-                  <a href="#"><img src="../assets/images/edit-icon.svg" alt="" /></a>
-                  <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#deleterecord-modal"><img
-                      src="../assets/images/delete-icon.svg" alt="" /></a>
-                </span>
-              </td>
-            </tr>
-
-            <tr>
-              <td>C00007</td>
-              <td>10-Jan-2024</td>
-              <td>FINANCE</td>
-              <td>Performa Invoice</td>
-              <td>Mohan Mutha Export Private Limited</td>
-              <td>3,540.00</td>
-
-              <td>Approved By Matrix</td>
-              <td>aditya.agarwal@ficci.com</td>
-              <td>10-Mar-2024</td>
-
-              <td>
-                <span class="table-btns">
-                  <a href="view-pi-customerstatus.html"><img src="../assets/images/view-icon.svg" alt="" /></a>
-                  <a href="#"><img src="../assets/images/edit-icon.svg" alt="" /></a>
-                  <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#deleterecord-modal"><img
-                      src="../assets/images/delete-icon.svg" alt="" /></a>
-                </span>
-              </td>
-            </tr>
-
-            <tr>
-              <td>C00007</td>
-              <td>10-Jan-2024</td>
-              <td>FINANCE</td>
-              <td>Performa Invoice</td>
-              <td>Mohan Mutha Export Private Limited</td>
-              <td>3,540.00</td>
-
-              <td>Approved By Matrix</td>
-              <td>aditya.agarwal@ficci.com</td>
-              <td>10-Mar-2024</td>
-
-              <td>
-                <span class="table-btns">
-                  <a href="view-pi-customerstatus.html"><img src="../assets/images/view-icon.svg" alt="" /></a>
-                  <a href="#"><img src="../assets/images/edit-icon.svg" alt="" /></a>
-                  <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#deleterecord-modal"><img
-                      src="../assets/images/delete-icon.svg" alt="" /></a>
-                </span>
-              </td>
-            </tr>
-
-            <tr>
-              <td>C00007</td>
-              <td>10-Jan-2024</td>
-              <td>FINANCE</td>
-              <td>Performa Invoice</td>
-              <td>Mohan Mutha Export Private Limited</td>
-              <td>3,540.00</td>
-
-              <td>Approved By Matrix</td>
-              <td>aditya.agarwal@ficci.com</td>
-              <td>10-Mar-2024</td>
-
-              <td>
-                <span class="table-btns">
-                  <a href="view-pi-customerstatus.html"><img src="../assets/images/view-icon.svg" alt="" /></a>
-                  <a href="#"><img src="../assets/images/edit-icon.svg" alt="" /></a>
-                  <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#deleterecord-modal"><img
-                      src="../assets/images/delete-icon.svg" alt="" /></a>
-                </span>
-              </td>
-            </tr>
           </tbody>
         </table>
+        <div *ngIf="!publicVariable.invoiceStatuslistData || publicVariable.invoiceStatuslistData.length === 0">
+          <p>No data found.</p>
+        </div>
+        <div class="text-center"
+          *ngIf="(publicVariable.invoiceStatuslistData | searchFilter: publicVariable.searchText).length === 0 && publicVariable.invoiceStatuslistData.length > 0">
+          <strong class="text-danger">No results found.</strong>
+        </div>
       </div>
 
       <div class="clearfix">
-        <div class="hint-text">Showing <b>1</b> out of <b>10</b> entries</div>
-        <ul class="pagination">
-          <li class="page-item">
-            <a href="#" class="page-link"><img src="../assets/images/angle-left-icon.svg" alt="" /></a>
-          </li>
-          <li class="page-item active"><a href="#" class="page-link">1</a></li>
-          <li class="page-item"><a href="#" class="page-link">2</a></li>
-          <li class="page-item"><a href="#" class="page-link">...</a></li>
-          <li class="page-item"><a href="#" class="page-link">9</a></li>
-          <li class="page-item"><a href="#" class="page-link">10</a></li>
-          <li class="page-item">
-            <a href="#" class="page-link"><img src="../assets/images/angle-right-icon.svg" alt="" /></a>
-          </li>
-        </ul>
+        <div class="hint-text">Showing <b>{{this.publicVariable.tableSize}}</b> out of <b>{{ publicVariable.count }}</b>
+          entries</div>
+        <pagination-controls previousLabel="Prev" class="pagination"
+          *ngIf="publicVariable.invoiceStatuslistData && publicVariable.invoiceStatuslistData.length > 0" nextLabel="Next"
+          (pageChange)="onTableDataChange($event)">
+        </pagination-controls>
       </div>
     </div>
   </div>
