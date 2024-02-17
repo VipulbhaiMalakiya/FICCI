@@ -31,8 +31,8 @@ export class NewPurchaseInvoiceComponent implements OnInit {
       headerid: [''],
       ImpiHeaderInvoiceType: ['Proforma Invoice', Validators.required],
       ImpiHeaderProjectCode: [null, [Validators.required]],
-      ImpiHeaderDepartment: ['', [Validators.required]],
-      ImpiHeaderDivison: ['', [Validators.required]],
+      ImpiHeaderDepartment: [{ value: '', disabled: true }, [Validators.required]],
+      ImpiHeaderDivison: [{ value: '', disabled: true }, [Validators.required]],
       ImpiHeaderPanNo: ['', [Validators.required, panValidator()]], // Use the custom validator function
       ImpiHeaderGstNo: ['', [Validators.required, gstValidator()]],
       PINO: [''], //api missing
@@ -57,6 +57,8 @@ export class NewPurchaseInvoiceComponent implements OnInit {
     this.items.forEach(item => this.addItem(item));
   }
 
+
+
   ngOnInit(): void {
     this.loadProjectList();
     this.publicVariable.isProcess = false;
@@ -76,6 +78,25 @@ export class NewPurchaseInvoiceComponent implements OnInit {
       this.publicVariable.Subscription.add(subscription);
     } catch (error) {
       console.error('Error loading project list:', error);
+    }
+  }
+
+  onSelectProject() {
+    const selectedId = this.publicVariable.dataForm.get('ImpiHeaderProjectCode')?.value;
+    if (selectedId) {
+      this.publicVariable.selectedProjet = this.publicVariable.projectList.find(project => project.projectCode == selectedId);
+      if (this.publicVariable.selectedProjet) {
+        this.publicVariable.dataForm.patchValue({
+          ImpiHeaderDepartment: this.publicVariable.selectedProjet.department,
+          ImpiHeaderDivison: this.publicVariable.selectedProjet.divison,
+        });
+      }
+    } else {
+      this.publicVariable.dataForm.patchValue({
+        username: null,
+        name: null,
+        email: null
+      });
     }
   }
 
@@ -176,16 +197,19 @@ export class NewPurchaseInvoiceComponent implements OnInit {
 
 
   onSubmit(): void {
+
     if (this.publicVariable.dataForm.valid) {
       const newData = this.publicVariable.dataForm.value;
       const isUpdate = !!newData.headerid;
       const formData = new FormData();
+
+      this.publicVariable.selectedProjet = this.publicVariable.projectList.find(project => project.projectCode == newData.ImpiHeaderProjectCode);
       formData.append('ImpiHeaderAttachment', this.ImpiHeaderAttachment);
       formData.append('isupdate', String(isUpdate));
       formData.append('ImpiHeaderInvoiceType', newData.ImpiHeaderInvoiceType);
       formData.append('ImpiHeaderProjectCode', newData.ImpiHeaderProjectCode);
-      formData.append('ImpiHeaderDepartment', newData.ImpiHeaderDepartment);
-      formData.append('ImpiHeaderDivison', newData.ImpiHeaderDivison);
+      formData.append('ImpiHeaderDepartment', this.publicVariable.selectedProjet.department);
+      formData.append('ImpiHeaderDivison', this.publicVariable.selectedProjet.divison);
       formData.append('ImpiHeaderPanNo', newData.ImpiHeaderPanNo);
       formData.append('ImpiHeaderGstNo', newData.ImpiHeaderGstNo);
       formData.append('PINO', newData.PINO);

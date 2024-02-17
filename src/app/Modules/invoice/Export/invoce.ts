@@ -24,7 +24,7 @@ export class publicVariable {
   tableSizes: number[] = [10, 20, 50, 100];
   searchText: string = '';
   Subscription: Subscription = new Subscription();
-  selectedEmployee: any;
+  selectedProjet: any;
   userData:any;
   projectList:projectModel[] = [];
   listData:any[] = [];

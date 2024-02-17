@@ -28,7 +28,8 @@
           <div class="form-group">
             <label for="projectCode">Project Code</label>
             <ng-select [items]="publicVariable.projectList" bindLabel="projectCode" bindValue="projectCode"
-              placeholder="Select in Project Code" formControlName="ImpiHeaderProjectCode">
+              placeholder="Select in Project Code" formControlName="ImpiHeaderProjectCode"
+              (change)="onSelectProject()">
             </ng-select>
             <div *ngIf="shouldShowError('ImpiHeaderProjectCode','required')" class="text-danger">This field is required</div>
 
