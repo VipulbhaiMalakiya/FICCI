@@ -61,7 +61,7 @@ export class InvoiceStatusComponent implements OnInit {
       "Address": x?.impiHeaderCustomerAddress,
       'Customer  GST Number': x?.impiHeaderCustomerGstNo || '',
       'Contact Person': x?.impiHeaderCustomerContactPerson || '',
-      'Phone No':x?.impiHeaderCustomerPhoneNo || '',
+      'Phone No': x?.impiHeaderCustomerPhoneNo || '',
       "Email ID": x?.impiHeaderCustomerEmailId || '',
       Amount: x?.impiHeaderTotalInvoiceAmount != null ? (x.impiHeaderTotalInvoiceAmount).toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '',
       Status: '',
@@ -71,7 +71,9 @@ export class InvoiceStatusComponent implements OnInit {
 
     const headers = [
       'PO No.', 'PO Date', 'Department', 'Divison', 'Category', 'PAN No', 'GST No',
-      'Vendor Name', 'Address', 'State', 'City', 'Pincode', 'Customer  GST Number', 'Contact Person','Phone No', 'Amount', 'Status', 'City', 'Approver', 'Update Date', 'State'
+      'Vendor Name', 'Address', 'State', 'City', 'Pincode', 'Customer  GST Number',
+      'Contact Person', 'Phone No', 'Amount', 'Status', 'Approver',
+      'Update Date'
     ];
     this.appService.exportAsExcelFile(exportData, 'PI Invoice Status', headers);
   }
