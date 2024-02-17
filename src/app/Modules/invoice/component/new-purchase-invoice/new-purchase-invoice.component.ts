@@ -294,6 +294,8 @@ export class NewPurchaseInvoiceComponent implements OnInit {
 
   onSubmit(): void {
 
+    console.log(this.publicVariable.dataForm.value.items);
+
     if (this.publicVariable.dataForm.valid) {
       const newData = this.publicVariable.dataForm.value;
       const isUpdate = !!newData.headerid;
@@ -317,13 +319,31 @@ export class NewPurchaseInvoiceComponent implements OnInit {
       formData.append('ImpiHeaderCustomerContactPerson', newData.ImpiHeaderCustomerContactPerson);
       formData.append('ImpiHeaderCustomerEmailId', newData.ImpiHeaderCustomerEmailId);
       formData.append('ImpiHeaderCustomerPhoneNo', newData.ImpiHeaderCustomerPhoneNo);
-      formData.append('lineItem_Requests', newData.items);
       formData.append('ImpiHeaderPaymentTerms', newData.ImpiHeaderPaymentTerms);
       formData.append('ImpiHeaderRemarks', newData.ImpiHeaderRemarks);
       formData.append('IsDraft', newData.IsDraft);
       formData.append('ImpiHeaderTotalInvoiceAmount', String(this.calculateTotalAmount()));
       formData.append('ImpiHeaderCustomerCode', 'dummy');
       formData.append('ImpiHeaderCreatedBy', 'dummy');
+      for (let i = 0; i < newData.items.length; i++) {
+        const item = newData.items[i];
+        formData.append(`lineItem_Requests[${i}].impiLineDescription`, item.impiLineDescription);
+        formData.append(`lineItem_Requests[${i}].impiLineQuantity`, item.impiLineQuantity);
+        formData.append(`lineItem_Requests[${i}].impiLineDiscount`, item.impiLineDiscount);
+        formData.append(`lineItem_Requests[${i}].impiLineUnitPrice`, item.impiLineUnitPrice);
+
+        // Calculate the amount here
+        const quantity = parseFloat(item.impiLineQuantity);
+        const unitPrice = parseFloat(item.impiLineUnitPrice);
+        const discount = parseFloat(item.impiLineDiscount);
+
+        const calculateAmount = quantity * unitPrice * (1 - (discount / 100));
+        console.log('Calculated Amount for item', i, ':', calculateAmount);
+
+        // Append the calculated amount to the FormData object
+        formData.append(`lineItem_Requests[${i}].impiLineAmount`, calculateAmount.toString());
+    }
+
 
       // Check if ImpiHeaderInvoiceType is Tax Invoice, then include PINO
       if (newData.ImpiHeaderInvoiceType === 'Tax Invoice') {
