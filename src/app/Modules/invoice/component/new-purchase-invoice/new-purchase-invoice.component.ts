@@ -42,8 +42,8 @@ export class NewPurchaseInvoiceComponent implements OnInit {
       ImpiHeaderCustomerName: [null, [Validators.required]],
       ImpiHeaderCustomerCode: [''], //new filed
       ImpiHeaderCustomerAddress: ['', [Validators.required]],
-      ImpiHeaderCustomerState: ['', [Validators.required]],
-      ImpiHeaderCustomerCity: ['', [Validators.required]],
+      ImpiHeaderCustomerState: [null, [Validators.required]],
+      ImpiHeaderCustomerCity: [null, [Validators.required]],
       ImpiHeaderCustomerPinCode: ['', [Validators.required, Validators.pattern(/^\d{6}$/)]],
       ImpiHeaderCustomerGstNo: ['', [Validators.required, gstValidator()]],
       ImpiHeaderCustomerContactPerson: ['', [Validators.required]],
@@ -105,21 +105,23 @@ export class NewPurchaseInvoiceComponent implements OnInit {
 
     this.publicVariable.Subscription.add(subscription);
   }
-  onSelectCustomer():void{
+  onSelectCustomer(): void {
     const selectedId = this.publicVariable.dataForm.get('ImpiHeaderCustomerName')?.value;
     if (selectedId) {
       this.publicVariable.selectCustomer = this.publicVariable.customerStatusList.find(customer => customer.customerName == selectedId);
-      console.log(this.publicVariable.selectCustomer);
+      this.onSelectState(this.publicVariable.selectCustomer.country);
+      this.onSelectCity(this.publicVariable.selectCustomer.state);
 
       if (this.publicVariable.selectCustomer) {
         this.publicVariable.dataForm.patchValue({
           ImpiHeaderCustomerAddress: this.publicVariable.selectCustomer.address,
           ImpiHeaderCustomerPinCode: this.publicVariable.selectCustomer.pincode,
-          ImpiHeaderCustomerGstNo:this.publicVariable.selectCustomer.gstNumber,
-          ImpiHeaderCustomerContactPerson:this.publicVariable.selectCustomer.contact,
-          ImpiHeaderCustomerEmailId:this.publicVariable.selectCustomer.email,
-          ImpiHeaderCustomerPhoneNo:this.publicVariable.selectCustomer.phoneNumber,
-
+          ImpiHeaderCustomerGstNo: this.publicVariable.selectCustomer.gstNumber,
+          ImpiHeaderCustomerContactPerson: this.publicVariable.selectCustomer.contact,
+          ImpiHeaderCustomerEmailId: this.publicVariable.selectCustomer.email,
+          ImpiHeaderCustomerPhoneNo: this.publicVariable.selectCustomer.phoneNumber,
+          ImpiHeaderCustomerState: this.publicVariable.selectCustomer.state.stateName,
+          ImpiHeaderCustomerCity: this.publicVariable.selectCustomer.city.cityName,
         });
       }
     } else {
@@ -127,11 +129,55 @@ export class NewPurchaseInvoiceComponent implements OnInit {
         ImpiHeaderCustomerAddress: null,
         ImpiHeaderCustomerPinCode: null,
         ImpiHeaderCustomerGstNo: null,
-        ImpiHeaderCustomerContactPerson:null,
-        ImpiHeaderCustomerEmailId:null,
-        ImpiHeaderCustomerPhoneNo:null
+        ImpiHeaderCustomerContactPerson: null,
+        ImpiHeaderCustomerEmailId: null,
+        ImpiHeaderCustomerPhoneNo: null,
+        ImpiHeaderCustomerState: null,
+        ImpiHeaderCustomerCity: null
+
       });
     }
+  }
+
+  onSelectState(event: any) {
+    const selectedCountry = event;
+    const countryId = selectedCountry ? selectedCountry.countryId : null;
+    try {
+      const subscription = this.CAPI.getStateList(countryId).subscribe({
+        next: (response: any) => {
+          this.publicVariable.stateList = response.data;
+        },
+        error: (error) => {
+          console.error('Error loading project list:', error);
+        }
+      });
+
+      this.publicVariable.Subscription.add(subscription);
+    } catch (error) {
+      console.error('Error loading project list:', error);
+    }
+
+
+  }
+  onSelectCity(event: any) {
+    const selectedState = event;
+    const stateId = selectedState ? selectedState.stateId : null;
+    try {
+      const subscription = this.CAPI.getCityList(stateId).subscribe({
+        next: (response: any) => {
+          this.publicVariable.cityList = response.data;
+        },
+        error: (error) => {
+          console.error('Error loading project list:', error);
+        }
+      });
+
+      this.publicVariable.Subscription.add(subscription);
+    } catch (error) {
+      console.error('Error loading project list:', error);
+    }
+
+
   }
   onSelectProject() {
     const selectedId = this.publicVariable.dataForm.get('ImpiHeaderProjectCode')?.value;
@@ -217,10 +263,10 @@ export class NewPurchaseInvoiceComponent implements OnInit {
   onFileSelected(event: any) {
     const selectedFile = event.target.files[0];
     const allowedTypes = ['application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', // .xlsx
-                          'application/vnd.ms-excel', // .xls
-                          'application/msword', // .doc
-                          'text/csv', // .csv
-                          'application/pdf']; // .pdf
+      'application/vnd.ms-excel', // .xls
+      'application/msword', // .doc
+      'text/csv', // .csv
+      'application/pdf']; // .pdf
     const maxSize = 5 * 1024 * 1024; // 5MB in bytes
 
     if (!selectedFile) {
@@ -252,7 +298,6 @@ export class NewPurchaseInvoiceComponent implements OnInit {
       const newData = this.publicVariable.dataForm.value;
       const isUpdate = !!newData.headerid;
       const formData = new FormData();
-
       this.publicVariable.selectedProjet = this.publicVariable.projectList.find(project => project.projectCode == newData.ImpiHeaderProjectCode);
       formData.append('ImpiHeaderAttachment', this.ImpiHeaderAttachment);
       formData.append('isupdate', String(isUpdate));

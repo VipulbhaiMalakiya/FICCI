@@ -100,8 +100,8 @@
           <div class="form-group">
             <label for="CustomerName">Customer Name</label>
             <div class="flex-field">
-              <ng-select [items]="publicVariable.customerStatusList" class="w-100" bindLabel="customerName" bindValue="customerName"
-                placeholder="Select customer " formControlName="ImpiHeaderCustomerName"
+              <ng-select [items]="publicVariable.customerStatusList" class="w-100" bindLabel="customerName"
+                bindValue="customerName" placeholder="Select customer " formControlName="ImpiHeaderCustomerName"
                 (change)="onSelectCustomer()">
               </ng-select>
               <div class="add-btn"><a routerLink="/customer/new">+</a></div>
@@ -124,10 +124,9 @@
         <div class="col-md-4 col-sm-6">
           <div class="form-group">
             <label for="state">State</label>
-            <select class="form-select" formControlName="ImpiHeaderCustomerState">
-              <option value="">Select State</option>
-              <option value="haryana">Haryana</option>
-            </select>
+            <ng-select [items]="publicVariable.stateList" bindLabel="stateName" bindValue="stateName"
+              placeholder="Select " formControlName="ImpiHeaderCustomerState" (change)="onSelectCity($event)">
+            </ng-select>
             <div *ngIf="shouldShowError('ImpiHeaderCustomerState','required')" class="text-danger">This field is
               required</div>
 
@@ -136,10 +135,9 @@
         <div class="col-md-4 col-sm-6">
           <div class="form-group">
             <label for="city">City</label>
-            <select class="form-select" formControlName="ImpiHeaderCustomerCity">
-              <option value="">Select City</option>
-              <option value="gurugram">gurugram</option>
-            </select>
+            <ng-select [items]="publicVariable.cityList" bindLabel="cityName" bindValue="cityName"
+            placeholder="Select" formControlName="ImpiHeaderCustomerCity" >
+          </ng-select>
             <div *ngIf="shouldShowError('ImpiHeaderCustomerCity','required')" class="text-danger">This field is required
             </div>
 
