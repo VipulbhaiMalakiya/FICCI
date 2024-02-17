@@ -1,140 +1,153 @@
 <app-loading *ngIf="publicVariable.isProcess"></app-loading>
 <div class="inner-content">
-  <h3 class="content-title">Configuration List</h3>
-  <div class="mastersform-sec">
-    <form [formGroup]="publicVariable.dataForm" (ngSubmit)="onSubmit()">
-      <div class="row">
-        <div class="col-md-2 col-sm-6">
-          <div class="form-group">
-            <label for="c_Code">Code</label>
-            <input type="text" id="c_Code" class="form-control" formControlName="c_Code" placeholder="enter code" />
-            <div *ngIf="shouldShowError('c_Code','required')" class="text-danger">Please enter the Code.</div>
-            <div *ngIf="shouldShowError('c_Code','minlength')" class="text-danger">Code must be at least 3 characters
-              long.</div>
-            <div *ngIf="shouldShowError('c_Code','maxlength')" class="text-danger">Code cannot be more than 10
-              characters long.</div>
-            <div *ngIf="shouldShowError('c_Code','alphanumeric')" class="text-danger">Code can only contain letters and
-              numbers.</div>
-          </div>
-        </div>
-        <div class="col-md-3 col-sm-6">
-          <div class="form-group">
-            <label for="c_Value">Value</label>
-            <input type="text" id="c_Value" class="form-control" formControlName="c_Value" placeholder="enter Value" />
-            <div *ngIf="shouldShowError('c_Value','required')" class="text-danger">Please enter Value.</div>
-            <div *ngIf="shouldShowError('c_Value','minlength')" class="text-danger">Value must be at least 5 characters
-              long.</div>
-            <div *ngIf="shouldShowError('c_Value','maxlength')" class="text-danger"> Value cannot be more than 20
-              characters long.</div>
-            <div *ngIf="shouldShowError('c_Value','alphanumericWithSpacesValidator')" class="text-danger">Value can only
-              contain letters and numbers.</div>
-          </div>
-        </div>
-        <div class="col-md-3 col-sm-6">
-          <div class="form-group">
-            <label>Category</label>
-            <ng-select [items]="publicVariable.categoryList" formControlName="categoryID" bindLabel="category_Name"
-              bindValue="id" placeholder="Select Category">
-              <ng-template nsSelectPlaceholder>Select Category</ng-template>
-              <ng-template ng-option-tmp let-item="item">
-                {{ item.category_Name | titlecase }}
-              </ng-template>
-            </ng-select>
-            <div *ngIf="shouldShowError('categoryID','required')" class="text-danger">Please Select the Category</div>
-          </div>
-        </div>
-        <div class="col-md-2 col-sm-6">
-          <div class="form-group">
-            <label for="isActive">Active</label>
-            <select id="isActive" formControlName="isActive" class="form-select">
-              <option [ngValue]="true">Yes</option>
-              <option [ngValue]="false">No</option>
+    <h3 class="content-title">Configuration List</h3>
+    <div class="mastersform-sec">
+        <form [formGroup]="publicVariable.dataForm" (ngSubmit)="onSubmit()">
+            <div class="row">
+                <div class="col-md-2 col-sm-6">
+                    <div class="form-group">
+                        <label for="c_Code">Code</label>
+                        <input type="text" id="c_Code" class="form-control" formControlName="c_Code"
+                            placeholder="enter code" />
+                        <div *ngIf="shouldShowError('c_Code','required')" class="text-danger">Please enter the Code.
+                        </div>
+                        <div *ngIf="shouldShowError('c_Code','minlength')" class="text-danger">Code must be at least 3
+                            characters
+                            long.</div>
+                        <div *ngIf="shouldShowError('c_Code','maxlength')" class="text-danger">Code cannot be more than
+                            10
+                            characters long.</div>
+                        <div *ngIf="shouldShowError('c_Code','alphanumeric')" class="text-danger">Code can only contain
+                            letters and
+                            numbers.</div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    <div class="form-group">
+                        <label for="c_Value">Value</label>
+                        <input type="text" id="c_Value" class="form-control" formControlName="c_Value"
+                            placeholder="enter Value" />
+                        <div *ngIf="shouldShowError('c_Value','required')" class="text-danger">Please enter Value.</div>
+                        <div *ngIf="shouldShowError('c_Value','minlength')" class="text-danger">Value must be at least 5
+                            characters
+                            long.</div>
+                        <div *ngIf="shouldShowError('c_Value','maxlength')" class="text-danger"> Value cannot be more
+                            than 20
+                            characters long.</div>
+                        <div *ngIf="shouldShowError('c_Value','alphanumericWithSpacesValidator')" class="text-danger">
+                            Value can only
+                            contain letters and numbers.</div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    <div class="form-group">
+                        <label>Category</label>
+                        <ng-select [items]="publicVariable.categoryList" formControlName="categoryID"
+                            bindLabel="category_Name" bindValue="id" placeholder="Select Category">
+                            <ng-template nsSelectPlaceholder>Select Category</ng-template>
+                            <ng-template ng-option-tmp let-item="item">
+                                {{ item.category_Name | titlecase }}
+                            </ng-template>
+                        </ng-select>
+                        <div *ngIf="shouldShowError('categoryID','required')" class="text-danger">Please Select the
+                            Category</div>
+                    </div>
+                </div>
+                <div class="col-md-2 col-sm-6">
+                    <div class="form-group">
+                        <label for="isActive">Active</label>
+                        <select id="isActive" formControlName="isActive" class="form-select">
+                            <option [ngValue]="true">Yes</option>
+                            <option [ngValue]="false">No</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-md-2 text-end">
+                    <div class="form-group mb-0">
+                        <label>&nbsp;</label>
+                        <button type="submit" class="common-btn">{{ publicVariable.isEdit ? 'Update' : 'Save'
+                            }}</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+    </div>
+    <div class="page-btns-col" *ngIf="publicVariable.data && publicVariable.data.length > 0">
+        <div class="tblsort">
+            <label class="col-form-label">Show</label>
+            <select class="form-select" id="itemsPerPageSelect" [(ngModel)]="publicVariable.tableSize"
+                (change)="onTableSizeChange($event)">
+                <option *ngFor="let size of publicVariable.tableSizes" [value]="size">{{ size }}</option>
             </select>
-          </div>
+        </div>
+        <div class="dt-buttons">
+            <button class="gray-btns" type="button" (click)="onDownload()"><img src="../assets/images/excel-icon.png"
+                    alt=""></button>
         </div>
 
-        <div class="col-md-2 text-end">
-          <div class="form-group mb-0">
-            <label>&nbsp;</label>
-            <button type="submit" class="common-btn">{{ publicVariable.isEdit ? 'Update' : 'Save' }}</button>
-          </div>
+        <!-- Example single danger button -->
+        <div class="topbr-btns">
+            <div class="btn-group">
+                <div class="table-search"><input type="text" class="form-control"
+                        [(ngModel)]="publicVariable.searchText" name="name" id="name" placeholder="Search here"></div>
+            </div>
         </div>
-      </div>
-    </form>
-
-  </div>
-  <div class="page-btns-col" *ngIf="publicVariable.data && publicVariable.data.length > 0">
-    <div class="tblsort">
-      <label class="col-form-label">Show</label>
-      <select class="form-select" id="itemsPerPageSelect" [(ngModel)]="publicVariable.tableSize"
-        (change)="onTableSizeChange($event)">
-        <option *ngFor="let size of publicVariable.tableSizes" [value]="size">{{ size }}</option>
-      </select>
     </div>
-    <div class="dt-buttons">
-      <button class="gray-btns" type="button" (click)="onDownload()"><img src="../assets/images/excel-icon.png"
-          alt=""></button>
-    </div>
-
-    <!-- Example single danger button -->
-    <div class="topbr-btns">
-      <div class="btn-group">
-        <div class="table-search"><input type="text" class="form-control" [(ngModel)]="publicVariable.searchText"
-            name="name" id="name" placeholder="Search here"></div>
-      </div>
-    </div>
-  </div>
-  <div class="inner-middle-content">
-    <div class="dasboard-table">
-      <div class="table-responsive">
-        <ng-container *ngIf="publicVariable.data && publicVariable.data.length > 0">
-          <table class="table">
-            <thead>
-              <tr>
-                <th>#</th>
-                <th>Code</th>
-                <th>Value</th>
-                <th>Category</th>
-                <th>Active</th>
-                <th class="action-cl">Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr
-                *ngFor="let item of publicVariable.data | searchFilter: publicVariable.searchText | paginate: {itemsPerPage: publicVariable.tableSize, currentPage: publicVariable.page, totalItems: publicVariable.count}; let i = index; trackBy: utilityService.trackById">
-                <td>{{i+1}}</td>
-                <td>{{ item.c_Code }}</td>
-                <td>{{ item.c_Value | titlecase }}</td>
-                <td>{{ item.category_Name | titlecase }}</td>
-                <td [ngClass]="{'text-success': item.isActive, 'text-danger': !item.isActive}">
-                  <span class="status">•</span> {{ item.isActive ? 'Yes' : 'No' }}
-                </td>
-                <td>
-                  <span class="table-btns">
-                    <a (click)="onEdit(item)"><img src="../assets/images/edit-icon.svg" alt=""></a>
-                    <a (click)="onDelete(item.c_ID)"><img src="../assets/images/delete-icon.svg" alt=""></a>
-                  </span>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </ng-container>
-        <div *ngIf="!publicVariable.data || publicVariable.data.length === 0">
-          <p>No data found.</p>
+    <div class="inner-middle-content">
+        <div class="dasboard-table">
+            <div class="table-responsive">
+                <ng-container *ngIf="publicVariable.data && publicVariable.data.length > 0">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Code</th>
+                                <th>Value</th>
+                                <th>Category</th>
+                                <th>Active</th>
+                                <th class="action-cl">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr
+                                *ngFor="let item of publicVariable.data | searchFilter: publicVariable.searchText | paginate: {itemsPerPage: publicVariable.tableSize, currentPage: publicVariable.page, totalItems: publicVariable.count}; let i = index; trackBy: utilityService.trackById">
+                                <td>{{i+1}}</td>
+                                <td>{{ item.c_Code }}</td>
+                                <td>{{ item.c_Value | titlecase }}</td>
+                                <td>{{ item.category_Name | titlecase }}</td>
+                                <td [ngClass]="{'text-success': item.isActive, 'text-danger': !item.isActive}">
+                                    <span class="status">•</span> {{ item.isActive ? 'Yes' : 'No' }}
+                                </td>
+                                <td>
+                                    <span class="table-btns">
+                                        <a (click)="onEdit(item)"><img src="../assets/images/edit-icon.svg" alt=""></a>
+                                        <a (click)="onDelete(item.c_ID)"><img src="../assets/images/delete-icon.svg"
+                                                alt=""></a>
+                                    </span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </ng-container>
+                <div *ngIf="!publicVariable.data || publicVariable.data.length === 0">
+                    <p>No data found.</p>
+                </div>
+                <div class="text-center"
+                    *ngIf="(publicVariable.data | searchFilter: publicVariable.searchText).length === 0 && publicVariable.data.length > 0">
+                    <strong class="text-danger">No results found.</strong>
+                </div>
+            </div>
+            <div class="clearfix">
+                <div class="hint-text">Showing <b>{{this.publicVariable.tableSize}}</b> out of <b>{{
+                        publicVariable.count }}</b>
+                    entries</div>
+                <pagination-controls previousLabel="Prev" class="pagination"
+                    *ngIf="publicVariable.data && publicVariable.data.length > 0" nextLabel="Next"
+                    (pageChange)="onTableDataChange($event)">
+                </pagination-controls>
+            </div>
         </div>
-        <div class="text-center"
-          *ngIf="(publicVariable.data | searchFilter: publicVariable.searchText).length === 0 && publicVariable.data.length > 0">
-          <strong class="text-danger">No results found.</strong>
-        </div>
-      </div>
-      <div class="clearfix">
-        <div class="hint-text">Showing <b>{{this.publicVariable.tableSize}}</b> out of <b>{{ publicVariable.count }}</b>
-          entries</div>
-        <pagination-controls previousLabel="Prev" class="pagination"
-          *ngIf="publicVariable.data && publicVariable.data.length > 0" nextLabel="Next"
-          (pageChange)="onTableDataChange($event)">
-        </pagination-controls>
-      </div>
     </div>
-  </div>
 </div>
