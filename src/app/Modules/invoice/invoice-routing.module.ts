@@ -15,6 +15,7 @@ const routes: Routes = [
     { path: 'approval', component: ApprovalInboxComponent },
     { path: 'accounts', component: AccountsInboxComponent },
     { path: 'status/view/:id', component: ViewInvoiceStatusComponent },
+    { path: 'status/edit/:id', component: NewPurchaseInvoiceComponent },
     { path: 'approval/view/:id', component: ViewPiApprovalComponent },
     { path: 'accounts/view/:id', component: ViewPiAccountsInboxComponent }
 ];

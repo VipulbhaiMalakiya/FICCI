@@ -79,6 +79,13 @@ export class InvoiceStatusComponent implements OnInit {
 
     }
 
+    onEdit(data: invoiceStatusModule): void {
+        if (data.headerId) {
+            this.router.navigate(['invoice/status/edit', data.headerId], { state: { data: data } });
+        } else {
+            console.error('ID is undefined or null');
+        }
+    }
     onDownload() {
         const exportData = this.publicVariable.invoiceStatuslistData.map((x) => ({
             "PO No.": x?.impiHeaderProjectCode || '',
