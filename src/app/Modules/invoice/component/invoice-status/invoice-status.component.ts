@@ -55,7 +55,7 @@ export class InvoiceStatusComponent implements OnInit {
         }
     }
 
-    onDelete(id: number) {
+    onDelete(id: any) {
         const modalRef = this.modalService.open(ConfirmationDialogModalComponent, { size: "sm", centered: true, backdrop: "static" });
         var componentInstance = modalRef.componentInstance as ConfirmationDialogModalComponent;
         componentInstance.message = "Do you really want to delete these records? This process cannot be undone ?";
