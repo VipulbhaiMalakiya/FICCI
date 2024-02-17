@@ -6,40 +6,40 @@ import { addUpdateEmployees } from '../import';
 import { addUpdateConfiguration } from '../../configuration-list/import';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class UserService {
 
-  private RolesList = `${environment.apiURL}DropDown/GetRole` ;
-  private EmployeeList = `${environment.apiURL}DropDown/GetEmployeeList` ;
-  private apiUrl = `${environment.apiURL}FICCI_User_Master/0` ;
-  private deleteapiUrl = `${environment.apiURL}FICCI_User_Master` ;
-  private postAPIURL = `${environment.apiURL}FICCI_User_Master` ;
-  private  retry:any =  retry(1); // Retry the request up to 2 times in case of failure
+    private RolesList = `${environment.apiURL}DropDown/GetRole`;
+    private EmployeeList = `${environment.apiURL}DropDown/GetEmployeeList`;
+    private apiUrl = `${environment.apiURL}FICCI_User_Master/0`;
+    private deleteapiUrl = `${environment.apiURL}FICCI_User_Master`;
+    private postAPIURL = `${environment.apiURL}FICCI_User_Master`;
+    private retry: any = retry(1); // Retry the request up to 2 times in case of failure
 
-  constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient) { }
 
-  public getRoles(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.RolesList}`).pipe(this.retry);
-  }
-  getUserById(userId: number): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}?IMEM_ID=${userId}`);
-  }
-  getEmployee(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.EmployeeList}`).pipe(this.retry);
-  }
+    public getRoles(): Observable<any[]> {
+        return this.http.get<any[]>(`${this.RolesList}`).pipe(this.retry);
+    }
+    getUserById(userId: number): Observable<any> {
+        return this.http.get<any>(`${this.apiUrl}?IMEM_ID=${userId}`);
+    }
+    getEmployee(): Observable<any[]> {
+        return this.http.get<any[]>(`${this.EmployeeList}`).pipe(this.retry);
+    }
 
-  getUsers(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}`).pipe(this.retry);
-  }
+    getUsers(): Observable<any[]> {
+        return this.http.get<any[]>(`${this.apiUrl}`).pipe(this.retry);
+    }
 
 
-  create(data: addUpdateEmployees): Observable<addUpdateConfiguration> {
-    return this.http.post<addUpdateConfiguration>(`${this.postAPIURL}`, data).pipe(this.retry);
-  }
+    create(data: addUpdateEmployees): Observable<addUpdateConfiguration> {
+        return this.http.post<addUpdateConfiguration>(`${this.postAPIURL}`, data).pipe(this.retry);
+    }
 
-  delete(id: number): Observable<any> {
-    return this.http.delete<any>(`${this.deleteapiUrl}/${id}`).pipe(this.retry);
-  }
+    delete(id: number): Observable<any> {
+        return this.http.delete<any>(`${this.deleteapiUrl}/${id}`).pipe(this.retry);
+    }
 
 }

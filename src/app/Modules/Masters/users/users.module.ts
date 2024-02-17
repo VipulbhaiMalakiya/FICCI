@@ -11,19 +11,19 @@ import { NgSelectModule } from '@ng-select/ng-select';
 
 
 @NgModule({
-  declarations: [
-    UsersComponent,
-    AddComponent,
-    SearchFilterPipe
-  ],
-  imports: [
-    CommonModule,
-    UsersRoutingModule,
-    ReactiveFormsModule,
-    SharedModule,
-    FormsModule,
-    NgxPaginationModule,
-    NgSelectModule
-  ]
+    declarations: [
+        UsersComponent,
+        AddComponent,
+        SearchFilterPipe
+    ],
+    imports: [
+        CommonModule,
+        UsersRoutingModule,
+        ReactiveFormsModule,
+        SharedModule,
+        FormsModule,
+        NgxPaginationModule,
+        NgSelectModule
+    ]
 })
 export class UsersModule { }

@@ -5,7 +5,7 @@ import { ConfigurationListComponent } from './pages/configuration-list/configura
 const routes: Routes = [{ path: '', component: ConfigurationListComponent }];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+    imports: [RouterModule.forChild(routes)],
+    exports: [RouterModule]
 })
 export class ConfigurationListRoutingModule { }

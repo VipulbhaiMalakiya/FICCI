@@ -21,24 +21,24 @@ export * from '@ng-bootstrap/ng-bootstrap';
 export * from 'src/app/Modules/shared/components/confirmation-dialog-modal/confirmation-dialog-modal.component';
 
 export const DEFAULT_CATEGORY_LIST: Category[] = [
-  { id: 1, category_Name: 'CUSTOMER TYPE' },
-  { id: 2, category_Name: 'USER ROLE' },
-  { id: 3, category_Name: 'MAIL TEMPLATE' },
-  { id: 4, category_Name: 'INVOICE TYPE' }
+    { id: 1, category_Name: 'CUSTOMER TYPE' },
+    { id: 2, category_Name: 'USER ROLE' },
+    { id: 3, category_Name: 'MAIL TEMPLATE' },
+    { id: 4, category_Name: 'INVOICE TYPE' }
 ];
 
 
 export class publicVariable {
-  dataForm!: FormGroup;
-  isEdit: boolean = false;
-  categoryList: Category[] = [];
-  data: Configuration[] = [];
-  page: number = 1;
-  isProcess:boolean = true;
-  count: number = 0;
-  tableSize: number = 10;
-  tableSizes: number[] = [10, 20, 50, 100];
-  searchText: string = '';
-  configurationSubscription: Subscription = new Subscription();
+    dataForm!: FormGroup;
+    isEdit: boolean = false;
+    categoryList: Category[] = [];
+    data: Configuration[] = [];
+    page: number = 1;
+    isProcess: boolean = true;
+    count: number = 0;
+    tableSize: number = 10;
+    tableSizes: number[] = [10, 20, 50, 100];
+    searchText: string = '';
+    configurationSubscription: Subscription = new Subscription();
 }
 

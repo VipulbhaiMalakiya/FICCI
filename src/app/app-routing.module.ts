@@ -6,30 +6,30 @@ import { ForbiddenComponent } from './layouts/forbidden/forbidden.component';
 
 
 const routes: Routes = [
-  { path: '', loadChildren: () => import('./Modules/dashboard/dashboard.module').then(m => m.DashboardModule) },
-  {
-    path: '',
-    component: SidebarLayoutComponent,
-    children: [
-      {
-        path: 'masters',
+    { path: '', loadChildren: () => import('./Modules/dashboard/dashboard.module').then(m => m.DashboardModule) },
+    {
+        path: '',
+        component: SidebarLayoutComponent,
         children: [
-          { path: 'configuration-list', loadChildren: () => import('./Modules/Masters/configuration-list/configuration-list.module').then(m => m.ConfigurationListModule) },
-          { path: 'users', loadChildren: () => import('./Modules/Masters/users/users.module').then(m => m.UsersModule) },
+            {
+                path: 'masters',
+                children: [
+                    { path: 'configuration-list', loadChildren: () => import('./Modules/Masters/configuration-list/configuration-list.module').then(m => m.ConfigurationListModule) },
+                    { path: 'users', loadChildren: () => import('./Modules/Masters/users/users.module').then(m => m.UsersModule) },
+                ]
+            },
+            { path: 'dashboard', loadChildren: () => import('./Modules/landing-page/dashboard/dashboard.module').then(m => m.DashboardModule) },
+            { path: 'customer', loadChildren: () => import('./Modules/customers/customers.module').then(m => m.CustomersModule) },
+            { path: 'invoice', loadChildren: () => import('./Modules/invoice/invoice.module').then(m => m.InvoiceModule) },
         ]
-      },
-      { path: 'dashboard', loadChildren: () => import('./Modules/landing-page/dashboard/dashboard.module').then(m => m.DashboardModule) },
-      { path: 'customer', loadChildren: () => import('./Modules/customers/customers.module').then(m => m.CustomersModule) },
-      { path: 'invoice', loadChildren: () => import('./Modules/invoice/invoice.module').then(m => m.InvoiceModule) },
-    ]
-  },
-  { path: '404', component: NotFoundComponent },
-  { path: '403', component: ForbiddenComponent },
-  { path: '**', redirectTo: '/404' },
+    },
+    { path: '404', component: NotFoundComponent },
+    { path: '403', component: ForbiddenComponent },
+    { path: '**', redirectTo: '/404' },
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+    imports: [RouterModule.forRoot(routes)],
+    exports: [RouterModule]
 })
 export class AppRoutingModule { }
