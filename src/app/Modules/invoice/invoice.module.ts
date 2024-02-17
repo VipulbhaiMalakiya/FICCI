@@ -18,25 +18,25 @@ import { SearchFilterPipe } from './Pipe/searchFilter';
 
 
 @NgModule({
-  declarations: [
-    InvoiceStatusComponent,
-    NewPurchaseInvoiceComponent,
-    ApprovalInboxComponent,
-    AccountsInboxComponent,
-    ViewInvoiceStatusComponent,
-    NumberToWordsPipe,
-    ViewPiApprovalComponent,
-    ViewPiAccountsInboxComponent,
-    SearchFilterPipe
-  ],
-  imports: [
-    CommonModule,
-    InvoiceRoutingModule,
-    ReactiveFormsModule,
-    FormsModule,
-    NgSelectModule,
-    SharedModule,
-    NgxPaginationModule
-  ]
+    declarations: [
+        InvoiceStatusComponent,
+        NewPurchaseInvoiceComponent,
+        ApprovalInboxComponent,
+        AccountsInboxComponent,
+        ViewInvoiceStatusComponent,
+        NumberToWordsPipe,
+        ViewPiApprovalComponent,
+        ViewPiAccountsInboxComponent,
+        SearchFilterPipe
+    ],
+    imports: [
+        CommonModule,
+        InvoiceRoutingModule,
+        ReactiveFormsModule,
+        FormsModule,
+        NgSelectModule,
+        SharedModule,
+        NgxPaginationModule
+    ]
 })
 export class InvoiceModule { }

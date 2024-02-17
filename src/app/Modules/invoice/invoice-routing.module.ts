@@ -9,18 +9,18 @@ import { ViewPiApprovalComponent } from './View/view-pi-approval/view-pi-approva
 import { ViewPiAccountsInboxComponent } from './View/view-pi-accounts-inbox/view-pi-accounts-inbox.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'status', pathMatch: 'full' },
-  { path: 'status', component: InvoiceStatusComponent },
-  { path: 'new', component: NewPurchaseInvoiceComponent },
-  { path: 'approval', component: ApprovalInboxComponent },
-  { path: 'accounts', component: AccountsInboxComponent },
-  { path: 'status/view/:id', component: ViewInvoiceStatusComponent },
-  { path: 'approval/view/:id', component: ViewPiApprovalComponent },
-  { path: 'accounts/view/:id', component: ViewPiAccountsInboxComponent }
+    { path: '', redirectTo: 'status', pathMatch: 'full' },
+    { path: 'status', component: InvoiceStatusComponent },
+    { path: 'new', component: NewPurchaseInvoiceComponent },
+    { path: 'approval', component: ApprovalInboxComponent },
+    { path: 'accounts', component: AccountsInboxComponent },
+    { path: 'status/view/:id', component: ViewInvoiceStatusComponent },
+    { path: 'approval/view/:id', component: ViewPiApprovalComponent },
+    { path: 'accounts/view/:id', component: ViewPiAccountsInboxComponent }
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+    imports: [RouterModule.forChild(routes)],
+    exports: [RouterModule]
 })
 export class InvoiceRoutingModule { }
