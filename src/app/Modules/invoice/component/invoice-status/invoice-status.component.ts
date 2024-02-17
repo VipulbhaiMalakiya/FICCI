@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { AppService, InvoicesService, NgbModal, Router, ToastrService, publicVariable } from '../../Export/invoce';
+import { AppService, InvoicesService, NgbModal, Router, ToastrService, formatDate, publicVariable } from '../../Export/invoce';
 
 @Component({
   selector: 'app-invoice-status',
   templateUrl: './invoice-status.component.html',
   styleUrls: ['./invoice-status.component.css']
 })
-export class InvoiceStatusComponent implements OnInit{
+export class InvoiceStatusComponent implements OnInit {
   publicVariable = new publicVariable();
 
 
@@ -21,7 +21,7 @@ export class InvoiceStatusComponent implements OnInit{
   }
 
   ngOnInit(): void {
-      this.loadPurchaseInvoiceList();
+    this.loadPurchaseInvoiceList();
   }
   loadPurchaseInvoiceList(): void {
     try {
@@ -42,21 +42,24 @@ export class InvoiceStatusComponent implements OnInit{
     }
   }
 
+  toTitleCase(str: string): string {
+    return str.toLowerCase().split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+  }
   onDownload() {
-    // const exportData = this.publicVariable.userlist.map((x) => ({
-    //   "PO No.": x?.imeM_EmpId || '',
-    //   "PO Date": x?.imeM_Name || '',
-    //   Department: x?.imeM_Username || '',
-    //   Category: x?.imeM_Email || '',
-    //   "Vendor Name": x && x.isActive ? 'Yes' : 'No',
-    //   Amount: x?.roleName || '',
-    //   Status: x?.roleName || '',
-    //   Approver: x?.roleName || '',
-     //   "Update Date": x?.roleName || '',
-    // }));
+    const exportData = this.publicVariable.invoiceStatuslistData.map((x) => ({
+      "PO No.": x?.impiHeaderProjectCode || '',
+      "PO Date": x?.impiHeaderSubmittedDate ? formatDate(x.impiHeaderSubmittedDate, 'medium', 'en-IN', 'IST') : '',
+      Department: x?.impiHeaderDepartment ? this.toTitleCase(x.impiHeaderDepartment) : '',
+      Category: x?.impiHeaderInvoiceType ? this.toTitleCase(x.impiHeaderInvoiceType) : '',
+      "Vendor Name": x && x.impiHeaderCustomerName ? this.toTitleCase(x.impiHeaderCustomerName) : '',
+      Amount: x?.impiHeaderTotalInvoiceAmount != null ? (x.impiHeaderTotalInvoiceAmount).toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '',
+      Status: '',
+      Approver: '',
+      "Update Date": x?.impiHeaderModifiedDate ? formatDate(x.impiHeaderModifiedDate, 'medium', 'en-IN', 'IST') : '',
+    }));
 
-    // const headers = ['PO No.','PO Date', 'Department', 'Category','Vendor Name', 'Amount','Status','Approver','Update Date'];
-    // this.appService.exportAsExcelFile(exportData,'Customer Status',headers);
+    const headers = ['PO No.', 'PO Date', 'Department', 'Category', 'Vendor Name', 'Amount', 'Status', 'Approver', 'Update Date'];
+    this.appService.exportAsExcelFile(exportData, 'PI Invoice Status', headers);
   }
 
   onTableDataChange(event: any) {
