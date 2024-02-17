@@ -60,9 +60,8 @@ export class NewCustomerComponent implements OnInit {
 
   patchFormData(data: any): void {
 
-
     this.publicVariable.dataForm.patchValue({
-      customerId: data.customerNo,
+      customerId: data.customerId,
       customerNo: data.customerCode,
       name: data.customerName,
       name2: data.customerLastName,
@@ -173,7 +172,7 @@ export class NewCustomerComponent implements OnInit {
       const newData = this.publicVariable.dataForm.value;
       const isUpdate = !!newData.customerId;
       const newConfig: any = {
-        isUpdate: isUpdate,
+        isupdate: isUpdate,
         customerId: isUpdate ? newData.customerId : undefined,
         customerCode: newData.customerNo,
         customerName: newData.name.trim(),
