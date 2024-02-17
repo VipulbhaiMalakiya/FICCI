@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { CustomersService, FormBuilder, NgbModal, Router, ToastrService, Validators, alphanumericWithSpacesValidator, gstValidator, panValidator, publicVariable } from '../../Export/new-customer';
+import { ActivatedRoute, CustomersService, FormBuilder, NgbModal, Router, ToastrService, Validators, alphanumericWithSpacesValidator, gstValidator, panValidator, publicVariable } from '../../Export/new-customer';
 @Component({
   selector: 'app-new-customer',
   templateUrl: './new-customer.component.html',
@@ -7,13 +7,17 @@ import { CustomersService, FormBuilder, NgbModal, Router, ToastrService, Validat
 })
 export class NewCustomerComponent implements OnInit {
   publicVariable = new publicVariable();
+  customerId?: number;
+  data: any;
+
+
   constructor(private fb: FormBuilder,
     private modalService: NgbModal,
     private toastr: ToastrService,
     private router: Router,
     private cd: ChangeDetectorRef,
-    private API: CustomersService
-
+    private API: CustomersService,
+    private route: ActivatedRoute
   ) {
     this.initializeForm();
   }
@@ -42,31 +46,49 @@ export class NewCustomerComponent implements OnInit {
   ngOnInit(): void {
     this.loadCountryList();
     this.loadGstCustomerType();
+
+    this.route.params.subscribe(params => {
+      this.customerId = +params['id'];
+    });
+
+    if (this.data = history.state.data) {
+      this.onSelectState(this.data.country);
+      this.onSelectCity(this.data.state);
+      this.patchFormData(this.data);
+    }
   }
+
+  patchFormData(data: any): void {
+
+
+    this.publicVariable.dataForm.patchValue({
+      customerId: data.customerNo,
+      customerNo: data.customerCode,
+      name: data.customerName,
+      name2: data.customerLastName,
+      address: data.address,
+      address2: data.address,
+      country: data.country.countryId,
+      state: data.state.stateId,
+      city: data.city.cityId,
+      postCode: data.pincode,
+      GSTRegistrationNo: data.gstNumber,
+      GSTCustomerType: data.gstType.gstTypeId,
+      email: data.email,
+      PrimaryContactNo: data.phoneNumber,
+      contact: data.contact,
+      PANNo: data.pan,
+      isDraft: data.isDraft
+    });
+
+  }
+
 
   loadCountryList(): void {
     try {
       const subscription = this.API.getCountryList().subscribe({
         next: (response: any) => {
           this.publicVariable.countryList = response.data;
-        },
-        error: (error) => {
-          console.error('Error loading project list:', error);
-        }
-      });
-
-      this.publicVariable.Subscription.add(subscription);
-    } catch (error) {
-      console.error('Error loading project list:', error);
-    }
-  }
-
-  loadGstCustomerType(): void {
-    try {
-      const subscription = this.API.getGstCustomerType().subscribe({
-        next: (response: any) => {
-
-          this.publicVariable.customerTypeList = response.data;
         },
         error: (error) => {
           console.error('Error loading project list:', error);
@@ -100,7 +122,6 @@ export class NewCustomerComponent implements OnInit {
 
 
   }
-
   onSelectCity(event: any) {
     const selectedState = event;
     const stateId = selectedState ? selectedState.stateId : null;
@@ -121,6 +142,26 @@ export class NewCustomerComponent implements OnInit {
 
 
   }
+
+  loadGstCustomerType(): void {
+    try {
+      const subscription = this.API.getGstCustomerType().subscribe({
+        next: (response: any) => {
+
+          this.publicVariable.customerTypeList = response.data;
+        },
+        error: (error) => {
+          console.error('Error loading project list:', error);
+        }
+      });
+
+      this.publicVariable.Subscription.add(subscription);
+    } catch (error) {
+      console.error('Error loading project list:', error);
+    }
+  }
+
+
 
 
   onInputChange(event: any) {

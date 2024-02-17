@@ -13,6 +13,7 @@ export { AppService } from 'src/app/services/excel.service';
 export  { ConfirmationDialogModalComponent } from 'src/app/Modules/shared/components/confirmation-dialog-modal/confirmation-dialog-modal.component';
 export { CustomersService } from '../service/customers.service';
 export { customerStatusListModel } from '../interface/customers';
+export { ActivatedRoute } from '@angular/router';
 
 export class publicVariable {
   dataForm!: FormGroup;

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute } from '../../Export/new-customer';
 
 @Component({
   selector: 'app-customer-status',
