@@ -12,7 +12,7 @@ export { ConfirmationDialogModalComponent } from 'src/app/Modules/shared/compone
 export { InvoicesService } from '../service/invoices.service';
 export { CustomersService } from 'src/app/Modules/customers/Export/new-customer';
 export { formatDate } from '@angular/common';
-
+export { ActivatedRoute } from 'src/app/Modules/customers/Export/new-customer';
 export { panValidator } from '../Validation/panValidator';
 export { alphanumericWithSpacesValidator } from '../Validation/alphanumericWithSpacesValidator';
 export { gstValidator } from '../Validation/gstValidator';

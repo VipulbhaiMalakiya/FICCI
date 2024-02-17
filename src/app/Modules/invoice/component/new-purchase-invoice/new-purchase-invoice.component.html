@@ -68,8 +68,7 @@
                         <input type="text" id="PANNo" class="form-control" placeholder="PAN No"
                             formControlName="ImpiHeaderPanNo" />
                         <div *ngIf="shouldShowError('ImpiHeaderPanNo','invalidPAN')" class="text-danger">Please enter a
-                            valid PAN
-                            Number.
+                            valid PAN Number.
                         </div>
                     </div>
                 </div>
@@ -125,8 +124,7 @@
                         <input type="text" id="address" placeholder="Address"
                             formControlName="ImpiHeaderCustomerAddress" class="form-control" />
                         <div *ngIf="shouldShowError('ImpiHeaderCustomerAddress','required')" class="text-danger">This
-                            field is
-                            required</div>
+                            field is required</div>
 
                     </div>
                 </div>
@@ -138,8 +136,7 @@
                             (change)="onSelectCity($event)">
                         </ng-select>
                         <div *ngIf="shouldShowError('ImpiHeaderCustomerState','required')" class="text-danger">This
-                            field is
-                            required</div>
+                            field is required</div>
 
                     </div>
                 </div>
@@ -177,8 +174,7 @@
                         <input type="text" class="form-control" id="GSTNumber" placeholder="GST Number"
                             formControlName="ImpiHeaderCustomerGstNo" />
                         <div *ngIf="shouldShowError('ImpiHeaderCustomerGstNo','invalidGST')" class="text-danger"> Please
-                            enter
-                            a valid GST Registration Number. (05AAACF1282E1Z5)</div>
+                            enter a valid GST Registration Number. (05AAACF1282E1Z5)</div>
                     </div>
                 </div>
 
@@ -188,8 +184,7 @@
                         <input type="text" placeholder="Contact Person" id="ContactPerson"
                             formControlName="ImpiHeaderCustomerContactPerson" class="form-control" />
                         <div *ngIf="shouldShowError('ImpiHeaderCustomerContactPerson','required')" class="text-danger">
-                            This field is
-                            required</div>
+                            This field is  required</div>
 
                     </div>
                 </div>
@@ -199,13 +194,9 @@
                         <label for="EmailID">Email ID</label>
                         <input type="text" placeholder="Email ID" id="EmailID"
                             formControlName="ImpiHeaderCustomerEmailId" class="form-control" />
-                        <div *ngIf="shouldShowError('ImpiHeaderCustomerEmailId','required')" class="text-danger">Email
-                            is required.
+                        <div *ngIf="shouldShowError('ImpiHeaderCustomerEmailId','required')" class="text-danger">Email is required.
                         </div>
-                        <div *ngIf="shouldShowError('ImpiHeaderCustomerEmailId','email')" class="text-danger"> Please
-                            enter a valid
-                            email
-                            address.</div>
+                        <div *ngIf="shouldShowError('ImpiHeaderCustomerEmailId','email')" class="text-danger"> Please  enter a valid email address.</div>
                     </div>
                 </div>
 
@@ -215,11 +206,9 @@
                         <input type="text" class="form-control" id="PhoneNo" (input)="onInputChange($event)"
                             placeholder="Phone No" formControlName="ImpiHeaderCustomerPhoneNo" />
                         <div *ngIf="shouldShowError('ImpiHeaderCustomerPhoneNo','required')" class="text-danger">Phone
-                            number is
-                            required.</div>
+                            number is required.</div>
                         <div *ngIf="shouldShowError('ImpiHeaderCustomerPhoneNo','pattern')" class="text-danger">Invalid
-                            phone
-                            number.</div>
+                            phone  number.</div>
 
                     </div>
                 </div>
@@ -267,9 +256,7 @@
                             <td colspan="2" class="text-end"><b>{{ calculateTotalAmount() | currency: 'INR' }}</b></td>
                         </tr>
                         <tr>
-                            <td colspan="4" class="text-start">Total Amount Receivable In Word: {{
-                                calculateTotalAmount() |
-                                numberToWords }}</td>
+                            <td colspan="4" class="text-start">Total Amount Receivable In Word: {{  calculateTotalAmount() | numberToWords }}</td>
                             <td colspan="2" class="text-end"><b>{{ calculateTotalAmount() | currency: 'INR' }}</b></td>
                         </tr>
                     </tbody>

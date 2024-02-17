@@ -1,208 +1,219 @@
-<div class="inner-content">	
-			
-    <h3 class="content-title">PI Invoice Status</h3>	
-      
-    <div class="mastersform-sec mb-0">
-         <div class="row">
-                    
-          <div class="col-md-4 col-sm-6">
-            <div class="form-group">
-              <label>Project Code</label>  
-              <input type="text" value="C00007" class="form-control" disabled="" readonly="">
-            </div>	  
-          </div>
+<div class="inner-content">
 
-          <div class="col-md-4 col-sm-6">
-            <div class="form-group">
-              <label>Department</label>  
-              <input type="text" value="Dummy data" class="form-control" disabled="" readonly="">
-            </div>	  
-          </div>
-            
-          <div class="col-md-4 col-sm-6">
-            <div class="form-group">
-              <label>Division</label>  
-              <input type="text" value="Dummy data" class="form-control" disabled="" readonly="">
-            </div>	  
-          </div>
-            
-          <div class="col-md-4 col-sm-6">
-            <div class="form-group">
-              <label>PAN No</label>  
-              <input type="text" value="Dummy data" class="form-control" disabled="" readonly="">
-            </div>	  
-          </div>
-            
-          <div class="col-md-4 col-sm-6">
-            <div class="form-group">
-              <label>GST No</label>  
-              <input type="text" value="Dummy data" class="form-control" disabled="" readonly="">
-            </div>	  
-          </div>  
-            
+    <h3 class="content-title">PI Invoice Status</h3>
+
+    <div class="mastersform-sec mb-0">
+        <div class="row">
+
+            <div class="col-md-4 col-sm-6">
+                <div class="form-group">
+                    <label>Project Code</label>
+                    <input type="text" value="{{data.impiHeaderProjectCode}}" class="form-control" disabled=""
+                        readonly="">
+                </div>
+            </div>
+
+            <div class="col-md-4 col-sm-6">
+                <div class="form-group">
+                    <label>Department</label>
+                    <input type="text" value="{{data.impiHeaderDepartment}}" class="form-control" disabled=""
+                        readonly="">
+                </div>
+            </div>
+
+            <div class="col-md-4 col-sm-6">
+                <div class="form-group">
+                    <label>Division</label>
+                    <input type="text" value="{{data.impiHeaderDivison}}" class="form-control" disabled="" readonly="">
+                </div>
+            </div>
+
+            <div class="col-md-4 col-sm-6">
+                <div class="form-group">
+                    <label>PAN No</label>
+                    <input type="text" value="{{data.impiHeaderPanNo}}" class="form-control" disabled="" readonly="">
+                </div>
+            </div>
+
+            <div class="col-md-4 col-sm-6">
+                <div class="form-group">
+                    <label>GST No</label>
+                    <input type="text" value="{{data.impiHeaderGstNo}}" class="form-control" disabled="" readonly="">
+                </div>
+            </div>
+
             <!--show tax-invoice-only
             <div class="col-md-4 col-sm-6">
               <div class="form-group">
-                <label>GST No</label>  
+                <label>GST No</label>
                 <input type="text" value="" class="form-control" required="">
-              </div>	  
+              </div>
             </div>
-            --> 
+            -->
 
         </div>
 
     </div>
-      
-    <div class="pi-pagetitle">Customer Details</div>	
-      
+
+    <div class="pi-pagetitle">Customer Details</div>
+
     <div class="mastersform-sec mb-0">
-         <div class="row">
-                    
-          <div class="col-md-4 col-sm-6">
-            <div class="form-group">
-              <label>Customer Name</label>
-              <input type="text" value="Dummy data" class="form-control" disabled="" readonly="">
-              </div> 
-          </div>
+        <div class="row">
 
-          <div class="col-md-4 col-sm-6">
-            <div class="form-group">
-              <label>Address</label>  
-              <input type="text" value="Dummy data" class="form-control" disabled="" readonly="">
-            </div>	  
-          </div>
-            
-          <div class="col-md-4 col-sm-6">
-            <div class="form-group">
-              <label>City</label>  
-              <input type="text" value="Dummy data" class="form-control" disabled="" readonly="">
-            </div>	  
-          </div>
-            
-          <div class="col-md-4 col-sm-6">
-            <div class="form-group">
-              <label>State</label>  
-              <input type="text" value="Dummy data" class="form-control" disabled="" readonly="">
-            </div>	  
-          </div>
-            
-          <div class="col-md-4 col-sm-6">
-            <div class="form-group">
-              <label>Pincode</label>  
-              <input type="text" value="Dummy data" class="form-control" disabled="" readonly="">
-            </div>	  
-          </div>
-            
-          <div class="col-md-4 col-sm-6">
-            <div class="form-group">
-              <label>GST Number</label>  
-              <input type="text" value="Dummy data" class="form-control" disabled="" readonly="">
-            </div>	  
-          </div>  
-            
-           <div class="col-md-4 col-sm-6">
-            <div class="form-group">
-              <label>Contact Person</label>  
-              <input type="text" value="Dummy data" class="form-control" disabled="" readonly="">
-            </div>	  
-          </div>
-            
-          <div class="col-md-4 col-sm-6">
-            <div class="form-group">
-              <label>Email ID</label>  
-              <input type="text" value="Dummy data" class="form-control" disabled="" readonly="">
-            </div>	  
-          </div>
-            
-          <div class="col-md-4 col-sm-6">
-            <div class="form-group">
-              <label>Phone No.</label>  
-              <input type="text" value="Dummy data" class="form-control" disabled="" readonly="">
-            </div>	  
-          </div> 
+            <div class="col-md-4 col-sm-6">
+                <div class="form-group">
+                    <label>Customer Name</label>
+                    <input type="text" value="{{data.impiHeaderCustomerName}}" class="form-control" disabled=""
+                        readonly="">
+                </div>
+            </div>
+
+            <div class="col-md-4 col-sm-6">
+                <div class="form-group">
+                    <label>Address</label>
+                    <input type="text" value="{{data.impiHeaderCustomerAddress}}" class="form-control" disabled=""
+                        readonly="">
+                </div>
+            </div>
+
+            <div class="col-md-4 col-sm-6">
+                <div class="form-group">
+                    <label>City</label>
+                    <input type="text" value="{{data.impiHeaderCustomerCity}}" class="form-control" disabled=""
+                        readonly="">
+                </div>
+            </div>
+
+            <div class="col-md-4 col-sm-6">
+                <div class="form-group">
+                    <label>State</label>
+                    <input type="text" value="{{data.impiHeaderCustomerState}}" class="form-control" disabled=""
+                        readonly="">
+                </div>
+            </div>
+
+            <div class="col-md-4 col-sm-6">
+                <div class="form-group">
+                    <label>Pincode</label>
+                    <input type="text" value="{{data.impiHeaderCustomerPinCode}}" class="form-control" disabled=""
+                        readonly="">
+                </div>
+            </div>
+
+            <div class="col-md-4 col-sm-6">
+                <div class="form-group">
+                    <label>GST Number</label>
+                    <input type="text" value="{{data.impiHeaderCustomerGstNo}}" class="form-control" disabled=""
+                        readonly="">
+                </div>
+            </div>
+
+            <div class="col-md-4 col-sm-6">
+                <div class="form-group">
+                    <label>Contact Person</label>
+                    <input type="text" value="{{data.impiHeaderCustomerContactPerson}}" class="form-control" disabled=""
+                        readonly="">
+                </div>
+            </div>
+
+            <div class="col-md-4 col-sm-6">
+                <div class="form-group">
+                    <label>Email ID</label>
+                    <input type="text" value="{{data.impiHeaderCustomerEmailId}}" class="form-control" disabled=""
+                        readonly="">
+                </div>
+            </div>
+
+            <div class="col-md-4 col-sm-6">
+                <div class="form-group">
+                    <label>Phone No.</label>
+                    <input type="text" value="{{data.impiHeaderCustomerPhoneNo}}" class="form-control" disabled=""
+                        readonly="">
+                </div>
+            </div>
 
         </div>
 
     </div>
-      
+
     <div class="dasboard-table pi-table">
-                   
-    <div class="table-responsive">
 
-      <table class="table table-bordered">
-  <thead>
-      <tr>
-          <th width="38%">Particulars</th>						
-          <th>Unit</th>
-          <th>Discount</th>
-          <th>Rate/Unit(INR)</th>
-          <th>Amount(INR)</th>
-      </tr>
-  </thead>
-  <tbody>
+        <div class="table-responsive">
 
-      <tr>
-          <td><input type="text" value="Dummy data" class="form-control" disabled="" readonly=""></td>
-          <td><input type="text" value="1" class="form-control" disabled="" readonly=""></td>
-          <td><input type="text" value="0.00" class="form-control" disabled="" readonly=""></td>
-          <td><input type="text" value="3,000" class="form-control" disabled="" readonly=""></td>
-          <td><input type="text" value="3,000" class="form-control" disabled="" readonly=""></td>
-      </tr>
-      
-      <tr>
-       <td colspan="3" class="text-end">Total</td>
-       <td colspan="2" class="text-end"><b>3,000.00</b></td>	
-      </tr>
-      
-      <tr>
-       <td colspan="3" class="text-start">Total Amount Receivable In Word: THREE THOUSAND FIVE HUNDRED FORTY AND ZERO ONLY</td>
-       <td colspan="2" class="text-end"><b>3,540.00</b></td>	
-      </tr>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th width="38%">Particulars</th>
+                        <th>Unit</th>
+                        <th>Discount</th>
+                        <th>Rate/Unit(INR)</th>
+                        <th>Amount(INR)</th>
+                    </tr>
+                </thead>
+                <tbody>
 
-  </tbody>
-</table>
+                    <tr *ngFor="let i of data.lineItem_Requests">
+                        <td><input type="text" value="{{i.impiLineDescription}}" class="form-control" disabled="" readonly=""></td>
+                        <td><input type="text" value="{{i.impiLineQuantity}}" class="form-control" disabled="" readonly=""></td>
+                        <td><input type="text" value="{{i.impiLineDiscount}}" class="form-control" disabled="" readonly=""></td>
+                        <td><input type="text" value="{{i.impiLineUnitPrice}}" class="form-control" disabled="" readonly=""></td>
+                        <td><input type="text" value="{{i.impiLineAmount}}" class="form-control" disabled="" readonly=""></td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="3" class="text-end">Total</td>
+                        <td colspan="2" class="text-end"><b>{{data.impiHeaderTotalInvoiceAmount | currency: 'INR'}}</b></td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="3" class="text-start">Total Amount Receivable In Word: {{  data.impiHeaderTotalInvoiceAmount | numberToWords }}</td>
+                        <td colspan="2" class="text-end"><b>{{data.impiHeaderTotalInvoiceAmount | currency: 'INR'}}</b></td>
+                    </tr>
+
+                </tbody>
+            </table>
+
+        </div>
 
     </div>
 
-  </div>	
-      
     <div class="col-md-9 col-xs-12 col-sm-12 attach-col">
-          <div class="row align-items-center">
-              <div class="col-sm-2"><b>Attachment</b></div> 
-              <div class="col-sm-9"><a href="#" style="color:#1382D7;">dummy-attachment.doc</a></div>  
-          </div>
-   </div>
-      
-  <div class="mastersform-sec mb-3">	
-      
-   <div class="col-md-9 mt-4">
-     <div class="form-group">
-       <label>Payment Terms</label>  
-       <textarea class="form-control h-100" cols="2" rows="3" disabled="" readonly="">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.</textarea>  
-     </div>	  
-   </div>
-      
-   <div class="col-md-9 mt-3">
-     <div class="form-group">
-       <label>Remarks</label>  
-       <textarea class="form-control h-100" cols="2" rows="3" disabled="" readonly="">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.</textarea>
-     </div>	  
-   </div>
-      
-   <div class="col-md-9">
-    <div class="form-group">
-      <label>Cancel</label>  
-      <textarea class="form-control h-100" cols="2" rows="3"></textarea>
-    </div>	  
-  </div>	
-      
-   <div class="col-md-12">
-    <div class="form-group mb-0 mt-4">  
-      <button type="submit" class="common-btn w-auto">Cancel</button>
-    </div>	  
-  </div>	
-      
-  </div>	
-      
-      
-  </div>
+        <div class="row align-items-center">
+            <div class="col-sm-2"><b>Attachment</b></div>
+            <div class="col-sm-9"><a href="#" style="color:#1382D7;">dummy-attachment.doc</a></div>
+        </div>
+    </div>
+
+    <div class="mastersform-sec mb-3">
+
+        <div class="col-md-9 mt-4">
+            <div class="form-group">
+                <label>Payment Terms</label>
+                <textarea class="form-control h-100" cols="2" rows="3" disabled="" readonly="">{{data.impiHeaderPaymentTerms}}</textarea>
+            </div>
+        </div>
+
+        <div class="col-md-9 mt-3">
+            <div class="form-group">
+                <label>Remarks</label>
+                <textarea class="form-control h-100" cols="2" rows="3" disabled=""   readonly="">{{data.impiHeaderRemarks}}</textarea>
+            </div>
+        </div>
+
+        <div class="col-md-9">
+            <div class="form-group">
+                <label>Cancel</label>
+                <textarea class="form-control h-100" cols="2" rows="3"></textarea>
+            </div>
+        </div>
+
+        <div class="col-md-12">
+            <div class="form-group mb-0 mt-4">
+                <button type="submit" class="common-btn w-auto">Cancel</button>
+            </div>
+        </div>
+
+    </div>
+
+
+</div>
