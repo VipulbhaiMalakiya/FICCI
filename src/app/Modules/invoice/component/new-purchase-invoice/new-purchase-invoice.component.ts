@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, AppService, CustomersService, FormBuilder, InvoicesService, NgbModal, Router, ToastrService, Validators, gstValidator, panValidator, publicVariable } from '../../Export/invoce';
+import { ActivatedRoute, AppService, CustomersService, FormBuilder, InvoicesService, NgbModal, Router, ToastrService, Validators, alphanumericWithSpacesValidator, gstValidator, panValidator, publicVariable } from '../../Export/invoce';
 import { FormArray } from '@angular/forms';
 import { finalize, timeout } from 'rxjs';
 
@@ -49,7 +49,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
             ImpiHeaderCustomerCity: [null, [Validators.required]],
             ImpiHeaderCustomerPinCode: ['', [Validators.required, Validators.pattern(/^\d{6}$/)]],
             ImpiHeaderCustomerGstNo: ['', [Validators.required, gstValidator()]],
-            ImpiHeaderCustomerContactPerson: ['', [Validators.required]],
+            ImpiHeaderCustomerContactPerson: ['', [Validators.required,alphanumericWithSpacesValidator()]],
             ImpiHeaderCustomerEmailId: ['', [Validators.required, Validators.email]],
             ImpiHeaderCustomerPhoneNo: ['', [Validators.required, Validators.pattern(/^[6-9]\d{9}$/)]],
             ImpiHeaderCreatedBy: [''],

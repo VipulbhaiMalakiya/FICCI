@@ -184,8 +184,9 @@
                         <label for="ContactPerson">Contact Person</label>
                         <input type="text" placeholder="Contact Person" id="ContactPerson"
                             formControlName="ImpiHeaderCustomerContactPerson" class="form-control" />
-                        <div *ngIf="shouldShowError('ImpiHeaderCustomerContactPerson','required')" class="text-danger">
-                            This field is  required</div>
+                        <div *ngIf="shouldShowError('ImpiHeaderCustomerContactPerson', 'alphanumericWithSpaces')" class="text-danger">
+                            Please enter a valid alphanumeric value.
+                        </div>
 
                     </div>
                 </div>
@@ -195,9 +196,11 @@
                         <label for="EmailID">Email ID</label>
                         <input type="text" placeholder="Email ID" id="EmailID"
                             formControlName="ImpiHeaderCustomerEmailId" class="form-control" />
-                        <div *ngIf="shouldShowError('ImpiHeaderCustomerEmailId','required')" class="text-danger">Email is required.
+                        <div *ngIf="shouldShowError('ImpiHeaderCustomerEmailId','required')" class="text-danger">Email
+                            is required.
                         </div>
-                        <div *ngIf="shouldShowError('ImpiHeaderCustomerEmailId','email')" class="text-danger"> Please  enter a valid email address.</div>
+                        <div *ngIf="shouldShowError('ImpiHeaderCustomerEmailId','email')" class="text-danger"> Please
+                            enter a valid email address.</div>
                     </div>
                 </div>
 
@@ -209,7 +212,7 @@
                         <div *ngIf="shouldShowError('ImpiHeaderCustomerPhoneNo','required')" class="text-danger">Phone
                             number is required.</div>
                         <div *ngIf="shouldShowError('ImpiHeaderCustomerPhoneNo','pattern')" class="text-danger">Invalid
-                            phone  number.</div>
+                            phone number.</div>
 
                     </div>
                 </div>
@@ -242,8 +245,7 @@
                             <td><input class="form-control" (input)="priceValidator($event)"
                                     formControlName="impiLineUnitPrice" type="text" placeholder="Rate/Unit(INR)"
                                     required /></td>
-                            <td><input class="form-control"  type="text"
-                                    placeholder="Amount(INR)"
+                            <td><input class="form-control" type="text" placeholder="Amount(INR)"
                                     [value]="item.value !== 0 ? calculateAmount(item.value) : ''" readonly /></td>
                             <td>
                                 <span class="table-btns">
@@ -257,7 +259,8 @@
                             <td colspan="2" class="text-end"><b>{{ calculateTotalAmount() | currency: 'INR' }}</b></td>
                         </tr>
                         <tr>
-                            <td colspan="4" class="text-start">Total Amount Receivable In Word: {{  calculateTotalAmount() | numberToWords }}</td>
+                            <td colspan="4" class="text-start">Total Amount Receivable In Word: {{
+                                calculateTotalAmount() | numberToWords }}</td>
                             <td colspan="2" class="text-end"><b>{{ calculateTotalAmount() | currency: 'INR' }}</b></td>
                         </tr>
                     </tbody>
