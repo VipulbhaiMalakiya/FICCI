@@ -62,14 +62,18 @@ export class UsersComponent implements OnInit, OnDestroy {
 
     }
 
+    toTitleCase(str: string): string {
+        return str.toLowerCase().split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+    }
+
     onDownload() {
         const exportData = this.publicVariable.userlist.map((x) => ({
             "Employee ID	": x?.imeM_EmpId || '',
-            Name: x?.imeM_Name || '',
-            Username: x?.imeM_Username || '',
-            Email: x?.imeM_Email || '',
+            Name: x?.imeM_Name ? this.toTitleCase(x.imeM_Name) : '',
+            Username: x?.imeM_Username ? this.toTitleCase(x.imeM_Username) : '',
+            Email: x?.imeM_Email ? this.toTitleCase(x.imeM_Email) : '',
             Active: x && x.isActive ? 'Yes' : 'No',
-            Role: x?.roleName || ''
+            Role: x?.roleName ? this.toTitleCase(x.roleName) : ''
         }));
 
         const headers = ['Employee ID	', 'Name', 'Email', 'Username', 'Role', 'Active'];

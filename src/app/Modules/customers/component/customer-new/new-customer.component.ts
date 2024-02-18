@@ -36,8 +36,8 @@ export class NewCustomerComponent implements OnInit {
             GSTRegistrationNo: ['', [Validators.required, gstValidator()]],
             GSTCustomerType: [null, Validators.required],
             email: ['', [Validators.required, Validators.email]],
-            PrimaryContactNo: ['', Validators.required],
-            contact: ['', Validators.required],
+            PrimaryContactNo:  ['', [Validators.required, Validators.pattern(/^[6-9]\d{9}$/)]],
+            contact: ['', [Validators.required]],
             PANNo: ['', [Validators.required, panValidator()]],
             isDraft: ['true']
         });

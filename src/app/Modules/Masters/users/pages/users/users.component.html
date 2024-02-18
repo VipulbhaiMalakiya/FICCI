@@ -55,10 +55,10 @@
                             *ngFor="let user of  this.publicVariable.userlist | searchFilter: publicVariable.searchText| paginate: {itemsPerPage: publicVariable.tableSize,currentPage: publicVariable.page,totalItems: publicVariable.count};let i = index">
                             <td>{{i + 1}}</td>
                             <td>{{ user.imeM_EmpId }}</td>
-                            <td>{{ user.imeM_Name }}</td>
-                            <td>{{ user.imeM_Email }}</td>
-                            <td>{{ user.imeM_Username || 'Null'}}</td>
-                            <td>{{ user.roleName }}</td>
+                            <td>{{ user.imeM_Name | titlecase}}</td>
+                            <td>{{ user.imeM_Email |titlecase}}</td>
+                            <td>{{ user.imeM_Username |titlecase}}</td>
+                            <td>{{ user.roleName | titlecase }}</td>
                             <td [ngClass]="{'text-success': user.isActive, 'text-danger': !user.isActive}">
                                 <span class="status">•</span> {{ user.isActive ? 'Yes' : 'No' }}
                             </td>

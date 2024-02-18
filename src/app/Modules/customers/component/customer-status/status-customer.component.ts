@@ -99,16 +99,17 @@ export class StatusCustomerComponent implements OnInit {
             Country: x.country?.countryName,
             City: x?.city.cityName ? this.toTitleCase(x.city.cityName) : '',
             Pincode: x?.pincode,
-            Contact: x && x.phoneNumber,
+            "Contact Person": x && x.contact,
+            "Phone Number" : x?.phoneNumber || '',
             Email: x?.email || '',
             gstNumber: x.gstNumber || '',
             'PAN Card': x.pan || '',
             'GST Customer Type': x.gstType.gstTypeName ? this.toTitleCase(x.gstType.gstTypeName) : '',
-            'Save as Draft': x.isActive ? 'yes' : 'no'
+            'Save as Draft': x.isDraft ? 'yes' : 'No'
 
         }));
 
-        const headers = ['Cust. No.', 'Name', 'Address', 'Country', 'State', 'City', 'Pincode', 'Contact', 'Email', 'gstNumber', 'PAN Card', 'GST Customer Type', 'Save as Draft'];
+        const headers = ['Cust. No.', 'Name', 'Address', 'Country', 'State', 'City', 'Pincode', 'Contact Person', 'Phone Number','Email', 'gstNumber', 'PAN Card', 'GST Customer Type', 'Save as Draft'];
         this.appService.exportAsExcelFile(exportData, 'Customer Status', headers);
     }
     onTableDataChange(event: any) {

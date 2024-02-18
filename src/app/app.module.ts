@@ -25,7 +25,7 @@ import { ForbiddenComponent } from './layouts/forbidden/forbidden.component';
                 closeButton: true,
                 timeOut: 3000,
                 progressAnimation: 'increasing',
-                preventDuplicates: false,
+                preventDuplicates: true,
 
             }
         ),
