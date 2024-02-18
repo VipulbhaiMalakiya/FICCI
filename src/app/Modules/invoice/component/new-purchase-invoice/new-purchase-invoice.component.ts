@@ -13,10 +13,10 @@ export class NewPurchaseInvoiceComponent implements OnInit {
 
     publicVariable = new publicVariable();
     items: any[] = [
-        { impiLineDescription: '', impiLineQuantity: '', impiLineDiscount: '', impiLineUnitPrice: '', calculateAmount: 0 }
+        { impiLineDescription: '', impiLineQuantity: '', impiLineDiscount: '', impiLineUnitPrice: '', calculateAmount: '' }
     ];
     ImpiHeaderAttachment: any;
-    headerId?: number;
+    Id?: number;
     data: any;
 
     constructor(private appService: AppService,
@@ -70,7 +70,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
         this.loadCustomerStatusList();
 
         this.route.params.subscribe(params => {
-            this.headerId = +params['id'];
+            this.Id = +params['id'];
         });
         if (this.data = history.state.data) {
             this.patchFormData(this.data);
@@ -81,7 +81,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
     patchFormData(data: any): void {
 
         this.publicVariable.dataForm.patchValue({
-            headerId: data.headerId,
+            headerid: data.headerId,
             ImpiHeaderInvoiceType: data.impiHeaderInvoiceType,
             ImpiHeaderProjectCode: data.impiHeaderProjectCode,
             ImpiHeaderDepartment: data.impiHeaderDepartment,
@@ -115,8 +115,6 @@ export class NewPurchaseInvoiceComponent implements OnInit {
                 impiLineQuantity: [item.impiLineQuantity],
                 impiLineDiscount: [item.impiLineDiscount],
                 impiLineUnitPrice: [item.impiLineUnitPrice],
-                // impiLineDiscount: [item.impiLineAmount],
-                // calculateAmount: [item.impiLineAmount]
             }));
         });
     }
@@ -352,9 +350,13 @@ export class NewPurchaseInvoiceComponent implements OnInit {
             const newData = this.publicVariable.dataForm.value;
             const isUpdate = !!newData.headerid;
             const formData = new FormData();
+
+            if (isUpdate) {
+                formData.append('headerid', isUpdate ? newData.headerid : undefined);
+            }
+            formData.append('isupdate', String(isUpdate));
             this.publicVariable.selectedProjet = this.publicVariable.projectList.find(project => project.projectCode == newData.ImpiHeaderProjectCode);
             formData.append('ImpiHeaderAttachment', this.ImpiHeaderAttachment);
-            formData.append('isupdate', String(isUpdate));
             formData.append('ImpiHeaderInvoiceType', newData.ImpiHeaderInvoiceType);
             formData.append('ImpiHeaderProjectCode', newData.ImpiHeaderProjectCode);
             formData.append('ImpiHeaderDepartment', this.publicVariable.selectedProjet.department);
@@ -408,9 +410,11 @@ export class NewPurchaseInvoiceComponent implements OnInit {
                             this.publicVariable.dataForm.reset();
                         } else {
                             this.toastr.error(res.message, 'Error');
+                            this.publicVariable.isProcess = false;
                         }
                     },
                     error: (error: any) => {
+                        this.publicVariable.isProcess = false;
                         this.toastr.error(error.error.message || 'An error occurred. Please try again later.', 'Error');
                     },
                     complete: () => {

@@ -4,6 +4,7 @@
     <h3 class="content-title">PI New Purchase Invoice</h3>
 
     <form [formGroup]="publicVariable.dataForm" (ngSubmit)="onSubmit()">
+        <input type="hidden" formControlName="headerid">
         <div class="pipage-radio">
             <div class="form-check">
                 <input class="form-check-input" formControlName="ImpiHeaderInvoiceType" type="radio"
