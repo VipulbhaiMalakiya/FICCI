@@ -73,14 +73,13 @@ export class NewPurchaseInvoiceComponent implements OnInit {
             this.headerId = +params['id'];
         });
         if (this.data = history.state.data) {
-            // this.onSelectState(this.data.country);
-            // this.onSelectCity(this.data.state);
             this.patchFormData(this.data);
         }
 
     }
 
     patchFormData(data: any): void {
+
         this.publicVariable.dataForm.patchValue({
             headerId: data.headerId,
             ImpiHeaderInvoiceType: data.impiHeaderInvoiceType,
@@ -99,18 +98,27 @@ export class NewPurchaseInvoiceComponent implements OnInit {
             ImpiHeaderCustomerGstNo: data.impiHeaderCustomerGstNo,
             ImpiHeaderCustomerContactPerson: data.impiHeaderCustomerContactPerson,
             ImpiHeaderCustomerEmailId: data.impiHeaderCustomerEmailId,
-             ImpiHeaderCustomerPhoneNo:data.impiHeaderCustomerPhoneNo,
+            ImpiHeaderCustomerPhoneNo: data.impiHeaderCustomerPhoneNo,
             ImpiHeaderCreatedBy: data.impiHeaderCreatedBy,
             ImpiHeaderTotalInvoiceAmount: data.impiHeaderTotalInvoiceAmount,
-            // items: this.fb.array([]),
             ImpiHeaderPaymentTerms: data.impiHeaderPaymentTerms,
             ImpiHeaderRemarks: data.impiHeaderRemarks,
-            IsDraft: data.isDraft
-
+            IsDraft: data.isDraft,
+            // items: this.fb.array([]),
         });
+        const lineItemsArray = this.publicVariable.dataForm.get('items') as FormArray;
+        lineItemsArray.clear(); // Clear existing items before patching
 
-
-
+        data.lineItem_Requests.forEach((item: any) => {
+            lineItemsArray.push(this.fb.group({
+                impiLineDescription: [item.impiLineDescription],
+                impiLineQuantity: [item.impiLineQuantity],
+                impiLineDiscount: [item.impiLineDiscount],
+                impiLineUnitPrice: [item.impiLineUnitPrice],
+                // impiLineDiscount: [item.impiLineAmount],
+                // calculateAmount: [item.impiLineAmount]
+            }));
+        });
     }
 
     loadProjectList(): void {
@@ -340,8 +348,6 @@ export class NewPurchaseInvoiceComponent implements OnInit {
 
     onSubmit(): void {
 
-        console.log(this.publicVariable.dataForm.value.items);
-
         if (this.publicVariable.dataForm.valid) {
             const newData = this.publicVariable.dataForm.value;
             const isUpdate = !!newData.headerid;
@@ -377,15 +383,11 @@ export class NewPurchaseInvoiceComponent implements OnInit {
                 formData.append(`lineItem_Requests[${i}].impiLineQuantity`, item.impiLineQuantity);
                 formData.append(`lineItem_Requests[${i}].impiLineDiscount`, item.impiLineDiscount);
                 formData.append(`lineItem_Requests[${i}].impiLineUnitPrice`, item.impiLineUnitPrice);
-
                 // Calculate the amount here
                 const quantity = parseFloat(item.impiLineQuantity);
                 const unitPrice = parseFloat(item.impiLineUnitPrice);
                 const discount = parseFloat(item.impiLineDiscount);
-
                 const calculateAmount = quantity * unitPrice * (1 - (discount / 100));
-                console.log('Calculated Amount for item', i, ':', calculateAmount);
-
                 // Append the calculated amount to the FormData object
                 formData.append(`lineItem_Requests[${i}].impiLineAmount`, calculateAmount.toString());
             }
