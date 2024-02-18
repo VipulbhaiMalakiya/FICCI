@@ -147,11 +147,14 @@ export class ConfigurationListComponent implements OnInit, OnDestroy {
             id: data.c_ID
         });
     }
+    toTitleCase(str: string): string {
+        return str.toLowerCase().split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+    }
     onDownload(): void {
         const exportData = this.publicVariable.data.map((x) => ({
             Code: x?.c_Code || '',
-            Value: x?.c_Value || '',
-            Category: x?.category_Name ? toTitleCase(x.category_Name) : '',
+            Value: x?.c_Value ? this.toTitleCase(x.c_Value) : '',
+            Category: x?.category_Name ? this.toTitleCase(x.category_Name) : '',
             Active: x && x.isActive ? 'Yes' : 'No'
         }));
         const headers = ['Code', 'Value', 'Category', 'Active'];

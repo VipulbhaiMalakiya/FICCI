@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { AppService, ConfirmationDialogModalComponent, InvoicesService, NgbModal, Router, ToastrService, formatDate, publicVariable } from '../../Export/invoce';
 import { invoiceStatusModule } from '../../interface/invoice';
 
@@ -15,7 +15,9 @@ export class InvoiceStatusComponent implements OnInit {
         private modalService: NgbModal,
         private router: Router,
         private toastr: ToastrService,
-        private API: InvoicesService
+        private API: InvoicesService,
+        private cdr: ChangeDetectorRef
+
 
     ) {
 
@@ -66,7 +68,9 @@ export class InvoiceStatusComponent implements OnInit {
                     next: (res: any) => {
                         this.toastr.success(res.message, 'Success');
                         this.publicVariable.isProcess = false;
+                        this.cdr.detectChanges();
                         this.loadPurchaseInvoiceList();
+
                     },
                     error: (error) => {
                         this.publicVariable.isProcess = false;
