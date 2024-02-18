@@ -37,7 +37,7 @@ export class NewCustomerComponent implements OnInit {
             GSTCustomerType: [null, Validators.required],
             email: ['', [Validators.required, Validators.email]],
             PrimaryContactNo:  ['', [Validators.required, Validators.pattern(/^[6-9]\d{9}$/)]],
-            contact: ['', [Validators.required]],
+            contact: ['', [Validators.required,alphanumericWithSpacesValidator()]],
             PANNo: ['', [Validators.required, panValidator()]],
             isDraft: ['true']
         });

@@ -142,8 +142,9 @@
                     <div class="form-group">
                         <label>Contact Person</label>
                         <input type="text" class="form-control" formControlName="contact" placeholder="Contact" />
-                        <div *ngIf="shouldShowError('contact', 'required')" class="text-danger">
-                            This field is required
+
+                        <div *ngIf="shouldShowError('contact', 'alphanumericWithSpaces')" class="text-danger">
+                            Please enter a valid alphanumeric value.
                         </div>
                     </div>
                 </div>
