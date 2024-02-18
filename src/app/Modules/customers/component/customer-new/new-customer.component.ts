@@ -77,7 +77,7 @@ export class NewCustomerComponent implements OnInit {
             PrimaryContactNo: data.phoneNumber,
             contact: data.contact,
             PANNo: data.pan,
-            isDraft: data.isActive
+            isDraft: data.isDraft
         });
 
     }

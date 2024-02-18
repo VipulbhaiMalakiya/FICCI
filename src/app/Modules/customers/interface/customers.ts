@@ -60,6 +60,7 @@ export interface customerStatusListModel {
     country: Country
     gstType: GstType
     isActive: boolean
+    isDraft:boolean
 }
 
 export interface City {
