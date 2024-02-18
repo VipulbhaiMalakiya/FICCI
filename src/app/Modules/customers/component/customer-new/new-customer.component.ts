@@ -1,11 +1,11 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, CustomersService, FormBuilder, NgbModal, Router, ToastrService, Validators, alphanumericWithSpacesValidator, gstValidator, panValidator, publicVariable } from '../../Export/new-customer';
 @Component({
     selector: 'app-new-customer',
     templateUrl: './new-customer.component.html',
     styleUrls: ['./new-customer.component.css']
 })
-export class NewCustomerComponent implements OnInit {
+export class NewCustomerComponent implements OnInit, OnDestroy {
     publicVariable = new publicVariable();
     customerId?: number;
     data: any;
@@ -36,8 +36,8 @@ export class NewCustomerComponent implements OnInit {
             GSTRegistrationNo: ['', [Validators.required, gstValidator()]],
             GSTCustomerType: [null, Validators.required],
             email: ['', [Validators.required, Validators.email]],
-            PrimaryContactNo:  ['', [Validators.required, Validators.pattern(/^[6-9]\d{9}$/)]],
-            contact: ['', [Validators.required,alphanumericWithSpacesValidator()]],
+            PrimaryContactNo: ['', [Validators.required, Validators.pattern(/^[6-9]\d{9}$/)]],
+            contact: ['', [Validators.required, alphanumericWithSpacesValidator()]],
             PANNo: ['', [Validators.required, panValidator()]],
             isDraft: ['true']
         });
@@ -55,6 +55,12 @@ export class NewCustomerComponent implements OnInit {
             this.onSelectState(this.data.country);
             this.onSelectCity(this.data.state);
             this.patchFormData(this.data);
+        }
+    }
+
+    ngOnDestroy() {
+        if (this.publicVariable.Subscription) {
+            this.publicVariable.Subscription.unsubscribe();
         }
     }
 
@@ -103,7 +109,12 @@ export class NewCustomerComponent implements OnInit {
     onSelectState(event: any) {
         const selectedCountry = event;
         const countryId = selectedCountry ? selectedCountry.countryId : null;
+        this.publicVariable.dataForm.get('state')?.reset();
+        this.publicVariable.dataForm.get('city')?.reset();
+        !countryId ? console.log("Country ID is null or undefined") : this.fetchStateList(countryId);
+    }
 
+    fetchStateList(countryId: any) {
         try {
             const subscription = this.API.getStateList(countryId).subscribe({
                 next: (response: any) => {
@@ -118,28 +129,32 @@ export class NewCustomerComponent implements OnInit {
         } catch (error) {
             console.error('Error loading project list:', error);
         }
-
-
     }
+
     onSelectCity(event: any) {
         const selectedState = event;
         const stateId = selectedState ? selectedState.stateId : null;
+        this.publicVariable.dataForm.get('city')?.reset();
+        !stateId ? console.log("State ID is null or undefined") : this.fetchCityList(stateId);
+    }
+
+    fetchCityList(stateId: any) {
         try {
             const subscription = this.API.getCityList(stateId).subscribe({
                 next: (response: any) => {
                     this.publicVariable.cityList = response.data;
                 },
                 error: (error) => {
-                    console.error('Error loading project list:', error);
+                    console.error('Error loading city list:', error);
+                    console.error('Failed to load city list. Please try again later.');
                 }
             });
 
             this.publicVariable.Subscription.add(subscription);
         } catch (error) {
-            console.error('Error loading project list:', error);
+            console.error('Error loading city list:', error);
+            console.error('An unexpected error occurred. Please try again later.');
         }
-
-
     }
 
     loadGstCustomerType(): void {
