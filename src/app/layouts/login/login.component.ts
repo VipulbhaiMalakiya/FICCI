@@ -42,13 +42,13 @@ export class LoginComponent {
                     } else {
                         this.authService.setLoggedIn(true);
                         this.authService.setUserRole(response.role);
-                        // Redirect to home or desired route
                         this.router.navigate(['/dashboard']); // Redirect to the dashboard
+                        this.toastr.success('Logged in successfully', 'Success');
                     }
                 },
                 (error) => {
-                    console.error('Login failed', error);
                     this.error = 'Login failed';
+                    this.toastr.error(this.error, 'Error')
                 }
             );
         } else {
