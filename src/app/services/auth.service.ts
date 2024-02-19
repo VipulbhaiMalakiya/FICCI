@@ -11,7 +11,10 @@ export class AuthService {
     private userRole: string = '';
 
     private users = [
-        { email: 'admin@gmail.com', password: '123', role: 'admin' },
+        { email: 'admin@gmail.com', password: 'admin', role: 'admin' },
+        { email: 'accounts@gmail.com', password: 'accounts', role: 'accounts' },
+        { email: 'approver@gmail.com', password: 'approver', role: 'approver' },
+        { email: 'employee@gmail.com', password: 'employee', role: 'employee' },
         // Add more dummy users as needed
     ];
 
