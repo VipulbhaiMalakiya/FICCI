@@ -43,7 +43,13 @@
                             <th>Address</th>
                             <th>City</th>
                             <th>Contact</th>
-                            <th>Email</th>
+                            <th>TL Approve</th>
+                            <th>CL Approve</th>
+                            <th>Created On</th>
+                            <th>Created By</th>
+                            <th>Last Updated On</th>
+                            <th>Last Updated By</th>
+                            <th>Status</th>
                             <th class="action-cl">Action</th>
                         </tr>
                     </thead>
@@ -56,9 +62,14 @@
                             <td>{{d.customerName |titlecase }}</td>
                             <td>{{d.address}}</td>
                             <td>{{d.city.cityName | titlecase}}</td>
-                            <td>{{d.phoneNumber}}</td>
-                            <td>{{d.email}}</td>
-
+                            <td>{{d.phoneNumber | titlecase}}</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
                             <td><span class="table-btns">
                                     <a href="javascript:void(0);" (click)="onView(d)"><img
                                             src="../assets/images/view-icon.svg" alt=""></a>
