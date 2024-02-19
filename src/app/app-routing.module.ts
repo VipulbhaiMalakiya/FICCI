@@ -3,9 +3,11 @@ import { RouterModule, Routes } from '@angular/router';
 import { SidebarLayoutComponent } from './layouts/sidebar-layout/sidebar-layout.component';
 import { NotFoundComponent } from './layouts/not-found/not-found.component';
 import { ForbiddenComponent } from './layouts/forbidden/forbidden.component';
+import { LoginComponent } from './layouts/login/login.component';
 
 
 const routes: Routes = [
+    { path: 'login', component: LoginComponent },
     { path: '', loadChildren: () => import('./Modules/dashboard/dashboard.module').then(m => m.DashboardModule) },
     {
         path: '',

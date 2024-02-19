@@ -4,12 +4,14 @@ import { AppComponent, SidebarLayoutComponent, BrowserModule, AppRoutingModule, 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NotFoundComponent } from './layouts/not-found/not-found.component';
 import { ForbiddenComponent } from './layouts/forbidden/forbidden.component';
+import { LoginComponent } from './layouts/login/login.component';
 @NgModule({
     declarations: [
         AppComponent,
         SidebarLayoutComponent,
         NotFoundComponent,
         ForbiddenComponent,
+        LoginComponent,
     ],
     imports: [
         BrowserModule,

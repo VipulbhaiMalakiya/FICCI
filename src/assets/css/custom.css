@@ -700,10 +700,113 @@ textarea.form-control{ padding-top: 10px; padding-bottom: 10px; }
 .main-data-nav1 .nav-item .nav-link.active{ font-weight: 700; color:#F26100; border-bottom: 3px solid #F26100; }
 
 
-
-
-
-
-
-
 /*------------end new dashboard---------*/
+
+/*-------------login screen-----------*/
+
+.login-wrapper{ background-image: linear-gradient(to right, #F2FFF7, #FFF8E9, #FDF7F4); min-height:100vh; }
+
+header.login-page{ position:absolute; top: 0; width:100%; z-index: 9; }
+.header-logo { padding:5px 0px; display: inline-block; }
+.header-logo span {
+    border-left: 1px solid #D4D4D4;
+    line-height: 23px;
+    padding-left: 15px;
+    margin-left: 10px;
+    font-size: 18px;
+    font-weight: 900;
+    color: #444;
+    vertical-align: middle;
+    text-transform: uppercase;
+}
+
+.header-logo span small{ display: block; line-height: 1; }
+
+.main-content .position-relative {
+    min-height:100vh;
+}
+
+.innerlogin-sec {
+    display: flex;
+    padding-top:100px;
+}
+
+.home-search {
+    max-width: 380px;
+    width: 100%;
+    background: #fff;
+    padding: 20px 30px;
+    border-radius: 0px 10px 10px 0px;
+    box-shadow: 0px 10px 30px rgb(0 0 0 / 8%);
+}
+.home-search h1 {
+    color: #010101;
+    font-size: 34px;
+    margin-bottom: 30px;
+    font-weight: 600;
+}
+.top-search {
+    display: inline-block;
+    width: 100%;
+    position: relative;
+}
+.login-form .form-group {
+    position: relative;
+}
+
+
+
+.login-copyright {
+    position: absolute;
+    bottom: 15px;
+    left: 0;
+    color: #545454;
+    right: 0;
+    text-align: center;
+	font-weight: 500;
+	font-size:14px;
+	margin-bottom: 0px;
+}
+
+.login-page .header-logo{ padding:25px 0px 0; }
+
+.login-form .form-control{ background: none; color:#000;  }
+
+.login-form .common-btn{ padding:15px 40px; font-size:16px;  }
+
+.login-ico {
+    position: absolute;
+    top:38px;
+    right:15px;
+}
+
+.login-ico img{ max-height:17px; } 
+
+.login-vector{ border-radius:10px 0px 0px 10px; overflow: hidden; }
+
+/*------------end login-------------*/
+
+.comments-history-icon {
+    position: absolute;
+    right:5px;
+    top: -5px;
+    font-size: 30px;
+    cursor: pointer;
+    z-index: 9;
+}
+
+.comments-history-icon img{ max-height:30px; }
+
+.approver-form{ position: relative; }
+
+#workflow-modal.common-modal .small-title { font-size: 26px; }
+
+
+
+
+
+
+
+
+
+
