@@ -4,6 +4,7 @@ import { SidebarLayoutComponent } from './layouts/sidebar-layout/sidebar-layout.
 import { NotFoundComponent } from './layouts/not-found/not-found.component';
 import { ForbiddenComponent } from './layouts/forbidden/forbidden.component';
 import { LoginComponent } from './layouts/login/login.component';
+import { AuthGuard } from './guard/auth.guard';
 
 
 const routes: Routes = [
@@ -12,6 +13,7 @@ const routes: Routes = [
     {
         path: '',
         component: SidebarLayoutComponent,
+        canActivate: [AuthGuard], data: { expectedRole: 'admin' },
         children: [
             {
                 path: 'masters',

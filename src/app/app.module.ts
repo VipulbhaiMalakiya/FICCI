@@ -5,6 +5,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NotFoundComponent } from './layouts/not-found/not-found.component';
 import { ForbiddenComponent } from './layouts/forbidden/forbidden.component';
 import { LoginComponent } from './layouts/login/login.component';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthInterceptor } from './interceptor/auth-interceptor.interceptor';
 @NgModule({
     declarations: [
         AppComponent,
@@ -33,7 +35,9 @@ import { LoginComponent } from './layouts/login/login.component';
             }
         ),
     ],
-    providers: [],
+    providers: [
+        { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
+    ],
     bootstrap: [AppComponent]
 })
 export class AppModule { }
