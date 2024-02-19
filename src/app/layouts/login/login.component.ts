@@ -40,8 +40,6 @@ export class LoginComponent {
                     if (response.error) {
                         this.error = response.error;
                     } else {
-                        this.authService.setLoggedIn(true);
-                        this.authService.setUserRole(response.role);
                         this.router.navigate(['/dashboard']); // Redirect to the dashboard
                         this.toastr.success('Logged in successfully', 'Success');
                     }

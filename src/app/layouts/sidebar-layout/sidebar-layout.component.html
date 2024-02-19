@@ -12,10 +12,10 @@
 
           <div class="top-noti-user">
 
-            <div class="top-user-profile" *ngIf="userEmail">
+            <div class="top-user-profile" >
               <a href="javascript:void(0);" class="dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true"
                 aria-expanded="false"><img src="../assets/images/profile.jpg" alt="">
-                <p>{{ userEmail }} <small>{{ userRole }}</small></p>
+                <p>{{ storedEmail  }} <small>{{ storedRole }}</small></p>
               </a>
 
               <ul class="dropdown-menu">

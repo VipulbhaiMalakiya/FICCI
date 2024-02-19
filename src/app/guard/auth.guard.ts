@@ -9,12 +9,12 @@ export class AuthGuard implements CanActivate {
     constructor(private authService: AuthService, private router: Router) { }
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-        if (this.authService.isLoggedIn()) {
-            // Check if route is restricted by role
-            const expectedRole = route.data['expectedRole']; // Access 'expectedRole' using ['expectedRole']
-            const userRole = this.authService.getUserRole(); // Get user role using method
+        const isLoggedIn = localStorage.getItem('token') !== null;
+        if (isLoggedIn) {
+            const expectedRole = route.data['expectedRole'] as string;
+            const userRole = localStorage.getItem('userRole');
             if (expectedRole && userRole !== expectedRole) {
-                // Role not authorized, redirect to login page or unauthorized page
+                // Role not authorized, redirect to unauthorized page
                 this.router.navigate(['/unauthorized']);
                 return false;
             }
@@ -25,4 +25,5 @@ export class AuthGuard implements CanActivate {
             return false;
         }
     }
+
 }

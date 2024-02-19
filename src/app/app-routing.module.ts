@@ -13,11 +13,11 @@ const routes: Routes = [
     {
         path: '',
         component: SidebarLayoutComponent,
+        canActivate: [AuthGuard], data: { expectedRole: 'admin' },
 
         children: [
             {
                 path: 'masters',
-                canActivate: [AuthGuard], data: { expectedRole: 'admin' },
                 children: [
                     { path: 'configuration-list', loadChildren: () => import('./Modules/Masters/configuration-list/configuration-list.module').then(m => m.ConfigurationListModule) },
                     { path: 'users', loadChildren: () => import('./Modules/Masters/users/users.module').then(m => m.UsersModule) },
