@@ -162,7 +162,7 @@ a:hover { color:#482B8F; }
 	font-weight:600;
 	text-align: center;
 	width: 100%;
-} 
+}
 
 .common-btn:hover{ background:#10813b; color:#fff;  }
 
@@ -251,7 +251,7 @@ a:hover { color:#482B8F; }
     padding:6px 15px;
 }
 
-.top-user-profile .dropdown-menu a i{ color:#000; font-size:24px; margin-right:5px;   } 
+.top-user-profile .dropdown-menu a i{ color:#000; font-size:24px; margin-right:5px;   }
 
 .top-user-profile .dropdown-menu a:hover{ font-weight: 500; }
 
@@ -321,12 +321,12 @@ header.main-header {
 
 .custom-3wdt{ -ms-flex: 0 0 19%;
     flex: 0 0 19%;
-    max-width: 19%; 
+    max-width: 19%;
 }
 
 .custom-9wdt{ -ms-flex: 0 0 81%;
     flex: 0 0 81%;
-    max-width: 81%; 
+    max-width: 81%;
 }
 
 .white-bg {
@@ -360,11 +360,11 @@ header.main-header {
 	display: block;
 }
 
-.left-men a:hover{ color:#fff; } 
+.left-men a:hover{ color:#fff; }
 
 .left-men h3 img {
     margin-right:5px;
-	max-height:20px; 
+	max-height:20px;
 }
 
 .left-men.active{ background:#F26100; border-top-right-radius: 10px; border-bottom-right-radius: 10px; }
@@ -376,7 +376,7 @@ header.main-header {
     color: #1f1917;
     font-weight: 600;
     position: relative;
-	margin-bottom:20px; 
+	margin-bottom:20px;
 }
 
 .mastersform-sec .form-group label {
@@ -489,7 +489,7 @@ header.main-header {
 	align-items: center;
 }
 
-.tblsort .col-form-label{ margin-right:10px; font-size: 14px; } 
+.tblsort .col-form-label{ margin-right:10px; font-size: 14px; }
 .tblsort .form-select{ height: calc(1em + 0.75rem + 2px); padding: 0px 10px; }
 
 /*-------delete modal------*/
@@ -502,7 +502,7 @@ header.main-header {
     z-index: 9;
     text-align: center;
     border: 3px solid #f15e5e;
-	line-height:73px; 
+	line-height:73px;
 }
 .centermodal-col .icon-box i {
     color: #f15e5e;
@@ -537,7 +537,7 @@ header.main-header {
 	font-weight: 600;
 }
 
-.twocol-btns button{ margin:0px 2px; min-width: 120px; } 
+.twocol-btns button{ margin:0px 2px; min-width: 120px; }
 .twocol-btns .btn-secondary { background:#aaa; border-color:#aaa;  }
 .twocol-btns .btn-secondary:hover{ background:#999; border-color:#999;  }
 .twocol-btns .btn-danger { background: #f24242; border-color:#f24242; }
@@ -563,7 +563,7 @@ header.main-header {
 	margin-top: 25px;
 }
 
-.pipage-radio .form-check{ margin-right:30px; } 
+.pipage-radio .form-check{ margin-right:30px; }
 .pipage-radio .form-check-label{ font-size:15px; font-weight: 600; color:#1F1917; margin-left:4px; cursor: pointer; }
 .pipage-radio .form-check-input:checked{ background-color:#E05717; border-color:#E05717; }
 .pipage-radio .form-check-input{ border-color: #aaa; width:20px; height:20px; margin-top: 2px; }
@@ -625,7 +625,7 @@ textarea.form-control{ padding-top: 10px; padding-bottom: 10px; }
     max-width: 500px;
     width: 100%;
 	margin-top: 20px;
-	margin-bottom:30px; 
+	margin-bottom:30px;
 }
 
 .attach-col2 .form-control {
@@ -780,7 +780,7 @@ header.login-page{ position:absolute; top: 0; width:100%; z-index: 9; }
     right:15px;
 }
 
-.login-ico img{ max-height:17px; } 
+.login-ico img{ max-height:17px; }
 
 .login-vector{ border-radius:10px 0px 0px 10px; overflow: hidden; }
 
