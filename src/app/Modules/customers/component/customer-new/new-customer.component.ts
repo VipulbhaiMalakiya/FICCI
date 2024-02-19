@@ -35,7 +35,7 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
             postCode: ['', [Validators.required, Validators.pattern(/^\d{6}$/)]],
             GSTRegistrationNo: ['', [Validators.required, gstValidator()]],
             GSTCustomerType: [null, Validators.required],
-            email: ['', [Validators.required, Validators.email]],
+            email: ['', [Validators.required, Validators.email, Validators.maxLength(80)]],
             PrimaryContactNo: ['', [Validators.required, Validators.pattern(/^[6-9]\d{9}$/)]],
             contact: ['', [Validators.required, alphanumericWithSpacesValidator(),Validators.maxLength(100)]],
             PANNo: ['', [Validators.required, panValidator()]],

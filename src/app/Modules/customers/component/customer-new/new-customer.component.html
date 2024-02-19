@@ -135,6 +135,10 @@
                         <div *ngIf="shouldShowError('email', 'email')" class="text-danger">
                             Please enter a valid email address.
                         </div>
+
+                        <div *ngIf="shouldShowError('email', 'maxlength')" class="text-danger">
+                            Email must be less than 80 characters.
+                        </div>
                     </div>
                 </div>
                 <div class="col-md-3 col-sm-6">
