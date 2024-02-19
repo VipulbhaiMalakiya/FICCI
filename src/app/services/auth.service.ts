@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable, of } from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
@@ -8,11 +9,25 @@ export class AuthService {
 
     private loggedIn = false;
     private userRole: string = '';
+
+    private users = [
+        { email: 'admin@gmail.com', password: '123', role: 'admin' },
+        // Add more dummy users as needed
+    ];
+
     constructor(private http: HttpClient) { }
 
-    login(username: string, password: string) {
-        // Make API call to authenticate user and retrieve JWT token
-        return this.http.post<any>('api/login', { username, password });
+    login(email: string, password: string): Observable<any> {
+        const user = this.users.find(u => u.email === email && u.password === password);
+        if (user) {
+            const dummyData = { token: 'dummy-token', role: user.role };
+            localStorage.setItem('token', dummyData.token);
+            this.loggedIn = true;
+            this.userRole = dummyData.role;
+            return of(dummyData);
+        } else {
+            return of({ error: 'Invalid credentials' });
+        }
     }
 
     logout(): void {

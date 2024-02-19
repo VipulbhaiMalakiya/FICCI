@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
     selector: 'app-login',
@@ -10,9 +12,11 @@ import { ToastrService } from 'ngx-toastr';
 export class LoginComponent {
     dataForm!: FormGroup;
     hidePassword: boolean = true;
+    error!: string;
 
 
-    constructor(private toastr: ToastrService, private fb: FormBuilder,) {
+    constructor(private toastr: ToastrService,
+        private router: Router,private fb: FormBuilder, private authService: AuthService) {
         this.initializeForm();
     }
 
@@ -29,8 +33,24 @@ export class LoginComponent {
 
     onSubmit() {
         if (this.dataForm.valid) {
-            // Here you can implement your login logic, such as sending the form data to a server
-            console.log('Form submitted!', this.dataForm.value);
+            const { email, password } = this.dataForm.value;
+
+            this.authService.login(email, password).subscribe(
+                (response) => {
+                    if (response.error) {
+                        this.error = response.error;
+                    } else {
+                        this.authService.setLoggedIn(true);
+                        this.authService.setUserRole(response.role);
+                        // Redirect to home or desired route
+                        this.router.navigate(['/dashboard']); // Redirect to the dashboard
+                    }
+                },
+                (error) => {
+                    console.error('Login failed', error);
+                    this.error = 'Login failed';
+                }
+            );
         } else {
             this.markFormControlsAsTouched();
         }
