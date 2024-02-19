@@ -65,23 +65,7 @@ export class AuthService {
         const storedLoginTime = localStorage.getItem(this.loginTimeKey);
 
         // Check if all necessary items are present
-        return storedRole !== null && storedToken !== null && storedLoginTime !== null;
+        return storedRole !== null && storedToken !== null && storedLoginTime !== null && storedEmail !==null;
     }
 
-
-    // setLoggedIn(value: boolean): void {
-    //     this.loggedIn = value;
-    // }
-
-    // getUserRole(): string {
-    //     return this.userRole;
-    // }
-
-    // setUserRole(role: string): void {
-    //     this.userRole = role;
-    // }
-
-    // getUserEmail(): string {
-    //     return this.userEmail;
-    // }
 }

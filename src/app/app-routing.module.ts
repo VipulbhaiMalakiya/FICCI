@@ -13,7 +13,8 @@ const routes: Routes = [
     {
         path: '',
         component: SidebarLayoutComponent,
-        canActivate: [AuthGuard], data: { expectedRole: 'admin' },
+        canActivate: [AuthGuard],
+        data: { expectedRoles: ['admin', 'accounts'] }, // Define multiple expected roles
 
         children: [
             {
