@@ -28,17 +28,15 @@
 
                     <div class="form-group">
                         <label>Password</label>
-                        <div class="input-group">
-                            <input type="{{ hidePassword ? 'password' : 'text' }}" class="form-control" placeholder="Password" formControlName="password">
-                            <div class="input-group-append">
-                                <button class="btn btn-outline-secondary" type="button" (click)="togglePasswordVisibility()">
-                                    <img [src]="hidePassword ? '../assets/images/show-password-icon.png' : '../assets/images/hide-password-icon.png'" alt="">
-                                </button>
-                            </div>
-                        </div>
+                        <input  type="{{ hidePassword ? 'password' : 'text' }}" class="form-control" placeholder="Password" name="password"
+                            formControlName="password">
+                        <span class="login-ico" (click)="togglePasswordVisibility()">
+                            <img [src]="hidePassword ? '../assets/images/password-icon.png' : '../assets/images/password-icon2.png'"  style="max-height:14px;" alt="">
+
+                        </span>
+
                         <div *ngIf="shouldShowError('password','required')" class="text-danger">Password is required</div>
                     </div>
-
 
                     <div class="form-group mt-4">
                         <button type="submit" class="common-btn w-auto">LOGIN</button>
