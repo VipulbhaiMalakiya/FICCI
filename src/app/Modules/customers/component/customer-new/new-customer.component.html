@@ -17,7 +17,10 @@
                         <label>Name</label>
                         <input type="text" class="form-control" placeholder="Name" formControlName="name" />
                         <div *ngIf="shouldShowError('name', 'alphanumericWithSpaces')" class="text-danger">
-                            Please enter a valid alphanumeric value.
+                            Name must be less than 100 characters.
+                        </div>
+                        <div *ngIf="shouldShowError('name', 'alphanumericWithSpaces')" class="text-danger">
+                            Name must be alphanumeric with spaces.
                         </div>
                     </div>
                 </div>
@@ -25,8 +28,11 @@
                     <div class="form-group">
                         <label>Name 2</label>
                         <input type="text" class="form-control" placeholder="Name 2" formControlName="name2" />
+                        <div *ngIf="shouldShowError('name2', 'maxlength')" class="text-danger">
+                            Name2 must be less than 50 characters.
+                        </div>
                         <div *ngIf="shouldShowError('name2', 'alphanumericWithSpaces')" class="text-danger">
-                            Please enter a valid alphanumeric value.
+                            Name2 must be alphanumeric with spaces.
                         </div>
                     </div>
                 </div>
