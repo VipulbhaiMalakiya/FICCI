@@ -12,15 +12,15 @@
 
           <div class="top-noti-user">
 
-            <div class="top-user-profile">
-              <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true"
+            <div class="top-user-profile" *ngIf="userEmail">
+              <a href="javascript:void(0);" class="dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true"
                 aria-expanded="false"><img src="../assets/images/profile.jpg" alt="">
-                <p>Hemant <small>Admin</small></p>
+                <p>{{ userEmail }} <small>{{ userRole }}</small></p>
               </a>
 
               <ul class="dropdown-menu">
                 <li><a routerLink="my-profile">My Profile</a></li>
-                <li><a href="#">Logout</a></li>
+                <li><a href="javascript:void(0);" (click)="logout()">Logout</a></li>
               </ul>
 
             </div>

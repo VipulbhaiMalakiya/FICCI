@@ -47,8 +47,8 @@ export class LoginComponent {
                     }
                 },
                 (error) => {
-                    this.error = 'Login failed';
-                    this.toastr.error(this.error, 'Error')
+
+                    this.toastr.error('Login failed', 'Error')
                 }
             );
         } else {
