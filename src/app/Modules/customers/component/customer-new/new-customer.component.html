@@ -52,6 +52,9 @@
                     <div class="form-group">
                         <label>Address 2</label>
                         <input type="text" class="form-control" placeholder="Address 2" formControlName="address2" />
+                        <div *ngIf="shouldShowError('address2', 'maxlength')" class="text-danger">
+                            Address 2 must be less than 50 characters.
+                        </div>
                     </div>
                 </div>
                 <div class="col-md-3 col-sm-6">
