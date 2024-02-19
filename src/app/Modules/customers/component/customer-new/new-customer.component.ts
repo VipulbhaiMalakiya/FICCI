@@ -27,7 +27,7 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
             customerNo: [''],
             name: ['', [Validators.required, alphanumericWithSpacesValidator(),Validators.maxLength(100)]],
             name2: ['', [alphanumericWithSpacesValidator(),Validators.maxLength(50)]],
-            address: ['', Validators.required,],
+            address: ['', Validators.required,Validators.maxLength(100)],
             address2: ['',],
             country: [null, Validators.required],
             state: [null, Validators.required],
