@@ -23,6 +23,8 @@ const routes: Routes = [
             { path: 'dashboard', loadChildren: () => import('./Modules/landing-page/dashboard/dashboard.module').then(m => m.DashboardModule) },
             { path: 'customer', loadChildren: () => import('./Modules/customers/customers.module').then(m => m.CustomersModule) },
             { path: 'invoice', loadChildren: () => import('./Modules/invoice/invoice.module').then(m => m.InvoiceModule) },
+            { path: 'my-profile', loadChildren: () => import('./Modules/my-profile/my-profile.module').then(m => m.MyProfileModule) },
+
         ]
     },
     { path: '404', component: NotFoundComponent },

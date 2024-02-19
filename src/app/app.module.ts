@@ -12,6 +12,7 @@ import { LoginComponent } from './layouts/login/login.component';
         NotFoundComponent,
         ForbiddenComponent,
         LoginComponent,
+
     ],
     imports: [
         BrowserModule,

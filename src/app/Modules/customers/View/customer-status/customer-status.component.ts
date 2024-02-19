@@ -18,4 +18,8 @@ export class CustomerStatusComponent implements OnInit {
         });
         this.data = history.state.data;
     }
+
+
+
+
 }
