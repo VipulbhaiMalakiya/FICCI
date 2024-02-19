@@ -6,7 +6,7 @@
             <div class="row">
                 <div class="col-md-3 col-sm-6">
                     <div class="form-group">
-                        <label>Customer No.</label>
+                        <label>Customer No. </label>
                         <input type="hidden" formControlName="customerId" />
                         <input type="text" class="form-control" placeholder="Customer No"
                             formControlName="customerNo" />
@@ -14,7 +14,7 @@
                 </div>
                 <div class="col-md-3 col-sm-6">
                     <div class="form-group">
-                        <label>Name</label>
+                        <label>Name <sup class="text-danger">*</sup></label>
                         <input type="text" class="form-control" placeholder="Name" formControlName="name" />
                         <div *ngIf="shouldShowError('name', 'alphanumericWithSpaces')" class="text-danger">
                             Name must be less than 100 characters.
@@ -26,7 +26,7 @@
                 </div>
                 <div class="col-md-3 col-sm-6">
                     <div class="form-group">
-                        <label>Name 2</label>
+                        <label>Name 2 <sup class="text-danger">*</sup></label>
                         <input type="text" class="form-control" placeholder="Name 2" formControlName="name2" />
                         <div *ngIf="shouldShowError('name2', 'maxlength')" class="text-danger">
                             Name2 must be less than 50 characters.
@@ -38,7 +38,7 @@
                 </div>
                 <div class="col-md-3 col-sm-6">
                     <div class="form-group">
-                        <label>Address</label>
+                        <label>Address <sup class="text-danger">*</sup></label>
                         <input type="text" class="form-control" placeholder="Address" formControlName="address" />
                         <div *ngIf="shouldShowError('address', 'required')" class="text-danger">
                             Address is required.
@@ -50,7 +50,7 @@
                 </div>
                 <div class="col-md-3 col-sm-6">
                     <div class="form-group">
-                        <label>Address 2</label>
+                        <label>Address 2 <sup class="text-danger">*</sup></label>
                         <input type="text" class="form-control" placeholder="Address 2" formControlName="address2" />
                         <div *ngIf="shouldShowError('address2', 'maxlength')" class="text-danger">
                             Address 2 must be less than 50 characters.
@@ -59,7 +59,7 @@
                 </div>
                 <div class="col-md-3 col-sm-6">
                     <div class="form-group">
-                        <label>Country/Region Code</label>
+                        <label>Country/Region Code <sup class="text-danger">*</sup></label>
                         <ng-select [items]="publicVariable.countryList" bindLabel="countryName" bindValue="countryId"
                             placeholder="Select" formControlName="country" (change)="onSelectState($event)">
                         </ng-select>
@@ -70,7 +70,7 @@
                 </div>
                 <div class="col-md-3 col-sm-6">
                     <div class="form-group">
-                        <label>State</label>
+                        <label>State <sup class="text-danger">*</sup></label>
                         <ng-select [items]="publicVariable.stateList" bindLabel="stateName" bindValue="stateId"
                             placeholder="Select " formControlName="state" (change)="onSelectCity($event)">
                         </ng-select>
@@ -81,7 +81,7 @@
                 </div>
                 <div class="col-md-3 col-sm-6">
                     <div class="form-group">
-                        <label>City</label>
+                        <label>City <sup class="text-danger">*</sup></label>
                         <ng-select [items]="publicVariable.cityList" bindLabel="cityName" bindValue="cityId"
                             placeholder="Select" formControlName="city">
                         </ng-select>
@@ -92,7 +92,7 @@
                 </div>
                 <div class="col-md-3 col-sm-6">
                     <div class="form-group">
-                        <label>Post Code</label>
+                        <label>Post Code <sup class="text-danger">*</sup></label>
                         <input type="text" class="form-control" placeholder="Post Code" formControlName="postCode"
                             (input)="onInputChange($event)" />
                         <div *ngIf="shouldShowError('postCode', 'required')" class="text-danger">
@@ -105,7 +105,7 @@
                 </div>
                 <div class="col-md-3 col-sm-6">
                     <div class="form-group">
-                        <label>GST Registration No.</label>
+                        <label>GST Registration No. <sup class="text-danger">*</sup></label>
                         <input type="text" class="form-control" placeholder="GST Registration No."
                             formControlName="GSTRegistrationNo" />
                         <div *ngIf="shouldShowError('GSTRegistrationNo', 'invalidGST')" class="text-danger">
@@ -115,7 +115,7 @@
                 </div>
                 <div class="col-md-3 col-sm-6">
                     <div class="form-group">
-                        <label>GST Customer Type</label>
+                        <label>GST Customer Type <sup class="text-danger">*</sup></label>
 
                         <ng-select [items]="publicVariable.customerTypeList" bindLabel="gstTypeName"
                             bindValue="gstTypeId" placeholder="Select" formControlName="GSTCustomerType">
@@ -127,7 +127,7 @@
                 </div>
                 <div class="col-md-3 col-sm-6">
                     <div class="form-group">
-                        <label>E-Mail</label>
+                        <label>E-Mail <sup class="text-danger">*</sup></label>
                         <input type="text" class="form-control" formControlName="email" placeholder="email" />
                         <div *ngIf="shouldShowError('email', 'required')" class="text-danger">
                             Email is required.
@@ -143,7 +143,7 @@
                 </div>
                 <div class="col-md-3 col-sm-6">
                     <div class="form-group">
-                        <label>Primary Contact No.</label>
+                        <label>Primary Contact No. <sup class="text-danger">*</sup></label>
                         <input type="text" class="form-control" formControlName="PrimaryContactNo"
                             placeholder="Primary Contact No" (input)="onInputChange($event)" />
                         <div *ngIf="shouldShowError('PrimaryContactNo', 'required')" class="text-danger">
@@ -156,7 +156,7 @@
                 </div>
                 <div class="col-md-3 col-sm-6">
                     <div class="form-group">
-                        <label>Contact Person</label>
+                        <label>Contact Person <sup class="text-danger">*</sup></label>
                         <input type="text" class="form-control" formControlName="contact" placeholder="Contact" />
 
                         <div *ngIf="shouldShowError('contact', 'alphanumericWithSpaces')" class="text-danger">
@@ -170,7 +170,7 @@
                 </div>
                 <div class="col-md-3 col-sm-6">
                     <div class="form-group">
-                        <label>P.A.N. No.</label>
+                        <label>P.A.N. No. <sup class="text-danger">*</sup></label>
                         <input type="text" class="form-control" formControlName="PANNo" placeholder="P.A.N. No." />
 
                         <div *ngIf="shouldShowError('PANNo', 'invalidPAN')" class="text-danger">
