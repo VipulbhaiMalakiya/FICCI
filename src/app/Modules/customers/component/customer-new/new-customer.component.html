@@ -156,7 +156,11 @@
                         <input type="text" class="form-control" formControlName="contact" placeholder="Contact" />
 
                         <div *ngIf="shouldShowError('contact', 'alphanumericWithSpaces')" class="text-danger">
-                            Please enter a valid alphanumeric value.
+                            Contact must be alphanumeric with spaces.
+                        </div>
+
+                        <div *ngIf="shouldShowError('contact', 'maxlength')" class="text-danger">
+                            Contact must be less than 100 characters.
                         </div>
                     </div>
                 </div>
