@@ -22,3 +22,12 @@ select.ng-valid.ng-touched {
 .modal-sm {
   --bs-modal-width: 400px !important;
 }
+
+.ng-select.ng-select-single .ng-select-container {
+    height: 39px;
+    border: 1px solid #a5a5a5;
+    font-size: 13px;
+    color: #000;
+}
+
+.ng-dropdown-panel .ng-dropdown-panel-items .ng-option{ font-size:13px; }
