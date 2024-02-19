@@ -24,7 +24,7 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
     private initializeForm(): void {
         this.publicVariable.dataForm = this.fb.group({
             customerId: [''],
-            customerNo: [''],
+            customerNo: ['', [Validators.maxLength(20)]],
             name: ['', [Validators.required, alphanumericWithSpacesValidator(),Validators.maxLength(100)]],
             name2: ['', [alphanumericWithSpacesValidator(),Validators.maxLength(50)]],
             address: ['', Validators.required,Validators.maxLength(100)],

@@ -9,18 +9,21 @@
                         <label>Customer No. </label>
                         <input type="hidden" formControlName="customerId" />
                         <input type="text" class="form-control" placeholder="Customer No"
-                            formControlName="customerNo" />
+                            formControlName="customerNo" (input)="onInputChange($event)"  />
+                        <div *ngIf="shouldShowError('customerNo', 'maxlength')" class="text-danger">
+                            Customer No must be less than 20 characters.
+                        </div>
                     </div>
                 </div>
                 <div class="col-md-3 col-sm-6">
                     <div class="form-group">
                         <label>Name <sup class="text-danger">*</sup></label>
                         <input type="text" class="form-control" placeholder="Name" formControlName="name" />
-                        <div *ngIf="shouldShowError('name', 'alphanumericWithSpaces')" class="text-danger">
+                        <div *ngIf="shouldShowError('name', 'maxlength')" class="text-danger">
                             Name must be less than 100 characters.
                         </div>
                         <div *ngIf="shouldShowError('name', 'alphanumericWithSpaces')" class="text-danger">
-                            Name must be alphanumeric with spaces.
+                            Name must be alphanumeric.
                         </div>
                     </div>
                 </div>
