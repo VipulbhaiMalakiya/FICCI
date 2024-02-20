@@ -25,9 +25,9 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
         this.publicVariable.dataForm = this.fb.group({
             customerId: [''],
             customerNo: ['', [Validators.maxLength(20)]],
-            name: ['', [Validators.required, alphanumericWithSpacesValidator(),Validators.maxLength(100)]],
-            name2: ['', [alphanumericWithSpacesValidator(),Validators.maxLength(50)]],
-            address: ['', [Validators.required,Validators.maxLength(100)]],
+            name: ['', [Validators.required, alphanumericWithSpacesValidator(), Validators.maxLength(100)]],
+            name2: ['', [alphanumericWithSpacesValidator(), Validators.maxLength(50)]],
+            address: ['', [Validators.required, Validators.maxLength(100)]],
             address2: ['', [Validators.maxLength(50)]],
             country: [null, [Validators.required]],
             state: [null, [Validators.required]],
@@ -37,7 +37,7 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
             GSTCustomerType: [null, Validators.required],
             email: ['', [Validators.required, Validators.email, Validators.maxLength(80)]],
             PrimaryContactNo: ['', [Validators.required, Validators.pattern(/^[6-9]\d{9}$/)]],
-            contact: ['', [Validators.required, alphanumericWithSpacesValidator(),Validators.maxLength(100)]],
+            contact: ['', [Validators.required, alphanumericWithSpacesValidator(), Validators.maxLength(100)]],
             PANNo: ['', [Validators.required, panValidator()]],
             isDraft: [false]
         });
@@ -61,7 +61,7 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
 
     get isAccount() {
         return this.publicVariable.storedRole == 'Accounts';
-      }
+    }
 
     ngOnDestroy() {
         if (this.publicVariable.Subscription) {
@@ -185,20 +185,12 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
     }
 
     onSubmit(): void {
-        // const isDraft = this.publicVariable.dataForm.value.isDraft;
 
-        // if (isDraft) {
-        //   // Set status to DRAFT
-        //   console.log('Status set to DRAFT');
-        //   // Perform additional actions if needed
-        // } else {
-        //   // Set status to PENDING WITH TL APPROVER
-        //   console.log('Status set to PENDING WITH TL APPROVER');
-        //   // Perform additional actions if needed
-        // }
         if (this.publicVariable.dataForm.valid) {
             const newData = this.publicVariable.dataForm.value;
             const isUpdate = !!newData.customerId;
+            // let customerStatus: any = newData.isDraft ? "DRAFT" : "PENDING WITH TL APPROVER";
+
             const newConfig: any = {
                 isupdate: isUpdate,
                 customerId: isUpdate ? newData.customerId : undefined,
@@ -216,7 +208,8 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
                 gstNumber: newData.GSTRegistrationNo.trim(),
                 gstCustomerType: newData.GSTCustomerType,
                 pan: newData.PANNo.trim(),
-                loginId:this.publicVariable.storedEmail
+                loginId: this.publicVariable.storedEmail,
+                // customerStatus:customerStatus
             };
             this.publicVariable.isProcess = true;
             this.publicVariable.Subscription.add(

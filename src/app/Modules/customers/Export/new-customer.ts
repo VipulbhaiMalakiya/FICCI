@@ -14,6 +14,7 @@ export { ConfirmationDialogModalComponent } from 'src/app/Modules/shared/compone
 export { CustomersService } from '../service/customers.service';
 export { customerStatusListModel } from '../interface/customers';
 export { ActivatedRoute } from '@angular/router';
+export { formatDate } from '@angular/common';
 
 export class publicVariable {
     dataForm!: FormGroup;

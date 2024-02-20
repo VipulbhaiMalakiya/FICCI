@@ -42,8 +42,8 @@
                             <th>Address</th>
                             <th>City</th>
                             <th>Contact</th>
-                            <th>TL Approve</th>
-                            <th>CL Approve</th>
+                            <th>TL Approver</th>
+                            <th>CL Approver</th>
                             <th>Created On</th>
                             <th>Created By</th>
                             <th>Last Updated On</th>
@@ -66,16 +66,16 @@
                             <td>{{d.clApprover}}</td>
                             <td>{{d.createdOn | date:'medium':'IST' }}</td>
                             <td>{{d.createdBy}}</td>
-                            <td>{{d.modifiedOn  }}</td>
+                            <td>{{d.modifiedOn | date:'medium':'IST' }}</td>
                             <td>{{d.lastUpdateBy | titlecase}}</td>
                             <td>{{d.customerStatus | titlecase}}</td>
                             <td><span class="table-btns">
                                     <a href="javascript:void(0);" (click)="onView(d)"><img
                                             src="../assets/images/view-icon.svg" alt=""></a>
-                                    <a  href="javascript:void(0);"  (click)="onEdit(d)" >
+                                    <a *ngIf="d.isDraft"  href="javascript:void(0);"  (click)="onEdit(d)" >
                                         <img src="../assets/images/edit-icon.svg" alt="">
                                     </a>
-                                    <a   href="javascript:void(0);" (click)="onDelete(d.customerId)"><img
+                                    <a *ngIf="d.isDraft"  href="javascript:void(0);" (click)="onDelete(d.customerId)"><img
                                             src="../assets/images/delete-icon.svg" alt=""></a>
                                 </span>
                             </td>

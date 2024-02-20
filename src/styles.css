@@ -41,7 +41,7 @@ select.ng-valid.ng-touched {
 
 .draft-savebtn {
     display: inline-block;
-    border: 1px solid #ccc;
+
     border-radius: 6px;
     position: relative;
     margin-right: 10px;
