@@ -1,9 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable, catchError, map, of } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 import { remove } from 'lodash';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
     providedIn: 'root'
@@ -13,39 +14,36 @@ export class AuthService {
     private loggedIn = false;
     private userRole: string = '';
     private userEmail: string = '';
-
-    private users = [
-        { email: 'admin@gmail.com', password: 'admin', role: 'Admin' },
-        { email: 'approver@gmail.com', password: 'approver', role: 'Approver' },
-        { email: 'employee@gmail.com', password: 'employee', role: 'Employee' },
-        { email: 'account@gmail.com', password: 'account', role: 'Account' },
-        // Add more dummy users as needed
-    ];
-
+    private apiUrl = `${environment.apiURL}UserAuth`;
     private loginTimeKey = 'loginTime';
-
     constructor(private http: HttpClient, private toastr: ToastrService, private router: Router) { }
-
     login(email: string, password: string): Observable<any> {
-        const user = this.users.find(u => u.email === email && u.password === password);
-        if (user) {
-            const dummyData = { token: 'dummy-token', role: user.role };
+        const body = { email: email, password: password };
+        return this.http.post(`${this.apiUrl}`, body).pipe(
+            map((response: any) => {
+                if (response.data && response.data.token) {
+                    const userRole = response.data.roleName;
+                    const userEmail = response.data.email;
+                    const name =response.data.name;
+                    // Save login time to local storage
+                    const loginTime = new Date().getTime();
+                    localStorage.setItem('userRole', userRole);
+                    localStorage.setItem('userEmail', userEmail);
+                    localStorage.setItem('userName', name);
+                    localStorage.setItem(this.loginTimeKey, loginTime.toString());
+                    localStorage.setItem('token', response.token);
+                    return { token: response.data.token, role: userRole };
+                } else {
+                    this.toastr.error('Invalid credentials', 'Error');
+                    return { error: 'Invalid credentials' };
 
-            this.loggedIn = true;
-            this.userRole = dummyData.role;
-            this.userEmail = user.email;
-
-            // Save login time to local storage
-            const loginTime = new Date().getTime();
-            localStorage.setItem('userRole', user.role);
-            localStorage.setItem('userEmail', user.email);
-            localStorage.setItem(this.loginTimeKey, loginTime.toString());
-            localStorage.setItem('token', dummyData.token);
-
-            return of(dummyData);
-        } else {
-            return of({ error: 'Invalid credentials' });
-        }
+                }
+            }),
+            catchError(error => {
+                this.toastr.error('An error occurred during login', 'Error');
+                return of({ error: 'An error occurred during login' });
+            })
+        );
     }
 
     logout(): void {
