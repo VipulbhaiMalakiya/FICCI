@@ -34,7 +34,7 @@ export class StatusCustomerComponent implements OnInit {
         ).subscribe({
             next: (response: any) => {
                 // Filter the response data by email
-                const filteredData = response.data.filter((item: any) => item.email === this.publicVariable.storedEmail);
+                const filteredData = response.data.filter((item: any) => item.createdBy === this.publicVariable.storedEmail);
                 this.publicVariable.customerStatusList = filteredData;
                 this.publicVariable.count = filteredData.length;
             },

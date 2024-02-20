@@ -27,11 +27,11 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
             customerNo: ['', [Validators.maxLength(20)]],
             name: ['', [Validators.required, alphanumericWithSpacesValidator(),Validators.maxLength(100)]],
             name2: ['', [alphanumericWithSpacesValidator(),Validators.maxLength(50)]],
-            address: ['', Validators.required,Validators.maxLength(100)],
-            address2: ['', Validators.maxLength(50)],
-            country: [null, Validators.required],
-            state: [null, Validators.required],
-            city: [null, Validators.required],
+            address: ['', [Validators.required,Validators.maxLength(100)]],
+            address2: ['', [Validators.maxLength(50)]],
+            country: [null, [Validators.required]],
+            state: [null, [Validators.required]],
+            city: [null, [Validators.required]],
             postCode: ['', [Validators.required, Validators.pattern(/^\d{6}$/)]],
             GSTRegistrationNo: ['', [Validators.required, gstValidator()]],
             GSTCustomerType: [null, Validators.required],
@@ -39,7 +39,7 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
             PrimaryContactNo: ['', [Validators.required, Validators.pattern(/^[6-9]\d{9}$/)]],
             contact: ['', [Validators.required, alphanumericWithSpacesValidator(),Validators.maxLength(100)]],
             PANNo: ['', [Validators.required, panValidator()]],
-            isDraft: ['true']
+            isDraft: [false]
         });
     }
 
