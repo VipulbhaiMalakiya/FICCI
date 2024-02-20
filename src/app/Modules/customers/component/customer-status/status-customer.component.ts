@@ -26,7 +26,7 @@ export class StatusCustomerComponent implements OnInit {
     }
 
     loadCustomerStatusList(): void {
-        const subscription = this.API.getCustomerStatus().pipe(
+        const subscription = this.API.getCustomerStatusNew().pipe(
             timeout(120000), // Timeout set to 2 minutes (120000 milliseconds)
             finalize(() => {
                 this.publicVariable.isProcess = false;
