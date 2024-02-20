@@ -10,11 +10,13 @@ export class SidebarLayoutComponent {
 
     storedRole: string = '';
     storedEmail:string = '';
+    storeUsername:string = ''
   constructor(private authService: AuthService) { }
 
   ngOnInit(): void {
     this.storedRole = localStorage.getItem('userRole') ?? '';
     this.storedEmail = localStorage.getItem('userEmail') ?? '';
+    this.storeUsername =  localStorage.getItem('userName') ?? '';
   }
 
   logout(): void {

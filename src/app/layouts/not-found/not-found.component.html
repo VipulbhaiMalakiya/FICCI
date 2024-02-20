@@ -10,17 +10,18 @@
 
         <div class="col-lg-4 col-sm-6">
 
-          <div class="top-noti-user">
+          <div class="top-noti-user" *ngIf="storeUsername">
 
             <div class="top-user-profile">
-              <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true"
-                aria-expanded="false"><img src="../assets/images/profile.jpg" alt="">
-                <p>Hemant <small>Admin</small></p>
-              </a>
+                <a href="javascript:void(0);" class="dropdown-toggle" data-bs-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false"><img src="../assets/images/profile.jpg"
+                        alt="">
+                    <p>{{ storeUsername }} <small>{{ storedRole }}</small></p>
+                </a>
 
-              <ul class="dropdown-menu">
-                <li><a href="#">Logout</a></li>
-              </ul>
+                <ul class="dropdown-menu">
+                    <li><a href="javascript:void(0);" (click)="logout()">Logout</a></li>
+                </ul>
 
             </div>
 
