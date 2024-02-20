@@ -43,11 +43,11 @@ const routes: Routes = [
     {
         path: 'approval/remarks/:id', component: ApprovalRemarksComponent,
         canActivate: [AuthGuard],
-        data: { expectedRoles: ['Admin', 'Approver', 'Employee', 'Account'] }
+        data: { expectedRoles: ['Admin', 'Approver'] }
     },
     {
         path: 'accounts/remarks/:id', component: AccountsRemarksComponent, canActivate: [AuthGuard],
-        data: { expectedRoles: ['Admin', 'Approver', 'Employee', 'Account'] }
+        data: { expectedRoles: ['Admin','Account'] }
     }
 ];
 
