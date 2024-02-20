@@ -70,7 +70,8 @@
                   <a routerLink="/invoice/approval" class="menu-list-title" routerLinkActive="active">Approval Inbox</a>
                   <a routerLink="/invoice/accounts" class="menu-list-title" routerLinkActive="active">Accounts Inbox</a>
                 </div>
-                <div class="left-men" routerLinkActive="active">
+
+                <div class="left-men" routerLinkActive="active" *ngIf="isAdmin" >
                   <h3><img src="../assets/images/master-icon.png" alt=""> Masters</h3>
                   <a routerLink="/masters/configuration-list" class="menu-list-title" routerLinkActive="active"
                     [routerLinkActiveOptions]="{ exact: true }">Configuration List</a>

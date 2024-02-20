@@ -20,4 +20,8 @@ export class SidebarLayoutComponent {
   logout(): void {
     this.authService.logout();
   }
+
+  get isAdmin() {
+    return this.storedRole == 'Admin';
+  }
 }
