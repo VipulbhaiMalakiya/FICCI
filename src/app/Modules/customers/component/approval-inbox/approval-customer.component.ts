@@ -16,8 +16,6 @@ export class ApprovalCustomerComponent implements OnInit {
         private router: Router,
         private toastr: ToastrService,
         private API: CustomersService
-
-
     ) {
 
     }
@@ -57,19 +55,31 @@ export class ApprovalCustomerComponent implements OnInit {
 
         this.publicVariable.Subscription.add(subscription);
     }
+    toTitleCase(str: string): string {
+        return str.toLowerCase().split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+    }
 
     onDownload() {
-        // const exportData = this.publicVariable.userlist.map((x) => ({
-        //   "Cust. No.": x?.imeM_EmpId || '',
-        //   Name: x?.imeM_Name || '',
-        //   Address: x?.imeM_Username || '',
-        //   City: x?.imeM_Email || '',
-        //   Contact: x && x.isActive ? 'Yes' : 'No',
-        //   Email: x?.roleName || ''
-        // }));
+        const exportData = this.publicVariable.customerStatusList.map((x) => ({
+            "Cust. No.": x?.customerCode || '',
+            Name: x?.customerName ? this.toTitleCase(x.customerName) : '',
+            Address: x?.address || '',
+            State: x?.state.stateName ? this.toTitleCase(x.state.stateName) : '',
+            Country: x.country?.countryName,
+            City: x?.city.cityName ? this.toTitleCase(x.city.cityName) : '',
+            Pincode: x?.pincode,
+            "Contact Person": x && x.contact,
+            "Phone Number": x?.phoneNumber || '',
+            Email: x?.email || '',
+            gstNumber: x.gstNumber || '',
+            'PAN Card': x.pan || '',
+            'GST Customer Type': x.gstType.gstTypeName ? this.toTitleCase(x.gstType.gstTypeName) : '',
+            'Save as Draft': x.isDraft ? 'yes' : 'No'
 
-        // const headers = ['Cust. No.','Name', 'Address', 'City','Contact', 'Email'];
-        // this.appService.exportAsExcelFile(exportData,'Customer Status',headers);
+        }));
+
+        const headers = ['Cust. No.', 'Name', 'Address', 'Country', 'State', 'City', 'Pincode', 'Contact Person', 'Phone Number', 'Email', 'gstNumber', 'PAN Card', 'GST Customer Type', 'Save as Draft'];
+        this.appService.exportAsExcelFile(exportData, 'Customer Status', headers);
     }
 
     onTableDataChange(event: any) {
