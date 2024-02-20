@@ -67,6 +67,7 @@ export interface customerStatusListModel {
     modifiedOn:string
     tlApprover:string
     clApprover:string
+    customerStatus:string
 
 }
 
