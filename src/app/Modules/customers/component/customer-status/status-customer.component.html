@@ -72,9 +72,10 @@
                             <td><span class="table-btns">
                                     <a href="javascript:void(0);" (click)="onView(d)"><img
                                             src="../assets/images/view-icon.svg" alt=""></a>
-                                    <a href="javascript:void(0);" (click)="onEdit(d)"><img
-                                            src="../assets/images/edit-icon.svg" alt=""></a>
-                                    <a href="javascript:void(0);" (click)="onDelete(d.customerId)"><img
+                                    <a *ngIf="d.isDraft"   href="javascript:void(0);"  (click)="onEdit(d)" >
+                                        <img src="../assets/images/edit-icon.svg" alt="">
+                                    </a>
+                                    <a  *ngIf="d.isDraft" href="javascript:void(0);" (click)="onDelete(d.customerId)"><img
                                             src="../assets/images/delete-icon.svg" alt=""></a>
                                 </span>
                             </td>
