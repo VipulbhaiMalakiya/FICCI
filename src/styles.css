@@ -6,23 +6,26 @@
 
 
 /* Red border for invalid inputs */
-input.ng-invalid.ng-touched,select.ng-invalid.ng-touched {
-  border-color: #dc3545 !important;
+input.ng-invalid.ng-touched,
+select.ng-invalid.ng-touched {
+    border-color: #dc3545 !important;
 }
 
 /* Green border for valid inputs */
 input.ng-valid.ng-touched,
 select.ng-valid.ng-touched {
-  border-color: #28a745 !important;
+    border-color: #28a745 !important;
 }
-.ngx-pagination .current{
-  z-index: 1;
-  color: #fff;
-  background-color: #FF8201 !important;
-  border-color: #fff;
+
+.ngx-pagination .current {
+    z-index: 1;
+    color: #fff;
+    background-color: #FF8201 !important;
+    border-color: #fff;
 }
+
 .modal-sm {
-  --bs-modal-width: 400px !important;
+    --bs-modal-width: 400px !important;
 }
 
 .ng-select.ng-select-single .ng-select-container {
@@ -32,4 +35,28 @@ select.ng-valid.ng-touched {
     color: #000;
 }
 
-.ng-dropdown-panel .ng-dropdown-panel-items .ng-option{ font-size:13px; }
+.ng-dropdown-panel .ng-dropdown-panel-items .ng-option {
+    font-size: 13px;
+}
+
+.draft-savebtn {
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    position: relative;
+    margin-right: 10px;
+}
+
+.form-check-input {
+    margin: 10px;
+    border: 1px solid #aaa;
+    background-color: #f5f5f5;
+}
+
+.draft-btn {
+    display: inline-block;
+    width: auto !important;
+    padding: 8px 15px;
+    margin-bottom: 0px !important;
+    padding-left: 0px;
+}
