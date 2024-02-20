@@ -13,12 +13,12 @@ const routes: Routes = [
     { path: '', redirectTo: 'status', pathMatch: 'full' },
     {
         path: 'status', component: StatusCustomerComponent, canActivate: [AuthGuard],
-        data: { expectedRoles: ['Admin', 'Approver', 'Employee', 'Account'] },
+        data: { expectedRoles: ['Admin', 'Approver', 'Employee', 'Accounts'] },
     },
     {
         path: 'new', component: NewCustomerComponent,
         canActivate: [AuthGuard],
-        data: { expectedRoles: ['Admin', 'Approver', 'Employee', 'Account'] }
+        data: { expectedRoles: ['Admin', 'Approver', 'Employee', 'Accounts'] }
     },
     {
         path: 'approval', component: ApprovalCustomerComponent,
