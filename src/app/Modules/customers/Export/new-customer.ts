@@ -34,5 +34,7 @@ export class publicVariable {
     customerTypeList: GstCustomerTypeList[] = [];
     customerStatusList: customerStatusListModel[] = [];
     storedEmail:string = '';
+    storedRole: string = localStorage.getItem('userRole') ?? '';;
+
 
 }

@@ -46,6 +46,7 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
         this.loadCountryList();
         this.loadGstCustomerType();
+        this.publicVariable.storedEmail = localStorage.getItem('userEmail') ?? '';
 
         this.route.params.subscribe(params => {
             this.customerId = +params['id'];
@@ -57,6 +58,10 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
             this.patchFormData(this.data);
         }
     }
+
+    get isAccount() {
+        return this.publicVariable.storedRole == 'Accounts';
+      }
 
     ngOnDestroy() {
         if (this.publicVariable.Subscription) {
@@ -180,6 +185,17 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
     }
 
     onSubmit(): void {
+        // const isDraft = this.publicVariable.dataForm.value.isDraft;
+
+        // if (isDraft) {
+        //   // Set status to DRAFT
+        //   console.log('Status set to DRAFT');
+        //   // Perform additional actions if needed
+        // } else {
+        //   // Set status to PENDING WITH TL APPROVER
+        //   console.log('Status set to PENDING WITH TL APPROVER');
+        //   // Perform additional actions if needed
+        // }
         if (this.publicVariable.dataForm.valid) {
             const newData = this.publicVariable.dataForm.value;
             const isUpdate = !!newData.customerId;
@@ -199,7 +215,8 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
                 isDraft: newData.isDraft,
                 gstNumber: newData.GSTRegistrationNo.trim(),
                 gstCustomerType: newData.GSTCustomerType,
-                pan: newData.PANNo.trim()
+                pan: newData.PANNo.trim(),
+                loginId:this.publicVariable.storedEmail
             };
             this.publicVariable.isProcess = true;
             this.publicVariable.Subscription.add(
