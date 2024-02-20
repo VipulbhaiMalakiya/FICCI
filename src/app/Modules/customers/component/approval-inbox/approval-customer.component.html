@@ -21,7 +21,7 @@
         <div class="topbr-btns" *ngIf="publicVariable.ApproveCustomerList && publicVariable.ApproveCustomerList.length > 0">
             <div class="btn-group">
                 <div class="table-search"><input type="text" class="form-control"
-                        [(ngModel)]="publicVariable.searchText" name="name" id="name" placeholder="Search here"></div>
+                        [(ngModel)]="publicVariable.approvalsearchText" name="name" id="name" placeholder="Search here"></div>
             </div>
         </div>
 
@@ -56,7 +56,7 @@
                     <tbody>
 
                         <tr
-                        *ngFor="let d of  this.publicVariable.ApproveCustomerList | searchFilter: publicVariable.searchText| paginate: {itemsPerPage: publicVariable.tableSize,currentPage: publicVariable.page,totalItems: publicVariable.count};let i = index">
+                        *ngFor="let d of  this.publicVariable.ApproveCustomerList | approvalsearchFilter: publicVariable.approvalsearchText| paginate: {itemsPerPage: publicVariable.tableSize,currentPage: publicVariable.page,totalItems: publicVariable.count};let i = index">
                             <td>{{i + 1}}</td>
                             <td>{{d.customerName | titlecase}}</td>
                             <td>{{d.custoemrAddress}}</td>
@@ -81,7 +81,7 @@
                     <div class="text-center my-3">No data found.</div>
                 </div>
                 <div class="text-center"
-                    *ngIf="(publicVariable.ApproveCustomerList | searchFilter: publicVariable.searchText).length === 0 && publicVariable.customerStatusList.length > 0">
+                    *ngIf="(publicVariable.ApproveCustomerList | approvalsearchFilter: publicVariable.approvalsearchText).length === 0 && publicVariable.ApproveCustomerList.length > 0">
                     <span class="text-danger">No results found.</span>
                 </div>
             </div>

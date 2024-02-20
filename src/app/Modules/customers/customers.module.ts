@@ -14,6 +14,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { SharedModule } from '../shared/shared.module';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { SearchFilterPipe } from './pipe/searchFilter';
+import { ApprovalSearchFilterPipe } from './pipe/approvalSearch';
 
 
 @NgModule({
@@ -25,7 +26,8 @@ import { SearchFilterPipe } from './pipe/searchFilter';
         CustomerStatusComponent,
         ApprovalRemarksComponent,
         AccountsRemarksComponent,
-        SearchFilterPipe
+        SearchFilterPipe,
+        ApprovalSearchFilterPipe
     ],
     imports: [
         CommonModule,

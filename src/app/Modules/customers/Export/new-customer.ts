@@ -26,6 +26,7 @@ export class publicVariable {
     tableSize: number = 10;
     tableSizes: number[] = [10, 20, 50, 100];
     searchText: string = '';
+    approvalsearchText:string = '';
     Subscription: Subscription = new Subscription();
     selectedEmployee: any;
     userData: any;
