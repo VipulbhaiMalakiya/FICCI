@@ -24,4 +24,17 @@ export class SidebarLayoutComponent {
   get isAdmin() {
     return this.storedRole == 'Admin';
   }
+
+  get isApprover() {
+    return this.storedRole == 'Approver';
+  }
+
+  get isEmployee() {
+    return this.storedRole == 'Employee';
+  }
+
+  get isAccount() {
+    return this.storedRole == 'Account';
+  }
+
 }

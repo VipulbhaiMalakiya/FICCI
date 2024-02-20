@@ -1,103 +1,115 @@
 <div class="outer-bg">
 
-  <header class="main-header">
-    <div class="container-fluid">
-      <div class="row align-items-center">
+    <header class="main-header">
+        <div class="container-fluid">
+            <div class="row align-items-center">
 
-        <div class="col-lg-8 col-sm-6">
-          <div class="main-logo"><a routerLink="dashboard"><img src="../assets/images/logo.png" alt=""></a></div>
-        </div>
+                <div class="col-lg-8 col-sm-6">
+                    <div class="main-logo"><a routerLink="dashboard"><img src="../assets/images/logo.png" alt=""></a>
+                    </div>
+                </div>
 
-        <div class="col-lg-4 col-sm-6">
+                <div class="col-lg-4 col-sm-6">
 
-          <div class="top-noti-user">
+                    <div class="top-noti-user">
 
-            <div class="top-user-profile" >
-              <a href="javascript:void(0);" class="dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true"
-                aria-expanded="false"><img src="../assets/images/profile.jpg" alt="">
-                <p>{{ storedEmail  }} <small>{{ storedRole }}</small></p>
-              </a>
+                        <div class="top-user-profile">
+                            <a href="javascript:void(0);" class="dropdown-toggle" data-bs-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false"><img src="../assets/images/profile.jpg"
+                                    alt="">
+                                <p>{{ storedEmail }} <small>{{ storedRole }}</small></p>
+                            </a>
 
-              <ul class="dropdown-menu">
-                <li><a routerLink="my-profile">My Profile</a></li>
-                <li><a href="javascript:void(0);" (click)="logout()">Logout</a></li>
-              </ul>
+                            <ul class="dropdown-menu">
+                                <li><a routerLink="my-profile">My Profile</a></li>
+                                <li><a href="javascript:void(0);" (click)="logout()">Logout</a></li>
+                            </ul>
+
+                        </div>
+
+                    </div>
+
+                </div>
 
             </div>
 
-          </div>
-
         </div>
+    </header>
 
-      </div>
+    <div class="main-wrapper">
+        <div class="container-fluid">
+            <div class="row">
 
-    </div>
-  </header>
+                <div class="col-lg-3 p-0 custom-3wdt">
+                    <aside class="left-menu">
 
-  <div class="main-wrapper">
-    <div class="container-fluid">
-      <div class="row">
+                        <div class="left-mobile-menu">Menu</div>
 
-        <div class="col-lg-3 p-0 custom-3wdt">
-          <aside class="left-menu">
+                        <div class="side-filters menu-list">
 
-            <div class="left-mobile-menu">Menu</div>
+                            <div id="accordion">
 
-            <div class="side-filters menu-list">
+                                <div class="left-men" routerLinkActive="active">
+                                    <h3><a routerLink="dashboard" routerLinkActive="active"
+                                            [routerLinkActiveOptions]="{ exact: true }"><img
+                                                src="../assets/images/dashboard-icon.png" alt=""> Dashboard</a></h3>
+                                </div>
+                                <div class="left-men" routerLinkActive="active">
+                                    <h3><img src="../assets/images/customer-icon.png" alt=""> Customer</h3>
+                                    <a routerLink="/customer/new" class="menu-list-title" routerLinkActive="active"
+                                        [routerLinkActiveOptions]="{ exact: true }">New Customer</a>
+                                    <a routerLink="/customer/status" class="menu-list-title"
+                                        routerLinkActive="active">Customer Status</a>
+                                    <a routerLink="/customer/approval" class="menu-list-title"
+                                        routerLinkActive="active"
+                                        *ngIf="isAdmin || isApprover" >Approval
+                                        Inbox</a>
+                                    <a routerLink="/customer/accounts" class="menu-list-title"
+                                        routerLinkActive="active"
+                                        *ngIf="isAdmin || isAccount">Accounts
+                                        Inbox</a>
+                                </div>
 
-              <div id="accordion">
+                                <div class="left-men" routerLinkActive="active">
+                                    <h3><img src="../assets/images/invoice-icon.png" alt=""> Purchase Invoice</h3>
+                                    <a routerLink="/invoice/new" class="menu-list-title" routerLinkActive="active"
+                                        [routerLinkActiveOptions]="{ exact: true }">New Purchase Invoice</a>
+                                    <a routerLink="/invoice/status" class="menu-list-title"
+                                        routerLinkActive="active">Invoice Status</a>
+                                    <a routerLink="/invoice/approval" class="menu-list-title"
+                                        routerLinkActive="active" *ngIf="isAdmin || isApprover" >Approval Inbox</a>
+                                    <a routerLink="/invoice/accounts" class="menu-list-title"
+                                        routerLinkActive="active" *ngIf="isAdmin || isAccount">Accounts Inbox</a>
+                                </div>
 
-                <div class="left-men" routerLinkActive="active">
-                  <h3><a routerLink="dashboard" routerLinkActive="active"
-                    [routerLinkActiveOptions]="{ exact: true }"><img src="../assets/images/dashboard-icon.png" alt=""> Dashboard</a></h3>
+                                <div class="left-men" routerLinkActive="active" *ngIf="isAdmin">
+                                    <h3><img src="../assets/images/master-icon.png" alt=""> Masters</h3>
+                                    <a routerLink="/masters/configuration-list" class="menu-list-title"
+                                        routerLinkActive="active"
+                                        [routerLinkActiveOptions]="{ exact: true }">Configuration List</a>
+                                    <a routerLink="/masters/users" class="menu-list-title" routerLinkActive="active"
+                                        [routerLinkActiveOptions]="{ exact: true }">User Master</a>
+                                </div>
+
+
+                            </div>
+
+                        </div>
+
+                    </aside>
+
                 </div>
-                <div class="left-men" routerLinkActive="active">
-                  <h3><img src="../assets/images/customer-icon.png" alt=""> Customer</h3>
-                  <a routerLink="/customer/new" class="menu-list-title" routerLinkActive="active"
-                    [routerLinkActiveOptions]="{ exact: true }">New Customer</a>
-                  <a routerLink="/customer/status" class="menu-list-title" routerLinkActive="active">Customer Status</a>
-                  <a routerLink="/customer/approval" class="menu-list-title" routerLinkActive="active">Approval
-                    Inbox</a>
-                  <a routerLink="/customer/accounts" class="menu-list-title" routerLinkActive="active">Accounts
-                    Inbox</a>
+
+
+                <div class="col-lg-9 custom-9wdt">
+                    <div class="content-wrapper white-bg">
+                        <router-outlet></router-outlet>
+                    </div>
+
                 </div>
-
-                <div class="left-men" routerLinkActive="active">
-                  <h3><img src="../assets/images/invoice-icon.png" alt=""> Purchase Invoice</h3>
-                  <a routerLink="/invoice/new" class="menu-list-title" routerLinkActive="active"
-                    [routerLinkActiveOptions]="{ exact: true }">New Purchase Invoice</a>
-                  <a routerLink="/invoice/status" class="menu-list-title" routerLinkActive="active">Invoice Status</a>
-                  <a routerLink="/invoice/approval" class="menu-list-title" routerLinkActive="active">Approval Inbox</a>
-                  <a routerLink="/invoice/accounts" class="menu-list-title" routerLinkActive="active">Accounts Inbox</a>
-                </div>
-
-                <div class="left-men" routerLinkActive="active" *ngIf="isAdmin" >
-                  <h3><img src="../assets/images/master-icon.png" alt=""> Masters</h3>
-                  <a routerLink="/masters/configuration-list" class="menu-list-title" routerLinkActive="active"
-                    [routerLinkActiveOptions]="{ exact: true }">Configuration List</a>
-                  <a routerLink="/masters/users" class="menu-list-title" routerLinkActive="active"
-                    [routerLinkActiveOptions]="{ exact: true }">User Master</a>
-                </div>
-
-
-              </div>
 
             </div>
-
-          </aside>
-
         </div>
-
-
-        <div class="col-lg-9 custom-9wdt">
-          <div class="content-wrapper white-bg">
-            <router-outlet></router-outlet>
-          </div>
-
-        </div>
-
-      </div>
     </div>
-  </div>
 
 </div>

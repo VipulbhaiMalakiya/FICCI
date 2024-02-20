@@ -7,17 +7,48 @@ import { AccountsCustomerComponent } from './component/accounts-inbox/accounts-c
 import { CustomerStatusComponent } from './View/customer-status/customer-status.component';
 import { ApprovalRemarksComponent } from './Remarks/approval-remarks/approval-remarks.component';
 import { AccountsRemarksComponent } from './Remarks/accounts-remarks/accounts-remarks.component';
+import { AuthGuard } from 'src/app/guard/auth.guard';
 
 const routes: Routes = [
     { path: '', redirectTo: 'status', pathMatch: 'full' },
-    { path: 'status', component: StatusCustomerComponent },
-    { path: 'new', component: NewCustomerComponent },
-    { path: 'approval', component: ApprovalCustomerComponent },
-    { path: 'accounts', component: AccountsCustomerComponent },
-    { path: 'status/view/:id', component: CustomerStatusComponent },
-    { path: 'status/edit/:id', component: NewCustomerComponent },
-    { path: 'approval/remarks/:id', component: ApprovalRemarksComponent },
-    { path: 'accounts/remarks/:id', component: AccountsRemarksComponent }
+    {
+        path: 'status', component: StatusCustomerComponent, canActivate: [AuthGuard],
+        data: { expectedRoles: ['Admin', 'Approver', 'Employee', 'Account'] },
+    },
+    {
+        path: 'new', component: NewCustomerComponent,
+        canActivate: [AuthGuard],
+        data: { expectedRoles: ['Admin', 'Approver', 'Employee', 'Account'] }
+    },
+    {
+        path: 'approval', component: ApprovalCustomerComponent,
+        canActivate: [AuthGuard],
+        data: { expectedRoles: ['Admin', 'Approver'] }
+    },
+    {
+        path: 'accounts', component: AccountsCustomerComponent,
+        canActivate: [AuthGuard],
+        data: { expectedRoles: ['Admin', 'Account'] }
+    },
+    {
+        path: 'status/view/:id', component: CustomerStatusComponent,
+        canActivate: [AuthGuard],
+        data: { expectedRoles: ['Admin', 'Approver', 'Employee', 'Account'] }
+    },
+    {
+        path: 'status/edit/:id', component: NewCustomerComponent,
+        canActivate: [AuthGuard],
+        data: { expectedRoles: ['Admin', 'Approver', 'Employee', 'Account'] }
+    },
+    {
+        path: 'approval/remarks/:id', component: ApprovalRemarksComponent,
+        canActivate: [AuthGuard],
+        data: { expectedRoles: ['Admin', 'Approver', 'Employee', 'Account'] }
+    },
+    {
+        path: 'accounts/remarks/:id', component: AccountsRemarksComponent, canActivate: [AuthGuard],
+        data: { expectedRoles: ['Admin', 'Approver', 'Employee', 'Account'] }
+    }
 ];
 
 @NgModule({

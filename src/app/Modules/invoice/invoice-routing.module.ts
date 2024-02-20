@@ -7,17 +7,50 @@ import { AccountsInboxComponent } from './component/accounts-inbox/accounts-inbo
 import { ViewInvoiceStatusComponent } from './View/view-invoice-status/view-invoice-status.component';
 import { ViewPiApprovalComponent } from './View/view-pi-approval/view-pi-approval.component';
 import { ViewPiAccountsInboxComponent } from './View/view-pi-accounts-inbox/view-pi-accounts-inbox.component';
+import { AuthGuard } from 'src/app/guard/auth.guard';
 
 const routes: Routes = [
     { path: '', redirectTo: 'status', pathMatch: 'full' },
-    { path: 'status', component: InvoiceStatusComponent },
-    { path: 'new', component: NewPurchaseInvoiceComponent },
-    { path: 'approval', component: ApprovalInboxComponent },
-    { path: 'accounts', component: AccountsInboxComponent },
-    { path: 'status/view/:id', component: ViewInvoiceStatusComponent },
-    { path: 'status/edit/:id', component: NewPurchaseInvoiceComponent },
-    { path: 'approval/view/:id', component: ViewPiApprovalComponent },
-    { path: 'accounts/view/:id', component: ViewPiAccountsInboxComponent }
+    {
+        path: 'status', component: InvoiceStatusComponent,
+        canActivate: [AuthGuard],
+        data: { expectedRoles: ['Admin', 'Approver', 'Employee', 'Account'] }
+    },
+    {
+        path: 'new', component: NewPurchaseInvoiceComponent,
+        canActivate: [AuthGuard],
+        data: { expectedRoles: ['Admin', 'Approver', 'Employee', 'Account'] }
+    },
+    {
+        path: 'approval', component: ApprovalInboxComponent,
+        canActivate: [AuthGuard],
+        data: { expectedRoles: ['Admin', 'Approver', 'Employee', 'Account'] }
+    },
+    {
+        path: 'accounts', component: AccountsInboxComponent,
+        canActivate: [AuthGuard],
+        data: { expectedRoles: ['Admin', 'Approver', 'Employee', 'Account'] }
+    },
+    {
+        path: 'status/view/:id', component: ViewInvoiceStatusComponent,
+        canActivate: [AuthGuard],
+        data: { expectedRoles: ['Admin', 'Approver', 'Employee', 'Account'] }
+    },
+    {
+        path: 'status/edit/:id', component: NewPurchaseInvoiceComponent,
+        canActivate: [AuthGuard],
+        data: { expectedRoles: ['Admin', 'Approver', 'Employee', 'Account'] }
+    },
+    {
+        path: 'approval/view/:id', component: ViewPiApprovalComponent,
+        canActivate: [AuthGuard],
+        data: { expectedRoles: ['Admin', 'Approver', 'Employee', 'Account'] }
+    },
+    {
+        path: 'accounts/view/:id', component: ViewPiAccountsInboxComponent,
+        canActivate: [AuthGuard],
+        data: { expectedRoles: ['Admin', 'Approver', 'Employee', 'Account'] }
+    }
 ];
 
 @NgModule({
