@@ -14,32 +14,32 @@ const routes: Routes = [
     {
         path: 'status', component: InvoiceStatusComponent,
         canActivate: [AuthGuard],
-        data: { expectedRoles: ['Admin', 'Approver', 'Employee', 'Account'] }
+        data: { expectedRoles: ['Admin', 'Approver', 'Employee', 'Accounts'] }
     },
     {
         path: 'new', component: NewPurchaseInvoiceComponent,
         canActivate: [AuthGuard],
-        data: { expectedRoles: ['Admin', 'Approver', 'Employee', 'Account'] }
+        data: { expectedRoles: ['Admin', 'Approver', 'Employee', 'Accounts'] }
     },
     {
         path: 'approval', component: ApprovalInboxComponent,
         canActivate: [AuthGuard],
-        data: { expectedRoles: ['Admin', 'Approver', 'Employee', 'Account'] }
+        data: { expectedRoles: ['Admin', 'Approver', 'Employee', 'Accounts'] }
     },
     {
         path: 'accounts', component: AccountsInboxComponent,
         canActivate: [AuthGuard],
-        data: { expectedRoles: ['Admin', 'Approver', 'Employee', 'Account'] }
+        data: { expectedRoles: ['Admin', 'Approver', 'Employee', 'Accounts'] }
     },
     {
         path: 'status/view/:id', component: ViewInvoiceStatusComponent,
         canActivate: [AuthGuard],
-        data: { expectedRoles: ['Admin', 'Approver', 'Employee', 'Account'] }
+        data: { expectedRoles: ['Admin', 'Approver', 'Employee', 'Accounts'] }
     },
     {
         path: 'status/edit/:id', component: NewPurchaseInvoiceComponent,
         canActivate: [AuthGuard],
-        data: { expectedRoles: ['Admin', 'Approver', 'Employee', 'Account'] }
+        data: { expectedRoles: ['Admin', 'Approver', 'Employee', 'Accounts'] }
     },
     {
         path: 'approval/view/:id', component: ViewPiApprovalComponent,
@@ -49,7 +49,7 @@ const routes: Routes = [
     {
         path: 'accounts/view/:id', component: ViewPiAccountsInboxComponent,
         canActivate: [AuthGuard],
-        data: { expectedRoles: ['Admin','Account'] }
+        data: { expectedRoles: ['Admin','Accounts'] }
     }
 ];
 

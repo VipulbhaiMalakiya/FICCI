@@ -34,7 +34,7 @@ export class SidebarLayoutComponent {
   }
 
   get isAccount() {
-    return this.storedRole == 'Account';
+    return this.storedRole == 'Accounts';
   }
 
 }
