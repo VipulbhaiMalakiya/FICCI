@@ -22,6 +22,7 @@ export class StatusCustomerComponent implements OnInit {
 
     ngOnInit(): void {
         this.loadCustomerStatusList();
+        this.publicVariable.storedEmail = localStorage.getItem('userEmail') ?? '';
     }
 
     loadCustomerStatusList(): void {
@@ -32,12 +33,14 @@ export class StatusCustomerComponent implements OnInit {
             })
         ).subscribe({
             next: (response: any) => {
-                this.publicVariable.customerStatusList = response.data;
-                this.publicVariable.count = response.data.length;
+                // Filter the response data by email
+                const filteredData = response.data.filter((item: any) => item.email === this.publicVariable.storedEmail);
+                this.publicVariable.customerStatusList = filteredData;
+                this.publicVariable.count = filteredData.length;
             },
             error: (error: any) => {
                 if (error.name === 'TimeoutError') {
-                    this.toastr.error('Operation timed out after 40 seconds', error.name);
+                    this.toastr.error('Operation timed out after2 minutes', error.name);
                 } else {
                     this.toastr.error('Error loading user list', error.name);
                 }
@@ -46,6 +49,7 @@ export class StatusCustomerComponent implements OnInit {
 
         this.publicVariable.Subscription.add(subscription);
     }
+
 
     onDelete(id: number) {
         const modalRef = this.modalService.open(ConfirmationDialogModalComponent, { size: "sm", centered: true, backdrop: "static" });
@@ -100,7 +104,7 @@ export class StatusCustomerComponent implements OnInit {
             City: x?.city.cityName ? this.toTitleCase(x.city.cityName) : '',
             Pincode: x?.pincode,
             "Contact Person": x && x.contact,
-            "Phone Number" : x?.phoneNumber || '',
+            "Phone Number": x?.phoneNumber || '',
             Email: x?.email || '',
             gstNumber: x.gstNumber || '',
             'PAN Card': x.pan || '',
@@ -109,7 +113,7 @@ export class StatusCustomerComponent implements OnInit {
 
         }));
 
-        const headers = ['Cust. No.', 'Name', 'Address', 'Country', 'State', 'City', 'Pincode', 'Contact Person', 'Phone Number','Email', 'gstNumber', 'PAN Card', 'GST Customer Type', 'Save as Draft'];
+        const headers = ['Cust. No.', 'Name', 'Address', 'Country', 'State', 'City', 'Pincode', 'Contact Person', 'Phone Number', 'Email', 'gstNumber', 'PAN Card', 'GST Customer Type', 'Save as Draft'];
         this.appService.exportAsExcelFile(exportData, 'Customer Status', headers);
     }
     onTableDataChange(event: any) {

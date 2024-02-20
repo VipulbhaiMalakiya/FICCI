@@ -33,4 +33,6 @@ export class publicVariable {
     cityList: CityList[] = [];
     customerTypeList: GstCustomerTypeList[] = [];
     customerStatusList: customerStatusListModel[] = [];
+    storedEmail:string = '';
+
 }
