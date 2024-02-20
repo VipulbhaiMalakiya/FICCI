@@ -7,7 +7,7 @@
 
     <div class="page-btns-col">
 
-        <div class="tblsort">
+        <div class="tblsort" *ngIf="publicVariable.userlist && publicVariable.userlist.length > 0">
             <label class="col-form-label">Show</label>
             <select id="itemsPerPageSelect" class="form-select" [(ngModel)]="publicVariable.tableSize"
                 (change)="onTableSizeChange($event)">
@@ -15,7 +15,7 @@
             </select>
         </div>
 
-        <div class="dt-buttons">
+        <div class="dt-buttons" *ngIf="publicVariable.userlist && publicVariable.userlist.length > 0">
             <button class="gray-btns" type="button" (click)="onDownload()"><img src="../assets/images/excel-icon.png"
                     alt=""></button>
         </div>
@@ -23,7 +23,7 @@
         <!-- Example single danger button -->
         <div class="topbr-btns">
             <div class="btn-group">
-                <div class="table-search"><input type="text" class="form-control"
+                <div class="table-search" *ngIf="publicVariable.userlist && publicVariable.userlist.length > 0"><input type="text" class="form-control"
                         [(ngModel)]="publicVariable.searchText" name="name" id="name" placeholder="Search here"></div>
             </div>
         </div>
@@ -73,20 +73,19 @@
                     </tbody>
                 </table>
                 <div *ngIf="!publicVariable.userlist || publicVariable.userlist.length === 0">
-                    <p>No data found.</p>
+                    <div class="text-center mt-3">No data found.</div>
                 </div>
                 <div class="text-center"
                     *ngIf="(publicVariable.userlist | searchFilter: publicVariable.searchText).length === 0 && publicVariable.userlist.length > 0">
-                    <strong class="text-danger">No results found.</strong>
+                    <span class="text-danger">No results found.</span>
                 </div>
             </div>
 
-            <div class="clearfix">
+            <div class="clearfix" *ngIf="publicVariable.userlist && publicVariable.userlist.length > 0">
                 <div class="hint-text">Showing <b>{{this.publicVariable.tableSize}}</b> out of <b>{{
                         publicVariable.count }}</b>
                     entries</div>
-                <pagination-controls previousLabel="Prev" class="pagination"
-                    *ngIf="publicVariable.userlist && publicVariable.userlist.length > 0" nextLabel="Next"
+                <pagination-controls previousLabel="Prev" class="pagination" nextLabel="Next"
                     (pageChange)="onTableDataChange($event)">
                 </pagination-controls>
             </div>
