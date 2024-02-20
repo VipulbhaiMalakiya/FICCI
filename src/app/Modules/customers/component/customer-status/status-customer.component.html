@@ -63,11 +63,11 @@
                             <td>{{d.address}}</td>
                             <td>{{d.city.cityName | titlecase}}</td>
                             <td>{{d.phoneNumber | titlecase}}</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
+                            <td>{{d.tlApprover}}</td>
+                            <td>{{d.clApprover}}</td>
+                            <td>{{d.createdOn | date:'medium':'IST' }}</td>
+                            <td>{{d.createdBy}}</td>
+                            <td>{{d.modifiedOn | date:'medium':'IST' }}</td>
                             <td></td>
                             <td></td>
                             <td><span class="table-btns">

@@ -61,6 +61,13 @@ export interface customerStatusListModel {
     gstType: GstType
     isActive: boolean
     isDraft:boolean
+    createdOn:string
+    createdBy:string
+    lastUpdateBy:string
+    modifiedOn:string
+    tlApprover:string
+    clApprover:string
+
 }
 
 export interface City {
