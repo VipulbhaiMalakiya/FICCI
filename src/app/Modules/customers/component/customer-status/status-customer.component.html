@@ -83,11 +83,11 @@
                     </tbody>
                 </table>
                 <div *ngIf="!publicVariable.customerStatusList || publicVariable.customerStatusList.length === 0">
-                    <p>No data found.</p>
+                    <div class="text-center mt-3">No data found.</div>
                 </div>
                 <div class="text-center"
                     *ngIf="(publicVariable.customerStatusList | searchFilter: publicVariable.searchText).length === 0 && publicVariable.customerStatusList.length > 0">
-                    <strong class="text-danger">No results found.</strong>
+                    <span class="text-danger">No results found.</span>
                 </div>
             </div>
 
