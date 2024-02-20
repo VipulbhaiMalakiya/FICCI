@@ -92,3 +92,30 @@ export interface GstType {
     gstTypeId: number
     gstTypeName: string
 }
+
+export interface ApproveCustomerList {
+    customerId: number
+    statusName: string
+    customerName: string
+    custoemrAddress: string
+    customerPhoneNo: string
+    customerEmailId: string
+    customerPinCode: string
+    customerLastname: string
+    custoemrAddress2: string
+    customerContactPerson: any
+    customerGstNo: string
+    customerPanNo: string
+    isActive: boolean
+    createdOn: string
+    createdby: string
+    lastUpdateBy: any
+    customerUpdatedOn: string
+    customerTlApprover: string
+    customerClusterApprover: string
+    customerSgApprover: string
+    cityName: string
+    customerTypeName: string
+    customerStatus: number
+    approverEmail: string
+  }

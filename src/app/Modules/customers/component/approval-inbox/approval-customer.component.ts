@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AppService, CustomersService, NgbModal, Router, ToastrService, publicVariable } from '../../Export/new-customer';
+import { AppService, CustomersService, NgbModal, Router, formatDate,ToastrService, publicVariable } from '../../Export/new-customer';
 import { finalize, timeout } from 'rxjs';
 
 @Component({
@@ -26,7 +26,7 @@ export class ApprovalCustomerComponent implements OnInit {
     }
 
     loadCustomerStatusList(): void {
-        const subscription = this.API.getCustomerStatus().pipe(
+        const subscription = this.API.ApproveCustomer().pipe(
             timeout(120000), // Timeout set to 2 minutes (120000 milliseconds)
             finalize(() => {
                 this.publicVariable.isProcess = false;
@@ -34,12 +34,17 @@ export class ApprovalCustomerComponent implements OnInit {
         ).subscribe({
             next: (response: any) => {
                 if(this.publicVariable.storedRole === 'Admin'){
-                    this.publicVariable.customerStatusList = response.data;
-                    this.publicVariable.count = response.data.length;
+                    // this.publicVariable.ApproveCustomerList = response.data;
+                    // this.publicVariable.count = response.data.length;
+
+                      // Filter the response data by email
+                      const filteredData = response.data.filter((item: any) => item.approverEmail === this.publicVariable.storedEmail);
+                      this.publicVariable.ApproveCustomerList = filteredData;
+                      this.publicVariable.count = filteredData.length;
                 }else{
                       // Filter the response data by email
-                const filteredData = response.data.filter((item: any) => item.createdBy === this.publicVariable.storedEmail);
-                this.publicVariable.customerStatusList = filteredData;
+                const filteredData = response.data.filter((item: any) => item.approverEmail === this.publicVariable.storedEmail);
+                this.publicVariable.ApproveCustomerList = filteredData;
                 this.publicVariable.count = filteredData.length;
                 }
 
@@ -60,36 +65,45 @@ export class ApprovalCustomerComponent implements OnInit {
     }
 
     onDownload() {
-        const exportData = this.publicVariable.customerStatusList.map((x) => ({
-            "Cust. No.": x?.customerCode || '',
+        const exportData = this.publicVariable.ApproveCustomerList.map((x) => ({
             Name: x?.customerName ? this.toTitleCase(x.customerName) : '',
-            Address: x?.address || '',
-            State: x?.state.stateName ? this.toTitleCase(x.state.stateName) : '',
-            Country: x.country?.countryName,
-            City: x?.city.cityName ? this.toTitleCase(x.city.cityName) : '',
-            Pincode: x?.pincode,
-            "Contact Person": x && x.contact,
-            "Phone Number": x?.phoneNumber || '',
-            Email: x?.email || '',
-            gstNumber: x.gstNumber || '',
-            'PAN Card': x.pan || '',
-            'GST Customer Type': x.gstType.gstTypeName ? this.toTitleCase(x.gstType.gstTypeName) : '',
-            'Save as Draft': x.isDraft ? 'yes' : 'No'
+            Name2:x?.customerLastname ? this.toTitleCase(x.customerLastname) : '',
+            Address: x?.custoemrAddress || '',
+            Address2:x?.custoemrAddress2 || '',
+            Email: x?.customerEmailId ? this.toTitleCase(x.customerEmailId) : '',
+            "Phone Number": x?.customerPhoneNo || '',
+            "Pincode":x?.customerPinCode || '',
+            "GstNo":x?.customerGstNo||'',
+            "Contact Person" : x?.customerContactPerson ? this.toTitleCase(x.customerContactPerson) : '',
+            "PanNo":x?.customerPanNo || '',
+            "createdOn":x.createdOn ? formatDate(x.createdOn, 'medium', 'en-IN', 'IST') : '',
+            "createdby":x.createdby ? this.toTitleCase(x.createdby) : '',
+            "Status" : x?.statusName ? this.toTitleCase(x.statusName) : '',
+            "UpdatedOn" : x?.customerUpdatedOn ? formatDate(x.customerUpdatedOn, 'medium', 'en-IN', 'IST') : '',
+            "TL Approver" : x.customerTlApprover ? this.toTitleCase(x.customerTlApprover) : '',
+            "CL Approver" : x.customerClusterApprover ? this.toTitleCase(x.customerClusterApprover) : '',
+            "SG Approver" : x.customerSgApprover ? this.toTitleCase(x.customerSgApprover) : '',
+            'Customer TypeName' : x.customerTypeName ? this.toTitleCase(x.customerTypeName) : '',
+            "Approver Email" : x.approverEmail ? this.toTitleCase(x.approverEmail) : '',
 
         }));
 
-        const headers = ['Cust. No.', 'Name', 'Address', 'Country', 'State', 'City', 'Pincode', 'Contact Person', 'Phone Number', 'Email', 'gstNumber', 'PAN Card', 'GST Customer Type', 'Save as Draft'];
-        this.appService.exportAsExcelFile(exportData, 'Customer Status', headers);
+        const headers = ['Name','Name2', 'Address','Address2','Email','Phone Number','Pincode',
+        'Contact Person','GstNo','PanNo','TL Approver','CL Approver','SG Approver', 'Customer TypeName',
+        'Approver Email',
+        'createdOn','createdby','UpdatedOn',
+        'Status'];
+        this.appService.exportAsExcelFile(exportData, 'Customer Approval Inbox', headers);
     }
 
     onTableDataChange(event: any) {
         this.publicVariable.page = event;
-        // this.publicVariable.userlist
+        this.publicVariable.ApproveCustomerList
     }
     onTableSizeChange(event: any): void {
         this.publicVariable.tableSize = event.target.value;
         this.publicVariable.page = 1;
-        // this.publicVariable.userlist
+        this.publicVariable.ApproveCustomerList
 
     }
 }
