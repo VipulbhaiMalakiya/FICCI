@@ -33,10 +33,15 @@ export class StatusCustomerComponent implements OnInit {
             })
         ).subscribe({
             next: (response: any) => {
-                // Filter the response data by email
+                if(this.publicVariable.storedRole === 'Admin'){
+                    this.publicVariable.customerStatusList = response.data;
+                }else{
+                      // Filter the response data by email
                 const filteredData = response.data.filter((item: any) => item.createdBy === this.publicVariable.storedEmail);
                 this.publicVariable.customerStatusList = filteredData;
                 this.publicVariable.count = filteredData.length;
+                }
+
             },
             error: (error: any) => {
                 if (error.name === 'TimeoutError') {
