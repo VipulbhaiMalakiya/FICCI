@@ -14,11 +14,13 @@ const routes: Routes = [
         path: '',
         component: SidebarLayoutComponent,
         canActivate: [AuthGuard],
-        data: { expectedRoles: ['admin', 'accounts'] }, // Define multiple expected roles
+        data: { expectedRoles: ['Admin', 'Approver','Employee','Account'] }, // Define multiple expected roles
 
         children: [
             {
                 path: 'masters',
+                canActivate: [AuthGuard],
+                data: { expectedRoles: ['Admin'] },
                 children: [
                     { path: 'configuration-list', loadChildren: () => import('./Modules/Masters/configuration-list/configuration-list.module').then(m => m.ConfigurationListModule) },
                     { path: 'users', loadChildren: () => import('./Modules/Masters/users/users.module').then(m => m.UsersModule) },
