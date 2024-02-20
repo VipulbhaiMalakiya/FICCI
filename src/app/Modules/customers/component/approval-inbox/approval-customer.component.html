@@ -25,7 +25,7 @@
             </div>
         </div>
 
-        <div class="common-box"><a routerLink="/customer/new" class="common-btn">Add New</a></div>
+        <div class="common-box"><a routerLink="/customer/new" class="common-btn" *ngIf="this.publicVariable.storedRole !== 'Admin'">Add New</a></div>
 
     </div>
 

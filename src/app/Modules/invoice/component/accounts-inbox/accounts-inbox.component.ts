@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { publicVariable } from '../../Export/invoce';
 
 @Component({
   selector: 'app-accounts-inbox',
@@ -6,5 +7,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./accounts-inbox.component.css']
 })
 export class AccountsInboxComponent {
+    publicVariable = new publicVariable();
 
 }

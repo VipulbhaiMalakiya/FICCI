@@ -29,7 +29,7 @@
       </div>
     </div>
 
-    <div class="common-box"><a href="customer-newcustomer.html" class="common-btn">Add New</a></div>
+    <div class="common-box"><a href="customer-newcustomer.html" class="common-btn" *ngIf="this.publicVariable.storedRole !== 'Admin'">Add New</a></div>
 
   </div>
 

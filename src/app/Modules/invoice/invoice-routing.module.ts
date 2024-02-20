@@ -19,7 +19,7 @@ const routes: Routes = [
     {
         path: 'new', component: NewPurchaseInvoiceComponent,
         canActivate: [AuthGuard],
-        data: { expectedRoles: ['Admin', 'Approver', 'Employee', 'Accounts'] }
+        data: { expectedRoles: [ 'Approver', 'Employee', 'Accounts'] }
     },
     {
         path: 'approval', component: ApprovalInboxComponent,

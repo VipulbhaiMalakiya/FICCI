@@ -18,7 +18,7 @@ const routes: Routes = [
     {
         path: 'new', component: NewCustomerComponent,
         canActivate: [AuthGuard],
-        data: { expectedRoles: ['Admin', 'Approver', 'Employee', 'Accounts'] }
+        data: { expectedRoles: [ 'Approver', 'Employee', 'Accounts'] }
     },
     {
         path: 'approval', component: ApprovalCustomerComponent,

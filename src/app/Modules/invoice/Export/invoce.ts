@@ -37,5 +37,7 @@ export class publicVariable {
     countryList: CountryList[] = [];
     stateList: StateList[] = [];
     cityList: CityList[] = [];
+    storedEmail:string =  localStorage.getItem('userEmail') ?? '';
+    storedRole: string = localStorage.getItem('userRole') ?? '';;
 
 }

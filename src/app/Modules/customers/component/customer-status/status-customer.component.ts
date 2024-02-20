@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AppService, ConfirmationDialogModalComponent,formatDate, CustomersService, NgbModal, Router, ToastrService, customerStatusListModel, publicVariable } from '../../Export/new-customer'
+import { AppService, ConfirmationDialogModalComponent, formatDate, CustomersService, NgbModal, Router, ToastrService, customerStatusListModel, publicVariable } from '../../Export/new-customer'
 import { finalize, timeout } from 'rxjs';
 @Component({
     selector: 'app-status-customer',
@@ -34,8 +34,13 @@ export class StatusCustomerComponent implements OnInit {
         ).subscribe({
             next: (response: any) => {
                 if (this.publicVariable.storedRole === 'Admin') {
-                    this.publicVariable.customerStatusList = response.data;
-                    this.publicVariable.count = response.data.length;
+                    // this.publicVariable.customerStatusList = response.data;
+                    // this.publicVariable.count = response.data.length;
+
+                    // Filter the response data by email
+                    const filteredData = response.data.filter((item: any) => item.createdBy === this.publicVariable.storedEmail);
+                    this.publicVariable.customerStatusList = filteredData;
+                    this.publicVariable.count = filteredData.length;
                 } else {
 
                     // Filter the response data by email
@@ -116,19 +121,19 @@ export class StatusCustomerComponent implements OnInit {
             gstNumber: x.gstNumber || '',
             'PAN Card': x.pan || '',
             'GST Customer Type': x.gstType.gstTypeName ? this.toTitleCase(x.gstType.gstTypeName) : '',
-            'Created On' :x.createdOn  ? formatDate(x.createdOn, 'medium', 'en-IN', 'IST') : '',
-            'Created By' : x.createdBy ? this.toTitleCase(x.createdBy) : '',
-            'Last Updated On' : x.createdOn  ? formatDate(x.modifiedOn, 'medium', 'en-IN', 'IST') : '',
-            'Last Update By' : x.lastUpdateBy  ? this.toTitleCase(x.lastUpdateBy) : '',
-            'TL Approver' : x.tlApprover ? this.toTitleCase(x.tlApprover) : '',
-            'CL Approver':x.clApprover ? this.toTitleCase(x.clApprover) : '',
-            'Status':x.customerStatus ? this.toTitleCase(x.customerStatus) : '',
+            'Created On': x.createdOn ? formatDate(x.createdOn, 'medium', 'en-IN', 'IST') : '',
+            'Created By': x.createdBy ? this.toTitleCase(x.createdBy) : '',
+            'Last Updated On': x.createdOn ? formatDate(x.modifiedOn, 'medium', 'en-IN', 'IST') : '',
+            'Last Update By': x.lastUpdateBy ? this.toTitleCase(x.lastUpdateBy) : '',
+            'TL Approver': x.tlApprover ? this.toTitleCase(x.tlApprover) : '',
+            'CL Approver': x.clApprover ? this.toTitleCase(x.clApprover) : '',
+            'Status': x.customerStatus ? this.toTitleCase(x.customerStatus) : '',
         }));
 
         const headers = ['Cust. No.', 'Name', 'Address', 'Country', 'State', 'City',
-         'Pincode', 'Contact Person', 'Phone Number',
-         'Email', 'gstNumber', 'PAN Card', 'GST Customer Type',
-        'Created On','Created By','Last Updated On','Last Update By','TL Approver','CL Approver','Status'];
+            'Pincode', 'Contact Person', 'Phone Number',
+            'Email', 'gstNumber', 'PAN Card', 'GST Customer Type',
+            'Created On', 'Created By', 'Last Updated On', 'Last Update By', 'TL Approver', 'CL Approver', 'Status'];
         this.appService.exportAsExcelFile(exportData, 'Customer Status', headers);
     }
     onTableDataChange(event: any) {
