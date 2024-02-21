@@ -16,7 +16,7 @@ export class CustomerStatusComponent implements OnInit {
         this.route.params.subscribe(params => {
             this.customerId = +params['id'];
         });
-        this.data = history.state.data;
+        this.data = history.state.data;        
     }
 
 

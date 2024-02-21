@@ -68,8 +68,21 @@ export interface customerStatusListModel {
     tlApprover:string
     clApprover:string
     customerStatus:string
+    workFlowHistory: WorkFlowHistory[]
 
 }
+export interface WorkFlowHistory {
+    imwdId: number
+    imwdScreenName: string
+    imwdInitiatedBy: string
+    imwdRole: string
+    imwdRemarks?: string
+    imwdStatus: string
+    imwdPendingAt: string
+    imwdCreatedBy: string
+    imwdCreatedOn: string
+    customerId: number
+  }
 
 export interface City {
     cityId: number

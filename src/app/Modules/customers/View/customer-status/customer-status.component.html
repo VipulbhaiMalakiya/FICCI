@@ -1,7 +1,15 @@
 <div class="inner-content">
-
+    <div class="approver-form">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="comments-history-icon" data-bs-toggle="modal" data-bs-target="#workflow-modal">
+                    <img src="../assets/images/file-history-icon.png" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
     <h3 class="content-title">View Customer Status</h3>
-
+ 
     <div class="mastersform-sec">
         <div class="row">
 
@@ -120,37 +128,7 @@
 
 </div>
 
-<div class="approver-form">
-    <div class="row">
 
-        <div class="col-md-12">
-
-            <div class="comments-history-icon" data-bs-toggle="modal" data-bs-target="#workflow-modal"><img
-                    src="../assets/images/file-history-icon.png" alt=""></div>
-
-            <div class="form-group row mb-3 align-items-center">
-                <label class="col-sm-1 col-form-label col-form-label-sm">Status</label>
-                <div class="col-sm-11">
-                    <label>Pending with name</label>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-12">
-            <div class="form-group row mb-2">
-                <label class="col-sm-1 col-form-label col-form-label-sm">Remarks</label>
-                <div class="col-sm-11">
-                    <input type="text" class="form-control" name="banner-title" required="">
-                </div>
-            </div>
-        </div>
-        <div class="col-md-12 text-end mt-3">
-            <button type="submit" class="common-btn w-auto" >Submit</button>
-
-        </div>
-
-    </div>
-</div>
 <!-----Modal----->
 
 <div class="modal fade common-modal" id="workflow-modal" tabindex="-1" role="dialog"
@@ -172,7 +150,7 @@
                             <table class="table">
                                 <thead>
                                     <tr>
-                                        <th>Role</th>
+                                        <th>#</th>
                                         <th>Status</th>
                                         <th>Remarks By</th>
                                         <th>Remarks On</th>
@@ -181,12 +159,12 @@
                                 </thead>
                                 <tbody>
 
-                                    <tr>
-                                        <td>Maker</td>
-                                        <td>Pending With Checker</td>
-                                        <td>Manish 312321</td>
-                                        <td>Nov-12 2024 08:45</td>
-                                        <td></td>
+                                    <tr *ngFor="let i of this.data.workFlowHistory;let in = index">
+                                        <td>{{in + 1}}</td>
+                                        <td>{{i.imwdPendingAt | titlecase}}</td>
+                                        <td>{{i.imwdInitiatedBy |titlecase}}</td>
+                                        <td>{{i.imwdCreatedOn | date:'medium':'IST'}}</td>
+                                        <td>{{i.imwdRemarks | titlecase}}</td>
                                     </tr>
 
 
