@@ -34,6 +34,8 @@ export class AccountsRemarksComponent {
             this.customerId = +params['id'];
         });
         this.data = history.state.data;
+        console.log(this.data);
+
         this.publicVariable.isProcess = false;
 
     }
