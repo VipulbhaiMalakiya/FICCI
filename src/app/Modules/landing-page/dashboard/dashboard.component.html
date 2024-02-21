@@ -20,9 +20,9 @@
                 <div class="data-tabs">
                     <ul class="nav nav-pills" role="tablist">
                         <li class="nav-item">
-                            <a class="nav-link active tabbg-1" data-bs-toggle="pill" href="#home">
+                            <a class="nav-link active tabbg-1" (click)="onCustomerStatus('DRAFT')" data-bs-toggle="pill" href="#home">
                                 <small>Draft</small>
-                                <span>328</span>
+                                <span>{{ count}}</span>
                             </a>
                         </li>
                         <li class="nav-item">
@@ -47,7 +47,6 @@
                         </li>
 
 
-
                         <li class="nav-item">
                             <a class="nav-link tabbg-7" data-bs-toggle="pill" href="#menu6">
                                 <small>All</small>
@@ -69,19 +68,19 @@
 
                             <div class="page-btns-col">
 
-                                <div class="tblsort">
+                                <div class="tblsort" *ngIf="customerStatusList && customerStatusList.length > 0">
                                     <label class="col-form-label">Show</label>
-                                    <select class="form-select" required="">
-                                        <option value="">10</option>
-                                        <option value="">20</option>
+                                    <select id="itemsPerPageSelect" class="form-select" [(ngModel)]="tableSize"
+                                        (change)="onTableSizeChange($event)">
+                                        <option *ngFor="let size of tableSizes" [value]="size">{{ size }}</option>
                                     </select>
                                 </div>
 
-                                <div class="dt-buttons">
-                                    <button class="gray-btns" type="button"><img src="../assets/images/csv.png"
-                                            alt=""></button>
-                                    <button class="gray-btns" type="button"><img src="../assets/images/excel-icon.png"
-                                            alt=""></button>
+                                <div class="topbr-btns" >
+                                    <div class="btn-group" *ngIf="customerStatusList && customerStatusList.length > 0">
+                                        <div class="table-search"><input type="text" class="form-control"
+                                                [(ngModel)]="searchText" name="name" id="name" placeholder="Search here"></div>
+                                    </div>
                                 </div>
 
                                 <!-- Example single danger button -->
@@ -318,7 +317,7 @@
                                 </div>
                             </div>
 
-                        </div><!--tab-pane-->
+                        </div>
 
 
                         <div id="menu2" class="tab-pane fade"><br>
@@ -340,7 +339,7 @@
                                             alt=""></button>
                                 </div>
 
-                                <!-- Example single danger button -->
+
                                 <div class="topbr-btns">
                                     <div class="btn-group">
                                         <div class="table-search"><input type="text" class="form-control" name="name"
