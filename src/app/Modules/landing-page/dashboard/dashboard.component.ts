@@ -70,8 +70,12 @@ export class DashboardComponent {
         const counts: any = {
             'DRAFT': 0,
             'PENDING WITH TL APPROVER': 0,
-            'APPROVED BY ACCOUNTS APPROVER': 0,
+            'PENDING WITH CH APPROVER':0,
+            'PENDING WITH ACCOUNTS APPROVER':0,
+            'APPROVED BY ACCOUNTS APPROVER':0,
+            'REJECTED BY TL APPROVER':0,
             'REJECTED BY CH APPROVER': 0,
+            'REJECTED BY ACCOUNTS APPROVER':0,
             'ALL': 0
         };
 
@@ -79,13 +83,18 @@ export class DashboardComponent {
         const draftData = data.filter(item => item.customerStatus === 'DRAFT');
         counts['DRAFT'] = draftData.length;
 
-        const pendingData = data.filter(item => item.customerStatus === 'PENDING WITH TL APPROVER');
+        const pendingData = data.filter(item => item.customerStatus === 'PENDING WITH TL APPROVER'
+         || item.customerStatus === 'PENDING WITH CH APPROVER'
+         || item.customerStatus === 'PENDING WITH ACCOUNTS APPROVER');
         counts['PENDING WITH TL APPROVER'] = pendingData.length;
+
 
         const approvedData = data.filter(item => item.customerStatus === 'APPROVED BY ACCOUNTS APPROVER');
         counts['APPROVED BY ACCOUNTS APPROVER'] = approvedData.length;
 
-        const rejectedData = data.filter(item => item.customerStatus === 'REJECTED BY CH APPROVER');
+        const rejectedData = data.filter(item => item.customerStatus === 'REJECTED BY TL APPROVER'
+        || item.customerStatus === 'REJECTED BY CH APPROVER'
+        ||item.customerStatus === 'REJECTED BY ACCOUNTS APPROVER');
         counts['REJECTED BY CH APPROVER'] = rejectedData.length;
 
         // Calculate total count
@@ -126,34 +135,28 @@ export class DashboardComponent {
                         case 'DRAFT':
                             const filteredDataDraft = response.data.filter((item: any) => item.createdBy === this.publicVariable.storedEmail && item.customerStatus === this.customerStatus);
                             this.publicVariable.customerStatusList = filteredDataDraft;
-                            this.isDRAFT = filteredDataDraft.length;
                             break;
                         case 'PENDING WITH TL APPROVER':
                             const filteredDataPendingWithAccountsApprover = response.data.filter((item: any) => item.createdBy === this.publicVariable.storedEmail && item.customerStatus === this.customerStatus);
                             this.publicVariable.customerStatusList = filteredDataPendingWithAccountsApprover;
-                            this.PendingApproval = filteredDataPendingWithAccountsApprover.length;
                             break;
                         case 'APPROVED BY ACCOUNTS APPROVER':
                             const filteredDataApprovedWithAccountsApprover = response.data.filter((item: any) => item.createdBy === this.publicVariable.storedEmail && item.customerStatus === this.customerStatus);
                             this.publicVariable.customerStatusList = filteredDataApprovedWithAccountsApprover;
-                            this.ApprovedAccounts = filteredDataApprovedWithAccountsApprover.length;
                             break;
                         case 'REJECTED BY CH APPROVER':
                             const filteredDataRejectedbBYAccountsApprover = response.data.filter((item: any) => item.createdBy === this.publicVariable.storedEmail && item.customerStatus === this.customerStatus);
                             this.publicVariable.customerStatusList = filteredDataRejectedbBYAccountsApprover;
-                            this.RejectedbyAccounts = filteredDataRejectedbBYAccountsApprover.length;
                             break;
 
                         case 'ALL':
                             const filteredDataAll = response.data.filter((item: any) => item.createdBy === this.publicVariable.storedEmail);
                             this.publicVariable.customerStatusList = filteredDataAll;
-                            this.ALL = filteredDataAll.length;
                             break;
 
                         default:
                             const filteredDataOther = response.data.filter((item: any) => item.createdBy === this.publicVariable.storedEmail);
                             this.publicVariable.customerStatusList = filteredDataAll;
-                            this.ALL = filteredDataAll.length;
                             break;
                     }
 
@@ -172,9 +175,6 @@ export class DashboardComponent {
         this.publicVariable.Subscription.add(subscription);
     }
 
-    loadCustomer() {
-
-    }
 
 
     onDelete(id: number) {
