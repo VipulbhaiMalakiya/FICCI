@@ -63,4 +63,10 @@ export class CustomersService {
     isApproverRemarks(data: any): Observable<any[]> {
         return this.http.post<any[]>(`${this.ApproverURL}`, data).pipe(this.retry);
     }
+
+    AccountsCustomer(): Observable<any[]> {
+      //  const url = `${this.ApproveCustomerURL}${localStorage.getItem('userEmail') ?? ''}`;
+      const url = 'https://localhost:7038/api/ApproveCustomer?email=harsh@example.com';
+        return this.http.get<any[]>(url).pipe(this.retry);
+    }
 }
