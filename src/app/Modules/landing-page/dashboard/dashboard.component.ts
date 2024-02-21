@@ -12,9 +12,11 @@ export class DashboardComponent {
 
     publicVariable = new publicVariable();
     customerStatus: string = 'DRAFT';
-    isDRAFT:number = 0;
-    PendingApproval:number = 0;
-    ApprovedAccounts:number =0; 
+    isDRAFT: number = 0;
+    PendingApproval: number = 0;
+    ApprovedAccounts: number = 0;
+    RejectedbyAccounts: number = 0;
+    ALL:number = 0;
 
 
     constructor(private appService: AppService,
@@ -64,30 +66,27 @@ export class DashboardComponent {
                             this.publicVariable.customerStatusList = filteredDataPendingWithAccountsApprover;
                             this.PendingApproval = filteredDataPendingWithAccountsApprover.length;
                             break;
-
-
                         case 'APPROVED BY ACCOUNTS APPROVER':
                             const filteredDataApprovedWithAccountsApprover = response.data.filter((item: any) => item.createdBy === this.publicVariable.storedEmail && item.customerStatus === this.customerStatus);
                             this.publicVariable.customerStatusList = filteredDataApprovedWithAccountsApprover;
                             this.ApprovedAccounts = filteredDataApprovedWithAccountsApprover.length;
                             break;
-
-                        case 'REJECTED BY ACCOUNTS APPROVER':
-                            const filteredDataRejectedbBYAccountsApprover = response.data.filter((item: any) => item.createdBy === this.publicVariable.storedEmail);
+                        case 'REJECTED BY CH APPROVER':
+                            const filteredDataRejectedbBYAccountsApprover = response.data.filter((item: any) => item.createdBy === this.publicVariable.storedEmail  && item.customerStatus === this.customerStatus);
                             this.publicVariable.customerStatusList = filteredDataRejectedbBYAccountsApprover;
-                            this.publicVariable.count = filteredDataRejectedbBYAccountsApprover.length;
+                            this.RejectedbyAccounts = filteredDataRejectedbBYAccountsApprover.length;
                             break;
 
                         case 'ALL':
                             const filteredDataAll = response.data.filter((item: any) => item.createdBy === this.publicVariable.storedEmail);
                             this.publicVariable.customerStatusList = filteredDataAll;
-                            this.publicVariable.count = filteredDataAll.length;
+                            this.ALL = filteredDataAll.length;
                             break;
 
                         default:
-                            const filteredDataOther = response.data.filter((item: any) => item.createdBy === this.publicVariable.storedEmail && item.customerStatus === this.customerStatus);
-                            this.publicVariable.customerStatusList = filteredDataOther;
-                            this.publicVariable.count = filteredDataOther.length;
+                            const filteredDataOther = response.data.filter((item: any) => item.createdBy === this.publicVariable.storedEmail);
+                            this.publicVariable.customerStatusList = filteredDataAll;
+                            this.ALL = filteredDataAll.length;
                             break;
                     }
 
