@@ -19,6 +19,7 @@ export class CustomersService {
     private getCustomerStatusURL = `${environment.apiURL}Customer/0`;
     private getCustomerStatusNewURL = `${environment.apiURL}Customer?email=`;
     private ApproveCustomerURL = `${environment.apiURL}ApproveCustomer?email=`;
+    private ApproverURL = `${environment.apiURL}Approver`;
 
 
     private retry: any = retry(1); // Retry the request up to 2 times in case of failure
@@ -56,5 +57,10 @@ export class CustomersService {
     ApproveCustomer(): Observable<any[]> {
         const url = `${this.ApproveCustomerURL}${localStorage.getItem('userEmail') ?? ''}`;
         return this.http.get<any[]>(url).pipe(this.retry);
+    }
+
+
+    isApproverRemarks(data: any): Observable<any[]> {
+        return this.http.post<any[]>(`${this.ApproverURL}`, data).pipe(this.retry);
     }
 }

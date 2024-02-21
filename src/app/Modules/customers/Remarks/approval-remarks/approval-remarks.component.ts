@@ -13,7 +13,7 @@ export class ApprovalRemarksComponent {
     publicVariable = new publicVariable();
 
 
-     constructor(private fb: FormBuilder,
+    constructor(private fb: FormBuilder,
         private modalService: NgbModal,
         private toastr: ToastrService,
         private router: Router,
@@ -39,41 +39,45 @@ export class ApprovalRemarksComponent {
 
     }
 
-    onSubmit() {
+    onSubmit(action: boolean) {
         if (this.publicVariable.dataForm.valid) {
             const newData = this.publicVariable.dataForm.value;
-            const newConfig: any = {
-                customerId:this.data.customerId,
-                isApproved:true,
-                loginId:this.publicVariable.storedEmail,
-                statusId:this.data.customerStatus,
-                remarks:newData.remarks,
+            let statusId: number;
+
+            if (!action) {
+                statusId = 1;
+            } else {
+                statusId = this.data.customerStatus;
             }
-            console.log(newConfig);
+            const newConfig: any = {
+                customerId: this.data.customerId,
+                isApproved: action,
+                loginId: this.publicVariable.storedEmail,
+                statusId: statusId,
+                remarks: newData.remarks,
+            }
+            this.publicVariable.isProcess = true;
+            this.publicVariable.Subscription.add(
+                this.API.isApproverRemarks(newConfig).subscribe({
+                    next: (res: any) => {
+                        if (res.status === true) {
+                            this.toastr.success(res.message, 'Success');
+                            this.router.navigate(['customer/approval']);
+                            this.publicVariable.dataForm.reset();
+                        } else {
+                            this.toastr.error(res.message, 'Error');
+                        }
+                    },
+                    error: (error: any) => {
+                        this.toastr.error(error.error.message || 'An error occurred. Please try again later.', 'Error');
+                    },
+                    complete: () => {
+                        this.publicVariable.isProcess = false;
+                    }
+                })
+            );
 
-
-            // this.publicVariable.isProcess = true;
-            // this.publicVariable.Subscription.add(
-            //     this.API.create(newConfig).subscribe({
-            //         next: (res: any) => {
-            //             if (res.status === true) {
-            //                 this.toastr.success(res.message, 'Success');
-            //                 this.router.navigate(['customer/status']);
-            //                 this.publicVariable.dataForm.reset();
-            //             } else {
-            //                 this.toastr.error(res.message, 'Error');
-            //             }
-            //         },
-            //         error: (error: any) => {
-            //             this.toastr.error(error.error.message || 'An error occurred. Please try again later.', 'Error');
-            //         },
-            //         complete: () => {
-            //             this.publicVariable.isProcess = false;
-            //         }
-            //     })
-            // );
-
-        }else{
+        } else {
             this.markFormControlsAsTouched();
 
         }
