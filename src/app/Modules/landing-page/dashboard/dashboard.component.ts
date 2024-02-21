@@ -11,7 +11,10 @@ import { timeout, finalize } from 'rxjs';
 export class DashboardComponent {
 
     publicVariable = new publicVariable();
-    customerStatus:string = 'DRAFT';
+    customerStatus: string = 'DRAFT';
+    isDRAFT:number = 0;
+    PendingApproval:number = 0;
+    ApprovedAccounts:number =0; 
 
 
     constructor(private appService: AppService,
@@ -29,7 +32,7 @@ export class DashboardComponent {
         this.publicVariable.storedEmail = localStorage.getItem('userEmail') ?? '';
     }
 
-    loadCustomerStatusList(status:string): void {
+    loadCustomerStatusList(status: string): void {
         const subscription = this.API.getCustomerStatusNew().pipe(
             timeout(120000), // Timeout set to 2 minutes (120000 milliseconds)
             finalize(() => {
@@ -46,12 +49,48 @@ export class DashboardComponent {
                     this.publicVariable.customerStatusList = filteredData;
                     this.publicVariable.count = filteredData.length;
                 } else {
-                    
+
                     // Filter the response data by email and status
                     this.customerStatus = status;
-                    const filteredData = response.data.filter((item: any) => item.createdBy === this.publicVariable.storedEmail && item.customerStatus == this.customerStatus);
-                    this.publicVariable.customerStatusList = filteredData;
-                    this.publicVariable.count = filteredData.length;
+                    switch (this.customerStatus) {
+
+                        case 'DRAFT':
+                            const filteredDataDraft = response.data.filter((item: any) => item.createdBy === this.publicVariable.storedEmail && item.customerStatus === this.customerStatus);
+                            this.publicVariable.customerStatusList = filteredDataDraft;
+                            this.isDRAFT = filteredDataDraft.length;
+                            break;
+                        case 'PENDING WITH ACCOUNTS APPROVER':
+                            const filteredDataPendingWithAccountsApprover = response.data.filter((item: any) => item.createdBy === this.publicVariable.storedEmail && item.customerStatus === this.customerStatus);
+                            this.publicVariable.customerStatusList = filteredDataPendingWithAccountsApprover;
+                            this.PendingApproval = filteredDataPendingWithAccountsApprover.length;
+                            break;
+
+
+                        case 'APPROVED BY ACCOUNTS APPROVER':
+                            const filteredDataApprovedWithAccountsApprover = response.data.filter((item: any) => item.createdBy === this.publicVariable.storedEmail && item.customerStatus === this.customerStatus);
+                            this.publicVariable.customerStatusList = filteredDataApprovedWithAccountsApprover;
+                            this.ApprovedAccounts = filteredDataApprovedWithAccountsApprover.length;
+                            break;
+
+                        case 'REJECTED BY ACCOUNTS APPROVER':
+                            const filteredDataRejectedbBYAccountsApprover = response.data.filter((item: any) => item.createdBy === this.publicVariable.storedEmail);
+                            this.publicVariable.customerStatusList = filteredDataRejectedbBYAccountsApprover;
+                            this.publicVariable.count = filteredDataRejectedbBYAccountsApprover.length;
+                            break;
+
+                        case 'ALL':
+                            const filteredDataAll = response.data.filter((item: any) => item.createdBy === this.publicVariable.storedEmail);
+                            this.publicVariable.customerStatusList = filteredDataAll;
+                            this.publicVariable.count = filteredDataAll.length;
+                            break;
+
+                        default:
+                            const filteredDataOther = response.data.filter((item: any) => item.createdBy === this.publicVariable.storedEmail && item.customerStatus === this.customerStatus);
+                            this.publicVariable.customerStatusList = filteredDataOther;
+                            this.publicVariable.count = filteredDataOther.length;
+                            break;
+                    }
+
                 }
 
             },
@@ -79,7 +118,8 @@ export class DashboardComponent {
                     next: (res: any) => {
                         this.toastr.success(res.message, 'Success');
                         this.publicVariable.isProcess = false;
-                        this.loadCustomerStatusList(this.customerStatus);                    },
+                        this.loadCustomerStatusList(this.customerStatus);
+                    },
                     error: (error) => {
                         this.publicVariable.isProcess = false;
                         this.toastr.error(error.error.message, 'Error');
