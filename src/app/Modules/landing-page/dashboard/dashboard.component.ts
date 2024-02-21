@@ -16,7 +16,7 @@ export class DashboardComponent {
     PendingApproval: number = 0;
     ApprovedAccounts: number = 0;
     RejectedbyAccounts: number = 0;
-    ALL:number = 0;
+    ALL: number = 0;
 
 
     constructor(private appService: AppService,
@@ -72,7 +72,7 @@ export class DashboardComponent {
                             this.ApprovedAccounts = filteredDataApprovedWithAccountsApprover.length;
                             break;
                         case 'REJECTED BY CH APPROVER':
-                            const filteredDataRejectedbBYAccountsApprover = response.data.filter((item: any) => item.createdBy === this.publicVariable.storedEmail  && item.customerStatus === this.customerStatus);
+                            const filteredDataRejectedbBYAccountsApprover = response.data.filter((item: any) => item.createdBy === this.publicVariable.storedEmail && item.customerStatus === this.customerStatus);
                             this.publicVariable.customerStatusList = filteredDataRejectedbBYAccountsApprover;
                             this.RejectedbyAccounts = filteredDataRejectedbBYAccountsApprover.length;
                             break;
