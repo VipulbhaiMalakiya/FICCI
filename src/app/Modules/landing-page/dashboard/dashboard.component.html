@@ -20,9 +20,9 @@
                 <div class="data-tabs">
                     <ul class="nav nav-pills" role="tablist">
                         <li class="nav-item">
-                            <a class="nav-link active tabbg-1" data-bs-toggle="pill" href="#home">
+                            <a class="nav-link active tabbg-1" data-bs-toggle="pill" (click)="loadCustomerStatusList('DRAFT')" href="#home">
                                 <small>Draft</small>
-                                <span>1</span>
+                                <span>{{this.publicVariable.count }}</span>
                             </a>
                         </li>
                         <li class="nav-item">

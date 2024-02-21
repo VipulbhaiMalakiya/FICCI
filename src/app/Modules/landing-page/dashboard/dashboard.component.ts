@@ -11,6 +11,7 @@ import { timeout, finalize } from 'rxjs';
 export class DashboardComponent {
 
     publicVariable = new publicVariable();
+    customerStatus:string = 'DRAFT';
 
 
     constructor(private appService: AppService,
@@ -24,11 +25,11 @@ export class DashboardComponent {
     }
 
     ngOnInit(): void {
-        this.loadCustomerStatusList();
+        this.loadCustomerStatusList(this.customerStatus);
         this.publicVariable.storedEmail = localStorage.getItem('userEmail') ?? '';
     }
 
-    loadCustomerStatusList(): void {
+    loadCustomerStatusList(status:string): void {
         const subscription = this.API.getCustomerStatusNew().pipe(
             timeout(120000), // Timeout set to 2 minutes (120000 milliseconds)
             finalize(() => {
@@ -45,9 +46,10 @@ export class DashboardComponent {
                     this.publicVariable.customerStatusList = filteredData;
                     this.publicVariable.count = filteredData.length;
                 } else {
-
-                    // Filter the response data by email
-                    const filteredData = response.data.filter((item: any) => item.createdBy === this.publicVariable.storedEmail);
+                    
+                    // Filter the response data by email and status
+                    this.customerStatus = status;
+                    const filteredData = response.data.filter((item: any) => item.createdBy === this.publicVariable.storedEmail && item.customerStatus == this.customerStatus);
                     this.publicVariable.customerStatusList = filteredData;
                     this.publicVariable.count = filteredData.length;
                 }
@@ -77,8 +79,7 @@ export class DashboardComponent {
                     next: (res: any) => {
                         this.toastr.success(res.message, 'Success');
                         this.publicVariable.isProcess = false;
-                        this.loadCustomerStatusList();
-                    },
+                        this.loadCustomerStatusList(this.customerStatus);                    },
                     error: (error) => {
                         this.publicVariable.isProcess = false;
                         this.toastr.error(error.error.message, 'Error');
