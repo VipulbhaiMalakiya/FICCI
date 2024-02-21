@@ -210,6 +210,8 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
                 gstCustomerType: newData.GSTCustomerType,
                 pan: newData.PANNo.trim(),
                 loginId: this.publicVariable.storedEmail,
+                roleName:this.publicVariable.storedRole
+
                 // customerStatus:customerStatus
             };
             this.publicVariable.isProcess = true;
@@ -226,6 +228,7 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
                     },
                     error: (error: any) => {
                         this.toastr.error(error.error.message || 'An error occurred. Please try again later.', 'Error');
+                        this.publicVariable.isProcess = false;
                     },
                     complete: () => {
                         this.publicVariable.isProcess = false;

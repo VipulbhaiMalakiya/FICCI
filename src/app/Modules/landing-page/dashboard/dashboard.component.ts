@@ -69,7 +69,7 @@ export class DashboardComponent {
     countDataByStatus(data: any[]): void {
         const counts: any = {
             'DRAFT': 0,
-            'PENDING WITH ACCOUNTS APPROVER': 0,
+            'PENDING WITH TL APPROVER': 0,
             'APPROVED BY ACCOUNTS APPROVER': 0,
             'REJECTED BY CH APPROVER': 0,
             'ALL': 0
@@ -79,8 +79,8 @@ export class DashboardComponent {
         const draftData = data.filter(item => item.customerStatus === 'DRAFT');
         counts['DRAFT'] = draftData.length;
 
-        const pendingData = data.filter(item => item.customerStatus === 'PENDING WITH ACCOUNTS APPROVER');
-        counts['PENDING WITH ACCOUNTS APPROVER'] = pendingData.length;
+        const pendingData = data.filter(item => item.customerStatus === 'PENDING WITH TL APPROVER');
+        counts['PENDING WITH TL APPROVER'] = pendingData.length;
 
         const approvedData = data.filter(item => item.customerStatus === 'APPROVED BY ACCOUNTS APPROVER');
         counts['APPROVED BY ACCOUNTS APPROVER'] = approvedData.length;
@@ -93,12 +93,12 @@ export class DashboardComponent {
 
         // Update counts
         this.isDRAFT = counts['DRAFT'];
-        this.PendingApproval = counts['PENDING WITH ACCOUNTS APPROVER'];
+        this.PendingApproval = counts['PENDING WITH TL APPROVER'];
         this.ApprovedAccounts = counts['APPROVED BY ACCOUNTS APPROVER'];
         this.RejectedbyAccounts = counts['REJECTED BY CH APPROVER'];
         this.ALL = counts['ALL'];
         this.publicVariable.count = counts['ALL']; // Total count
-      
+
     }
 
     loadCustomerStatusList(status: string): void {
@@ -128,7 +128,7 @@ export class DashboardComponent {
                             this.publicVariable.customerStatusList = filteredDataDraft;
                             this.isDRAFT = filteredDataDraft.length;
                             break;
-                        case 'PENDING WITH ACCOUNTS APPROVER':
+                        case 'PENDING WITH TL APPROVER':
                             const filteredDataPendingWithAccountsApprover = response.data.filter((item: any) => item.createdBy === this.publicVariable.storedEmail && item.customerStatus === this.customerStatus);
                             this.publicVariable.customerStatusList = filteredDataPendingWithAccountsApprover;
                             this.PendingApproval = filteredDataPendingWithAccountsApprover.length;
