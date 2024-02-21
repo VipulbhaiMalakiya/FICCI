@@ -31,10 +31,75 @@ export class DashboardComponent {
 
     ngOnInit(): void {
         this.loadCustomerStatusList(this.customerStatus);
+        this.loadCustomerStatusCountList();
         this.publicVariable.storedEmail = localStorage.getItem('userEmail') ?? '';
     }
 
- 
+    loadCustomerStatusCountList(): void {
+        const subscription = this.API.getCustomerStatusNew().pipe(
+            timeout(120000), // Timeout set to 2 minutes (120000 milliseconds)
+            finalize(() => {
+                this.publicVariable.isProcess = false;
+            })
+        ).subscribe({
+            next: (response: any) => {
+                if (this.publicVariable.storedRole === 'Admin') {
+                    // Filter the response data by email
+                    const filteredData = response.data.filter((item: any) => item.createdBy === this.publicVariable.storedEmail);
+                    this.publicVariable.customerStatusList = filteredData;
+                    this.publicVariable.count = filteredData.length;
+                } else {
+                    // Count data for each customer status
+                    this.countDataByStatus(response.data);
+                }
+            },
+            error: (error: any) => {
+                if (error.name === 'TimeoutError') {
+                    this.toastr.error('Operation timed out after 2 minutes', error.name);
+                } else {
+                    this.toastr.error('Error loading user list', error.name);
+                }
+            }
+        });
+
+        this.publicVariable.Subscription.add(subscription);
+    }
+
+    // Helper method to count data for each customer status
+    countDataByStatus(data: any[]): void {
+        const counts: any = {
+            'DRAFT': 0,
+            'PENDING WITH ACCOUNTS APPROVER': 0,
+            'APPROVED BY ACCOUNTS APPROVER': 0,
+            'REJECTED BY CH APPROVER': 0,
+            'ALL': 0
+        };
+
+        // Filter data for each customer status
+        const draftData = data.filter(item => item.customerStatus === 'DRAFT');
+        counts['DRAFT'] = draftData.length;
+
+        const pendingData = data.filter(item => item.customerStatus === 'PENDING WITH ACCOUNTS APPROVER');
+        counts['PENDING WITH ACCOUNTS APPROVER'] = pendingData.length;
+
+        const approvedData = data.filter(item => item.customerStatus === 'APPROVED BY ACCOUNTS APPROVER');
+        counts['APPROVED BY ACCOUNTS APPROVER'] = approvedData.length;
+
+        const rejectedData = data.filter(item => item.customerStatus === 'REJECTED BY CH APPROVER');
+        counts['REJECTED BY CH APPROVER'] = rejectedData.length;
+
+        // Calculate total count
+        counts['ALL'] = data.length;
+
+        // Update counts
+        this.isDRAFT = counts['DRAFT'];
+        this.PendingApproval = counts['PENDING WITH ACCOUNTS APPROVER'];
+        this.ApprovedAccounts = counts['APPROVED BY ACCOUNTS APPROVER'];
+        this.RejectedbyAccounts = counts['REJECTED BY CH APPROVER'];
+        this.ALL = counts['ALL'];
+        this.publicVariable.count = counts['ALL']; // Total count
+      
+    }
 
     loadCustomerStatusList(status: string): void {
         const subscription = this.API.getCustomerStatusNew().pipe(
@@ -107,8 +172,8 @@ export class DashboardComponent {
         this.publicVariable.Subscription.add(subscription);
     }
 
-    loadCustomer(){
-        
+    loadCustomer() {
+
     }
 
 
