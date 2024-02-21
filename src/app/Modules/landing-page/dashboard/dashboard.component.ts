@@ -34,6 +34,8 @@ export class DashboardComponent {
         this.publicVariable.storedEmail = localStorage.getItem('userEmail') ?? '';
     }
 
+ 
+
     loadCustomerStatusList(status: string): void {
         const subscription = this.API.getCustomerStatusNew().pipe(
             timeout(120000), // Timeout set to 2 minutes (120000 milliseconds)
@@ -103,6 +105,10 @@ export class DashboardComponent {
         });
 
         this.publicVariable.Subscription.add(subscription);
+    }
+
+    loadCustomer(){
+        
     }
 
 
