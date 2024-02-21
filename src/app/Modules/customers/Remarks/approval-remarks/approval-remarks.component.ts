@@ -17,8 +17,6 @@ export class ApprovalRemarksComponent {
             this.customerId = +params['id'];
         });
         this.data = history.state.data;
-        console.log(this.data);
-
     }
 
 }
