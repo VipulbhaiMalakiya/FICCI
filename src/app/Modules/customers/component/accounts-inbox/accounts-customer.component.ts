@@ -28,7 +28,7 @@ export class AccountsCustomerComponent {
 
     onEdit(data: ApproveCustomerList): void {
         if (data.customerId) {
-            this.router.navigate(['customer/approval/remarks/', data.customerId], { state: { data: data } });
+            this.router.navigate(['customer/accounts/remarks/', data.customerId], { state: { data: data } });
         } else {
             console.error('ID is undefined or null');
         }
