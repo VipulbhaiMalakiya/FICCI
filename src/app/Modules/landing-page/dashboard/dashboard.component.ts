@@ -30,7 +30,7 @@ export class DashboardComponent {
     }
 
     ngOnInit(): void {
-        this.loadCustomerStatusList(this.customerStatus);
+
         this.loadCustomerStatusCountList();
         this.publicVariable.storedEmail = localStorage.getItem('userEmail') ?? '';
     }
@@ -51,6 +51,7 @@ export class DashboardComponent {
                 } else {
                     // Count data for each customer status
                     this.countDataByStatus(response.data);
+                    this.loadCustomerStatusList(this.customerStatus);
                 }
             },
             error: (error: any) => {
@@ -70,12 +71,12 @@ export class DashboardComponent {
         const counts: any = {
             'DRAFT': 0,
             'PENDING WITH TL APPROVER': 0,
-            'PENDING WITH CH APPROVER':0,
-            'PENDING WITH ACCOUNTS APPROVER':0,
-            'APPROVED BY ACCOUNTS APPROVER':0,
-            'REJECTED BY TL APPROVER':0,
+            'PENDING WITH CH APPROVER': 0,
+            'PENDING WITH ACCOUNTS APPROVER': 0,
+            'APPROVED BY ACCOUNTS APPROVER': 0,
+            'REJECTED BY TL APPROVER': 0,
             'REJECTED BY CH APPROVER': 0,
-            'REJECTED BY ACCOUNTS APPROVER':0,
+            'REJECTED BY ACCOUNTS APPROVER': 0,
             'ALL': 0
         };
 
@@ -84,8 +85,8 @@ export class DashboardComponent {
         counts['DRAFT'] = draftData.length;
 
         const pendingData = data.filter(item => item.customerStatus === 'PENDING WITH TL APPROVER'
-         || item.customerStatus === 'PENDING WITH CH APPROVER'
-         || item.customerStatus === 'PENDING WITH ACCOUNTS APPROVER');
+            || item.customerStatus === 'PENDING WITH CH APPROVER'
+            || item.customerStatus === 'PENDING WITH ACCOUNTS APPROVER');
         counts['PENDING WITH TL APPROVER'] = pendingData.length;
 
 
@@ -93,8 +94,8 @@ export class DashboardComponent {
         counts['APPROVED BY ACCOUNTS APPROVER'] = approvedData.length;
 
         const rejectedData = data.filter(item => item.customerStatus === 'REJECTED BY TL APPROVER'
-        || item.customerStatus === 'REJECTED BY CH APPROVER'
-        ||item.customerStatus === 'REJECTED BY ACCOUNTS APPROVER');
+            || item.customerStatus === 'REJECTED BY CH APPROVER'
+            || item.customerStatus === 'REJECTED BY ACCOUNTS APPROVER');
         counts['REJECTED BY CH APPROVER'] = rejectedData.length;
 
         // Calculate total count
@@ -131,21 +132,27 @@ export class DashboardComponent {
                     // Filter the response data by email and status
                     this.customerStatus = status;
                     switch (this.customerStatus) {
-
                         case 'DRAFT':
-                            const filteredDataDraft = response.data.filter((item: any) => item.createdBy === this.publicVariable.storedEmail && item.customerStatus === this.customerStatus);
+                            const filteredDataDraft = response.data.filter((item: any) => item.createdBy === this.publicVariable.storedEmail && item.customerStatus === 'DRAFT');
                             this.publicVariable.customerStatusList = filteredDataDraft;
                             break;
-                        case 'PENDING WITH TL APPROVER':
-                            const filteredDataPendingWithAccountsApprover = response.data.filter((item: any) => item.createdBy === this.publicVariable.storedEmail && item.customerStatus === this.customerStatus);
+                        case 'PENDING WITH APPROVER':
+                            const filteredDataPendingWithAccountsApprover = response.data.filter((item: any) => item.createdBy === this.publicVariable.storedEmail &&
+                                item.customerStatus === 'PENDING WITH TL APPROVER'
+                                || item.customerStatus === 'PENDING WITH CH APPROVER'
+                                || item.customerStatus === 'PENDING WITH ACCOUNTS APPROVER');
                             this.publicVariable.customerStatusList = filteredDataPendingWithAccountsApprover;
                             break;
                         case 'APPROVED BY ACCOUNTS APPROVER':
-                            const filteredDataApprovedWithAccountsApprover = response.data.filter((item: any) => item.createdBy === this.publicVariable.storedEmail && item.customerStatus === this.customerStatus);
+                            const filteredDataApprovedWithAccountsApprover = response.data.filter((item: any) => item.createdBy === this.publicVariable.storedEmail &&
+                                item.customerStatus === this.customerStatus);
                             this.publicVariable.customerStatusList = filteredDataApprovedWithAccountsApprover;
                             break;
                         case 'REJECTED BY CH APPROVER':
-                            const filteredDataRejectedbBYAccountsApprover = response.data.filter((item: any) => item.createdBy === this.publicVariable.storedEmail && item.customerStatus === this.customerStatus);
+                            const filteredDataRejectedbBYAccountsApprover = response.data.filter((item: any) => item.createdBy === this.publicVariable.storedEmail &&
+                                item.customerStatus === 'REJECTED BY TL APPROVER'
+                                || item.customerStatus === 'REJECTED BY CH APPROVER'
+                                || item.customerStatus === 'REJECTED BY ACCOUNTS APPROVER');
                             this.publicVariable.customerStatusList = filteredDataRejectedbBYAccountsApprover;
                             break;
 
