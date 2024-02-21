@@ -47,6 +47,7 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
         this.loadCountryList();
         this.loadGstCustomerType();
         this.publicVariable.storedEmail = localStorage.getItem('userEmail') ?? '';
+        this.publicVariable.isProcess = false;
 
         this.route.params.subscribe(params => {
             this.customerId = +params['id'];
