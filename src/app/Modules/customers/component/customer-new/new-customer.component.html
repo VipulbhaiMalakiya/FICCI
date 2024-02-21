@@ -4,7 +4,7 @@
     <h3 class="content-title">Add New Customer</h3>
 
     <div class="mastersform-sec">
-        <form [formGroup]="publicVariable.dataForm" #myForm (ngSubmit)="onSubmit()">
+        <form [formGroup]="publicVariable.dataForm"  (ngSubmit)="onSubmit()">
             <div class="row">
                 <div class="col-md-3 col-sm-6" *ngIf="isAccount">
                     <div class="form-group">
