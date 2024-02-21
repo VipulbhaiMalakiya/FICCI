@@ -15,14 +15,14 @@
             <div class="col-md-3 col-sm-6">
                 <div class="form-group">
                     <label>Name</label>
-                    <input type="text" value="{{data.customerName}}" class="form-control" disabled readonly>
+                    <input type="text" value="{{data.customerName | titlecase}}" class="form-control" disabled readonly>
                 </div>
             </div>
 
             <div class="col-md-3 col-sm-6">
                 <div class="form-group">
                     <label>Name 2</label>
-                    <input type="text" value="{{data.customerName}}" class="form-control" disabled readonly>
+                    <input type="text" value="{{data.customerName | titlecase}}" class="form-control" disabled readonly>
                 </div>
             </div>
 
@@ -44,7 +44,7 @@
                 <div class="form-group">
                     <label>Country/Region Code</label>
                     <select class="form-select" disabled readonly>
-                        <option value="">{{data.country.countryName}}</option>
+                        <option value="">{{data.country.countryName | titlecase}}</option>
                     </select>
                 </div>
             </div>
@@ -53,7 +53,7 @@
                 <div class="form-group">
                     <label>State</label>
                     <select class="form-select" disabled readonly>
-                        <option value="">{{data.state.stateName}}</option>
+                        <option value="">{{data.state.stateName | titlecase}}</option>
                     </select>
                 </div>
             </div>
@@ -61,7 +61,7 @@
                 <div class="form-group">
                     <label>City</label>
                     <select class="form-select" disabled readonly>
-                        <option value="">{{data.city.cityName}}</option>
+                        <option value="">{{data.city.cityName | titlecase}}</option>
                     </select>
                 </div>
             </div>
@@ -76,7 +76,7 @@
             <div class="col-md-3 col-sm-6">
                 <div class="form-group">
                     <label>E-Mail</label>
-                    <input type="text" value="{{data.email}}" class="form-control" disabled readonly>
+                    <input type="text" value="{{data.email | titlecase}}" class="form-control" disabled readonly>
                 </div>
             </div>
 
@@ -89,7 +89,7 @@
             <div class="col-md-3 col-sm-6">
                 <div class="form-group">
                     <label>Contact Person</label>
-                    <input type="text" value="{{data.contact}}" class="form-control" disabled readonly>
+                    <input type="text" value="{{data.contact | titlecase}}" class="form-control" disabled readonly>
                 </div>
             </div>
             <div class="col-md-3 col-sm-6">
@@ -109,7 +109,7 @@
                 <div class="form-group">
                     <label>GST Customer Type</label>
                     <select class="form-select" disabled readonly>
-                        <option value="">{{data.gstType.gstTypeName}}</option>
+                        <option value="">{{data.gstType.gstTypeName | titlecase}}</option>
                     </select>
                 </div>
             </div>
