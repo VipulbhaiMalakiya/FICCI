@@ -42,13 +42,8 @@ export class ApprovalRemarksComponent {
     onSubmit(action: boolean) {
         if (this.publicVariable.dataForm.valid) {
             const newData = this.publicVariable.dataForm.value;
-            let statusId: number;
+            let statusId: number = !action ? this.data.customerStatus : this.data.customerStatus;
 
-            if (!action) {
-                statusId = 1;
-            } else {
-                statusId = this.data.customerStatus;
-            }
             const newConfig: any = {
                 customerId: this.data.customerId,
                 isApproved: action,
