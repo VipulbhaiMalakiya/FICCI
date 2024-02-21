@@ -64,6 +64,7 @@ export class ApprovalRemarksComponent {
                         }
                     },
                     error: (error: any) => {
+                        this.publicVariable.isProcess = false;
                         this.toastr.error(error.error.message || 'An error occurred. Please try again later.', 'Error');
                     },
                     complete: () => {
