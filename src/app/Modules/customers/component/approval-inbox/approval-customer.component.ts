@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AppService, CustomersService, NgbModal, Router, formatDate,ToastrService, publicVariable } from '../../Export/new-customer';
 import { finalize, timeout } from 'rxjs';
+import { ApproveCustomerList } from '../../interface/customers';
 
 @Component({
     selector: 'app-approval-customer',
@@ -23,6 +24,14 @@ export class ApprovalCustomerComponent implements OnInit {
     ngOnInit(): void {
         this.loadCustomerStatusList();
         this.publicVariable.storedEmail = localStorage.getItem('userEmail') ?? '';
+    }
+
+    onEdit(data: ApproveCustomerList): void {
+        if (data.customerId) {
+            this.router.navigate(['customer/approval/remarks/', data.customerId], { state: { data: data } });
+        } else {
+            console.error('ID is undefined or null');
+        }
     }
 
     loadCustomerStatusList(): void {
@@ -105,6 +114,5 @@ export class ApprovalCustomerComponent implements OnInit {
         this.publicVariable.tableSize = event.target.value;
         this.publicVariable.page = 1;
         this.publicVariable.ApproveCustomerList
-
     }
 }

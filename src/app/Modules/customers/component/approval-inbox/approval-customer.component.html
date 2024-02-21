@@ -71,7 +71,7 @@
                             <td>{{d.lastUpdateBy | titlecase }}</td>
                             <td>{{d.statusName | titlecase}}</td>
                             <td><span class="table-btns">
-                                    <a routerLink="remarks/1"><img src="../assets/images/view-icon.svg" alt=""></a>
+                                    <a href="javascript:void(0);"  (click)="onEdit(d)" ><img src="../assets/images/view-icon.svg" alt=""></a>
                                 </span>
                             </td>
                         </tr>
