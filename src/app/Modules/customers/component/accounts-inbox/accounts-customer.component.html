@@ -2,9 +2,9 @@
 
     <h3 class="content-title">Customer Accounts Inbox</h3>
 
-    <div class="page-btns-col" >
+    <div class="page-btns-col">
 
-        <div class="tblsort" *ngIf="publicVariable.ApproveCustomerList && publicVariable.ApproveCustomerList.length > 0">
+        <div class="tblsort" *ngIf="publicVariable.customerStatusList && publicVariable.customerStatusList.length > 0">
             <label class="col-form-label">Show</label>
             <select id="itemsPerPageSelect" class="form-select" [(ngModel)]="publicVariable.tableSize"
                 (change)="onTableSizeChange($event)">
@@ -12,20 +12,21 @@
             </select>
         </div>
 
-        <div class="dt-buttons" *ngIf="publicVariable.ApproveCustomerList && publicVariable.ApproveCustomerList.length > 0">
-            <button class="gray-btns" type="button" (click)="onDownload()"><img src="../assets/images/excel-icon.png"
+        <div class="dt-buttons" *ngIf="publicVariable.customerStatusList && publicVariable.customerStatusList.length > 0">
+            <button class="gray-btns" (click)="onDownload()" type="button"><img src="../assets/images/excel-icon.png"
                     alt=""></button>
         </div>
 
         <!-- Example single danger button -->
-        <div class="topbr-btns" *ngIf="publicVariable.ApproveCustomerList && publicVariable.ApproveCustomerList.length > 0">
-            <div class="btn-group">
+        <div class="topbr-btns" >
+            <div class="btn-group" *ngIf="publicVariable.customerStatusList && publicVariable.customerStatusList.length > 0">
                 <div class="table-search"><input type="text" class="form-control"
-                        [(ngModel)]="publicVariable.approvalsearchText" name="name" id="name" placeholder="Search here"></div>
+                        [(ngModel)]="publicVariable.searchText" name="name" id="name" placeholder="Search here"></div>
             </div>
         </div>
 
-        <div class="common-box"><a routerLink="/customer/new" class="common-btn" *ngIf="this.publicVariable.storedRole !== 'Admin'">Add New</a></div>
+        <div class="common-box"><a routerLink="/customer/new" class="common-btn"
+            *ngIf="this.publicVariable.storedRole !== 'Admin'">Add New</a></div>
 
     </div>
 
@@ -42,9 +43,8 @@
                             <th>Address</th>
                             <th>City</th>
                             <th>Contact</th>
-                            <th>TL Approve</th>
-                            <th>CL Approve</th>
-                            <th>SG Approver</th>
+                            <th>TL Approver</th>
+                            <th>CL Approver</th>
                             <th>Created On</th>
                             <th>Created By</th>
                             <th>Last Updated On</th>
@@ -56,45 +56,45 @@
                     <tbody>
 
                         <tr
-                        *ngFor="let d of  this.publicVariable.ApproveCustomerList | approvalsearchFilter: publicVariable.approvalsearchText| paginate: {itemsPerPage: publicVariable.tableSize,currentPage: publicVariable.page,totalItems: publicVariable.count};let i = index">
+                            *ngFor="let d of  this.publicVariable.customerStatusList | searchFilter: publicVariable.searchText| paginate: {itemsPerPage: publicVariable.tableSize,currentPage: publicVariable.page,totalItems: publicVariable.count};let i = index">
                             <td>{{i + 1}}</td>
-                            <td>{{d.customerName | titlecase}}</td>
-                            <td>{{d.custoemrAddress}}</td>
-                            <td>{{d.cityName |titlecase}}</td>
-                            <td>{{d.customerPhoneNo}}</td>
-                            <td>{{d.customerTlApprover | titlecase}}</td>
-                            <td>{{d.customerClusterApprover | titlecase}}</td>
-                            <td>{{d.customerSgApprover | titlecase}}</td>
+                            <!-- <td>{{d.customerCode}}</td> -->
+                            <td>{{d.customerName |titlecase }}</td>
+                            <td>{{d.address}}</td>
+                            <td>{{d.city.cityName | titlecase}}</td>
+                            <td>{{d.phoneNumber | titlecase}}</td>
+                            <td>{{d.tlApprover}}</td>
+                            <td>{{d.clApprover}}</td>
                             <td>{{d.createdOn | date:'medium':'IST' }}</td>
-                            <td>{{d.createdby | titlecase}}</td>
-                            <td>{{d.customerUpdatedOn | date:'medium':'IST' }}</td>
-                            <td>{{d.lastUpdateBy | titlecase }}</td>
-                            <td>{{d.statusName | titlecase}}</td>
+                            <td>{{d.createdBy}}</td>
+                            <td>{{d.modifiedOn | date:'medium':'IST' }}</td>
+                            <td>{{d.lastUpdateBy | titlecase}}</td>
+                            <td>{{d.customerStatus | titlecase}}</td>
                             <td><span class="table-btns">
-                                    <a href="javascript:void(0);"  (click)="onEdit(d)" ><img src="../assets/images/view-icon.svg" alt=""></a>
-                                </span>
-                            </td>
+                                <a href="javascript:void(0);"  (click)="onEdit(d)" ><img src="../assets/images/view-icon.svg" alt=""></a>
+                            </span>
+                        </td>
                         </tr>
                     </tbody>
                 </table>
-                <div *ngIf="!publicVariable.ApproveCustomerList || publicVariable.ApproveCustomerList.length === 0">
+                <div *ngIf="!publicVariable.customerStatusList || publicVariable.customerStatusList.length === 0">
                     <div class="text-center my-3">No data found.</div>
                 </div>
                 <div class="text-center"
-                    *ngIf="(publicVariable.ApproveCustomerList | approvalsearchFilter: publicVariable.approvalsearchText).length === 0 && publicVariable.ApproveCustomerList.length > 0">
+                    *ngIf="(publicVariable.customerStatusList | searchFilter: publicVariable.searchText).length === 0 && publicVariable.customerStatusList.length > 0">
                     <span class="text-danger">No results found.</span>
                 </div>
             </div>
 
             <div class="clearfix"
-            *ngIf="publicVariable.ApproveCustomerList && publicVariable.ApproveCustomerList.length > 0">
-            <div class="hint-text">Showing <b>{{this.publicVariable.tableSize}}</b> out of <b>{{
-                    publicVariable.count }}</b>
-                entries</div>
-            <pagination-controls previousLabel="Prev" class="pagination" nextLabel="Next"
-                (pageChange)="onTableDataChange($event)">
-            </pagination-controls>
-        </div>
+                *ngIf="publicVariable.customerStatusList && publicVariable.customerStatusList.length > 0">
+                <div class="hint-text">Showing <b>{{this.publicVariable.tableSize}}</b> out of <b>{{
+                        publicVariable.count }}</b>
+                    entries</div>
+                <pagination-controls previousLabel="Prev" class="pagination" nextLabel="Next"
+                    (pageChange)="onTableDataChange($event)">
+                </pagination-controls>
+            </div>
 
 
         </div>

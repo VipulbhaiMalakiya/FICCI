@@ -20,7 +20,7 @@ export class CustomersService {
     private getCustomerStatusNewURL = `${environment.apiURL}Customer?email=`;
     private ApproveCustomerURL = `${environment.apiURL}ApproveCustomer?email=`;
     private ApproverURL = `${environment.apiURL}Approver`;
-
+    private AccountURL = `${environment.apiURL}Account`;
 
     private retry: any = retry(1); // Retry the request up to 2 times in case of failure
 
@@ -65,8 +65,12 @@ export class CustomersService {
     }
 
     AccountsCustomer(): Observable<any[]> {
-      //  const url = `${this.ApproveCustomerURL}${localStorage.getItem('userEmail') ?? ''}`;
-      const url = 'https://localhost:7038/api/ApproveCustomer?email=harsh@example.com';
+       const url = `${this.ApproveCustomerURL}${localStorage.getItem('userEmail') ?? ''}`;
         return this.http.get<any[]>(url).pipe(this.retry);
     }
+
+    getCustomerStatuaccount(): Observable<any[]> {
+        const url = `${this.AccountURL}`;
+         return this.http.get<any[]>(url).pipe(this.retry);
+     }
 }
