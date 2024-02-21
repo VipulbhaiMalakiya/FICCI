@@ -4,9 +4,9 @@ import { finalize, timeout } from 'rxjs';
 import { ApproveCustomerList, customerStatusListModel } from '../../interface/customers';
 
 @Component({
-  selector: 'app-accounts-customer',
-  templateUrl: './accounts-customer.component.html',
-  styleUrls: ['./accounts-customer.component.css']
+    selector: 'app-accounts-customer',
+    templateUrl: './accounts-customer.component.html',
+    styleUrls: ['./accounts-customer.component.css']
 })
 export class AccountsCustomerComponent {
 
@@ -39,7 +39,7 @@ export class AccountsCustomerComponent {
         ).subscribe({
             next: (response: any) => {
                 this.publicVariable.customerStatusList = response.data;
-                    this.publicVariable.count = response.data.length;
+                this.publicVariable.count = response.data.length;
 
             },
             error: (error: any) => {

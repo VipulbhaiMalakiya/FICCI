@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AppService, CustomersService, NgbModal, Router, formatDate,ToastrService, publicVariable } from '../../Export/new-customer';
+import { AppService, CustomersService, NgbModal, Router, formatDate, ToastrService, publicVariable } from '../../Export/new-customer';
 import { finalize, timeout } from 'rxjs';
 import { ApproveCustomerList } from '../../interface/customers';
 
@@ -42,21 +42,17 @@ export class ApprovalCustomerComponent implements OnInit {
             })
         ).subscribe({
             next: (response: any) => {
-                if(this.publicVariable.storedRole === 'Admin'){
-                    // this.publicVariable.ApproveCustomerList = response.data;
-                    // this.publicVariable.count = response.data.length;
 
-                      // Filter the response data by email
-                      const filteredData = response.data.filter((item: any) => item.approverEmail === this.publicVariable.storedEmail);
-                      this.publicVariable.ApproveCustomerList = filteredData;
-                      this.publicVariable.count = filteredData.length;
-                }else{
-                      // Filter the response data by email
+                if (this.publicVariable.storedRole === 'Admin') {
+                    this.publicVariable.ApproveCustomerList = response.data;
+                    this.publicVariable.count = response.data.length;
+
+                } else {
+                    // Filter the response data by email
                 const filteredData = response.data.filter((item: any) => item.approverEmail === this.publicVariable.storedEmail);
                 this.publicVariable.ApproveCustomerList = filteredData;
                 this.publicVariable.count = filteredData.length;
                 }
-
             },
             error: (error: any) => {
                 if (error.name === 'TimeoutError') {
@@ -76,33 +72,33 @@ export class ApprovalCustomerComponent implements OnInit {
     onDownload() {
         const exportData = this.publicVariable.ApproveCustomerList.map((x) => ({
             Name: x?.customerName ? this.toTitleCase(x.customerName) : '',
-            Name2:x?.customerLastname ? this.toTitleCase(x.customerLastname) : '',
+            Name2: x?.customerLastname ? this.toTitleCase(x.customerLastname) : '',
             Address: x?.custoemrAddress || '',
-            Address2:x?.custoemrAddress2 || '',
+            Address2: x?.custoemrAddress2 || '',
             Email: x?.customerEmailId ? this.toTitleCase(x.customerEmailId) : '',
             "Phone Number": x?.customerPhoneNo || '',
-            "Pincode":x?.customerPinCode || '',
-            "GstNo":x?.customerGstNo||'',
-            "Contact Person" : x?.customerContactPerson ? this.toTitleCase(x.customerContactPerson) : '',
-            "PanNo":x?.customerPanNo || '',
-            "createdOn":x.createdOn ? formatDate(x.createdOn, 'medium', 'en-IN', 'IST') : '',
-            "createdby":x.createdby ? this.toTitleCase(x.createdby) : '',
-            "Status" : x?.statusName ? this.toTitleCase(x.statusName) : '',
-            "UpdatedOn" : x?.customerUpdatedOn ? formatDate(x.customerUpdatedOn, 'medium', 'en-IN', 'IST') : '',
-            'lastUpdateBy':x?.lastUpdateBy  ? this.toTitleCase(x.lastUpdateBy) : '',
-            "TL Approver" : x.customerTlApprover ? this.toTitleCase(x.customerTlApprover) : '',
-            "CL Approver" : x.customerClusterApprover ? this.toTitleCase(x.customerClusterApprover) : '',
-            "SG Approver" : x.customerSgApprover ? this.toTitleCase(x.customerSgApprover) : '',
-            'Customer TypeName' : x.customerTypeName ? this.toTitleCase(x.customerTypeName) : '',
-            "Approver Email" : x.approverEmail ? this.toTitleCase(x.approverEmail) : '',
+            "Pincode": x?.customerPinCode || '',
+            "GstNo": x?.customerGstNo || '',
+            "Contact Person": x?.customerContactPerson ? this.toTitleCase(x.customerContactPerson) : '',
+            "PanNo": x?.customerPanNo || '',
+            "createdOn": x.createdOn ? formatDate(x.createdOn, 'medium', 'en-IN', 'IST') : '',
+            "createdby": x.createdby ? this.toTitleCase(x.createdby) : '',
+            "Status": x?.statusName ? this.toTitleCase(x.statusName) : '',
+            "UpdatedOn": x?.customerUpdatedOn ? formatDate(x.customerUpdatedOn, 'medium', 'en-IN', 'IST') : '',
+            'lastUpdateBy': x?.lastUpdateBy ? this.toTitleCase(x.lastUpdateBy) : '',
+            "TL Approver": x.customerTlApprover ? this.toTitleCase(x.customerTlApprover) : '',
+            "CL Approver": x.customerClusterApprover ? this.toTitleCase(x.customerClusterApprover) : '',
+            "SG Approver": x.customerSgApprover ? this.toTitleCase(x.customerSgApprover) : '',
+            'Customer TypeName': x.customerTypeName ? this.toTitleCase(x.customerTypeName) : '',
+            "Approver Email": x.approverEmail ? this.toTitleCase(x.approverEmail) : '',
 
         }));
 
-        const headers = ['Name','Name2', 'Address','Address2','Email','Phone Number','Pincode',
-        'Contact Person','GstNo','PanNo','TL Approver','CL Approver','SG Approver', 'Customer TypeName',
-        'Approver Email',
-        'createdOn','createdby','UpdatedOn','lastUpdateBy',
-        'Status'];
+        const headers = ['Name', 'Name2', 'Address', 'Address2', 'Email', 'Phone Number', 'Pincode',
+            'Contact Person', 'GstNo', 'PanNo', 'TL Approver', 'CL Approver', 'SG Approver', 'Customer TypeName',
+            'Approver Email',
+            'createdOn', 'createdby', 'UpdatedOn', 'lastUpdateBy',
+            'Status'];
         this.appService.exportAsExcelFile(exportData, 'Customer Approval Inbox', headers);
     }
 

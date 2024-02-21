@@ -34,15 +34,10 @@ export class StatusCustomerComponent implements OnInit {
         ).subscribe({
             next: (response: any) => {
                 if (this.publicVariable.storedRole === 'Admin') {
-                    // this.publicVariable.customerStatusList = response.data;
-                    // this.publicVariable.count = response.data.length;
+                    this.publicVariable.customerStatusList = response.data;
+                    this.publicVariable.count = response.data.length;
 
-                    // Filter the response data by email
-                    const filteredData = response.data.filter((item: any) => item.createdBy === this.publicVariable.storedEmail);
-                    this.publicVariable.customerStatusList = filteredData;
-                    this.publicVariable.count = filteredData.length;
                 } else {
-
                     // Filter the response data by email
                     const filteredData = response.data.filter((item: any) => item.createdBy === this.publicVariable.storedEmail);
                     this.publicVariable.customerStatusList = filteredData;
