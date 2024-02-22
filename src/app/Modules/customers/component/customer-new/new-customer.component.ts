@@ -190,8 +190,6 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
         if (this.publicVariable.dataForm.valid) {
             const newData = this.publicVariable.dataForm.value;
             const isUpdate = !!newData.customerId;
-            // let customerStatus: any = newData.isDraft ? "DRAFT" : "PENDING WITH TL APPROVER";
-
             const newConfig: any = {
                 isupdate: isUpdate,
                 customerId: isUpdate ? newData.customerId : undefined,
@@ -211,8 +209,6 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
                 pan: newData.PANNo.trim(),
                 loginId: this.publicVariable.storedEmail,
                 roleName:this.publicVariable.storedRole
-
-                // customerStatus:customerStatus
             };
             this.publicVariable.isProcess = true;
             this.publicVariable.Subscription.add(
