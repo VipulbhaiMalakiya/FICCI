@@ -71,6 +71,7 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
     }
 
     patchFormData(data: any): void {
+        console.log(data.isDraft);
 
         this.publicVariable.dataForm.patchValue({
             customerId: data.customerId,
