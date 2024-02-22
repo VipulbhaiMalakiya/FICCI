@@ -17,6 +17,7 @@ export class DashboardComponent {
     ApprovedAccounts: number = 0;
     RejectedbyAccounts: number = 0;
     ALL: number = 0;
+    dashboardData: any;
 
 
     constructor(private appService: AppService,
@@ -51,6 +52,7 @@ export class DashboardComponent {
                 } else {
                     // Count data for each customer status
                     this.countDataByStatus(response.data);
+                    this.dashboardData = response.data;
                     this.loadCustomerStatusList(this.customerStatus);
                 }
             },
@@ -112,75 +114,43 @@ export class DashboardComponent {
     }
 
     loadCustomerStatusList(status: string): void {
-        const subscription = this.API.getCustomerStatusNew().pipe(
-            timeout(120000), // Timeout set to 2 minutes (120000 milliseconds)
-            finalize(() => {
-                this.publicVariable.isProcess = false;
-            })
-        ).subscribe({
-            next: (response: any) => {
-                if (this.publicVariable.storedRole === 'Admin') {
-                    // this.publicVariable.customerStatusList = response.data;
-                    // this.publicVariable.count = response.data.length;
+        this.customerStatus = status;
+        let filteredData;
 
-                    // Filter the response data by email
-                    const filteredData = response.data.filter((item: any) => item.createdBy === this.publicVariable.storedEmail);
-                    this.publicVariable.customerStatusList = filteredData;
-                    this.publicVariable.count = filteredData.length;
-                } else {
+        switch (this.customerStatus) {
+            case 'DRAFT':
+                filteredData = this.dashboardData.filter((item: any) =>
+                    // item.createdBy === this.publicVariable.storedEmail &&
+                    item.customerStatus === 'DRAFT');
+                break;
+            case 'PENDING WITH APPROVER':
+                filteredData = this.dashboardData.filter((item: any) =>
+                // item.createdBy === this.publicVariable.storedEmail &&
+                (item.customerStatus === 'PENDING WITH TL APPROVER' ||
+                    item.customerStatus === 'PENDING WITH CH APPROVER' ||
+                    item.customerStatus === 'PENDING WITH ACCOUNTS APPROVER'));
+                break;
+            case 'APPROVED BY ACCOUNTS APPROVER':
+                filteredData = this.dashboardData.filter((item: any) =>
+                    // item.createdBy === this.publicVariable.storedEmail &&
+                    item.customerStatus === this.customerStatus);
+                break;
+            case 'REJECTED BY CH APPROVER':
+                filteredData = this.dashboardData.filter((item: any) =>
+                // item.createdBy === this.publicVariable.storedEmail &&
+                (item.customerStatus === 'REJECTED BY TL APPROVER' ||
+                    item.customerStatus === 'REJECTED BY CH APPROVER' ||
+                    item.customerStatus === 'REJECTED BY ACCOUNTS APPROVER'));
+                break;
+            default:
+                filteredData = this.dashboardData.filter((item: any) =>
+                    item.createdBy === this.publicVariable.storedEmail);
+                break;
+        }
 
-                    // Filter the response data by email and status
-                    this.customerStatus = status;
-                    switch (this.customerStatus) {
-                        case 'DRAFT':
-                            const filteredDataDraft = response.data.filter((item: any) => item.createdBy === this.publicVariable.storedEmail && item.customerStatus === 'DRAFT');
-                            this.publicVariable.customerStatusList = filteredDataDraft;
-                            break;
-                        case 'PENDING WITH APPROVER':
-                            const filteredDataPendingWithAccountsApprover = response.data.filter((item: any) => item.createdBy === this.publicVariable.storedEmail &&
-                                item.customerStatus === 'PENDING WITH TL APPROVER'
-                                || item.customerStatus === 'PENDING WITH CH APPROVER'
-                                || item.customerStatus === 'PENDING WITH ACCOUNTS APPROVER');
-                            this.publicVariable.customerStatusList = filteredDataPendingWithAccountsApprover;
-                            break;
-                        case 'APPROVED BY ACCOUNTS APPROVER':
-                            const filteredDataApprovedWithAccountsApprover = response.data.filter((item: any) => item.createdBy === this.publicVariable.storedEmail &&
-                                item.customerStatus === this.customerStatus);
-                            this.publicVariable.customerStatusList = filteredDataApprovedWithAccountsApprover;
-                            break;
-                        case 'REJECTED BY CH APPROVER':
-                            const filteredDataRejectedbBYAccountsApprover = response.data.filter((item: any) => item.createdBy === this.publicVariable.storedEmail &&
-                                item.customerStatus === 'REJECTED BY TL APPROVER'
-                                || item.customerStatus === 'REJECTED BY CH APPROVER'
-                                || item.customerStatus === 'REJECTED BY ACCOUNTS APPROVER');
-                            this.publicVariable.customerStatusList = filteredDataRejectedbBYAccountsApprover;
-                            break;
-
-                        case 'ALL':
-                            const filteredDataAll = response.data.filter((item: any) => item.createdBy === this.publicVariable.storedEmail);
-                            this.publicVariable.customerStatusList = filteredDataAll;
-                            break;
-
-                        default:
-                            const filteredDataOther = response.data.filter((item: any) => item.createdBy === this.publicVariable.storedEmail);
-                            this.publicVariable.customerStatusList = filteredDataAll;
-                            break;
-                    }
-
-                }
-
-            },
-            error: (error: any) => {
-                if (error.name === 'TimeoutError') {
-                    this.toastr.error('Operation timed out after2 minutes', error.name);
-                } else {
-                    this.toastr.error('Error loading user list', error.name);
-                }
-            }
-        });
-
-        this.publicVariable.Subscription.add(subscription);
+        this.publicVariable.customerStatusList = filteredData;
     }
+
 
 
 
@@ -195,7 +165,7 @@ export class DashboardComponent {
                     next: (res: any) => {
                         this.toastr.success(res.message, 'Success');
                         this.publicVariable.isProcess = false;
-                        this.loadCustomerStatusList(this.customerStatus);
+                        this.loadCustomerStatusCountList();
                     },
                     error: (error) => {
                         this.publicVariable.isProcess = false;
