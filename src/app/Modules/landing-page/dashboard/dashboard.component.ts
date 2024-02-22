@@ -45,8 +45,8 @@ export class DashboardComponent {
         ).subscribe({
             next: (response: any) => {
                 this.countDataByStatus(response.data);
-                    this.dashboardData = response.data;
-                    this.loadCustomerStatusList(this.customerStatus);
+                this.dashboardData = response.data;
+                this.loadCustomerStatusList(this.customerStatus);
             },
             error: (error: any) => {
                 if (error.name === 'TimeoutError') {
@@ -135,13 +135,15 @@ export class DashboardComponent {
                     item.customerStatus === 'REJECTED BY ACCOUNTS APPROVER'));
                 break;
             default:
-                filteredData = this.dashboardData.filter((item: any) =>
-                    item.createdBy === this.publicVariable.storedEmail);
+                filteredData = this.dashboardData
                 break;
         }
 
         this.publicVariable.customerStatusList = filteredData;
     }
+
+
+
 
     onDelete(id: number) {
         const modalRef = this.modalService.open(ConfirmationDialogModalComponent, { size: "sm", centered: true, backdrop: "static" });
