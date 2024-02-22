@@ -142,7 +142,16 @@ export class DashboardComponent {
         this.publicVariable.customerStatusList = filteredData;
     }
 
+    onTableDataChange(event: any) {
+        this.publicVariable.page = event;
+        this.publicVariable.customerStatusList
+    }
+    onTableSizeChange(event: any): void {
+        this.publicVariable.tableSize = event.target.value;
+        this.publicVariable.page = 1;
+        this.publicVariable.customerStatusList
 
+    }
 
 
     onDelete(id: number) {
@@ -166,17 +175,6 @@ export class DashboardComponent {
 
             }
         }).catch(() => { });
-
-    }
-
-    onTableDataChange(event: any) {
-        this.publicVariable.page = event;
-        this.publicVariable.customerStatusList
-    }
-    onTableSizeChange(event: any): void {
-        this.publicVariable.tableSize = event.target.value;
-        this.publicVariable.page = 1;
-        this.publicVariable.customerStatusList
 
     }
 
