@@ -132,10 +132,12 @@
                 <div class="col-md-4 col-sm-6">
                     <div class="form-group">
                         <label for="state">State</label>
-                        <ng-select [items]="publicVariable.stateList" bindLabel="stateName" bindValue="stateName"
+                        <input type="text" id="state" class="form-control" placeholder="State"
+                            formControlName="ImpiHeaderCustomerState" />
+                        <!-- <ng-select [items]="publicVariable.stateList" bindLabel="stateName" bindValue="stateName"
                             placeholder="Select " formControlName="ImpiHeaderCustomerState"
                             (change)="onSelectCity($event)">
-                        </ng-select>
+                        </ng-select> -->
                         <div *ngIf="shouldShowError('ImpiHeaderCustomerState','required')" class="text-danger">This
                             field is required</div>
 
@@ -144,9 +146,11 @@
                 <div class="col-md-4 col-sm-6">
                     <div class="form-group">
                         <label for="city">City</label>
-                        <ng-select [items]="publicVariable.cityList" bindLabel="cityName" bindValue="cityName"
+                        <input type="text" id="city" class="form-control" placeholder="State"
+                        formControlName="ImpiHeaderCustomerCity" />
+                        <!-- <ng-select [items]="publicVariable.cityList" bindLabel="cityName" bindValue="cityName"
                             placeholder="Select" formControlName="ImpiHeaderCustomerCity">
-                        </ng-select>
+                        </ng-select> -->
                         <div *ngIf="shouldShowError('ImpiHeaderCustomerCity','required')" class="text-danger">This field
                             is required
                         </div>
