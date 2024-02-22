@@ -344,7 +344,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
     }
 
 
-    onSubmit(): void {
+    onSubmit(action: boolean): void {
 
         if (this.publicVariable.dataForm.valid) {
             const newData = this.publicVariable.dataForm.value;
@@ -375,7 +375,8 @@ export class NewPurchaseInvoiceComponent implements OnInit {
             formData.append('ImpiHeaderCustomerPhoneNo', newData.ImpiHeaderCustomerPhoneNo);
             formData.append('ImpiHeaderPaymentTerms', newData.ImpiHeaderPaymentTerms);
             formData.append('ImpiHeaderRemarks', newData.ImpiHeaderRemarks);
-            formData.append('IsDraft', newData.IsDraft);
+            formData.append('IsDraft', action.toString());
+            formData.append('loginId',   this.publicVariable.storedEmail);
             formData.append('ImpiHeaderTotalInvoiceAmount', String(this.calculateTotalAmount()));
             formData.append('ImpiHeaderCustomerCode', 'dummy');
             formData.append('ImpiHeaderCreatedBy', 'dummy');
