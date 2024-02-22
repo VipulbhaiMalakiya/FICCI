@@ -169,6 +169,17 @@ export class DashboardComponent {
 
     }
 
+    onTableDataChange(event: any) {
+        this.publicVariable.page = event;
+        this.publicVariable.customerStatusList
+    }
+    onTableSizeChange(event: any): void {
+        this.publicVariable.tableSize = event.target.value;
+        this.publicVariable.page = 1;
+        this.publicVariable.customerStatusList
+
+    }
+
     onEdit(data: customerStatusListModel): void {
         if (data.customerId) {
             this.router.navigate(['customer/status/edit', data.customerId], { state: { data: data } });
@@ -218,16 +229,7 @@ export class DashboardComponent {
             'Created On', 'Created By', 'Last Updated On', 'Last Update By', 'TL Approver', 'CL Approver', 'Status'];
         this.appService.exportAsExcelFile(exportData, 'Customer Status', headers);
     }
-    onTableDataChange(event: any) {
-        this.publicVariable.page = event;
-        this.publicVariable.customerStatusList
-    }
-    onTableSizeChange(event: any): void {
-        this.publicVariable.tableSize = event.target.value;
-        this.publicVariable.page = 1;
-        this.publicVariable.customerStatusList
 
-    }
 
 
 }
