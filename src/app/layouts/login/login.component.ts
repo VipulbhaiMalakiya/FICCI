@@ -13,6 +13,8 @@ export class LoginComponent {
     dataForm!: FormGroup;
     hidePassword: boolean = true;
     error!: string;
+    isProcess: boolean = false;
+
 
 
     constructor(private toastr: ToastrService,
@@ -34,18 +36,21 @@ export class LoginComponent {
     onSubmit() {
         if (this.dataForm.valid) {
             const { email, password } = this.dataForm.value;
-
+            this.isProcess = true;
             this.authService.login(email, password).subscribe(
                 (response) => {
                     if (response.error) {
                         this.error = response.error;
+                        this.isProcess = false;
                     } else {
                         this.router.navigate(['/dashboard']); // Redirect to the dashboard
                         this.toastr.success('Logged in successfully', 'Success');
+                        this.isProcess = false;
+
                     }
                 },
                 (error) => {
-
+                    this.isProcess = false;
                     this.toastr.error('Login failed', 'Error')
                 }
             );

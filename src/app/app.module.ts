@@ -7,6 +7,7 @@ import { ForbiddenComponent } from './layouts/forbidden/forbidden.component';
 import { LoginComponent } from './layouts/login/login.component';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './interceptor/auth-interceptor.interceptor';
+import { SharedModule } from "./Modules/shared/shared.module";
 @NgModule({
     declarations: [
         AppComponent,
@@ -14,8 +15,11 @@ import { AuthInterceptor } from './interceptor/auth-interceptor.interceptor';
         NotFoundComponent,
         ForbiddenComponent,
         LoginComponent,
-
     ],
+    providers: [
+        { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
+    ],
+    bootstrap: [AppComponent],
     imports: [
         BrowserModule,
         AppRoutingModule,
@@ -23,21 +27,15 @@ import { AuthInterceptor } from './interceptor/auth-interceptor.interceptor';
         FormsModule,
         ReactiveFormsModule,
         BrowserAnimationsModule,
-        ToastrModule.forRoot(
-            {
-                progressBar: true,
-                positionClass: 'toast-top-right',
-                closeButton: true,
-                timeOut: 3000,
-                progressAnimation: 'increasing',
-                preventDuplicates: true,
-
-            }
-        ),
-    ],
-    providers: [
-        { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
-    ],
-    bootstrap: [AppComponent]
+        ToastrModule.forRoot({
+            progressBar: true,
+            positionClass: 'toast-top-right',
+            closeButton: true,
+            timeOut: 3000,
+            progressAnimation: 'increasing',
+            preventDuplicates: true,
+        }),
+        SharedModule
+    ]
 })
 export class AppModule { }
