@@ -47,7 +47,7 @@ select.ng-valid.ng-touched {
     margin-right: 10px;
 }
 
-.form-check-input {
+/* .form-check-input {
     margin: 10px;
     border: 1px solid #aaa;
     background-color: #f5f5f5;
@@ -59,4 +59,4 @@ select.ng-valid.ng-touched {
     padding: 8px 15px;
     margin-bottom: 0px !important;
     padding-left: 0px;
-}
+} */
