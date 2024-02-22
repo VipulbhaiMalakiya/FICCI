@@ -10,11 +10,7 @@ import { ApproveCustomerList, customerStatusListModel } from '../../interface/cu
 })
 export class AccountsCustomerComponent {
 
-
-
     publicVariable = new publicVariable();
-
-
     constructor(private appService: AppService,
         private modalService: NgbModal,
         private router: Router,
@@ -40,20 +36,23 @@ export class AccountsCustomerComponent {
             next: (response: any) => {
                 this.publicVariable.customerStatusList = response.data;
                 this.publicVariable.count = response.data.length;
-
+                this.publicVariable.isProcess = false;
             },
             error: (error: any) => {
                 if (error.name === 'TimeoutError') {
                     this.toastr.error('Operation timed out after2 minutes', error.name);
+                    this.publicVariable.isProcess = false;
+
                 } else {
                     this.toastr.error('Error loading user list', error.name);
+                    this.publicVariable.isProcess = false;
+
                 }
             }
         });
 
         this.publicVariable.Subscription.add(subscription);
     }
-
 
 
     onEdit(data: customerStatusListModel): void {

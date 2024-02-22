@@ -46,18 +46,22 @@ export class ApprovalCustomerComponent implements OnInit {
                 if (this.publicVariable.storedRole === 'Admin') {
                     this.publicVariable.ApproveCustomerList = response.data;
                     this.publicVariable.count = response.data.length;
-
+                    this.publicVariable.isProcess = false;
                 } else {
                     // Filter the response data by email
-                const filteredData = response.data.filter((item: any) => item.approverEmail === this.publicVariable.storedEmail);
-                this.publicVariable.ApproveCustomerList = filteredData;
-                this.publicVariable.count = filteredData.length;
+                    const filteredData = response.data.filter((item: any) => item.approverEmail === this.publicVariable.storedEmail);
+                    this.publicVariable.ApproveCustomerList = filteredData;
+                    this.publicVariable.count = filteredData.length;
+                    this.publicVariable.isProcess = false;
+
                 }
             },
             error: (error: any) => {
                 if (error.name === 'TimeoutError') {
+                    this.publicVariable.isProcess = false;
                     this.toastr.error('Operation timed out after2 minutes', error.name);
                 } else {
+                    this.publicVariable.isProcess = false;
                     this.toastr.error('Error loading user list', error.name);
                 }
             }
