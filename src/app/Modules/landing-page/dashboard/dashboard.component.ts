@@ -140,6 +140,8 @@ export class DashboardComponent {
         }
 
         this.publicVariable.customerStatusList = filteredData;
+        this.publicVariable.count = filteredData.length;
+
     }
 
     onTableDataChange(event: any) {
