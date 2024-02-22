@@ -376,7 +376,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
             formData.append('ImpiHeaderPaymentTerms', newData.ImpiHeaderPaymentTerms);
             formData.append('ImpiHeaderRemarks', newData.ImpiHeaderRemarks);
             formData.append('IsDraft', action.toString());
-            formData.append('loginId',   this.publicVariable.storedEmail);
+            formData.append('LoginId',   this.publicVariable.storedEmail);
             formData.append('ImpiHeaderTotalInvoiceAmount', String(this.calculateTotalAmount()));
             formData.append('ImpiHeaderCustomerCode', 'dummy');
             formData.append('ImpiHeaderCreatedBy', 'dummy');
