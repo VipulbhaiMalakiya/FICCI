@@ -88,14 +88,13 @@ export class ApprovalCustomerComponent implements OnInit {
             'lastUpdateBy': x?.lastUpdateBy ? this.toTitleCase(x.lastUpdateBy) : '',
             "TL Approver": x.customerTlApprover ? this.toTitleCase(x.customerTlApprover) : '',
             "CL Approver": x.customerClusterApprover ? this.toTitleCase(x.customerClusterApprover) : '',
-            "SG Approver": x.customerSgApprover ? this.toTitleCase(x.customerSgApprover) : '',
             'Customer TypeName': x.customerTypeName ? this.toTitleCase(x.customerTypeName) : '',
             "Approver Email": x.approverEmail ? this.toTitleCase(x.approverEmail) : '',
 
         }));
 
         const headers = ['Name', 'Name2', 'Address', 'Address2', 'Email', 'Phone Number', 'Pincode',
-            'Contact Person', 'GstNo', 'PanNo', 'TL Approver', 'CL Approver', 'SG Approver', 'Customer TypeName',
+            'Contact Person', 'GstNo', 'PanNo', 'TL Approver', 'CL Approver', 'Customer TypeName',
             'Approver Email',
             'createdOn', 'createdby', 'UpdatedOn', 'lastUpdateBy',
             'Status'];
