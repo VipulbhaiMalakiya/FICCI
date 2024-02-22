@@ -35,11 +35,13 @@ export interface addUpdateCustomer {
     phone: string
     pinCode: string
     email: string
-    cityid: number
     isDraft: boolean
     gstNumber: string
     pan: string
     gstCustomerType: number
+    cityCode: string,
+    stateCode: string,
+    countryCode: string
 }
 
 export interface customerStatusListModel {
@@ -55,9 +57,6 @@ export interface customerStatusListModel {
     contact: string
     gstNumber: string
     pan: string
-    city: City
-    state: State
-    country: Country
     gstType: GstType
     isActive: boolean
     isDraft:boolean
@@ -68,6 +67,9 @@ export interface customerStatusListModel {
     tlApprover:string
     clApprover:string
     customerStatus:string
+    cityCode:string
+    stateCode:string
+    countryCode:string
     workFlowHistory: WorkFlowHistory[]
 
 }
@@ -84,22 +86,7 @@ export interface WorkFlowHistory {
     customerId: number
   }
 
-export interface City {
-    cityId: number
-    cityName: string
-    state: any
-}
 
-export interface State {
-    stateId: number
-    stateName: string
-    country: any
-}
-
-export interface Country {
-    countryId: number
-    countryName: string
-}
 
 export interface GstType {
     gstTypeId: number

@@ -29,9 +29,9 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
             name2: ['', [alphanumericWithSpacesValidator(), Validators.maxLength(50)]],
             address: ['', [Validators.required, Validators.maxLength(100)]],
             address2: ['', [Validators.maxLength(50)]],
-            country: [null, [Validators.required]],
-            state: [null, [Validators.required]],
-            city: [null, [Validators.required]],
+            countryCode: [null, [Validators.required]],
+            stateCode: [null, [Validators.required]],
+            cityCode: [null, [Validators.required]],
             postCode: ['', [Validators.required, Validators.pattern(/^\d{6}$/)]],
             GSTRegistrationNo: ['', [Validators.required, gstValidator()]],
             GSTCustomerType: [null, Validators.required],
@@ -44,7 +44,7 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
-        this.loadCountryList();
+        // this.loadCountryList();
         this.loadGstCustomerType();
         this.publicVariable.storedEmail = localStorage.getItem('userEmail') ?? '';
         this.publicVariable.isProcess = false;
@@ -54,8 +54,8 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
         });
 
         if (this.data = history.state.data) {
-            this.onSelectState(this.data.country);
-            this.onSelectCity(this.data.state);
+            // this.onSelectState(this.data.country);
+            // this.onSelectCity(this.data.state);
             this.patchFormData(this.data);
         }
     }
@@ -71,7 +71,6 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
     }
 
     patchFormData(data: any): void {
-        console.log(data.isDraft);
 
         this.publicVariable.dataForm.patchValue({
             customerId: data.customerId,
@@ -80,9 +79,9 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
             name2: data.customerLastName,
             address: data.address,
             address2: data.address,
-            country: data.country.countryId,
-            state: data.state.stateId,
-            city: data.city.cityId,
+            countryCode: data.countryCode,
+            stateCode: data.stateCode,
+            cityCode: data.cityCode,
             postCode: data.pincode,
             GSTRegistrationNo: data.gstNumber,
             GSTCustomerType: data.gstType.gstTypeId,
@@ -113,37 +112,37 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
         }
     }
 
-    onSelectState(event: any) {
-        const selectedCountry = event;
-        const countryId = selectedCountry ? selectedCountry.countryId : null;
-        this.publicVariable.dataForm.get('state')?.reset();
-        this.publicVariable.dataForm.get('city')?.reset();
-        !countryId ? console.log("Country ID is null or undefined") : this.fetchStateList(countryId);
-    }
+    // onSelectState(event: any) {
+    //     const selectedCountry = event;
+    //     const countryId = selectedCountry ? selectedCountry.countryId : null;
+    //     this.publicVariable.dataForm.get('state')?.reset();
+    //     this.publicVariable.dataForm.get('city')?.reset();
+    //     !countryId ? console.log("Country ID is null or undefined") : this.fetchStateList(countryId);
+    // }
 
-    fetchStateList(countryId: any) {
-        try {
-            const subscription = this.API.getStateList(countryId).subscribe({
-                next: (response: any) => {
-                    this.publicVariable.stateList = response.data;
-                },
-                error: (error) => {
-                    console.error('Error loading project list:', error);
-                }
-            });
+    // fetchStateList(countryId: any) {
+    //     try {
+    //         const subscription = this.API.getStateList(countryId).subscribe({
+    //             next: (response: any) => {
+    //                 this.publicVariable.stateList = response.data;
+    //             },
+    //             error: (error) => {
+    //                 console.error('Error loading project list:', error);
+    //             }
+    //         });
 
-            this.publicVariable.Subscription.add(subscription);
-        } catch (error) {
-            console.error('Error loading project list:', error);
-        }
-    }
+    //         this.publicVariable.Subscription.add(subscription);
+    //     } catch (error) {
+    //         console.error('Error loading project list:', error);
+    //     }
+    // }
 
-    onSelectCity(event: any) {
-        const selectedState = event;
-        const stateId = selectedState ? selectedState.stateId : null;
-        this.publicVariable.dataForm.get('city')?.reset();
-        !stateId ? console.log("State ID is null or undefined") : this.fetchCityList(stateId);
-    }
+    // onSelectCity(event: any) {
+    //     const selectedState = event;
+    //     const stateId = selectedState ? selectedState.stateId : null;
+    //     this.publicVariable.dataForm.get('city')?.reset();
+    //     !stateId ? console.log("State ID is null or undefined") : this.fetchCityList(stateId);
+    // }
 
     fetchCityList(stateId: any) {
         try {
@@ -203,7 +202,9 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
                 phone: newData.PrimaryContactNo.trim(),
                 pinCode: newData.postCode.trim(),
                 email: newData.email.trim(),
-                cityid: newData.city,
+                cityCode: newData.cityCode,
+                stateCode: newData.stateCode,
+                countryCode: newData.countryCode,
                 isDraft: action,
                 gstNumber: newData.GSTRegistrationNo.trim(),
                 gstCustomerType: newData.GSTCustomerType,
@@ -239,7 +240,7 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
     }
 
     markFormControlsAsTouched(): void {
-        ['name', 'address', 'country', 'state', 'city', 'postCode', 'GSTRegistrationNo', 'GSTCustomerType', 'email', 'PrimaryContactNo', 'contact', 'PANNo'].forEach(controlName => {
+        ['name', 'address', 'countryCode', 'stateCode', 'cityCode', 'postCode', 'GSTRegistrationNo', 'GSTCustomerType', 'email', 'PrimaryContactNo', 'contact', 'PANNo'].forEach(controlName => {
             this.publicVariable.dataForm.controls[controlName].markAsTouched();
         });
     }

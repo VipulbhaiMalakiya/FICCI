@@ -65,10 +65,12 @@
                 <div class="col-md-3 col-sm-6">
                     <div class="form-group">
                         <label>Country/Region Code <sup class="text-danger">*</sup></label>
-                        <ng-select [items]="publicVariable.countryList" bindLabel="countryName" bindValue="countryId"
+                        <!-- <ng-select [items]="publicVariable.countryList" bindLabel="countryName" bindValue="countryId"
                             placeholder="Select" formControlName="country" (change)="onSelectState($event)">
-                        </ng-select>
-                        <div *ngIf="shouldShowError('country', 'required')" class="text-danger">
+                        </ng-select> -->
+                        <input type="text" class="form-control" placeholder="Country Code" formControlName="countryCode" />
+
+                        <div *ngIf="shouldShowError('countryCode', 'required')" class="text-danger">
                             This field is required
                         </div>
                     </div>
@@ -76,10 +78,12 @@
                 <div class="col-md-3 col-sm-6">
                     <div class="form-group">
                         <label>State <sup class="text-danger">*</sup></label>
-                        <ng-select [items]="publicVariable.stateList" bindLabel="stateName" bindValue="stateId"
+                        <!-- <ng-select [items]="publicVariable.stateList" bindLabel="stateName" bindValue="stateId"
                             placeholder="Select " formControlName="state" (change)="onSelectCity($event)">
-                        </ng-select>
-                        <div *ngIf="shouldShowError('state', 'required')" class="text-danger">
+                        </ng-select> -->
+                        <input type="text" class="form-control" placeholder="State Code" formControlName="stateCode" />
+
+                        <div *ngIf="shouldShowError('stateCode', 'required')" class="text-danger">
                             This field is required
                         </div>
                     </div>
@@ -87,10 +91,12 @@
                 <div class="col-md-3 col-sm-6">
                     <div class="form-group">
                         <label>City <sup class="text-danger">*</sup></label>
-                        <ng-select [items]="publicVariable.cityList" bindLabel="cityName" bindValue="cityId"
+                        <!-- <ng-select [items]="publicVariable.cityList" bindLabel="cityName" bindValue="cityId"
                             placeholder="Select" formControlName="city">
-                        </ng-select>
-                        <div *ngIf="shouldShowError('city', 'required')" class="text-danger">
+                        </ng-select> -->
+                        <input type="text" class="form-control" placeholder="City Code" formControlName="cityCode" />
+
+                        <div *ngIf="shouldShowError('cityCode', 'required')" class="text-danger">
                             This field is required
                         </div>
                     </div>
