@@ -147,11 +147,18 @@
                                                     <td><span class="table-btns">
                                                             <a href="javascript:void(0);" (click)="onView(d)"><img
                                                                     src="../assets/images/view-icon.svg" alt=""></a>
-                                                            <a *ngIf="d.isDraft" href="javascript:void(0);"
-                                                                (click)="onEdit(d)">
+                                                            <a *ngIf="publicVariable.storedRole !== 'Admin' && (d.isDraft ||
+                                                                d.customerStatus == 'REJECTED BY TL APPROVER' ||
+                                                                d.customerStatus == 'REJECTED BY CH APPROVER' ||
+                                                                d.customerStatus == 'REJECTED BY ACCOUNTS APPROVER')"
+                                                                href="javascript:void(0);" (click)="onEdit(d)">
                                                                 <img src="../assets/images/edit-icon.svg" alt="">
                                                             </a>
-                                                            <a *ngIf="d.isDraft" href="javascript:void(0);"
+                                                            <a *ngIf="publicVariable.storedRole !== 'Admin' && (d.isDraft ||
+                                                                d.customerStatus == 'REJECTED BY TL APPROVER' ||
+                                                                d.customerStatus == 'REJECTED BY CH APPROVER' ||
+                                                                d.customerStatus == 'REJECTED BY ACCOUNTS APPROVER')"
+                                                                href="javascript:void(0);"
                                                                 (click)="onDelete(d.customerId)"><img
                                                                     src="../assets/images/delete-icon.svg" alt=""></a>
                                                         </span>
@@ -174,7 +181,8 @@
                                         <div class="hint-text">Showing <b>{{this.publicVariable.tableSize}}</b> out of
                                             <b>{{
                                                 publicVariable.count }}</b>
-                                            entries</div>
+                                            entries
+                                        </div>
                                         <pagination-controls previousLabel="Prev" class="pagination" nextLabel="Next"
                                             (pageChange)="onTableDataChange($event)">
                                         </pagination-controls>
@@ -190,7 +198,8 @@
 
                 </div>
 
-            </div><!--tab-pane-->
+            </div>
+            <!--tab-pane-->
 
             <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
                 <div class="data-tabs">
@@ -507,7 +516,8 @@
                                 </div>
                             </div>
 
-                        </div><!--tab-pane-->
+                        </div>
+                        <!--tab-pane-->
 
                         <div id="PImenu1" class="tab-pane fade"><br>
 
@@ -2043,11 +2053,13 @@
                     </div>
 
                 </div>
-            </div><!--tab-pane-->
+            </div>
+            <!--tab-pane-->
 
         </div>
 
-    </div><!--main-data-navs-->
+    </div>
+    <!--main-data-navs-->
 
 
 </div>
