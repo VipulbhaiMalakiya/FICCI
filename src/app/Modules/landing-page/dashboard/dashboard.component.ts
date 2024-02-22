@@ -44,17 +44,9 @@ export class DashboardComponent {
             })
         ).subscribe({
             next: (response: any) => {
-                if (this.publicVariable.storedRole === 'Admin') {
-                    // Filter the response data by email
-                    const filteredData = response.data.filter((item: any) => item.createdBy === this.publicVariable.storedEmail);
-                    this.publicVariable.customerStatusList = filteredData;
-                    this.publicVariable.count = filteredData.length;
-                } else {
-                    // Count data for each customer status
-                    this.countDataByStatus(response.data);
+                this.countDataByStatus(response.data);
                     this.dashboardData = response.data;
                     this.loadCustomerStatusList(this.customerStatus);
-                }
             },
             error: (error: any) => {
                 if (error.name === 'TimeoutError') {
