@@ -22,8 +22,23 @@ select.ng-valid.ng-touched {
     color: #fff;
     background-color: #FF8201 !important;
     border-color: #fff;
+    min-width: 30px;
+    min-height: 30px;
+    margin: 0 7px;
+    line-height: 30px;
+    border-radius: 5px;
+    text-align: center;
+    padding: 1px 12px !important;
 }
-
+.ngx-pagination {
+    float: right;
+    margin: 0px;
+    border-radius: 0px;
+    overflow: hidden;
+}
+.pagination li a{
+    margin: 0 5px !important
+}
 .modal-sm {
     --bs-modal-width: 400px !important;
 }
@@ -46,6 +61,7 @@ select.ng-valid.ng-touched {
     position: relative;
     margin-right: 10px;
 }
+
 
 /* .form-check-input {
     margin: 10px;
