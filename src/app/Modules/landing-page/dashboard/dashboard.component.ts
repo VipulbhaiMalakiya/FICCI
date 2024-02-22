@@ -143,9 +143,6 @@ export class DashboardComponent {
         this.publicVariable.customerStatusList = filteredData;
     }
 
-
-
-
     onDelete(id: number) {
         const modalRef = this.modalService.open(ConfirmationDialogModalComponent, { size: "sm", centered: true, backdrop: "static" });
         var componentInstance = modalRef.componentInstance as ConfirmationDialogModalComponent;
