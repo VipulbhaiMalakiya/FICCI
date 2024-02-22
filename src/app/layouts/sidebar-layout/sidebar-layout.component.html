@@ -78,9 +78,9 @@
                                     <a routerLink="/invoice/status" class="menu-list-title"
                                         routerLinkActive="active">Invoice Status</a>
                                     <a routerLink="/invoice/approval" class="menu-list-title"
-                                        routerLinkActive="active" *ngIf="isAdmin || isApprover" >Approval Inbox</a>
+                                        routerLinkActive="active" *ngIf="isApprover" >Approval Inbox</a>
                                     <a routerLink="/invoice/accounts" class="menu-list-title"
-                                        routerLinkActive="active" *ngIf="isAdmin || isAccount">Accounts Inbox</a>
+                                        routerLinkActive="active" *ngIf="isAccount">Accounts Inbox</a>
                                 </div>
 
                                 <div class="left-men" routerLinkActive="active" *ngIf="isAdmin">
