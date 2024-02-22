@@ -4,7 +4,7 @@
     <h3 class="content-title">Add New Customer</h3>
 
     <div class="mastersform-sec">
-        <form [formGroup]="publicVariable.dataForm" (ngSubmit)="onSubmit()">
+        <form [formGroup]="publicVariable.dataForm" >
             <div class="row">
                 <div class="col-md-3 col-sm-6" *ngIf="isAccount">
                     <div class="form-group">
@@ -188,8 +188,8 @@
                     <div class="form-group mb-0 mt-4">
                         <input type="checkbox" class="btn-check" formControlName="isDraft" id="btn-check"
                             autocomplete="off">
-                        <label class="btn btn-secondary w-auto mb-0 me-2" for="btn-check">Save as Draft</label>
-                        <button type="submit" class="common-btn w-auto">Submit</button>
+                        <label class="btn btn-secondary w-auto mb-0 me-2" for="btn-check" (click)="onSubmit(true)">Save as Draft</label>
+                        <button type="submit" class="common-btn w-auto" (click)="onSubmit(false)">Submit</button>
                     </div>
                 </div>
 

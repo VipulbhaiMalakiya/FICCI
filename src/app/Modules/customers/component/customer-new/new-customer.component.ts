@@ -186,7 +186,7 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
         const inputValue = event.target.value; event.target.value = inputValue.replace(/[^0-9]/g, '');
     }
 
-    onSubmit(): void {
+    onSubmit(action: boolean): void {
 
         if (this.publicVariable.dataForm.valid) {
             const newData = this.publicVariable.dataForm.value;
@@ -204,7 +204,7 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
                 pinCode: newData.postCode.trim(),
                 email: newData.email.trim(),
                 cityid: newData.city,
-                isDraft: newData.isDraft,
+                isDraft: action,
                 gstNumber: newData.GSTRegistrationNo.trim(),
                 gstCustomerType: newData.GSTCustomerType,
                 pan: newData.PANNo.trim(),
