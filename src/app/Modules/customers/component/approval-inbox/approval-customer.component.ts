@@ -96,14 +96,13 @@ export class ApprovalCustomerComponent implements OnInit {
             "TL Approver": x.customerTlApprover ? this.toTitleCase(x.customerTlApprover) : '',
             "CL Approver": x.customerClusterApprover ? this.toTitleCase(x.customerClusterApprover) : '',
             'Customer TypeName': x.customerTypeName ? this.toTitleCase(x.customerTypeName) : '',
-            "Approver Email": x.approverEmail ? this.toTitleCase(x.approverEmail) : '',
 
         }));
 
         const headers = ['Name', 'Name2', 'Address', 'Address2', 'Country/Region Code','City','Post Code','Email',
         'Phone Number',
             'Contact Person', 'Customer TypeName','GstNo', 'PanNo', 'TL Approver', 'CL Approver',
-            'Approver Email',
+
             'createdOn', 'createdby', 'UpdatedOn', 'lastUpdateBy',
             'Status'];
         this.appService.exportAsExcelFile(exportData, 'Customer Approval Inbox', headers);
