@@ -203,15 +203,17 @@ export class DashboardComponent {
         const exportData = this.publicVariable.customerStatusList.map((x) => ({
             "Cust. No.": x?.customerCode || '',
             Name: x?.customerName ? this.toTitleCase(x.customerName) : '',
+            "Name 2":x?.customerLastName ? this.toTitleCase(x.customerLastName) : '',
             Address: x?.address || '',
-            State: x?.stateCode,
-            Country: x.countryCode,
-            City: x?.cityCode,
+            "Address 2":x.address2  || '',
+            State: x?.stateCode ,
+            Country: x.countryCode ,
+            City: x?.cityCode ,
             Pincode: x?.pincode,
             "Contact Person": x && x.contact,
             "Phone Number": x?.phoneNumber || '',
             Email: x?.email || '',
-            gstNumber: x.gstNumber || '',
+            "GST Registration No.": x.gstNumber || '',
             'PAN Card': x.pan || '',
             'GST Customer Type': x.gstType.gstTypeName ? this.toTitleCase(x.gstType.gstTypeName) : '',
             'Created On': x.createdOn ? formatDate(x.createdOn, 'medium', 'en-IN', 'IST') : '',
@@ -223,9 +225,9 @@ export class DashboardComponent {
             'Status': x.customerStatus ? this.toTitleCase(x.customerStatus) : '',
         }));
 
-        const headers = ['Cust. No.', 'Name', 'Address', 'Country', 'State', 'City',
-            'Pincode', 'Contact Person', 'Phone Number',
-            'Email', 'gstNumber', 'PAN Card', 'GST Customer Type',
+        const headers = ['Cust. No.', 'Name','Name 2', 'Address','Address 2', 'Country', 'State', 'City',
+            'Pincode', 'Email','Phone Number','Contact Person',
+           'GST Customer Type', 'GST Registration No.', 'PAN Card',
             'Created On', 'Created By', 'Last Updated On', 'Last Update By', 'TL Approver', 'CL Approver', 'Status'];
         this.appService.exportAsExcelFile(exportData, 'Customer Status', headers);
     }

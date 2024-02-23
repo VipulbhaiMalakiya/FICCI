@@ -70,7 +70,11 @@ export class AccountsCustomerComponent {
         const exportData = this.publicVariable.customerStatusList.map((x) => ({
             "Cust. No.": x?.customerCode || '',
             Name: x?.customerName ? this.toTitleCase(x.customerName) : '',
+            "Name 2":x?.customerLastName ? this.toTitleCase(x.customerLastName) : '',
+
             Address: x?.address || '',
+            "Address 2":x.address2  || '',
+
             State: x?.stateCode ,
             Country: x.countryCode,
             City: x?.cityCode ,
@@ -90,9 +94,9 @@ export class AccountsCustomerComponent {
             'Status': x.customerStatus ? this.toTitleCase(x.customerStatus) : '',
         }));
 
-        const headers = ['Cust. No.', 'Name', 'Address', 'Country', 'State', 'City',
-            'Pincode', 'Contact Person', 'Phone Number',
-            'Email', 'gstNumber', 'PAN Card', 'GST Customer Type',
+        const headers = ['Cust. No.', 'Name','Name 2', 'Address', 'Address 2','Country', 'State', 'City',
+            'Pincode', 'Contact Person',  'Email','Phone Number',
+            'GST Customer Type', 'gstNumber', 'PAN Card',
             'Created On', 'Created By', 'Last Updated On', 'Last Update By', 'TL Approver', 'CL Approver', 'Status'];
         this.appService.exportAsExcelFile(exportData, 'Customer Status', headers);
     }

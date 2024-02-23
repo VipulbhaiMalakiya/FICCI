@@ -131,9 +131,9 @@ export class StatusCustomerComponent implements OnInit {
             'Status': x.customerStatus ? this.toTitleCase(x.customerStatus) : '',
         }));
 
-        const headers = ['Cust. No.', 'Name',"Name 2", 'Address','Address 2"', 'Country', 'State', 'City',
+        const headers = ['Cust. No.', 'Name','Name 2', 'Address','Address 2', 'Country', 'State', 'City',
             'Pincode', 'Email','Phone Number','Contact Person',
-            , 'GST Customer Type', 'GST Registration No.', 'PAN Card',
+             'GST Customer Type', 'GST Registration No.', 'PAN Card',
             'Created On', 'Created By', 'Last Updated On', 'Last Update By', 'TL Approver', 'CL Approver', 'Status'];
         this.appService.exportAsExcelFile(exportData, 'Customer Status', headers);
     }
