@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, AppService, CustomersService, FormBuilder, InvoicesService, NgbModal, Router, ToastrService, Validators, alphanumericWithSpacesValidator, gstValidator, panValidator, publicVariable } from '../../Export/invoce';
-import { FormArray } from '@angular/forms';
+import { FormArray, FormGroup } from '@angular/forms';
 import { finalize, timeout } from 'rxjs';
 
 
@@ -49,7 +49,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
             ImpiHeaderCustomerCity: [null, [Validators.required]],
             ImpiHeaderCustomerPinCode: ['', [Validators.required, Validators.pattern(/^\d{6}$/)]],
             ImpiHeaderCustomerGstNo: ['', [Validators.required, gstValidator()]],
-            ImpiHeaderCustomerContactPerson: ['', [Validators.required,alphanumericWithSpacesValidator()]],
+            ImpiHeaderCustomerContactPerson: ['', [Validators.required, alphanumericWithSpacesValidator()]],
             ImpiHeaderCustomerEmailId: ['', [Validators.required, Validators.email]],
             ImpiHeaderCustomerPhoneNo: ['', [Validators.required, Validators.pattern(/^[6-9]\d{9}$/)]],
             ImpiHeaderCreatedBy: [''],
@@ -82,7 +82,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
         const concatenatedString = `${item.projectCode} ${item.projectName}`.toLowerCase();
         return concatenatedString.includes(term.toLowerCase());
     }
-    customerSearchFn(term: string, item: any){
+    customerSearchFn(term: string, item: any) {
         const concatenatedString = `${item.customerName} ${item.pan} ${item.gstNumber}`.toLowerCase();
         return concatenatedString.includes(term.toLowerCase());
     }
@@ -300,6 +300,8 @@ export class NewPurchaseInvoiceComponent implements OnInit {
         }));
     }
 
+
+
     removeItem(index: number): void {
         this.itemsFormArray.removeAt(index);
     }
@@ -385,7 +387,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
             formData.append('ImpiHeaderPaymentTerms', newData.ImpiHeaderPaymentTerms);
             formData.append('ImpiHeaderRemarks', newData.ImpiHeaderRemarks);
             formData.append('IsDraft', action.toString());
-            formData.append('LoginId',   this.publicVariable.storedEmail);
+            formData.append('LoginId', this.publicVariable.storedEmail);
             formData.append('ImpiHeaderTotalInvoiceAmount', String(this.calculateTotalAmount()));
             formData.append('ImpiHeaderCustomerCode', 'dummy');
             formData.append('ImpiHeaderCreatedBy', 'dummy');
@@ -441,9 +443,22 @@ export class NewPurchaseInvoiceComponent implements OnInit {
         ['ImpiHeaderInvoiceType', 'ImpiHeaderProjectCode', 'ImpiHeaderDepartment', 'ImpiHeaderDivison', 'ImpiHeaderPanNo', 'ImpiHeaderGstNo',
             'ImpiHeaderCustomerName', 'ImpiHeaderCustomerAddress', 'ImpiHeaderCustomerState', 'ImpiHeaderCustomerCity', 'ImpiHeaderCustomerPinCode', 'ImpiHeaderCustomerEmailId',
             'ImpiHeaderCustomerGstNo', 'ImpiHeaderCustomerContactPerson', 'ImpiHeaderCustomerPhoneNo', 'items'
-            ].forEach(controlName => {
-                this.publicVariable.dataForm.controls[controlName].markAsTouched();
-            });
+        ].forEach(controlName => {
+            this.publicVariable.dataForm.controls[controlName].markAsTouched();
+        });
+
+        // Marking form controls under 'items' FormArray as touched
+        const itemsFormArray = this.publicVariable.dataForm.get('items') as FormArray;
+        if (itemsFormArray) {
+            for (let i = 0; i < itemsFormArray.length; i++) {
+                const itemFormGroup = itemsFormArray.at(i) as FormGroup;
+                if (itemFormGroup) {
+                    Object.values(itemFormGroup.controls).forEach(control => {
+                        control.markAsTouched();
+                    });
+                }
+            }
+        }
     }
 
     shouldShowError(controlName: string, errorName: string): boolean {
