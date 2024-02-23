@@ -80,10 +80,13 @@ export class ApprovalCustomerComponent implements OnInit {
             Address: x?.custoemrAddress || '',
             Address2: x?.custoemrAddress2 || '',
             Email: x?.customerEmailId ? this.toTitleCase(x.customerEmailId) : '',
+            "Country/Region Code":x?.countryCode || '',
+            State:x?.stateCode ||  '',
+            City: x?.cityCode || '',
             "Phone Number": x?.customerPhoneNo || '',
-            "Pincode": x?.customerPinCode || '',
             "GstNo": x?.customerGstNo || '',
             "Contact Person": x?.customerContactPerson ? this.toTitleCase(x.customerContactPerson) : '',
+            "Post Code":x.customerPinCode || '',
             "PanNo": x?.customerPanNo || '',
             "createdOn": x.createdOn ? formatDate(x.createdOn, 'medium', 'en-IN', 'IST') : '',
             "createdby": x.createdby ? this.toTitleCase(x.createdby) : '',
@@ -97,8 +100,9 @@ export class ApprovalCustomerComponent implements OnInit {
 
         }));
 
-        const headers = ['Name', 'Name2', 'Address', 'Address2', 'Email', 'Phone Number', 'Pincode',
-            'Contact Person', 'GstNo', 'PanNo', 'TL Approver', 'CL Approver', 'Customer TypeName',
+        const headers = ['Name', 'Name2', 'Address', 'Address2', 'Country/Region Code','City','Post Code','Email',
+        'Phone Number',
+            'Contact Person', 'Customer TypeName','GstNo', 'PanNo', 'TL Approver', 'CL Approver',
             'Approver Email',
             'createdOn', 'createdby', 'UpdatedOn', 'lastUpdateBy',
             'Status'];

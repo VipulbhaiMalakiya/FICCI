@@ -118,4 +118,7 @@ export interface ApproveCustomerList {
     customerTypeName: string
     customerStatus: number
     approverEmail: string
+    cityCode:string
+    stateCode:string
+    countryCode:string
   }
