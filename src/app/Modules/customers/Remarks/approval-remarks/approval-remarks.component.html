@@ -36,28 +36,25 @@
                 </div>
             </div>
 
+
+            <div class="col-md-3 col-sm-6">
+                <div class="form-group">
+                    <label>Country/Region Code</label>
+                    <input type="text" value="{{data.countryCode}}" class="form-control" disabled readonly>
+                </div>
+            </div>
+
+            <div class="col-md-3 col-sm-6">
+                <div class="form-group">
+                    <label>State</label>
+                    <input type="text" value="{{data.stateCode}}" class="form-control" disabled readonly>
+                </div>
+            </div>
+
             <div class="col-md-3 col-sm-6">
                 <div class="form-group">
                     <label>City</label>
-                    <select class="form-select" disabled readonly>
-                        <option value="">{{data.cityCode}}</option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="col-md-3 col-sm-6">
-                <div class="form-group">
-                    <label>GST Registration No.</label>
-                    <input type="text" value="{{data.customerGstNo}}" class="form-control" disabled readonly>
-                </div>
-            </div>
-
-            <div class="col-md-3 col-sm-6">
-                <div class="form-group">
-                    <label>GST Customer Type</label>
-                    <select class="form-select" disabled readonly>
-                        <option value="">{{data.customerTypeName | titlecase}}</option>
-                    </select>
+                    <input type="text" value="{{data.cityCode}}" class="form-control" disabled readonly>
                 </div>
             </div>
 
@@ -67,6 +64,7 @@
                     <input type="text" value="{{data.customerPinCode}}" class="form-control" disabled readonly>
                 </div>
             </div>
+
             <div class="col-md-3 col-sm-6">
                 <div class="form-group">
                     <label>E-Mail</label>
@@ -78,6 +76,28 @@
                 <div class="form-group">
                     <label>Primary Contact No.</label>
                     <input type="text" value="{{data.customerPhoneNo}}" class="form-control" disabled readonly>
+                </div>
+            </div>
+
+            <div class="col-md-3 col-sm-6">
+                <div class="form-group">
+                    <label>Contact Person</label>
+                    <input type="text" value="{{data.customerContactPerson}}" class="form-control" disabled readonly>
+                </div>
+            </div>
+
+            <div class="col-md-3 col-sm-6">
+                <div class="form-group">
+                    <label>GST Customer Type</label>
+                    <select class="form-select" disabled readonly>
+                        <option value="">{{data.customerTypeName | titlecase}}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <div class="form-group">
+                    <label>GST Registration No.</label>
+                    <input type="text" value="{{data.customerGstNo}}" class="form-control" disabled readonly>
                 </div>
             </div>
 
@@ -104,14 +124,6 @@
                 </div>
             </div>
 
-
-            <div class="col-md-3 col-sm-6">
-                <div class="form-group">
-                    <label>Approver</label>
-                    <input type="text" value="{{data.approverEmail | titlecase}}" class="form-control" disabled
-                        readonly>
-                </div>
-            </div>
 
             <form [formGroup]="publicVariable.dataForm" >
                 <div class="col-md-9">

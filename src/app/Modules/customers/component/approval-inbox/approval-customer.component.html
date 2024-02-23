@@ -48,8 +48,8 @@
                             <th>CL Approve</th>
                             <th>Created On</th>
                             <th>Created By</th>
-                            <th>Last Updated On</th>
-                            <th>Last Updated By</th>
+                            <!-- <th>Last Updated On</th>
+                            <th>Last Updated By</th> -->
                             <th>Status</th>
                             <th class="action-cl">Action</th>
                         </tr>
@@ -61,14 +61,14 @@
                             <td>{{i + 1}}</td>
                             <td>{{d.customerName | titlecase}}</td>
                             <td>{{d.custoemrAddress}}</td>
-                            <td>{{d.cityName |titlecase}}</td>
+                            <td>{{d.cityCode |titlecase}}</td>
                             <td>{{d.customerPhoneNo}}</td>
                             <td>{{d.customerTlApprover | titlecase}}</td>
                             <td>{{d.customerClusterApprover | titlecase}}</td>
                             <td>{{d.createdOn | date:'medium':'IST' }}</td>
                             <td>{{d.createdby | titlecase}}</td>
-                            <td>{{d.customerUpdatedOn | date:'medium':'IST' }}</td>
-                            <td>{{d.lastUpdateBy | titlecase }}</td>
+                            <!-- <td>{{d.customerUpdatedOn | date:'medium':'IST' }}</td>
+                            <td>{{d.lastUpdateBy | titlecase }}</td> -->
                             <td>{{d.statusName | titlecase}}</td>
                             <td><span class="table-btns">
                                     <a href="javascript:void(0);"  (click)="onEdit(d)" ><img src="../assets/images/view-icon.svg" alt=""></a>
