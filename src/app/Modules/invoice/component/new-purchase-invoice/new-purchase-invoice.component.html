@@ -263,8 +263,8 @@
                                     [value]="item.value !== 0 ? calculateAmount(item.value) : ''" readonly /></td>
                             <td>
                                 <span class="table-btns">
-                                    <a (click)="addItem()"><img src="../assets/images/plus-icon.svg" alt="" /></a>
-                                    <a (click)="removeItem(i)"><img src="../assets/images/delete-icon.svg" alt="" /></a>
+                                    <a  (click)="addItem()"><img src="../assets/images/plus-icon.svg" alt="" /></a>
+                                    <a *ngIf="i > 0" (click)="removeItem(i)"><img src="../assets/images/delete-icon.svg" alt="" /></a>
                                 </span>
                             </td>
                         </tr>
