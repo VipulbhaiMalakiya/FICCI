@@ -28,28 +28,33 @@ export class UsersComponent implements OnInit, OnDestroy {
         }
     }
 
+
+
     loadUserList(): void {
-        const subscription = this.API.getUsers().pipe(
-            timeout(120000), // Timeout set to 2 minutes (120000 milliseconds)
+        const subscription = this.API.getUsers()
+          .pipe(
+            timeout(120000),
             finalize(() => {
-                this.publicVariable.isProcess = false;
+              this.publicVariable.isProcess = false;
             })
-        ).subscribe({
+          )
+          .subscribe({
             next: (response: any) => {
-                this.publicVariable.userlist = response.data;
-                this.publicVariable.count = response.data.length;
+              this.publicVariable.userlist = response.data;
+              this.publicVariable.count = response.data.length;
             },
             error: (error: any) => {
-                if (error.name === 'TimeoutError') {
-                    this.toastr.error('Operation timed out after 40 seconds', error.name);
-                } else {
-                    this.toastr.error('Error loading user list', error.name);
-                }
+              this.toastr.error(
+                error.name === 'TimeoutError' ?
+                'Operation timed out after 40 seconds' : 'Error loading user list',
+                error.name
+              );
             }
-        });
+          });
 
         this.publicVariable.Subscription.add(subscription);
-    }
+      }
+
 
     onTableDataChange(event: any) {
         this.publicVariable.page = event;
