@@ -82,6 +82,10 @@ export class NewPurchaseInvoiceComponent implements OnInit {
         const concatenatedString = `${item.projectCode} ${item.projectName}`.toLowerCase();
         return concatenatedString.includes(term.toLowerCase());
     }
+    customerSearchFn(term: string, item: any){
+        const concatenatedString = `${item.customerName} ${item.pan} ${item.gstNumber}`.toLowerCase();
+        return concatenatedString.includes(term.toLowerCase());
+    }
 
     patchFormData(data: any): void {
 
