@@ -8,13 +8,13 @@ import { ApprovalInboxComponent } from './component/approval-inbox/approval-inbo
 import { AccountsInboxComponent } from './component/accounts-inbox/accounts-inbox.component';
 import { ViewInvoiceStatusComponent } from './View/view-invoice-status/view-invoice-status.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { NumberToWordsPipe } from './Pipe/numberToWords';
 import { ViewPiApprovalComponent } from './View/view-pi-approval/view-pi-approval.component';
 import { ViewPiAccountsInboxComponent } from './View/view-pi-accounts-inbox/view-pi-accounts-inbox.component';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { SharedModule } from '../shared/shared.module';
 import { NgxPaginationModule } from 'ngx-pagination';
-import { SearchFilterPipe } from './Pipe/searchFilter';
+import { NumberToWordsPipe } from './pipe/numberToWords';
+import { SearchFilterPipe } from './pipe/searchFilter';
 
 
 @NgModule({
@@ -36,7 +36,8 @@ import { SearchFilterPipe } from './Pipe/searchFilter';
         FormsModule,
         NgSelectModule,
         SharedModule,
-        NgxPaginationModule
+        NgxPaginationModule,
+
     ]
 })
 export class InvoiceModule { }
