@@ -9,7 +9,7 @@
                     <div class="form-group">
                         <label>Employee ID</label>
                         <ng-select [items]="publicVariable.employeeList" #select bindLabel="imeM_EmpId"
-                            bindValue="imeM_EmpId" placeholder="Select an employee" formControlName="empId"
+                            bindValue="imeM_EmpId" placeholder="Select employee " formControlName="empId"
                             (change)="onSelectEmployee()">
                             <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
                                 <small>{{item.imeM_EmpId}} - {{item.imeM_Name}}</small>
