@@ -1,9 +1,9 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-    name: 'numberToWords'
+    name: 'numberToWords1'
 })
-export class NumberToWordsPipe implements PipeTransform {
+export class NumberToWordsPipe1 implements PipeTransform {
     transform(value: number): string {
         // Array of words for numbers from 0 to 19
         const units: string[] = ['', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen', 'Sixteen', 'Seventeen', 'Eighteen', 'Nineteen'];

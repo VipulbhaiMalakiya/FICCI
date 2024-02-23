@@ -13,8 +13,9 @@ import { ViewPiAccountsInboxComponent } from './View/view-pi-accounts-inbox/view
 import { NgSelectModule } from '@ng-select/ng-select';
 import { SharedModule } from '../shared/shared.module';
 import { NgxPaginationModule } from 'ngx-pagination';
-import { NumberToWordsPipe } from './pipe/numberToWords';
-import { SearchFilterPipe } from './pipe/searchFilter';
+import { NumberToWordsPipe1 } from './pipe/numberToWords';
+import { SearchFilterPipe1 } from './pipe/searchFilter';
+
 
 
 @NgModule({
@@ -24,10 +25,10 @@ import { SearchFilterPipe } from './pipe/searchFilter';
         ApprovalInboxComponent,
         AccountsInboxComponent,
         ViewInvoiceStatusComponent,
-        NumberToWordsPipe,
+        NumberToWordsPipe1,
         ViewPiApprovalComponent,
         ViewPiAccountsInboxComponent,
-        SearchFilterPipe
+        SearchFilterPipe1
     ],
     imports: [
         CommonModule,
