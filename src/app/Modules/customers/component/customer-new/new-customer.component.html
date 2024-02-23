@@ -31,7 +31,7 @@
                 </div>
                 <div class="col-md-3 col-sm-6">
                     <div class="form-group">
-                        <label>Name 2 <sup class="text-danger">*</sup></label>
+                        <label>Name 2 </label>
                         <input type="text" class="form-control" placeholder="Name 2" formControlName="name2" />
                         <div *ngIf="shouldShowError('name2', 'maxlength')" class="text-danger">
                             Name2 must be less than 50 characters.
@@ -55,7 +55,7 @@
                 </div>
                 <div class="col-md-3 col-sm-6">
                     <div class="form-group">
-                        <label>Address 2 <sup class="text-danger">*</sup></label>
+                        <label>Address 2 </label>
                         <input type="text" class="form-control" placeholder="Address 2" formControlName="address2" />
                         <div *ngIf="shouldShowError('address2', 'maxlength')" class="text-danger">
                             Address 2 must be less than 50 characters.
@@ -114,28 +114,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-3 col-sm-6">
-                    <div class="form-group">
-                        <label>GST Registration No. <sup class="text-danger">*</sup></label>
-                        <input type="text" class="form-control" placeholder="GST Registration No."
-                            formControlName="GSTRegistrationNo" />
-                        <div *ngIf="shouldShowError('GSTRegistrationNo', 'invalidGST')" class="text-danger">
-                            Please enter a valid GST Registration Number. (05AAACF1282E1Z5)
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3 col-sm-6">
-                    <div class="form-group">
-                        <label>GST Customer Type <sup class="text-danger">*</sup></label>
 
-                        <ng-select [items]="publicVariable.customerTypeList" bindLabel="gstTypeName"
-                            bindValue="gstTypeId" placeholder="Select" formControlName="GSTCustomerType">
-                        </ng-select>
-                        <div *ngIf="shouldShowError('GSTCustomerType', 'required')" class="text-danger">
-                            This field is required
-                        </div>
-                    </div>
-                </div>
                 <div class="col-md-3 col-sm-6">
                     <div class="form-group">
                         <label>E-Mail <sup class="text-danger">*</sup></label>
@@ -179,6 +158,29 @@
                         </div>
                     </div>
                 </div>
+                <div class="col-md-3 col-sm-6">
+                    <div class="form-group">
+                        <label>GST Customer Type <sup class="text-danger">*</sup></label>
+
+                        <ng-select [items]="publicVariable.customerTypeList" bindLabel="gstTypeName"
+                            bindValue="gstTypeId" placeholder="Select" formControlName="GSTCustomerType">
+                        </ng-select>
+                        <div *ngIf="shouldShowError('GSTCustomerType', 'required')" class="text-danger">
+                            This field is required
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    <div class="form-group">
+                        <label>GST Registration No. <sup class="text-danger">*</sup></label>
+                        <input type="text" class="form-control" placeholder="GST Registration No."
+                            formControlName="GSTRegistrationNo" />
+                        <div *ngIf="shouldShowError('GSTRegistrationNo', 'invalidGST')" class="text-danger">
+                            Please enter a valid GST Registration Number. (05AAACF1282E1Z5)
+                        </div>
+                    </div>
+                </div>
+
                 <div class="col-md-3 col-sm-6">
                     <div class="form-group">
                         <label>P.A.N. No. <sup class="text-danger">*</sup></label>
