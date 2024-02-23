@@ -30,7 +30,7 @@
                         <label for="projectCode">Project Code</label>
                         <ng-select [items]="publicVariable.projectList" #select bindLabel="projectCode" bindValue="projectCode"
                             placeholder="Select in Project Code" formControlName="ImpiHeaderProjectCode"
-                            (change)="onSelectProject()">
+                            (change)="onSelectProject()" [searchable]="true" [searchFn]="customSearchFn">
 
                             <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
                                 <small>{{item.projectCode}} - {{item.projectName}}</small>
