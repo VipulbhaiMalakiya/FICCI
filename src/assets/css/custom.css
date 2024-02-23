@@ -459,7 +459,7 @@ header.main-header {
     overflow: hidden;
 }
 
-.pagination li a {
+.pagination li {
     font-size: 13px;
     min-width: 30px;
     min-height: 30px;
@@ -468,16 +468,16 @@ header.main-header {
     line-height: 30px;
     border-radius: 5px;
     text-align: center;
-    padding: 1px 12px;
     background: none;
     border: 1px solid #ccc;
+    border-radius: 5px !important;
 }
 
-.page-item.active .page-link {
+.pagination li.current {
     z-index: 1;
     color: #fff;
     background-color: #FF8201;
-    border-color: #fff;
+    border-color: #FF8201;
 }
 
 .topbr-btns .form-control{  font-size: 13px; height: calc(1.2em + 0.75rem + 2px); }
