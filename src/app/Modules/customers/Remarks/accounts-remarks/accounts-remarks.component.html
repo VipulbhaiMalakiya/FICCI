@@ -95,10 +95,13 @@
                     <input type="text" value="{{data.contact | titlecase}}" class="form-control" disabled readonly>
                 </div>
             </div>
+
             <div class="col-md-3 col-sm-6">
                 <div class="form-group">
-                    <label>P.A.N. No.</label>
-                    <input type="text" value="{{data.pan}}" class="form-control" disabled readonly>
+                    <label>GST Customer Type</label>
+                    <select class="form-select" disabled readonly>
+                        <option value="">{{data.gstType.gstTypeName | titlecase}}</option>
+                    </select>
                 </div>
             </div>
             <div class="col-md-3 col-sm-6">
@@ -110,10 +113,8 @@
 
             <div class="col-md-3 col-sm-6">
                 <div class="form-group">
-                    <label>GST Customer Type</label>
-                    <select class="form-select" disabled readonly>
-                        <option value="">{{data.gstType.gstTypeName | titlecase}}</option>
-                    </select>
+                    <label>P.A.N. No.</label>
+                    <input type="text" value="{{data.pan}}" class="form-control" disabled readonly>
                 </div>
             </div>
 
