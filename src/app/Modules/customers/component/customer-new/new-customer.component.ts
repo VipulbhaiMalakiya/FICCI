@@ -44,7 +44,8 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
-        // this.loadCountryList();
+        this.loadCountryList();
+        this.fetchStateList();
         this.loadGstCustomerType();
         this.publicVariable.storedEmail = localStorage.getItem('userEmail') ?? '';
         this.publicVariable.isProcess = false;
@@ -54,8 +55,6 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
         });
 
         if (this.data = history.state.data) {
-            // this.onSelectState(this.data.country);
-            // this.onSelectCity(this.data.state);
             this.patchFormData(this.data);
         }
     }
@@ -112,37 +111,24 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
         }
     }
 
-    // onSelectState(event: any) {
-    //     const selectedCountry = event;
-    //     const countryId = selectedCountry ? selectedCountry.countryId : null;
-    //     this.publicVariable.dataForm.get('state')?.reset();
-    //     this.publicVariable.dataForm.get('city')?.reset();
-    //     !countryId ? console.log("Country ID is null or undefined") : this.fetchStateList(countryId);
-    // }
+    fetchStateList() {
+        try {
+            const subscription = this.API.getStateList().subscribe({
+                next: (response: any) => {
+                    this.publicVariable.stateList = response.data;
+                },
+                error: (error) => {
+                    console.error('Error loading project list:', error);
+                }
+            });
 
-    // fetchStateList(countryId: any) {
-    //     try {
-    //         const subscription = this.API.getStateList(countryId).subscribe({
-    //             next: (response: any) => {
-    //                 this.publicVariable.stateList = response.data;
-    //             },
-    //             error: (error) => {
-    //                 console.error('Error loading project list:', error);
-    //             }
-    //         });
+            this.publicVariable.Subscription.add(subscription);
+        } catch (error) {
+            console.error('Error loading project list:', error);
+        }
+    }
 
-    //         this.publicVariable.Subscription.add(subscription);
-    //     } catch (error) {
-    //         console.error('Error loading project list:', error);
-    //     }
-    // }
 
-    // onSelectCity(event: any) {
-    //     const selectedState = event;
-    //     const stateId = selectedState ? selectedState.stateId : null;
-    //     this.publicVariable.dataForm.get('city')?.reset();
-    //     !stateId ? console.log("State ID is null or undefined") : this.fetchCityList(stateId);
-    // }
 
     fetchCityList(stateId: any) {
         try {

@@ -1,14 +1,13 @@
 export interface CountryList {
-    countryId: number,
-    countryName: string,
-    countryCode: string
+    countryId: string
+    countryName: string
+
 }
 
 
 export interface StateList {
-    stateId: number,
-    stateName: string,
-    country: string
+    stateId: number
+    stateName: string
 }
 
 export interface CityList {

@@ -12,8 +12,8 @@ export class CustomersService {
     constructor(private http: HttpClient) { }
 
     private apiUrl = `${environment.apiURL}Customer`;
-    private countryListURL = `${environment.apiURL}DropDown/GetCountryList`;
-    private GetStateURl = `${environment.apiURL}DropDown/GetStateByCountryId`;
+    private countryListURL = `${environment.apiURL}NavERP/GetCountry`;
+    private GetStateURl = `${environment.apiURL}NavERP/GetState`;
     private GetCityURl = `${environment.apiURL}DropDown/GetCityByStateId`;
     private gustomerTypeURL = `${environment.apiURL}DropDown/GstCustomerType`;
     private getCustomerStatusURL = `${environment.apiURL}Customer/0`;
@@ -31,8 +31,8 @@ export class CustomersService {
         return this.http.get<any[]>(`${this.countryListURL}`).pipe(this.retry);
     }
 
-    getStateList(counrtyId: number): Observable<any[]> {
-        return this.http.get<any>(`${this.GetStateURl}?counrtyId=${counrtyId}`);
+    getStateList(): Observable<any[]> {
+        return this.http.get<any>(`${this.GetStateURl}`);
     }
 
     getCityList(stateId: number): Observable<any[]> {

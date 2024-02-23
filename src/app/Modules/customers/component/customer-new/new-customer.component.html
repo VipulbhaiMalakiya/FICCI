@@ -65,11 +65,9 @@
                 <div class="col-md-3 col-sm-6">
                     <div class="form-group">
                         <label>Country/Region Code <sup class="text-danger">*</sup></label>
-                        <!-- <ng-select [items]="publicVariable.countryList" bindLabel="countryName" bindValue="countryId"
-                            placeholder="Select" formControlName="country" (change)="onSelectState($event)">
-                        </ng-select> -->
-                        <input type="text" class="form-control" placeholder="Country Code" formControlName="countryCode" />
-
+                        <ng-select [items]="publicVariable.countryList" bindLabel="countryName" bindValue="countryId"
+                            placeholder="Select" formControlName="countryCode" >
+                        </ng-select>
                         <div *ngIf="shouldShowError('countryCode', 'required')" class="text-danger">
                             This field is required
                         </div>
@@ -78,10 +76,10 @@
                 <div class="col-md-3 col-sm-6">
                     <div class="form-group">
                         <label>State <sup class="text-danger">*</sup></label>
-                        <!-- <ng-select [items]="publicVariable.stateList" bindLabel="stateName" bindValue="stateId"
-                            placeholder="Select " formControlName="state" (change)="onSelectCity($event)">
-                        </ng-select> -->
-                        <input type="text" class="form-control" placeholder="State Code" formControlName="stateCode" />
+                        <ng-select [items]="publicVariable.stateList" bindLabel="stateName" bindValue="stateId"
+                            placeholder="Select " formControlName="stateCode" >
+                        </ng-select>
+                        <!-- <input type="text" class="form-control" placeholder="State Code" formControlName="stateCode" /> -->
 
                         <div *ngIf="shouldShowError('stateCode', 'required')" class="text-danger">
                             This field is required
