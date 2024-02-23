@@ -8,8 +8,16 @@
                 <div class="col-md-3 col-sm-6">
                     <div class="form-group">
                         <label>Employee ID</label>
-                        <ng-select [items]="publicVariable.employeeList" bindLabel="imeM_EmpId" bindValue="imeM_EmpId"
-                            placeholder="Select an employee" formControlName="empId" (change)="onSelectEmployee()">
+                        <ng-select [items]="publicVariable.employeeList"
+                        #select
+                        bindLabel="imeM_EmpId"
+                         bindValue="imeM_EmpId"
+                            placeholder="Select an employee"
+                             formControlName="empId"
+                             (change)="onSelectEmployee()">
+                             <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
+                                <small>{{item.imeM_EmpId}} - {{item.imeM_Name}}</small>
+                            </ng-template>
                         </ng-select>
                         <div *ngIf="shouldShowError('empId','required')" class="text-danger">This field is required
                         </div>
