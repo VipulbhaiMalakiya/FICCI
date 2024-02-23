@@ -54,13 +54,13 @@ select.ng-valid.ng-touched {
     font-size: 13px;
 }
 
-.draft-savebtn {
+/* .draft-savebtn {
     display: inline-block;
 
     border-radius: 6px;
     position: relative;
     margin-right: 10px;
-}
+} */
 
 
 /* .form-check-input {
