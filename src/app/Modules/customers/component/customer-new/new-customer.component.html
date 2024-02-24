@@ -65,8 +65,12 @@
                 <div class="col-md-3 col-sm-6">
                     <div class="form-group">
                         <label>Country/Region Code <sup class="text-danger">*</sup></label>
-                        <ng-select [items]="publicVariable.countryList" bindLabel="countryName" bindValue="countryId"
-                            placeholder="Select" formControlName="countryCode" >
+                        <ng-select [items]="publicVariable.countryList" #select bindLabel="countryName" bindValue="countryId"
+                            placeholder="Select" formControlName="countryCode"
+                            [searchable]="true" [searchFn]="countrySearchFn">
+                            <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
+                                <small>{{item.countryId}} - {{item.countryName}}</small>
+                            </ng-template>
                         </ng-select>
                         <div *ngIf="shouldShowError('countryCode', 'required')" class="text-danger">
                             This field is required
@@ -76,8 +80,11 @@
                 <div class="col-md-3 col-sm-6">
                     <div class="form-group">
                         <label>State <sup class="text-danger">*</sup></label>
-                        <ng-select [items]="publicVariable.stateList" bindLabel="stateName" bindValue="stateId"
-                            placeholder="Select " formControlName="stateCode" >
+                        <ng-select [items]="publicVariable.stateList" #select bindLabel="stateName" bindValue="stateId"
+                            placeholder="Select " formControlName="stateCode"  [searchable]="true" [searchFn]="stateSearchFn">
+                            <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
+                                <small>{{item.stateId}} - {{item.stateName}}</small>
+                            </ng-template>
                         </ng-select>
                         <div *ngIf="shouldShowError('stateCode', 'required')" class="text-danger">
                             This field is required
@@ -87,8 +94,12 @@
                 <div class="col-md-3 col-sm-6">
                     <div class="form-group">
                         <label>City <sup class="text-danger">*</sup></label>
-                        <ng-select [items]="publicVariable.cityList" bindLabel="cityName" bindValue="cityId"
-                            placeholder="Select" formControlName="cityCode">
+                        <ng-select [items]="publicVariable.cityList" #select  bindLabel="cityName" bindValue="cityId"
+                            placeholder="Select" formControlName="cityCode"
+                            [searchable]="true" [searchFn]="citySearchFn">
+                            <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
+                                <small>{{item.cityId}} - {{item.cityName}}</small>
+                            </ng-template>
                         </ng-select>
                         <div *ngIf="shouldShowError('cityCode', 'required')" class="text-danger">
                             This field is required
@@ -98,8 +109,12 @@
                 <div class="col-md-3 col-sm-6">
                     <div class="form-group">
                         <label>Post Code <sup class="text-danger">*</sup></label>
-                        <ng-select [items]="publicVariable.postCodeList" bindLabel="postCode" bindValue="postCode"
-                        placeholder="Select" formControlName="postCode">
+                        <ng-select [items]="publicVariable.postCodeList" #select  bindLabel="postCode" bindValue="postCode"
+                        placeholder="Select" formControlName="postCode"
+                        [searchable]="true" [searchFn]="postCodeSearchFn">
+                        <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
+                            <small>{{item.postCode}} - {{item.city}}</small>
+                        </ng-template>
                     </ng-select>
                         <div *ngIf="shouldShowError('postCode', 'required')" class="text-danger">
                             Post Code is required.

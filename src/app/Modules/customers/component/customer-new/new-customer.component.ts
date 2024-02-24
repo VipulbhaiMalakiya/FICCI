@@ -210,7 +210,24 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
         this.publicVariable.isProcess = false; // Set status to false on error
     }
 
+    countrySearchFn(term: string, item: any) {
+        const concatenatedString = `${item.countryId} ${item.countryName}`.toLowerCase();
+        return concatenatedString.includes(term.toLowerCase());
+    }
 
+    stateSearchFn(term: string, item: any) {
+        const concatenatedString = `${item.stateId} ${item.stateName}`.toLowerCase();
+        return concatenatedString.includes(term.toLowerCase());
+    }
+    citySearchFn(term: string, item: any) {
+        const concatenatedString = `${item.cityId} ${item.cityName}`.toLowerCase();
+        return concatenatedString.includes(term.toLowerCase());
+    }
+
+    postCodeSearchFn(term: string, item: any) {
+        const concatenatedString = `${item.postCode} ${item.city}`.toLowerCase();
+        return concatenatedString.includes(term.toLowerCase());
+    }
 
     onInputChange(event: any) {
         const inputValue = event.target.value;
