@@ -366,12 +366,12 @@ export class NewPurchaseInvoiceComponent implements OnInit {
                 formData.append('headerid', isUpdate ? newData.headerid : undefined);
             }
             formData.append('isupdate', String(isUpdate));
-            // this.publicVariable.selectedProjet = this.publicVariable.projectList.find(project => project.projectCode == newData.ImpiHeaderProjectCode);
+            this.publicVariable.selectedProjet = this.publicVariable.projectList.find(project => project.code == newData.ImpiHeaderProjectCode);
             formData.append('ImpiHeaderAttachment', this.ImpiHeaderAttachment);
             formData.append('ImpiHeaderInvoiceType', newData.ImpiHeaderInvoiceType);
             formData.append('ImpiHeaderProjectCode', newData.ImpiHeaderProjectCode);
-            formData.append('ImpiHeaderDepartment', this.publicVariable.selectedProjet.department);
-            formData.append('ImpiHeaderDivison', this.publicVariable.selectedProjet.divison);
+            formData.append('ImpiHeaderDepartment', this.publicVariable.selectedProjet.departmentCode);
+            formData.append('ImpiHeaderDivison', this.publicVariable.selectedProjet.divisionCode);
             formData.append('ImpiHeaderPanNo', newData.ImpiHeaderPanNo);
             formData.append('ImpiHeaderGstNo', newData.ImpiHeaderGstNo);
             formData.append('PINO', newData.PINO);
