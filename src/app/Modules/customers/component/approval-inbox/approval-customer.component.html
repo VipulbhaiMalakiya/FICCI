@@ -20,8 +20,8 @@
         </div>
 
         <!-- Example single danger button -->
-        <div class="topbr-btns" *ngIf="publicVariable.ApproveCustomerList && publicVariable.ApproveCustomerList.length > 0">
-            <div class="btn-group">
+        <div class="topbr-btns" >
+            <div class="btn-group" *ngIf="publicVariable.ApproveCustomerList && publicVariable.ApproveCustomerList.length > 0">
                 <div class="table-search"><input type="text" class="form-control"
                         [(ngModel)]="publicVariable.approvalsearchText" name="name" id="name" placeholder="Search here"></div>
             </div>
