@@ -369,9 +369,21 @@ export class NewPurchaseInvoiceComponent implements OnInit {
             this.publicVariable.selectedProjet = this.publicVariable.projectList.find(project => project.code == newData.ImpiHeaderProjectCode);
             formData.append('ImpiHeaderAttachment', this.ImpiHeaderAttachment);
             formData.append('ImpiHeaderInvoiceType', newData.ImpiHeaderInvoiceType);
-            formData.append('ImpiHeaderProjectCode', newData.ImpiHeaderProjectCode);
-            formData.append('ImpiHeaderDepartment', this.publicVariable.selectedProjet.departmentCode);
-            formData.append('ImpiHeaderDivison', this.publicVariable.selectedProjet.divisionCode);
+
+            formData.append('ImpiHeaderProjectCode', this.publicVariable.selectedProjet.code);
+            formData.append('ImpiHeaderProjectName', this.publicVariable.selectedProjet.name);
+            formData.append('ImpiHeaderProjectDepartmentCode', this.publicVariable.selectedProjet.departmentCode);
+            formData.append('ImpiHeaderProjectDepartmentName', this.publicVariable.selectedProjet.departmentName);
+            formData.append('ImpiHeaderProjectDivisionCode', this.publicVariable.selectedProjet.divisionCode);
+            formData.append('ImpiHeaderProjectDivisionName', this.publicVariable.selectedProjet.divisionName);
+
+            formData.append('ImpiHeaderTlApprover', this.publicVariable.selectedProjet.tlApprover);
+            formData.append('ImpiHeaderClusterApprover', this.publicVariable.selectedProjet.chApprover);
+            formData.append('ImpiHeaderFinanceApprover', this.publicVariable.selectedProjet.financeApprover);
+            formData.append('ImpiHeaderSupportApprover', this.publicVariable.selectedProjet.supportApprover);
+
+
+
             formData.append('ImpiHeaderPanNo', newData.ImpiHeaderPanNo);
             formData.append('ImpiHeaderGstNo', newData.ImpiHeaderGstNo);
             formData.append('PINO', newData.PINO);
