@@ -1,10 +1,22 @@
 
 export interface projectModel {
-    projectId: number
-    projectCode: string
-    projectName: string
-    divison: string
-    department: string
+    // projectId: number
+    // projectCode: string
+    // projectName: string
+    // divison: string
+    // department: string
+
+    dimension_Code:string
+    code:string
+    name:string
+    departmentCode:string
+    departmentName:string
+    divisionCode:string
+    divisionName:string
+    tlApprover:string
+    chApprover:string
+    financeApprover:string
+    supportApprover:string
 }
 
 

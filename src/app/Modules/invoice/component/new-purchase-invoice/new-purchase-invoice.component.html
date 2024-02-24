@@ -28,12 +28,12 @@
                 <div class="col-md-4 col-sm-6">
                     <div class="form-group">
                         <label for="projectCode">Project Code</label>
-                        <ng-select [items]="publicVariable.projectList" #select bindLabel="projectCode" bindValue="projectCode"
+                        <ng-select [items]="publicVariable.projectList" #select bindLabel="code" bindValue="code"
                             placeholder="Select in Project Code" formControlName="ImpiHeaderProjectCode"
                             (change)="onSelectProject()" [searchable]="true" [searchFn]="customSearchFn">
 
                             <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
-                                <small>{{item.projectCode}} - {{item.projectName}}</small>
+                                <small>{{item.code}} - {{item.name}}</small>
                             </ng-template>
                         </ng-select>
                         <div *ngIf="shouldShowError('ImpiHeaderProjectCode','required')" class="text-danger">This field

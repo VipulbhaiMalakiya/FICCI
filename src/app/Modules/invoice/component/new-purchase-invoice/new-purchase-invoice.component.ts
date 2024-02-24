@@ -67,8 +67,6 @@ export class NewPurchaseInvoiceComponent implements OnInit {
 
     ngOnInit(): void {
         this.loadProjectList();
-        this.loadCustomerStatusList();
-
         this.route.params.subscribe(params => {
             this.Id = +params['id'];
         });
@@ -79,7 +77,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
     }
 
     customSearchFn(term: string, item: any) {
-        const concatenatedString = `${item.projectCode} ${item.projectName}`.toLowerCase();
+        const concatenatedString = `${item.code} ${item.name}`.toLowerCase();
         return concatenatedString.includes(term.toLowerCase());
     }
     customerSearchFn(term: string, item: any) {
@@ -133,6 +131,8 @@ export class NewPurchaseInvoiceComponent implements OnInit {
             const subscription = this.API.getProjects().subscribe({
                 next: (response: any) => {
                     this.publicVariable.projectList = response.data;
+                    this.loadCustomerStatusList();
+
                 },
                 error: (error) => {
                     console.error('Error loading project list:', error);
@@ -243,11 +243,11 @@ export class NewPurchaseInvoiceComponent implements OnInit {
     onSelectProject() {
         const selectedId = this.publicVariable.dataForm.get('ImpiHeaderProjectCode')?.value;
         if (selectedId) {
-            this.publicVariable.selectedProjet = this.publicVariable.projectList.find(project => project.projectCode == selectedId);
+            this.publicVariable.selectedProjet = this.publicVariable.projectList.find(project => project.code == selectedId);
             if (this.publicVariable.selectedProjet) {
                 this.publicVariable.dataForm.patchValue({
-                    ImpiHeaderDepartment: this.publicVariable.selectedProjet.department,
-                    ImpiHeaderDivison: this.publicVariable.selectedProjet.divison,
+                    ImpiHeaderDepartment: this.publicVariable.selectedProjet.departmentName,
+                    ImpiHeaderDivison: this.publicVariable.selectedProjet.divisionName,
                 });
             }
         } else {
@@ -366,7 +366,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
                 formData.append('headerid', isUpdate ? newData.headerid : undefined);
             }
             formData.append('isupdate', String(isUpdate));
-            this.publicVariable.selectedProjet = this.publicVariable.projectList.find(project => project.projectCode == newData.ImpiHeaderProjectCode);
+            // this.publicVariable.selectedProjet = this.publicVariable.projectList.find(project => project.projectCode == newData.ImpiHeaderProjectCode);
             formData.append('ImpiHeaderAttachment', this.ImpiHeaderAttachment);
             formData.append('ImpiHeaderInvoiceType', newData.ImpiHeaderInvoiceType);
             formData.append('ImpiHeaderProjectCode', newData.ImpiHeaderProjectCode);

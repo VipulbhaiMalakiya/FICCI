@@ -13,7 +13,7 @@ export class InvoicesService {
     private apiUrl = `${environment.apiURL}PurchaseInvoice_New`;
     private getCustomerStatusNewURL = `${environment.apiURL}Customer?email=`;
 
-    private Projectapi = `${environment.apiURL}DropDown/GetProject?id=0`;
+    private Projectapi = `${environment.apiURL}NavERP/GetProject`;
     private PurchaseInvoice_New = `${environment.apiURL}PurchaseInvoice_New/0`;
     private retry: any = retry(1); // Retry the request up to 2 times in case of failure
 
