@@ -1,6 +1,6 @@
 import { FormGroup } from "@angular/forms";
 import { Subscription } from "rxjs";
-import { ApproveCustomerList, CityList, CountryList, GstCustomerTypeList, StateList, customerStatusListModel } from "../interface/customers";
+import { ApproveCustomerList, CityList, CountryList, GstCustomerTypeList, PostCodeList, StateList, customerStatusListModel } from "../interface/customers";
 
 export { FormBuilder, Validators } from '@angular/forms';
 export { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -34,6 +34,7 @@ export class publicVariable {
     ApproveCustomerList:ApproveCustomerList[] = [];
     stateList: StateList[] = [];
     cityList: CityList[] = [];
+    postCodeList: PostCodeList[] = [];
     customerTypeList: GstCustomerTypeList[] = [];
     customerStatusList: customerStatusListModel[] = [];
     storedEmail:string =  localStorage.getItem('userEmail') ?? '';

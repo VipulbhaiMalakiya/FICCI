@@ -15,6 +15,7 @@ export class CustomersService {
     private countryListURL = `${environment.apiURL}NavERP/GetCountry`;
     private GetStateURl = `${environment.apiURL}NavERP/GetState`;
     private GetCityURl = `${environment.apiURL}NavERP/GetCity`;
+    private GetPostCodeURL = `${environment.apiURL}NavERP/GetPostCode`;
     private gustomerTypeURL = `${environment.apiURL}DropDown/GstCustomerType`;
     private getCustomerStatusURL = `${environment.apiURL}Customer/0`;
     private getCustomerStatusNewURL = `${environment.apiURL}Customer?email=`;
@@ -38,6 +39,10 @@ export class CustomersService {
 
     getCityList(): Observable<any[]> {
         return this.http.get<any>(`${this.GetCityURl}`);
+    }
+
+    getPostCodeList(): Observable<any[]> {
+        return this.http.get<any>(`${this.GetPostCodeURL}`);
     }
     getCustomerStatus(): Observable<any[]> {
         return this.http.get<any[]>(`${this.getCustomerStatusURL}`).pipe(this.retry);

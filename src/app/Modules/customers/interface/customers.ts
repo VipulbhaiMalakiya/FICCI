@@ -16,6 +16,11 @@ export interface CityList {
     state: string
 }
 
+export interface PostCodeList {
+    postCode: string,
+    city: string
+}
+
 export interface GstCustomerTypeList {
     gstTypeId: number,
     gstTypeName: string,

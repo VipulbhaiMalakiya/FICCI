@@ -37,49 +37,19 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
         this.publicVariable.dataForm = this.fb.group({
             customerId: [''],
             customerNo: ['', [Validators.maxLength(20)]],
-            name: [
-                '',
-                [
-                    Validators.required,
-                    alphanumericWithSpacesValidator(),
-                    Validators.maxLength(100),
-                ],
-            ],
-            name2: [
-                '',
-                [alphanumericWithSpacesValidator(), Validators.maxLength(50)],
-            ],
+            name: ['', [Validators.required, alphanumericWithSpacesValidator(), Validators.maxLength(100)]],
+            name2: ['', [alphanumericWithSpacesValidator(), Validators.maxLength(50)]],
             address: ['', [Validators.required, Validators.maxLength(100)]],
             address2: ['', [Validators.maxLength(50)]],
             countryCode: [null, [Validators.required]],
             stateCode: [null, [Validators.required]],
             cityCode: [null, [Validators.required]],
-            postCode: [
-                '',
-                [Validators.required, Validators.pattern(/^\d{6}$/)],
-            ],
+            postCode: [null,[Validators.required]],
             GSTRegistrationNo: ['', [Validators.required, gstValidator()]],
             GSTCustomerType: [null, Validators.required],
-            email: [
-                '',
-                [
-                    Validators.required,
-                    Validators.email,
-                    Validators.maxLength(80),
-                ],
-            ],
-            PrimaryContactNo: [
-                '',
-                [Validators.required, Validators.pattern(/^[6-9]\d{9}$/)],
-            ],
-            contact: [
-                '',
-                [
-                    Validators.required,
-                    alphanumericWithSpacesValidator(),
-                    Validators.maxLength(100),
-                ],
-            ],
+            email: ['',[Validators.required,Validators.email,Validators.maxLength(80)]],
+            PrimaryContactNo: ['',[Validators.required, Validators.pattern(/^[6-9]\d{9}$/)],],
+            contact: ['',[Validators.required,alphanumericWithSpacesValidator(),Validators.maxLength(100)]],
             PANNo: ['', [Validators.required, panValidator()]],
             isDraft: [false],
         });
@@ -177,6 +147,28 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
             const subscription = this.API.getCityList().subscribe({
                 next: (response: any) => {
                     this.publicVariable.cityList = response.data;
+                    this.loadPostCodeList();
+                },
+                error: (error) => {
+                    console.error('Error loading city list:', error);
+                    console.error('Failed to load city list. Please try again later.');
+                    this.handleLoadingError();
+                },
+            });
+
+            this.publicVariable.Subscription.add(subscription);
+        } catch (error) {
+            console.error('Error loading city list:', error);
+            console.error('An unexpected error occurred. Please try again later.');
+            this.handleLoadingError();
+        }
+    }
+
+    loadPostCodeList() {
+        try {
+            const subscription = this.API.getPostCodeList().subscribe({
+                next: (response: any) => {
+                    this.publicVariable.postCodeList = response.data;
                     this.loadGstCustomerType();
                 },
                 error: (error) => {
