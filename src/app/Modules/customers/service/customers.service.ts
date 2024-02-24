@@ -20,7 +20,7 @@ export class CustomersService {
     private getCustomerStatusURL = `${environment.apiURL}Customer/0`;
     private getCustomerStatusNewURL = `${environment.apiURL}Customer?email=`;
     private ApproveCustomerURL = `${environment.apiURL}ApproveCustomer?email=`;
-    private ApproverURL = `${environment.apiURL}Approver`;
+    private ApproverURL = `${environment.apiURL}ApproveCustomer`;
     private AccountURL = `${environment.apiURL}Account`;
 
     private retry: any = retry(1); // Retry the request up to 2 times in case of failure
