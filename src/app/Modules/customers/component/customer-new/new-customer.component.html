@@ -79,8 +79,6 @@
                         <ng-select [items]="publicVariable.stateList" bindLabel="stateName" bindValue="stateId"
                             placeholder="Select " formControlName="stateCode" >
                         </ng-select>
-                        <!-- <input type="text" class="form-control" placeholder="State Code" formControlName="stateCode" /> -->
-
                         <div *ngIf="shouldShowError('stateCode', 'required')" class="text-danger">
                             This field is required
                         </div>
@@ -89,11 +87,9 @@
                 <div class="col-md-3 col-sm-6">
                     <div class="form-group">
                         <label>City <sup class="text-danger">*</sup></label>
-                        <!-- <ng-select [items]="publicVariable.cityList" bindLabel="cityName" bindValue="cityId"
-                            placeholder="Select" formControlName="city">
-                        </ng-select> -->
-                        <input type="text" class="form-control" placeholder="City Code" formControlName="cityCode" />
-
+                        <ng-select [items]="publicVariable.cityList" bindLabel="cityName" bindValue="cityId"
+                            placeholder="Select" formControlName="cityCode">
+                        </ng-select>
                         <div *ngIf="shouldShowError('cityCode', 'required')" class="text-danger">
                             This field is required
                         </div>

@@ -1,17 +1,29 @@
 import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute, CustomersService, FormBuilder, NgbModal, Router, ToastrService, Validators, alphanumericWithSpacesValidator, gstValidator, panValidator, publicVariable } from '../../Export/new-customer';
+import {
+    ActivatedRoute,
+    CustomersService,
+    FormBuilder,
+    NgbModal,
+    Router,
+    ToastrService,
+    Validators,
+    alphanumericWithSpacesValidator,
+    gstValidator,
+    panValidator,
+    publicVariable,
+} from '../../Export/new-customer';
 @Component({
     selector: 'app-new-customer',
     templateUrl: './new-customer.component.html',
-    styleUrls: ['./new-customer.component.css']
+    styleUrls: ['./new-customer.component.css'],
 })
 export class NewCustomerComponent implements OnInit, OnDestroy {
     publicVariable = new publicVariable();
     customerId?: number;
     data: any;
 
-
-    constructor(private fb: FormBuilder,
+    constructor(
+        private fb: FormBuilder,
         private modalService: NgbModal,
         private toastr: ToastrService,
         private router: Router,
@@ -25,36 +37,63 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
         this.publicVariable.dataForm = this.fb.group({
             customerId: [''],
             customerNo: ['', [Validators.maxLength(20)]],
-            name: ['', [Validators.required, alphanumericWithSpacesValidator(), Validators.maxLength(100)]],
-            name2: ['', [alphanumericWithSpacesValidator(), Validators.maxLength(50)]],
+            name: [
+                '',
+                [
+                    Validators.required,
+                    alphanumericWithSpacesValidator(),
+                    Validators.maxLength(100),
+                ],
+            ],
+            name2: [
+                '',
+                [alphanumericWithSpacesValidator(), Validators.maxLength(50)],
+            ],
             address: ['', [Validators.required, Validators.maxLength(100)]],
             address2: ['', [Validators.maxLength(50)]],
             countryCode: [null, [Validators.required]],
             stateCode: [null, [Validators.required]],
             cityCode: [null, [Validators.required]],
-            postCode: ['', [Validators.required, Validators.pattern(/^\d{6}$/)]],
+            postCode: [
+                '',
+                [Validators.required, Validators.pattern(/^\d{6}$/)],
+            ],
             GSTRegistrationNo: ['', [Validators.required, gstValidator()]],
             GSTCustomerType: [null, Validators.required],
-            email: ['', [Validators.required, Validators.email, Validators.maxLength(80)]],
-            PrimaryContactNo: ['', [Validators.required, Validators.pattern(/^[6-9]\d{9}$/)]],
-            contact: ['', [Validators.required, alphanumericWithSpacesValidator(), Validators.maxLength(100)]],
+            email: [
+                '',
+                [
+                    Validators.required,
+                    Validators.email,
+                    Validators.maxLength(80),
+                ],
+            ],
+            PrimaryContactNo: [
+                '',
+                [Validators.required, Validators.pattern(/^[6-9]\d{9}$/)],
+            ],
+            contact: [
+                '',
+                [
+                    Validators.required,
+                    alphanumericWithSpacesValidator(),
+                    Validators.maxLength(100),
+                ],
+            ],
             PANNo: ['', [Validators.required, panValidator()]],
-            isDraft: [false]
+            isDraft: [false],
         });
     }
 
     ngOnInit(): void {
         this.loadCountryList();
-        this.fetchStateList();
-        this.loadGstCustomerType();
         this.publicVariable.storedEmail = localStorage.getItem('userEmail') ?? '';
-        this.publicVariable.isProcess = false;
 
-        this.route.params.subscribe(params => {
+        this.route.params.subscribe((params) => {
             this.customerId = +params['id'];
         });
 
-        if (this.data = history.state.data) {
+        if ((this.data = history.state.data)) {
             this.patchFormData(this.data);
         }
     }
@@ -70,7 +109,6 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
     }
 
     patchFormData(data: any): void {
-
         this.publicVariable.dataForm.patchValue({
             customerId: data.customerId,
             customerNo: data.customerCode,
@@ -88,64 +126,71 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
             PrimaryContactNo: data.phoneNumber,
             contact: data.contact,
             PANNo: data.pan,
-            isDraft: data.isDraft
+            isDraft: data.isDraft,
         });
-
     }
-
 
     loadCountryList(): void {
         try {
             const subscription = this.API.getCountryList().subscribe({
                 next: (response: any) => {
                     this.publicVariable.countryList = response.data;
+                    this.loadStateList();
                 },
                 error: (error) => {
                     console.error('Error loading project list:', error);
-                }
+                    this.handleLoadingError();
+
+                },
             });
 
             this.publicVariable.Subscription.add(subscription);
         } catch (error) {
             console.error('Error loading project list:', error);
+            this.handleLoadingError();
+
         }
     }
 
-    fetchStateList() {
+    loadStateList() {
         try {
             const subscription = this.API.getStateList().subscribe({
                 next: (response: any) => {
                     this.publicVariable.stateList = response.data;
+                    this.loadCityList();
                 },
                 error: (error) => {
                     console.error('Error loading project list:', error);
-                }
+                    this.handleLoadingError()
+                },
             });
 
             this.publicVariable.Subscription.add(subscription);
         } catch (error) {
             console.error('Error loading project list:', error);
+            this.handleLoadingError()
         }
     }
 
-
-
-    fetchCityList(stateId: any) {
+    loadCityList() {
         try {
-            const subscription = this.API.getCityList(stateId).subscribe({
+            const subscription = this.API.getCityList().subscribe({
                 next: (response: any) => {
                     this.publicVariable.cityList = response.data;
+                    this.loadGstCustomerType();
                 },
                 error: (error) => {
                     console.error('Error loading city list:', error);
                     console.error('Failed to load city list. Please try again later.');
-                }
+                    this.handleLoadingError();
+                },
             });
 
             this.publicVariable.Subscription.add(subscription);
         } catch (error) {
             console.error('Error loading city list:', error);
             console.error('An unexpected error occurred. Please try again later.');
+            this.handleLoadingError();
         }
     }
 
@@ -153,26 +198,34 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
         try {
             const subscription = this.API.getGstCustomerType().subscribe({
                 next: (response: any) => {
-
                     this.publicVariable.customerTypeList = response.data;
+                    this.publicVariable.isProcess = false;
                 },
                 error: (error) => {
                     console.error('Error loading project list:', error);
-                }
+                    this.handleLoadingError();
+                },
             });
 
             this.publicVariable.Subscription.add(subscription);
         } catch (error) {
             console.error('Error loading project list:', error);
+            this.handleLoadingError();
         }
     }
 
+    handleLoadingError() {
+        this.publicVariable.isProcess = false; // Set status to false on error
+    }
+
+
+
     onInputChange(event: any) {
-        const inputValue = event.target.value; event.target.value = inputValue.replace(/[^0-9]/g, '');
+        const inputValue = event.target.value;
+        event.target.value = inputValue.replace(/[^0-9]/g, '');
     }
 
     onSubmit(action: boolean): void {
-
         if (this.publicVariable.dataForm.valid) {
             const newData = this.publicVariable.dataForm.value;
             const isUpdate = !!newData.customerId;
@@ -196,7 +249,7 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
                 gstCustomerType: newData.GSTCustomerType,
                 pan: newData.PANNo.trim(),
                 loginId: this.publicVariable.storedEmail,
-                roleName:this.publicVariable.storedRole
+                roleName: this.publicVariable.storedRole,
             };
             this.publicVariable.isProcess = true;
             this.publicVariable.Subscription.add(
@@ -211,27 +264,48 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
                         }
                     },
                     error: (error: any) => {
-                        this.toastr.error(error.error.message || 'An error occurred. Please try again later.', 'Error');
+                        this.toastr.error(
+                            error.error.message ||
+                            'An error occurred. Please try again later.',
+                            'Error'
+                        );
                         this.publicVariable.isProcess = false;
                     },
                     complete: () => {
                         this.publicVariable.isProcess = false;
-                    }
+                    },
                 })
             );
-
         } else {
             this.markFormControlsAsTouched();
         }
     }
 
     markFormControlsAsTouched(): void {
-        ['name', 'address', 'countryCode', 'stateCode', 'cityCode', 'postCode', 'GSTRegistrationNo', 'GSTCustomerType', 'email', 'PrimaryContactNo', 'contact', 'PANNo'].forEach(controlName => {
+        [
+            'name',
+            'address',
+            'countryCode',
+            'stateCode',
+            'cityCode',
+            'postCode',
+            'GSTRegistrationNo',
+            'GSTCustomerType',
+            'email',
+            'PrimaryContactNo',
+            'contact',
+            'PANNo',
+        ].forEach((controlName) => {
             this.publicVariable.dataForm.controls[controlName].markAsTouched();
         });
     }
 
     shouldShowError(controlName: string, errorName: string): boolean {
-        return this.publicVariable.dataForm.controls[controlName].touched && this.publicVariable.dataForm.controls[controlName].hasError(errorName);
+        return (
+            this.publicVariable.dataForm.controls[controlName].touched &&
+            this.publicVariable.dataForm.controls[controlName].hasError(
+                errorName
+            )
+        );
     }
 }
