@@ -15,10 +15,6 @@ import { SharedModule } from '../shared/shared.module';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { SearchFilterPipe } from './pipe/searchFilter';
 import { ApprovalSearchFilterPipe } from './pipe/approvalSearch';
-import { StoreModule } from '@ngrx/store';
-import { EffectsModule } from '@ngrx/effects';
-import { countryReducer } from './store/country.reducer';
-import { CountryEffects } from './store/country.effects';
 
 
 @NgModule({
@@ -41,8 +37,6 @@ import { CountryEffects } from './store/country.effects';
         NgSelectModule,
         SharedModule,
         NgxPaginationModule,
-        StoreModule.forFeature('country', countryReducer),
-        EffectsModule.forFeature([CountryEffects])
     ]
 })
 export class CustomersModule { }
