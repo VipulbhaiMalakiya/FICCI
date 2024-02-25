@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, isDevMode } from '@angular/core';
 import { ToastrModule } from 'ngx-toastr';
 import { AppComponent, SidebarLayoutComponent, BrowserModule, AppRoutingModule, HttpClientModule, BrowserAnimationsModule } from './import/app';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -8,6 +8,10 @@ import { LoginComponent } from './layouts/login/login.component';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './interceptor/auth-interceptor.interceptor';
 import { SharedModule } from "./Modules/shared/shared.module";
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { appReducer } from './shared/store/app.reducer';
 @NgModule({
     declarations: [
         AppComponent,
@@ -35,7 +39,10 @@ import { SharedModule } from "./Modules/shared/shared.module";
             progressAnimation: 'increasing',
             preventDuplicates: true,
         }),
-        SharedModule
+        SharedModule,
+        StoreModule.forRoot({ appState: appReducer }),
+        EffectsModule.forRoot([]),
+        StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() })
     ]
 })
 export class AppModule { }
