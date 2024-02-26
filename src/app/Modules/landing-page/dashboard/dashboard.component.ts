@@ -37,7 +37,7 @@ export class DashboardComponent {
         private IAPI : InvoicesService
 
     ) {
-        this.loadCustomerStatusCountList();
+
     }
 
     ngOnInit(): void {
@@ -109,11 +109,9 @@ export class DashboardComponent {
             const subscription = this.IAPI.getPurchaseInvoice_New().subscribe({
                 next: (response: any) => {
                     this.countDataByInvoies(response.data);
-                    this.invoiceStatuslistData = response.data;
-                    this.publicVariable.count = response.data.length;
+                    this.dashboardData = response.data;
+
                     this.loadInoivceStatusList(this.customerStatus);
-
-
                 },
                 error: (error) => {
                     console.error('Error loading project list:', error);
@@ -288,7 +286,9 @@ export class DashboardComponent {
                 break;
         }
 
-        this.publicVariable.customerStatusList = filteredData;
+        this.invoiceStatuslistData = filteredData;
+        console.log( this.invoiceStatuslistData );
+
         this.publicVariable.count = filteredData.length;
 
     }
