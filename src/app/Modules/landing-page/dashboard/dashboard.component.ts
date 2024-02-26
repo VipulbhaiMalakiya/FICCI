@@ -19,6 +19,12 @@ export class DashboardComponent {
     ApprovedAccounts: number = 0;
     RejectedbyAccounts: number = 0;
     ALL: number = 0;
+
+    PIisDRAFT: number = 0;
+    PIPendingApproval: number = 0;
+    PIApprovedAccounts: number = 0;
+    PIRejectedbyAccounts: number = 0;
+    PIALL: number = 0;
     dashboardData: any;
     invoiceStatuslistData: invoiceStatusModule[] = [];
 
@@ -200,11 +206,11 @@ export class DashboardComponent {
         counts['ALL'] = data.length;
 
         // Update counts
-        this.isDRAFT = counts['DRAFT'];
-        this.PendingApproval = counts['PENDING WITH TL APPROVER'];
-        this.ApprovedAccounts = counts['APPROVED BY ACCOUNTS APPROVER'];
-        this.RejectedbyAccounts = counts['REJECTED BY CH APPROVER'];
-        this.ALL = counts['ALL'];
+        this.PIisDRAFT = counts['DRAFT'];
+        this.PIPendingApproval = counts['PENDING WITH TL APPROVER'];
+        this.PIApprovedAccounts = counts['APPROVED BY ACCOUNTS APPROVER'];
+        this.PIRejectedbyAccounts = counts['REJECTED BY CH APPROVER'];
+        this.PIALL = counts['ALL'];
         this.publicVariable.count = counts['ALL']; // Total count
     }
 
