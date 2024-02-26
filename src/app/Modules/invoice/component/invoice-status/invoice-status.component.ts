@@ -98,7 +98,6 @@ export class InvoiceStatusComponent implements OnInit {
             Divison: x?.impiHeaderProjectDivisionName ? this.toTitleCase(x.impiHeaderProjectDivisionName) : '',
             Category: x?.impiHeaderInvoiceType ? this.toTitleCase(x.impiHeaderInvoiceType) : '',
             "PAN No": x?.impiHeaderPanNo || '',
-            "GST No": x?.impiHeaderGstNo || '',
             "State": x?.impiHeaderCustomerState ? this.toTitleCase(x.impiHeaderCustomerState) : '',
             "City": x?.impiHeaderCustomerCity ? this.toTitleCase(x.impiHeaderCustomerCity) : '',
             "Pincode": x?.impiHeaderCustomerPinCode || '',
