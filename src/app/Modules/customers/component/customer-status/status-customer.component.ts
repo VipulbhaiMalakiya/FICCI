@@ -21,7 +21,7 @@ export class StatusCustomerComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.loadCustomerStatusList();
+        this.loadCityList();
         this.publicVariable.storedEmail = localStorage.getItem('userEmail') ?? '';
     }
 
@@ -29,7 +29,7 @@ export class StatusCustomerComponent implements OnInit {
         const subscription = this.API.getCustomerStatusNew().pipe(
             timeout(120000), // Timeout set to 2 minutes (120000 milliseconds)
             finalize(() => {
-                this.publicVariable.isProcess = false;
+               this.publicVariable.isProcess = false;
             })
         ).subscribe({
             next: (response: any) => {
@@ -43,6 +43,7 @@ export class StatusCustomerComponent implements OnInit {
                     this.publicVariable.customerStatusList = filteredData;
                     this.publicVariable.count = filteredData.length;
                     this.publicVariable.isProcess = false;
+
                 }
 
             },
@@ -57,6 +58,40 @@ export class StatusCustomerComponent implements OnInit {
 
         this.publicVariable.Subscription.add(subscription);
     }
+
+    loadCityList() {
+        try {
+            const subscription = this.API.getCityList().subscribe({
+                next: (response: any) => {
+                    this.publicVariable.cityList = response.data;
+                    this.loadCustomerStatusList();
+
+                },
+                error: (error) => {
+                    console.error('Error loading city list:', error);
+                    console.error('Failed to load city list. Please try again later.');
+                },
+            });
+
+            this.publicVariable.Subscription.add(subscription);
+        } catch (error) {
+            console.error('Error loading city list:', error);
+            console.error('An unexpected error occurred. Please try again later.');
+        }
+    }
+
+
+
+    getCityName(cityId: string): string | undefined {
+        const city = this.publicVariable.cityList.find((c: any) => c.cityId === cityId);
+        const cityName = city ? city.cityName : undefined;
+        this.handleLoadingError(); // Set isProcess to false after retrieving the city name
+        return cityName;
+    }
+    handleLoadingError() {
+        this.publicVariable.isProcess = false; // Set status to false on error
+    }
+
 
 
     onDelete(id: number) {
