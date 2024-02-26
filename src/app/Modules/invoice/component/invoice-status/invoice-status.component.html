@@ -40,15 +40,17 @@
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th>PO No.</th>
+                            <th>Project Code</th>
                             <th>PO Date</th>
                             <th>Department</th>
                             <th>Category</th>
                             <th>Vendor Name</th>
                             <th>Amount</th>
+                            <th>TL Approver</th>
+                            <th>CL Approver</th>
+                            <th>Finance Approver</th>
+                            <th>Support Approver</th>
                             <th>Status</th>
-                            <th>Approver</th>
-                            <th>Update Date</th>
                             <th class="action-cl">Action</th>
                         </tr>
                     </thead>
@@ -58,13 +60,15 @@
                             <td>{{i + 1}}</td>
                             <td>{{d.impiHeaderProjectCode}}</td>
                             <td>{{d.impiHeaderSubmittedDate | date:'medium':'IST'}}</td>
-                            <td>{{d.impiHeaderDepartment | titlecase}}</td>
+                            <td>{{d.impiHeaderProjectDepartmentName | titlecase}}</td>
                             <td>{{d.impiHeaderInvoiceType | titlecase}}</td>
                             <td>{{d.impiHeaderCustomerName | titlecase}}</td>
                             <td>{{d.impiHeaderTotalInvoiceAmount | number:'1.2-2' }}</td>
-                            <td></td>
-                            <td></td>
-                            <td>{{d.impiHeaderModifiedDate | date:'medium':'IST' }}</td>
+                            <td>{{d.impiHeaderTlApprover | titlecase}}</td>
+                            <td>{{d.impiHeaderFinanceApprover | titlecase}}</td>
+                            <td>{{d.impiHeaderClusterApprover | titlecase}}</td>
+                            <td>{{d.impiHeaderSupportApprover |titlecase}}</td>
+                            <td>{{d.headerStatus | titlecase}}</td>
 
                             <td>
                                 <span class="table-btns">

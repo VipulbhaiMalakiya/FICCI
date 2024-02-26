@@ -91,40 +91,40 @@ export class InvoiceStatusComponent implements OnInit {
         }
     }
     onDownload() {
-        const exportData = this.publicVariable.invoiceStatuslistData.map((x) => ({
-            "PO No.": x?.impiHeaderProjectCode || '',
-            "PO Date": x?.impiHeaderSubmittedDate ? formatDate(x.impiHeaderSubmittedDate, 'medium', 'en-IN', 'IST') : '',
-            Department: x?.impiHeaderDepartment ? this.toTitleCase(x.impiHeaderDepartment) : '',
-            Divison: x?.impiHeaderDivison ? this.toTitleCase(x.impiHeaderDivison) : '',
-            Category: x?.impiHeaderInvoiceType ? this.toTitleCase(x.impiHeaderInvoiceType) : '',
-            "PAN No": x?.impiHeaderPanNo || '',
-            "GST No": x?.impiHeaderGstNo || '',
-            "State": x?.impiHeaderCustomerState ? this.toTitleCase(x.impiHeaderCustomerState) : '',
-            "City": x?.impiHeaderCustomerCity ? this.toTitleCase(x.impiHeaderCustomerCity) : '',
-            "Pincode": x?.impiHeaderCustomerPinCode || '',
-            "Vendor Name": x && x.impiHeaderCustomerName ? this.toTitleCase(x.impiHeaderCustomerName) : '',
-            "Address": x?.impiHeaderCustomerAddress,
-            'Customer  GST Number': x?.impiHeaderCustomerGstNo || '',
-            'Contact Person': x?.impiHeaderCustomerContactPerson || '',
-            'Phone No': x?.impiHeaderCustomerPhoneNo || '',
-            "Email ID": x?.impiHeaderCustomerEmailId || '',
-            Amount: x?.impiHeaderTotalInvoiceAmount != null ? (x.impiHeaderTotalInvoiceAmount).toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '',
-            Status: '',
-            Approver: '',
-            'Payment Terms': x?.impiHeaderPaymentTerms || '',
-            'impiHeaderRemarks': x?.impiHeaderRemarks || '',
-            'Save as Draft': x.isDraft ? 'Yes' : 'No',
-            "Update Date": x?.impiHeaderModifiedDate ? formatDate(x.impiHeaderModifiedDate, 'medium', 'en-IN', 'IST') : '',
-        }));
+        // const exportData = this.publicVariable.invoiceStatuslistData.map((x) => ({
+        //     "PO No.": x?.impiHeaderProjectCode || '',
+        //     "PO Date": x?.impiHeaderSubmittedDate ? formatDate(x.impiHeaderSubmittedDate, 'medium', 'en-IN', 'IST') : '',
+        //     Department: x?.impiHeaderDepartment ? this.toTitleCase(x.impiHeaderDepartment) : '',
+        //     Divison: x?.impiHeaderDivison ? this.toTitleCase(x.impiHeaderDivison) : '',
+        //     Category: x?.impiHeaderInvoiceType ? this.toTitleCase(x.impiHeaderInvoiceType) : '',
+        //     "PAN No": x?.impiHeaderPanNo || '',
+        //     "GST No": x?.impiHeaderGstNo || '',
+        //     "State": x?.impiHeaderCustomerState ? this.toTitleCase(x.impiHeaderCustomerState) : '',
+        //     "City": x?.impiHeaderCustomerCity ? this.toTitleCase(x.impiHeaderCustomerCity) : '',
+        //     "Pincode": x?.impiHeaderCustomerPinCode || '',
+        //     "Vendor Name": x && x.impiHeaderCustomerName ? this.toTitleCase(x.impiHeaderCustomerName) : '',
+        //     "Address": x?.impiHeaderCustomerAddress,
+        //     'Customer  GST Number': x?.impiHeaderCustomerGstNo || '',
+        //     'Contact Person': x?.impiHeaderCustomerContactPerson || '',
+        //     'Phone No': x?.impiHeaderCustomerPhoneNo || '',
+        //     "Email ID": x?.impiHeaderCustomerEmailId || '',
+        //     Amount: x?.impiHeaderTotalInvoiceAmount != null ? (x.impiHeaderTotalInvoiceAmount).toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '',
+        //     Status: '',
+        //     Approver: '',
+        //     'Payment Terms': x?.impiHeaderPaymentTerms || '',
+        //     'impiHeaderRemarks': x?.impiHeaderRemarks || '',
+        //     'Save as Draft': x.isDraft ? 'Yes' : 'No',
+        //     "Update Date": x?.impiHeaderModifiedDate ? formatDate(x.impiHeaderModifiedDate, 'medium', 'en-IN', 'IST') : '',
+        // }));
 
-        const headers = [
-            'PO No.', 'PO Date', 'Department', 'Divison', 'Category', 'PAN No', 'GST No',
-            'Vendor Name', 'Address', 'State', 'City', 'Pincode', 'Customer  GST Number',
-            'Contact Person', 'Phone No', "Email ID", 'Amount', 'Status', 'Approver', 'Payment Terms',
-            'impiHeaderRemarks', 'Save as Draft',
-            'Update Date'
-        ];
-        this.appService.exportAsExcelFile(exportData, 'PI Invoice Status', headers);
+        // const headers = [
+        //     'PO No.', 'PO Date', 'Department', 'Divison', 'Category', 'PAN No', 'GST No',
+        //     'Vendor Name', 'Address', 'State', 'City', 'Pincode', 'Customer  GST Number',
+        //     'Contact Person', 'Phone No', "Email ID", 'Amount', 'Status', 'Approver', 'Payment Terms',
+        //     'impiHeaderRemarks', 'Save as Draft',
+        //     'Update Date'
+        // ];
+        // this.appService.exportAsExcelFile(exportData, 'PI Invoice Status', headers);
     }
 
     onTableDataChange(event: any) {

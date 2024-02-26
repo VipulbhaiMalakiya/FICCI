@@ -1,31 +1,31 @@
 
 export interface projectModel {
-    // projectId: number
-    // projectCode: string
-    // projectName: string
-    // divison: string
-    // department: string
 
-    dimension_Code:string
-    code:string
-    name:string
-    departmentCode:string
-    departmentName:string
-    divisionCode:string
-    divisionName:string
-    tlApprover:string
-    chApprover:string
-    financeApprover:string
-    supportApprover:string
+
+    dimension_Code: string
+    code: string
+    name: string
+    departmentCode: string
+    departmentName: string
+    divisionCode: string
+    divisionName: string
+    tlApprover: string
+    chApprover: string
+    financeApprover: string
+    supportApprover: string
 }
 
 
 export interface invoiceStatusModule {
-    headerId: string
+    headerId: number
+    headerPiNo: any
     impiHeaderInvoiceType: string
     impiHeaderProjectCode: string
-    impiHeaderDepartment: string
-    impiHeaderDivison: string
+    impiHeaderProjectName: string
+    impiHeaderProjectDepartmentCode: string
+    impiHeaderProjectDepartmentName: string
+    impiHeaderProjectDivisionCode: string
+    impiHeaderProjectDivisionName: string
     impiHeaderPanNo: string
     impiHeaderGstNo: string
     impiHeaderCustomerName: string
@@ -40,12 +40,17 @@ export interface invoiceStatusModule {
     impiHeaderCustomerPhoneNo: string
     impiHeaderCreatedBy: string
     impiHeaderTotalInvoiceAmount: number
-    impiHeaderAttachment: any
+    impiHeaderAttachment: string
     impiHeaderPaymentTerms: string
     impiHeaderRemarks: string
     impiHeaderSubmittedDate: string
     impiHeaderModifiedDate: any
+    headerStatus: string
     isDraft: boolean
+    impiHeaderTlApprover: string
+    impiHeaderClusterApprover: string
+    impiHeaderFinanceApprover: string
+    impiHeaderSupportApprover: any
     lineItem_Requests: LineItemRequest[]
 }
 
