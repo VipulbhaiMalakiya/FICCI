@@ -12,9 +12,7 @@ export class CustomersService {
     constructor(private http: HttpClient) { }
 
     private apiUrl = `${environment.apiURL}Customer`;
-    private countryListURL = `${environment.apiURL}NavERP/GetCountry`;
-    private GetStateURl = `${environment.apiURL}NavERP/GetState`;
-    private GetCityURl = `${environment.apiURL}NavERP/GetCity`;
+
     private GetPostCodeURL = `${environment.apiURL}NavERP/GetPostCode`;
     private gustomerTypeURL = `${environment.apiURL}DropDown/GstCustomerType`;
     private getCustomerStatusURL = `${environment.apiURL}Customer/0`;
@@ -22,6 +20,10 @@ export class CustomersService {
     private ApproveCustomerURL = `${environment.apiURL}ApproveCustomer?email=`;
     private ApproverURL = `${environment.apiURL}ApproveCustomer`;
     private AccountURL = `${environment.apiURL}Account`;
+
+    private countryListURL = `${environment.apiURL}DropDown/GetCountry`;
+    private GetStateURl = `${environment.apiURL}DropDown/GetState`;
+    private GetCityURl = `${environment.apiURL}DropDown/GetCity`;
 
     private retry: any = retry(1); // Retry the request up to 2 times in case of failure
 

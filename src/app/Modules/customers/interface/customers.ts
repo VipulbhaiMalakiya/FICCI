@@ -43,9 +43,9 @@ export interface addUpdateCustomer {
     gstNumber: string
     pan: string
     gstCustomerType: number
-    cityCode: string,
-    stateCode: string,
-    countryCode: string
+    cityCode?: string,
+    stateCode?: string,
+    countryCode?: string
 }
 
 export interface customerStatusListModel {

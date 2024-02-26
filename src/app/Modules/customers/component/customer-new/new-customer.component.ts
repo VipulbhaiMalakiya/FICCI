@@ -79,6 +79,8 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
     }
 
     patchFormData(data: any): void {
+        console.log(data);
+
         this.publicVariable.dataForm.patchValue({
             customerId: data.customerId,
             customerNo: data.customerCode,
@@ -86,9 +88,9 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
             name2: data.customerLastName,
             address: data.address,
             address2: data.address,
-            countryCode: data.countryCode,
-            stateCode: data.stateCode,
-            cityCode: data.cityCode,
+            countryCode:  data.countryList.countryCode,
+            stateCode: data.stateList.stateCode,
+            cityCode:  data.cityList.cityCode,
             postCode: data.pincode,
             GSTRegistrationNo: data.gstNumber,
             GSTCustomerType: data.gstType.gstTypeId,
@@ -147,7 +149,6 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
             const subscription = this.API.getCityList().subscribe({
                 next: (response: any) => {
                     this.publicVariable.cityList = response.data;
-                    // this.loadPostCodeList();
                     this.loadGstCustomerType()
                 },
                 error: (error) => {
@@ -165,28 +166,7 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
         }
     }
 
-    // loadPostCodeList() {
-    //     try {
-    //         const subscription = this.API.getPostCodeList().subscribe({
-    //             next: (response: any) => {
-    //                 this.publicVariable.postCodeList = response.data;
-    //                 this.handleLoadingError();
 
-    //             },
-    //             error: (error) => {
-    //                 console.error('Error loading city list:', error);
-    //                 console.error('Failed to load city list. Please try again later.');
-    //                 this.handleLoadingError();
-    //             },
-    //         });
-
-    //         this.publicVariable.Subscription.add(subscription);
-    //     } catch (error) {
-    //         console.error('Error loading city list:', error);
-    //         console.error('An unexpected error occurred. Please try again later.');
-    //         this.handleLoadingError();
-    //     }
-    // }
 
     loadGstCustomerType(): void {
         try {
@@ -213,16 +193,16 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
     }
 
     countrySearchFn(term: string, item: any) {
-        const concatenatedString = `${item.countryId} ${item.countryName}`.toLowerCase();
+        const concatenatedString = `${item.countryCode} ${item.countryName}`.toLowerCase();
         return concatenatedString.includes(term.toLowerCase());
     }
 
     stateSearchFn(term: string, item: any) {
-        const concatenatedString = `${item.stateId} ${item.stateName}`.toLowerCase();
+        const concatenatedString = `${item.stateCode} ${item.stateName}`.toLowerCase();
         return concatenatedString.includes(term.toLowerCase());
     }
     citySearchFn(term: string, item: any) {
-        const concatenatedString = `${item.cityId} ${item.cityName}`.toLowerCase();
+        const concatenatedString = `${item.countryCode} ${item.cityName}`.toLowerCase();
         return concatenatedString.includes(term.toLowerCase());
     }
 
