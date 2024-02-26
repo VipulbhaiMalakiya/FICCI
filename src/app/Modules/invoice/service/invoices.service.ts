@@ -16,6 +16,7 @@ export class InvoicesService {
     private Projectapi = `${environment.apiURL}NavERP/GetProject`;
     private PurchaseInvoice_New = `${environment.apiURL}PurchaseInvoice_New/0`;
     private retry: any = retry(1); // Retry the request up to 2 times in case of failure
+    private ApproveInvoiceURL = `${environment.apiURL}ApproveInvoice?email=`;
 
 
     getProjects(): Observable<any[]> {
@@ -35,6 +36,11 @@ export class InvoicesService {
     }
     getCustomerStatusNew(): Observable<any[]> {
         const url = `${this.getCustomerStatusNewURL}${localStorage.getItem('userEmail') ?? ''}`;
+        return this.http.get<any[]>(url).pipe(this.retry);
+    }
+
+    getApproveInvoice(): Observable<any[]> {
+        const url = `${this.ApproveInvoiceURL}${localStorage.getItem('userEmail') ?? ''}`;
         return this.http.get<any[]>(url).pipe(this.retry);
     }
 }

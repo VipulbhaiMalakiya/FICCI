@@ -61,3 +61,28 @@ export interface LineItemRequest {
     impiLineUnitPrice: number
     impiLineAmount: number
 }
+
+
+export interface invoiceApproveModule {
+    impiHeaderId: number
+    impiHeaderPiNo: any
+    impiHeaderInvoiceType: string
+    impiHeaderProjectDivisionCode: string
+    impiHeaderPanNo: string
+    impiHeaderGstNo: string
+    impiHeaderCustomerCode: string
+    impiHeaderCustomerCity: string
+    impiHeaderCustomerState: string
+    impiHeaderCustomerPinCode: string
+    impiHeaderCustomerGstNo: string
+    impiHeaderCustomerEmailId: string
+    impiHeaderCustomerPhoneNo: string
+    impiHeaderCreatedBy: string
+    impiHeaderSubmittedDate: string
+    impiHeaderTotalInvoiceAmount: number
+    impiHeaderPaymentTerms: string
+    impiHeaderRemarks: string
+    headerStatusId: number
+    statusName: string
+    approverEmail: string
+  }

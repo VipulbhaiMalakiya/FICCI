@@ -1,12 +1,13 @@
-import { Component } from '@angular/core';
-import { AppService, NgbModal, Router, ToastrService, publicVariable } from '../../Export/invoce';
+import { Component, OnInit } from '@angular/core';
+import { AppService, InvoicesService, NgbModal, Router, ToastrService, publicVariable } from '../../Export/invoce';
+import { finalize, timeout } from 'rxjs';
 
 @Component({
   selector: 'app-approval-inbox',
   templateUrl: './approval-inbox.component.html',
   styleUrls: ['./approval-inbox.component.css']
 })
-export class ApprovalInboxComponent {
+export class ApprovalInboxComponent implements OnInit {
   publicVariable = new publicVariable();
 
 
@@ -14,10 +15,54 @@ export class ApprovalInboxComponent {
     private modalService: NgbModal,
     private router: Router,
     private toastr: ToastrService,
+    private API: InvoicesService,
+
 
   ) {
 
   }
+
+  ngOnInit(): void {
+    this.loadApproveInvoiceList();
+  }
+
+
+  loadApproveInvoiceList(): void {
+    const subscription = this.API.getApproveInvoice().pipe(
+        timeout(120000), // Timeout set to 2 minutes (120000 milliseconds)
+        finalize(() => {
+            this.publicVariable.isProcess = false;
+        })
+    ).subscribe({
+        next: (response: any) => {
+
+            if (this.publicVariable.storedRole === 'Admin') {
+                this.publicVariable.invoiceApprovelistData = response.data;
+                this.publicVariable.count = response.data.length;
+                this.publicVariable.isProcess = false;
+            } else {
+                // Filter the response data by email
+                const filteredData = response.data.filter((item: any) => item.approverEmail === this.publicVariable.storedEmail);
+                this.publicVariable.invoiceApprovelistData = filteredData;
+                this.publicVariable.count = filteredData.length;
+                this.publicVariable.isProcess = false;
+
+            }
+        },
+        error: (error: any) => {
+            if (error.name === 'TimeoutError') {
+                this.publicVariable.isProcess = false;
+                this.toastr.error('Operation timed out after2 minutes', error.name);
+            } else {
+                this.publicVariable.isProcess = false;
+                this.toastr.error('Error loading user list', error.name);
+            }
+        }
+    });
+
+    this.publicVariable.Subscription.add(subscription);
+}
+
 
 
   onDownload() {

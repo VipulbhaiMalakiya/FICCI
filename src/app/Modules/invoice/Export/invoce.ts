@@ -1,6 +1,6 @@
 import { FormGroup } from "@angular/forms";
 import { Subscription } from "rxjs";
-import { invoiceStatusModule, projectModel } from "../interface/invoice";
+import { invoiceApproveModule, invoiceStatusModule, projectModel } from "../interface/invoice";
 import { CityList, CountryList, StateList, customerStatusListModel } from "../../customers/interface/customers";
 
 export { FormBuilder, Validators } from '@angular/forms';
@@ -33,6 +33,8 @@ export class publicVariable {
     userData: any;
     projectList: projectModel[] = [];
     invoiceStatuslistData: invoiceStatusModule[] = [];
+    invoiceApprovelistData: invoiceApproveModule[] = [];
+
     customerStatusList: customerStatusListModel[] = [];
     countryList: CountryList[] = [];
     stateList: StateList[] = [];

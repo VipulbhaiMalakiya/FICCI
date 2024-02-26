@@ -43,7 +43,6 @@
             <tr>
               <th>PO No.</th>
               <th>PO Date</th>
-              <th>Department</th>
               <th>Category</th>
               <th>Vendor Name</th>
               <th>Amount</th>
@@ -55,11 +54,11 @@
           </thead>
           <tbody>
 
-            <tr>
-              <td>C00007</td>
-              <td>10-Jan-2024</td>
-              <td>FINANCE</td>
-              <td>Performa Invoice</td>
+            <tr
+            *ngFor="let d of  this.publicVariable.invoiceApprovelistData | searchFilter: publicVariable.searchText| paginate: {itemsPerPage: publicVariable.tableSize,currentPage: publicVariable.page,totalItems: publicVariable.count};let i = index">
+              <td>{{d.impiHeaderProjectDivisionCode}}</td>
+              <td>{{d.impiHeaderSubmittedDate | date:'medium':'IST'}}</td>
+              <td>{{d.impiHeaderInvoiceType}}</td>
               <td>Mohan Mutha Export Private Limited</td>
               <td>3,540.00</td>
 
@@ -73,141 +72,6 @@
                 </span>
               </td>
             </tr>
-
-            <tr>
-              <td>C00007</td>
-              <td>10-Jan-2024</td>
-              <td>FINANCE</td>
-              <td>Performa Invoice</td>
-              <td>Mohan Mutha Export Private Limited</td>
-              <td>3,540.00</td>
-
-              <td>Approved By Matrix</td>
-              <td>aditya.agarwal@ficci.com</td>
-              <td>10-Mar-2024</td>
-
-              <td><span class="table-btns">
-                  <a href="view-pi-approval-inbox.html"><img src="../assets/images/view-icon.svg" alt=""></a>
-
-                </span>
-              </td>
-            </tr>
-
-            <tr>
-              <td>C00007</td>
-              <td>10-Jan-2024</td>
-              <td>FINANCE</td>
-              <td>Performa Invoice</td>
-              <td>Mohan Mutha Export Private Limited</td>
-              <td>3,540.00</td>
-
-              <td>Approved By Matrix</td>
-              <td>aditya.agarwal@ficci.com</td>
-              <td>10-Mar-2024</td>
-
-              <td><span class="table-btns">
-                  <a href="view-pi-approval-inbox.html"><img src="../assets/images/view-icon.svg" alt=""></a>
-
-                </span>
-              </td>
-            </tr>
-
-            <tr>
-              <td>C00007</td>
-              <td>10-Jan-2024</td>
-              <td>FINANCE</td>
-              <td>Performa Invoice</td>
-              <td>Mohan Mutha Export Private Limited</td>
-              <td>3,540.00</td>
-
-              <td>Approved By Matrix</td>
-              <td>aditya.agarwal@ficci.com</td>
-              <td>10-Mar-2024</td>
-
-              <td><span class="table-btns">
-                  <a href="view-pi-approval-inbox.html"><img src="../assets/images/view-icon.svg" alt=""></a>
-
-                </span>
-              </td>
-            </tr>
-
-            <tr>
-              <td>C00007</td>
-              <td>10-Jan-2024</td>
-              <td>FINANCE</td>
-              <td>Performa Invoice</td>
-              <td>Mohan Mutha Export Private Limited</td>
-              <td>3,540.00</td>
-
-              <td>Approved By Matrix</td>
-              <td>aditya.agarwal@ficci.com</td>
-              <td>10-Mar-2024</td>
-
-              <td><span class="table-btns">
-                  <a href="view-pi-approval-inbox.html"><img src="../assets/images/view-icon.svg" alt=""></a>
-
-                </span>
-              </td>
-            </tr>
-
-            <tr>
-              <td>C00007</td>
-              <td>10-Jan-2024</td>
-              <td>FINANCE</td>
-              <td>Performa Invoice</td>
-              <td>Mohan Mutha Export Private Limited</td>
-              <td>3,540.00</td>
-
-              <td>Approved By Matrix</td>
-              <td>aditya.agarwal@ficci.com</td>
-              <td>10-Mar-2024</td>
-
-              <td><span class="table-btns">
-                  <a href="view-pi-approval-inbox.html"><img src="../assets/images/view-icon.svg" alt=""></a>
-
-                </span>
-              </td>
-            </tr>
-
-            <tr>
-              <td>C00007</td>
-              <td>10-Jan-2024</td>
-              <td>FINANCE</td>
-              <td>Performa Invoice</td>
-              <td>Mohan Mutha Export Private Limited</td>
-              <td>3,540.00</td>
-
-              <td>Approved By Matrix</td>
-              <td>aditya.agarwal@ficci.com</td>
-              <td>10-Mar-2024</td>
-
-              <td><span class="table-btns">
-                  <a href="view-pi-approval-inbox.html"><img src="../assets/images/view-icon.svg" alt=""></a>
-
-                </span>
-              </td>
-            </tr>
-
-            <tr>
-              <td>C00007</td>
-              <td>10-Jan-2024</td>
-              <td>FINANCE</td>
-              <td>Performa Invoice</td>
-              <td>Mohan Mutha Export Private Limited</td>
-              <td>3,540.00</td>
-
-              <td>Approved By Matrix</td>
-              <td>aditya.agarwal@ficci.com</td>
-              <td>10-Mar-2024</td>
-
-              <td><span class="table-btns">
-                  <a href="view-pi-approval-inbox.html"><img src="../assets/images/view-icon.svg" alt=""></a>
-
-                </span>
-              </td>
-            </tr>
-
-
 
 
           </tbody>
