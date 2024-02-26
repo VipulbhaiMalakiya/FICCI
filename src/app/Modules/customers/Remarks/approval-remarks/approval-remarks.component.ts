@@ -35,6 +35,8 @@ export class ApprovalRemarksComponent {
             this.customerId = +params['id'];
         });
         this.data = history.state.data;
+        console.log( this.data );
+
         this.publicVariable.isProcess = false;
 
     }
@@ -42,7 +44,7 @@ export class ApprovalRemarksComponent {
     onSubmit(action: boolean) {
         if (this.publicVariable.dataForm.valid) {
             const newData = this.publicVariable.dataForm.value;
-            let statusId: number = !action ? this.data.customerStatus : this.data.customerStatus;
+            let statusId: number = !action ? this.data.customerStatusId : this.data.customerStatusId;
 
             const newConfig: any = {
                 customerId: this.data.customerId,

@@ -41,7 +41,7 @@ export class AccountsRemarksComponent {
     onSubmit(action: boolean) {
         if (this.publicVariable.dataForm.valid) {
             const newData = this.publicVariable.dataForm.value;
-            let statusId: number = !action ? this.data.customerStatusId : this.data.customerStatusId;            
+            let statusId: number = !action ? this.data.customerStatusId : this.data.customerStatusId;
             const newConfig: any = {
                 customerId: this.data.customerId,
                 isApproved: action,

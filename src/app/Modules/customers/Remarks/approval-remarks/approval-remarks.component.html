@@ -9,6 +9,13 @@
 
             <div class="col-md-3 col-sm-6">
                 <div class="form-group">
+                    <label>Customer No.</label>
+                    <input type="text" value="{{data.customerCode}}" class="form-control" disabled readonly>
+                </div>
+            </div>
+
+            <div class="col-md-3 col-sm-6">
+                <div class="form-group">
                     <label>Name</label>
                     <input type="text" value="{{data.customerName | titlecase}}" class="form-control" disabled readonly>
                 </div>
@@ -17,72 +24,74 @@
             <div class="col-md-3 col-sm-6">
                 <div class="form-group">
                     <label>Name 2</label>
-                    <input type="text" value="{{data.customerLastname | titlecase}}" class="form-control" disabled
-                        readonly>
+                    <input type="text" value="{{data.customerLastName | titlecase}}" class="form-control" disabled readonly>
                 </div>
             </div>
 
             <div class="col-md-3 col-sm-6">
                 <div class="form-group">
                     <label>Address</label>
-                    <input type="text" value="{{data.custoemrAddress}}" class="form-control" disabled readonly>
+                    <input type="text" value="{{data.address}}" class="form-control" disabled readonly>
                 </div>
             </div>
 
             <div class="col-md-3 col-sm-6">
                 <div class="form-group">
                     <label>Address 2</label>
-                    <input type="text" value="{{data.custoemrAddress}}" class="form-control" disabled readonly>
+                    <input type="text" value="{{data.address2}}" class="form-control" disabled readonly>
                 </div>
             </div>
-
 
             <div class="col-md-3 col-sm-6">
                 <div class="form-group">
                     <label>Country/Region Code</label>
-                    <input type="text" value="{{data.countryCode}}" class="form-control" disabled readonly>
+                    <select class="form-select" disabled readonly>
+                        <option value="">{{data.cityList.cityName}}</option>
+                    </select>
                 </div>
             </div>
 
             <div class="col-md-3 col-sm-6">
                 <div class="form-group">
                     <label>State</label>
-                    <input type="text" value="{{data.stateCode}}" class="form-control" disabled readonly>
+                    <select class="form-select" disabled readonly>
+                        <option value="">{{data.stateList.stateName}}</option>
+                    </select>
                 </div>
             </div>
-
             <div class="col-md-3 col-sm-6">
                 <div class="form-group">
                     <label>City</label>
-                    <input type="text" value="{{data.cityCode}}" class="form-control" disabled readonly>
+                    <select class="form-select" disabled readonly>
+                        <option value="">{{data.cityList.cityName}}</option>
+                    </select>
                 </div>
             </div>
-
             <div class="col-md-3 col-sm-6">
                 <div class="form-group">
                     <label>Post Code</label>
-                    <input type="text" value="{{data.customerPinCode}}" class="form-control" disabled readonly>
+                    <input type="text" value="{{data.pincode}}" class="form-control" disabled readonly>
                 </div>
             </div>
+
 
             <div class="col-md-3 col-sm-6">
                 <div class="form-group">
                     <label>E-Mail</label>
-                    <input type="text" value="{{data.customerEmailId}}" class="form-control" disabled readonly>
+                    <input type="text" value="{{data.email | titlecase}}" class="form-control" disabled readonly>
                 </div>
             </div>
 
             <div class="col-md-3 col-sm-6">
                 <div class="form-group">
                     <label>Primary Contact No.</label>
-                    <input type="text" value="{{data.customerPhoneNo}}" class="form-control" disabled readonly>
+                    <input type="text" value="{{data.phoneNumber}}" class="form-control" disabled readonly>
                 </div>
             </div>
-
             <div class="col-md-3 col-sm-6">
                 <div class="form-group">
                     <label>Contact Person</label>
-                    <input type="text" value="{{data.customerContactPerson}}" class="form-control" disabled readonly>
+                    <input type="text" value="{{data.contact | titlecase}}" class="form-control" disabled readonly>
                 </div>
             </div>
 
@@ -90,28 +99,28 @@
                 <div class="form-group">
                     <label>GST Customer Type</label>
                     <select class="form-select" disabled readonly>
-                        <option value="">{{data.customerTypeName | titlecase}}</option>
+                        <option value="">{{data.gstType.gstTypeName | titlecase}}</option>
                     </select>
                 </div>
             </div>
             <div class="col-md-3 col-sm-6">
                 <div class="form-group">
                     <label>GST Registration No.</label>
-                    <input type="text" value="{{data.customerGstNo}}" class="form-control" disabled readonly>
+                    <input type="text" value="{{data.gstNumber}}" class="form-control" disabled readonly>
                 </div>
             </div>
 
             <div class="col-md-3 col-sm-6">
                 <div class="form-group">
                     <label>P.A.N. No.</label>
-                    <input type="text" value="{{data.customerPanNo}}" class="form-control" disabled readonly>
+                    <input type="text" value="{{data.pan}}" class="form-control" disabled readonly>
                 </div>
             </div>
 
             <div class="col-md-3 col-sm-6">
                 <div class="form-group">
                     <label>TL Approver</label>
-                    <input type="text" value="{{data.customerTlApprover | titlecase}}" class="form-control" disabled
+                    <input type="text" value="{{data.tlApprover | titlecase}}" class="form-control" disabled
                         readonly>
                 </div>
             </div>
@@ -119,10 +128,19 @@
             <div class="col-md-3 col-sm-6">
                 <div class="form-group">
                     <label>CL Approver</label>
-                    <input type="text" value="{{data.customerClusterApprover | titlecase}}" class="form-control"
+                    <input type="text" value="{{data.clApprover | titlecase}}" class="form-control"
                         disabled readonly>
                 </div>
             </div>
+
+            <div class="col-md-3 col-sm-6">
+                <div class="form-group">
+                    <label>Status</label>
+                    <input type="text" value="{{data.customerStatus | titlecase}}" class="form-control"
+                        disabled readonly>
+                </div>
+            </div>
+
 
 
             <form [formGroup]="publicVariable.dataForm" >

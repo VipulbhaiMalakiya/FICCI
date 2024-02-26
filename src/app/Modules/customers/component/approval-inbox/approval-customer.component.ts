@@ -44,12 +44,10 @@ export class ApprovalCustomerComponent implements OnInit {
             next: (response: any) => {
 
                 if (this.publicVariable.storedRole === 'Admin') {
-                    this.publicVariable.ApproveCustomerList = response.data;
-                    this.publicVariable.count = response.data.length;
-                    this.publicVariable.isProcess = false;
+
                 } else {
                     // Filter the response data by email
-                    const filteredData = response.data.filter((item: any) => item.approverEmail === this.publicVariable.storedEmail);
+                    const filteredData = response.data;
                     this.publicVariable.ApproveCustomerList = filteredData;
                     this.publicVariable.count = filteredData.length;
                     this.publicVariable.isProcess = false;
@@ -75,36 +73,34 @@ export class ApprovalCustomerComponent implements OnInit {
 
     onDownload() {
         const exportData = this.publicVariable.ApproveCustomerList.map((x) => ({
+            "Cust. No.": x?.customerCode || '',
             Name: x?.customerName ? this.toTitleCase(x.customerName) : '',
-            Name2: x?.customerLastname ? this.toTitleCase(x.customerLastname) : '',
-            Address: x?.custoemrAddress || '',
-            Address2: x?.custoemrAddress2 || '',
-            Email: x?.customerEmailId ? this.toTitleCase(x.customerEmailId) : '',
-            "Country/Region Code":x?.countryList.countryName || '',
-            State:x?.stateList.stateName ||  '',
-            City: x?.cityList.cityName || '',
-            "Phone Number": x?.customerPhoneNo || '',
-            "GstNo": x?.customerGstNo || '',
-            "Contact Person": x?.customerContactPerson ? this.toTitleCase(x.customerContactPerson) : '',
-            "Post Code":x.customerPinCode || '',
-            "PanNo": x?.customerPanNo || '',
-            "createdOn": x.createdOn ? formatDate(x.createdOn, 'medium', 'en-IN', 'IST') : '',
-            "createdby": x.createdby ? this.toTitleCase(x.createdby) : '',
-            "Status": x?.statusName ? this.toTitleCase(x.statusName) : '',
-            "UpdatedOn": x?.customerUpdatedOn ? formatDate(x.customerUpdatedOn, 'medium', 'en-IN', 'IST') : '',
-            'lastUpdateBy': x?.lastUpdateBy ? this.toTitleCase(x.lastUpdateBy) : '',
-            "TL Approver": x.customerTlApprover ? this.toTitleCase(x.customerTlApprover) : '',
-            "CL Approver": x.customerClusterApprover ? this.toTitleCase(x.customerClusterApprover) : '',
-            'Customer TypeName': x.customerTypeName ? this.toTitleCase(x.customerTypeName) : '',
-
+            "Name 2":x?.customerLastName ? this.toTitleCase(x.customerLastName) : '',
+            Address: x?.address || '',
+            "Address 2":x.address2  || '',
+            State: x?.stateList.stateName ,
+            Country: x?.countryList.countryName ,
+            City: x?.cityList.cityName  ,
+            Pincode: x?.pincode,
+            "Contact Person": x && x.contact,
+            "Phone Number": x?.phoneNumber || '',
+            Email: x?.email || '',
+            "GST Registration No.": x.gstNumber || '',
+            'PAN Card': x.pan || '',
+            'GST Customer Type': x.gstType.gstTypeName ? this.toTitleCase(x.gstType.gstTypeName) : '',
+            'Created On': x.createdOn ? formatDate(x.createdOn, 'medium', 'en-IN', 'IST') : '',
+            'Created By': x.createdBy ? this.toTitleCase(x.createdBy) : '',
+            'Last Updated On': x.createdOn ? formatDate(x.modifiedOn, 'medium', 'en-IN', 'IST') : '',
+            'Last Update By': x.lastUpdateBy ? this.toTitleCase(x.lastUpdateBy) : '',
+            'TL Approver': x.tlApprover ? this.toTitleCase(x.tlApprover) : '',
+            'CL Approver': x.clApprover ? this.toTitleCase(x.clApprover) : '',
+            'Status': x.customerStatus ? this.toTitleCase(x.customerStatus) : '',
         }));
 
-        const headers = ['Name', 'Name2', 'Address', 'Address2', 'Country/Region Code','City','Post Code','Email',
-        'Phone Number',
-            'Contact Person', 'Customer TypeName','GstNo', 'PanNo', 'TL Approver', 'CL Approver',
-
-            'createdOn', 'createdby', 'UpdatedOn', 'lastUpdateBy',
-            'Status'];
+        const headers = ['Cust. No.', 'Name','Name 2', 'Address','Address 2', 'Country', 'State', 'City',
+            'Pincode', 'Email','Phone Number','Contact Person',
+             'GST Customer Type', 'GST Registration No.', 'PAN Card',
+            'Created On', 'Created By', 'Last Updated On', 'Last Update By', 'TL Approver', 'CL Approver', 'Status'];
         this.appService.exportAsExcelFile(exportData, 'Customer Approval Inbox', headers);
     }
 

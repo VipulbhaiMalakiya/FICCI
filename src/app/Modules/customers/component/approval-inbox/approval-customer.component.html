@@ -44,8 +44,8 @@
                             <th>Address</th>
                             <th>City</th>
                             <th>Contact</th>
-                            <th>TL Approve</th>
-                            <th>CL Approve</th>
+                            <th>TL Approver</th>
+                            <th>CL Approver</th>
                             <th>Created On</th>
                             <th>Created By</th>
                             <!-- <th>Last Updated On</th>
@@ -58,18 +58,19 @@
 
                         <tr
                         *ngFor="let d of  this.publicVariable.ApproveCustomerList | approvalsearchFilter: publicVariable.approvalsearchText| paginate: {itemsPerPage: publicVariable.tableSize,currentPage: publicVariable.page,totalItems: publicVariable.count};let i = index">
-                            <td>{{i + 1}}</td>
-                            <td>{{d.customerName | titlecase}}</td>
-                            <td>{{d.custoemrAddress}}</td>
-                            <td>{{d.CityList.cityName |titlecase}}</td>
-                            <td>{{d.customerPhoneNo}}</td>
-                            <td>{{d.customerTlApprover | titlecase}}</td>
-                            <td>{{d.customerClusterApprover | titlecase}}</td>
-                            <td>{{d.createdOn | date:'medium':'IST' }}</td>
-                            <td>{{d.createdby | titlecase}}</td>
-                            <!-- <td>{{d.customerUpdatedOn | date:'medium':'IST' }}</td>
-                            <td>{{d.lastUpdateBy | titlecase }}</td> -->
-                            <td>{{d.statusName | titlecase}}</td>
+                        <td>{{i + 1}}</td>
+                        <!-- <td>{{d.customerCode}}</td> -->
+                        <td>{{d.customerName |titlecase }}</td>
+                        <td>{{d.address}}</td>
+                        <td>{{ d.cityList.cityName }}</td>
+                        <td>{{d.phoneNumber | titlecase}}</td>
+                        <td>{{d.tlApprover}}</td>
+                        <td>{{d.clApprover}}</td>
+                        <td>{{d.createdOn | date:'medium':'IST' }}</td>
+                        <td>{{d.createdBy}}</td>
+                        <!-- <td>{{d.modifiedOn | date:'medium':'IST' }}</td>
+                        <td>{{d.lastUpdateBy | titlecase}}</td> -->
+                        <td>{{d.customerStatus | titlecase}}</td>
                             <td><span class="table-btns">
                                     <a href="javascript:void(0);"  (click)="onEdit(d)" ><img src="../assets/images/view-icon.svg" alt=""></a>
                                 </span>
