@@ -238,7 +238,7 @@
                         <li class="nav-item">
                             <a class="nav-link tabbg-4" data-bs-toggle="pill" href="#PIhome"
                                 (click)="loadInoivceStatusList('REJECTED BY CH APPROVER')">
-                                <small>Rejected by Invoice</small>
+                                <small>Rejected Invoice</small>
                                 <span>{{PIRejectedbyAccounts}}</span>
                             </a>
                         </li>
@@ -339,15 +339,18 @@
                                                         <span class="table-btns">
                                                             <a href="javascript:void(0);" (click)="onView(d)"><img
                                                                     src="../assets/images/view-icon.svg" alt="" /></a>
-                                                            <a *ngIf="publicVariable.storedRole !== 'Admin' &&
-                                                            (d.isDraft )" href="javascript:void(0);"
-                                                                (click)="onEdit(d)"><img
-                                                                    src="../assets/images/edit-icon.svg" alt="" /></a>
-                                                            <a *ngIf="publicVariable.storedRole !== 'Admin' &&
-                                                            (d.isDraft )" href="javascript:void(0)"
-                                                                (click)="onDelete(d.headerId)" data-bs-toggle="modal"
-                                                                data-bs-target="#deleterecord-modal"><img
-                                                                    src="../assets/images/delete-icon.svg" alt="" /></a>
+                                                                    <a  *ngIf="publicVariable.storedRole !== 'Admin' &&
+                                                                    (d.isDraft ||
+                                                                    d.headerStatus == 'REJECTED BY TL APPROVER'  ||
+                                                                    d.headerStatus == 'REJECTED BY CH APPROVER' ||
+                                                                    d.headerStatus == 'REJECTED BY ACCOUNTS APPROVER')" href="javascript:void(0);" (click)="onEdit(d)"><img src="../assets/images/edit-icon.svg" alt="" /></a>
+                                                                    <a *ngIf="publicVariable.storedRole !== 'Admin' &&
+                                                                    (d.isDraft ||
+                                                                    d.headerStatus == 'REJECTED BY TL APPROVER'  ||
+                                                                    d.headerStatus == 'REJECTED BY CH APPROVER' ||
+                                                                    d.headerStatus == 'REJECTED BY ACCOUNTS APPROVER')" href="javascript:void(0)" (click)="onDelete(d.headerId)" data-bs-toggle="modal"
+                                                                        data-bs-target="#deleterecord-modal"><img src="../assets/images/delete-icon.svg"
+                                                                            alt="" /></a>
                                                         </span>
                                                     </td>
                                                 </tr>
