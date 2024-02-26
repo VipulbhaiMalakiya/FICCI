@@ -18,6 +18,8 @@ export class ViewInvoiceStatusComponent {
             this.headerId = +params['id'];
         });
         this.data = history.state.data;
+        console.log(this.data );
+
         this.FilePath = `${environment.fileURL}${ this.data.headerAttachmentpath}`
     }
 
