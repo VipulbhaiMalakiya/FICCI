@@ -9,13 +9,15 @@ import { ApprovalSearchFilterPipe } from '../pipe/approvalSearch';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { SharedModule } from '../../shared/shared.module';
+import { SearchFilterPipe1 } from '../pipe/searchpi';
 
 
 @NgModule({
     declarations: [
         DashboardComponent,
         SearchFilterPipe,
-        ApprovalSearchFilterPipe
+        ApprovalSearchFilterPipe,
+        SearchFilterPipe1
     ],
     imports: [
         CommonModule,

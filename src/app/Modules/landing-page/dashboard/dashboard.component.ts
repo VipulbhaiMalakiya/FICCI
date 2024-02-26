@@ -287,8 +287,6 @@ export class DashboardComponent {
         }
 
         this.invoiceStatuslistData = filteredData;
-        console.log(this.invoiceStatuslistData);
-
         this.publicVariable.count = filteredData.length;
 
     }
