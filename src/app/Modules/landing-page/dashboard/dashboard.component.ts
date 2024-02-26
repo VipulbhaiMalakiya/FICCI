@@ -111,7 +111,7 @@ export class DashboardComponent {
                     this.countDataByInvoies(response.data);
                     this.invoiceStatuslistData = response.data;
                     this.publicVariable.count = response.data.length;
-                    // this.loadInoivceStatusList(this.customerStatus);
+                    this.loadInoivceStatusList(this.customerStatus);
 
 
                 },
