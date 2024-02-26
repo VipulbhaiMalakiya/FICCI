@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
-import { CustomersService, FormBuilder, NgbModal, ToastrService, Validators, publicVariable } from '../../Export/invoce';
+import { CustomersService, FormBuilder, InvoicesService, NgbModal, ToastrService, Validators, publicVariable } from '../../Export/invoce';
 
 @Component({
   selector: 'app-view-pi-approval',
@@ -19,7 +19,7 @@ export class ViewPiApprovalComponent {
         private toastr: ToastrService,
         private router: Router,
         private cd: ChangeDetectorRef,
-        private API: CustomersService,
+        private API: InvoicesService,
         private route: ActivatedRoute
     ) {
         this.initializeForm();
@@ -44,13 +44,12 @@ export class ViewPiApprovalComponent {
     onSubmit(action: boolean) {
         if (this.publicVariable.dataForm.valid) {
             const newData = this.publicVariable.dataForm.value;
-            let statusId: number = !action ? this.data.customerStatus : this.data.customerStatus;
 
             const newConfig: any = {
-                customerId: this.data.customerId,
+                headerId: this.data.headerId,
                 isApproved: action,
                 loginId: this.publicVariable.storedEmail,
-                statusId: statusId,
+                statusId: this.data.headerStatusId,
                 remarks: newData.remarks,
             }
             this.publicVariable.isProcess = true;

@@ -17,6 +17,8 @@ export class InvoicesService {
     private PurchaseInvoice_New = `${environment.apiURL}PurchaseInvoice_New/0`;
     private retry: any = retry(1); // Retry the request up to 2 times in case of failure
     private ApproveInvoiceURL = `${environment.apiURL}ApproveInvoice?email=`;
+    private ApproverURL = `${environment.apiURL}ApproveInvoice`;
+
 
 
     getProjects(): Observable<any[]> {
@@ -42,5 +44,9 @@ export class InvoicesService {
     getApproveInvoice(): Observable<any[]> {
         const url = `${this.ApproveInvoiceURL}${localStorage.getItem('userEmail') ?? ''}`;
         return this.http.get<any[]>(url).pipe(this.retry);
+    }
+
+    isApproverRemarks(data: any): Observable<any[]> {
+        return this.http.post<any[]>(`${this.ApproverURL}`, data).pipe(this.retry);
     }
 }
