@@ -146,7 +146,7 @@ export class StatusCustomerComponent implements OnInit {
             "Address 2":x.address2  || '',
             State: x?.stateCode ,
             Country: x.countryCode ,
-            City: x?.cityCode ,
+            City: this.getCityName(x?.cityCode)  ,
             Pincode: x?.pincode,
             "Contact Person": x && x.contact,
             "Phone Number": x?.phoneNumber || '',
