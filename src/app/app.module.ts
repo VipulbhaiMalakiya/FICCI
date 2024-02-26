@@ -8,6 +8,11 @@ import { LoginComponent } from './layouts/login/login.component';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './interceptor/auth-interceptor.interceptor';
 import { SharedModule } from "./Modules/shared/shared.module";
+import { StoreModule } from '@ngrx/store';
+import { appReducer } from './shared/store/app.reducer';
+import { EffectsModule } from '@ngrx/effects';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { environment } from 'src/environments/environment';
 @NgModule({
     declarations: [
         AppComponent,
@@ -35,7 +40,10 @@ import { SharedModule } from "./Modules/shared/shared.module";
             progressAnimation: 'increasing',
             preventDuplicates: true,
         }),
-        SharedModule
+        SharedModule,
+        StoreModule.forRoot({ appState: appReducer }),
+        EffectsModule.forRoot([]),
+        StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production })
 
     ]
 })
