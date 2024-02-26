@@ -6,8 +6,10 @@
     <div class="main-data-navs">
         <ul class="nav nav-pills main-data-nav1 mb-3" id="pills-tab" role="tablist">
             <li class="nav-item" role="presentation">
-                <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home"
-                    type="button" role="tab" aria-controls="pills-home" aria-selected="true">Customer</button>
+                <button class="nav-link active" id="pills-home-tab"
+                 data-bs-toggle="pill" data-bs-target="#pills-home"
+                    type="button" role="tab" aria-controls="pills-home" aria-selected="true"
+                    (click)="loadCustomerStatusCountList()">Customer</button>
             </li>
             <li class="nav-item" role="presentation">
                 <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile"
@@ -210,7 +212,7 @@
 
                         <li class="nav-item">
                             <a class="nav-link active tabbg-1" data-bs-toggle="pill" href="#PIhome"
-                            (click)="loadInoivceStatusList('DRAFT')">
+                                (click)="loadInoivceStatusList('DRAFT')">
                                 <small>Draft</small>
                                 <span>{{PIisDRAFT}}</span>
                             </a>
@@ -219,7 +221,7 @@
 
                         <li class="nav-item">
                             <a class="nav-link tabbg-2" data-bs-toggle="pill" href="#PIhome"
-                            (click)="loadInoivceStatusList('PENDING WITH APPROVER')">
+                                (click)="loadInoivceStatusList('PENDING WITH APPROVER')">
                                 <small>Pending Approval</small>
                                 <span>{{PIPendingApproval}}</span>
                             </a>
@@ -227,7 +229,7 @@
 
                         <li class="nav-item">
                             <a class="nav-link tabbg-3" data-bs-toggle="pill" href="#PIhome"
-                            (click)="loadInoivceStatusList('APPROVED BY ACCOUNTS APPROVER')">
+                                (click)="loadInoivceStatusList('APPROVED BY ACCOUNTS APPROVER')">
                                 <small>Approved Accounts</small>
                                 <span>{{PIApprovedAccounts}}</span>
                             </a>
@@ -235,7 +237,7 @@
 
                         <li class="nav-item">
                             <a class="nav-link tabbg-4" data-bs-toggle="pill" href="#PIhome"
-                            (click)="loadInoivceStatusList('REJECTED BY CH APPROVER')">
+                                (click)="loadInoivceStatusList('REJECTED BY CH APPROVER')">
                                 <small>Rejected by Invoice</small>
                                 <span>{{PIRejectedbyAccounts}}</span>
                             </a>
@@ -243,7 +245,7 @@
 
                         <li class="nav-item">
                             <a class="nav-link tabbg-5" data-bs-toggle="pill" href="#PIhome"
-                            (click)="loadInoivceStatusList('ALL')">
+                                (click)="loadInoivceStatusList('ALL')">
                                 <small>All</small>
                                 <span>{{PIALL}}</span>
                             </a>
@@ -263,28 +265,34 @@
 
                             <div class="page-btns-col">
 
-                                <div class="tblsort">
+                                <div class="tblsort"
+                                    *ngIf="invoiceStatuslistData && invoiceStatuslistData.length > 0">
                                     <label class="col-form-label">Show</label>
-                                    <select class="form-select" required="">
-                                        <option value="">10</option>
-                                        <option value="">20</option>
+                                    <select id="itemsPerPageSelect" class="form-select"
+                                        [(ngModel)]="publicVariable.tableSize" (change)="onTableSizeChange($event)">
+                                        <option *ngFor="let size of publicVariable.tableSizes" [value]="size">{{ size }}
+                                        </option>
                                     </select>
                                 </div>
 
-                                <div class="dt-buttons">
-                                    <button class="gray-btns" type="button"><img src="../assets/images/csv.png"
-                                            alt=""></button>
-                                    <button class="gray-btns" type="button"><img src="../assets/images/excel-icon.png"
-                                            alt=""></button>
+                                <div class="dt-buttons"
+                                    *ngIf="invoiceStatuslistData.length > 0">
+                                    <button class="gray-btns" (click)="onDownloadPI()" type="button"><img
+                                            src="../assets/images/excel-icon.png" alt=""></button>
                                 </div>
 
                                 <!-- Example single danger button -->
                                 <div class="topbr-btns">
-                                    <div class="btn-group">
-                                        <div class="table-search"><input type="text" class="form-control" name="name"
-                                                id="name" placeholder="Search here" required=""></div>
+                                    <div class="btn-group"
+                                        *ngIf="invoiceStatuslistData && invoiceStatuslistData.length > 0">
+                                        <div class="table-search"><input type="text" class="form-control"
+                                                [(ngModel)]="publicVariable.searchText" name="name" id="name"
+                                                placeholder="Search here"></div>
                                     </div>
                                 </div>
+
+                                <div class="common-box"><a routerLink="/invoice/new" class="common-btn"
+                                        *ngIf="this.publicVariable.storedRole !== 'Admin'">Add New</a></div>
 
                             </div>
 
@@ -332,32 +340,39 @@
                                                             <a href="javascript:void(0);" (click)="onView(d)"><img
                                                                     src="../assets/images/view-icon.svg" alt="" /></a>
                                                             <a *ngIf="publicVariable.storedRole !== 'Admin' &&
-                                                            (d.isDraft )" href="javascript:void(0);" (click)="onEdit(d)"><img src="../assets/images/edit-icon.svg" alt="" /></a>
+                                                            (d.isDraft )" href="javascript:void(0);"
+                                                                (click)="onEdit(d)"><img
+                                                                    src="../assets/images/edit-icon.svg" alt="" /></a>
                                                             <a *ngIf="publicVariable.storedRole !== 'Admin' &&
-                                                            (d.isDraft )" href="javascript:void(0)" (click)="onDelete(d.headerId)" data-bs-toggle="modal"
-                                                                data-bs-target="#deleterecord-modal"><img src="../assets/images/delete-icon.svg"
-                                                                    alt="" /></a>
+                                                            (d.isDraft )" href="javascript:void(0)"
+                                                                (click)="onDelete(d.headerId)" data-bs-toggle="modal"
+                                                                data-bs-target="#deleterecord-modal"><img
+                                                                    src="../assets/images/delete-icon.svg" alt="" /></a>
                                                         </span>
                                                     </td>
                                                 </tr>
                                             </tbody>
                                         </table>
-
+                                        <div
+                                            *ngIf="!invoiceStatuslistData || invoiceStatuslistData.length === 0">
+                                            <div class="text-center my-3">No data found.</div>
+                                        </div>
+                                        <div class="text-center"
+                                            *ngIf="(invoiceStatuslistData | searchFilter: publicVariable.searchText).length === 0 && invoiceStatuslistData.length > 0">
+                                            <span class="text-danger">No results found.</span>
+                                        </div>
                                     </div>
 
-                                    <div class="clearfix">
-                                        <div class="hint-text">Showing <b>1</b> out of <b>10</b> entries</div>
-                                        <ul class="pagination">
-                                            <li class="page-item"><a href="#" class="page-link"><img
-                                                        src="../assets/images/angle-left-icon.svg" alt=""></a></li>
-                                            <li class="page-item active"><a href="#" class="page-link">1</a></li>
-                                            <li class="page-item"><a href="#" class="page-link">2</a></li>
-                                            <li class="page-item"><a href="#" class="page-link">...</a></li>
-                                            <li class="page-item"><a href="#" class="page-link">9</a></li>
-                                            <li class="page-item"><a href="#" class="page-link">10</a></li>
-                                            <li class="page-item"><a href="#" class="page-link"><img
-                                                        src="../assets/images/angle-right-icon.svg" alt=""></a></li>
-                                        </ul>
+                                    <div class="clearfix"
+                                        *ngIf="invoiceStatuslistData && invoiceStatuslistData.length > 0">
+                                        <div class="hint-text">Showing <b>{{this.publicVariable.tableSize}}</b> out of
+                                            <b>{{
+                                                publicVariable.count }}</b>
+                                            entries
+                                        </div>
+                                        <pagination-controls previousLabel="Prev" class="pagination" nextLabel="Next"
+                                            (pageChange)="onTableDataChange($event)">
+                                        </pagination-controls>
                                     </div>
 
 
@@ -369,1027 +384,6 @@
 
 
 
-                        <div id="PImenu2" class="tab-pane fade"><br>
-
-                            <div class="page-btns-col">
-
-                                <div class="tblsort">
-                                    <label class="col-form-label">Show</label>
-                                    <select class="form-select" required="">
-                                        <option value="">10</option>
-                                        <option value="">20</option>
-                                    </select>
-                                </div>
-
-                                <div class="dt-buttons">
-                                    <button class="gray-btns" type="button"><img src="../assets/images/csv.png"
-                                            alt=""></button>
-                                    <button class="gray-btns" type="button"><img src="../assets/images/excel-icon.png"
-                                            alt=""></button>
-                                </div>
-
-                                <!-- Example single danger button -->
-                                <div class="topbr-btns">
-                                    <div class="btn-group">
-                                        <div class="table-search"><input type="text" class="form-control" name="name"
-                                                id="name" placeholder="Search here" required=""></div>
-                                    </div>
-                                </div>
-
-                            </div>
-
-                            <div class="inner-middle-content">
-                                <div class="dasboard-table">
-
-                                    <div class="table-responsive">
-
-                                        <table class="table text-nowrap">
-                                            <thead>
-                                                <tr>
-                                                    <th>Cust. No.</th>
-                                                    <th>Name</th>
-                                                    <th>Address</th>
-                                                    <th>City</th>
-                                                    <th>Contact</th>
-                                                    <th>Email</th>
-                                                    <th class="action-cl">Action</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-
-                                                <tr>
-                                                    <td>C00007</td>
-                                                    <td>INTERACTIVE PVT LTD</td>
-                                                    <td>KPT House,Plot 41/13,Sector-30</td>
-                                                    <td>Navi Mumbai</td>
-                                                    <td>1234567890</td>
-                                                    <td>carol@ficci.com</td>
-
-                                                    <td><span class="table-btns">
-                                                            <a href="view-customerstatus.html"><img
-                                                                    src="../assets/images/view-icon.svg" alt=""></a>
-                                                            <a href="#"><img src="../assets/images/edit-icon.svg"
-                                                                    alt=""></a>
-                                                            <a href="javascript:void(0)" data-bs-toggle="modal"
-                                                                data-bs-target="#deleterecord-modal"><img
-                                                                    src="../assets/images/delete-icon.svg" alt=""></a>
-                                                        </span>
-                                                    </td>
-                                                </tr>
-
-                                                <tr>
-                                                    <td>C00007</td>
-                                                    <td>INTERACTIVE PVT LTD</td>
-                                                    <td>KPT House,Plot 41/13,Sector-30</td>
-                                                    <td>Navi Mumbai</td>
-                                                    <td>1234567890</td>
-                                                    <td>carol@ficci.com</td>
-
-                                                    <td><span class="table-btns">
-                                                            <a href="view-customerstatus.html"><img
-                                                                    src="../assets/images/view-icon.svg" alt=""></a>
-                                                            <a href="#"><img src="../assets/images/edit-icon.svg"
-                                                                    alt=""></a>
-                                                            <a href="javascript:void(0)" data-bs-toggle="modal"
-                                                                data-bs-target="#deleterecord-modal"><img
-                                                                    src="../assets/images/delete-icon.svg" alt=""></a>
-                                                        </span>
-                                                    </td>
-                                                </tr>
-
-                                                <tr>
-                                                    <td>C00007</td>
-                                                    <td>INTERACTIVE PVT LTD</td>
-                                                    <td>KPT House,Plot 41/13,Sector-30</td>
-                                                    <td>Navi Mumbai</td>
-                                                    <td>1234567890</td>
-                                                    <td>carol@ficci.com</td>
-
-                                                    <td><span class="table-btns">
-                                                            <a href="view-customerstatus.html"><img
-                                                                    src="../assets/images/view-icon.svg" alt=""></a>
-                                                            <a href="#"><img src="../assets/images/edit-icon.svg"
-                                                                    alt=""></a>
-                                                            <a href="javascript:void(0)" data-bs-toggle="modal"
-                                                                data-bs-target="#deleterecord-modal"><img
-                                                                    src="../assets/images/delete-icon.svg" alt=""></a>
-                                                        </span>
-                                                    </td>
-                                                </tr>
-
-                                                <tr>
-                                                    <td>C00007</td>
-                                                    <td>INTERACTIVE PVT LTD</td>
-                                                    <td>KPT House,Plot 41/13,Sector-30</td>
-                                                    <td>Navi Mumbai</td>
-                                                    <td>1234567890</td>
-                                                    <td>carol@ficci.com</td>
-
-                                                    <td><span class="table-btns">
-                                                            <a href="view-customerstatus.html"><img
-                                                                    src="../assets/images/view-icon.svg" alt=""></a>
-                                                            <a href="#"><img src="../assets/images/edit-icon.svg"
-                                                                    alt=""></a>
-                                                            <a href="javascript:void(0)" data-bs-toggle="modal"
-                                                                data-bs-target="#deleterecord-modal"><img
-                                                                    src="../assets/images/delete-icon.svg" alt=""></a>
-                                                        </span>
-                                                    </td>
-                                                </tr>
-
-                                                <tr>
-                                                    <td>C00007</td>
-                                                    <td>INTERACTIVE PVT LTD</td>
-                                                    <td>KPT House,Plot 41/13,Sector-30</td>
-                                                    <td>Navi Mumbai</td>
-                                                    <td>1234567890</td>
-                                                    <td>carol@ficci.com</td>
-
-                                                    <td><span class="table-btns">
-                                                            <a href="view-customerstatus.html"><img
-                                                                    src="../assets/images/view-icon.svg" alt=""></a>
-                                                            <a href="#"><img src="../assets/images/edit-icon.svg"
-                                                                    alt=""></a>
-                                                            <a href="javascript:void(0)" data-bs-toggle="modal"
-                                                                data-bs-target="#deleterecord-modal"><img
-                                                                    src="../assets/images/delete-icon.svg" alt=""></a>
-                                                        </span>
-                                                    </td>
-                                                </tr>
-
-                                                <tr>
-                                                    <td>C00007</td>
-                                                    <td>INTERACTIVE PVT LTD</td>
-                                                    <td>KPT House,Plot 41/13,Sector-30</td>
-                                                    <td>Navi Mumbai</td>
-                                                    <td>1234567890</td>
-                                                    <td>carol@ficci.com</td>
-
-                                                    <td><span class="table-btns">
-                                                            <a href="view-customerstatus.html"><img
-                                                                    src="../assets/images/view-icon.svg" alt=""></a>
-                                                            <a href="#"><img src="../assets/images/edit-icon.svg"
-                                                                    alt=""></a>
-                                                            <a href="javascript:void(0)" data-bs-toggle="modal"
-                                                                data-bs-target="#deleterecord-modal"><img
-                                                                    src="../assets/images/delete-icon.svg" alt=""></a>
-                                                        </span>
-                                                    </td>
-                                                </tr>
-
-                                                <tr>
-                                                    <td>C00007</td>
-                                                    <td>INTERACTIVE PVT LTD</td>
-                                                    <td>KPT House,Plot 41/13,Sector-30</td>
-                                                    <td>Navi Mumbai</td>
-                                                    <td>1234567890</td>
-                                                    <td>carol@ficci.com</td>
-
-                                                    <td><span class="table-btns">
-                                                            <a href="view-customerstatus.html"><img
-                                                                    src="../assets/images/view-icon.svg" alt=""></a>
-                                                            <a href="#"><img src="../assets/images/edit-icon.svg"
-                                                                    alt=""></a>
-                                                            <a href="javascript:void(0)" data-bs-toggle="modal"
-                                                                data-bs-target="#deleterecord-modal"><img
-                                                                    src="../assets/images/delete-icon.svg" alt=""></a>
-                                                        </span>
-                                                    </td>
-                                                </tr>
-
-                                                <tr>
-                                                    <td>C00007</td>
-                                                    <td>INTERACTIVE PVT LTD</td>
-                                                    <td>KPT House,Plot 41/13,Sector-30</td>
-                                                    <td>Navi Mumbai</td>
-                                                    <td>1234567890</td>
-                                                    <td>carol@ficci.com</td>
-
-                                                    <td><span class="table-btns">
-                                                            <a href="view-customerstatus.html"><img
-                                                                    src="../assets/images/view-icon.svg" alt=""></a>
-                                                            <a href="#"><img src="../assets/images/edit-icon.svg"
-                                                                    alt=""></a>
-                                                            <a href="javascript:void(0)" data-bs-toggle="modal"
-                                                                data-bs-target="#deleterecord-modal"><img
-                                                                    src="../assets/images/delete-icon.svg" alt=""></a>
-                                                        </span>
-                                                    </td>
-                                                </tr>
-
-                                                <tr>
-                                                    <td>C00007</td>
-                                                    <td>INTERACTIVE PVT LTD</td>
-                                                    <td>KPT House,Plot 41/13,Sector-30</td>
-                                                    <td>Navi Mumbai</td>
-                                                    <td>1234567890</td>
-                                                    <td>carol@ficci.com</td>
-
-                                                    <td><span class="table-btns">
-                                                            <a href="view-customerstatus.html"><img
-                                                                    src="../assets/images/view-icon.svg" alt=""></a>
-                                                            <a href="#"><img src="../assets/images/edit-icon.svg"
-                                                                    alt=""></a>
-                                                            <a href="javascript:void(0)" data-bs-toggle="modal"
-                                                                data-bs-target="#deleterecord-modal"><img
-                                                                    src="../assets/images/delete-icon.svg" alt=""></a>
-                                                        </span>
-                                                    </td>
-                                                </tr>
-
-
-                                            </tbody>
-                                        </table>
-
-                                    </div>
-
-                                    <div class="clearfix">
-                                        <div class="hint-text">Showing <b>1</b> out of <b>10</b> entries</div>
-                                        <ul class="pagination">
-                                            <li class="page-item"><a href="#" class="page-link"><img
-                                                        src="../assets/images/angle-left-icon.svg" alt=""></a></li>
-                                            <li class="page-item active"><a href="#" class="page-link">1</a></li>
-                                            <li class="page-item"><a href="#" class="page-link">2</a></li>
-                                            <li class="page-item"><a href="#" class="page-link">...</a></li>
-                                            <li class="page-item"><a href="#" class="page-link">9</a></li>
-                                            <li class="page-item"><a href="#" class="page-link">10</a></li>
-                                            <li class="page-item"><a href="#" class="page-link"><img
-                                                        src="../assets/images/angle-right-icon.svg" alt=""></a></li>
-                                        </ul>
-                                    </div>
-
-
-                                </div>
-                            </div>
-
-                        </div>
-
-                        <div id="PImenu3" class="tab-pane fade"><br>
-
-                            <div class="page-btns-col">
-
-                                <div class="tblsort">
-                                    <label class="col-form-label">Show</label>
-                                    <select class="form-select" required="">
-                                        <option value="">10</option>
-                                        <option value="">20</option>
-                                    </select>
-                                </div>
-
-                                <div class="dt-buttons">
-                                    <button class="gray-btns" type="button"><img src="../assets/images/csv.png"
-                                            alt=""></button>
-                                    <button class="gray-btns" type="button"><img src="../assets/images/excel-icon.png"
-                                            alt=""></button>
-                                </div>
-
-                                <!-- Example single danger button -->
-                                <div class="topbr-btns">
-                                    <div class="btn-group">
-                                        <div class="table-search"><input type="text" class="form-control" name="name"
-                                                id="name" placeholder="Search here" required=""></div>
-                                    </div>
-                                </div>
-
-                            </div>
-
-                            <div class="inner-middle-content">
-                                <div class="dasboard-table">
-
-                                    <div class="table-responsive">
-
-                                        <table class="table text-nowrap">
-                                            <thead>
-                                                <tr>
-                                                    <th>Cust. No.</th>
-                                                    <th>Name</th>
-                                                    <th>Address</th>
-                                                    <th>City</th>
-                                                    <th>Contact</th>
-                                                    <th>Email</th>
-                                                    <th class="action-cl">Action</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-
-                                                <tr>
-                                                    <td>C00007</td>
-                                                    <td>INTERACTIVE PVT LTD</td>
-                                                    <td>KPT House,Plot 41/13,Sector-30</td>
-                                                    <td>Navi Mumbai</td>
-                                                    <td>1234567890</td>
-                                                    <td>carol@ficci.com</td>
-
-                                                    <td><span class="table-btns">
-                                                            <a href="view-customerstatus.html"><img
-                                                                    src="../assets/images/view-icon.svg" alt=""></a>
-                                                            <a href="#"><img src="../assets/images/edit-icon.svg"
-                                                                    alt=""></a>
-                                                            <a href="javascript:void(0)" data-bs-toggle="modal"
-                                                                data-bs-target="#deleterecord-modal"><img
-                                                                    src="../assets/images/delete-icon.svg" alt=""></a>
-                                                        </span>
-                                                    </td>
-                                                </tr>
-
-                                                <tr>
-                                                    <td>C00007</td>
-                                                    <td>INTERACTIVE PVT LTD</td>
-                                                    <td>KPT House,Plot 41/13,Sector-30</td>
-                                                    <td>Navi Mumbai</td>
-                                                    <td>1234567890</td>
-                                                    <td>carol@ficci.com</td>
-
-                                                    <td><span class="table-btns">
-                                                            <a href="view-customerstatus.html"><img
-                                                                    src="../assets/images/view-icon.svg" alt=""></a>
-                                                            <a href="#"><img src="../assets/images/edit-icon.svg"
-                                                                    alt=""></a>
-                                                            <a href="javascript:void(0)" data-bs-toggle="modal"
-                                                                data-bs-target="#deleterecord-modal"><img
-                                                                    src="../assets/images/delete-icon.svg" alt=""></a>
-                                                        </span>
-                                                    </td>
-                                                </tr>
-
-                                                <tr>
-                                                    <td>C00007</td>
-                                                    <td>INTERACTIVE PVT LTD</td>
-                                                    <td>KPT House,Plot 41/13,Sector-30</td>
-                                                    <td>Navi Mumbai</td>
-                                                    <td>1234567890</td>
-                                                    <td>carol@ficci.com</td>
-
-                                                    <td><span class="table-btns">
-                                                            <a href="view-customerstatus.html"><img
-                                                                    src="../assets/images/view-icon.svg" alt=""></a>
-                                                            <a href="#"><img src="../assets/images/edit-icon.svg"
-                                                                    alt=""></a>
-                                                            <a href="javascript:void(0)" data-bs-toggle="modal"
-                                                                data-bs-target="#deleterecord-modal"><img
-                                                                    src="../assets/images/delete-icon.svg" alt=""></a>
-                                                        </span>
-                                                    </td>
-                                                </tr>
-
-                                                <tr>
-                                                    <td>C00007</td>
-                                                    <td>INTERACTIVE PVT LTD</td>
-                                                    <td>KPT House,Plot 41/13,Sector-30</td>
-                                                    <td>Navi Mumbai</td>
-                                                    <td>1234567890</td>
-                                                    <td>carol@ficci.com</td>
-
-                                                    <td><span class="table-btns">
-                                                            <a href="view-customerstatus.html"><img
-                                                                    src="../assets/images/view-icon.svg" alt=""></a>
-                                                            <a href="#"><img src="../assets/images/edit-icon.svg"
-                                                                    alt=""></a>
-                                                            <a href="javascript:void(0)" data-bs-toggle="modal"
-                                                                data-bs-target="#deleterecord-modal"><img
-                                                                    src="../assets/images/delete-icon.svg" alt=""></a>
-                                                        </span>
-                                                    </td>
-                                                </tr>
-
-                                                <tr>
-                                                    <td>C00007</td>
-                                                    <td>INTERACTIVE PVT LTD</td>
-                                                    <td>KPT House,Plot 41/13,Sector-30</td>
-                                                    <td>Navi Mumbai</td>
-                                                    <td>1234567890</td>
-                                                    <td>carol@ficci.com</td>
-
-                                                    <td><span class="table-btns">
-                                                            <a href="view-customerstatus.html"><img
-                                                                    src="../assets/images/view-icon.svg" alt=""></a>
-                                                            <a href="#"><img src="../assets/images/edit-icon.svg"
-                                                                    alt=""></a>
-                                                            <a href="javascript:void(0)" data-bs-toggle="modal"
-                                                                data-bs-target="#deleterecord-modal"><img
-                                                                    src="../assets/images/delete-icon.svg" alt=""></a>
-                                                        </span>
-                                                    </td>
-                                                </tr>
-
-                                                <tr>
-                                                    <td>C00007</td>
-                                                    <td>INTERACTIVE PVT LTD</td>
-                                                    <td>KPT House,Plot 41/13,Sector-30</td>
-                                                    <td>Navi Mumbai</td>
-                                                    <td>1234567890</td>
-                                                    <td>carol@ficci.com</td>
-
-                                                    <td><span class="table-btns">
-                                                            <a href="view-customerstatus.html"><img
-                                                                    src="../assets/images/view-icon.svg" alt=""></a>
-                                                            <a href="#"><img src="../assets/images/edit-icon.svg"
-                                                                    alt=""></a>
-                                                            <a href="javascript:void(0)" data-bs-toggle="modal"
-                                                                data-bs-target="#deleterecord-modal"><img
-                                                                    src="../assets/images/delete-icon.svg" alt=""></a>
-                                                        </span>
-                                                    </td>
-                                                </tr>
-
-                                                <tr>
-                                                    <td>C00007</td>
-                                                    <td>INTERACTIVE PVT LTD</td>
-                                                    <td>KPT House,Plot 41/13,Sector-30</td>
-                                                    <td>Navi Mumbai</td>
-                                                    <td>1234567890</td>
-                                                    <td>carol@ficci.com</td>
-
-                                                    <td><span class="table-btns">
-                                                            <a href="view-customerstatus.html"><img
-                                                                    src="../assets/images/view-icon.svg" alt=""></a>
-                                                            <a href="#"><img src="../assets/images/edit-icon.svg"
-                                                                    alt=""></a>
-                                                            <a href="javascript:void(0)" data-bs-toggle="modal"
-                                                                data-bs-target="#deleterecord-modal"><img
-                                                                    src="../assets/images/delete-icon.svg" alt=""></a>
-                                                        </span>
-                                                    </td>
-                                                </tr>
-
-                                                <tr>
-                                                    <td>C00007</td>
-                                                    <td>INTERACTIVE PVT LTD</td>
-                                                    <td>KPT House,Plot 41/13,Sector-30</td>
-                                                    <td>Navi Mumbai</td>
-                                                    <td>1234567890</td>
-                                                    <td>carol@ficci.com</td>
-
-                                                    <td><span class="table-btns">
-                                                            <a href="view-customerstatus.html"><img
-                                                                    src="../assets/images/view-icon.svg" alt=""></a>
-                                                            <a href="#"><img src="../assets/images/edit-icon.svg"
-                                                                    alt=""></a>
-                                                            <a href="javascript:void(0)" data-bs-toggle="modal"
-                                                                data-bs-target="#deleterecord-modal"><img
-                                                                    src="../assets/images/delete-icon.svg" alt=""></a>
-                                                        </span>
-                                                    </td>
-                                                </tr>
-
-                                                <tr>
-                                                    <td>C00007</td>
-                                                    <td>INTERACTIVE PVT LTD</td>
-                                                    <td>KPT House,Plot 41/13,Sector-30</td>
-                                                    <td>Navi Mumbai</td>
-                                                    <td>1234567890</td>
-                                                    <td>carol@ficci.com</td>
-
-                                                    <td><span class="table-btns">
-                                                            <a href="view-customerstatus.html"><img
-                                                                    src="../assets/images/view-icon.svg" alt=""></a>
-                                                            <a href="#"><img src="../assets/images/edit-icon.svg"
-                                                                    alt=""></a>
-                                                            <a href="javascript:void(0)" data-bs-toggle="modal"
-                                                                data-bs-target="#deleterecord-modal"><img
-                                                                    src="../assets/images/delete-icon.svg" alt=""></a>
-                                                        </span>
-                                                    </td>
-                                                </tr>
-
-
-                                            </tbody>
-                                        </table>
-
-                                    </div>
-
-                                    <div class="clearfix">
-                                        <div class="hint-text">Showing <b>1</b> out of <b>10</b> entries</div>
-                                        <ul class="pagination">
-                                            <li class="page-item"><a href="#" class="page-link"><img
-                                                        src="../assets/images/angle-left-icon.svg" alt=""></a></li>
-                                            <li class="page-item active"><a href="#" class="page-link">1</a></li>
-                                            <li class="page-item"><a href="#" class="page-link">2</a></li>
-                                            <li class="page-item"><a href="#" class="page-link">...</a></li>
-                                            <li class="page-item"><a href="#" class="page-link">9</a></li>
-                                            <li class="page-item"><a href="#" class="page-link">10</a></li>
-                                            <li class="page-item"><a href="#" class="page-link"><img
-                                                        src="../assets/images/angle-right-icon.svg" alt=""></a></li>
-                                        </ul>
-                                    </div>
-
-
-                                </div>
-                            </div>
-
-                        </div>
-
-                        <div id="PImenu4" class="tab-pane fade"><br>
-
-                            <div class="page-btns-col">
-
-                                <div class="tblsort">
-                                    <label class="col-form-label">Show</label>
-                                    <select class="form-select" required="">
-                                        <option value="">10</option>
-                                        <option value="">20</option>
-                                    </select>
-                                </div>
-
-                                <div class="dt-buttons">
-                                    <button class="gray-btns" type="button"><img src="../assets/images/csv.png"
-                                            alt=""></button>
-                                    <button class="gray-btns" type="button"><img src="../assets/images/excel-icon.png"
-                                            alt=""></button>
-                                </div>
-
-                                <!-- Example single danger button -->
-                                <div class="topbr-btns">
-                                    <div class="btn-group">
-                                        <div class="table-search"><input type="text" class="form-control" name="name"
-                                                id="name" placeholder="Search here" required=""></div>
-                                    </div>
-                                </div>
-
-                            </div>
-
-                            <div class="inner-middle-content">
-                                <div class="dasboard-table">
-
-                                    <div class="table-responsive">
-
-                                        <table class="table text-nowrap">
-                                            <thead>
-                                                <tr>
-                                                    <th>Cust. No.</th>
-                                                    <th>Name</th>
-                                                    <th>Address</th>
-                                                    <th>City</th>
-                                                    <th>Contact</th>
-                                                    <th>Email</th>
-                                                    <th class="action-cl">Action</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-
-                                                <tr>
-                                                    <td>C00007</td>
-                                                    <td>INTERACTIVE PVT LTD</td>
-                                                    <td>KPT House,Plot 41/13,Sector-30</td>
-                                                    <td>Navi Mumbai</td>
-                                                    <td>1234567890</td>
-                                                    <td>carol@ficci.com</td>
-
-                                                    <td><span class="table-btns">
-                                                            <a href="view-customerstatus.html"><img
-                                                                    src="../assets/images/view-icon.svg" alt=""></a>
-                                                            <a href="#"><img src="../assets/images/edit-icon.svg"
-                                                                    alt=""></a>
-                                                            <a href="javascript:void(0)" data-bs-toggle="modal"
-                                                                data-bs-target="#deleterecord-modal"><img
-                                                                    src="../assets/images/delete-icon.svg" alt=""></a>
-                                                        </span>
-                                                    </td>
-                                                </tr>
-
-                                                <tr>
-                                                    <td>C00007</td>
-                                                    <td>INTERACTIVE PVT LTD</td>
-                                                    <td>KPT House,Plot 41/13,Sector-30</td>
-                                                    <td>Navi Mumbai</td>
-                                                    <td>1234567890</td>
-                                                    <td>carol@ficci.com</td>
-
-                                                    <td><span class="table-btns">
-                                                            <a href="view-customerstatus.html"><img
-                                                                    src="../assets/images/view-icon.svg" alt=""></a>
-                                                            <a href="#"><img src="../assets/images/edit-icon.svg"
-                                                                    alt=""></a>
-                                                            <a href="javascript:void(0)" data-bs-toggle="modal"
-                                                                data-bs-target="#deleterecord-modal"><img
-                                                                    src="../assets/images/delete-icon.svg" alt=""></a>
-                                                        </span>
-                                                    </td>
-                                                </tr>
-
-                                                <tr>
-                                                    <td>C00007</td>
-                                                    <td>INTERACTIVE PVT LTD</td>
-                                                    <td>KPT House,Plot 41/13,Sector-30</td>
-                                                    <td>Navi Mumbai</td>
-                                                    <td>1234567890</td>
-                                                    <td>carol@ficci.com</td>
-
-                                                    <td><span class="table-btns">
-                                                            <a href="view-customerstatus.html"><img
-                                                                    src="../assets/images/view-icon.svg" alt=""></a>
-                                                            <a href="#"><img src="../assets/images/edit-icon.svg"
-                                                                    alt=""></a>
-                                                            <a href="javascript:void(0)" data-bs-toggle="modal"
-                                                                data-bs-target="#deleterecord-modal"><img
-                                                                    src="../assets/images/delete-icon.svg" alt=""></a>
-                                                        </span>
-                                                    </td>
-                                                </tr>
-
-                                                <tr>
-                                                    <td>C00007</td>
-                                                    <td>INTERACTIVE PVT LTD</td>
-                                                    <td>KPT House,Plot 41/13,Sector-30</td>
-                                                    <td>Navi Mumbai</td>
-                                                    <td>1234567890</td>
-                                                    <td>carol@ficci.com</td>
-
-                                                    <td><span class="table-btns">
-                                                            <a href="view-customerstatus.html"><img
-                                                                    src="../assets/images/view-icon.svg" alt=""></a>
-                                                            <a href="#"><img src="../assets/images/edit-icon.svg"
-                                                                    alt=""></a>
-                                                            <a href="javascript:void(0)" data-bs-toggle="modal"
-                                                                data-bs-target="#deleterecord-modal"><img
-                                                                    src="../assets/images/delete-icon.svg" alt=""></a>
-                                                        </span>
-                                                    </td>
-                                                </tr>
-
-                                                <tr>
-                                                    <td>C00007</td>
-                                                    <td>INTERACTIVE PVT LTD</td>
-                                                    <td>KPT House,Plot 41/13,Sector-30</td>
-                                                    <td>Navi Mumbai</td>
-                                                    <td>1234567890</td>
-                                                    <td>carol@ficci.com</td>
-
-                                                    <td><span class="table-btns">
-                                                            <a href="view-customerstatus.html"><img
-                                                                    src="../assets/images/view-icon.svg" alt=""></a>
-                                                            <a href="#"><img src="../assets/images/edit-icon.svg"
-                                                                    alt=""></a>
-                                                            <a href="javascript:void(0)" data-bs-toggle="modal"
-                                                                data-bs-target="#deleterecord-modal"><img
-                                                                    src="../assets/images/delete-icon.svg" alt=""></a>
-                                                        </span>
-                                                    </td>
-                                                </tr>
-
-                                                <tr>
-                                                    <td>C00007</td>
-                                                    <td>INTERACTIVE PVT LTD</td>
-                                                    <td>KPT House,Plot 41/13,Sector-30</td>
-                                                    <td>Navi Mumbai</td>
-                                                    <td>1234567890</td>
-                                                    <td>carol@ficci.com</td>
-
-                                                    <td><span class="table-btns">
-                                                            <a href="view-customerstatus.html"><img
-                                                                    src="../assets/images/view-icon.svg" alt=""></a>
-                                                            <a href="#"><img src="../assets/images/edit-icon.svg"
-                                                                    alt=""></a>
-                                                            <a href="javascript:void(0)" data-bs-toggle="modal"
-                                                                data-bs-target="#deleterecord-modal"><img
-                                                                    src="../assets/images/delete-icon.svg" alt=""></a>
-                                                        </span>
-                                                    </td>
-                                                </tr>
-
-                                                <tr>
-                                                    <td>C00007</td>
-                                                    <td>INTERACTIVE PVT LTD</td>
-                                                    <td>KPT House,Plot 41/13,Sector-30</td>
-                                                    <td>Navi Mumbai</td>
-                                                    <td>1234567890</td>
-                                                    <td>carol@ficci.com</td>
-
-                                                    <td><span class="table-btns">
-                                                            <a href="view-customerstatus.html"><img
-                                                                    src="../assets/images/view-icon.svg" alt=""></a>
-                                                            <a href="#"><img src="../assets/images/edit-icon.svg"
-                                                                    alt=""></a>
-                                                            <a href="javascript:void(0)" data-bs-toggle="modal"
-                                                                data-bs-target="#deleterecord-modal"><img
-                                                                    src="../assets/images/delete-icon.svg" alt=""></a>
-                                                        </span>
-                                                    </td>
-                                                </tr>
-
-                                                <tr>
-                                                    <td>C00007</td>
-                                                    <td>INTERACTIVE PVT LTD</td>
-                                                    <td>KPT House,Plot 41/13,Sector-30</td>
-                                                    <td>Navi Mumbai</td>
-                                                    <td>1234567890</td>
-                                                    <td>carol@ficci.com</td>
-
-                                                    <td><span class="table-btns">
-                                                            <a href="view-customerstatus.html"><img
-                                                                    src="../assets/images/view-icon.svg" alt=""></a>
-                                                            <a href="#"><img src="../assets/images/edit-icon.svg"
-                                                                    alt=""></a>
-                                                            <a href="javascript:void(0)" data-bs-toggle="modal"
-                                                                data-bs-target="#deleterecord-modal"><img
-                                                                    src="../assets/images/delete-icon.svg" alt=""></a>
-                                                        </span>
-                                                    </td>
-                                                </tr>
-
-                                                <tr>
-                                                    <td>C00007</td>
-                                                    <td>INTERACTIVE PVT LTD</td>
-                                                    <td>KPT House,Plot 41/13,Sector-30</td>
-                                                    <td>Navi Mumbai</td>
-                                                    <td>1234567890</td>
-                                                    <td>carol@ficci.com</td>
-
-                                                    <td><span class="table-btns">
-                                                            <a href="view-customerstatus.html"><img
-                                                                    src="../assets/images/view-icon.svg" alt=""></a>
-                                                            <a href="#"><img src="../assets/images/edit-icon.svg"
-                                                                    alt=""></a>
-                                                            <a href="javascript:void(0)" data-bs-toggle="modal"
-                                                                data-bs-target="#deleterecord-modal"><img
-                                                                    src="../assets/images/delete-icon.svg" alt=""></a>
-                                                        </span>
-                                                    </td>
-                                                </tr>
-
-
-                                            </tbody>
-                                        </table>
-
-                                    </div>
-
-                                    <div class="clearfix">
-                                        <div class="hint-text">Showing <b>1</b> out of <b>10</b> entries</div>
-                                        <ul class="pagination">
-                                            <li class="page-item"><a href="#" class="page-link"><img
-                                                        src="../assets/images/angle-left-icon.svg" alt=""></a></li>
-                                            <li class="page-item active"><a href="#" class="page-link">1</a></li>
-                                            <li class="page-item"><a href="#" class="page-link">2</a></li>
-                                            <li class="page-item"><a href="#" class="page-link">...</a></li>
-                                            <li class="page-item"><a href="#" class="page-link">9</a></li>
-                                            <li class="page-item"><a href="#" class="page-link">10</a></li>
-                                            <li class="page-item"><a href="#" class="page-link"><img
-                                                        src="../assets/images/angle-right-icon.svg" alt=""></a></li>
-                                        </ul>
-                                    </div>
-
-
-                                </div>
-                            </div>
-
-                        </div>
-
-
-
-                        <div id="PImenu6" class="tab-pane fade"><br>
-
-                            <div class="page-btns-col">
-
-                                <div class="tblsort">
-                                    <label class="col-form-label">Show</label>
-                                    <select class="form-select" required="">
-                                        <option value="">10</option>
-                                        <option value="">20</option>
-                                    </select>
-                                </div>
-
-                                <div class="dt-buttons">
-                                    <button class="gray-btns" type="button"><img src="../assets/images/csv.png"
-                                            alt=""></button>
-                                    <button class="gray-btns" type="button"><img src="../assets/images/excel-icon.png"
-                                            alt=""></button>
-                                </div>
-
-                                <!-- Example single danger button -->
-                                <div class="topbr-btns">
-                                    <div class="btn-group">
-                                        <div class="table-search"><input type="text" class="form-control" name="name"
-                                                id="name" placeholder="Search here" required=""></div>
-                                    </div>
-                                </div>
-
-                            </div>
-
-                            <div class="inner-middle-content">
-                                <div class="dasboard-table">
-
-                                    <div class="table-responsive">
-
-                                        <table class="table text-nowrap">
-                                            <thead>
-                                                <tr>
-                                                    <th>Cust. No.</th>
-                                                    <th>Name</th>
-                                                    <th>Address</th>
-                                                    <th>City</th>
-                                                    <th>Contact</th>
-                                                    <th>Email</th>
-                                                    <th class="action-cl">Action</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-
-                                                <tr>
-                                                    <td>C00007</td>
-                                                    <td>INTERACTIVE PVT LTD</td>
-                                                    <td>KPT House,Plot 41/13,Sector-30</td>
-                                                    <td>Navi Mumbai</td>
-                                                    <td>1234567890</td>
-                                                    <td>carol@ficci.com</td>
-
-                                                    <td><span class="table-btns">
-                                                            <a href="view-customerstatus.html"><img
-                                                                    src="../assets/images/view-icon.svg" alt=""></a>
-                                                            <a href="#"><img src="../assets/images/edit-icon.svg"
-                                                                    alt=""></a>
-                                                            <a href="javascript:void(0)" data-bs-toggle="modal"
-                                                                data-bs-target="#deleterecord-modal"><img
-                                                                    src="../assets/images/delete-icon.svg" alt=""></a>
-                                                        </span>
-                                                    </td>
-                                                </tr>
-
-                                                <tr>
-                                                    <td>C00007</td>
-                                                    <td>INTERACTIVE PVT LTD</td>
-                                                    <td>KPT House,Plot 41/13,Sector-30</td>
-                                                    <td>Navi Mumbai</td>
-                                                    <td>1234567890</td>
-                                                    <td>carol@ficci.com</td>
-
-                                                    <td><span class="table-btns">
-                                                            <a href="view-customerstatus.html"><img
-                                                                    src="../assets/images/view-icon.svg" alt=""></a>
-                                                            <a href="#"><img src="../assets/images/edit-icon.svg"
-                                                                    alt=""></a>
-                                                            <a href="javascript:void(0)" data-bs-toggle="modal"
-                                                                data-bs-target="#deleterecord-modal"><img
-                                                                    src="../assets/images/delete-icon.svg" alt=""></a>
-                                                        </span>
-                                                    </td>
-                                                </tr>
-
-                                                <tr>
-                                                    <td>C00007</td>
-                                                    <td>INTERACTIVE PVT LTD</td>
-                                                    <td>KPT House,Plot 41/13,Sector-30</td>
-                                                    <td>Navi Mumbai</td>
-                                                    <td>1234567890</td>
-                                                    <td>carol@ficci.com</td>
-
-                                                    <td><span class="table-btns">
-                                                            <a href="view-customerstatus.html"><img
-                                                                    src="../assets/images/view-icon.svg" alt=""></a>
-                                                            <a href="#"><img src="../assets/images/edit-icon.svg"
-                                                                    alt=""></a>
-                                                            <a href="javascript:void(0)" data-bs-toggle="modal"
-                                                                data-bs-target="#deleterecord-modal"><img
-                                                                    src="../assets/images/delete-icon.svg" alt=""></a>
-                                                        </span>
-                                                    </td>
-                                                </tr>
-
-                                                <tr>
-                                                    <td>C00007</td>
-                                                    <td>INTERACTIVE PVT LTD</td>
-                                                    <td>KPT House,Plot 41/13,Sector-30</td>
-                                                    <td>Navi Mumbai</td>
-                                                    <td>1234567890</td>
-                                                    <td>carol@ficci.com</td>
-
-                                                    <td><span class="table-btns">
-                                                            <a href="view-customerstatus.html"><img
-                                                                    src="../assets/images/view-icon.svg" alt=""></a>
-                                                            <a href="#"><img src="../assets/images/edit-icon.svg"
-                                                                    alt=""></a>
-                                                            <a href="javascript:void(0)" data-bs-toggle="modal"
-                                                                data-bs-target="#deleterecord-modal"><img
-                                                                    src="../assets/images/delete-icon.svg" alt=""></a>
-                                                        </span>
-                                                    </td>
-                                                </tr>
-
-                                                <tr>
-                                                    <td>C00007</td>
-                                                    <td>INTERACTIVE PVT LTD</td>
-                                                    <td>KPT House,Plot 41/13,Sector-30</td>
-                                                    <td>Navi Mumbai</td>
-                                                    <td>1234567890</td>
-                                                    <td>carol@ficci.com</td>
-
-                                                    <td><span class="table-btns">
-                                                            <a href="view-customerstatus.html"><img
-                                                                    src="../assets/images/view-icon.svg" alt=""></a>
-                                                            <a href="#"><img src="../assets/images/edit-icon.svg"
-                                                                    alt=""></a>
-                                                            <a href="javascript:void(0)" data-bs-toggle="modal"
-                                                                data-bs-target="#deleterecord-modal"><img
-                                                                    src="../assets/images/delete-icon.svg" alt=""></a>
-                                                        </span>
-                                                    </td>
-                                                </tr>
-
-                                                <tr>
-                                                    <td>C00007</td>
-                                                    <td>INTERACTIVE PVT LTD</td>
-                                                    <td>KPT House,Plot 41/13,Sector-30</td>
-                                                    <td>Navi Mumbai</td>
-                                                    <td>1234567890</td>
-                                                    <td>carol@ficci.com</td>
-
-                                                    <td><span class="table-btns">
-                                                            <a href="view-customerstatus.html"><img
-                                                                    src="../assets/images/view-icon.svg" alt=""></a>
-                                                            <a href="#"><img src="../assets/images/edit-icon.svg"
-                                                                    alt=""></a>
-                                                            <a href="javascript:void(0)" data-bs-toggle="modal"
-                                                                data-bs-target="#deleterecord-modal"><img
-                                                                    src="../assets/images/delete-icon.svg" alt=""></a>
-                                                        </span>
-                                                    </td>
-                                                </tr>
-
-                                                <tr>
-                                                    <td>C00007</td>
-                                                    <td>INTERACTIVE PVT LTD</td>
-                                                    <td>KPT House,Plot 41/13,Sector-30</td>
-                                                    <td>Navi Mumbai</td>
-                                                    <td>1234567890</td>
-                                                    <td>carol@ficci.com</td>
-
-                                                    <td><span class="table-btns">
-                                                            <a href="view-customerstatus.html"><img
-                                                                    src="../assets/images/view-icon.svg" alt=""></a>
-                                                            <a href="#"><img src="../assets/images/edit-icon.svg"
-                                                                    alt=""></a>
-                                                            <a href="javascript:void(0)" data-bs-toggle="modal"
-                                                                data-bs-target="#deleterecord-modal"><img
-                                                                    src="../assets/images/delete-icon.svg" alt=""></a>
-                                                        </span>
-                                                    </td>
-                                                </tr>
-
-                                                <tr>
-                                                    <td>C00007</td>
-                                                    <td>INTERACTIVE PVT LTD</td>
-                                                    <td>KPT House,Plot 41/13,Sector-30</td>
-                                                    <td>Navi Mumbai</td>
-                                                    <td>1234567890</td>
-                                                    <td>carol@ficci.com</td>
-
-                                                    <td><span class="table-btns">
-                                                            <a href="view-customerstatus.html"><img
-                                                                    src="../assets/images/view-icon.svg" alt=""></a>
-                                                            <a href="#"><img src="../assets/images/edit-icon.svg"
-                                                                    alt=""></a>
-                                                            <a href="javascript:void(0)" data-bs-toggle="modal"
-                                                                data-bs-target="#deleterecord-modal"><img
-                                                                    src="../assets/images/delete-icon.svg" alt=""></a>
-                                                        </span>
-                                                    </td>
-                                                </tr>
-
-                                                <tr>
-                                                    <td>C00007</td>
-                                                    <td>INTERACTIVE PVT LTD</td>
-                                                    <td>KPT House,Plot 41/13,Sector-30</td>
-                                                    <td>Navi Mumbai</td>
-                                                    <td>1234567890</td>
-                                                    <td>carol@ficci.com</td>
-
-                                                    <td><span class="table-btns">
-                                                            <a href="view-customerstatus.html"><img
-                                                                    src="../assets/images/view-icon.svg" alt=""></a>
-                                                            <a href="#"><img src="../assets/images/edit-icon.svg"
-                                                                    alt=""></a>
-                                                            <a href="javascript:void(0)" data-bs-toggle="modal"
-                                                                data-bs-target="#deleterecord-modal"><img
-                                                                    src="../assets/images/delete-icon.svg" alt=""></a>
-                                                        </span>
-                                                    </td>
-                                                </tr>
-
-
-                                            </tbody>
-                                        </table>
-
-                                    </div>
-
-                                    <div class="clearfix">
-                                        <div class="hint-text">Showing <b>1</b> out of <b>10</b> entries</div>
-                                        <ul class="pagination">
-                                            <li class="page-item"><a href="#" class="page-link"><img
-                                                        src="../assets/images/angle-left-icon.svg" alt=""></a></li>
-                                            <li class="page-item active"><a href="#" class="page-link">1</a></li>
-                                            <li class="page-item"><a href="#" class="page-link">2</a></li>
-                                            <li class="page-item"><a href="#" class="page-link">...</a></li>
-                                            <li class="page-item"><a href="#" class="page-link">9</a></li>
-                                            <li class="page-item"><a href="#" class="page-link">10</a></li>
-                                            <li class="page-item"><a href="#" class="page-link"><img
-                                                        src="../assets/images/angle-right-icon.svg" alt=""></a></li>
-                                        </ul>
-                                    </div>
-
-
-                                </div>
-                            </div>
-
-                        </div>
 
 
                     </div>
