@@ -1,20 +1,20 @@
-export interface CountryList {
-    countryId: string
-    countryName: string
-
-}
-
-
-export interface StateList {
-    stateId: number
-    stateName: string
-}
-
 export interface CityList {
-    cityId: number,
-    cityName: string,
-    state: string
-}
+    cityId: any
+    cityName: string
+    cityCode: string
+  }
+
+  export interface StateList {
+    stateId: any
+    stateName: string
+    stateCode: string
+  }
+
+  export interface CountryList {
+    countryId: any
+    countryName: string
+    countryCode: string
+  }
 
 export interface PostCodeList {
     postCode: string,
@@ -71,9 +71,9 @@ export interface customerStatusListModel {
     tlApprover:string
     clApprover:string
     customerStatus:string
-    cityCode:string
-    stateCode:string
-    countryCode:string
+    cityList: CityList
+    stateList: StateList
+    countryList: CountryList
     workFlowHistory: WorkFlowHistory[]
 
 }
@@ -122,7 +122,7 @@ export interface ApproveCustomerList {
     customerTypeName: string
     customerStatus: number
     approverEmail: string
-    cityCode:string
-    stateCode:string
-    countryCode:string
+    cityList: CityList
+    stateList: StateList
+    countryList: CountryList
   }

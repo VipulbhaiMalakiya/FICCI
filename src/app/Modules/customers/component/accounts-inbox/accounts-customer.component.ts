@@ -75,9 +75,9 @@ export class AccountsCustomerComponent {
             Address: x?.address || '',
             "Address 2":x.address2  || '',
 
-            State: x?.stateCode ,
-            Country: x.countryCode,
-            City: x?.cityCode ,
+            State: x?.stateList.stateName ,
+            Country: x.countryList.countryName,
+            City: x?.cityList.cityName ,
             Pincode: x?.pincode,
             "Contact Person": x && x.contact,
             "Phone Number": x?.phoneNumber || '',
