@@ -21,7 +21,7 @@ export class StatusCustomerComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.loadCityList();
+        this.loadCustomerStatusList();
         this.publicVariable.storedEmail = localStorage.getItem('userEmail') ?? '';
     }
 
@@ -59,26 +59,26 @@ export class StatusCustomerComponent implements OnInit {
         this.publicVariable.Subscription.add(subscription);
     }
 
-    loadCityList() {
-        try {
-            const subscription = this.API.getCityList().subscribe({
-                next: (response: any) => {
-                    this.publicVariable.cityList = response.data;
-                    this.loadCustomerStatusList();
+    // loadCityList() {
+    //     try {
+    //         const subscription = this.API.getCityList().subscribe({
+    //             next: (response: any) => {
+    //                 this.publicVariable.cityList = response.data;
+    //                 this.loadCustomerStatusList();
 
-                },
-                error: (error) => {
-                    console.error('Error loading city list:', error);
-                    console.error('Failed to load city list. Please try again later.');
-                },
-            });
+    //             },
+    //             error: (error) => {
+    //                 console.error('Error loading city list:', error);
+    //                 console.error('Failed to load city list. Please try again later.');
+    //             },
+    //         });
 
-            this.publicVariable.Subscription.add(subscription);
-        } catch (error) {
-            console.error('Error loading city list:', error);
-            console.error('An unexpected error occurred. Please try again later.');
-        }
-    }
+    //         this.publicVariable.Subscription.add(subscription);
+    //     } catch (error) {
+    //         console.error('Error loading city list:', error);
+    //         console.error('An unexpected error occurred. Please try again later.');
+    //     }
+    // }
 
 
 
@@ -146,7 +146,7 @@ export class StatusCustomerComponent implements OnInit {
             "Address 2":x.address2  || '',
             State: x?.stateCode ,
             Country: x.countryCode ,
-            City: this.getCityName(x?.cityCode)  ,
+            City: x?.cityCode  ,
             Pincode: x?.pincode,
             "Contact Person": x && x.contact,
             "Phone Number": x?.phoneNumber || '',
