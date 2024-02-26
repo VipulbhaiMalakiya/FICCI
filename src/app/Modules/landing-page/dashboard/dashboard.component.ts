@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AppService, ConfirmationDialogModalComponent, CustomersService, NgbModal, Router, ToastrService, customerStatusListModel, formatDate, publicVariable } from '../../customers/Export/new-customer';
 import { timeout, finalize } from 'rxjs';
+import { InvoicesService } from '../../invoice/service/invoices.service';
+import { invoiceApproveModule, invoiceStatusModule } from '../../invoice/interface/invoice';
 
 
 @Component({
@@ -18,13 +20,15 @@ export class DashboardComponent {
     RejectedbyAccounts: number = 0;
     ALL: number = 0;
     dashboardData: any;
+    invoiceStatuslistData: invoiceStatusModule[] = [];
 
 
     constructor(private appService: AppService,
         private modalService: NgbModal,
         private router: Router,
         private toastr: ToastrService,
-        private API: CustomersService
+        private API: CustomersService,
+        private IAPI : InvoicesService
 
     ) {
         this.loadCustomerStatusCountList();
@@ -94,6 +98,26 @@ export class DashboardComponent {
         this.publicVariable.Subscription.add(subscription);
     }
 
+    loadPurchaseInvoiceList(): void {
+        try {
+            const subscription = this.IAPI.getPurchaseInvoice_New().subscribe({
+                next: (response: any) => {
+                    this.countDataByInvoies(response.data);
+                    this.invoiceStatuslistData = response.data;
+                    this.publicVariable.count = response.data.length;
+
+                },
+                error: (error) => {
+                    console.error('Error loading project list:', error);
+                }
+            });
+
+            this.publicVariable.Subscription.add(subscription);
+        } catch (error) {
+            console.error('Error loading project list:', error);
+        }
+    }
+
     // Helper method to count data for each customer status
     countDataByStatus(data: any[]): void {
         const counts: any = {
@@ -138,6 +162,52 @@ export class DashboardComponent {
         this.publicVariable.count = counts['ALL']; // Total count
 
     }
+
+    countDataByInvoies(data: any[]): void {
+        const counts: any = {
+            'DRAFT': 0,
+            'PENDING WITH TL APPROVER': 0,
+            'PENDING WITH CH APPROVER': 0,
+            'PENDING WITH ACCOUNTS APPROVER': 0,
+            'APPROVED BY ACCOUNTS APPROVER': 0,
+            'REJECTED BY TL APPROVER': 0,
+            'REJECTED BY CH APPROVER': 0,
+            'REJECTED BY ACCOUNTS APPROVER': 0,
+            'ALL': 0
+        };
+
+        // Filter data for each customer status
+        const draftData = data.filter(item => item.customerStatus === 'DRAFT');
+        counts['DRAFT'] = draftData.length;
+
+        const pendingData = data.filter(item => item.customerStatus === 'PENDING WITH TL APPROVER'
+            || item.customerStatus === 'PENDING WITH CH APPROVER'
+            || item.customerStatus === 'PENDING WITH ACCOUNTS APPROVER');
+        counts['PENDING WITH TL APPROVER'] = pendingData.length;
+
+
+        const approvedData = data.filter(item => item.customerStatus === 'APPROVED BY ACCOUNTS APPROVER');
+        counts['APPROVED BY ACCOUNTS APPROVER'] = approvedData.length;
+
+        const rejectedData = data.filter(item => item.customerStatus === 'REJECTED BY TL APPROVER'
+            || item.customerStatus === 'REJECTED BY CH APPROVER'
+            || item.customerStatus === 'REJECTED BY ACCOUNTS APPROVER');
+        counts['REJECTED BY CH APPROVER'] = rejectedData.length;
+
+        // Calculate total count
+        counts['ALL'] = data.length;
+
+        // Update counts
+        this.isDRAFT = counts['DRAFT'];
+
+
+        this.PendingApproval = counts['PENDING WITH TL APPROVER'];
+        this.ApprovedAccounts = counts['APPROVED BY ACCOUNTS APPROVER'];
+        this.RejectedbyAccounts = counts['REJECTED BY CH APPROVER'];
+        this.ALL = counts['ALL'];
+        this.publicVariable.count = counts['ALL']; // Total count
+    }
+
 
     loadCustomerStatusList(status: string): void {
         this.customerStatus = status;
