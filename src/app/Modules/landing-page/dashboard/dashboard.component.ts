@@ -343,6 +343,48 @@ export class DashboardComponent {
         }
     }
 
+
+    onDeletePI(id: any) {
+        const modalRef = this.modalService.open(ConfirmationDialogModalComponent, { size: "sm", centered: true, backdrop: "static" });
+        var componentInstance = modalRef.componentInstance as ConfirmationDialogModalComponent;
+        componentInstance.message = "Do you really want to delete these records? This process cannot be undone ?";
+        modalRef.result.then((canDelete: boolean) => {
+            if (canDelete) {
+                this.publicVariable.isProcess = true;
+                this.IAPI.delete(id).subscribe({
+                    next: (res: any) => {
+                        this.toastr.success(res.message, 'Success');
+                        this.publicVariable.isProcess = false;
+                        this.loadPurchaseInvoiceList();
+
+                    },
+                    error: (error) => {
+                        this.publicVariable.isProcess = false;
+                        this.toastr.error(error.error.message, 'Error');
+                    }
+                });
+
+            }
+        }).catch(() => { });
+
+    }
+
+    onEditPI(data: invoiceStatusModule): void {
+        if (data.headerId) {
+            this.router.navigate(['invoice/status/edit', data.headerId], { state: { data: data } });
+        } else {
+            console.error('ID is undefined or null');
+        }
+    }
+
+    onViewPI(data: invoiceStatusModule): void {
+        if (data.headerId) {
+            this.router.navigate(['invoice/status/view', data.headerId], { state: { data: data } });
+        } else {
+            console.error('ID is undefined or null');
+        }
+    }
+
     toTitleCase(str: string): string {
         return str.toLowerCase().split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
     }
