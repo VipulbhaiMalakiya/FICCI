@@ -58,7 +58,7 @@ export class ViewPiApprovalComponent {
                     next: (res: any) => {
                         if (res.status === true) {
                             this.toastr.success(res.message, 'Success');
-                            this.router.navigate(['customer/approval']);
+                            this.router.navigate(['invoice/approval']);
                             this.publicVariable.dataForm.reset();
                         } else {
                             this.toastr.error(res.message, 'Error');
