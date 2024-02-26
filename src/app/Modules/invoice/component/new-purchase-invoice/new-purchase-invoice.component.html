@@ -3,7 +3,7 @@
 <div class="inner-content">
     <h3 class="content-title">PI New Purchase Invoice</h3>
 
-    <form [formGroup]="publicVariable.dataForm" >
+    <form [formGroup]="publicVariable.dataForm">
         <input type="hidden" formControlName="headerid">
         <div class="pipage-radio">
             <div class="form-check">
@@ -112,12 +112,11 @@
                         <label for="CustomerName">Customer Name</label>
                         <div class="flex-field">
                             <ng-select [items]="publicVariable.customerStatusList" #select class="w-100"
-                                bindLabel="customerName" bindValue="customerName"
-                                 placeholder="Select customer "
+                                bindLabel="customerName" bindValue="customerName" placeholder="Select customer "
                                 formControlName="ImpiHeaderCustomerName" (change)="onSelectCustomer()"
                                 [searchable]="true" [searchFn]="customerSearchFn">
                                 <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
-                                    <div><span >Name : </span><span >{{item.customerName | titlecase}}</span></div>
+                                    <div><span>Name : </span><span>{{item.customerName | titlecase}}</span></div>
                                     <small><b>Pan :</b> {{item.pan}} - <b>GST :</b> {{item.gstNumber}}</small>
                                 </ng-template>
                             </ng-select>
@@ -157,7 +156,7 @@
                     <div class="form-group">
                         <label for="city">City</label>
                         <input type="text" id="city" class="form-control" placeholder="State"
-                        formControlName="ImpiHeaderCustomerCity" />
+                            formControlName="ImpiHeaderCustomerCity" />
                         <!-- <ng-select [items]="publicVariable.cityList" bindLabel="cityName" bindValue="cityName"
                             placeholder="Select" formControlName="ImpiHeaderCustomerCity">
                         </ng-select> -->
@@ -198,7 +197,8 @@
                         <label for="ContactPerson">Contact Person</label>
                         <input type="text" placeholder="Contact Person" id="ContactPerson"
                             formControlName="ImpiHeaderCustomerContactPerson" class="form-control" />
-                        <div *ngIf="shouldShowError('ImpiHeaderCustomerContactPerson', 'alphanumericWithSpaces')" class="text-danger">
+                        <div *ngIf="shouldShowError('ImpiHeaderCustomerContactPerson', 'alphanumericWithSpaces')"
+                            class="text-danger">
                             Please enter a valid alphanumeric value.
                         </div>
 
@@ -265,8 +265,9 @@
                                     [value]="item.value !== 0 ? calculateAmount(item.value) : ''" readonly /></td>
                             <td>
                                 <span class="table-btns">
-                                    <a  (click)="addItem()"><img src="../assets/images/plus-icon.svg" alt="" /></a>
-                                    <a *ngIf="i > 0" (click)="removeItem(i)"><img src="../assets/images/delete-icon.svg" alt="" /></a>
+                                    <a (click)="addItem()"><img src="../assets/images/plus-icon.svg" alt="" /></a>
+                                    <a *ngIf="i > 0" (click)="removeItem(i)"><img src="../assets/images/delete-icon.svg"
+                                            alt="" /></a>
                                 </span>
                             </td>
                         </tr>
@@ -322,7 +323,8 @@
                 <div class="form-group mb-0 mt-4">
                     <input type="checkbox" class="btn-check" formControlName="IsDraft" id="btn-check"
                         autocomplete="off">
-                    <label class="btn btn-secondary w-auto mb-0 me-2" for="btn-check" (click)="onSubmit(true)">Save as Draft</label>
+                    <label class="btn btn-secondary w-auto mb-0 me-2" for="btn-check" (click)="onSubmit(true)">Save as
+                        Draft</label>
                     <button type="submit" class="common-btn w-auto" (click)="onSubmit(false)">Submit</button>
                 </div>
             </div>

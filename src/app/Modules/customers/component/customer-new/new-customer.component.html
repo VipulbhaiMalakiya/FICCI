@@ -122,6 +122,10 @@
                         <div *ngIf="shouldShowError('postCode', 'required')" class="text-danger">
                             Post Code is required.
                         </div>
+                        <div *ngIf="shouldShowError('postCode','pattern')" class="text-danger"> Please
+                            enter a
+                            valid
+                            6-digit Pin Code.</div>
                     </div>
                 </div>
 
