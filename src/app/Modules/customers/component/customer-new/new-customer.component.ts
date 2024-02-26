@@ -147,7 +147,8 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
             const subscription = this.API.getCityList().subscribe({
                 next: (response: any) => {
                     this.publicVariable.cityList = response.data;
-                    this.loadPostCodeList();
+                    // this.loadPostCodeList();
+                    this.loadGstCustomerType()
                 },
                 error: (error) => {
                     console.error('Error loading city list:', error);
@@ -164,48 +165,48 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
         }
     }
 
-    loadPostCodeList() {
-        try {
-            const subscription = this.API.getPostCodeList().subscribe({
-                next: (response: any) => {
-                    this.publicVariable.postCodeList = response.data;
-                    this.handleLoadingError();
-
-                },
-                error: (error) => {
-                    console.error('Error loading city list:', error);
-                    console.error('Failed to load city list. Please try again later.');
-                    this.handleLoadingError();
-                },
-            });
-
-            this.publicVariable.Subscription.add(subscription);
-        } catch (error) {
-            console.error('Error loading city list:', error);
-            console.error('An unexpected error occurred. Please try again later.');
-            this.handleLoadingError();
-        }
-    }
-
-    // loadGstCustomerType(): void {
+    // loadPostCodeList() {
     //     try {
-    //         const subscription = this.API.getGstCustomerType().subscribe({
+    //         const subscription = this.API.getPostCodeList().subscribe({
     //             next: (response: any) => {
-    //                 this.publicVariable.customerTypeList = response.data;
-    //                 this.publicVariable.isProcess = false;
+    //                 this.publicVariable.postCodeList = response.data;
+    //                 this.handleLoadingError();
+
     //             },
     //             error: (error) => {
-    //                 console.error('Error loading project list:', error);
+    //                 console.error('Error loading city list:', error);
+    //                 console.error('Failed to load city list. Please try again later.');
     //                 this.handleLoadingError();
     //             },
     //         });
 
     //         this.publicVariable.Subscription.add(subscription);
     //     } catch (error) {
-    //         console.error('Error loading project list:', error);
+    //         console.error('Error loading city list:', error);
+    //         console.error('An unexpected error occurred. Please try again later.');
     //         this.handleLoadingError();
     //     }
     // }
+
+    loadGstCustomerType(): void {
+        try {
+            const subscription = this.API.getGstCustomerType().subscribe({
+                next: (response: any) => {
+                    this.publicVariable.customerTypeList = response.data;
+                    this.publicVariable.isProcess = false;
+                },
+                error: (error) => {
+                    console.error('Error loading project list:', error);
+                    this.handleLoadingError();
+                },
+            });
+
+            this.publicVariable.Subscription.add(subscription);
+        } catch (error) {
+            console.error('Error loading project list:', error);
+            this.handleLoadingError();
+        }
+    }
 
     handleLoadingError() {
         this.publicVariable.isProcess = false; // Set status to false on error
