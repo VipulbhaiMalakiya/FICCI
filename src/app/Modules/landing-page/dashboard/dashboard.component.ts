@@ -228,7 +228,8 @@ export class DashboardComponent {
                 // item.createdBy === this.publicVariable.storedEmail &&
                 (item.customerStatus === 'PENDING WITH TL APPROVER' ||
                     item.customerStatus === 'PENDING WITH CH APPROVER' ||
-                    item.customerStatus === 'PENDING WITH ACCOUNTS APPROVER'));
+                    item.customerStatus === 'PENDING WITH ACCOUNTS APPROVER' ||
+                    item.customerStatus  === 'PENDING WITH FINANCE APPROVER'));
                 break;
             case 'APPROVED BY ACCOUNTS APPROVER':
                 filteredData = this.dashboardData.filter((item: any) =>
@@ -269,7 +270,7 @@ export class DashboardComponent {
                 (item.headerStatus === 'PENDING WITH TL APPROVER' ||
                     item.headerStatus === 'PENDING WITH CH APPROVER' ||
                     item.headerStatus === 'PENDING WITH ACCOUNTS APPROVER' ||
-                    item.headerStatus === 'REJECTED BY FINANCE APPROVER'));
+                    item.customerStatus  === 'PENDING WITH FINANCE APPROVER'));
                 break;
             case 'APPROVED BY ACCOUNTS APPROVER':
                 filteredData = this.dashboardData.filter((item: any) =>
