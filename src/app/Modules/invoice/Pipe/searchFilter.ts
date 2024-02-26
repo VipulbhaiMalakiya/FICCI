@@ -12,7 +12,7 @@ export class SearchFilterPipe1 implements PipeTransform {
         return items.filter(item => {
             return item.impiHeaderProjectCode.toLowerCase().includes(searchText)
                 || item.impiHeaderInvoiceType.toLowerCase().includes(searchText)
-                || item.impiHeaderDepartment.toLowerCase().includes(searchText)
+                || item.impiHeaderProjectDepartmentName.toLowerCase().includes(searchText)
                 || item.impiHeaderCustomerName.toLowerCase().includes(searchText);
         });
     }
