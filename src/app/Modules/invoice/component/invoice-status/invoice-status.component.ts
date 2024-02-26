@@ -32,7 +32,6 @@ export class InvoiceStatusComponent implements OnInit {
                 next: (response: any) => {
                     this.publicVariable.invoiceStatuslistData = response.data;
                     this.publicVariable.count = response.data.length;
-
                 },
                 error: (error) => {
                     console.error('Error loading project list:', error);
