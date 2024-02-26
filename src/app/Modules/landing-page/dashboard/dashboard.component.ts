@@ -32,8 +32,42 @@ export class DashboardComponent {
 
     ngOnInit(): void {
 
-        this.loadCustomerStatusCountList();
+        this.loadCityList();
         this.publicVariable.storedEmail = localStorage.getItem('userEmail') ?? '';
+    }
+
+
+    loadCityList() {
+        try {
+            const subscription = this.API.getCityList().subscribe({
+                next: (response: any) => {
+                    this.publicVariable.cityList = response.data;
+                    this.loadCustomerStatusCountList();
+
+                },
+                error: (error) => {
+                    console.error('Error loading city list:', error);
+                    console.error('Failed to load city list. Please try again later.');
+                },
+            });
+
+            this.publicVariable.Subscription.add(subscription);
+        } catch (error) {
+            console.error('Error loading city list:', error);
+            console.error('An unexpected error occurred. Please try again later.');
+        }
+    }
+
+
+
+    getCityName(cityId: string): string | undefined {
+        const city = this.publicVariable.cityList.find((c: any) => c.cityId === cityId);
+        const cityName = city ? city.cityName : undefined;
+        this.handleLoadingError(); // Set isProcess to false after retrieving the city name
+        return cityName;
+    }
+    handleLoadingError() {
+        this.publicVariable.isProcess = false; // Set status to false on error
     }
 
     loadCustomerStatusCountList(): void {
@@ -208,7 +242,7 @@ export class DashboardComponent {
             "Address 2":x.address2  || '',
             State: x?.stateCode ,
             Country: x.countryCode ,
-            City: x?.cityCode ,
+            City: this.getCityName(x?.cityCode) ,
             Pincode: x?.pincode,
             "Contact Person": x && x.contact,
             "Phone Number": x?.phoneNumber || '',
