@@ -272,7 +272,7 @@ export class DashboardComponent {
             case 'APPROVED BY ACCOUNTS APPROVER':
                 filteredData = this.dashboardData.filter((item: any) =>
                     // item.createdBy === this.publicVariable.storedEmail &&
-                    item.headerStatus === this.customerStatus);
+                    item.headerStatus ==='APPROVED BY ACCOUNTS APPROVER');
                 break;
             case 'REJECTED BY CH APPROVER':
                 filteredData = this.dashboardData.filter((item: any) =>
@@ -287,7 +287,7 @@ export class DashboardComponent {
         }
 
         this.invoiceStatuslistData = filteredData;
-        console.log( this.invoiceStatuslistData );
+        console.log(this.invoiceStatuslistData);
 
         this.publicVariable.count = filteredData.length;
 
