@@ -44,7 +44,7 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
             countryCode: [null, [Validators.required]],
             stateCode: [null, [Validators.required]],
             cityCode: [null, [Validators.required]],
-            postCode: [null,[Validators.required]],
+            postCode: ['', [Validators.required, Validators.pattern(/^\d{6}$/)]],
             GSTRegistrationNo: ['', [Validators.required, gstValidator()]],
             GSTCustomerType: [null, Validators.required],
             email: ['',[Validators.required,Validators.email,Validators.maxLength(80)]],
@@ -169,7 +169,8 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
             const subscription = this.API.getPostCodeList().subscribe({
                 next: (response: any) => {
                     this.publicVariable.postCodeList = response.data;
-                    this.loadGstCustomerType();
+                    this.handleLoadingError();
+
                 },
                 error: (error) => {
                     console.error('Error loading city list:', error);
@@ -186,25 +187,25 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
         }
     }
 
-    loadGstCustomerType(): void {
-        try {
-            const subscription = this.API.getGstCustomerType().subscribe({
-                next: (response: any) => {
-                    this.publicVariable.customerTypeList = response.data;
-                    this.publicVariable.isProcess = false;
-                },
-                error: (error) => {
-                    console.error('Error loading project list:', error);
-                    this.handleLoadingError();
-                },
-            });
+    // loadGstCustomerType(): void {
+    //     try {
+    //         const subscription = this.API.getGstCustomerType().subscribe({
+    //             next: (response: any) => {
+    //                 this.publicVariable.customerTypeList = response.data;
+    //                 this.publicVariable.isProcess = false;
+    //             },
+    //             error: (error) => {
+    //                 console.error('Error loading project list:', error);
+    //                 this.handleLoadingError();
+    //             },
+    //         });
 
-            this.publicVariable.Subscription.add(subscription);
-        } catch (error) {
-            console.error('Error loading project list:', error);
-            this.handleLoadingError();
-        }
-    }
+    //         this.publicVariable.Subscription.add(subscription);
+    //     } catch (error) {
+    //         console.error('Error loading project list:', error);
+    //         this.handleLoadingError();
+    //     }
+    // }
 
     handleLoadingError() {
         this.publicVariable.isProcess = false; // Set status to false on error

@@ -4,7 +4,7 @@
     <h3 class="content-title">Add New Customer</h3>
 
     <div class="mastersform-sec">
-        <form [formGroup]="publicVariable.dataForm" >
+        <form [formGroup]="publicVariable.dataForm">
             <div class="row">
                 <div class="col-md-3 col-sm-6" *ngIf="isAccount">
                     <div class="form-group">
@@ -65,9 +65,9 @@
                 <div class="col-md-3 col-sm-6">
                     <div class="form-group">
                         <label>Country/Region Code <sup class="text-danger">*</sup></label>
-                        <ng-select [items]="publicVariable.countryList" #select bindLabel="countryName" bindValue="countryId"
-                            placeholder="Select" formControlName="countryCode"
-                            [searchable]="true" [searchFn]="countrySearchFn">
+                        <ng-select [items]="publicVariable.countryList" #select bindLabel="countryName"
+                            bindValue="countryId" placeholder="Select" formControlName="countryCode" [searchable]="true"
+                            [searchFn]="countrySearchFn">
                             <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
                                 <small>{{item.countryId}} - {{item.countryName}}</small>
                             </ng-template>
@@ -81,7 +81,8 @@
                     <div class="form-group">
                         <label>State <sup class="text-danger">*</sup></label>
                         <ng-select [items]="publicVariable.stateList" #select bindLabel="stateName" bindValue="stateId"
-                            placeholder="Select " formControlName="stateCode"  [searchable]="true" [searchFn]="stateSearchFn">
+                            placeholder="Select " formControlName="stateCode" [searchable]="true"
+                            [searchFn]="stateSearchFn">
                             <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
                                 <small>{{item.stateId}} - {{item.stateName}}</small>
                             </ng-template>
@@ -94,9 +95,9 @@
                 <div class="col-md-3 col-sm-6">
                     <div class="form-group">
                         <label>City <sup class="text-danger">*</sup></label>
-                        <ng-select [items]="publicVariable.cityList" #select  bindLabel="cityName" bindValue="cityId"
-                            placeholder="Select" formControlName="cityCode"
-                            [searchable]="true" [searchFn]="citySearchFn">
+                        <ng-select [items]="publicVariable.cityList" #select bindLabel="cityName" bindValue="cityId"
+                            placeholder="Select" formControlName="cityCode" [searchable]="true"
+                            [searchFn]="citySearchFn">
                             <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
                                 <small>{{item.cityId}} - {{item.cityName}}</small>
                             </ng-template>
@@ -109,13 +110,15 @@
                 <div class="col-md-3 col-sm-6">
                     <div class="form-group">
                         <label>Post Code <sup class="text-danger">*</sup></label>
-                        <ng-select [items]="publicVariable.postCodeList" #select  bindLabel="postCode" bindValue="postCode"
+                        <!-- <ng-select [items]="publicVariable.postCodeList" #select  bindLabel="postCode" bindValue="postCode"
                         placeholder="Select" formControlName="postCode"
                         [searchable]="true" [searchFn]="postCodeSearchFn">
                         <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
                             <small>{{item.postCode}} - {{item.city}}</small>
                         </ng-template>
-                    </ng-select>
+                    </ng-select> -->
+                    <input type="text" formControlName="postCode" class="form-control" placeholder="Pincode"
+                    (input)="onInputChange($event)" >
                         <div *ngIf="shouldShowError('postCode', 'required')" class="text-danger">
                             Post Code is required.
                         </div>
@@ -203,7 +206,8 @@
                     <div class="form-group mb-0 mt-4">
                         <input type="checkbox" class="btn-check" formControlName="isDraft" id="btn-check"
                             autocomplete="off">
-                        <label class="btn btn-secondary w-auto mb-0 me-2" for="btn-check" (click)="onSubmit(true)">Save as Draft</label>
+                        <label class="btn btn-secondary w-auto mb-0 me-2" for="btn-check" (click)="onSubmit(true)">Save
+                            as Draft</label>
                         <button type="submit" class="common-btn w-auto" (click)="onSubmit(false)">Submit</button>
                     </div>
                 </div>
