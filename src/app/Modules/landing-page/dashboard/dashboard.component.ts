@@ -34,7 +34,7 @@ export class DashboardComponent {
         private router: Router,
         private toastr: ToastrService,
         private API: CustomersService,
-        private IAPI : InvoicesService
+        private IAPI: InvoicesService
 
     ) {
 
@@ -240,7 +240,8 @@ export class DashboardComponent {
                 // item.createdBy === this.publicVariable.storedEmail &&
                 (item.customerStatus === 'REJECTED BY TL APPROVER' ||
                     item.customerStatus === 'REJECTED BY CH APPROVER' ||
-                    item.customerStatus === 'REJECTED BY ACCOUNTS APPROVER'));
+                    item.customerStatus === 'REJECTED BY ACCOUNTS APPROVER' ||
+                    item.customerStatus === 'REJECTED BY FINANCE APPROVER'));
                 break;
             default:
                 filteredData = this.dashboardData
@@ -267,19 +268,21 @@ export class DashboardComponent {
                 // item.createdBy === this.publicVariable.storedEmail &&
                 (item.headerStatus === 'PENDING WITH TL APPROVER' ||
                     item.headerStatus === 'PENDING WITH CH APPROVER' ||
-                    item.headerStatus === 'PENDING WITH ACCOUNTS APPROVER'));
+                    item.headerStatus === 'PENDING WITH ACCOUNTS APPROVER' ||
+                    item.headerStatus === 'REJECTED BY FINANCE APPROVER'));
                 break;
             case 'APPROVED BY ACCOUNTS APPROVER':
                 filteredData = this.dashboardData.filter((item: any) =>
                     // item.createdBy === this.publicVariable.storedEmail &&
-                    item.headerStatus ==='APPROVED BY ACCOUNTS APPROVER');
+                    item.headerStatus === 'APPROVED BY ACCOUNTS APPROVER');
                 break;
             case 'REJECTED BY CH APPROVER':
                 filteredData = this.dashboardData.filter((item: any) =>
                 // item.createdBy === this.publicVariable.storedEmail &&
                 (item.headerStatus === 'REJECTED BY TL APPROVER' ||
                     item.headerStatus === 'REJECTED BY CH APPROVER' ||
-                    item.headerStatus === 'REJECTED BY ACCOUNTS APPROVER'));
+                    item.headerStatus === 'REJECTED BY ACCOUNTS APPROVER' ||
+                    item.headerStatus === 'REJECTED BY FINANCE APPROVER'));
                 break;
             default:
                 filteredData = this.dashboardData
@@ -392,11 +395,11 @@ export class DashboardComponent {
         const exportData = this.publicVariable.customerStatusList.map((x) => ({
             "Cust. No.": x?.customerCode || '',
             Name: x?.customerName ? this.toTitleCase(x.customerName) : '',
-            "Name 2":x?.customerLastName ? this.toTitleCase(x.customerLastName) : '',
+            "Name 2": x?.customerLastName ? this.toTitleCase(x.customerLastName) : '',
             Address: x?.address || '',
-            "Address 2":x.address2  || '',
-            State: x?.stateCode ,
-            Country: x.countryCode ,
+            "Address 2": x.address2 || '',
+            State: x?.stateCode,
+            Country: x.countryCode,
             City: x?.cityCode,
             Pincode: x?.pincode,
             "Contact Person": x && x.contact,
@@ -414,9 +417,9 @@ export class DashboardComponent {
             'Status': x.customerStatus ? this.toTitleCase(x.customerStatus) : '',
         }));
 
-        const headers = ['Cust. No.', 'Name','Name 2', 'Address','Address 2', 'Country', 'State', 'City',
-            'Pincode', 'Email','Phone Number','Contact Person',
-           'GST Customer Type', 'GST Registration No.', 'PAN Card',
+        const headers = ['Cust. No.', 'Name', 'Name 2', 'Address', 'Address 2', 'Country', 'State', 'City',
+            'Pincode', 'Email', 'Phone Number', 'Contact Person',
+            'GST Customer Type', 'GST Registration No.', 'PAN Card',
             'Created On', 'Created By', 'Last Updated On', 'Last Update By', 'TL Approver', 'CL Approver', 'Status'];
         this.appService.exportAsExcelFile(exportData, 'Customer Status', headers);
     }
@@ -441,10 +444,10 @@ export class DashboardComponent {
             Amount: x?.impiHeaderTotalInvoiceAmount != null ? (x.impiHeaderTotalInvoiceAmount).toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '',
             'Payment Terms': x?.impiHeaderPaymentTerms || '',
             'impiHeaderRemarks': x?.impiHeaderRemarks || '',
-            'Tl Approver':x?.impiHeaderTlApprover  ? this.toTitleCase(x.impiHeaderTlApprover) : '',
-            'Cl Approver':x?.impiHeaderClusterApprover  ? this.toTitleCase(x.impiHeaderClusterApprover) : '',
+            'Tl Approver': x?.impiHeaderTlApprover ? this.toTitleCase(x.impiHeaderTlApprover) : '',
+            'Cl Approver': x?.impiHeaderClusterApprover ? this.toTitleCase(x.impiHeaderClusterApprover) : '',
             'Finance Approver': x?.impiHeaderFinanceApprover ? this.toTitleCase(x.impiHeaderFinanceApprover) : '',
-            'Support Approver' : x?.impiHeaderSupportApprover ? this.toTitleCase(x.impiHeaderSupportApprover) : '',
+            'Support Approver': x?.impiHeaderSupportApprover ? this.toTitleCase(x.impiHeaderSupportApprover) : '',
             "Update Date": x?.impiHeaderModifiedDate ? formatDate(x.impiHeaderModifiedDate, 'medium', 'en-IN', 'IST') : '',
         }));
 
@@ -452,7 +455,7 @@ export class DashboardComponent {
             'PO No.', 'PO Date', 'Department', 'Divison', 'Category',
             'Vendor Name', 'Address', 'State', 'City', 'Pincode',
             'Phone No', "Email ID", 'Contact Person', 'Customer  GST Number', 'PAN No', 'Amount', 'Payment Terms',
-            'impiHeaderRemarks','Tl Approver', 'Cl Approver','Finance Approver','Support Approver','Update Date'
+            'impiHeaderRemarks', 'Tl Approver', 'Cl Approver', 'Finance Approver', 'Support Approver', 'Update Date'
         ];
         this.appService.exportAsExcelFile(exportData, 'PI Invoice Status', headers);
     }
