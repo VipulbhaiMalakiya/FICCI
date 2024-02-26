@@ -18,8 +18,12 @@ export class InvoicesService {
     private retry: any = retry(1); // Retry the request up to 2 times in case of failure
     private ApproveInvoiceURL = `${environment.apiURL}ApproveInvoice?email=`;
     private ApproverURL = `${environment.apiURL}ApproveInvoice`;
+    private ApproverAccountURL = `${environment.apiURL}Account/GetInvoice`;
 
 
+    getApproveAccountInvoice(): Observable<any[]> {
+        return this.http.get<any[]>(`${this.ApproverAccountURL}`).pipe(this.retry);
+    }
 
     getProjects(): Observable<any[]> {
         return this.http.get<any[]>(`${this.Projectapi}`).pipe(this.retry);

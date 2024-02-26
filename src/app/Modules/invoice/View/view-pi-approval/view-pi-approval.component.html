@@ -183,9 +183,21 @@
             <div class="col-sm-9"  ><a href="{{FilePath}}" download   style="color:#1382D7;">{{data.impiHeaderAttachment}}</a></div>
         </div>
     </div>
+    <div class="col-md-9 mt-4">
+        <div class="form-group">
+          <label>Payment Terms</label>
+          <textarea class="form-control h-100" cols="2" rows="3" disabled="" readonly="">{{data.impiHeaderPaymentTerms}}</textarea>
+        </div>
+      </div>
 
+      <div class="col-md-9 mt-3">
+        <div class="form-group">
+          <label>Remarks</label>
+          <textarea class="form-control h-100" cols="2" rows="3" disabled="" readonly="">{{data.impiHeaderRemarks}}</textarea>
+        </div>
+      </div>
     <form [formGroup]="publicVariable.dataForm" >
-        <div class="col-md-9">
+        <div class="col-md-9 mt-3">
             <div class="form-group">
                 <label>Remarks</label>
                 <textarea class="form-control h-100" cols="3" rows="5"  formControlName="remarks" ></textarea>
@@ -195,7 +207,7 @@
             </div>
         </div>
 
-        <div class="col-md-12">
+        <div class="col-md-12 mt-4">
             <div class="form-group mb-0 mt-2">
                 <button type="submit" class="btn btn-danger w-auto me-2" (click)="onSubmit(false)">Reject</button>
                 <button type="submit" class="common-btn w-auto"  (click)="onSubmit(true)">Approve</button>
