@@ -1,4 +1,4 @@
-<app-loading *ngIf="publicVariable.isProcess"></app-loading>
+<!-- <app-loading *ngIf="publicVariable.isProcess"></app-loading> -->
 
 <div class="inner-content">
     <div class="approver-form">
@@ -54,7 +54,7 @@
                 <div class="form-group">
                     <label>Country/Region Code</label>
                     <select class="form-select" disabled readonly>
-                        <option value="">{{data.countryCode}}</option>
+                        <option value="">{{data.cityList.cityName}}</option>
                     </select>
                 </div>
             </div>
@@ -63,7 +63,7 @@
                 <div class="form-group">
                     <label>State</label>
                     <select class="form-select" disabled readonly>
-                        <option value="">{{data.stateCode}}</option>
+                        <option value="">{{data.stateList.stateName}}</option>
                     </select>
                 </div>
             </div>
@@ -71,7 +71,7 @@
                 <div class="form-group">
                     <label>City</label>
                     <select class="form-select" disabled readonly>
-                        <option value="">{{getCityName(data.cityCode) }}</option>
+                        <option value="">{{data.cityList.cityName}}</option>
                     </select>
                 </div>
             </div>

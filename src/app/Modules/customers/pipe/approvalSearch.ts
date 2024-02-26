@@ -1,4 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
+import { CityList } from './../interface/customers';
 
 @Pipe({
     name: 'approvalsearchFilter'
@@ -10,7 +11,7 @@ export class ApprovalSearchFilterPipe implements PipeTransform {
         }
         searchText = searchText.toLowerCase();
         return items.filter(item => {
-            return item.customerName.toLowerCase().includes(searchText) || item.cityCode.toLowerCase().includes(searchText);
+            return item.customerName.toLowerCase().includes(searchText) || item.cityList.cityName.toLowerCase().includes(searchText);
         });
     }
 }
