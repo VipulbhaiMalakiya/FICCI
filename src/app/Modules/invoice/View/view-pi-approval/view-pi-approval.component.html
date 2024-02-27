@@ -1,3 +1,5 @@
+<app-loading *ngIf="publicVariable.isProcess"></app-loading>
+
 <div class="inner-content">
 
     <h3 class="content-title">PI Approval Inbox</h3>
@@ -78,16 +80,16 @@
 
             <div class="col-md-4 col-sm-6">
                 <div class="form-group">
-                    <label>City</label>
-                    <input type="text" value="{{data.impiHeaderCustomerCity}}" class="form-control" disabled=""
+                    <label>State</label>
+                    <input type="text" value="{{getStateNameById(data.impiHeaderCustomerState)}}" class="form-control" disabled=""
                         readonly="">
                 </div>
             </div>
 
             <div class="col-md-4 col-sm-6">
                 <div class="form-group">
-                    <label>State</label>
-                    <input type="text" value="{{data.impiHeaderCustomerState}}" class="form-control" disabled=""
+                    <label>City</label>
+                    <input type="text" value="{{getCityNameById(data.impiHeaderCustomerCity)}}" class="form-control" disabled=""
                         readonly="">
                 </div>
             </div>
@@ -201,9 +203,7 @@
             <div class="form-group">
                 <label>Remarks</label>
                 <textarea class="form-control h-100" cols="3" rows="5"  formControlName="remarks" ></textarea>
-                <div *ngIf="shouldShowError('remarks', 'required')" class="text-danger">
-                    This field is required
-                </div>
+
             </div>
         </div>
 
