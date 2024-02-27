@@ -17,7 +17,7 @@ export class ViewPiAccountsInboxComponent implements OnInit, OnDestroy {
     headerId?: number;
     data: any;
     FilePath: any;
-    isApprove:boolean = false;
+    isApprove: boolean = false;
     publicVariable = new publicVariable();
 
     editorConfig: AngularEditorConfig = {
@@ -53,12 +53,12 @@ export class ViewPiAccountsInboxComponent implements OnInit, OnDestroy {
         })
     }
 
-    private  initializeFormmailForm(): void {
+    private initializeFormmailForm(): void {
         this.publicVariable.mailForm = this.fb.group({
-            emailTo: ['',[Validators.required]],
-            subject: ['',[Validators.required]],
-            body:[''],
-            Attachment:[''],
+            emailTo: ['', [Validators.required]],
+            subject: ['', [Validators.required]],
+            body: [''],
+            attachment: [''],
         })
     }
 
@@ -130,7 +130,7 @@ export class ViewPiAccountsInboxComponent implements OnInit, OnDestroy {
     handleLoadingError() {
         this.publicVariable.isProcess = false; // Set status to false on error
     }
-    onback(){
+    onback() {
         this.isApprove = false;
     }
     onSubmit(action: boolean) {
@@ -176,6 +176,23 @@ export class ViewPiAccountsInboxComponent implements OnInit, OnDestroy {
 
     }
 
+    onSendEmail() {
+        if (this.publicVariable.mailForm.valid) {
+            const newData = this.publicVariable.mailForm.value;
+            const newConfig: any = {
+                emailTo: newData.emailTo,
+                subject: newData.subject,
+                body: newData.body,
+                attachment: newData.attachment,
+            }
+
+
+        } else {
+            this.markFormControlsAsTouchedemail();
+
+        }
+    }
+
 
 
     markFormControlsAsTouched(): void {
@@ -183,9 +200,14 @@ export class ViewPiAccountsInboxComponent implements OnInit, OnDestroy {
             this.publicVariable.dataForm.controls[controlName].markAsTouched();
         });
     }
+    markFormControlsAsTouchedemail(): void {
+        ['emailTo','subject'].forEach(controlName => {
+            this.publicVariable.mailForm.controls[controlName].markAsTouched();
+        });
+    }
 
     shouldShowError(controlName: string, errorName: string): boolean {
-        return this.publicVariable.dataForm.controls[controlName].touched && this.publicVariable.dataForm.controls[controlName].hasError(errorName);
+        return this.publicVariable.dataForm.controls[controlName].touched || this.publicVariable.mailForm.controls[controlName].touched && this.publicVariable.dataForm.controls[controlName].hasError(errorName) || this.publicVariable.mailForm.controls[controlName].hasError(errorName);
     }
 }
 

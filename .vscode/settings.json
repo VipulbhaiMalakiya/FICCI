@@ -10,7 +10,8 @@
         "Rejectedby",
         "Statuslist",
         "titlecase",
-        "toastr"
+        "toastr",
+        "Touchedemail"
     ],
     "angular-schematics.schematicsDefaultOptions": {
         "angular-*": {
