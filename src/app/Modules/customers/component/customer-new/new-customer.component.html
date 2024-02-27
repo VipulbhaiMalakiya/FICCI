@@ -66,8 +66,8 @@
                     <div class="form-group">
                         <label>Country/Region Code <sup class="text-danger">*</sup></label>
                         <ng-select [items]="publicVariable.countryList" #select bindLabel="countryName"
-                            bindValue="countryCode" placeholder="Select" formControlName="countryCode" [searchable]="true"
-                            [searchFn]="countrySearchFn">
+                            bindValue="countryCode" placeholder="Select" formControlName="countryCode"
+                            [searchable]="true" [searchFn]="countrySearchFn">
                             <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
                                 <small>{{item.countryCode}} - {{item.countryName}}</small>
                             </ng-template>
@@ -80,8 +80,8 @@
                 <div class="col-md-3 col-sm-6">
                     <div class="form-group">
                         <label>State <sup class="text-danger">*</sup></label>
-                        <ng-select [items]="publicVariable.stateList" #select bindLabel="stateName" bindValue="stateCode"
-                            placeholder="Select " formControlName="stateCode" [searchable]="true"
+                        <ng-select [items]="publicVariable.stateList" #select bindLabel="stateName"
+                            bindValue="stateCode" placeholder="Select " formControlName="stateCode" [searchable]="true"
                             [searchFn]="stateSearchFn">
                             <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
                                 <small>{{item.stateCode}} - {{item.stateName}}</small>
@@ -95,7 +95,7 @@
                 <div class="col-md-3 col-sm-6">
                     <div class="form-group">
                         <label>City <sup class="text-danger">*</sup></label>
-                        <ng-select [items]="publicVariable.cityList" #select bindLabel="cityCode" bindValue="cityCode"
+                        <ng-select [items]="publicVariable.cityList" #select bindLabel="cityName" bindValue="cityCode"
                             placeholder="Select" formControlName="cityCode" [searchable]="true"
                             [searchFn]="citySearchFn">
                             <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
@@ -117,8 +117,8 @@
                             <small>{{item.postCode}} - {{item.city}}</small>
                         </ng-template>
                     </ng-select> -->
-                    <input type="text" formControlName="postCode" class="form-control" placeholder="Pincode"
-                    (input)="onInputChange($event)" >
+                        <input type="text" formControlName="postCode" class="form-control" placeholder="Pincode"
+                            (input)="onInputChange($event)">
                         <div *ngIf="shouldShowError('postCode', 'required')" class="text-danger">
                             Post Code is required.
                         </div>
