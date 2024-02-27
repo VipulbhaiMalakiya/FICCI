@@ -1,3 +1,5 @@
+<app-loading *ngIf="publicVariable.isProcess"></app-loading>
+
 <div class="inner-content">
 
     <div class="inner-content">
@@ -18,29 +20,32 @@
                 <div class="col-md-4 col-sm-6">
                     <div class="form-group">
                         <label>Department</label>
-                        <input type="text" value="{{data.impiHeaderProjectDepartmentName}}" class="form-control" disabled=""
-                            readonly="">
+                        <input type="text" value="{{data.impiHeaderProjectDepartmentName}}" class="form-control"
+                            disabled="" readonly="">
                     </div>
                 </div>
 
                 <div class="col-md-4 col-sm-6">
                     <div class="form-group">
                         <label>Division</label>
-                        <input type="text" value="{{data.impiHeaderProjectDivisionName}}" class="form-control" disabled="" readonly="">
+                        <input type="text" value="{{data.impiHeaderProjectDivisionName}}" class="form-control"
+                            disabled="" readonly="">
                     </div>
                 </div>
 
                 <div class="col-md-4 col-sm-6">
                     <div class="form-group">
                         <label>PAN No</label>
-                        <input type="text" value="{{data.impiHeaderPanNo}}" class="form-control" disabled="" readonly="">
+                        <input type="text" value="{{data.impiHeaderPanNo}}" class="form-control" disabled=""
+                            readonly="">
                     </div>
                 </div>
 
                 <div class="col-md-4 col-sm-6">
                     <div class="form-group">
                         <label>GST No</label>
-                        <input type="text" value="{{data.impiHeaderGstNo}}" class="form-control" disabled="" readonly="">
+                        <input type="text" value="{{data.impiHeaderGstNo}}" class="form-control" disabled=""
+                            readonly="">
                     </div>
                 </div>
 
@@ -80,16 +85,16 @@
 
                 <div class="col-md-4 col-sm-6">
                     <div class="form-group">
-                        <label>City</label>
-                        <input type="text" value="{{data.impiHeaderCustomerCity}}" class="form-control" disabled=""
+                        <label>State</label>
+                        <input type="text" value="{{getStateNameById(data.impiHeaderCustomerState)}}" class="form-control" disabled=""
                             readonly="">
                     </div>
                 </div>
 
                 <div class="col-md-4 col-sm-6">
                     <div class="form-group">
-                        <label>State</label>
-                        <input type="text" value="{{data.impiHeaderCustomerState}}" class="form-control" disabled=""
+                        <label>City</label>
+                        <input type="text" value="{{getCityNameById(data.impiHeaderCustomerCity)}}" class="form-control" disabled=""
                             readonly="">
                     </div>
                 </div>
@@ -113,8 +118,8 @@
                 <div class="col-md-4 col-sm-6">
                     <div class="form-group">
                         <label>Contact Person</label>
-                        <input type="text" value="{{data.impiHeaderCustomerContactPerson}}" class="form-control" disabled=""
-                            readonly="">
+                        <input type="text" value="{{data.impiHeaderCustomerContactPerson}}" class="form-control"
+                            disabled="" readonly="">
                     </div>
                 </div>
 
@@ -155,21 +160,29 @@
                     <tbody>
 
                         <tr *ngFor="let i of data.lineItem_Requests">
-                            <td><input type="text" value="{{i.impiLineDescription}}" class="form-control" disabled="" readonly=""></td>
-                            <td><input type="text" value="{{i.impiLineQuantity}}" class="form-control" disabled="" readonly=""></td>
-                            <td><input type="text" value="{{i.impiLineDiscount}}" class="form-control" disabled="" readonly=""></td>
-                            <td><input type="text" value="{{i.impiLineUnitPrice}}" class="form-control" disabled="" readonly=""></td>
-                            <td><input type="text" value="{{i.impiLineAmount}}" class="form-control" disabled="" readonly=""></td>
+                            <td><input type="text" value="{{i.impiLineDescription}}" class="form-control" disabled=""
+                                    readonly=""></td>
+                            <td><input type="text" value="{{i.impiLineQuantity}}" class="form-control" disabled=""
+                                    readonly=""></td>
+                            <td><input type="text" value="{{i.impiLineDiscount}}" class="form-control" disabled=""
+                                    readonly=""></td>
+                            <td><input type="text" value="{{i.impiLineUnitPrice}}" class="form-control" disabled=""
+                                    readonly=""></td>
+                            <td><input type="text" value="{{i.impiLineAmount}}" class="form-control" disabled=""
+                                    readonly=""></td>
                         </tr>
 
                         <tr>
                             <td colspan="3" class="text-end">Total</td>
-                            <td colspan="2" class="text-end"><b>{{data.impiHeaderTotalInvoiceAmount | currency: 'INR'}}</b></td>
+                            <td colspan="2" class="text-end"><b>{{data.impiHeaderTotalInvoiceAmount | currency:
+                                    'INR'}}</b></td>
                         </tr>
 
                         <tr>
-                            <td colspan="3" class="text-start">Total Amount Receivable In Word: {{  data.impiHeaderTotalInvoiceAmount | numberToWords1 }}</td>
-                            <td colspan="2" class="text-end"><b>{{data.impiHeaderTotalInvoiceAmount | currency: 'INR'}}</b></td>
+                            <td colspan="3" class="text-start">Total Amount Receivable In Word: {{
+                                data.impiHeaderTotalInvoiceAmount | numberToWords1 }}</td>
+                            <td colspan="2" class="text-end"><b>{{data.impiHeaderTotalInvoiceAmount | currency:
+                                    'INR'}}</b></td>
                         </tr>
 
                     </tbody>
@@ -182,27 +195,30 @@
         <div class="col-md-9 col-xs-12 col-sm-12 attach-col">
             <div class="row align-items-center">
                 <div class="col-sm-2"><b>Attachment</b></div>
-                <div class="col-sm-9"  ><a href="{{FilePath}}" download   style="color:#1382D7;">{{data.impiHeaderAttachment}}</a></div>
+                <div class="col-sm-9"><a href="{{FilePath}}" download
+                        style="color:#1382D7;">{{data.impiHeaderAttachment}}</a></div>
             </div>
         </div>
         <div class="col-md-9 mt-4">
             <div class="form-group">
-              <label>Payment Terms</label>
-              <textarea class="form-control h-100" cols="2" rows="3" disabled="" readonly="">{{data.impiHeaderPaymentTerms}}</textarea>
+                <label>Payment Terms</label>
+                <textarea class="form-control h-100" cols="2" rows="3" disabled=""
+                    readonly="">{{data.impiHeaderPaymentTerms}}</textarea>
             </div>
-          </div>
+        </div>
 
-          <div class="col-md-9 mt-3">
+        <div class="col-md-9 mt-3">
             <div class="form-group">
-              <label>Remarks</label>
-              <textarea class="form-control h-100" cols="2" rows="3" disabled="" readonly="">{{data.impiHeaderRemarks}}</textarea>
+                <label>Remarks</label>
+                <textarea class="form-control h-100" cols="2" rows="3" disabled=""
+                    readonly="">{{data.impiHeaderRemarks}}</textarea>
             </div>
-          </div>
-        <form [formGroup]="publicVariable.dataForm" >
+        </div>
+        <form [formGroup]="publicVariable.dataForm">
             <div class="col-md-9 mt-3">
                 <div class="form-group">
                     <label>Remarks</label>
-                    <textarea class="form-control h-100" cols="3" rows="5"  formControlName="remarks" ></textarea>
+                    <textarea class="form-control h-100" cols="3" rows="5" formControlName="remarks"></textarea>
                     <div *ngIf="shouldShowError('remarks', 'required')" class="text-danger">
                         This field is required
                     </div>
@@ -212,7 +228,7 @@
             <div class="col-md-12 mt-4">
                 <div class="form-group mb-0 mt-2">
                     <button type="submit" class="btn btn-danger w-auto me-2" (click)="onSubmit(false)">Reject</button>
-                    <button type="submit" class="common-btn w-auto"  (click)="onSubmit(true)">Approve</button>
+                    <button type="submit" class="common-btn w-auto" (click)="onSubmit(true)">Approve</button>
                 </div>
             </div>
         </form>
@@ -220,45 +236,45 @@
 
     </div>
 
-  <div class="pi-pagetitle mt-4">Mailer Information</div>
+    <div class="pi-pagetitle mt-4">Mailer Information</div>
 
-  <div class="mailer-piaccount">
+    <div class="mailer-piaccount">
 
-    <div class="mb-3 row">
-      <label for="" class="col-sm-3 col-form-label">Mail to</label>
-      <div class="col-sm-9">
-        <input type="text" class="form-control" id="">
-      </div>
+        <div class="mb-3 row">
+            <label for="" class="col-sm-3 col-form-label">Mail to</label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" id="">
+            </div>
+        </div>
+
+        <div class="mb-3 row">
+            <label for="" class="col-sm-3 col-form-label">Subject</label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" id="">
+            </div>
+        </div>
+
+        <div class="mb-3 row">
+            <label for="" class="col-sm-3 col-form-label">Body</label>
+            <div class="col-sm-9">
+                <textarea class="form-control h-100" cols="2" rows="3"></textarea>
+            </div>
+        </div>
+
+        <div class="mb-3 row attach-col2">
+            <label for="" class="col-sm-3 col-form-label">Attachment</label>
+            <div class="col-sm-9">
+                <input class="form-control" type="file" id="formFile">
+            </div>
+        </div>
+
+        <div class="col-md-12">
+            <div class="form-group mb-0 mt-4">
+                <button type="submit" class="common-btn w-auto">Submit</button>
+            </div>
+        </div>
+
     </div>
-
-    <div class="mb-3 row">
-      <label for="" class="col-sm-3 col-form-label">Subject</label>
-      <div class="col-sm-9">
-        <input type="text" class="form-control" id="">
-      </div>
-    </div>
-
-    <div class="mb-3 row">
-      <label for="" class="col-sm-3 col-form-label">Body</label>
-      <div class="col-sm-9">
-        <textarea class="form-control h-100" cols="2" rows="3"></textarea>
-      </div>
-    </div>
-
-    <div class="mb-3 row attach-col2">
-      <label for="" class="col-sm-3 col-form-label">Attachment</label>
-      <div class="col-sm-9">
-        <input class="form-control" type="file" id="formFile">
-      </div>
-    </div>
-
-    <div class="col-md-12">
-      <div class="form-group mb-0 mt-4">
-        <button type="submit" class="common-btn w-auto">Submit</button>
-      </div>
-    </div>
-
-  </div>
 
 
 </div>
