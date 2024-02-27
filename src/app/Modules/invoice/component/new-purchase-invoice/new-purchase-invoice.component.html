@@ -155,11 +155,14 @@
                 <div class="col-md-4 col-sm-6">
                     <div class="form-group">
                         <label for="city">City</label>
-                        <input type="text" id="city" class="form-control" placeholder="State"
-                            formControlName="ImpiHeaderCustomerCity" />
-                        <!-- <ng-select [items]="publicVariable.cityList" bindLabel="cityName" bindValue="cityName"
-                            placeholder="Select" formControlName="ImpiHeaderCustomerCity">
-                        </ng-select> -->
+
+                            <ng-select [items]="publicVariable.cityList" #select bindLabel="cityName" bindValue="cityCode"
+                            placeholder="Select" formControlName="ImpiHeaderCustomerCity" [searchable]="true"
+                            [searchFn]="citySearchFn">
+                            <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
+                                <small>{{item.cityCode}} - {{item.cityName}}</small>
+                            </ng-template>
+                        </ng-select>
                         <div *ngIf="shouldShowError('ImpiHeaderCustomerCity','required')" class="text-danger">This field
                             is required
                         </div>
