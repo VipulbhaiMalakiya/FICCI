@@ -181,8 +181,8 @@ export class NewPurchaseInvoiceComponent implements OnInit {
                     ImpiHeaderCustomerContactPerson: this.publicVariable.selectCustomer.contact,
                     ImpiHeaderCustomerEmailId: this.publicVariable.selectCustomer.email,
                     ImpiHeaderCustomerPhoneNo: this.publicVariable.selectCustomer.phoneNumber,
-                    ImpiHeaderCustomerState: this.publicVariable.selectCustomer.stateCode,
-                    ImpiHeaderCustomerCity: this.publicVariable.selectCustomer.cityCode,
+                    ImpiHeaderCustomerState: this.publicVariable.selectCustomer.stateList.stateCode,
+                    ImpiHeaderCustomerCity: this.publicVariable.selectCustomer.cityList.cityCode,
                 });
             }
         } else {
