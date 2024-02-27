@@ -86,3 +86,22 @@ export interface invoiceApproveModule {
     statusName: string
     approverEmail: string
   }
+
+  export interface GetCustomerModel {
+    custId: number
+    custNo: string
+    custName: string
+    custName2: string
+    custAddress: string
+    custAddress2: string
+    city: string
+    contact: string
+    pinCode: any
+    stateCode: string
+    countryRegionCode: string
+    gstregistrationNo: string
+    gstcustomerType: string
+    panNo: string
+    email: string
+    primaryContactNo: string
+  }

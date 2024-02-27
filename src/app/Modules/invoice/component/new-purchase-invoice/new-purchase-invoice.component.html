@@ -111,13 +111,13 @@
                     <div class="form-group">
                         <label for="CustomerName">Customer Name</label>
                         <div class="flex-field">
-                            <ng-select [items]="publicVariable.customerStatusList" #select class="w-100"
-                                bindLabel="customerName" bindValue="customerName" placeholder="Select customer "
+                            <ng-select [items]="publicVariable.GetCustomerList" #select class="w-100"
+                                bindLabel="custName" bindValue="custName" placeholder="Select customer "
                                 formControlName="ImpiHeaderCustomerName" (change)="onSelectCustomer()"
                                 [searchable]="true" [searchFn]="customerSearchFn">
                                 <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
-                                    <div><span>Name : </span><span>{{item.customerName | titlecase}}</span></div>
-                                    <small><b>Pan :</b> {{item.pan}} - <b>GST :</b> {{item.gstNumber}}</small>
+                                    <div><span>Name : </span><span>{{item.custName | titlecase}}</span></div>
+                                    <small><b>Pan :</b> {{item.panNo}} - <b>GST :</b> {{item.gstregistrationNo}}</small>
                                 </ng-template>
                             </ng-select>
                             <div class="add-btn"><a routerLink="/customer/new">+</a></div>
@@ -141,7 +141,7 @@
                 <div class="col-md-4 col-sm-6">
                     <div class="form-group">
                         <label for="state">State</label>
-                        <ng-select [items]="publicVariable.stateList" #select bindLabel="stateName"
+                        <ng-select [items]="publicVariable.stateList" #select bindLabel="stateCode"
                             bindValue="stateCode" placeholder="Select " formControlName="ImpiHeaderCustomerState" [searchable]="true"
                             [searchFn]="stateSearchFn">
                             <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
@@ -156,13 +156,9 @@
                     <div class="form-group">
                         <label for="city">City</label>
 
-                            <ng-select [items]="publicVariable.cityList" #select bindLabel="cityName" bindValue="cityCode"
-                            placeholder="Select" formControlName="ImpiHeaderCustomerCity" [searchable]="true"
-                            [searchFn]="citySearchFn">
-                            <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
-                                <small>{{item.cityCode}} - {{item.cityName}}</small>
-                            </ng-template>
-                        </ng-select>
+
+                        <input type="text" class="form-control" id="city" placeholder="city"
+                        formControlName="ImpiHeaderCustomerCity" />
                         <div *ngIf="shouldShowError('ImpiHeaderCustomerCity','required')" class="text-danger">This field
                             is required
                         </div>

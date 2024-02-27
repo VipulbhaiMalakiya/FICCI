@@ -19,8 +19,13 @@ export class InvoicesService {
     private ApproveInvoiceURL = `${environment.apiURL}ApproveInvoice?email=`;
     private ApproverURL = `${environment.apiURL}ApproveInvoice`;
     private ApproverAccountURL = `${environment.apiURL}Account/GetInvoice`;
+    private GetCustomerAPI = `${environment.apiURL}DropDown/GetCustomer`;
 
 
+
+    GetCustomerList(): Observable<any[]> {
+        return this.http.get<any[]>(`${this.GetCustomerAPI}`).pipe(this.retry);
+    }
     getApproveAccountInvoice(): Observable<any[]> {
         return this.http.get<any[]>(`${this.ApproverAccountURL}`).pipe(this.retry);
     }

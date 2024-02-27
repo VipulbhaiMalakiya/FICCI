@@ -145,15 +145,17 @@ export class NewPurchaseInvoiceComponent implements OnInit {
         }
     }
 
+
+
     loadCustomerStatusList(): void {
-        const subscription = this.API.getCustomerStatusNew().pipe(
+        const subscription = this.API.GetCustomerList().pipe(
             timeout(120000), // Timeout set to 2 minutes (120000 milliseconds)
             finalize(() => {
                 this.publicVariable.isProcess = false;
             })
         ).subscribe({
             next: (response: any) => {
-                this.publicVariable.customerStatusList = response.data;
+                this.publicVariable.GetCustomerList = response.data;
                 this.loadStateList();
             },
             error: (error: any) => {
@@ -173,7 +175,6 @@ export class NewPurchaseInvoiceComponent implements OnInit {
             const subscription = this.CAPI.getStateList().subscribe({
                 next: (response: any) => {
                     this.publicVariable.stateList = response.data;
-                    this.loadCityList();
                 },
                 error: (error) => {
                     console.error('Error loading project list:', error);
@@ -188,50 +189,29 @@ export class NewPurchaseInvoiceComponent implements OnInit {
         }
     }
 
-    loadCityList() {
-        try {
-            const subscription = this.CAPI.getCityList().subscribe({
-                next: (response: any) => {
-                    this.publicVariable.cityList = response.data;
-                },
-                error: (error) => {
-                    console.error('Error loading city list:', error);
-                    console.error('Failed to load city list. Please try again later.');
-                    this.handleLoadingError();
-                },
-            });
 
-            this.publicVariable.Subscription.add(subscription);
-        } catch (error) {
-            console.error('Error loading city list:', error);
-            console.error('An unexpected error occurred. Please try again later.');
-            this.handleLoadingError();
-        }
-    }
 
     stateSearchFn(term: string, item: any) {
         const concatenatedString = `${item.stateCode} ${item.stateName}`.toLowerCase();
         return concatenatedString.includes(term.toLowerCase());
     }
-    citySearchFn(term: string, item: any) {
-        const concatenatedString = `${item.countryCode} ${item.cityName}`.toLowerCase();
-        return concatenatedString.includes(term.toLowerCase());
-    }
+
 
     onSelectCustomer(): void {
         const selectedId = this.publicVariable.dataForm.get('ImpiHeaderCustomerName')?.value;
+
         if (selectedId) {
-            this.publicVariable.selectCustomer = this.publicVariable.customerStatusList.find(customer => customer.customerName == selectedId);
+            this.publicVariable.selectCustomer = this.publicVariable.GetCustomerList.find(customer => customer.custName == selectedId);
             if (this.publicVariable.selectCustomer) {
                 this.publicVariable.dataForm.patchValue({
-                    ImpiHeaderCustomerAddress: this.publicVariable.selectCustomer.address,
-                    ImpiHeaderCustomerPinCode: this.publicVariable.selectCustomer.pincode,
-                    ImpiHeaderCustomerGstNo: this.publicVariable.selectCustomer.gstNumber,
+                    ImpiHeaderCustomerAddress: this.publicVariable.selectCustomer.custAddress,
+                    ImpiHeaderCustomerPinCode: this.publicVariable.selectCustomer.pinCode,
+                    ImpiHeaderCustomerGstNo: this.publicVariable.selectCustomer.gstregistrationNo,
                     ImpiHeaderCustomerContactPerson: this.publicVariable.selectCustomer.contact,
                     ImpiHeaderCustomerEmailId: this.publicVariable.selectCustomer.email,
-                    ImpiHeaderCustomerPhoneNo: this.publicVariable.selectCustomer.phoneNumber,
-                    ImpiHeaderCustomerState: this.publicVariable.selectCustomer.stateList.stateCode,
-                    ImpiHeaderCustomerCity: this.publicVariable.selectCustomer.cityList.cityCode,
+                    ImpiHeaderCustomerPhoneNo: this.publicVariable.selectCustomer.primaryContactNo,
+                    ImpiHeaderCustomerState: this.publicVariable.selectCustomer.stateCode,
+                    ImpiHeaderCustomerCity: this.publicVariable.selectCustomer.city,
                 });
             }
         } else {
