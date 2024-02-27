@@ -154,6 +154,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
         ).subscribe({
             next: (response: any) => {
                 this.publicVariable.customerStatusList = response.data;
+                this.loadStateList();
             },
             error: (error: any) => {
                 if (error.name === 'TimeoutError') {
@@ -166,13 +167,61 @@ export class NewPurchaseInvoiceComponent implements OnInit {
 
         this.publicVariable.Subscription.add(subscription);
     }
+
+    loadStateList() {
+        try {
+            const subscription = this.CAPI.getStateList().subscribe({
+                next: (response: any) => {
+                    this.publicVariable.stateList = response.data;
+                    this.loadCityList();
+                },
+                error: (error) => {
+                    console.error('Error loading project list:', error);
+                    this.handleLoadingError()
+                },
+            });
+
+            this.publicVariable.Subscription.add(subscription);
+        } catch (error) {
+            console.error('Error loading project list:', error);
+            this.handleLoadingError()
+        }
+    }
+
+    loadCityList() {
+        try {
+            const subscription = this.CAPI.getCityList().subscribe({
+                next: (response: any) => {
+                    this.publicVariable.cityList = response.data;
+                },
+                error: (error) => {
+                    console.error('Error loading city list:', error);
+                    console.error('Failed to load city list. Please try again later.');
+                    this.handleLoadingError();
+                },
+            });
+
+            this.publicVariable.Subscription.add(subscription);
+        } catch (error) {
+            console.error('Error loading city list:', error);
+            console.error('An unexpected error occurred. Please try again later.');
+            this.handleLoadingError();
+        }
+    }
+
+    stateSearchFn(term: string, item: any) {
+        const concatenatedString = `${item.stateCode} ${item.stateName}`.toLowerCase();
+        return concatenatedString.includes(term.toLowerCase());
+    }
+    citySearchFn(term: string, item: any) {
+        const concatenatedString = `${item.countryCode} ${item.cityName}`.toLowerCase();
+        return concatenatedString.includes(term.toLowerCase());
+    }
+
     onSelectCustomer(): void {
         const selectedId = this.publicVariable.dataForm.get('ImpiHeaderCustomerName')?.value;
         if (selectedId) {
             this.publicVariable.selectCustomer = this.publicVariable.customerStatusList.find(customer => customer.customerName == selectedId);
-            // this.onSelectState(this.publicVariable.selectCustomer.country);
-            // this.onSelectCity(this.publicVariable.selectCustomer.state);
-
             if (this.publicVariable.selectCustomer) {
                 this.publicVariable.dataForm.patchValue({
                     ImpiHeaderCustomerAddress: this.publicVariable.selectCustomer.address,
@@ -200,46 +249,11 @@ export class NewPurchaseInvoiceComponent implements OnInit {
         }
     }
 
-    // onSelectState(event: any) {
-    //     const selectedCountry = event;
-    //     const countryId = selectedCountry ? selectedCountry.countryId : null;
-    //     try {
-    //         const subscription = this.CAPI.getStateList(countryId).subscribe({
-    //             next: (response: any) => {
-    //                 this.publicVariable.stateList = response.data;
-    //             },
-    //             error: (error) => {
-    //                 console.error('Error loading project list:', error);
-    //             }
-    //         });
-
-    //         this.publicVariable.Subscription.add(subscription);
-    //     } catch (error) {
-    //         console.error('Error loading project list:', error);
-    //     }
 
 
-    // }
-    // onSelectCity(event: any) {
-    //     const selectedState = event;
-    //     const stateId = selectedState ? selectedState.stateId : null;
-    //     try {
-    //         const subscription = this.CAPI.getCityList(stateId).subscribe({
-    //             next: (response: any) => {
-    //                 this.publicVariable.cityList = response.data;
-    //             },
-    //             error: (error) => {
-    //                 console.error('Error loading project list:', error);
-    //             }
-    //         });
-
-    //         this.publicVariable.Subscription.add(subscription);
-    //     } catch (error) {
-    //         console.error('Error loading project list:', error);
-    //     }
-
-
-    // }
+    handleLoadingError() {
+        this.publicVariable.isProcess = false; // Set status to false on error
+    }
     onSelectProject() {
         const selectedId = this.publicVariable.dataForm.get('ImpiHeaderProjectCode')?.value;
         if (selectedId) {

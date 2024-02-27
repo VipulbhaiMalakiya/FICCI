@@ -141,14 +141,14 @@
                 <div class="col-md-4 col-sm-6">
                     <div class="form-group">
                         <label for="state">State</label>
-                        <input type="text" id="state" class="form-control" placeholder="State"
-                            formControlName="ImpiHeaderCustomerState" />
-                        <!-- <ng-select [items]="publicVariable.stateList" bindLabel="stateName" bindValue="stateName"
-                            placeholder="Select " formControlName="ImpiHeaderCustomerState"
-                            (change)="onSelectCity($event)">
-                        </ng-select> -->
-                        <div *ngIf="shouldShowError('ImpiHeaderCustomerState','required')" class="text-danger">This
-                            field is required</div>
+                        <ng-select [items]="publicVariable.stateList" #select bindLabel="stateName"
+                            bindValue="stateCode" placeholder="Select " formControlName="ImpiHeaderCustomerState" [searchable]="true"
+                            [searchFn]="stateSearchFn">
+                            <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
+                                <small>{{item.stateCode}} - {{item.stateName}}</small>
+                            </ng-template>
+                        </ng-select>
+                        <div *ngIf="shouldShowError('ImpiHeaderCustomerState','required')" class="text-danger">This  field is required</div>
 
                     </div>
                 </div>
