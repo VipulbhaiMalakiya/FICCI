@@ -19,6 +19,7 @@ export { gstValidator } from '../Validation/gstValidator';
 
 export class publicVariable {
     dataForm!: FormGroup;
+    mailForm!:FormGroup;
     isEdit: boolean = false;
     page: number = 1;
     roleId: any;

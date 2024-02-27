@@ -44,11 +44,21 @@ export class ViewPiAccountsInboxComponent implements OnInit, OnDestroy {
         private CAPI: CustomersService,
     ) {
         this.initializeForm();
+        this.initializeFormmailForm();
     }
 
     private initializeForm(): void {
         this.publicVariable.dataForm = this.fb.group({
             remarks: [''],
+        })
+    }
+
+    private  initializeFormmailForm(): void {
+        this.publicVariable.mailForm = this.fb.group({
+            emailTo: ['',[Validators.required]],
+            subject: ['',[Validators.required]],
+            body:[''],
+            Attachment:[''],
         })
     }
 
