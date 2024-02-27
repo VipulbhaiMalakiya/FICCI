@@ -1,3 +1,5 @@
+<app-loading *ngIf="publicVariable.isProcess"></app-loading>
+
 <div class="inner-content">
     <div class="approver-form">
         <div class="row">
@@ -87,7 +89,7 @@
             <div class="col-md-4 col-sm-6">
                 <div class="form-group">
                     <label>City</label>
-                    <input type="text" value="{{data.impiHeaderCustomerCity}}" class="form-control" disabled=""
+                    <input type="text" value="{{getCityNameById(data.impiHeaderCustomerCity)}}" class="form-control" disabled=""
                         readonly="">
                 </div>
             </div>
