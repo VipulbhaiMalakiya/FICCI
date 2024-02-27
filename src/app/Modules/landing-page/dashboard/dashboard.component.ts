@@ -397,7 +397,6 @@ export class DashboardComponent {
             const subscription = this.API.getStateList().subscribe({
                 next: (response: any) => {
                     this.publicVariable.stateList = response.data;
-                    this.loadCityList();
                 },
                 error: (error) => {
                     console.error('Error loading project list:', error);
@@ -412,37 +411,14 @@ export class DashboardComponent {
         }
     }
 
-    loadCityList() {
-        try {
-            const subscription = this.API.getCityList().subscribe({
-                next: (response: any) => {
-                    this.publicVariable.cityList = response.data;
-                    this.handleLoadingError();
-                },
-                error: (error) => {
-                    console.error('Error loading city list:', error);
-                    console.error('Failed to load city list. Please try again later.');
-                    this.handleLoadingError();
-                },
-            });
 
-            this.publicVariable.Subscription.add(subscription);
-        } catch (error) {
-            console.error('Error loading city list:', error);
-            console.error('An unexpected error occurred. Please try again later.');
-            this.handleLoadingError();
-        }
-    }
 
     getStateNameById(stateId:string) {
         const state = this.publicVariable.stateList.find(state => state.stateCode === stateId);
         return state ? state.stateName : null;
     }
 
-    getCityNameById(cityId:any) {
-        const city = this.publicVariable.cityList.find(city => city.cityCode === cityId);
-        return city ? city.cityName : null;
-    }
+
 
     handleLoadingError() {
         this.publicVariable.isProcess = false; // Set status to false on error
@@ -457,7 +433,7 @@ export class DashboardComponent {
             Category: x?.impiHeaderInvoiceType ? this.toTitleCase(x.impiHeaderInvoiceType) : '',
             "PAN No": x?.impiHeaderPanNo || '',
             "State": this.getStateNameById(x?.impiHeaderCustomerState),
-            "City": this.getCityNameById(x?.impiHeaderCustomerCity),
+            "City": x?.impiHeaderCustomerCity,
             "Pincode": x?.impiHeaderCustomerPinCode || '',
             "Vendor Name": x && x.impiHeaderCustomerName ? this.toTitleCase(x.impiHeaderCustomerName) : '',
             "Address": x?.impiHeaderCustomerAddress,
