@@ -141,7 +141,7 @@
                 <div class="col-md-4 col-sm-6">
                     <div class="form-group">
                         <label for="state">State</label>
-                        <ng-select [items]="publicVariable.stateList" #select bindLabel="stateCode"
+                        <ng-select [items]="publicVariable.stateList" #select bindLabel="stateName"
                             bindValue="stateCode" placeholder="Select " formControlName="ImpiHeaderCustomerState" [searchable]="true"
                             [searchFn]="stateSearchFn">
                             <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
