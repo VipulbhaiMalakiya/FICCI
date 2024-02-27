@@ -66,6 +66,11 @@ export class ViewInvoiceStatusComponent {
         }
     }
 
+    getStateNameById(stateId:string) {
+        const state = this.publicVariable.stateList.find(state => state.stateCode === stateId);
+        return state ? state.stateName : null;
+    }
+
     getCityNameById(cityId:any) {
         const city = this.publicVariable.cityList.find(city => city.cityCode === cityId);
         return city ? city.cityName : null;
