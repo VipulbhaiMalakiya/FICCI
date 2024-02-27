@@ -42,43 +42,10 @@ export class DashboardComponent {
 
     ngOnInit(): void {
         this.loadCustomerStatusCountList();
-        // this.loadCityList();
+        this.loadStateList();
         this.publicVariable.storedEmail = localStorage.getItem('userEmail') ?? '';
     }
 
-
-    loadCityList() {
-        try {
-            const subscription = this.API.getCityList().subscribe({
-                next: (response: any) => {
-                    this.publicVariable.cityList = response.data;
-                    this.loadCustomerStatusCountList();
-
-                },
-                error: (error) => {
-                    console.error('Error loading city list:', error);
-                    console.error('Failed to load city list. Please try again later.');
-                },
-            });
-
-            this.publicVariable.Subscription.add(subscription);
-        } catch (error) {
-            console.error('Error loading city list:', error);
-            console.error('An unexpected error occurred. Please try again later.');
-        }
-    }
-
-
-
-    // getCityName(cityId: string): string | undefined {
-    //     const city = this.publicVariable.cityList.find((c: any) => c.cityId === cityId);
-    //     const cityName = city ? city.cityName : undefined;
-    //     this.handleLoadingError(); // Set isProcess to false after retrieving the city name
-    //     return cityName;
-    // }
-    // handleLoadingError() {
-    //     this.publicVariable.isProcess = false; // Set status to false on error
-    // }
 
     loadCustomerStatusCountList(): void {
         const subscription = this.API.getCustomerStatusNew().pipe(
@@ -425,6 +392,62 @@ export class DashboardComponent {
         this.appService.exportAsExcelFile(exportData, 'Customer Status', headers);
     }
 
+    loadStateList() {
+        try {
+            const subscription = this.API.getStateList().subscribe({
+                next: (response: any) => {
+                    this.publicVariable.stateList = response.data;
+                    this.loadCityList();
+                },
+                error: (error) => {
+                    console.error('Error loading project list:', error);
+                    this.handleLoadingError()
+                },
+            });
+
+            this.publicVariable.Subscription.add(subscription);
+        } catch (error) {
+            console.error('Error loading project list:', error);
+            this.handleLoadingError()
+        }
+    }
+
+    loadCityList() {
+        try {
+            const subscription = this.API.getCityList().subscribe({
+                next: (response: any) => {
+                    this.publicVariable.cityList = response.data;
+                    this.handleLoadingError();
+                },
+                error: (error) => {
+                    console.error('Error loading city list:', error);
+                    console.error('Failed to load city list. Please try again later.');
+                    this.handleLoadingError();
+                },
+            });
+
+            this.publicVariable.Subscription.add(subscription);
+        } catch (error) {
+            console.error('Error loading city list:', error);
+            console.error('An unexpected error occurred. Please try again later.');
+            this.handleLoadingError();
+        }
+    }
+
+    getStateNameById(stateId:string) {
+        const state = this.publicVariable.stateList.find(state => state.stateCode === stateId);
+        return state ? state.stateName : null;
+    }
+
+    getCityNameById(cityId:any) {
+        const city = this.publicVariable.cityList.find(city => city.cityCode === cityId);
+        return city ? city.cityName : null;
+    }
+
+    handleLoadingError() {
+        this.publicVariable.isProcess = false; // Set status to false on error
+    }
+
     onDownloadPI() {
         const exportData = this.invoiceStatuslistData.map((x) => ({
             "PO No.": x?.impiHeaderProjectCode || '',
@@ -433,8 +456,8 @@ export class DashboardComponent {
             Divison: x?.impiHeaderProjectDivisionName ? this.toTitleCase(x.impiHeaderProjectDivisionName) : '',
             Category: x?.impiHeaderInvoiceType ? this.toTitleCase(x.impiHeaderInvoiceType) : '',
             "PAN No": x?.impiHeaderPanNo || '',
-            "State": x?.impiHeaderCustomerState ? this.toTitleCase(x.impiHeaderCustomerState) : '',
-            "City": x?.impiHeaderCustomerCity ? this.toTitleCase(x.impiHeaderCustomerCity) : '',
+            "State": this.getStateNameById(x?.impiHeaderCustomerState),
+            "City": this.getCityNameById(x?.impiHeaderCustomerCity),
             "Pincode": x?.impiHeaderCustomerPinCode || '',
             "Vendor Name": x && x.impiHeaderCustomerName ? this.toTitleCase(x.impiHeaderCustomerName) : '',
             "Address": x?.impiHeaderCustomerAddress,
