@@ -15,7 +15,7 @@ import { SharedModule } from '../shared/shared.module';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { NumberToWordsPipe1 } from './pipe/numberToWords';
 import { SearchFilterPipe1 } from './pipe/searchFilter';
-import { NgxEditorModule } from 'ngx-editor';
+import { AngularEditorModule } from '@kolkov/angular-editor';
 
 
 
@@ -39,7 +39,7 @@ import { NgxEditorModule } from 'ngx-editor';
         NgSelectModule,
         SharedModule,
         NgxPaginationModule,
-        NgxEditorModule
+        AngularEditorModule
     ]
 })
 export class InvoiceModule { }

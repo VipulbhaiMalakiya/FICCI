@@ -260,9 +260,8 @@
             <div class="col-sm-9">
 
                 <div class="NgxEditor__Wrapper">
-                    <ngx-editor-menu [editor]="editor" [toolbar]="toolbar"> </ngx-editor-menu>
-                    <ngx-editor [editor]="editor" [ngModel]="html" [disabled]="false"
-                        [placeholder]="'Type here...'"></ngx-editor>
+                    <angular-editor [config]="editorConfig"></angular-editor>
+
                 </div>
             </div>
         </div>

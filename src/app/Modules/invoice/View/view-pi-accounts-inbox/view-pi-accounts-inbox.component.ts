@@ -6,7 +6,7 @@ import { ToastrService } from 'ngx-toastr';
 import { environment } from 'src/environments/environment';
 import { CustomersService, publicVariable } from '../../Export/invoce';
 import { InvoicesService } from '../../service/invoices.service';
-import { Editor, Toolbar } from 'ngx-editor';
+import { AngularEditorConfig } from '@kolkov/angular-editor';
 
 @Component({
     selector: 'app-view-pi-accounts-inbox',
@@ -18,18 +18,55 @@ export class ViewPiAccountsInboxComponent implements OnInit, OnDestroy {
     data: any;
     FilePath: any;
     publicVariable = new publicVariable();
-    editor!: Editor;
-    html = '';
-    toolbar: Toolbar = [
-        ['bold', 'italic'],
-        ['underline', 'strike'],
-        ['code', 'blockquote'],
-        ['ordered_list', 'bullet_list'],
-        [{ heading: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'] }],
-        ['link', 'image'],
-        ['text_color', 'background_color'],
-        ['align_left', 'align_center', 'align_right', 'align_justify'],
-      ];
+
+    editorConfig: AngularEditorConfig = {
+        editable: true,
+          spellcheck: true,
+          height: 'auto',
+          minHeight: '0',
+          maxHeight: 'auto',
+          width: 'auto',
+          minWidth: '0',
+          translate: 'yes',
+          enableToolbar: true,
+          showToolbar: true,
+          placeholder: 'Enter text here...',
+          defaultParagraphSeparator: '',
+          defaultFontName: '',
+          defaultFontSize: '',
+          fonts: [
+            {class: 'arial', name: 'Arial'},
+            {class: 'times-new-roman', name: 'Times New Roman'},
+            {class: 'calibri', name: 'Calibri'},
+            {class: 'comic-sans-ms', name: 'Comic Sans MS'}
+          ],
+          customClasses: [
+          {
+            name: 'quote',
+            class: 'quote',
+          },
+          {
+            name: 'redText',
+            class: 'redText'
+          },
+          {
+            name: 'titleText',
+            class: 'titleText',
+            tag: 'h1',
+          },
+        ],
+        uploadUrl: 'v1/image',
+        // upload: (file: File) => { ... }
+        // uploadWithCredentials: false,
+        // sanitize: true,
+        // toolbarPosition: 'top',
+        // toolbarHiddenButtons: [
+        //   ['bold', 'italic'],
+        //   ['fontSize']
+        // ]
+    };
+
+
     constructor(private fb: FormBuilder,
         private modalService: NgbModal,
         private toastr: ToastrService,
@@ -55,13 +92,11 @@ export class ViewPiAccountsInboxComponent implements OnInit, OnDestroy {
         this.data = history.state.data;
         this.FilePath = `${environment.fileURL}${this.data.impiHeaderAttachment}`;
         this.loadStateList();
-        this.editor = new Editor();
 
 
     }
 
     ngOnDestroy(): void {
-        this.editor.destroy();
       }
     loadStateList() {
         try {
