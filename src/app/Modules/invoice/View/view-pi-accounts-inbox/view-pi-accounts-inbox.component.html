@@ -246,6 +246,8 @@
                     <div class="col-sm-9">
                         <input type="text" class="form-control" id="email" placeholder="Mail to"
                         formControlName="emailTo">
+                        <div *ngIf="shouldShowError('emailTo','required')" class="text-danger">Phone
+                            number is required.</div>
                     </div>
                 </div>
 
@@ -254,6 +256,8 @@
                     <div class="col-sm-9">
                         <input type="text" class="form-control" placeholder="Subject" formControlName="subject"
                         id="Subject">
+                        <div *ngIf="shouldShowError('subject','required')" class="text-danger">Phone
+                            number is required.</div>
                     </div>
                 </div>
 

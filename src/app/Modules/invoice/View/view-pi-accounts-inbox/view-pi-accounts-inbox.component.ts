@@ -136,10 +136,7 @@ export class ViewPiAccountsInboxComponent implements OnInit, OnDestroy {
     onSubmit(action: boolean) {
         if (this.publicVariable.dataForm.valid) {
             const newData = this.publicVariable.dataForm.value;
-            if (action === true) {
-                this.isApprove = true;
-            }
-            return
+
             const newConfig: any = {
                 headerId: this.data.headerId,
                 isApproved: action,
@@ -153,8 +150,13 @@ export class ViewPiAccountsInboxComponent implements OnInit, OnDestroy {
                     next: (res: any) => {
                         if (res.status === true) {
                             this.toastr.success(res.message, 'Success');
-                            this.router.navigate(['invoice/accounts']);
-                            this.publicVariable.dataForm.reset();
+                            if (action === true) {
+                                this.isApprove = true;
+                            }else{
+                                this.router.navigate(['invoice/accounts']);
+                                this.publicVariable.dataForm.reset();
+                            }
+
                         } else {
                             this.toastr.error(res.message, 'Error');
                         }
@@ -170,7 +172,6 @@ export class ViewPiAccountsInboxComponent implements OnInit, OnDestroy {
             );
 
         } else {
-            this.markFormControlsAsTouched();
 
         }
 
@@ -185,8 +186,6 @@ export class ViewPiAccountsInboxComponent implements OnInit, OnDestroy {
                 body: newData.body,
                 attachment: newData.attachment,
             }
-
-
         } else {
             this.markFormControlsAsTouchedemail();
 
@@ -194,12 +193,6 @@ export class ViewPiAccountsInboxComponent implements OnInit, OnDestroy {
     }
 
 
-
-    markFormControlsAsTouched(): void {
-        ['remarks'].forEach(controlName => {
-            this.publicVariable.dataForm.controls[controlName].markAsTouched();
-        });
-    }
     markFormControlsAsTouchedemail(): void {
         ['emailTo','subject'].forEach(controlName => {
             this.publicVariable.mailForm.controls[controlName].markAsTouched();
@@ -207,7 +200,7 @@ export class ViewPiAccountsInboxComponent implements OnInit, OnDestroy {
     }
 
     shouldShowError(controlName: string, errorName: string): boolean {
-        return this.publicVariable.dataForm.controls[controlName].touched || this.publicVariable.mailForm.controls[controlName].touched && this.publicVariable.dataForm.controls[controlName].hasError(errorName) || this.publicVariable.mailForm.controls[controlName].hasError(errorName);
+        return this.publicVariable.mailForm.controls[controlName].touched &&  this.publicVariable.mailForm.controls[controlName].hasError(errorName);
     }
 }
 
