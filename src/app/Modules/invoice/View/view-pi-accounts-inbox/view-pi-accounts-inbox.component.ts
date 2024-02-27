@@ -6,7 +6,7 @@ import { ToastrService } from 'ngx-toastr';
 import { environment } from 'src/environments/environment';
 import { CustomersService, publicVariable } from '../../Export/invoce';
 import { InvoicesService } from '../../service/invoices.service';
-import { Editor } from 'ngx-editor';
+import { Editor, Toolbar } from 'ngx-editor';
 
 @Component({
     selector: 'app-view-pi-accounts-inbox',
@@ -20,6 +20,16 @@ export class ViewPiAccountsInboxComponent implements OnInit, OnDestroy {
     publicVariable = new publicVariable();
     editor!: Editor;
     html = '';
+    toolbar: Toolbar = [
+        ['bold', 'italic'],
+        ['underline', 'strike'],
+        ['code', 'blockquote'],
+        ['ordered_list', 'bullet_list'],
+        [{ heading: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'] }],
+        ['link', 'image'],
+        ['text_color', 'background_color'],
+        ['align_left', 'align_center', 'align_right', 'align_justify'],
+      ];
     constructor(private fb: FormBuilder,
         private modalService: NgbModal,
         private toastr: ToastrService,
