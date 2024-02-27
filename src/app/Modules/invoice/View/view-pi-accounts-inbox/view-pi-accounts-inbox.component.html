@@ -86,16 +86,16 @@
                 <div class="col-md-4 col-sm-6">
                     <div class="form-group">
                         <label>State</label>
-                        <input type="text" value="{{getStateNameById(data.impiHeaderCustomerState)}}" class="form-control" disabled=""
-                            readonly="">
+                        <input type="text" value="{{getStateNameById(data.impiHeaderCustomerState)}}"
+                            class="form-control" disabled="" readonly="">
                     </div>
                 </div>
 
                 <div class="col-md-4 col-sm-6">
                     <div class="form-group">
                         <label>City</label>
-                        <input type="text" value="{{getCityNameById(data.impiHeaderCustomerCity)}}" class="form-control" disabled=""
-                            readonly="">
+                        <input type="text" value="{{getCityNameById(data.impiHeaderCustomerCity)}}" class="form-control"
+                            disabled="" readonly="">
                     </div>
                 </div>
 
@@ -257,7 +257,12 @@
         <div class="mb-3 row">
             <label for="" class="col-sm-3 col-form-label">Body</label>
             <div class="col-sm-9">
-                <textarea class="form-control h-100" cols="2" rows="3"></textarea>
+
+                <div class="NgxEditor__Wrapper">
+                    <ngx-editor-menu [editor]="editor"> </ngx-editor-menu>
+                    <ngx-editor [editor]="editor" [ngModel]="html" [disabled]="false"
+                        [placeholder]="'Type here...'"></ngx-editor>
+                </div>
             </div>
         </div>
 

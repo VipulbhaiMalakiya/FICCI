@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -6,18 +6,20 @@ import { ToastrService } from 'ngx-toastr';
 import { environment } from 'src/environments/environment';
 import { CustomersService, publicVariable } from '../../Export/invoce';
 import { InvoicesService } from '../../service/invoices.service';
+import { Editor } from 'ngx-editor';
 
 @Component({
     selector: 'app-view-pi-accounts-inbox',
     templateUrl: './view-pi-accounts-inbox.component.html',
     styleUrls: ['./view-pi-accounts-inbox.component.css']
 })
-export class ViewPiAccountsInboxComponent {
+export class ViewPiAccountsInboxComponent implements OnInit, OnDestroy {
     headerId?: number;
     data: any;
     FilePath: any;
     publicVariable = new publicVariable();
-
+    editor!: Editor;
+    html = '';
     constructor(private fb: FormBuilder,
         private modalService: NgbModal,
         private toastr: ToastrService,
@@ -43,8 +45,14 @@ export class ViewPiAccountsInboxComponent {
         this.data = history.state.data;
         this.FilePath = `${environment.fileURL}${this.data.impiHeaderAttachment}`;
         this.loadStateList();
+        this.editor = new Editor();
+
 
     }
+
+    ngOnDestroy(): void {
+        this.editor.destroy();
+      }
     loadStateList() {
         try {
             const subscription = this.CAPI.getStateList().subscribe({
