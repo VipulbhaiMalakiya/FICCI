@@ -2,7 +2,7 @@
 
 <div class="inner-content">
 
-    <div class="inner-content">
+    <div class="inner-content" *ngIf="!isApprove">
 
         <h3 class="content-title">PI Approval Inbox</h3>
 
@@ -236,50 +236,55 @@
 
 
     </div>
+    <ng-container *ngIf="isApprove">
+        <div class="pi-pagetitle mt-4">Mailer Information</div>
 
-    <div class="pi-pagetitle mt-4">Mailer Information</div>
+        <div class="mailer-piaccount">
 
-    <div class="mailer-piaccount">
-
-        <div class="mb-3 row">
-            <label for="" class="col-sm-3 col-form-label">Mail to</label>
-            <div class="col-sm-9">
-                <input type="text" class="form-control" placeholder="Mail to">
-            </div>
-        </div>
-
-        <div class="mb-3 row">
-            <label for="" class="col-sm-3 col-form-label">Subject</label>
-            <div class="col-sm-9">
-                <input type="text" class="form-control" placeholder="Subject">
-            </div>
-        </div>
-
-        <div class="mb-3 row">
-            <label for="" class="col-sm-3 col-form-label">Body</label>
-            <div class="col-sm-9">
-
-                <div class="NgxEditor__Wrapper">
-                    <angular-editor [config]="editorConfig"></angular-editor>
-
+            <div class="mb-3 row">
+                <label for="" class="col-sm-3 col-form-label">Mail to</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control" placeholder="Mail to">
                 </div>
             </div>
-        </div>
 
-        <div class="mb-3 row attach-col2">
-            <label for="" class="col-sm-3 col-form-label">Attachment</label>
-            <div class="col-sm-9">
-                <input class="form-control" type="file" id="formFile">
+            <div class="mb-3 row">
+                <label for="" class="col-sm-3 col-form-label">Subject</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control" placeholder="Subject">
+                </div>
             </div>
-        </div>
 
-        <div class="col-md-12">
-            <div class="form-group mb-0 mt-4">
-                <button type="submit" class="common-btn w-auto">Submit</button>
+            <div class="mb-3 row">
+                <label for="" class="col-sm-3 col-form-label">Body</label>
+                <div class="col-sm-9">
+
+                    <div class="NgxEditor__Wrapper">
+                        <angular-editor [config]="editorConfig"></angular-editor>
+
+                    </div>
+                </div>
             </div>
-        </div>
 
-    </div>
+            <div class="mb-3 row attach-col2">
+                <label for="" class="col-sm-3 col-form-label">Attachment</label>
+                <div class="col-sm-9">
+                    <input class="form-control" type="file" id="formFile">
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="form-group mb-0 mt-4">
+                    <input type="checkbox" class="btn-check" id="btn-check"
+                    autocomplete="off">
+                <label class="btn btn-secondary w-auto mb-0 me-2" for="btn-check" (click)="onback()">Back</label>
+                    <button type="submit" class="common-btn w-auto">Submit</button>
+                </div>
+            </div>
+
+        </div>
+    </ng-container>
+
 
 
 </div>

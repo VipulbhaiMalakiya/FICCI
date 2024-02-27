@@ -17,6 +17,7 @@ export class ViewPiAccountsInboxComponent implements OnInit, OnDestroy {
     headerId?: number;
     data: any;
     FilePath: any;
+    isApprove:boolean = false;
     publicVariable = new publicVariable();
 
     editorConfig: AngularEditorConfig = {
@@ -147,11 +148,16 @@ export class ViewPiAccountsInboxComponent implements OnInit, OnDestroy {
     handleLoadingError() {
         this.publicVariable.isProcess = false; // Set status to false on error
     }
-
+    onback(){
+        this.isApprove = false;
+    }
     onSubmit(action: boolean) {
         if (this.publicVariable.dataForm.valid) {
             const newData = this.publicVariable.dataForm.value;
-
+            if (action === true) {
+                this.isApprove = true;
+            }
+            return
             const newConfig: any = {
                 headerId: this.data.headerId,
                 isApproved: action,
@@ -187,6 +193,8 @@ export class ViewPiAccountsInboxComponent implements OnInit, OnDestroy {
         }
 
     }
+
+
 
     markFormControlsAsTouched(): void {
         ['remarks'].forEach(controlName => {
