@@ -67,7 +67,8 @@
                         <label>Country/Region Code <sup class="text-danger">*</sup></label>
                         <ng-select [items]="publicVariable.countryList" #select bindLabel="countryName"
                             bindValue="countryCode" placeholder="Select" formControlName="countryCode"
-                            [searchable]="true" [searchFn]="countrySearchFn">
+                            [searchable]="true" [searchFn]="countrySearchFn"
+                            [virtualScroll]="true" [bufferAmount]="10">
                             <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
                                 <small>{{item.countryCode}} - {{item.countryName}}</small>
                             </ng-template>
@@ -82,7 +83,8 @@
                         <label>State <sup class="text-danger">*</sup></label>
                         <ng-select [items]="publicVariable.stateList" #select bindLabel="stateName"
                             bindValue="stateCode" placeholder="Select " formControlName="stateCode" [searchable]="true"
-                            [searchFn]="stateSearchFn">
+                            [searchFn]="stateSearchFn"
+                            [virtualScroll]="true" [bufferAmount]="10">
                             <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
                                 <small>{{item.stateCode}} - {{item.stateName}}</small>
                             </ng-template>
@@ -97,7 +99,8 @@
                         <label>City <sup class="text-danger">*</sup></label>
                         <ng-select [items]="publicVariable.cityList" #select bindLabel="cityName" bindValue="cityCode"
                             placeholder="Select" formControlName="cityCode" [searchable]="true"
-                            [searchFn]="citySearchFn">
+                            [searchFn]="citySearchFn"
+                            [virtualScroll]="true" [bufferAmount]="10">
                             <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
                                 <small>{{item.cityCode}} - {{item.cityName}}</small>
                             </ng-template>
