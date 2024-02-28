@@ -304,6 +304,7 @@
                                                     <th>#</th>
                                                     <th>Invoice Type</th>
                                                     <th>Project Code</th>
+                                                    <th>Project Name</th>
                                                     <th>PO Date</th>
                                                     <th>Department</th>
                                                     <th>Vendor Name</th>
@@ -322,6 +323,7 @@
                                                     <td>{{i + 1}}</td>
                                                     <td>{{d.impiHeaderInvoiceType | titlecase}}</td>
                                                     <td>{{d.impiHeaderProjectCode}}</td>
+                                                    <td>{{d.impiHeaderProjectName | titlecase}}</td>
                                                     <td>{{d.impiHeaderSubmittedDate | date:'medium':'IST'}}</td>
                                                     <td>{{d.impiHeaderProjectDepartmentName | titlecase}}</td>
                                                     <td>{{d.impiHeaderCustomerName | titlecase}}</td>
