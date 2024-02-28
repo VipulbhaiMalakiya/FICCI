@@ -306,6 +306,7 @@
                                                     <th>Project Code</th>
                                                     <th>Project Name</th>
                                                     <th>Department</th>
+                                                    <th>Division</th>
                                                     <th>Vendor Name</th>
                                                     <th>Amount</th>
                                                     <th>TL Approver</th>
@@ -325,8 +326,8 @@
                                                     <td>{{d.impiHeaderInvoiceType | titlecase}}</td>
                                                     <td>{{d.impiHeaderProjectCode}}</td>
                                                     <td>{{d.impiHeaderProjectName | titlecase}}</td>
-                                                    <td>{{d.impiHeaderSubmittedDate | date:'medium':'IST'}}</td>
                                                     <td>{{d.impiHeaderProjectDepartmentName | titlecase}}</td>
+                                                    <td>{{d.impiHeaderProjectDivisionName | titlecase}}</td>
                                                     <td>{{d.impiHeaderCustomerName | titlecase}}</td>
                                                     <td>{{d.impiHeaderTotalInvoiceAmount | number:'1.2-2' }}</td>
                                                     <td>{{d.impiHeaderTlApprover | titlecase}}</td>
