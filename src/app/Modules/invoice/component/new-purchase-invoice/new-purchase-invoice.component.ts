@@ -81,7 +81,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
         return concatenatedString.includes(term.toLowerCase());
     }
     customerSearchFn(term: string, item: any) {
-        const concatenatedString = `${item.customerName} ${item.pan} ${item.gstNumber}`.toLowerCase();
+        const concatenatedString = `${item.custName} ${item.custName2} ${item.panNo} ${item.gstregistrationNo}`.toLowerCase();
         return concatenatedString.includes(term.toLowerCase());
     }
 
