@@ -245,7 +245,7 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
                 address2: newData.address2.trim(),
                 contact: newData.contact.trim(),
                 phone: newData.PrimaryContactNo.trim(),
-                pinCode: newData.postCode.trim(),
+                pinCode: newData.postCode,
                 email: newData.email.trim(),
                 cityCode: newData.cityCode,
                 stateCode: newData.stateCode,
