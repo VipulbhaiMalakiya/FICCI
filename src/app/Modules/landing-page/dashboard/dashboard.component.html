@@ -302,10 +302,10 @@
                                             <thead>
                                                 <tr>
                                                     <th>#</th>
+                                                    <th>Invoice Type</th>
                                                     <th>Project Code</th>
                                                     <th>PO Date</th>
                                                     <th>Department</th>
-                                                    <th>Category</th>
                                                     <th>Vendor Name</th>
                                                     <th>Amount</th>
                                                     <th>TL Approver</th>
@@ -320,10 +320,10 @@
                                                 <tr
                                                     *ngFor="let d of  this.invoiceStatuslistData | searchFilter1: publicVariable.searchText| paginate: {itemsPerPage: publicVariable.tableSize,currentPage: publicVariable.page,totalItems: publicVariable.count};let i = index">
                                                     <td>{{i + 1}}</td>
+                                                    <td>{{d.impiHeaderInvoiceType | titlecase}}</td>
                                                     <td>{{d.impiHeaderProjectCode}}</td>
                                                     <td>{{d.impiHeaderSubmittedDate | date:'medium':'IST'}}</td>
                                                     <td>{{d.impiHeaderProjectDepartmentName | titlecase}}</td>
-                                                    <td>{{d.impiHeaderInvoiceType | titlecase}}</td>
                                                     <td>{{d.impiHeaderCustomerName | titlecase}}</td>
                                                     <td>{{d.impiHeaderTotalInvoiceAmount | number:'1.2-2' }}</td>
                                                     <td>{{d.impiHeaderTlApprover | titlecase}}</td>
