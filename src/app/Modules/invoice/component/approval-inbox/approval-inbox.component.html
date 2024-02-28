@@ -44,7 +44,6 @@
                         <th>Invoice Type</th>
                         <th>Project Code</th>
                         <th>Project Name</th>
-                        <th>PO Date</th>
                         <th>Department</th>
                         <th>Vendor Name</th>
                         <th>Amount</th>
@@ -52,6 +51,8 @@
                         <th>CL Approver</th>
                         <th>Finance Approver</th>
                         <th>Support Approver</th>
+                        <th>Created On</th>
+                        <th>Created By</th>
                         <th>Status</th>
                         <th class="action-cl">Action</th>
                     </tr>
@@ -71,6 +72,8 @@
                         <td>{{d.impiHeaderClusterApprover | titlecase}}</td>
                         <td>{{d.impiHeaderFinanceApprover | titlecase}}</td>
                         <td>{{d.impiHeaderSupportApprover |titlecase}}</td>
+                        <td>{{d.impiHeaderSubmittedDate | date:'medium':'IST'}}</td>
+                        <td>{{d.impiHeaderCreatedBy | titlecase}}</td>
                         <td>{{d.headerStatus | titlecase}}</td>
 
                         <td>
