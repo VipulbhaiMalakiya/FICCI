@@ -120,12 +120,10 @@
                                                     <th>Address</th>
                                                     <th>City</th>
                                                     <th>Contact</th>
-                                                    <th>TL Approver</th>
-                                                    <th>CL Approver</th>
+                                                    <th>GST No</th>
+                                                    <th>PAN No</th>
                                                     <th>Created On</th>
                                                     <th>Created By</th>
-                                                    <!-- <th>Last Updated On</th>
-                                                    <th>Last Updated By</th> -->
                                                     <th>Status</th>
                                                     <th class="action-cl">Action</th>
                                                 </tr>
@@ -139,9 +137,9 @@
                                                     <td>{{d.customerName |titlecase }}</td>
                                                     <td>{{d.address}}</td>
                                                     <td>{{ d.cityList.cityName}}</td>
-                                                    <td>{{d.phoneNumber | titlecase}}</td>
-                                                    <td>{{d.tlApprover}}</td>
-                                                    <td>{{d.clApprover}}</td>
+                                                    <td>{{d.phoneNumber}}</td>
+                                                    <td>{{d.gstNumber}}</td>
+                                                    <td>{{d.pan}}</td>
                                                     <td>{{d.createdOn | date:'medium':'IST' }}</td>
                                                     <td>{{d.createdBy}}</td>
                                                     <!-- <td>{{d.modifiedOn | date:'medium':'IST' }}</td> -->
