@@ -100,7 +100,8 @@
                         <ng-select [items]="publicVariable.cityList" #select bindLabel="cityName" bindValue="cityCode"
                             placeholder="Select" formControlName="cityCode" [searchable]="true"
                             [searchFn]="citySearchFn"
-                            [virtualScroll]="true" [bufferAmount]="10">
+                            [virtualScroll]="true" [bufferAmount]="10"
+                            (change)="onCitySelectionChange()">
                             <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
                                 <small>{{item.cityCode}} - {{item.cityName}}</small>
                             </ng-template>
@@ -113,13 +114,6 @@
                 <div class="col-md-3 col-sm-6">
                     <div class="form-group">
                         <label>Post Code <sup class="text-danger">*</sup></label>
-                        <!-- <ng-select [items]="publicVariable.postCodeList" #select  bindLabel="postCode" bindValue="postCode"
-                        placeholder="Select" formControlName="postCode"
-                        [searchable]="true" [searchFn]="postCodeSearchFn">
-                        <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
-                            <small>{{item.postCode}} - {{item.city}}</small>
-                        </ng-template>
-                    </ng-select> -->
                         <input type="text" formControlName="postCode" class="form-control" placeholder="Pincode"
                             (input)="onInputChange($event)">
                         <div *ngIf="shouldShowError('postCode', 'required')" class="text-danger">

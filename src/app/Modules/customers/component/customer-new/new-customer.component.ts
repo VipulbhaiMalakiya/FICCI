@@ -38,7 +38,7 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
             customerId: [''],
             customerNo: ['', [Validators.maxLength(20)]],
             name: ['', [Validators.required, alphanumericWithSpacesValidator(), Validators.maxLength(100)]],
-            name2: ['', ],
+            name2: ['',],
             address: ['', [Validators.required, Validators.maxLength(100)]],
             address2: [''],
             countryCode: [null, [Validators.required]],
@@ -47,9 +47,9 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
             postCode: ['', [Validators.required, Validators.pattern(/^\d{6}$/)]],
             GSTRegistrationNo: ['', [Validators.required, gstValidator()]],
             GSTCustomerType: [null, Validators.required],
-            email: ['',[Validators.required,Validators.email,Validators.maxLength(80)]],
-            PrimaryContactNo: ['',[Validators.required, Validators.pattern(/^[6-9]\d{9}$/)],],
-            contact: ['',[Validators.required,alphanumericWithSpacesValidator(),Validators.maxLength(100)]],
+            email: ['', [Validators.required, Validators.email, Validators.maxLength(80)]],
+            PrimaryContactNo: ['', [Validators.required, Validators.pattern(/^[6-9]\d{9}$/)],],
+            contact: ['', [Validators.required, alphanumericWithSpacesValidator(), Validators.maxLength(100)]],
             PANNo: ['', [Validators.required, panValidator()]],
             isDraft: [false],
         });
@@ -88,9 +88,9 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
             name2: data.customerLastName,
             address: data.address,
             address2: data.address,
-            countryCode:  data.countryList.countryCode,
+            countryCode: data.countryList.countryCode,
             stateCode: data.stateList.stateCode,
-            cityCode:  data.cityList.cityCode,
+            cityCode: data.cityList.cityCode,
             postCode: data.pincode,
             GSTRegistrationNo: data.gstNumber,
             GSTCustomerType: data.gstType.gstTypeId,
@@ -204,6 +204,21 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
     citySearchFn(term: string, item: any) {
         const concatenatedString = `${item.countryCode} ${item.cityName}`.toLowerCase();
         return concatenatedString.includes(term.toLowerCase());
+    }
+
+    onCitySelectionChange() {
+        const selectedId = this.publicVariable.dataForm.get('cityCode')?.value;
+        console.log(selectedId);
+
+        if (selectedId) {
+            this.publicVariable.dataForm.patchValue({
+                postCode: selectedId
+            })
+        } else {
+            this.publicVariable.dataForm.patchValue({
+                postCode: null
+            })
+        }
     }
 
     postCodeSearchFn(term: string, item: any) {
