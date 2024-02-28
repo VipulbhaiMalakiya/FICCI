@@ -89,15 +89,13 @@ export class AccountsCustomerComponent {
             'Created By': x.createdBy ? this.toTitleCase(x.createdBy) : '',
             'Last Updated On': x.createdOn ? formatDate(x.modifiedOn, 'medium', 'en-IN', 'IST') : '',
             'Last Update By': x.lastUpdateBy ? this.toTitleCase(x.lastUpdateBy) : '',
-            'TL Approver': x.tlApprover ? this.toTitleCase(x.tlApprover) : '',
-            'CL Approver': x.clApprover ? this.toTitleCase(x.clApprover) : '',
             'Status': x.customerStatus ? this.toTitleCase(x.customerStatus) : '',
         }));
 
         const headers = ['Cust. No.', 'Name','Name 2', 'Address', 'Address 2','Country', 'State', 'City',
             'Pincode', 'Contact Person',  'Email','Phone Number',
             'GST Customer Type', 'gstNumber', 'PAN Card',
-            'Created On', 'Created By', 'Last Updated On', 'Last Update By', 'TL Approver', 'CL Approver', 'Status'];
+            'Created On', 'Created By', 'Last Updated On', 'Last Update By', 'Status'];
         this.appService.exportAsExcelFile(exportData, 'Customer Status', headers);
     }
     onTableDataChange(event: any) {
