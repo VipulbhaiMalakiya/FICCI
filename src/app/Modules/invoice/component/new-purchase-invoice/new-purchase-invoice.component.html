@@ -112,14 +112,16 @@
                         <label for="CustomerName">Customer Name</label>
                         <div class="flex-field">
                             <ng-select [items]="publicVariable.GetCustomerList" #select class="w-100"
-                                bindLabel="custName" bindValue="custName" placeholder="Select customer "
+                                bindLabel="custName" bindValue="custName" placeholder="Select customer"
                                 formControlName="ImpiHeaderCustomerName" (change)="onSelectCustomer()"
-                                [searchable]="true" [searchFn]="customerSearchFn">
+                                [searchable]="true" [searchFn]="customerSearchFn" [virtualScroll]="true"
+                                [bufferAmount]="10">
                                 <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
                                     <div><span>Name : </span><span>{{item.custName | titlecase}}</span></div>
                                     <small><b>Pan :</b> {{item.panNo}} - <b>GST :</b> {{item.gstregistrationNo}}</small>
                                 </ng-template>
                             </ng-select>
+
                             <div class="add-btn"><a routerLink="/customer/new">+</a></div>
                         </div>
                         <div *ngIf="shouldShowError('ImpiHeaderCustomerName','required')" class="text-danger">This field
@@ -142,13 +144,15 @@
                     <div class="form-group">
                         <label for="state">State</label>
                         <ng-select [items]="publicVariable.stateList" #select bindLabel="stateName"
-                            bindValue="stateCode" placeholder="Select " formControlName="ImpiHeaderCustomerState" [searchable]="true"
-                            [searchFn]="stateSearchFn">
+                            bindValue="stateCode" placeholder="Select " formControlName="ImpiHeaderCustomerState"
+                            [searchable]="true" [searchFn]="stateSearchFn"
+                            [virtualScroll]="true" [bufferAmount]="10">
                             <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
                                 <small>{{item.stateCode}} - {{item.stateName}}</small>
                             </ng-template>
                         </ng-select>
-                        <div *ngIf="shouldShowError('ImpiHeaderCustomerState','required')" class="text-danger">This  field is required</div>
+                        <div *ngIf="shouldShowError('ImpiHeaderCustomerState','required')" class="text-danger">This
+                            field is required</div>
 
                     </div>
                 </div>
@@ -158,7 +162,7 @@
 
 
                         <input type="text" class="form-control" id="city" placeholder="city"
-                        formControlName="ImpiHeaderCustomerCity" />
+                            formControlName="ImpiHeaderCustomerCity" />
                         <div *ngIf="shouldShowError('ImpiHeaderCustomerCity','required')" class="text-danger">This field
                             is required
                         </div>
