@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { AppService, ConfirmationDialogModalComponent, CustomersService, NgbModal, Router, ToastrService, customerStatusListModel, formatDate, publicVariable } from '../../customers/Export/new-customer';
-import { timeout, finalize } from 'rxjs';
+import { timeout, finalize, catchError, throwError } from 'rxjs';
 import { InvoicesService } from '../../invoice/service/invoices.service';
 import { invoiceApproveModule, invoiceStatusModule } from '../../invoice/interface/invoice';
+import { forkJoin } from 'rxjs';
 
 
 @Component({
@@ -43,79 +44,68 @@ export class DashboardComponent {
 
     ngOnInit(): void {
         this.loadCustomerStatusCountList();
-        this.loadCustomerAccountStatusList();
+        // this.loadCustomerAccountStatusList();
         this.publicVariable.storedEmail = localStorage.getItem('userEmail') ?? '';
     }
 
 
     loadCustomerStatusCountList(): void {
-        let data = {
-            "email": this.publicVariable.storedEmail ,
-            "statusId": 0
-        }
-        // getCustomerStatusNew
-        //dashboardCustomerstatus(data)
-        const subscription = this.API.getCustomerStatusNew().pipe(
-            timeout(120000), // Timeout set to 2 minutes (120000 milliseconds)
-            finalize(() => {
-                this.publicVariable.isProcess = false;
+        // Observable for the first API call
+        const statusSubscription = this.API.getCustomerStatusNew().pipe(
+            timeout(120000),
+            catchError((error: any) => {
+                if (error.name === 'TimeoutError') {
+                    this.toastr.error('Operation timed out after 2 minutes', error.name);
+                } else {
+                    this.toastr.error('Error loading user list', error.name);
+                }
+                return throwError(error);
             })
-        ).subscribe({
-            next: (response: any) => {
-                this.countDataByStatus(response.data);
-                this.dashboardData = response.data;
+        );
+    
+        // Observable for the second API call
+        const accountSubscription = this.API.getCustomerStatuaccount().pipe(
+            timeout(120000),
+            catchError((error: any) => {
+                if (error.name === 'TimeoutError') {
+                    this.toastr.error('Operation timed out after 2 minutes', error.name);
+                } else {
+                    this.toastr.error('Error loading user list', error.name);
+                }
+                return throwError(error);
+            })
+        );
+        forkJoin([statusSubscription, accountSubscription]).subscribe({
+            next: ([statusResponse, accountResponse]: [any, any]) => {
+                this.countDataByStatus(statusResponse.data);
+    
+                this.countDataByAccountStatus(accountResponse.data);
+    
+                this.dashboardData = [...statusResponse.data, ...accountResponse.data];
                 this.loadCustomerStatusList(this.customerStatus);
-            },
-            error: (error: any) => {
-                if (error.name === 'TimeoutError') {
-                    this.toastr.error('Operation timed out after 2 minutes', error.name);
-                } else {
-                    this.toastr.error('Error loading user list', error.name);
-                }
-            }
-        });
-
-        this.publicVariable.Subscription.add(subscription);
-    }
-
-
-    loadCustomerAccountStatusList(): void {
-        const subscription = this.API.getCustomerStatuaccount().pipe(
-            timeout(120000), // Timeout set to 2 minutes (120000 milliseconds)
-            finalize(() => {
+                // this.loadCustomerAccountList(this.customerStatus);
                 this.publicVariable.isProcess = false;
-            })
-        ).subscribe({
-            next: (response: any) => {
-                this.countDataByAccountStatus(response.data);
-                this.dashboardData = response.data;
-                this.loadCustomerAccountList(this.customerStatus);
             },
             error: (error: any) => {
-                if (error.name === 'TimeoutError') {
-                    this.toastr.error('Operation timed out after 2 minutes', error.name);
-                } else {
-                    this.toastr.error('Error loading user list', error.name);
-                }
+                // Handle errors for both API calls
+                this.toastr.error('Error loading user list', error.name);
             }
         });
-
-        this.publicVariable.Subscription.add(subscription);
     }
     
 
-    loadCustomerAccountList(status: string): void {
-        this.customerStatus = status;
-        let filteredData;
-        filteredData = this.dashboardData.filter((item: any) =>
-            (item.customerStatus === 'PENDING WITH ACCOUNTS APPROVER'));
+    // loadCustomerAccountList(status: string): void {
+    //     this.customerStatus = status;
+    //     let filteredData;
+    //     filteredData = this.dashboardData.filter((item: any) =>
+    //         (item.customerStatus === 'PENDING WITH ACCOUNTS APPROVER'));
 
-        this.publicVariable.customerStatusList = filteredData;
-        console.log(this.publicVariable.customerStatusList);
+    //     this.publicVariable.customerStatusList = filteredData;
+    //     console.log(this.publicVariable.customerStatusList);
 
-        this.publicVariable.count = filteredData.length;
+    //     this.publicVariable.count = filteredData.length;
 
-    }
+    // }
 
 
     loadPurchaseInvoiceList(): void {
@@ -263,6 +253,12 @@ export class DashboardComponent {
                     item.customerStatus === 'REJECTED BY ACCOUNTS APPROVER' ||
                     item.customerStatus === 'REJECTED BY FINANCE APPROVER'));
                 break;
+                case 'FOR APPROVAL':
+                    filteredData = this.dashboardData.filter((item: any) =>
+                    // item.createdBy === this.publicVariable.storedEmail &&
+                    (
+                        item.customerStatus === 'PENDING WITH ACCOUNTS APPROVER' ));
+                    break;
             default:
                 filteredData = this.dashboardData
                 break;
@@ -272,8 +268,6 @@ export class DashboardComponent {
         this.publicVariable.count = filteredData.length;
 
     }
-
-
 
 
     loadInoivceStatusList(status: string): void {
@@ -444,9 +438,6 @@ export class DashboardComponent {
             'Created On', 'Created By', 'Last Updated On', 'Last Update By', 'Status'];
         this.appService.exportAsExcelFile(exportData, 'Customer Status', headers);
     }
-
-  
-
 
 
     getStateNameById(stateId: string) {
