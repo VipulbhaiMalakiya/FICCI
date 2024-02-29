@@ -77,11 +77,12 @@ export class DashboardComponent {
         );
         forkJoin([statusSubscription, accountSubscription]).subscribe({
             next: ([statusResponse, accountResponse]: [any, any]) => {
-                this.countDataByStatus(statusResponse.data);
     
                 this.countDataByAccountStatus(accountResponse.data);
     
                 this.dashboardData = [...statusResponse.data, ...accountResponse.data];
+                this.countDataByStatus(this.dashboardData);
+
                 this.loadCustomerStatusList(this.customerStatus);
                 // this.loadCustomerAccountList(this.customerStatus);
                 this.publicVariable.isProcess = false;
@@ -93,20 +94,6 @@ export class DashboardComponent {
         });
     }
     
-
-    // loadCustomerAccountList(status: string): void {
-    //     this.customerStatus = status;
-    //     let filteredData;
-    //     filteredData = this.dashboardData.filter((item: any) =>
-    //         (item.customerStatus === 'PENDING WITH ACCOUNTS APPROVER'));
-
-    //     this.publicVariable.customerStatusList = filteredData;
-    //     console.log(this.publicVariable.customerStatusList);
-
-    //     this.publicVariable.count = filteredData.length;
-
-    // }
-
 
     loadPurchaseInvoiceList(): void {
         try {
@@ -151,9 +138,12 @@ export class DashboardComponent {
         const draftData = data.filter(item => item.customerStatus === 'DRAFT');
         counts['DRAFT'] = draftData.length;
 
-        const pendingData = data.filter(item => item.customerStatus === 'PENDING WITH TL APPROVER'
-            || item.customerStatus === 'PENDING WITH CH APPROVER'
-            || item.customerStatus === 'PENDING WITH ACCOUNTS APPROVER');
+        const pendingData = data.filter((item: any) =>
+        item.createdBy === this.publicVariable.storedEmail &&
+        (item.customerStatus === 'PENDING WITH TL APPROVER' ||
+            item.customerStatus === 'PENDING WITH CH APPROVER' ||
+            item.customerStatus === 'PENDING WITH ACCOUNTS APPROVER' ||
+            item.customerStatus === 'PENDING WITH FINANCE APPROVER'));
         counts['PENDING WITH TL APPROVER'] = pendingData.length;
 
 
@@ -199,6 +189,8 @@ export class DashboardComponent {
             || item.headerStatus === 'PENDING WITH CH APPROVER'
             || item.headerStatus === 'PENDING WITH ACCOUNTS APPROVER');
         counts['PENDING WITH TL APPROVER'] = pendingData.length;
+
+        
 
 
         const approvedData = data.filter(item => item.headerStatus === 'APPROVED BY ACCOUNTS APPROVER');
