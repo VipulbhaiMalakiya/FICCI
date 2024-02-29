@@ -155,14 +155,14 @@
                                                     <td><span class="table-btns">
                                                             <a href="javascript:void(0);" (click)="onView(d)"><img
                                                                     src="../assets/images/view-icon.svg" alt=""></a>
-                                                            <a *ngIf="publicVariable.storedRole !== 'Admin' && (d.isDraft ||
+                                                            <a *ngIf="publicVariable.storedRole !== 'Admin' && d.createdBy === this.publicVariable.storedEmail && (d.isDraft ||
                                                                 d.customerStatus == 'REJECTED BY TL APPROVER' ||
                                                                 d.customerStatus == 'REJECTED BY CH APPROVER' ||
                                                                 d.customerStatus == 'REJECTED BY ACCOUNTS APPROVER')"
                                                                 href="javascript:void(0);" (click)="onEdit(d)">
                                                                 <img src="../assets/images/edit-icon.svg" alt="">
                                                             </a>
-                                                            <a *ngIf="publicVariable.storedRole !== 'Admin' && (d.isDraft ||
+                                                            <a *ngIf="publicVariable.storedRole !== 'Admin' && d.createdBy === this.publicVariable.storedEmail && (d.isDraft ||
                                                                 d.customerStatus == 'REJECTED BY TL APPROVER' ||
                                                                 d.customerStatus == 'REJECTED BY CH APPROVER' ||
                                                                 d.customerStatus == 'REJECTED BY ACCOUNTS APPROVER')"

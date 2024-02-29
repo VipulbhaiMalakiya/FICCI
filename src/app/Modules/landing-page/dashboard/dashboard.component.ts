@@ -44,7 +44,6 @@ export class DashboardComponent {
 
     ngOnInit(): void {
         this.loadCustomerStatusCountList();
-        // this.loadCustomerAccountStatusList();
         this.publicVariable.storedEmail = localStorage.getItem('userEmail') ?? '';
     }
 
@@ -78,7 +77,7 @@ export class DashboardComponent {
         forkJoin([statusSubscription, accountSubscription]).subscribe({
             next: ([statusResponse, accountResponse]: [any, any]) => {
 
-                this.countDataByAccountStatus(accountResponse.data);
+                // this.countDataByAccountStatus(accountResponse.data);
 
                 this.dashboardData = [...statusResponse.data, ...accountResponse.data];
                 this.countDataByStatus(this.dashboardData);
@@ -115,10 +114,10 @@ export class DashboardComponent {
         }
     }
 
-    countDataByAccountStatus(data: any[]): void {
-        const pendingData = data.filter(item => item.customerStatus === 'PENDING WITH ACCOUNTS APPROVER');
-        this.forapproval = pendingData.length;
-    }
+    // countDataByAccountStatus(data: any[]): void {
+    //     const pendingData = data.filter(item => item.customerStatus === 'PENDING WITH ACCOUNTS APPROVER');
+    //     this.forapproval = pendingData.length;
+    // }
 
     // Helper method to count data for each customer status
     countDataByStatus(data: any[]): void {
@@ -131,12 +130,18 @@ export class DashboardComponent {
             'REJECTED BY TL APPROVER': 0,
             'REJECTED BY CH APPROVER': 0,
             'REJECTED BY ACCOUNTS APPROVER': 0,
+            'FOR APPROVAL': 0,
             'ALL': 0
         };
 
         // Filter data for each customer status
         const draftData = data.filter(item => item.customerStatus === 'DRAFT');
         counts['DRAFT'] = draftData.length;
+
+        const foraprovalData = data.filter((item: any) =>
+           (item.customerStatus === 'PENDING WITH ACCOUNTS APPROVER'));
+            counts['FOR APPROVAL'] = foraprovalData.length;
+
 
         const pendingData = data.filter((item: any) =>
             item.createdBy === this.publicVariable.storedEmail &&
@@ -163,6 +168,7 @@ export class DashboardComponent {
         this.PendingApproval = counts['PENDING WITH TL APPROVER'];
         this.ApprovedAccounts = counts['APPROVED BY ACCOUNTS APPROVER'];
         this.RejectedbyAccounts = counts['REJECTED BY CH APPROVER'];
+        this.forapproval = counts['FOR APPROVAL']
         this.ALL = counts['ALL'];
         this.publicVariable.count = counts['ALL']; // Total count
 
