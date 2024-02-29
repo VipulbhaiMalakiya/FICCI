@@ -821,8 +821,8 @@ header.login-page{ position:absolute; top: 0; width:100%; z-index: 9; }
 	padding-left:0px; 
 }
 
-
-
+.note-para{ margin-top: 20px; margin-bottom: 20px; }
+.note-para p{ font-size:13px; font-weight: 500; color: #111; margin-bottom: 0px; }
 
 
 

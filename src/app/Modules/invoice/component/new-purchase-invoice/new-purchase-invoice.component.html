@@ -237,7 +237,134 @@
             </div>
         </div>
 
+        <div class="pi-pagetitle">Sales Line</div>
 
+        <div class="mastersform-sec mb-0">
+            <div class="row">
+
+             <div class="col-md-4 col-sm-6">
+               <div class="form-group">
+                 <label>Nature of Expense</label>
+                 <select class="form-select" required="">
+                  <option value="">Select</option>
+                  <option value="">Dropdown 1</option>
+                 </select>
+               </div>
+             </div>
+
+             <div class="col-md-4 col-sm-6">
+               <div class="form-group">
+                 <label>Quantity</label>
+                 <select class="form-select" required="">
+                  <option value="">Select</option>
+                  <option value="">Dropdown 1</option>
+                 </select>
+               </div>
+             </div>
+
+             <div class="col-md-4 col-sm-6">
+               <div class="form-group">
+                 <label>GST Group Code</label>
+                 <select class="form-select" required="">
+                  <option value="">Select</option>
+                  <option value="">Dropdown 1</option>
+                 </select>
+               </div>
+             </div>
+
+             <div class="col-md-4 col-sm-6">
+               <div class="form-group">
+                 <label>HSN/SAC Code</label>
+                 <select class="form-select" required="">
+                  <option value="">Select</option>
+                  <option value="">Dropdown 1</option>
+                 </select>
+               </div>
+             </div>
+
+             <div class="col-md-4 col-sm-6">
+               <div class="form-group">
+                 <label>Direct Unit Cost</label>
+                 <input type="text" value="" class="form-control" required="">
+               </div>
+             </div>
+
+              <div class="col-md-4 col-sm-6">
+               <div class="form-group">
+                 <label>&nbsp;</label>
+                 <button class="common-btn w-auto" type="submit">Add Line</button>
+               </div>
+             </div>
+
+             <div class="col-md-4 col-sm-6">
+               <div class="form-group">
+                 <label>(Total Base Amount)</label>
+                 <input type="text" value="" class="form-control" required="">
+               </div>
+             </div>
+
+             <div class="col-md-4 col-sm-6">
+               <div class="form-group">
+                 <label>(Total GST Amount)</label>
+                 <input type="text" value="" class="form-control" required="">
+               </div>
+             </div>
+
+             <div class="col-md-4 col-sm-6">
+               <div class="form-group">
+                 <label>(Net total)</label>
+                 <input type="text" value="" class="form-control" required="">
+               </div>
+             </div>
+
+           </div>
+
+       </div>
+       <div class="dasboard-table pi-table mb-0">
+
+        <div class="table-responsive">
+
+            <table class="table table-bordered text-nowrap">
+                <thead>
+                    <tr>
+                        <th width="38%">Nature of Expense</th>
+                        <th>Quantity</th>
+                        <th>Direct Unit Cost</th>
+                        <th>Line Amount</th>
+                        <th>GST Group Code</th>
+                        <th>HSN/SAC Code</th>
+                        <th>GST Base Amount</th>
+                        <th>GST Amount</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <td>MCSE GIFT/BUSINESS PROMOTION EXP</td>
+                        <td>50</td>
+                        <td>2500</td>
+                        <td>125000</td>
+                        <td>18%</td>
+                        <td>8306</td>
+                        <td>125000</td>
+                        <td>22500</td>
+                        <td><span class="table-btns">
+                                <a href="#"><img src="../assets/imagesimages/plus-icon.svg" alt=""></a>
+                                <a href="javascript:void(0)" data-bs-toggle="modal"
+                                    data-bs-target="#deleterecord-modal"><img
+                                        src="../assets/imagesimages/delete-icon.svg" alt=""></a>
+                            </span>
+                        </td>
+                    </tr>
+
+
+                </tbody>
+            </table>
+
+        </div>
+
+    </div>
 
         <div class="dasboard-table pi-table">
             <div class="table-responsive">
@@ -293,6 +420,15 @@
 
             </div>
         </div>
+
+        <div class="text-end"><a href="#" class="common-btn w-auto">Calculate</a></div>
+
+        <div class="note-para">
+            <p>Upload Only Digitally Signed Attachments (Sales Invoice, Purchase Order, Challan,
+                Sample Copy, Other Documents)* <span class="text-danger">(Max File Size 5 MB
+                    only)</span></p>
+        </div>
+
         <div class="col-md-9 col-xs-12 col-sm-12 attach-col">
             <div class="row align-items-center">
                 <div class="col-sm-2"><b>Attachment</b></div>
