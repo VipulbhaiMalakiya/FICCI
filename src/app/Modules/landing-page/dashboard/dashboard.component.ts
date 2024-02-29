@@ -62,7 +62,7 @@ export class DashboardComponent {
                 return throwError(error);
             })
         );
-    
+
         // Observable for the second API call
         const accountSubscription = this.API.getCustomerStatuaccount().pipe(
             timeout(120000),
@@ -77,9 +77,9 @@ export class DashboardComponent {
         );
         forkJoin([statusSubscription, accountSubscription]).subscribe({
             next: ([statusResponse, accountResponse]: [any, any]) => {
-    
+
                 this.countDataByAccountStatus(accountResponse.data);
-    
+
                 this.dashboardData = [...statusResponse.data, ...accountResponse.data];
                 this.countDataByStatus(this.dashboardData);
 
@@ -93,7 +93,7 @@ export class DashboardComponent {
             }
         });
     }
-    
+
 
     loadPurchaseInvoiceList(): void {
         try {
@@ -139,11 +139,11 @@ export class DashboardComponent {
         counts['DRAFT'] = draftData.length;
 
         const pendingData = data.filter((item: any) =>
-        item.createdBy === this.publicVariable.storedEmail &&
-        (item.customerStatus === 'PENDING WITH TL APPROVER' ||
-            item.customerStatus === 'PENDING WITH CH APPROVER' ||
-            item.customerStatus === 'PENDING WITH ACCOUNTS APPROVER' ||
-            item.customerStatus === 'PENDING WITH FINANCE APPROVER'));
+            item.createdBy === this.publicVariable.storedEmail &&
+            (item.customerStatus === 'PENDING WITH TL APPROVER' ||
+                item.customerStatus === 'PENDING WITH CH APPROVER' ||
+                item.customerStatus === 'PENDING WITH ACCOUNTS APPROVER' ||
+                item.customerStatus === 'PENDING WITH FINANCE APPROVER'));
         counts['PENDING WITH TL APPROVER'] = pendingData.length;
 
 
@@ -190,7 +190,7 @@ export class DashboardComponent {
             || item.headerStatus === 'PENDING WITH ACCOUNTS APPROVER');
         counts['PENDING WITH TL APPROVER'] = pendingData.length;
 
-        
+
 
 
         const approvedData = data.filter(item => item.headerStatus === 'APPROVED BY ACCOUNTS APPROVER');
@@ -245,12 +245,12 @@ export class DashboardComponent {
                     item.customerStatus === 'REJECTED BY ACCOUNTS APPROVER' ||
                     item.customerStatus === 'REJECTED BY FINANCE APPROVER'));
                 break;
-                case 'FOR APPROVAL':
-                    filteredData = this.dashboardData.filter((item: any) =>
-                    // item.createdBy === this.publicVariable.storedEmail &&
-                    (
-                        item.customerStatus === 'PENDING WITH ACCOUNTS APPROVER' ));
-                    break;
+            case 'FOR APPROVAL':
+                filteredData = this.dashboardData.filter((item: any) =>
+                // item.createdBy === this.publicVariable.storedEmail &&
+                (
+                    item.customerStatus === 'PENDING WITH ACCOUNTS APPROVER'));
+                break;
             default:
                 filteredData = this.dashboardData
                 break;
