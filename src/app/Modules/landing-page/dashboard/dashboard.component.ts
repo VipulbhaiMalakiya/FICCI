@@ -43,7 +43,6 @@ export class DashboardComponent {
 
     ngOnInit(): void {
         this.loadCustomerStatusCountList();
-        // this.loadStateList();
         this.loadCustomerAccountStatusList();
         this.publicVariable.storedEmail = localStorage.getItem('userEmail') ?? '';
     }
@@ -445,24 +444,7 @@ export class DashboardComponent {
         this.appService.exportAsExcelFile(exportData, 'Customer Status', headers);
     }
 
-    loadStateList() {
-        try {
-            const subscription = this.API.getStateList().subscribe({
-                next: (response: any) => {
-                    this.publicVariable.stateList = response.data;
-                },
-                error: (error) => {
-                    console.error('Error loading project list:', error);
-                    this.handleLoadingError()
-                },
-            });
-
-            this.publicVariable.Subscription.add(subscription);
-        } catch (error) {
-            console.error('Error loading project list:', error);
-            this.handleLoadingError()
-        }
-    }
+  
 
 
 
