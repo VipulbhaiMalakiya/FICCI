@@ -102,6 +102,7 @@ export class DashboardComponent {
 
         this.publicVariable.Subscription.add(subscription);
     }
+    
 
     loadCustomerAccountList(status: string): void {
         this.customerStatus = status;
