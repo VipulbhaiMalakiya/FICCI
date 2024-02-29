@@ -46,7 +46,6 @@ export class ApprovalCustomerComponent implements OnInit {
                 if (this.publicVariable.storedRole === 'Admin') {
 
                 } else {
-                    // Filter the response data by email
                     const filteredData = response.data;
                     this.publicVariable.ApproveCustomerList = filteredData;
                     this.publicVariable.count = filteredData.length;

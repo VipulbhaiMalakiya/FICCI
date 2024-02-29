@@ -79,7 +79,6 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
     }
 
     patchFormData(data: any): void {
-        console.log(data);
 
         this.publicVariable.dataForm.patchValue({
             customerId: data.customerId,
@@ -189,7 +188,7 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
     }
 
     handleLoadingError() {
-        this.publicVariable.isProcess = false; // Set status to false on error
+        this.publicVariable.isProcess = false;
     }
 
     countrySearchFn(term: string, item: any) {

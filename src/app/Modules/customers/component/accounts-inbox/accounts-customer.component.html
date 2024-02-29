@@ -19,7 +19,6 @@
                     alt=""></button>
         </div>
 
-        <!-- Example single danger button -->
         <div class="topbr-btns" >
             <div class="btn-group" *ngIf="publicVariable.customerStatusList && publicVariable.customerStatusList.length > 0">
                 <div class="table-search"><input type="text" class="form-control"
@@ -49,8 +48,6 @@
                             <th>PAN No</th>
                             <th>Created On</th>
                             <th>Created By</th>
-                            <!-- <th>Last Updated On</th>
-                            <th>Last Updated By</th> -->
                             <th>Status</th>
                             <th class="action-cl">Action</th>
                         </tr>
@@ -60,7 +57,6 @@
                         <tr
                             *ngFor="let d of  this.publicVariable.customerStatusList | searchFilter: publicVariable.searchText| paginate: {itemsPerPage: publicVariable.tableSize,currentPage: publicVariable.page,totalItems: publicVariable.count};let i = index">
                             <td>{{i + 1}}</td>
-                            <!-- <td>{{d.customerCode}}</td> -->
                             <td>{{d.customerName |titlecase }}</td>
                             <td>{{d.address}}</td>
                             <td>{{d.cityList.cityName}}</td>
