@@ -22,8 +22,13 @@ export class InvoicesService {
     private GetCustomerAPI = `${environment.apiURL}DropDown/GetCustomer`;
     private GetCOAMasterAPI =  `${environment.apiURL}DropDown/GetCOAMaster`;
     private GetGSTGroupAPI = `${environment.apiURL}DropDown/GetGSTGroup`;
+    private GetHSNSACAPI = `${environment.apiURL}DropDown/GetHSNSAC?gstCode=`;
 
 
+    GetHSNSACLIist(gstCode:any){
+        const url = `${this.GetHSNSACAPI}${gstCode}`;
+        return this.http.get<any>(url);
+    }
     GetGSTGroupList():Observable<any[]> {
         return this.http.get<any[]>(`${this.GetGSTGroupAPI}`).pipe(this.retry);
     }

@@ -1,6 +1,6 @@
 import { FormGroup } from "@angular/forms";
 import { Subscription } from "rxjs";
-import { COAMasterModel, GSTGroupModel, GetCustomerModel, invoiceApproveModule, invoiceStatusModule, projectModel } from "../interface/invoice";
+import { COAMasterModel, GSTGroupModel, GetCustomerModel, HSNSACModel, invoiceApproveModule, invoiceStatusModule, projectModel } from "../interface/invoice";
 import { CityList, CountryList, StateList, customerStatusListModel } from "../../customers/interface/customers";
 
 export { FormBuilder, Validators } from '@angular/forms';
@@ -42,6 +42,7 @@ export class publicVariable {
     countryList: CountryList[] = [];
     stateList: StateList[] = [];
     GSTGroupList: GSTGroupModel[] = [];
+    HSNSACList : HSNSACModel[] = [];
     cityList: CityList[] = [];
     storedEmail:string =  localStorage.getItem('userEmail') ?? '';
     storedRole: string = localStorage.getItem('userRole') ?? '';;

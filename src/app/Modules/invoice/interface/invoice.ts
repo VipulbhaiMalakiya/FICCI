@@ -113,3 +113,9 @@ export interface invoiceApproveModule {
  export interface GSTGroupModel{
     code:string
  }
+
+ export interface HSNSACModel {
+    hsnId:number,
+    hsnCode:string,
+    hsnGroup:string
+ }

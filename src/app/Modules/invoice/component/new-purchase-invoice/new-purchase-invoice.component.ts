@@ -111,6 +111,25 @@ export class NewPurchaseInvoiceComponent implements OnInit {
         }
     }
 
+    onGSTGroupChange(gstCode: any) {
+        try {
+            
+            const subscription = this.API.GetHSNSACLIist(gstCode.code).subscribe({
+                next: (response: any) => {
+                    this.publicVariable.HSNSACList  =response.data;
+                    console.log(this.publicVariable.HSNSACList);
+                    
+                },
+                error: (error) => {
+                    console.error('Error loading project list:', error);
+                }
+            });
+
+            this.publicVariable.Subscription.add(subscription);
+        } catch (error) {
+            console.error('Error loading project list:', error);
+        }
+    }
 
     customSearchFn(term: string, item: any) {
         const concatenatedString = `${item.code} ${item.name}`.toLowerCase();

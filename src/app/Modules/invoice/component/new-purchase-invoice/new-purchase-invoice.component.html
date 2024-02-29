@@ -265,7 +265,8 @@
                         <ng-select [items]="publicVariable.GSTGroupList" #select bindLabel="code"
                         bindValue="code" placeholder="Select "
                         [searchable]="true"
-                        [virtualScroll]="true" [bufferAmount]="10">
+                        [virtualScroll]="true" [bufferAmount]="10"
+                        (change)="onGSTGroupChange($event)">
 
                     </ng-select>
                     </div>
@@ -274,10 +275,15 @@
                 <div class="col-md-4 col-sm-6">
                     <div class="form-group">
                         <label>HSN/SAC Code</label>
-                        <select class="form-select" required="">
-                            <option value="">Select</option>
-                            <option value="">Dropdown 1</option>
-                        </select>
+                        <ng-select [items]="publicVariable.HSNSACList" #select bindLabel="hsnCode"
+                        bindValue="hsnCode" placeholder="Select "
+                        [searchable]="true"
+                        [virtualScroll]="true" [bufferAmount]="10"
+                       >
+                       <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
+                        <small>{{item.hsnCode}} - {{item.hsnGroup}}</small>
+                    </ng-template>
+                    </ng-select>
                     </div>
                 </div>
 
