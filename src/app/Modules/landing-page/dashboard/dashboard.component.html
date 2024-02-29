@@ -133,7 +133,6 @@
                                                 <tr
                                                     *ngFor="let d of  this.publicVariable.customerStatusList | searchFilter: publicVariable.searchText| paginate: {itemsPerPage: publicVariable.tableSize,currentPage: publicVariable.page,totalItems: publicVariable.count};let i = index">
                                                     <td>{{i + 1}}</td>
-                                                    <!-- <td>{{d.customerCode}}</td> -->
                                                     <td>{{d.customerName |titlecase }}</td>
                                                     <td>{{d.address}}</td>
                                                     <td>{{ d.cityList.cityName}}</td>
@@ -142,8 +141,6 @@
                                                     <td>{{d.pan}}</td>
                                                     <td>{{d.createdOn | date:'medium':'IST' }}</td>
                                                     <td>{{d.createdBy}}</td>
-                                                    <!-- <td>{{d.modifiedOn | date:'medium':'IST' }}</td> -->
-                                                    <!-- <td>{{d.lastUpdateBy | titlecase}}</td> -->
                                                     <td>{{d.customerStatus | titlecase}}</td>
                                                     <td><span class="table-btns">
                                                             <a href="javascript:void(0);" (click)="onView(d)"><img
@@ -275,8 +272,6 @@
                                     <button class="gray-btns" (click)="onDownloadPI()" type="button"><img
                                             src="../assets/images/excel-icon.png" alt=""></button>
                                 </div>
-
-                                <!-- Example single danger button -->
                                 <div class="topbr-btns">
                                     <div class="btn-group"
                                         *ngIf="invoiceStatuslistData && invoiceStatuslistData.length > 0">
