@@ -71,6 +71,8 @@ export interface customerStatusListModel {
     tlApprover:string
     clApprover:string
     customerStatus:string
+    approvedBy:string
+    approvedOn:string
     cityList: CityList
     stateList: StateList
     countryList: CountryList
@@ -119,6 +121,8 @@ export interface ApproveCustomerList {
     modifiedOn:string
     tlApprover:string
     clApprover:string
+    approvedBy:string
+    approvedOn:string
     customerStatus:string
     cityList: CityList
     stateList: StateList
