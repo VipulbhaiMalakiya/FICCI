@@ -19,7 +19,7 @@ export class CustomersService {
     private getCustomerStatusNewURL = `${environment.apiURL}Customer?email=`;
     private ApproveCustomerURL = `${environment.apiURL}ApproveCustomer?email=`;
     private ApproverURL = `${environment.apiURL}ApproveCustomer`;
-    private AccountURL = `${environment.apiURL}Account`;
+    private AccountURL = `${environment.apiURL}Account?loginid=`;
 
     private countryListURL = `${environment.apiURL}DropDown/GetCountry`;
     private GetStateURl = `${environment.apiURL}DropDown/GetState`;
@@ -78,7 +78,7 @@ export class CustomersService {
     }
 
     getCustomerStatuaccount(): Observable<any[]> {
-        const url = `${this.AccountURL}`;
+        const url = `${this.AccountURL}${localStorage.getItem('userEmail') ?? ''}`;
          return this.http.get<any[]>(url).pipe(this.retry);
      }
 }
