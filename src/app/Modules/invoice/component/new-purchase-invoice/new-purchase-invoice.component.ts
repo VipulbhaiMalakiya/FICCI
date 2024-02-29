@@ -74,7 +74,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
             this.patchFormData(this.data);
         }
         this.loadCOAMasterList();
-
+        this.loadGetGSTGroupList();
     }
 
     loadCOAMasterList(): void {
@@ -82,6 +82,23 @@ export class NewPurchaseInvoiceComponent implements OnInit {
             const subscription = this.API.GetCOAMasterList().subscribe({
                 next: (response: any) => {
                     this.publicVariable.COAMasterList  =response.data;
+                },
+                error: (error) => {
+                    console.error('Error loading project list:', error);
+                }
+            });
+
+            this.publicVariable.Subscription.add(subscription);
+        } catch (error) {
+            console.error('Error loading project list:', error);
+        }
+    }
+
+    loadGetGSTGroupList(): void {
+        try {
+            const subscription = this.API.GetGSTGroupList().subscribe({
+                next: (response: any) => {
+                    this.publicVariable.GSTGroupList  =response.data;
                 },
                 error: (error) => {
                     console.error('Error loading project list:', error);

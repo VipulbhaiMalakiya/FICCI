@@ -21,6 +21,12 @@ export class InvoicesService {
     private ApproverAccountURL = `${environment.apiURL}Account/GetInvoice`;
     private GetCustomerAPI = `${environment.apiURL}DropDown/GetCustomer`;
     private GetCOAMasterAPI =  `${environment.apiURL}DropDown/GetCOAMaster`;
+    private GetGSTGroupAPI = `${environment.apiURL}DropDown/GetGSTGroup`;
+
+
+    GetGSTGroupList():Observable<any[]> {
+        return this.http.get<any[]>(`${this.GetGSTGroupAPI}`).pipe(this.retry);
+    }
 
     GetCOAMasterList(): Observable<any[]> {
         return this.http.get<any[]>(`${this.GetCOAMasterAPI}`).pipe(this.retry);

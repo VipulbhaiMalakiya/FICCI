@@ -119,7 +119,8 @@
                                 [bufferAmount]="10">
                                 <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
                                     <div><span>{{item.custNo}}</span> - <span>{{item.custName | titlecase}}</span></div>
-                                    <small  *ngIf="item.panNo || item.gstregistrationNo">{{item.panNo}} - {{item.gstregistrationNo}}</small>
+                                    <small *ngIf="item.panNo || item.gstregistrationNo">{{item.panNo}} -
+                                        {{item.gstregistrationNo}}</small>
                                 </ng-template>
                             </ng-select>
 
@@ -146,8 +147,7 @@
                         <label for="state">State</label>
                         <ng-select [items]="publicVariable.stateList" #select bindLabel="stateName"
                             bindValue="stateCode" placeholder="Select " formControlName="ImpiHeaderCustomerState"
-                            [searchable]="true" [searchFn]="stateSearchFn"
-                            [virtualScroll]="true" [bufferAmount]="10">
+                            [searchable]="true" [searchFn]="stateSearchFn" [virtualScroll]="true" [bufferAmount]="10">
                             <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
                                 <small>{{item.stateCode}} - {{item.stateName}}</small>
                             </ng-template>
@@ -242,129 +242,128 @@
         <div class="mastersform-sec mb-0">
             <div class="row">
 
-             <div class="col-md-4 col-sm-6">
-               <div class="form-group">
-                 <label>Nature of Expense</label>
-                 <ng-select [items]="publicVariable.COAMasterList" #select bindLabel="name"
-                 bindValue="no" placeholder="Select "
-                 [searchable]="true"
-                 [virtualScroll]="true" [bufferAmount]="10">
+                <div class="col-md-4 col-sm-6">
+                    <div class="form-group">
+                        <label>Nature of Expense</label>
+                        <ng-select [items]="publicVariable.COAMasterList" #select bindLabel="name" bindValue="no"
+                            placeholder="Select " [searchable]="true" [virtualScroll]="true" [bufferAmount]="10">
 
-             </ng-select>
-               </div>
-             </div>
+                        </ng-select>
+                    </div>
+                </div>
 
-             <div class="col-md-4 col-sm-6">
-               <div class="form-group">
-                 <label for="Quantity">Quantity</label>
-                 <input type="text" class="form-control" id="Quantity"
-                 placeholder="Quantity"  />
-               </div>
-             </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="form-group">
+                        <label for="Quantity">Quantity</label>
+                        <input type="text" class="form-control" id="Quantity" placeholder="Quantity" />
+                    </div>
+                </div>
 
-             <div class="col-md-4 col-sm-6">
-               <div class="form-group">
-                 <label>GST Group Code</label>
-                 <select class="form-select" required="">
-                  <option value="">Select</option>
-                  <option value="">Dropdown 1</option>
-                 </select>
-               </div>
-             </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="form-group">
+                        <label>GST Group Code</label>
+                        <ng-select [items]="publicVariable.GSTGroupList" #select bindLabel="code"
+                        bindValue="code" placeholder="Select "
+                        [searchable]="true"
+                        [virtualScroll]="true" [bufferAmount]="10">
 
-             <div class="col-md-4 col-sm-6">
-               <div class="form-group">
-                 <label>HSN/SAC Code</label>
-                 <select class="form-select" required="">
-                  <option value="">Select</option>
-                  <option value="">Dropdown 1</option>
-                 </select>
-               </div>
-             </div>
+                    </ng-select>
+                    </div>
+                </div>
 
-             <div class="col-md-4 col-sm-6">
-               <div class="form-group">
-                 <label>Direct Unit Cost</label>
-                 <input type="text" value="" class="form-control" required="">
-               </div>
-             </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="form-group">
+                        <label>HSN/SAC Code</label>
+                        <select class="form-select" required="">
+                            <option value="">Select</option>
+                            <option value="">Dropdown 1</option>
+                        </select>
+                    </div>
+                </div>
 
-              <div class="col-md-4 col-sm-6">
-               <div class="form-group">
-                 <label>&nbsp;</label>
-                 <button class="common-btn w-auto" type="submit">Add Line</button>
-               </div>
-             </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="form-group">
+                        <label>Direct Unit Cost</label>
+                        <input type="text" value="" class="form-control" required="">
+                    </div>
+                </div>
 
-             <div class="col-md-4 col-sm-6">
-               <div class="form-group">
-                 <label>(Total Base Amount)</label>
-                 <input type="text" value="" class="form-control" required="">
-               </div>
-             </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="form-group">
+                        <label>&nbsp;</label>
+                        <button class="common-btn w-auto" type="submit">Add Line</button>
+                    </div>
+                </div>
 
-             <div class="col-md-4 col-sm-6">
-               <div class="form-group">
-                 <label>(Total GST Amount)</label>
-                 <input type="text" value="" class="form-control" required="">
-               </div>
-             </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="form-group">
+                        <label>(Total Base Amount)</label>
+                        <input type="text" value="" class="form-control" required="">
+                    </div>
+                </div>
 
-             <div class="col-md-4 col-sm-6">
-               <div class="form-group">
-                 <label>(Net total)</label>
-                 <input type="text" value="" class="form-control" required="">
-               </div>
-             </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="form-group">
+                        <label>(Total GST Amount)</label>
+                        <input type="text" value="" class="form-control" required="">
+                    </div>
+                </div>
 
-           </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="form-group">
+                        <label>(Net total)</label>
+                        <input type="text" value="" class="form-control" required="">
+                    </div>
+                </div>
 
-       </div>
-       <div class="dasboard-table pi-table mb-0">
-
-        <div class="table-responsive">
-
-            <table class="table table-bordered text-nowrap">
-                <thead>
-                    <tr>
-                        <th width="38%">Nature of Expense</th>
-                        <th>Quantity</th>
-                        <th>Direct Unit Cost</th>
-                        <th>Line Amount</th>
-                        <th>GST Group Code</th>
-                        <th>HSN/SAC Code</th>
-                        <th>GST Base Amount</th>
-                        <th>GST Amount</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-
-                    <tr>
-                        <td>MCSE GIFT/BUSINESS PROMOTION EXP</td>
-                        <td>50</td>
-                        <td>2500</td>
-                        <td>125000</td>
-                        <td>18%</td>
-                        <td>8306</td>
-                        <td>125000</td>
-                        <td>22500</td>
-                        <td><span class="table-btns">
-                                <a href="#"><img src="../assets/imagesimages/plus-icon.svg" alt=""></a>
-                                <a href="javascript:void(0)" data-bs-toggle="modal"
-                                    data-bs-target="#deleterecord-modal"><img
-                                        src="../assets/imagesimages/delete-icon.svg" alt=""></a>
-                            </span>
-                        </td>
-                    </tr>
-
-
-                </tbody>
-            </table>
+            </div>
 
         </div>
+        <div class="dasboard-table pi-table mb-0">
 
-    </div>
+            <div class="table-responsive">
+
+                <table class="table table-bordered text-nowrap">
+                    <thead>
+                        <tr>
+                            <th width="38%">Nature of Expense</th>
+                            <th>Quantity</th>
+                            <th>Direct Unit Cost</th>
+                            <th>Line Amount</th>
+                            <th>GST Group Code</th>
+                            <th>HSN/SAC Code</th>
+                            <th>GST Base Amount</th>
+                            <th>GST Amount</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        <tr>
+                            <td>MCSE GIFT/BUSINESS PROMOTION EXP</td>
+                            <td>50</td>
+                            <td>2500</td>
+                            <td>125000</td>
+                            <td>18%</td>
+                            <td>8306</td>
+                            <td>125000</td>
+                            <td>22500</td>
+                            <td><span class="table-btns">
+                                    <a href="#"><img src="../assets/imagesimages/plus-icon.svg" alt=""></a>
+                                    <a href="javascript:void(0)" data-bs-toggle="modal"
+                                        data-bs-target="#deleterecord-modal"><img
+                                            src="../assets/imagesimages/delete-icon.svg" alt=""></a>
+                                </span>
+                            </td>
+                        </tr>
+
+
+                    </tbody>
+                </table>
+
+            </div>
+
+        </div>
 
         <div class="dasboard-table pi-table">
             <div class="table-responsive">

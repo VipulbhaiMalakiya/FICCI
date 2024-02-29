@@ -110,3 +110,6 @@ export interface invoiceApproveModule {
     name:string
     no:string
   }
+ export interface GSTGroupModel{
+    code:string
+ }
