@@ -73,8 +73,27 @@ export class NewPurchaseInvoiceComponent implements OnInit {
         if (this.data = history.state.data) {
             this.patchFormData(this.data);
         }
+        this.loadCOAMasterList();
 
     }
+
+    loadCOAMasterList(): void {
+        try {
+            const subscription = this.API.GetCOAMasterList().subscribe({
+                next: (response: any) => {
+                    this.publicVariable.COAMasterList  =response.data;
+                },
+                error: (error) => {
+                    console.error('Error loading project list:', error);
+                }
+            });
+
+            this.publicVariable.Subscription.add(subscription);
+        } catch (error) {
+            console.error('Error loading project list:', error);
+        }
+    }
+
 
     customSearchFn(term: string, item: any) {
         const concatenatedString = `${item.code} ${item.name}`.toLowerCase();

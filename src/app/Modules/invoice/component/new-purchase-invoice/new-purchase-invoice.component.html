@@ -245,10 +245,12 @@
              <div class="col-md-4 col-sm-6">
                <div class="form-group">
                  <label>Nature of Expense</label>
-                 <select class="form-select" required="">
-                  <option value="">Select</option>
-                  <option value="">Dropdown 1</option>
-                 </select>
+                 <ng-select [items]="publicVariable.COAMasterList" #select bindLabel="name"
+                 bindValue="no" placeholder="Select "
+                 [searchable]="true"
+                 [virtualScroll]="true" [bufferAmount]="10">
+
+             </ng-select>
                </div>
              </div>
 

@@ -105,3 +105,8 @@ export interface invoiceApproveModule {
     email: string
     primaryContactNo: string
   }
+
+  export interface COAMasterModel {
+    name:string
+    no:string
+  }
