@@ -54,7 +54,9 @@ export class DashboardComponent {
             "email": this.publicVariable.storedEmail ,
             "statusId": 0
         }
-        const subscription = this.API.dashboardCustomerstatus(data).pipe(
+        // getCustomerStatusNew
+        //dashboardCustomerstatus(data)
+        const subscription = this.API.getCustomerStatusNew().pipe(
             timeout(120000), // Timeout set to 2 minutes (120000 milliseconds)
             finalize(() => {
                 this.publicVariable.isProcess = false;

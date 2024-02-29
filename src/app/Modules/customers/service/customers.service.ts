@@ -12,7 +12,7 @@ export class CustomersService {
     constructor(private http: HttpClient) { }
 
     private apiUrl = `${environment.apiURL}Customer`;
-
+    private deleteURL = `${environment.apiURL}Customer/Delete`;
     private GetPostCodeURL = `${environment.apiURL}NavERP/GetPostCode`;
     private gustomerTypeURL = `${environment.apiURL}DropDown/GstCustomerType`;
     private getCustomerStatusURL = `${environment.apiURL}Customer/0`;
@@ -60,7 +60,7 @@ export class CustomersService {
     }
 
     delete(id: number): Observable<any> {
-        return this.http.delete<any>(`${this.apiUrl}/${id}`).pipe(this.retry);
+        return this.http.delete<any>(`${this.deleteURL}/${id}`).pipe(this.retry);
     }
 
     getCustomerStatusNew(): Observable<any[]> {
