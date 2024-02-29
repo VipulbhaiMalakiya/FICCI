@@ -98,6 +98,20 @@ export class DashboardComponent {
         this.publicVariable.Subscription.add(subscription);
     }
 
+    loadCustomerAccountList(status: string): void {
+        this.customerStatus = status;
+        let filteredData;
+        filteredData = this.dashboardData.filter((item: any) =>
+        (item.customerStatus  === 'PENDING WITH ACCOUNTS APPROVER'));
+
+        this.publicVariable.customerStatusList = filteredData;
+        console.log(this.publicVariable.customerStatusList);
+
+        this.publicVariable.count = filteredData.length;
+
+    }
+
+
     loadPurchaseInvoiceList(): void {
         try {
             const subscription = this.IAPI.getPurchaseInvoice_New().subscribe({
@@ -254,25 +268,7 @@ export class DashboardComponent {
     }
 
 
-    loadCustomerAccountList(status: string): void {
-        this.customerStatus = status;
-        let filteredData;
 
-        switch (this.customerStatus) {
-            case 'PENDING WITH APPROVER':
-                filteredData = this.dashboardData.filter((item: any) =>
-                (item.customerStatus  === 'PENDING WITH FINANCE APPROVER'));
-                break;
-            default:
-                filteredData = this.dashboardData
-                break;
-        }
-
-        this.publicVariable.customerStatusList = filteredData;
-        this.publicVariable.count = filteredData.length;
-
-    }
-    
 
     loadInoivceStatusList(status: string): void {
         this.customerStatus = status;
