@@ -19,6 +19,7 @@ export class DashboardComponent {
     ApprovedAccounts: number = 0;
     RejectedbyAccounts: number = 0;
     ALL: number = 0;
+    forapproval:number = 0;
 
     PIisDRAFT: number = 0;
     PIPendingApproval: number = 0;
@@ -43,6 +44,7 @@ export class DashboardComponent {
     ngOnInit(): void {
         this.loadCustomerStatusCountList();
         this.loadStateList();
+        this.loadCustomerAccountStatusList();
         this.publicVariable.storedEmail = localStorage.getItem('userEmail') ?? '';
     }
 
@@ -58,6 +60,31 @@ export class DashboardComponent {
                 this.countDataByStatus(response.data);
                 this.dashboardData = response.data;
                 this.loadCustomerStatusList(this.customerStatus);
+            },
+            error: (error: any) => {
+                if (error.name === 'TimeoutError') {
+                    this.toastr.error('Operation timed out after 2 minutes', error.name);
+                } else {
+                    this.toastr.error('Error loading user list', error.name);
+                }
+            }
+        });
+
+        this.publicVariable.Subscription.add(subscription);
+    }
+
+
+    loadCustomerAccountStatusList(): void {
+        const subscription = this.API.getCustomerStatuaccount().pipe(
+            timeout(120000), // Timeout set to 2 minutes (120000 milliseconds)
+            finalize(() => {
+                this.publicVariable.isProcess = false;
+            })
+        ).subscribe({
+            next: (response: any) => {
+                this.countDataByAccountStatus(response.data);
+                this.dashboardData = response.data;
+                this.loadCustomerAccountList(this.customerStatus);
             },
             error: (error: any) => {
                 if (error.name === 'TimeoutError') {
@@ -89,6 +116,11 @@ export class DashboardComponent {
         } catch (error) {
             console.error('Error loading project list:', error);
         }
+    }
+
+    countDataByAccountStatus(data:any[]):void{
+        const pendingData = data.filter(item => item.customerStatus === 'PENDING WITH ACCOUNTS APPROVER');
+        this.forapproval  = pendingData.length;
     }
 
     // Helper method to count data for each customer status
@@ -220,6 +252,27 @@ export class DashboardComponent {
         this.publicVariable.count = filteredData.length;
 
     }
+
+
+    loadCustomerAccountList(status: string): void {
+        this.customerStatus = status;
+        let filteredData;
+
+        switch (this.customerStatus) {
+            case 'PENDING WITH APPROVER':
+                filteredData = this.dashboardData.filter((item: any) =>
+                (item.customerStatus  === 'PENDING WITH FINANCE APPROVER'));
+                break;
+            default:
+                filteredData = this.dashboardData
+                break;
+        }
+
+        this.publicVariable.customerStatusList = filteredData;
+        this.publicVariable.count = filteredData.length;
+
+    }
+    
 
     loadInoivceStatusList(status: string): void {
         this.customerStatus = status;
