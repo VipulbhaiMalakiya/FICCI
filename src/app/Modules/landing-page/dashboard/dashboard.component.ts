@@ -114,10 +114,7 @@ export class DashboardComponent {
         }
     }
 
-    // countDataByAccountStatus(data: any[]): void {
-    //     const pendingData = data.filter(item => item.customerStatus === 'PENDING WITH ACCOUNTS APPROVER');
-    //     this.forapproval = pendingData.length;
-    // }
+
 
     // Helper method to count data for each customer status
     countDataByStatus(data: any[]): void {
