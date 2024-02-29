@@ -229,7 +229,7 @@ export class DashboardComponent {
                 break;
             case 'PENDING WITH APPROVER':
                 filteredData = this.dashboardData.filter((item: any) =>
-                // item.createdBy === this.publicVariable.storedEmail &&
+                item.createdBy === this.publicVariable.storedEmail &&
                 (item.customerStatus === 'PENDING WITH TL APPROVER' ||
                     item.customerStatus === 'PENDING WITH CH APPROVER' ||
                     item.customerStatus === 'PENDING WITH ACCOUNTS APPROVER' ||
