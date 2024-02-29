@@ -19,7 +19,7 @@ export class DashboardComponent {
     ApprovedAccounts: number = 0;
     RejectedbyAccounts: number = 0;
     ALL: number = 0;
-    forapproval:number = 0;
+    forapproval: number = 0;
 
     PIisDRAFT: number = 0;
     PIPendingApproval: number = 0;
@@ -43,14 +43,18 @@ export class DashboardComponent {
 
     ngOnInit(): void {
         this.loadCustomerStatusCountList();
-        this.loadStateList();
+        // this.loadStateList();
         this.loadCustomerAccountStatusList();
         this.publicVariable.storedEmail = localStorage.getItem('userEmail') ?? '';
     }
 
 
     loadCustomerStatusCountList(): void {
-        const subscription = this.API.getCustomerStatusNew().pipe(
+        let data = {
+            "email": this.publicVariable.storedEmail ,
+            "statusId": 0
+        }
+        const subscription = this.API.dashboardCustomerstatus(data).pipe(
             timeout(120000), // Timeout set to 2 minutes (120000 milliseconds)
             finalize(() => {
                 this.publicVariable.isProcess = false;
@@ -102,7 +106,7 @@ export class DashboardComponent {
         this.customerStatus = status;
         let filteredData;
         filteredData = this.dashboardData.filter((item: any) =>
-        (item.customerStatus  === 'PENDING WITH ACCOUNTS APPROVER'));
+            (item.customerStatus === 'PENDING WITH ACCOUNTS APPROVER'));
 
         this.publicVariable.customerStatusList = filteredData;
         console.log(this.publicVariable.customerStatusList);
@@ -132,9 +136,9 @@ export class DashboardComponent {
         }
     }
 
-    countDataByAccountStatus(data:any[]):void{
+    countDataByAccountStatus(data: any[]): void {
         const pendingData = data.filter(item => item.customerStatus === 'PENDING WITH ACCOUNTS APPROVER');
-        this.forapproval  = pendingData.length;
+        this.forapproval = pendingData.length;
     }
 
     // Helper method to count data for each customer status
@@ -242,7 +246,7 @@ export class DashboardComponent {
                 (item.customerStatus === 'PENDING WITH TL APPROVER' ||
                     item.customerStatus === 'PENDING WITH CH APPROVER' ||
                     item.customerStatus === 'PENDING WITH ACCOUNTS APPROVER' ||
-                    item.customerStatus  === 'PENDING WITH FINANCE APPROVER'));
+                    item.customerStatus === 'PENDING WITH FINANCE APPROVER'));
                 break;
             case 'APPROVED BY ACCOUNTS APPROVER':
                 filteredData = this.dashboardData.filter((item: any) =>
@@ -286,7 +290,7 @@ export class DashboardComponent {
                 (item.headerStatus === 'PENDING WITH TL APPROVER' ||
                     item.headerStatus === 'PENDING WITH CH APPROVER' ||
                     item.headerStatus === 'PENDING WITH ACCOUNTS APPROVER' ||
-                    item.customerStatus  === 'PENDING WITH FINANCE APPROVER'));
+                    item.customerStatus === 'PENDING WITH FINANCE APPROVER'));
                 break;
             case 'APPROVED BY ACCOUNTS APPROVER':
                 filteredData = this.dashboardData.filter((item: any) =>
@@ -460,7 +464,7 @@ export class DashboardComponent {
 
 
 
-    getStateNameById(stateId:string) {
+    getStateNameById(stateId: string) {
         const state = this.publicVariable.stateList.find(state => state.stateCode === stateId);
         return state ? state.stateName : null;
     }
@@ -494,17 +498,17 @@ export class DashboardComponent {
             'Cl Approver': x?.impiHeaderClusterApprover ? this.toTitleCase(x.impiHeaderClusterApprover) : '',
             'Finance Approver': x?.impiHeaderFinanceApprover ? this.toTitleCase(x.impiHeaderFinanceApprover) : '',
             'Support Approver': x?.impiHeaderSupportApprover ? this.toTitleCase(x.impiHeaderSupportApprover) : '',
-            'Created On':x?.impiHeaderSubmittedDate ? formatDate(x.impiHeaderSubmittedDate, 'medium', 'en-IN', 'IST') : '',
+            'Created On': x?.impiHeaderSubmittedDate ? formatDate(x.impiHeaderSubmittedDate, 'medium', 'en-IN', 'IST') : '',
             'Created By': x?.impiHeaderCreatedBy ? this.toTitleCase(x.impiHeaderCreatedBy) : '',
             "Update Date": x?.impiHeaderModifiedDate ? formatDate(x.impiHeaderModifiedDate, 'medium', 'en-IN', 'IST') : '',
-            'Status':x?.headerStatus ? this.toTitleCase(x?.headerStatus) : '',
+            'Status': x?.headerStatus ? this.toTitleCase(x?.headerStatus) : '',
         }));
 
         const headers = [
-            'PO No.','Department', 'Divison', 'Category',
+            'PO No.', 'Department', 'Divison', 'Category',
             'Vendor Name', 'Address', 'State', 'City', 'Pincode',
             'Phone No', "Email ID", 'Contact Person', 'Customer  GST Number', 'PAN No', 'Amount', 'Payment Terms',
-            'impiHeaderRemarks', 'Tl Approver', 'Cl Approver', 'Finance Approver', 'Support Approver', 'Created On', 'Created By','Update Date',
+            'impiHeaderRemarks', 'Tl Approver', 'Cl Approver', 'Finance Approver', 'Support Approver', 'Created On', 'Created By', 'Update Date',
             'Status'
         ];
         this.appService.exportAsExcelFile(exportData, 'PI Invoice Status', headers);

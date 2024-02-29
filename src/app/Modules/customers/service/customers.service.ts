@@ -24,9 +24,15 @@ export class CustomersService {
     private countryListURL = `${environment.apiURL}DropDown/GetCountry`;
     private GetStateURl = `${environment.apiURL}DropDown/GetState`;
     private GetCityURl = `${environment.apiURL}DropDown/GetCity`;
-
+    private GetStatusList =  `${environment.apiURL}Customer/GetStatusCustomerList`;
     private retry: any = retry(1); // Retry the request up to 2 times in case of failure
 
+
+
+    dashboardCustomerstatus(data: any): Observable<any> {
+        return this.http.post<any>(`${this.GetStatusList}`, data).pipe(this.retry);
+    }
+    
     getGstCustomerType(): Observable<any[]> {
         return this.http.get<any[]>(`${this.gustomerTypeURL}`).pipe(this.retry);
     }
