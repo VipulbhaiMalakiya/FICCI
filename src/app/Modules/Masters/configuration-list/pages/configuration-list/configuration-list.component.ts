@@ -196,8 +196,6 @@ export class ConfigurationListComponent implements OnInit, OnDestroy {
     }
 
     handleApiResponse(res: any, successMessage: string): void {
-        console.log(res);
-
         if (res.status === true) {
             this.toastr.success(successMessage, 'Success');
             this.loadConfiguration();
