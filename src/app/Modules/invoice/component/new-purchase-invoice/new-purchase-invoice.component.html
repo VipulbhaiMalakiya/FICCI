@@ -254,9 +254,9 @@
                             <label>Nature of Expense</label>
                             <ng-select [items]="publicVariable.COAMasterList" #select bindLabel="name" bindValue="name"
                                 placeholder="Select " [searchable]="true" [virtualScroll]="true" [bufferAmount]="10"
-                                formControlName="natureOfExpense">
+                                formControlName="documentType">
                             </ng-select>
-                            <div *ngIf="shouldShowExpenseError('natureOfExpense','required')" class="text-danger">This
+                            <div *ngIf="shouldShowExpenseError('documentType','required')" class="text-danger">This
                                 field is required</div>
                         </div>
                     </div>
@@ -372,7 +372,7 @@
                         <tr *ngFor="let e of publicVariable.expenses; let i = index">
                             <td>{{i + 1}}</td>
                             <td></td>
-                            <td>{{e.natureOfExpense }}</td>
+                            <td>{{e.documentType }}</td>
                             <td>{{e.quantity}}</td>
                             <td>{{e.unitCost}}</td>
                             <td>{{e.quantity * e.unitCost}}</td>

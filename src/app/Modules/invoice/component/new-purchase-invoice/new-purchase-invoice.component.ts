@@ -65,7 +65,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
 
     private createExpenseForm(): void {
         this.publicVariable.expenseForm = this.fb.group({
-            natureOfExpense: [null, Validators.required],
+            documentType: [null, Validators.required],
             quantity: ['', Validators.required],
             gstGroupCode: [null, Validators.required],
             hsnCode: [null, Validators.required],
@@ -148,6 +148,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
     }
 
     patchFormData(data: any): void {
+        console.log(data);
 
         this.publicVariable.dataForm.patchValue({
             headerid: data.headerId,
@@ -174,19 +175,9 @@ export class NewPurchaseInvoiceComponent implements OnInit {
             ImpiHeaderRemarks: data.impiHeaderRemarks,
             IsDraft: data.isDraft,
             Project: data.Project
-            // items: this.fb.array([]),
         });
-        const lineItemsArray = this.publicVariable.dataForm.get('items') as FormArray;
-        lineItemsArray.clear(); // Clear existing items before patching
 
-        // data.lineItem_Requests.forEach((item: any) => {
-        //     lineItemsArray.push(this.fb.group({
-        //         impiLineDescription: [item.impiLineDescription],
-        //         impiLineQuantity: [item.impiLineQuantity],
-        //         impiLineDiscount: [item.impiLineDiscount],
-        //         impiLineUnitPrice: [item.impiLineUnitPrice],
-        //     }));
-        // });
+        this.publicVariable.expenses = data.lineItem_Requests;
     }
 
     loadProjectList(): void {
@@ -421,7 +412,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
         this.publicVariable.expenseForm.patchValue({
             gstGroupCode: data.gstGroupCode,
             hsnCode: data.hsnCode,
-            natureOfExpense: data.natureOfExpense,
+            documentType: data.documentType,
             quantity: data.quantity,
             unitCost: data.unitCost,
         });
@@ -491,26 +482,23 @@ export class NewPurchaseInvoiceComponent implements OnInit {
                 formData.append(`lineItem_Requests[${i}].ImpiLocationCode`, 'FICCI-DL');
                 formData.append(`lineItem_Requests[${i}].ImpiQuantity`, item.quantity);
                 formData.append(`lineItem_Requests[${i}].ImpiUnitPrice`, item.unitCost);
-
                 formData.append(`lineItem_Requests[${i}].ImpiGstgroupCode`, item.gstGroupCode);
                 formData.append(`lineItem_Requests[${i}].ImpiGstgroupType`, 'GOODS');
                 formData.append(`lineItem_Requests[${i}].ImpiLineNo`, '10000');
                 formData.append(`lineItem_Requests[${i}].ImpiHsnsaccode`, item.hsnCode);
-                formData.append(`lineItem_Requests[${i}].documentType`, item.natureOfExpense);
-
-
+                formData.append(`lineItem_Requests[${i}].documentType`, item.documentType);
                 // Calculate the amount here
                 const quantity = parseFloat(item.quantity);
                 const unitPrice = parseFloat(item.unitCost);
                 const calculateAmount = quantity * unitPrice;
                 formData.append(`lineItem_Requests[${i}].ImpiLineAmount`, calculateAmount.toString());
-                
+
                 impiHeaderTotalInvoiceAmount += calculateAmount;
 
             }
 
             formData.append('impiHeaderTotalInvoiceAmount', String(impiHeaderTotalInvoiceAmount));
-            
+
 
 
 
@@ -602,7 +590,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
     }
 
     markexpenseFormControlsAsTouched(): void {
-        ['natureOfExpense', 'quantity', 'gstGroupCode', 'hsnCode', 'unitCost'].forEach(controlName => {
+        ['documentType', 'quantity', 'gstGroupCode', 'hsnCode', 'unitCost'].forEach(controlName => {
             this.publicVariable.expenseForm.controls[controlName].markAsTouched();
         });
     }
