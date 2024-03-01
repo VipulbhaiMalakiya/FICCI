@@ -487,20 +487,24 @@ export class NewPurchaseInvoiceComponent implements OnInit {
         return this.publicVariable.dataForm.controls[controlName].touched && this.publicVariable.dataForm.controls[controlName].hasError(errorName);
     }
 
+
     onAddLine() {
         if (this.publicVariable.expenseForm.valid) {
             if (this.isEditing) {
                 // Updating an existing record
                 this.publicVariable.expenses[this.publicVariable.editingIndex] = this.publicVariable.expenseForm.value;
                 this.publicVariable.editingIndex = -1;
+                this.toastr.success('Expense updated successfully', 'Success');
             } else {
                 // Adding a new record
                 this.publicVariable.expenses.push(this.publicVariable.expenseForm.value);
+                this.toastr.success('Expense added successfully', 'Success');
             }
             this.publicVariable.expenseForm.reset();
-            this.isEditing = false; // Resetting to false after adding/updating
+            this.isEditing = false;
         } else {
             this.markexpenseFormControlsAsTouched();
+            this.toastr.error('Please fill out all required fields', 'Error');
         }
     }
 
