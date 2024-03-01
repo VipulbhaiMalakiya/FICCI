@@ -158,8 +158,6 @@ export class DashboardComponent {
         counts['REJECTED BY CH APPROVER'] = rejectedData.length;
 
         // Calculate total count
-
-
         const allData = this.publicVariable.storedRole !== 'Accounts' ?
             data.filter(item => item.createdBy === this.publicVariable.storedEmail) :
             data;
