@@ -416,6 +416,20 @@ export class NewPurchaseInvoiceComponent implements OnInit {
 
     }
 
+
+    editExpense(data: any, index: number) {
+        this.publicVariable.expenseForm.patchValue({
+            gstGroupCode: data.gstGroupCode,
+            hsnCode: data.hsnCode,
+            natureOfExpense: data.natureOfExpense,
+            quantity: data.quantity,
+            unitCost: data.unitCost,
+        });
+        this.publicVariable.editingIndex = index;
+        this.isEditing = true;
+    }
+
+
     onSubmit(action: boolean): void {
 
         if (this.publicVariable.dataForm.valid) {
@@ -482,7 +496,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
                 formData.append(`lineItem_Requests[${i}].ImpiGstgroupType`, 'GOODS');
                 formData.append(`lineItem_Requests[${i}].ImpiLineNo`, '10000');
                 formData.append(`lineItem_Requests[${i}].ImpiHsnsaccode`, item.hsnCode);
-                formData.append(`lineItem_Requests[${i}].ImpiType`, item.natureOfExpense);
+                formData.append(`lineItem_Requests[${i}].documentType`, item.natureOfExpense);
             }
 
 
@@ -530,18 +544,6 @@ export class NewPurchaseInvoiceComponent implements OnInit {
 
 
 
-
-    editExpense(data: any, index: number) {
-        this.publicVariable.expenseForm.patchValue({
-            gstGroupCode: data.gstGroupCode,
-            hsnCode: data.hsnCode,
-            natureOfExpense: data.natureOfExpense,
-            quantity: data.quantity,
-            unitCost: data.unitCost,
-        });
-        this.publicVariable.editingIndex = index;
-        this.isEditing = true;
-    }
 
 
     deleteExpense(index: number) {
