@@ -493,16 +493,27 @@ export class NewPurchaseInvoiceComponent implements OnInit {
         if (this.publicVariable.expenseForm.valid) {
             if (this.publicVariable.editingIndex === -1) {
                 this.publicVariable.expenses.push(this.publicVariable.expenseForm.value);
-              } else {
+            } else {
                 this.publicVariable.expenses[this.publicVariable.editingIndex] = this.publicVariable.expenseForm.value;
                 this.publicVariable.editingIndex = -1;
-              }
-              this.publicVariable.expenseForm.reset();
+            }
+            this.publicVariable.expenseForm.reset();
         }
         else {
             this.markexpenseFormControlsAsTouched();
         }
     }
+
+    editExpense(index: number) {
+        this.publicVariable.expenseForm.patchValue(this.publicVariable.expenses[index]);
+        this.publicVariable.editingIndex = index;
+    }
+
+    deleteExpense(index: number) {
+        this.publicVariable.expenses.splice(index, 1);
+    }
+
+
     markexpenseFormControlsAsTouched(): void {
         ['natureOfExpense', 'quantity', 'gstGroupCode', 'hsnCode', 'unitCost'].forEach(controlName => {
             this.publicVariable.expenseForm.controls[controlName].markAsTouched();
