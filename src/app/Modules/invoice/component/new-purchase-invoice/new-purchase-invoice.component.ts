@@ -17,6 +17,11 @@ export class NewPurchaseInvoiceComponent implements OnInit {
     Id?: number;
     data: any;
 
+
+    public expenses: any[] = [];
+    public newExpense: any = {};
+    public editingIndex: number = -1;
+
     constructor(private appService: AppService,
         private modalService: NgbModal,
         private router: Router,
@@ -79,7 +84,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
         try {
             const subscription = this.API.GetCOAMasterList().subscribe({
                 next: (response: any) => {
-                    this.publicVariable.COAMasterList  =response.data;
+                    this.publicVariable.COAMasterList = response.data;
                 },
                 error: (error) => {
                     console.error('Error loading project list:', error);
@@ -96,7 +101,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
         try {
             const subscription = this.API.GetGSTGroupList().subscribe({
                 next: (response: any) => {
-                    this.publicVariable.GSTGroupList  =response.data;
+                    this.publicVariable.GSTGroupList = response.data;
                 },
                 error: (error) => {
                     console.error('Error loading project list:', error);
@@ -114,7 +119,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
 
             const subscription = this.API.GetHSNSACLIist(gstCode.code).subscribe({
                 next: (response: any) => {
-                    this.publicVariable.HSNSACList  =response.data;
+                    this.publicVariable.HSNSACList = response.data;
                     console.log(this.publicVariable.HSNSACList);
 
                 },
@@ -398,7 +403,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
 
             formData.append('ImpiHeaderTlApprover', 'amit.jha@teamcomputers.com');
             formData.append('ImpiHeaderClusterApprover', 'debananda.panda@teamcomputers.com ');
-            formData.append('ImpiHeaderFinanceApprover',' gautam.v@teamcomputers.com');
+            formData.append('ImpiHeaderFinanceApprover', ' gautam.v@teamcomputers.com');
             formData.append('ImpiHeaderSupportApprover', this.publicVariable.selectedProjet.supportApprover);
             formData.append('RoleName', this.publicVariable.storedRole);
 
