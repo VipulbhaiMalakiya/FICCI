@@ -249,6 +249,8 @@
                                 placeholder="Select " [searchable]="true" [virtualScroll]="true" [bufferAmount]="10"
                                 formControlName="natureOfExpense">
                             </ng-select>
+                            <div *ngIf="shouldShowExpenseError('natureOfExpense','required')" class="text-danger">This
+                                field is required</div>
                         </div>
                     </div>
 
@@ -257,6 +259,9 @@
                             <label for="Quantity">Quantity</label>
                             <input type="text" class="form-control" id="Quantity" placeholder="Quantity"
                                 formControlName="quantity" />
+                            <div *ngIf="shouldShowExpenseError('quantity','required')" class="text-danger">This field is
+                                required</div>
+
                         </div>
                     </div>
 
@@ -267,6 +272,8 @@
                                 placeholder="Select " [searchable]="true" [virtualScroll]="true" [bufferAmount]="10"
                                 (change)="onGSTGroupChange($event)" formControlName="gstGroupCode">
                             </ng-select>
+                            <div *ngIf="shouldShowExpenseError('gstGroupCode','required')" class="text-danger">This field is
+                                required</div>
                         </div>
                     </div>
 
@@ -280,6 +287,8 @@
                                     <small>{{item.hsnCode}} - {{item.hsnGroup}}</small>
                                 </ng-template>
                             </ng-select>
+                            <div *ngIf="shouldShowExpenseError('hsnCode','required')" class="text-danger">This field is
+                                required</div>
                         </div>
                     </div>
 
@@ -288,6 +297,8 @@
                             <label>Direct Unit Cost</label>
                             <input type="text" class="form-control" placeholder="Direct Unit Cost"
                                 formControlName="unitCost">
+                                <div *ngIf="shouldShowExpenseError('unitCost','required')" class="text-danger">This field is
+                                    required</div>
                         </div>
                     </div>
 
