@@ -42,30 +42,35 @@ export class ApprovalCustomerComponent implements OnInit {
             })
         ).subscribe({
             next: (response: any) => {
-
-                if (this.publicVariable.storedRole === 'Admin') {
-
+                if (response.data) {
+                    if (this.publicVariable.storedRole === 'Admin') {
+                        // Handle Admin role logic if needed
+                    } else {
+                        const filteredData = response.data;
+                        this.publicVariable.ApproveCustomerList = filteredData;
+                        this.publicVariable.count = filteredData.length;
+                    }
                 } else {
-                    const filteredData = response.data;
-                    this.publicVariable.ApproveCustomerList = filteredData;
-                    this.publicVariable.count = filteredData.length;
-                    this.publicVariable.isProcess = false;
-
+                    console.warn('Response data is null:', response.data);
+                    // Set default values or handle the case where response data is null
+                    this.publicVariable.ApproveCustomerList = [];
+                    this.publicVariable.count = 0;
                 }
+                this.publicVariable.isProcess = false;
             },
             error: (error: any) => {
                 if (error.name === 'TimeoutError') {
-                    this.publicVariable.isProcess = false;
-                    this.toastr.error('Operation timed out after2 minutes', error.name);
+                    this.toastr.error('Operation timed out after 2 minutes', error.name);
                 } else {
-                    this.publicVariable.isProcess = false;
                     this.toastr.error('Error loading user list', error.name);
                 }
+                this.publicVariable.isProcess = false;
             }
         });
 
         this.publicVariable.Subscription.add(subscription);
     }
+
     toTitleCase(str: string): string {
         return str.toLowerCase().split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
     }
@@ -74,12 +79,12 @@ export class ApprovalCustomerComponent implements OnInit {
         const exportData = this.publicVariable.ApproveCustomerList.map((x) => ({
             "Cust. No.": x?.customerCode || '',
             Name: x?.customerName ? this.toTitleCase(x.customerName) : '',
-            "Name 2":x?.customerLastName ? this.toTitleCase(x.customerLastName) : '',
+            "Name 2": x?.customerLastName ? this.toTitleCase(x.customerLastName) : '',
             Address: x?.address || '',
-            "Address 2":x.address2  || '',
-            State: x?.stateList.stateName ,
-            Country: x?.countryList.countryName ,
-            City: x?.cityList.cityName  ,
+            "Address 2": x.address2 || '',
+            State: x?.stateList.stateName,
+            Country: x?.countryList.countryName,
+            City: x?.cityList.cityName,
             Pincode: x?.pincode,
             "Contact Person": x && x.contact,
             "Phone Number": x?.phoneNumber || '',
@@ -93,9 +98,9 @@ export class ApprovalCustomerComponent implements OnInit {
             'Status': x.customerStatus ? this.toTitleCase(x.customerStatus) : '',
         }));
 
-        const headers = ['Cust. No.', 'Name','Name 2', 'Address','Address 2', 'Country', 'State', 'City',
-            'Pincode', 'Email','Phone Number','Contact Person',
-             'GST Customer Type', 'GST Registration No.', 'PAN Card',
+        const headers = ['Cust. No.', 'Name', 'Name 2', 'Address', 'Address 2', 'Country', 'State', 'City',
+            'Pincode', 'Email', 'Phone Number', 'Contact Person',
+            'GST Customer Type', 'GST Registration No.', 'PAN Card',
             'Created On', 'Created By', 'Last Updated On', 'Last Update By', 'Status'];
         this.appService.exportAsExcelFile(exportData, 'Customer Approval Inbox', headers);
     }
