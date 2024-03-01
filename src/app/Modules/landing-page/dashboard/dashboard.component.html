@@ -1,8 +1,6 @@
 <app-loading *ngIf="publicVariable.isProcess"></app-loading>
 <div class="inner-content">
-
     <h3 class="content-title">Sales Invoice Dashboard</h3>
-
     <div class="main-data-navs">
         <ul class="nav nav-pills main-data-nav1 mb-3" id="pills-tab" role="tablist">
             <li class="nav-item" role="presentation">
@@ -18,68 +16,56 @@
             </li>
         </ul>
         <div class="tab-content" id="pills-tabContent">
-
-
             <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
                 <div class="data-tabs">
                     <ul class="nav nav-pills" role="tablist">
-                      <li class="nav-item">
-                        <a class="nav-link active tabbg-1" data-bs-toggle="pill" href="#home"
-                        (click)="loadCustomerStatusList('DRAFT')">
-                        <small>Draft</small>
-                        <span>{{this.isDRAFT }}</span>
-                        </a>
-                      </li>
-
-                      <li class="nav-item">
-                        <a class="nav-link tabbg-2" data-bs-toggle="pill" href="#home"
-                        (click)="loadCustomerStatusList('PENDING WITH APPROVER')">
-                        <small>Pending Approval</small>
-                        <span>{{this.PendingApproval }}</span>
-                    </a>
-                      </li>
-
-                      <li class="nav-item">
-                        <a class="nav-link tabbg-3" data-bs-toggle="pill" href="#home"
-                        (click)="loadCustomerStatusList('APPROVED BY ACCOUNTS APPROVER')">
-                        <small>Approved Accounts</small>
-                        <span>{{this.ApprovedAccounts }}</span>
-                    </a>
-                      </li>
-
-                      <li class="nav-item">
-                        <a class="nav-link tabbg-4" data-bs-toggle="pill" href="#home"
-                        (click)="loadCustomerStatusList('REJECTED BY CH APPROVER')">
-                        <small>Rejected by Customer</small>
-                        <span>{{this.RejectedbyAccounts }}</span>
-                    </a>
-                      </li>
-
-                      <li class="nav-item" *ngIf="this.publicVariable.storedRole === 'Accounts'">
-                          <a class="nav-link tabbg-6" data-bs-toggle="pill" href="#home"
-                          (click)="loadCustomerStatusList('FOR APPROVAL')">
-                             <small>For Approval</small>
-                              <span>{{this.forapproval}}</span>
-                          </a>
+                        <li class="nav-item">
+                            <a class="nav-link active tabbg-1" data-bs-toggle="pill" href="#home"
+                                (click)="loadCustomerStatusList('DRAFT')">
+                                <small>Draft</small>
+                                <span>{{this.isDRAFT }}</span>
+                            </a>
                         </li>
-
-                      <li class="nav-item">
-                        <a class="nav-link tabbg-5" data-bs-toggle="pill" href="#home"
+                        <li class="nav-item">
+                            <a class="nav-link tabbg-2" data-bs-toggle="pill" href="#home"
+                                (click)="loadCustomerStatusList('PENDING WITH APPROVER')">
+                                <small>Pending Approval</small>
+                                <span>{{this.PendingApproval }}</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link tabbg-3" data-bs-toggle="pill" href="#home"
+                                (click)="loadCustomerStatusList('APPROVED BY ACCOUNTS APPROVER')">
+                                <small>Approved Accounts</small>
+                                <span>{{this.ApprovedAccounts }}</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link tabbg-4" data-bs-toggle="pill" href="#home"
+                                (click)="loadCustomerStatusList('REJECTED BY CH APPROVER')">
+                                <small>Rejected by Customer</small>
+                                <span>{{this.RejectedbyAccounts }}</span>
+                            </a>
+                        </li>
+                        <li class="nav-item" *ngIf="this.publicVariable.storedRole === 'Accounts'">
+                            <a class="nav-link tabbg-6" data-bs-toggle="pill" href="#home"
+                                (click)="loadCustomerStatusList('FOR APPROVAL')">
+                                <small>For Approval</small>
+                                <span>{{this.forapproval}}</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link tabbg-5" data-bs-toggle="pill" href="#home"
                                 (click)="loadCustomerStatusList('ALL')">
                                 <small>All</small>
                                 <span>{{this.ALL }}</span>
                             </a>
-                      </li>
-
-
-
+                        </li>
                     </ul>
                 </div>
-
-
                 <div class="data-tabs-content">
 
-                    <!-- Tab panes -->
+                    <!--Customer Tab  -->
                     <div class="tab-content">
 
                         <div id="home" class="tab-pane active"><br>
@@ -101,8 +87,6 @@
                                     <button class="gray-btns" (click)="onDownload()" type="button"><img
                                             src="../assets/images/excel-icon.png" alt=""></button>
                                 </div>
-
-                                <!-- Example single danger button -->
                                 <div class="topbr-btns">
                                     <div class="btn-group"
                                         *ngIf="publicVariable.customerStatusList && publicVariable.customerStatusList.length > 0">
@@ -155,6 +139,7 @@
                                                     <td><span class="table-btns">
                                                             <a href="javascript:void(0);" (click)="onView(d)"><img
                                                                     src="../assets/images/view-icon.svg" alt=""></a>
+
                                                             <a *ngIf="publicVariable.storedRole !== 'Admin' && d.createdBy === this.publicVariable.storedEmail && (d.isDraft ||
                                                                 d.customerStatus == 'REJECTED BY TL APPROVER' ||
                                                                 d.customerStatus == 'REJECTED BY CH APPROVER' ||

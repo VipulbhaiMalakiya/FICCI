@@ -77,17 +77,13 @@ export class DashboardComponent {
         forkJoin([statusSubscription, accountSubscription]).subscribe({
             next: ([statusResponse, accountResponse]: [any, any]) => {
 
-                // this.countDataByAccountStatus(accountResponse.data);
-
                 this.dashboardData = [...statusResponse.data, ...accountResponse.data];
                 this.countDataByStatus(this.dashboardData);
 
                 this.loadCustomerStatusList(this.customerStatus);
-                // this.loadCustomerAccountList(this.customerStatus);
                 this.publicVariable.isProcess = false;
             },
             error: (error: any) => {
-                // Handle errors for both API calls
                 this.toastr.error('Error loading user list', error.name);
             }
         });
