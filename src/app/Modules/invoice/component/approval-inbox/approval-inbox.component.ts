@@ -36,26 +36,31 @@ export class ApprovalInboxComponent implements OnInit {
             })
         ).subscribe({
             next: (response: any) => {
-
-                this.publicVariable.invoiceStatuslistData = response.data;
-                this.publicVariable.count = response.data.length;
-                this.loadStateList();
-
+                if (response.data && Array.isArray(response.data)) {
+                    this.publicVariable.invoiceStatuslistData = response.data;
+                    this.publicVariable.count = response.data.length;
+                    this.loadStateList();
+                } else {
+                    // Handle case where response data is null or not an array
+                    this.publicVariable.invoiceStatuslistData = [];
+                    this.publicVariable.count = 0;
+                    console.warn('Response data is null or not an array:', response.data);
+                }
                 this.publicVariable.isProcess = false;
             },
             error: (error: any) => {
                 if (error.name === 'TimeoutError') {
-                    this.publicVariable.isProcess = false;
-                    this.toastr.error('Operation timed out after2 minutes', error.name);
+                    this.toastr.error('Operation timed out after 2 minutes', error.name);
                 } else {
-                    this.publicVariable.isProcess = false;
                     this.toastr.error('Error loading user list', error.name);
                 }
+                this.publicVariable.isProcess = false;
             }
         });
 
         this.publicVariable.Subscription.add(subscription);
     }
+
 
 
     onView(data: invoiceStatusModule): void {
