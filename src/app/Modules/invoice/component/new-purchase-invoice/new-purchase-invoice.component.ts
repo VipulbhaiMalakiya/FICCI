@@ -18,9 +18,6 @@ export class NewPurchaseInvoiceComponent implements OnInit {
     data: any;
 
 
-    public expenses: any[] = [];
-    public newExpense: any = {};
-    public editingIndex: number = -1;
 
     constructor(private appService: AppService,
         private modalService: NgbModal,
@@ -494,7 +491,13 @@ export class NewPurchaseInvoiceComponent implements OnInit {
 
     onAddLine() {
         if (this.publicVariable.expenseForm.valid) {
-
+            if (this.publicVariable.editingIndex === -1) {
+                this.publicVariable.expenses.push(this.publicVariable.expenseForm.value);
+              } else {
+                this.publicVariable.expenses[this.publicVariable.editingIndex] = this.publicVariable.expenseForm.value;
+                this.publicVariable.editingIndex = -1;
+              }
+              this.publicVariable.expenseForm.reset();
         }
         else {
             this.markexpenseFormControlsAsTouched();

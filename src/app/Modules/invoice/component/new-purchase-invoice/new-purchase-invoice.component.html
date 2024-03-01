@@ -356,13 +356,13 @@
                     </thead>
                     <tbody>
 
-                        <tr>
-                            <td>MCSE GIFT/BUSINESS PROMOTION EXP</td>
-                            <td>50</td>
+                        <tr *ngFor="let e of publicVariable.expenses; let i = index">
+                            <td>{{e.natureOfExpense }}</td>
+                            <td>{{e.unitCost}}</td>
                             <td>2500</td>
                             <td>125000</td>
-                            <td>18%</td>
-                            <td>8306</td>
+                            <td>{{e.gstGroupCode }}</td>
+                            <td>{{e.hsnCode}}</td>
                             <td>125000</td>
                             <td>22500</td>
                             <td><span class="table-btns">

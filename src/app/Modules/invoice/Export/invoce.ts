@@ -22,6 +22,9 @@ export class publicVariable {
     mailForm!:FormGroup;
     expenseForm!: FormGroup;
 
+    expenses: any[] = [];
+    editingIndex: number = -1;
+
     isEdit: boolean = false;
     page: number = 1;
     roleId: any;
