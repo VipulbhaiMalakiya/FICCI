@@ -67,13 +67,13 @@ export class NewPurchaseInvoiceComponent implements OnInit {
         // this.items.forEach(item => this.addItem(item));
     }
 
-    private createExpenseForm() :void{
-        this.publicVariable.expenseForm  = this.fb.group({
+    private createExpenseForm(): void {
+        this.publicVariable.expenseForm = this.fb.group({
             natureOfExpense: [null, Validators.required],
             quantity: ['', Validators.required],
             gstGroupCode: [null, Validators.required],
-            hsnCode:[null, Validators.required],
-            unitCost:['', Validators.required],
+            hsnCode: [null, Validators.required],
+            unitCost: ['', Validators.required],
         })
     }
 
@@ -492,7 +492,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
         return this.publicVariable.dataForm.controls[controlName].touched && this.publicVariable.dataForm.controls[controlName].hasError(errorName);
     }
 
-    onAddLine(){
+    onAddLine() {
         if (this.publicVariable.expenseForm.valid) {
 
         }
@@ -500,9 +500,12 @@ export class NewPurchaseInvoiceComponent implements OnInit {
             this.markexpenseFormControlsAsTouched();
         }
     }
-    markexpenseFormControlsAsTouched():void{
-        ['ImpiHeaderInvoiceType', 'ImpiHeaderProjectCode', 'ImpiHeaderDepartment'].forEach(controlName => {
-        this.publicVariable.expenseForm.controls[controlName].markAsTouched();
-    });
+    markexpenseFormControlsAsTouched(): void {
+        ['natureOfExpense', 'quantity', 'gstGroupCode', 'hsnCode', 'unitCost'].forEach(controlName => {
+            this.publicVariable.expenseForm.controls[controlName].markAsTouched();
+        });
+    }
+    shouldShowExpenseError(controlName: string, errorName: string): boolean {
+        return this.publicVariable.expenseForm.controls[controlName].touched && this.publicVariable.expenseForm.controls[controlName].hasError(errorName);
     }
 }

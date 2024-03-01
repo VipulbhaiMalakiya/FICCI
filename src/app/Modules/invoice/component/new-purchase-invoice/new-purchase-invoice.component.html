@@ -240,9 +240,8 @@
         <div class="pi-pagetitle">Sales Line</div>
 
         <div class="mastersform-sec mb-0">
-            <div class="row">
-                <form [formGroup]="publicVariable.expenseForm" (ngSubmit)="onAddLine()">
-
+            <form [formGroup]="publicVariable.expenseForm" (ngSubmit)="onAddLine()">
+                <div class="row">
                     <div class="col-md-4 col-sm-6">
                         <div class="form-group">
                             <label>Nature of Expense</label>
@@ -257,7 +256,7 @@
                         <div class="form-group">
                             <label for="Quantity">Quantity</label>
                             <input type="text" class="form-control" id="Quantity" placeholder="Quantity"
-                            formControlName="quantity" />
+                                formControlName="quantity" />
                         </div>
                     </div>
 
@@ -266,8 +265,7 @@
                             <label>GST Group Code</label>
                             <ng-select [items]="publicVariable.GSTGroupList" #select bindLabel="code" bindValue="code"
                                 placeholder="Select " [searchable]="true" [virtualScroll]="true" [bufferAmount]="10"
-                                (change)="onGSTGroupChange($event)"
-                                formControlName="gstGroupCode">
+                                (change)="onGSTGroupChange($event)" formControlName="gstGroupCode">
                             </ng-select>
                         </div>
                     </div>
@@ -288,41 +286,43 @@
                     <div class="col-md-4 col-sm-6">
                         <div class="form-group">
                             <label>Direct Unit Cost</label>
-                            <input type="text" class="form-control" placeholder="Direct Unit Cost" formControlName="unitCost">
+                            <input type="text" class="form-control" placeholder="Direct Unit Cost"
+                                formControlName="unitCost">
                         </div>
                     </div>
 
                     <div class="col-md-4 col-sm-6">
                         <div class="form-group">
                             <label>&nbsp;</label>
-                            <button  class="common-btn w-auto" type="submit">Add Line</button>
+                            <button class="common-btn w-auto" type="submit">Add Line</button>
                         </div>
                     </div>
 
-                </form>
 
-                <div class="col-md-4 col-sm-6">
-                    <div class="form-group">
-                        <label>(Total Base Amount)</label>
-                        <input type="text" value="" class="form-control" required="">
+
+                    <div class="col-md-4 col-sm-6">
+                        <div class="form-group">
+                            <label>(Total Base Amount)</label>
+                            <input type="text" value="" class="form-control" required="">
+                        </div>
                     </div>
-                </div>
 
-                <div class="col-md-4 col-sm-6">
-                    <div class="form-group">
-                        <label>(Total GST Amount)</label>
-                        <input type="text" value="" class="form-control" required="">
+                    <div class="col-md-4 col-sm-6">
+                        <div class="form-group">
+                            <label>(Total GST Amount)</label>
+                            <input type="text" value="" class="form-control" required="">
+                        </div>
                     </div>
-                </div>
 
-                <div class="col-md-4 col-sm-6">
-                    <div class="form-group">
-                        <label>(Net total)</label>
-                        <input type="text" value="" class="form-control" required="">
+                    <div class="col-md-4 col-sm-6">
+                        <div class="form-group">
+                            <label>(Net total)</label>
+                            <input type="text" value="" class="form-control" required="">
+                        </div>
                     </div>
-                </div>
 
-            </div>
+                </div>
+            </form>
 
         </div>
         <div class="dasboard-table pi-table mb-0">
