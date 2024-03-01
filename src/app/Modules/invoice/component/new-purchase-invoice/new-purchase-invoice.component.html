@@ -160,8 +160,6 @@
                 <div class="col-md-4 col-sm-6">
                     <div class="form-group">
                         <label for="city">City</label>
-
-
                         <input type="text" class="form-control" id="city" placeholder="city"
                             formControlName="ImpiHeaderCustomerCity" />
                         <div *ngIf="shouldShowError('ImpiHeaderCustomerCity','required')" class="text-danger">This field
@@ -180,9 +178,7 @@
                             required.
                         </div>
                         <div *ngIf="shouldShowError('ImpiHeaderCustomerPinCode','pattern')" class="text-danger"> Please
-                            enter a
-                            valid
-                            6-digit Pin Code.</div>
+                            enter a valid 6-digit Pin Code.</div>
                     </div>
                 </div>
 
@@ -345,6 +341,7 @@
                     <thead>
                         <tr>
                             <th>#</th>
+                            <th>Line No</th>
                             <th width="38%">Nature of Expense</th>
                             <th>Quantity</th>
                             <th>Direct Unit Cost</th>
@@ -360,6 +357,7 @@
 
                         <tr *ngFor="let e of publicVariable.expenses; let i = index">
                             <td>{{i + 1}}</td>
+                            <td></td>
                             <td>{{e.natureOfExpense }}</td>
                             <td>{{e.unitCost}}</td>
                             <td>2500</td>
@@ -378,15 +376,6 @@
                                 </span>
                             </td>
                         </tr>
-                        <tr>
-                            <td colspan="8" class="text-end">Total</td>
-                            <td colspan="2" class="text-end"><b>1000</b></td>
-                        </tr>
-                        <tr>
-                            <td colspan="78" class="text-start">Total Amount Receivable In Word: </td>
-                            <td colspan="2" class="text-end"><b></b></td>
-                        </tr>
-
                     </tbody>
                 </table>
 

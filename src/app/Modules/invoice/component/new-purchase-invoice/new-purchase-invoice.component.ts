@@ -66,7 +66,6 @@ export class NewPurchaseInvoiceComponent implements OnInit {
 
     private createExpenseForm(): void {
         this.publicVariable.expenseForm = this.fb.group({
-            id:[''],
             natureOfExpense: [null, Validators.required],
             quantity: ['', Validators.required],
             gstGroupCode: [null, Validators.required],
@@ -488,8 +487,6 @@ export class NewPurchaseInvoiceComponent implements OnInit {
 
     onAddLine() {
         if (this.publicVariable.expenseForm.valid) {
-            console.log(this.publicVariable.expenseForm.value)
-
             if (this.publicVariable.editingIndex === -1) {
                 this.publicVariable.expenses.push(this.publicVariable.expenseForm.value);
             } else {
@@ -497,15 +494,14 @@ export class NewPurchaseInvoiceComponent implements OnInit {
                 this.publicVariable.editingIndex = -1;
             }
             this.publicVariable.expenseForm.reset();
-        }
-        else {
+        } else {
             this.markexpenseFormControlsAsTouched();
         }
     }
 
+
     editExpense(data:any,index:number) {
         this.publicVariable.expenseForm.patchValue({
-            id:data.id,
             gstGroupCode: data.gstGroupCode,
             hsnCode: data.hsnCode,
             natureOfExpense: data.natureOfExpense,
