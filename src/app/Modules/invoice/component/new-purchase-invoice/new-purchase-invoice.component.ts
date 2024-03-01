@@ -492,11 +492,22 @@ export class NewPurchaseInvoiceComponent implements OnInit {
                 formData.append(`lineItem_Requests[${i}].ImpiLocationCode`, 'FICCI-DL');
                 formData.append(`lineItem_Requests[${i}].ImpiQuantity`, item.quantity);
                 formData.append(`lineItem_Requests[${i}].ImpiUnitPrice`, item.unitCost);
+
                 formData.append(`lineItem_Requests[${i}].ImpiGstgroupCode`, item.gstGroupCode);
                 formData.append(`lineItem_Requests[${i}].ImpiGstgroupType`, 'GOODS');
                 formData.append(`lineItem_Requests[${i}].ImpiLineNo`, '10000');
                 formData.append(`lineItem_Requests[${i}].ImpiHsnsaccode`, item.hsnCode);
                 formData.append(`lineItem_Requests[${i}].documentType`, item.natureOfExpense);
+
+
+                // Calculate the amount here
+                const quantity = parseFloat(item.quantity);
+                const unitPrice = parseFloat(item.unitCost);
+                const calculateAmount = quantity * unitPrice;
+
+                // Append the calculated amount to the FormData object
+                formData.append(`lineItem_Requests[${i}].ImpiLineAmount`, calculateAmount.toString());
+
             }
 
 
