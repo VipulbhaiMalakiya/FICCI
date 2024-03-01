@@ -373,63 +373,6 @@
 
         </div>
         <div class="text-end"><a href="#" class="common-btn w-auto">Calculate</a></div>
-
-        <!-- <div class="dasboard-table pi-table">
-            <div class="table-responsive">
-                <table class="table table-bordered">
-                    <thead>
-                        <tr>
-                            <th width="38%">Particulars</th>
-                            <th>Unit</th>
-                            <th>Discount</th>
-                            <th>Rate/Unit(INR)</th>
-                            <th>Amount(INR)</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody formArrayName="items">
-                        <tr *ngFor="let item of itemsFormArray.controls; let i = index" [formGroupName]="i">
-                            <td>
-                                <input class="form-control" formControlName="impiLineDescription"
-                                    placeholder="Particulars" type="text" required />
-
-                            </td>
-                            <td><input class="form-control" (input)="onInputChange($event)"
-                                    formControlName="impiLineQuantity" type="text" placeholder="Unit" required /></td>
-                            <td><input class="form-control" (input)="onDiscountInput($event)"
-                                    formControlName="impiLineDiscount" type="text" placeholder="Discount" required />
-                            </td>
-                            <td><input class="form-control" (input)="priceValidator($event)"
-                                    formControlName="impiLineUnitPrice" type="text" placeholder="Rate/Unit(INR)"
-                                    required /></td>
-                            <td><input class="form-control" type="text" placeholder="Amount(INR)"
-                                    [value]="item.value !== 0 ? calculateAmount(item.value) : ''" readonly /></td>
-                            <td>
-                                <span class="table-btns">
-                                    <a (click)="addItem()"><img src="../assets/images/plus-icon.svg" alt="" /></a>
-                                    <a *ngIf="i > 0" (click)="removeItem(i)"><img src="../assets/images/delete-icon.svg"
-                                            alt="" /></a>
-                                </span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="4" class="text-end">Total</td>
-                            <td colspan="2" class="text-end"><b>{{ calculateTotalAmount() | currency: 'INR' }}</b></td>
-                        </tr>
-                        <tr>
-                            <td colspan="4" class="text-start">Total Amount Receivable In Word: {{
-                                calculateTotalAmount() | numberToWords1 }}</td>
-                            <td colspan="2" class="text-end"><b>{{ calculateTotalAmount() | currency: 'INR' }}</b></td>
-                        </tr>
-                    </tbody>
-
-                </table>
-
-
-            </div>
-        </div> -->
-
-
         <div class="note-para">
             <p>Upload Only Digitally Signed Attachments (Sales Invoice, Purchase Order, Challan,
                 Sample Copy, Other Documents)* <span class="text-danger">(Max File Size 5 MB
