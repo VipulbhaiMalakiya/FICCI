@@ -16,6 +16,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
     ImpiHeaderAttachment: any;
     Id?: number;
     data: any;
+    public isEditing: boolean = false;
 
 
 
@@ -507,7 +508,8 @@ export class NewPurchaseInvoiceComponent implements OnInit {
             natureOfExpense: data.natureOfExpense,
             quantity: data.quantity,
             unitCost: data.unitCost,
-        })
+        });
+        this.isEditing = true;
     }
 
     deleteExpense(index: number) {
