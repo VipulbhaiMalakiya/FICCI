@@ -39,9 +39,10 @@ export class NewPurchaseInvoiceComponent implements OnInit {
             headerid: [''],
             ImpiHeaderInvoiceType: ['Proforma Invoice', Validators.required],
             ImpiHeaderProjectCode: [null, [Validators.required]],
+            Project:[{ value: '', disabled: true }, [Validators.required]],
             ImpiHeaderDepartment: [{ value: '', disabled: true }, [Validators.required]],
             ImpiHeaderDivison: [{ value: '', disabled: true }, [Validators.required]],
-            ImpiHeaderPanNo: ['', [Validators.required, panValidator()]], // Use the custom validator function
+            ImpiHeaderPanNo: ['', [Validators.required, panValidator()]],
             ImpiHeaderGstNo: ['', [Validators.required, gstValidator()]],
             PINO: [''], //api missing
             ImpiHeaderCustomerName: [null, [Validators.required]],
@@ -175,6 +176,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
             ImpiHeaderPaymentTerms: data.impiHeaderPaymentTerms,
             ImpiHeaderRemarks: data.impiHeaderRemarks,
             IsDraft: data.isDraft,
+            Project:data.Project
             // items: this.fb.array([]),
         });
         const lineItemsArray = this.publicVariable.dataForm.get('items') as FormArray;
@@ -299,6 +301,8 @@ export class NewPurchaseInvoiceComponent implements OnInit {
                 this.publicVariable.dataForm.patchValue({
                     ImpiHeaderDepartment: this.publicVariable.selectedProjet.departmentName,
                     ImpiHeaderDivison: this.publicVariable.selectedProjet.divisionName,
+                    Project:this.publicVariable.selectedProjet.name
+
                 });
             }
         } else {
