@@ -94,8 +94,8 @@
                 <div class="col-md-4 col-sm-6">
                     <div class="form-group">
                         <label>City</label>
-                        <input type="text" value="{{data.impiHeaderCustomerCity}}" class="form-control"
-                            disabled="" readonly="">
+                        <input type="text" value="{{data.impiHeaderCustomerCity}}" class="form-control" disabled=""
+                            readonly="">
                     </div>
                 </div>
 
@@ -146,48 +146,36 @@
         <div class="dasboard-table pi-table">
 
             <div class="table-responsive">
-
-                <table class="table table-bordered">
+                <table class="table table-bordered text-nowrap">
                     <thead>
                         <tr>
-                            <th width="38%">Particulars</th>
-                            <th>Unit</th>
-                            <th>Discount</th>
-                            <th>Rate/Unit(INR)</th>
-                            <th>Amount(INR)</th>
+                            <th>#</th>
+                            <th>Line No</th>
+                            <th width="38%">Nature of Expense</th>
+                            <th>Quantity</th>
+                            <th>Direct Unit Cost</th>
+                            <th>Line Amount</th>
+                            <th>GST Group Code</th>
+                            <th>HSN/SAC Code</th>
+
                         </tr>
                     </thead>
                     <tbody>
 
-                        <tr *ngFor="let i of data.lineItem_Requests">
-                            <td><input type="text" value="{{i.impiLineDescription}}" class="form-control" disabled=""
-                                    readonly=""></td>
-                            <td><input type="text" value="{{i.impiLineQuantity}}" class="form-control" disabled=""
-                                    readonly=""></td>
-                            <td><input type="text" value="{{i.impiLineDiscount}}" class="form-control" disabled=""
-                                    readonly=""></td>
-                            <td><input type="text" value="{{i.impiLineUnitPrice}}" class="form-control" disabled=""
-                                    readonly=""></td>
-                            <td><input type="text" value="{{i.impiLineAmount}}" class="form-control" disabled=""
-                                    readonly=""></td>
-                        </tr>
+                        <tr *ngFor="let e of data.lineItem_Requests; let i = index">
+                            <td>{{i + 1}}</td>
+                            <td></td>
+                            <td>{{e.documentType | titlecase }}</td>
+                            <td>{{e.impiQuantity}}</td>
+                            <td>{{e.impiUnitPrice}}</td>
+                            <td>{{e.impiQuantity * e.impiUnitPrice}}</td>
+                            <td>{{e.impiGstgroupCode }}</td>
+                            <td>{{e.impiHsnsaccode}}</td>
 
-                        <tr>
-                            <td colspan="3" class="text-end">Total</td>
-                            <td colspan="2" class="text-end"><b>{{data.impiHeaderTotalInvoiceAmount | currency:
-                                    'INR'}}</b></td>
-                        </tr>
 
-                        <tr>
-                            <td colspan="3" class="text-start">Total Amount Receivable In Word: {{
-                                data.impiHeaderTotalInvoiceAmount | numberToWords1 }}</td>
-                            <td colspan="2" class="text-end"><b>{{data.impiHeaderTotalInvoiceAmount | currency:
-                                    'INR'}}</b></td>
                         </tr>
-
                     </tbody>
                 </table>
-
             </div>
 
         </div>
@@ -220,9 +208,7 @@
                 <div class="form-group">
                     <label>Remarks</label>
                     <textarea class="form-control h-100" cols="3" rows="5" formControlName="remarks"></textarea>
-                    <div *ngIf="shouldShowError('remarks', 'required')" class="text-danger">
-                        This field is required
-                    </div>
+
                 </div>
             </div>
 
@@ -245,7 +231,7 @@
                     <label for="email" class="col-sm-2 col-form-label">Mail to</label>
                     <div class="col-sm-9">
                         <input type="text" class="form-control" id="email" placeholder="Mail to"
-                        formControlName="emailTo">
+                            formControlName="emailTo">
                         <div *ngIf="shouldShowError('emailTo','required')" class="text-danger">Phone
                             number is required.</div>
                     </div>
@@ -255,7 +241,7 @@
                     <label for="Subject" class="col-sm-2 col-form-label">Subject</label>
                     <div class="col-sm-9">
                         <input type="text" class="form-control" placeholder="Subject" formControlName="subject"
-                        id="Subject">
+                            id="Subject">
                         <div *ngIf="shouldShowError('subject','required')" class="text-danger">Phone
                             number is required.</div>
                     </div>
@@ -275,15 +261,15 @@
                 <div class="mb-3 row attach-col2">
                     <label for="formFile" class="col-sm-2 col-form-label">Attachment</label>
                     <div class="col-sm-9">
-                        <input class="form-control" type="file" id="formFile"
-                        formControlName="attachment">
+                        <input class="form-control" type="file" id="formFile" formControlName="attachment">
                     </div>
                 </div>
 
                 <div class="col-md-12">
                     <div class="form-group mb-0 mt-4">
                         <input type="checkbox" class="btn-check" id="btn-check" autocomplete="off">
-                        <label class="btn btn-secondary w-auto mb-0 me-2" for="btn-check" (click)="onback()">Back</label>
+                        <label class="btn btn-secondary w-auto mb-0 me-2" for="btn-check"
+                            (click)="onback()">Back</label>
                         <button type="submit" class="common-btn w-auto">Submit</button>
                     </div>
                 </div>
