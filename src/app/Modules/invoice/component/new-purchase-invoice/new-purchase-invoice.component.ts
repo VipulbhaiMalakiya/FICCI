@@ -435,6 +435,8 @@ export class NewPurchaseInvoiceComponent implements OnInit {
         if (this.publicVariable.dataForm.valid) {
             const newData = this.publicVariable.dataForm.value;
             const isUpdate = !!newData.headerid;
+            let impiHeaderTotalInvoiceAmount = 0; // Initialize the total amount
+
             const formData = new FormData();
 
             if (isUpdate) {
@@ -462,7 +464,6 @@ export class NewPurchaseInvoiceComponent implements OnInit {
             formData.append('impiHeaderCreatedBy', this.publicVariable.storedEmail)
 
             //TEST CODE
-            formData.append('impiHeaderTotalInvoiceAmount', '123')
             formData.append('ImpiHeaderPaymentTerms', newData.ImpiHeaderPaymentTerms);
             formData.append('ImpiHeaderRemarks', newData.ImpiHeaderRemarks);
             formData.append('IsDraft', action.toString());
@@ -483,11 +484,9 @@ export class NewPurchaseInvoiceComponent implements OnInit {
             formData.append('ImpiHeaderSupportApprover', this.publicVariable.selectedProjet.supportApprover);
             formData.append('RoleName', this.publicVariable.storedRole);
 
-            formData.append('ImpiHeaderTotalInvoiceAmount', '00');
 
             for (let i = 0; i < this.publicVariable.expenses.length; i++) {
                 const item = this.publicVariable.expenses[i];
-                console.log("Appending data for item:", item);
                 formData.append(`lineItem_Requests[${i}].ImpiNetTotal`, '0');
                 formData.append(`lineItem_Requests[${i}].ImpiLocationCode`, 'FICCI-DL');
                 formData.append(`lineItem_Requests[${i}].ImpiQuantity`, item.quantity);
@@ -504,11 +503,14 @@ export class NewPurchaseInvoiceComponent implements OnInit {
                 const quantity = parseFloat(item.quantity);
                 const unitPrice = parseFloat(item.unitCost);
                 const calculateAmount = quantity * unitPrice;
-
-                // Append the calculated amount to the FormData object
                 formData.append(`lineItem_Requests[${i}].ImpiLineAmount`, calculateAmount.toString());
+                
+                impiHeaderTotalInvoiceAmount += calculateAmount;
 
             }
+
+            formData.append('impiHeaderTotalInvoiceAmount', String(impiHeaderTotalInvoiceAmount));
+            
 
 
 
