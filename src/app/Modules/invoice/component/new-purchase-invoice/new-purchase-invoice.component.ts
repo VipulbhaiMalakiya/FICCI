@@ -12,9 +12,7 @@ import { finalize, timeout } from 'rxjs';
 export class NewPurchaseInvoiceComponent implements OnInit {
 
     publicVariable = new publicVariable();
-    items: any[] = [
-        { impiLineDescription: '', impiLineQuantity: '', impiLineDiscount: '', impiLineUnitPrice: '', calculateAmount: '' }
-    ];
+
     ImpiHeaderAttachment: any;
     Id?: number;
     data: any;
@@ -60,7 +58,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
             IsDraft: [false]
         });
         // Initialize items form array
-        this.items.forEach(item => this.addItem(item));
+        // this.items.forEach(item => this.addItem(item));
     }
 
 
@@ -113,12 +111,12 @@ export class NewPurchaseInvoiceComponent implements OnInit {
 
     onGSTGroupChange(gstCode: any) {
         try {
-            
+
             const subscription = this.API.GetHSNSACLIist(gstCode.code).subscribe({
                 next: (response: any) => {
                     this.publicVariable.HSNSACList  =response.data;
                     console.log(this.publicVariable.HSNSACList);
-                    
+
                 },
                 error: (error) => {
                     console.error('Error loading project list:', error);
@@ -171,14 +169,14 @@ export class NewPurchaseInvoiceComponent implements OnInit {
         const lineItemsArray = this.publicVariable.dataForm.get('items') as FormArray;
         lineItemsArray.clear(); // Clear existing items before patching
 
-        data.lineItem_Requests.forEach((item: any) => {
-            lineItemsArray.push(this.fb.group({
-                impiLineDescription: [item.impiLineDescription],
-                impiLineQuantity: [item.impiLineQuantity],
-                impiLineDiscount: [item.impiLineDiscount],
-                impiLineUnitPrice: [item.impiLineUnitPrice],
-            }));
-        });
+        // data.lineItem_Requests.forEach((item: any) => {
+        //     lineItemsArray.push(this.fb.group({
+        //         impiLineDescription: [item.impiLineDescription],
+        //         impiLineQuantity: [item.impiLineQuantity],
+        //         impiLineDiscount: [item.impiLineDiscount],
+        //         impiLineUnitPrice: [item.impiLineUnitPrice],
+        //     }));
+        // });
     }
 
     loadProjectList(): void {
@@ -338,39 +336,6 @@ export class NewPurchaseInvoiceComponent implements OnInit {
     get itemsFormArray(): FormArray {
         return this.publicVariable.dataForm.get('items') as FormArray;
     }
-    addItem(item?: any): void {
-        item = item || { impiLineDescription: '', impiLineQuantity: '', impiLineDiscount: '', impiLineUnitPrice: '', calculateAmount: '' };
-        this.itemsFormArray.push(this.fb.group({
-            impiLineDescription: [item.impiLineDescription, Validators.required],
-            impiLineQuantity: [item.impiLineQuantity, Validators.required],
-            impiLineDiscount: [item.impiLineDiscount, [Validators.required, Validators.min(0), Validators.max(100)]],
-            impiLineUnitPrice: [item.impiLineUnitPrice, Validators.required],
-            calculateAmount: [this.calculateAmount(item), Validators.required]
-        }));
-    }
-
-
-
-    removeItem(index: number): void {
-        this.itemsFormArray.removeAt(index);
-    }
-
-    calculateAmount(item: any): number {
-        const impiLineQuantity = parseFloat(item.impiLineQuantity) || 0;
-        const impiLineDiscount = parseFloat(item.impiLineDiscount) || 0;
-        const impiLineUnitPrice = parseFloat(item.impiLineUnitPrice) || 0;
-        const amount = impiLineQuantity * impiLineUnitPrice * (1 - impiLineDiscount / 100);
-        return isNaN(amount) ? 0 : amount;
-    }
-
-    calculateTotalAmount(): number {
-        let total = 0;
-        this.itemsFormArray.controls.forEach(control => {
-            total += this.calculateAmount(control.value);
-        });
-        return total;
-    }
-
 
     onFileSelected(event: any) {
         const selectedFile = event.target.files[0];
@@ -454,7 +419,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
             formData.append('ImpiHeaderRemarks', newData.ImpiHeaderRemarks);
             formData.append('IsDraft', action.toString());
             formData.append('LoginId', this.publicVariable.storedEmail);
-            formData.append('ImpiHeaderTotalInvoiceAmount', String(this.calculateTotalAmount()));
+            // formData.append('ImpiHeaderTotalInvoiceAmount', String(this.calculateTotalAmount()));
             formData.append('ImpiHeaderCustomerCode', 'dummy');
             formData.append('ImpiHeaderCreatedBy', 'dummy');
             for (let i = 0; i < newData.items.length; i++) {
