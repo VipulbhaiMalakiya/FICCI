@@ -318,7 +318,7 @@
 
                         </div>
                     </div>
-
+<!--
                     <div class="col-md-4 col-sm-6" *ngIf="publicVariable.expenses.length > 0">
                         <div class="form-group">
                             <label>(Total Base Amount)</label>
@@ -341,7 +341,7 @@
                             <input type="text" class="form-control" [value]="calculateNetTotal()"
                                 placeholder="Net total" disabled="">
                         </div>
-                    </div>
+                    </div> -->
 
                 </div>
             </form>
@@ -362,8 +362,8 @@
                             <th>Line Amount</th>
                             <th>GST Group Code</th>
                             <th>HSN/SAC Code</th>
-                            <th>GST Base Amount</th>
-                            <th>GST Amount</th>
+                            <!-- <th>GST Base Amount</th>
+                            <th>GST Amount</th> -->
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -378,8 +378,8 @@
                             <td>{{e.quantity * e.unitCost}}</td>
                             <td>{{e.gstGroupCode }}</td>
                             <td>{{e.hsnCode}}</td>
-                            <td>{{ calculateGSTBaseAmount(e) }}</td>
-                            <td>{{ calculateGSTAmount(e) }}</td>
+                            <!-- <td>{{ calculateGSTBaseAmount(e) }}</td>
+                            <td>{{ calculateGSTAmount(e) }}</td> -->
                             <td><span class="table-btns">
                                     <a href="javascript:void(0)" (click)="editExpense(e,i)"><img
                                             src="../assets/images/edit-icon.svg" alt=""></a>
