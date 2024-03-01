@@ -16,6 +16,8 @@ export class NewPurchaseInvoiceComponent implements OnInit {
     Id?: number;
     data: any;
     public isEditing: boolean = false;
+    uploadedFiles: File[] = [];
+
 
     constructor(private appService: AppService,
         private modalService: NgbModal,
@@ -342,36 +344,58 @@ export class NewPurchaseInvoiceComponent implements OnInit {
         return this.publicVariable.dataForm.get('items') as FormArray;
     }
 
-    onFileSelected(event: any) {
-        const selectedFile = event.target.files[0];
+    onFilesSelected(event: any) {
+        const selectedFiles: FileList = event.target.files;
         const allowedTypes = ['application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', // .xlsx
-            'application/vnd.ms-excel', // .xls
-            'application/msword', // .doc
-            'text/csv', // .csv
-            'application/pdf']; // .pdf
+          'application/vnd.ms-excel', // .xls
+          'application/msword', // .doc
+          'text/csv', // .csv
+          'application/pdf']; // .pdf
         const maxSize = 5 * 1024 * 1024; // 5MB in bytes
 
-        if (!selectedFile) {
-            // No file selected
-            return;
-        }
+        for (let i = 0; i < selectedFiles.length; i++) {
+          const file = selectedFiles[i];
 
-        if (!allowedTypes.includes(selectedFile.type)) {
+          if (!allowedTypes.includes(file.type)) {
             alert('Only .doc, .csv, .xlsx, and .pdf files are allowed.');
             // Clear the file input
             event.target.value = null;
             return;
-        }
+          }
 
-        if (selectedFile.size > maxSize) {
-            alert('File size exceeds the maximum limit of 5MB.');
+          if (file.size > maxSize) {
+            alert('File size exceeds 5MB limit.');
             // Clear the file input
             event.target.value = null;
             return;
-        }
-        this.ImpiHeaderAttachment = selectedFile;
+          }
 
-    }
+          this.uploadedFiles.push(file);
+        }
+      }
+
+      getFileType(type: string): string {
+        // Convert file type to readable format
+        switch (type) {
+          case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
+            return '.xlsx';
+          case 'application/vnd.ms-excel':
+            return '.xls';
+          case 'application/msword':
+            return '.doc';
+          case 'text/csv':
+            return '.csv';
+          case 'application/pdf':
+            return '.pdf';
+          default:
+            return 'Unknown';
+        }
+      }
+
+      deleteFile(index: number) {
+        this.uploadedFiles.splice(index, 1);
+      }
+
 
 
     onSubmit(action: boolean): void {
