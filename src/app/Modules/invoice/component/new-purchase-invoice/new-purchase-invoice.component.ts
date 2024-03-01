@@ -33,6 +33,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
 
     ) {
         this.initializeForm();
+        this.createExpenseForm();
     }
 
     private initializeForm(): void {
@@ -66,6 +67,15 @@ export class NewPurchaseInvoiceComponent implements OnInit {
         // this.items.forEach(item => this.addItem(item));
     }
 
+    private createExpenseForm() :void{
+        this.publicVariable.expenseForm  = this.fb.group({
+            natureOfExpense: [null, Validators.required],
+            quantity: ['', Validators.required],
+            gstGroupCode: [null, Validators.required],
+            hsnCode:[null, Validators.required],
+            unitCost:['', Validators.required],
+        })
+    }
 
 
     ngOnInit(): void {
@@ -202,9 +212,6 @@ export class NewPurchaseInvoiceComponent implements OnInit {
             console.error('Error loading project list:', error);
         }
     }
-
-
-
     loadCustomerStatusList(): void {
         const subscription = this.API.GetCustomerList().pipe(
             timeout(120000), // Timeout set to 2 minutes (120000 milliseconds)
@@ -246,8 +253,6 @@ export class NewPurchaseInvoiceComponent implements OnInit {
             this.handleLoadingError()
         }
     }
-
-
 
     stateSearchFn(term: string, item: any) {
         const concatenatedString = `${item.stateCode} ${item.stateName}`.toLowerCase();
@@ -427,20 +432,19 @@ export class NewPurchaseInvoiceComponent implements OnInit {
             // formData.append('ImpiHeaderTotalInvoiceAmount', String(this.calculateTotalAmount()));
             formData.append('ImpiHeaderCustomerCode', 'dummy');
             formData.append('ImpiHeaderCreatedBy', 'dummy');
-            for (let i = 0; i < newData.items.length; i++) {
-                const item = newData.items[i];
-                formData.append(`lineItem_Requests[${i}].impiLineDescription`, item.impiLineDescription);
-                formData.append(`lineItem_Requests[${i}].impiLineQuantity`, item.impiLineQuantity);
-                formData.append(`lineItem_Requests[${i}].impiLineDiscount`, item.impiLineDiscount);
-                formData.append(`lineItem_Requests[${i}].impiLineUnitPrice`, item.impiLineUnitPrice);
-                // Calculate the amount here
-                const quantity = parseFloat(item.impiLineQuantity);
-                const unitPrice = parseFloat(item.impiLineUnitPrice);
-                const discount = parseFloat(item.impiLineDiscount);
-                const calculateAmount = quantity * unitPrice * (1 - (discount / 100));
-                // Append the calculated amount to the FormData object
-                formData.append(`lineItem_Requests[${i}].impiLineAmount`, calculateAmount.toString());
-            }
+            // for (let i = 0; i < newData.items.length; i++) {
+            //     const item = newData.items[i];
+            //     formData.append(`lineItem_Requests[${i}].impiLineDescription`, item.impiLineDescription);
+            //     formData.append(`lineItem_Requests[${i}].impiLineQuantity`, item.impiLineQuantity);
+            //     formData.append(`lineItem_Requests[${i}].impiLineDiscount`, item.impiLineDiscount);
+            //     formData.append(`lineItem_Requests[${i}].impiLineUnitPrice`, item.impiLineUnitPrice);
+            //     const quantity = parseFloat(item.impiLineQuantity);
+            //     const unitPrice = parseFloat(item.impiLineUnitPrice);
+            //     const discount = parseFloat(item.impiLineDiscount);
+            //     const calculateAmount = quantity * unitPrice * (1 - (discount / 100));
+            //     // Append the calculated amount to the FormData object
+            //     formData.append(`lineItem_Requests[${i}].impiLineAmount`, calculateAmount.toString());
+            // }
 
 
             // Check if ImpiHeaderInvoiceType is Tax Invoice, then include PINO
@@ -482,22 +486,23 @@ export class NewPurchaseInvoiceComponent implements OnInit {
         ].forEach(controlName => {
             this.publicVariable.dataForm.controls[controlName].markAsTouched();
         });
-
-        // Marking form controls under 'items' FormArray as touched
-        const itemsFormArray = this.publicVariable.dataForm.get('items') as FormArray;
-        if (itemsFormArray) {
-            for (let i = 0; i < itemsFormArray.length; i++) {
-                const itemFormGroup = itemsFormArray.at(i) as FormGroup;
-                if (itemFormGroup) {
-                    Object.values(itemFormGroup.controls).forEach(control => {
-                        control.markAsTouched();
-                    });
-                }
-            }
-        }
     }
 
     shouldShowError(controlName: string, errorName: string): boolean {
         return this.publicVariable.dataForm.controls[controlName].touched && this.publicVariable.dataForm.controls[controlName].hasError(errorName);
+    }
+
+    onAddLine(){
+        if (this.publicVariable.expenseForm.valid) {
+
+        }
+        else {
+            this.markexpenseFormControlsAsTouched();
+        }
+    }
+    markexpenseFormControlsAsTouched():void{
+        ['ImpiHeaderInvoiceType', 'ImpiHeaderProjectCode', 'ImpiHeaderDepartment'].forEach(controlName => {
+        this.publicVariable.expenseForm.controls[controlName].markAsTouched();
+    });
     }
 }

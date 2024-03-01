@@ -241,60 +241,65 @@
 
         <div class="mastersform-sec mb-0">
             <div class="row">
+                <form [formGroup]="publicVariable.expenseForm" (ngSubmit)="onAddLine()">
 
-                <div class="col-md-4 col-sm-6">
-                    <div class="form-group">
-                        <label>Nature of Expense</label>
-                        <ng-select [items]="publicVariable.COAMasterList" #select bindLabel="name" bindValue="no"
-                            placeholder="Select " [searchable]="true" [virtualScroll]="true" [bufferAmount]="10">
-
-                        </ng-select>
+                    <div class="col-md-4 col-sm-6">
+                        <div class="form-group">
+                            <label>Nature of Expense</label>
+                            <ng-select [items]="publicVariable.COAMasterList" #select bindLabel="name" bindValue="name"
+                                placeholder="Select " [searchable]="true" [virtualScroll]="true" [bufferAmount]="10"
+                                formControlName="natureOfExpense">
+                            </ng-select>
+                        </div>
                     </div>
-                </div>
 
-                <div class="col-md-4 col-sm-6">
-                    <div class="form-group">
-                        <label for="Quantity">Quantity</label>
-                        <input type="text" class="form-control" id="Quantity" placeholder="Quantity" />
+                    <div class="col-md-4 col-sm-6">
+                        <div class="form-group">
+                            <label for="Quantity">Quantity</label>
+                            <input type="text" class="form-control" id="Quantity" placeholder="Quantity"
+                            formControlName="quantity" />
+                        </div>
                     </div>
-                </div>
 
-                <div class="col-md-4 col-sm-6">
-                    <div class="form-group">
-                        <label>GST Group Code</label>
-                        <ng-select [items]="publicVariable.GSTGroupList" #select bindLabel="code" bindValue="code"
-                            placeholder="Select " [searchable]="true" [virtualScroll]="true" [bufferAmount]="10"
-                            (change)="onGSTGroupChange($event)">
-
-                        </ng-select>
+                    <div class="col-md-4 col-sm-6">
+                        <div class="form-group">
+                            <label>GST Group Code</label>
+                            <ng-select [items]="publicVariable.GSTGroupList" #select bindLabel="code" bindValue="code"
+                                placeholder="Select " [searchable]="true" [virtualScroll]="true" [bufferAmount]="10"
+                                (change)="onGSTGroupChange($event)"
+                                formControlName="gstGroupCode">
+                            </ng-select>
+                        </div>
                     </div>
-                </div>
 
-                <div class="col-md-4 col-sm-6">
-                    <div class="form-group">
-                        <label>HSN/SAC Code</label>
-                        <ng-select [items]="publicVariable.HSNSACList" #select bindLabel="hsnCode" bindValue="hsnCode"
-                            placeholder="Select " [searchable]="true" [virtualScroll]="true" [bufferAmount]="10">
-                            <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
-                                <small>{{item.hsnCode}} - {{item.hsnGroup}}</small>
-                            </ng-template>
-                        </ng-select>
+                    <div class="col-md-4 col-sm-6">
+                        <div class="form-group">
+                            <label>HSN/SAC Code</label>
+                            <ng-select [items]="publicVariable.HSNSACList" #select bindLabel="hsnCode"
+                                bindValue="hsnCode" placeholder="Select " [searchable]="true" [virtualScroll]="true"
+                                [bufferAmount]="10" formControlName="hsnCode">
+                                <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
+                                    <small>{{item.hsnCode}} - {{item.hsnGroup}}</small>
+                                </ng-template>
+                            </ng-select>
+                        </div>
                     </div>
-                </div>
 
-                <div class="col-md-4 col-sm-6">
-                    <div class="form-group">
-                        <label>Direct Unit Cost</label>
-                        <input type="text" value="" class="form-control" required="">
+                    <div class="col-md-4 col-sm-6">
+                        <div class="form-group">
+                            <label>Direct Unit Cost</label>
+                            <input type="text" class="form-control" placeholder="Direct Unit Cost" formControlName="unitCost">
+                        </div>
                     </div>
-                </div>
 
-                <div class="col-md-4 col-sm-6">
-                    <div class="form-group">
-                        <label>&nbsp;</label>
-                        <button class="common-btn w-auto" type="submit">Add Line</button>
+                    <div class="col-md-4 col-sm-6">
+                        <div class="form-group">
+                            <label>&nbsp;</label>
+                            <button  class="common-btn w-auto" type="submit">Add Line</button>
+                        </div>
                     </div>
-                </div>
+
+                </form>
 
                 <div class="col-md-4 col-sm-6">
                     <div class="form-group">
@@ -352,8 +357,8 @@
                             <td><span class="table-btns">
                                     <a href="#"><img src="../assets/images/plus-icon.svg" alt=""></a>
                                     <a href="javascript:void(0)" data-bs-toggle="modal"
-                                        data-bs-target="#deleterecord-modal"><img
-                                            src="../assets/images/delete-icon.svg" alt=""></a>
+                                        data-bs-target="#deleterecord-modal"><img src="../assets/images/delete-icon.svg"
+                                            alt=""></a>
                                 </span>
                             </td>
                         </tr>
