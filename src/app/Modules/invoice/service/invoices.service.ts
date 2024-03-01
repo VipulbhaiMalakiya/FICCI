@@ -24,6 +24,10 @@ export class InvoicesService {
     private GetGSTGroupAPI = `${environment.apiURL}DropDown/GetGSTGroup`;
     private GetHSNSACAPI = `${environment.apiURL}DropDown/GetHSNSAC?gstCode=`;
 
+    getApproveInvoice(): Observable<any[]> {
+        const url = `${this.ApproveInvoiceURL}${localStorage.getItem('userEmail') ?? ''}`;
+        return this.http.get<any[]>(url).pipe(this.retry);
+    }
 
     GetHSNSACLIist(gstCode:any){
         const url = `${this.GetHSNSACAPI}${gstCode}`;
@@ -65,10 +69,7 @@ export class InvoicesService {
         return this.http.get<any[]>(url).pipe(this.retry);
     }
 
-    getApproveInvoice(): Observable<any[]> {
-        const url = `${this.ApproveInvoiceURL}${localStorage.getItem('userEmail') ?? ''}`;
-        return this.http.get<any[]>(url).pipe(this.retry);
-    }
+
 
     isApproverRemarks(data: any): Observable<any[]> {
         return this.http.post<any[]>(`${this.ApproverURL}`, data).pipe(this.retry);

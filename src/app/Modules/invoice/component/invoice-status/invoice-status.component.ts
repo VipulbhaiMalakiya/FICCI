@@ -31,9 +31,15 @@ export class InvoiceStatusComponent implements OnInit {
         try {
             const subscription = this.API.getPurchaseInvoice_New().subscribe({
                 next: (response: any) => {
-                    this.publicVariable.invoiceStatuslistData = response.data;
-                    this.publicVariable.count = response.data.length;
-
+                    if (response.data && Array.isArray(response.data)) {
+                        this.publicVariable.invoiceStatuslistData = response.data;
+                        this.publicVariable.count = response.data.length;
+                    } else {
+                        // Handle case where response data is null or not an array
+                        this.publicVariable.invoiceStatuslistData = [];
+                        this.publicVariable.count = 0;
+                        console.warn('Response data is null or not an array:', response.data);
+                    }
                 },
                 error: (error) => {
                     console.error('Error loading project list:', error);
@@ -45,6 +51,7 @@ export class InvoiceStatusComponent implements OnInit {
             console.error('Error loading project list:', error);
         }
     }
+
 
     toTitleCase(str: string): string {
         return str.toLowerCase().split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');

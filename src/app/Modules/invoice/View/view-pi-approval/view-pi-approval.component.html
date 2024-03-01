@@ -142,36 +142,35 @@
 
         <div class="table-responsive">
 
-            <table class="table table-bordered">
+            <table class="table table-bordered text-nowrap">
                 <thead>
                     <tr>
-                        <th width="38%">Particulars</th>
-                        <th>Unit</th>
-                        <th>Discount</th>
-                        <th>Rate/Unit(INR)</th>
-                        <th>Amount(INR)</th>
+                        <th>#</th>
+                        <th>Line No</th>
+                        <th width="38%">Nature of Expense</th>
+                        <th>Quantity</th>
+                        <th>Direct Unit Cost</th>
+                        <th>Line Amount</th>
+                        <th>GST Group Code</th>
+                        <th>HSN/SAC Code</th>
+
                     </tr>
                 </thead>
                 <tbody>
 
-                    <tr *ngFor="let i of data.lineItem_Requests">
-                        <td><input type="text" value="{{i.impiLineDescription}}" class="form-control" disabled="" readonly=""></td>
-                        <td><input type="text" value="{{i.impiLineQuantity}}" class="form-control" disabled="" readonly=""></td>
-                        <td><input type="text" value="{{i.impiLineDiscount}}" class="form-control" disabled="" readonly=""></td>
-                        <td><input type="text" value="{{i.impiLineUnitPrice}}" class="form-control" disabled="" readonly=""></td>
-                        <td><input type="text" value="{{i.impiLineAmount}}" class="form-control" disabled="" readonly=""></td>
-                    </tr>
+                    <tr *ngFor="let e of data.lineItem_Requests
+                    ; let i = index">
+                        <td>{{i + 1}}</td>
+                        <td></td>
+                        <td>{{e.documentType | titlecase }}</td>
+                        <td>{{e.impiQuantity}}</td>
+                        <td>{{e.impiUnitPrice}}</td>
+                        <td>{{e.impiQuantity * e.impiUnitPrice}}</td>
+                        <td>{{e.impiGstgroupCode }}</td>
+                        <td>{{e.impiHsnsaccode}}</td>
 
-                    <tr>
-                        <td colspan="3" class="text-end">Total</td>
-                        <td colspan="2" class="text-end"><b>{{data.impiHeaderTotalInvoiceAmount | currency: 'INR'}}</b></td>
-                    </tr>
 
-                    <tr>
-                        <td colspan="3" class="text-start">Total Amount Receivable In Word: {{  data.impiHeaderTotalInvoiceAmount | numberToWords1 }}</td>
-                        <td colspan="2" class="text-end"><b>{{data.impiHeaderTotalInvoiceAmount | currency: 'INR'}}</b></td>
                     </tr>
-
                 </tbody>
             </table>
 
