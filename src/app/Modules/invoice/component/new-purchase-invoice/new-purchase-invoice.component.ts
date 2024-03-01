@@ -12,13 +12,10 @@ import { finalize, timeout } from 'rxjs';
 export class NewPurchaseInvoiceComponent implements OnInit {
 
     publicVariable = new publicVariable();
-
     ImpiHeaderAttachment: any;
     Id?: number;
     data: any;
     public isEditing: boolean = false;
-
-
 
     constructor(private appService: AppService,
         private modalService: NgbModal,
@@ -492,20 +489,22 @@ export class NewPurchaseInvoiceComponent implements OnInit {
 
     onAddLine() {
         if (this.publicVariable.expenseForm.valid) {
-            if (this.publicVariable.editingIndex === -1) {
-                this.publicVariable.expenses.push(this.publicVariable.expenseForm.value);
-            } else {
+            if (this.isEditing) {
+                // Updating an existing record
                 this.publicVariable.expenses[this.publicVariable.editingIndex] = this.publicVariable.expenseForm.value;
                 this.publicVariable.editingIndex = -1;
+            } else {
+                // Adding a new record
+                this.publicVariable.expenses.push(this.publicVariable.expenseForm.value);
             }
             this.publicVariable.expenseForm.reset();
+            this.isEditing = false; // Resetting to false after adding/updating
         } else {
             this.markexpenseFormControlsAsTouched();
         }
     }
 
-
-    editExpense(data:any,index:number) {
+    editExpense(data: any, index: number) {
         this.publicVariable.expenseForm.patchValue({
             gstGroupCode: data.gstGroupCode,
             hsnCode: data.hsnCode,
@@ -513,8 +512,10 @@ export class NewPurchaseInvoiceComponent implements OnInit {
             quantity: data.quantity,
             unitCost: data.unitCost,
         });
+        this.publicVariable.editingIndex = index;
         this.isEditing = true;
     }
+
 
     deleteExpense(index: number) {
         const modalRef = this.modalService.open(ConfirmationDialogModalComponent, { size: "sm", centered: true, backdrop: "static" });
