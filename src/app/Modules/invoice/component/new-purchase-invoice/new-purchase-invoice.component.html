@@ -262,28 +262,23 @@
                 <div class="col-md-4 col-sm-6">
                     <div class="form-group">
                         <label>GST Group Code</label>
-                        <ng-select [items]="publicVariable.GSTGroupList" #select bindLabel="code"
-                        bindValue="code" placeholder="Select "
-                        [searchable]="true"
-                        [virtualScroll]="true" [bufferAmount]="10"
-                        (change)="onGSTGroupChange($event)">
+                        <ng-select [items]="publicVariable.GSTGroupList" #select bindLabel="code" bindValue="code"
+                            placeholder="Select " [searchable]="true" [virtualScroll]="true" [bufferAmount]="10"
+                            (change)="onGSTGroupChange($event)">
 
-                    </ng-select>
+                        </ng-select>
                     </div>
                 </div>
 
                 <div class="col-md-4 col-sm-6">
                     <div class="form-group">
                         <label>HSN/SAC Code</label>
-                        <ng-select [items]="publicVariable.HSNSACList" #select bindLabel="hsnCode"
-                        bindValue="hsnCode" placeholder="Select "
-                        [searchable]="true"
-                        [virtualScroll]="true" [bufferAmount]="10"
-                       >
-                       <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
-                        <small>{{item.hsnCode}} - {{item.hsnGroup}}</small>
-                    </ng-template>
-                    </ng-select>
+                        <ng-select [items]="publicVariable.HSNSACList" #select bindLabel="hsnCode" bindValue="hsnCode"
+                            placeholder="Select " [searchable]="true" [virtualScroll]="true" [bufferAmount]="10">
+                            <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
+                                <small>{{item.hsnCode}} - {{item.hsnGroup}}</small>
+                            </ng-template>
+                        </ng-select>
                     </div>
                 </div>
 
@@ -362,7 +357,15 @@
                                 </span>
                             </td>
                         </tr>
-
+                        <tr>
+                            <td colspan="7" class="text-end">Total</td>
+                            <td colspan="2" class="text-end"><b>{{ calculateTotalAmount() | currency: 'INR' }}</b></td>
+                        </tr>
+                        <tr>
+                            <td colspan="7" class="text-start">Total Amount Receivable In Word: {{
+                                calculateTotalAmount() | numberToWords1 }}</td>
+                            <td colspan="2" class="text-end"><b>{{ calculateTotalAmount() | currency: 'INR' }}</b></td>
+                        </tr>
 
                     </tbody>
                 </table>
@@ -370,8 +373,9 @@
             </div>
 
         </div>
+        <div class="text-end"><a href="#" class="common-btn w-auto">Calculate</a></div>
 
-        <div class="dasboard-table pi-table">
+        <!-- <div class="dasboard-table pi-table">
             <div class="table-responsive">
                 <table class="table table-bordered">
                     <thead>
@@ -424,9 +428,8 @@
 
 
             </div>
-        </div>
+        </div> -->
 
-        <div class="text-end"><a href="#" class="common-btn w-auto">Calculate</a></div>
 
         <div class="note-para">
             <p>Upload Only Digitally Signed Attachments (Sales Invoice, Purchase Order, Challan,
