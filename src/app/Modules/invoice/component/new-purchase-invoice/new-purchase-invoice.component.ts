@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, AppService, CustomersService, FormBuilder, InvoicesService, NgbModal, Router, ToastrService, Validators, alphanumericWithSpacesValidator, gstValidator, panValidator, publicVariable } from '../../Export/invoce';
+import { ActivatedRoute, AppService, ConfirmationDialogModalComponent, CustomersService, FormBuilder, InvoicesService, NgbModal, Router, ToastrService, Validators, alphanumericWithSpacesValidator, gstValidator, panValidator, publicVariable } from '../../Export/invoce';
 import { FormArray, FormGroup } from '@angular/forms';
 import { finalize, timeout } from 'rxjs';
 
@@ -66,6 +66,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
 
     private createExpenseForm(): void {
         this.publicVariable.expenseForm = this.fb.group({
+            id:[''],
             natureOfExpense: [null, Validators.required],
             quantity: ['', Validators.required],
             gstGroupCode: [null, Validators.required],
@@ -487,6 +488,8 @@ export class NewPurchaseInvoiceComponent implements OnInit {
 
     onAddLine() {
         if (this.publicVariable.expenseForm.valid) {
+            console.log(this.publicVariable.expenseForm.value)
+
             if (this.publicVariable.editingIndex === -1) {
                 this.publicVariable.expenses.push(this.publicVariable.expenseForm.value);
             } else {
@@ -500,8 +503,9 @@ export class NewPurchaseInvoiceComponent implements OnInit {
         }
     }
 
-    editExpense(data:any) {
+    editExpense(data:any,index:number) {
         this.publicVariable.expenseForm.patchValue({
+            id:data.id,
             gstGroupCode: data.gstGroupCode,
             hsnCode: data.hsnCode,
             natureOfExpense: data.natureOfExpense,
@@ -511,8 +515,18 @@ export class NewPurchaseInvoiceComponent implements OnInit {
     }
 
     deleteExpense(index: number) {
-        this.publicVariable.expenses.splice(index, 1);
+        const modalRef = this.modalService.open(ConfirmationDialogModalComponent, { size: "sm", centered: true, backdrop: "static" });
+        var componentInstance = modalRef.componentInstance as ConfirmationDialogModalComponent;
+        componentInstance.message = "Do you really want to delete these records? This process cannot be undone ?";
+        modalRef.result.then((canDelete: boolean) => {
+            if (canDelete) {
+                this.publicVariable.expenses.splice(index, 1);
+                this.toastr.success('Expense deleted successfully!', 'Success');
+            }
+        }).catch(() => { });
     }
+
+
 
     markexpenseFormControlsAsTouched(): void {
         ['natureOfExpense', 'quantity', 'gstGroupCode', 'hsnCode', 'unitCost'].forEach(controlName => {
