@@ -272,7 +272,8 @@
                                 placeholder="Select " [searchable]="true" [virtualScroll]="true" [bufferAmount]="10"
                                 (change)="onGSTGroupChange($event)" formControlName="gstGroupCode">
                             </ng-select>
-                            <div *ngIf="shouldShowExpenseError('gstGroupCode','required')" class="text-danger">This field is
+                            <div *ngIf="shouldShowExpenseError('gstGroupCode','required')" class="text-danger">This
+                                field is
                                 required</div>
                         </div>
                     </div>
@@ -297,8 +298,8 @@
                             <label>Direct Unit Cost</label>
                             <input type="text" class="form-control" placeholder="Direct Unit Cost"
                                 formControlName="unitCost">
-                                <div *ngIf="shouldShowExpenseError('unitCost','required')" class="text-danger">This field is
-                                    required</div>
+                            <div *ngIf="shouldShowExpenseError('unitCost','required')" class="text-danger">This field is
+                                required</div>
                         </div>
                     </div>
 
@@ -343,6 +344,7 @@
                 <table class="table table-bordered text-nowrap">
                     <thead>
                         <tr>
+                            <th>#</th>
                             <th width="38%">Nature of Expense</th>
                             <th>Quantity</th>
                             <th>Direct Unit Cost</th>
@@ -357,6 +359,7 @@
                     <tbody>
 
                         <tr *ngFor="let e of publicVariable.expenses; let i = index">
+                            <td>{{i + 1}}</td>
                             <td>{{e.natureOfExpense }}</td>
                             <td>{{e.unitCost}}</td>
                             <td>2500</td>
@@ -366,19 +369,21 @@
                             <td>125000</td>
                             <td>22500</td>
                             <td><span class="table-btns">
-                                    <a href="#"><img src="../assets/images/plus-icon.svg" alt=""></a>
-                                    <a href="javascript:void(0)" data-bs-toggle="modal"
-                                        data-bs-target="#deleterecord-modal"><img src="../assets/images/delete-icon.svg"
-                                            alt=""></a>
+                                    <a href="javascript:void(0)" (click)="editExpense(e)"><img
+                                            src="../assets/images/edit-icon.svg" alt=""></a>
+                                    <a href="javascript:void(0)" (click)="deleteExpense(i)" data-bs-toggle="modal"
+                                        data-bs-target="#deleterecord-modal">
+                                        <img src="../assets/images/delete-icon.svg" alt="">
+                                    </a>
                                 </span>
                             </td>
                         </tr>
                         <tr>
-                            <td colspan="7" class="text-end">Total</td>
+                            <td colspan="8" class="text-end">Total</td>
                             <td colspan="2" class="text-end"><b>1000</b></td>
                         </tr>
                         <tr>
-                            <td colspan="7" class="text-start">Total Amount Receivable In Word: </td>
+                            <td colspan="78" class="text-start">Total Amount Receivable In Word: </td>
                             <td colspan="2" class="text-end"><b></b></td>
                         </tr>
 

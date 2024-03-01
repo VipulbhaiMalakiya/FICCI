@@ -127,8 +127,6 @@ export class NewPurchaseInvoiceComponent implements OnInit {
             const subscription = this.API.GetHSNSACLIist(gstCode.code).subscribe({
                 next: (response: any) => {
                     this.publicVariable.HSNSACList = response.data;
-                    console.log(this.publicVariable.HSNSACList);
-
                 },
                 error: (error) => {
                     console.error('Error loading project list:', error);
@@ -288,8 +286,6 @@ export class NewPurchaseInvoiceComponent implements OnInit {
             });
         }
     }
-
-
 
     handleLoadingError() {
         this.publicVariable.isProcess = false; // Set status to false on error
@@ -504,15 +500,19 @@ export class NewPurchaseInvoiceComponent implements OnInit {
         }
     }
 
-    editExpense(index: number) {
-        this.publicVariable.expenseForm.patchValue(this.publicVariable.expenses[index]);
-        this.publicVariable.editingIndex = index;
+    editExpense(data:any) {
+        this.publicVariable.expenseForm.patchValue({
+            gstGroupCode: data.gstGroupCode,
+            hsnCode: data.hsnCode,
+            natureOfExpense: data.natureOfExpense,
+            quantity: data.quantity,
+            unitCost: data.unitCost,
+        })
     }
 
     deleteExpense(index: number) {
         this.publicVariable.expenses.splice(index, 1);
     }
-
 
     markexpenseFormControlsAsTouched(): void {
         ['natureOfExpense', 'quantity', 'gstGroupCode', 'hsnCode', 'unitCost'].forEach(controlName => {
