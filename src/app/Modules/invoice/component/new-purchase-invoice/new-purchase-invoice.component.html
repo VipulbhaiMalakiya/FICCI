@@ -265,8 +265,8 @@
                         <div class="form-group">
                             <label for="Quantity">Quantity</label>
                             <input type="text" class="form-control" id="Quantity" placeholder="Quantity"
-                                formControlName="quantity" />
-                            <div *ngIf="shouldShowExpenseError('quantity','required')" class="text-danger">This field is
+                                formControlName="impiQuantity" />
+                            <div *ngIf="shouldShowExpenseError('impiQuantity','required')" class="text-danger">This field is
                                 required</div>
 
                         </div>
@@ -277,9 +277,9 @@
                             <label>GST Group Code</label>
                             <ng-select [items]="publicVariable.GSTGroupList" #select bindLabel="code" bindValue="code"
                                 placeholder="Select " [searchable]="true" [virtualScroll]="true" [bufferAmount]="10"
-                                (change)="onGSTGroupChange($event)" formControlName="gstGroupCode">
+                                (change)="onGSTGroupChange($event)" formControlName="impiGstgroupCode">
                             </ng-select>
-                            <div *ngIf="shouldShowExpenseError('gstGroupCode','required')" class="text-danger">This
+                            <div *ngIf="shouldShowExpenseError('impiGstgroupCode','required')" class="text-danger">This
                                 field is
                                 required</div>
                         </div>
@@ -290,12 +290,12 @@
                             <label>HSN/SAC Code</label>
                             <ng-select [items]="publicVariable.HSNSACList" #select bindLabel="hsnCode"
                                 bindValue="hsnCode" placeholder="Select " [searchable]="true" [virtualScroll]="true"
-                                [bufferAmount]="10" formControlName="hsnCode">
+                                [bufferAmount]="10" formControlName="impiHsnsaccode">
                                 <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
                                     <small>{{item.hsnCode}} - {{item.hsnGroup}}</small>
                                 </ng-template>
                             </ng-select>
-                            <div *ngIf="shouldShowExpenseError('hsnCode','required')" class="text-danger">This field is
+                            <div *ngIf="shouldShowExpenseError('impiHsnsaccode','required')" class="text-danger">This field is
                                 required</div>
                         </div>
                     </div>
@@ -304,8 +304,8 @@
                         <div class="form-group">
                             <label>Direct Unit Cost</label>
                             <input type="text" class="form-control" placeholder="Direct Unit Cost"
-                                formControlName="unitCost">
-                            <div *ngIf="shouldShowExpenseError('unitCost','required')" class="text-danger">This field is
+                                formControlName="impiUnitPrice">
+                            <div *ngIf="shouldShowExpenseError('impiUnitPrice','required')" class="text-danger">This field is
                                 required</div>
                         </div>
                     </div>
@@ -373,11 +373,11 @@
                             <td>{{i + 1}}</td>
                             <td></td>
                             <td>{{e.documentType }}</td>
-                            <td>{{e.quantity}}</td>
-                            <td>{{e.unitCost}}</td>
-                            <td>{{e.quantity * e.unitCost}}</td>
-                            <td>{{e.gstGroupCode }}</td>
-                            <td>{{e.hsnCode}}</td>
+                            <td>{{e.impiQuantity}}</td>
+                            <td>{{e.impiUnitPrice}}</td>
+                            <td>{{e.impiQuantity * e.impiUnitPrice}}</td>
+                            <td>{{e.impiGstgroupCode }}</td>
+                            <td>{{e.impiHsnsaccode}}</td>
                             <!-- <td>{{ calculateGSTBaseAmount(e) }}</td>
                             <td>{{ calculateGSTAmount(e) }}</td> -->
                             <td><span class="table-btns">

@@ -66,10 +66,10 @@ export class NewPurchaseInvoiceComponent implements OnInit {
     private createExpenseForm(): void {
         this.publicVariable.expenseForm = this.fb.group({
             documentType: [null, Validators.required],
-            quantity: ['', Validators.required],
-            gstGroupCode: [null, Validators.required],
-            hsnCode: [null, Validators.required],
-            unitCost: ['', Validators.required],
+            impiQuantity: ['', Validators.required],
+            impiGstgroupCode: [null, Validators.required],
+            impiHsnsaccode: [null, Validators.required],
+            impiUnitPrice: ['', Validators.required],
         })
     }
 
@@ -148,8 +148,6 @@ export class NewPurchaseInvoiceComponent implements OnInit {
     }
 
     patchFormData(data: any): void {
-        console.log(data);
-
         this.publicVariable.dataForm.patchValue({
             headerid: data.headerId,
             ImpiHeaderInvoiceType: data.impiHeaderInvoiceType,
@@ -410,11 +408,11 @@ export class NewPurchaseInvoiceComponent implements OnInit {
 
     editExpense(data: any, index: number) {
         this.publicVariable.expenseForm.patchValue({
-            gstGroupCode: data.gstGroupCode,
-            hsnCode: data.hsnCode,
+            impiGstgroupCode: data.impiGstgroupCode,
+            impiHsnsaccode: data.impiHsnsaccode,
             documentType: data.documentType,
-            quantity: data.quantity,
-            unitCost: data.unitCost,
+            impiQuantity: data.impiQuantity,
+            impiUnitPrice: data.impiUnitPrice,
         });
         this.publicVariable.editingIndex = index;
         this.isEditing = true;
@@ -480,17 +478,17 @@ export class NewPurchaseInvoiceComponent implements OnInit {
                 const item = this.publicVariable.expenses[i];
                 formData.append(`lineItem_Requests[${i}].ImpiNetTotal`, '0');
                 formData.append(`lineItem_Requests[${i}].ImpiLocationCode`, 'FICCI-DL');
-                formData.append(`lineItem_Requests[${i}].ImpiQuantity`, item.quantity);
-                formData.append(`lineItem_Requests[${i}].ImpiUnitPrice`, item.unitCost);
-                formData.append(`lineItem_Requests[${i}].ImpiGstgroupCode`, item.gstGroupCode);
+                formData.append(`lineItem_Requests[${i}].ImpiQuantity`, item.impiQuantity);
+                formData.append(`lineItem_Requests[${i}].ImpiUnitPrice`, item.impiUnitPrice);
+                formData.append(`lineItem_Requests[${i}].ImpiGstgroupCode`, item.impiGstgroupCode);
                 formData.append(`lineItem_Requests[${i}].ImpiGstgroupType`, 'GOODS');
                 formData.append(`lineItem_Requests[${i}].ImpiLineNo`, '10000');
-                formData.append(`lineItem_Requests[${i}].ImpiHsnsaccode`, item.hsnCode);
+                formData.append(`lineItem_Requests[${i}].ImpiHsnsaccode`, item.impiHsnsaccode);
                 formData.append(`lineItem_Requests[${i}].documentType`, item.documentType);
                 // Calculate the amount here
-                const quantity = parseFloat(item.quantity);
-                const unitPrice = parseFloat(item.unitCost);
-                const calculateAmount = quantity * unitPrice;
+                const impiQuantity = parseFloat(item.impiQuantity);
+                const unitPrice = parseFloat(item.impiUnitPrice);
+                const calculateAmount = impiQuantity * unitPrice;
                 formData.append(`lineItem_Requests[${i}].ImpiLineAmount`, calculateAmount.toString());
 
                 impiHeaderTotalInvoiceAmount += calculateAmount;
@@ -562,17 +560,17 @@ export class NewPurchaseInvoiceComponent implements OnInit {
     calculateGSTBaseAmount(e: any): number {
         // change gstPercentage in gst
         const gstPercentage = 5;
-        return (e.quantity * e.unitCost) * (1 + gstPercentage / 100);
+        return (e.impiQuantity * e.impiUnitPrice) * (1 + gstPercentage / 100);
     }
 
     calculateGSTAmount(e: any): number {
         const gstBaseAmount = this.calculateGSTBaseAmount(e);
-        return gstBaseAmount - (e.quantity * e.unitCost);
+        return gstBaseAmount - (e.impiQuantity * e.impiUnitPrice);
     }
 
 
     calculateTotalBaseAmount(): number {
-        return this.publicVariable.expenses.reduce((total, expense) => total + (expense.quantity * expense.unitCost), 0);
+        return this.publicVariable.expenses.reduce((total, expense) => total + (expense.impiQuantity * expense.impiUnitPrice), 0);
     }
 
     calculateTotalGSTAmount(): number {
@@ -590,7 +588,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
     }
 
     markexpenseFormControlsAsTouched(): void {
-        ['documentType', 'quantity', 'gstGroupCode', 'hsnCode', 'unitCost'].forEach(controlName => {
+        ['documentType', 'impiQuantity', 'impiGstgroupCode', 'impiHsnsaccode', 'impiUnitPrice'].forEach(controlName => {
             this.publicVariable.expenseForm.controls[controlName].markAsTouched();
         });
     }
