@@ -137,9 +137,12 @@
                                                     <td>{{d.createdBy}}</td>
                                                     <td>{{d.customerStatus | titlecase}}</td>
                                                     <td><span class="table-btns">
-                                                            <a href="javascript:void(0);" (click)="onView(d)"><img
-                                                                    src="../assets/images/view-icon.svg" alt=""></a>
-
+                                                            <a href="javascript:void(0);" (click)="onView(d)" *ngIf="customerStatus !== 'FOR APPROVAL'">
+                                                                <img src="../assets/images/view-icon.svg" alt="" >
+                                                            </a>
+                                                            <a href="javascript:void(0);" (click)="onApproval(d)" *ngIf="customerStatus == 'FOR APPROVAL'">
+                                                                <img src="../assets/images/view-icon.svg" alt="" >
+                                                            </a>
                                                             <a *ngIf="publicVariable.storedRole !== 'Admin' && d.createdBy === this.publicVariable.storedEmail && (d.isDraft ||
                                                                 d.customerStatus == 'REJECTED BY TL APPROVER' ||
                                                                 d.customerStatus == 'REJECTED BY CH APPROVER' ||

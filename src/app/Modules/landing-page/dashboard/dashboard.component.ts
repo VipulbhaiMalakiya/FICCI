@@ -37,10 +37,7 @@ export class DashboardComponent {
         private toastr: ToastrService,
         private API: CustomersService,
         private IAPI: InvoicesService
-
-    ) {
-
-    }
+    ) {}
 
     ngOnInit(): void {
         this.loadCustomerStatusCountList();
@@ -88,29 +85,6 @@ export class DashboardComponent {
             }
         });
     }
-
-
-    loadPurchaseInvoiceList(): void {
-        try {
-            const subscription = this.IAPI.getPurchaseInvoice_New().subscribe({
-                next: (response: any) => {
-                    this.countDataByInvoies(response.data);
-                    this.dashboardData = response.data;
-
-                    this.loadInoivceStatusList(this.customerStatus);
-                },
-                error: (error) => {
-                    console.error('Error loading project list:', error);
-                }
-            });
-
-            this.publicVariable.Subscription.add(subscription);
-        } catch (error) {
-            console.error('Error loading project list:', error);
-        }
-    }
-
-
 
     // Helper method to count data for each customer status
     countDataByStatus(data: any[]): void {
@@ -170,52 +144,6 @@ export class DashboardComponent {
 
     }
 
-    countDataByInvoies(data: any[]): void {
-        const counts: any = {
-            'DRAFT': 0,
-            'PENDING WITH TL APPROVER': 0,
-            'PENDING WITH CH APPROVER': 0,
-            'PENDING WITH ACCOUNTS APPROVER': 0,
-            'APPROVED BY ACCOUNTS APPROVER': 0,
-            'REJECTED BY TL APPROVER': 0,
-            'REJECTED BY CH APPROVER': 0,
-            'REJECTED BY ACCOUNTS APPROVER': 0,
-            'ALL': 0
-        };
-
-        // Filter data for each customer status
-        const draftData = data.filter(item => item.headerStatus === 'DRAFT');
-        counts['DRAFT'] = draftData.length;
-
-        const pendingData = data.filter(item => item.headerStatus === 'PENDING WITH TL APPROVER'
-            || item.headerStatus === 'PENDING WITH CH APPROVER'
-            || item.headerStatus === 'PENDING WITH ACCOUNTS APPROVER');
-        counts['PENDING WITH TL APPROVER'] = pendingData.length;
-
-
-
-
-        const approvedData = data.filter(item => item.headerStatus === 'APPROVED BY ACCOUNTS APPROVER');
-        counts['APPROVED BY ACCOUNTS APPROVER'] = approvedData.length;
-
-        const rejectedData = data.filter(item => item.headerStatus === 'REJECTED BY TL APPROVER'
-            || item.headerStatus === 'REJECTED BY CH APPROVER'
-            || item.headerStatus === 'REJECTED BY ACCOUNTS APPROVER');
-        counts['REJECTED BY CH APPROVER'] = rejectedData.length;
-
-        // Calculate total count
-        counts['ALL'] = data.length;
-
-        // Update counts
-        this.PIisDRAFT = counts['DRAFT'];
-        this.PIPendingApproval = counts['PENDING WITH TL APPROVER'];
-        this.PIApprovedAccounts = counts['APPROVED BY ACCOUNTS APPROVER'];
-        this.PIRejectedbyAccounts = counts['REJECTED BY CH APPROVER'];
-        this.PIALL = counts['ALL'];
-        this.publicVariable.count = counts['ALL']; // Total count
-    }
-
-
     loadCustomerStatusList(status: string): void {
         this.customerStatus = status;
         let filteredData;
@@ -268,6 +196,71 @@ export class DashboardComponent {
 
     }
 
+
+    loadPurchaseInvoiceList(): void {
+        try {
+            const subscription = this.IAPI.getPurchaseInvoice_New().subscribe({
+                next: (response: any) => {
+                    this.countDataByInvoies(response.data);
+                    this.dashboardData = response.data;
+
+                    this.loadInoivceStatusList(this.customerStatus);
+                },
+                error: (error) => {
+                    console.error('Error loading project list:', error);
+                }
+            });
+
+            this.publicVariable.Subscription.add(subscription);
+        } catch (error) {
+            console.error('Error loading project list:', error);
+        }
+    }
+
+    countDataByInvoies(data: any[]): void {
+        const counts: any = {
+            'DRAFT': 0,
+            'PENDING WITH TL APPROVER': 0,
+            'PENDING WITH CH APPROVER': 0,
+            'PENDING WITH ACCOUNTS APPROVER': 0,
+            'APPROVED BY ACCOUNTS APPROVER': 0,
+            'REJECTED BY TL APPROVER': 0,
+            'REJECTED BY CH APPROVER': 0,
+            'REJECTED BY ACCOUNTS APPROVER': 0,
+            'ALL': 0
+        };
+
+        // Filter data for each customer status
+        const draftData = data.filter(item => item.headerStatus === 'DRAFT');
+        counts['DRAFT'] = draftData.length;
+
+        const pendingData = data.filter(item => item.headerStatus === 'PENDING WITH TL APPROVER'
+            || item.headerStatus === 'PENDING WITH CH APPROVER'
+            || item.headerStatus === 'PENDING WITH ACCOUNTS APPROVER');
+        counts['PENDING WITH TL APPROVER'] = pendingData.length;
+
+
+
+
+        const approvedData = data.filter(item => item.headerStatus === 'APPROVED BY ACCOUNTS APPROVER');
+        counts['APPROVED BY ACCOUNTS APPROVER'] = approvedData.length;
+
+        const rejectedData = data.filter(item => item.headerStatus === 'REJECTED BY TL APPROVER'
+            || item.headerStatus === 'REJECTED BY CH APPROVER'
+            || item.headerStatus === 'REJECTED BY ACCOUNTS APPROVER');
+        counts['REJECTED BY CH APPROVER'] = rejectedData.length;
+
+        // Calculate total count
+        counts['ALL'] = data.length;
+
+        // Update counts
+        this.PIisDRAFT = counts['DRAFT'];
+        this.PIPendingApproval = counts['PENDING WITH TL APPROVER'];
+        this.PIApprovedAccounts = counts['APPROVED BY ACCOUNTS APPROVER'];
+        this.PIRejectedbyAccounts = counts['REJECTED BY CH APPROVER'];
+        this.PIALL = counts['ALL'];
+        this.publicVariable.count = counts['ALL']; // Total count
+    }
 
     loadInoivceStatusList(status: string): void {
         this.customerStatus = status;
@@ -357,6 +350,14 @@ export class DashboardComponent {
     onView(data: customerStatusListModel): void {
         if (data.customerId) {
             this.router.navigate(['customer/status/view', data.customerId], { state: { data: data } });
+        } else {
+            console.error('ID is undefined or null');
+        }
+    }
+
+    onApproval(data: customerStatusListModel){
+        if (data.customerId) {
+            this.router.navigate(['customer/accounts/remarks/', data.customerId], { state: { data: data } });
         } else {
             console.error('ID is undefined or null');
         }
