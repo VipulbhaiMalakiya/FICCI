@@ -38,7 +38,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
             headerid: [''],
             ImpiHeaderInvoiceType: ['Proforma Invoice', Validators.required],
             ImpiHeaderProjectCode: [null, [Validators.required]],
-            Project:[{ value: '', disabled: true }, [Validators.required]],
+            Project: [{ value: '', disabled: true }, [Validators.required]],
             ImpiHeaderDepartment: [{ value: '', disabled: true }, [Validators.required]],
             ImpiHeaderDivison: [{ value: '', disabled: true }, [Validators.required]],
             ImpiHeaderPanNo: ['', [Validators.required, panValidator()]],
@@ -61,8 +61,6 @@ export class NewPurchaseInvoiceComponent implements OnInit {
             ImpiHeaderRemarks: [''],
             IsDraft: [false]
         });
-        // Initialize items form array
-        // this.items.forEach(item => this.addItem(item));
     }
 
     private createExpenseForm(): void {
@@ -175,7 +173,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
             ImpiHeaderPaymentTerms: data.impiHeaderPaymentTerms,
             ImpiHeaderRemarks: data.impiHeaderRemarks,
             IsDraft: data.isDraft,
-            Project:data.Project
+            Project: data.Project
             // items: this.fb.array([]),
         });
         const lineItemsArray = this.publicVariable.dataForm.get('items') as FormArray;
@@ -300,7 +298,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
                 this.publicVariable.dataForm.patchValue({
                     ImpiHeaderDepartment: this.publicVariable.selectedProjet.departmentName,
                     ImpiHeaderDivison: this.publicVariable.selectedProjet.divisionName,
-                    Project:this.publicVariable.selectedProjet.name
+                    Project: this.publicVariable.selectedProjet.name
 
                 });
             }
@@ -347,56 +345,76 @@ export class NewPurchaseInvoiceComponent implements OnInit {
     onFilesSelected(event: any) {
         const selectedFiles: FileList = event.target.files;
         const allowedTypes = ['application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', // .xlsx
-          'application/vnd.ms-excel', // .xls
-          'application/msword', // .doc
-          'text/csv', // .csv
-          'application/pdf']; // .pdf
+            'application/vnd.ms-excel', // .xls
+            'application/msword', // .doc
+            'text/csv', // .csv
+            'application/pdf']; // .pdf
         const maxSize = 5 * 1024 * 1024; // 5MB in bytes
 
         for (let i = 0; i < selectedFiles.length; i++) {
-          const file = selectedFiles[i];
+            const file = selectedFiles[i];
 
-          if (!allowedTypes.includes(file.type)) {
-            alert('Only .doc, .csv, .xlsx, and .pdf files are allowed.');
-            // Clear the file input
-            event.target.value = null;
-            return;
-          }
+            if (!allowedTypes.includes(file.type)) {
+                alert('Only .doc, .csv, .xlsx, and .pdf files are allowed.');
+                // Clear the file input
+                event.target.value = null;
+                return;
+            }
 
-          if (file.size > maxSize) {
-            alert('File size exceeds 5MB limit.');
-            // Clear the file input
-            event.target.value = null;
-            return;
-          }
+            if (file.size > maxSize) {
+                alert('File size exceeds 5MB limit.');
+                // Clear the file input
+                event.target.value = null;
+                return;
+            }
 
-          this.uploadedFiles.push(file);
+            this.uploadedFiles.push(file);
         }
-      }
+    }
 
-      getFileType(type: string): string {
+    getFileType(type: string): string {
         // Convert file type to readable format
         switch (type) {
-          case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
-            return '.xlsx';
-          case 'application/vnd.ms-excel':
-            return '.xls';
-          case 'application/msword':
-            return '.doc';
-          case 'text/csv':
-            return '.csv';
-          case 'application/pdf':
-            return '.pdf';
-          default:
-            return 'Unknown';
+            case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
+                return '.xlsx';
+            case 'application/vnd.ms-excel':
+                return '.xls';
+            case 'application/msword':
+                return '.doc';
+            case 'text/csv':
+                return '.csv';
+            case 'application/pdf':
+                return '.pdf';
+            default:
+                return 'Unknown';
         }
-      }
+    }
 
-      deleteFile(index: number) {
+    deleteFile(index: number) {
         this.uploadedFiles.splice(index, 1);
-      }
+    }
+
+    onAddLine() {
+        if (this.publicVariable.expenseForm.valid) {
+            if (this.isEditing) {
+                // Updating an existing record
+                this.publicVariable.expenses[this.publicVariable.editingIndex] = this.publicVariable.expenseForm.value;
+                this.publicVariable.editingIndex = -1;
+                this.toastr.success('Expense updated successfully', 'Success');
+            } else {
+                // Adding a new record
+                this.publicVariable.expenses.push(this.publicVariable.expenseForm.value);
+                this.toastr.success('Expense added successfully', 'Success');
+            }
+            this.publicVariable.expenseForm.reset();
+            this.isEditing = false;
+        } else {
+            this.markexpenseFormControlsAsTouched();
+            this.toastr.error('Please fill out all required fields', 'Error');
+        }
 
 
+    }
 
     onSubmit(action: boolean): void {
 
@@ -410,66 +428,65 @@ export class NewPurchaseInvoiceComponent implements OnInit {
             }
             formData.append('isupdate', String(isUpdate));
             this.publicVariable.selectedProjet = this.publicVariable.projectList.find(project => project.code == newData.ImpiHeaderProjectCode);
+            this.publicVariable.selectCustomer = this.publicVariable.GetCustomerList.find(customer => customer.custName == newData.ImpiHeaderCustomerName);
             formData.append('ImpiHeaderAttachment', this.ImpiHeaderAttachment);
+
             formData.append('ImpiHeaderInvoiceType', newData.ImpiHeaderInvoiceType);
-
             formData.append('ImpiHeaderProjectCode', this.publicVariable.selectedProjet.code);
-            formData.append('ImpiHeaderProjectName', this.publicVariable.selectedProjet.name);
-            formData.append('ImpiHeaderProjectDepartmentCode', this.publicVariable.selectedProjet.departmentCode);
-            formData.append('ImpiHeaderProjectDepartmentName', this.publicVariable.selectedProjet.departmentName);
-            formData.append('ImpiHeaderProjectDivisionCode', this.publicVariable.selectedProjet.divisionCode);
-            formData.append('ImpiHeaderProjectDivisionName', this.publicVariable.selectedProjet.divisionName);
-
-            // formData.append('ImpiHeaderTlApprover', this.publicVariable.selectedProjet.tlApprover);
-            // formData.append('ImpiHeaderClusterApprover', this.publicVariable.selectedProjet.chApprover);
-            // formData.append('ImpiHeaderFinanceApprover', this.publicVariable.selectedProjet.financeApprover);
-            // formData.append('ImpiHeaderSupportApprover', this.publicVariable.selectedProjet.supportApprover);
-
-            formData.append('ImpiHeaderTlApprover', 'amit.jha@teamcomputers.com');
-            formData.append('ImpiHeaderClusterApprover', 'debananda.panda@teamcomputers.com ');
-            formData.append('ImpiHeaderFinanceApprover', ' gautam.v@teamcomputers.com');
-            formData.append('ImpiHeaderSupportApprover', this.publicVariable.selectedProjet.supportApprover);
-            formData.append('RoleName', this.publicVariable.storedRole);
-
-
             formData.append('ImpiHeaderPanNo', newData.ImpiHeaderPanNo);
             formData.append('ImpiHeaderGstNo', newData.ImpiHeaderGstNo);
-            formData.append('PINO', newData.PINO);
             formData.append('ImpiHeaderCustomerName', newData.ImpiHeaderCustomerName);
+            formData.append('impiHeaderCustomerCode', this.publicVariable.selectCustomer.custNo);
             formData.append('ImpiHeaderCustomerAddress', newData.ImpiHeaderCustomerAddress);
-            formData.append('ImpiHeaderCustomerState', newData.ImpiHeaderCustomerState);
             formData.append('ImpiHeaderCustomerCity', newData.ImpiHeaderCustomerCity);
+            formData.append('ImpiHeaderCustomerState', newData.ImpiHeaderCustomerState);
             formData.append('ImpiHeaderCustomerPinCode', newData.ImpiHeaderCustomerPinCode);
             formData.append('ImpiHeaderCustomerGstNo', newData.ImpiHeaderCustomerGstNo);
             formData.append('ImpiHeaderCustomerContactPerson', newData.ImpiHeaderCustomerContactPerson);
             formData.append('ImpiHeaderCustomerEmailId', newData.ImpiHeaderCustomerEmailId);
             formData.append('ImpiHeaderCustomerPhoneNo', newData.ImpiHeaderCustomerPhoneNo);
+            formData.append('impiHeaderCreatedBy', this.publicVariable.storedEmail)
+
+            //TEST CODE
+            formData.append('impiHeaderTotalInvoiceAmount', '123')
             formData.append('ImpiHeaderPaymentTerms', newData.ImpiHeaderPaymentTerms);
             formData.append('ImpiHeaderRemarks', newData.ImpiHeaderRemarks);
             formData.append('IsDraft', action.toString());
             formData.append('LoginId', this.publicVariable.storedEmail);
-            // formData.append('ImpiHeaderTotalInvoiceAmount', String(this.calculateTotalAmount()));
-            formData.append('ImpiHeaderCustomerCode', 'dummy');
-            formData.append('ImpiHeaderCreatedBy', 'dummy');
-            // for (let i = 0; i < newData.items.length; i++) {
-            //     const item = newData.items[i];
-            //     formData.append(`lineItem_Requests[${i}].impiLineDescription`, item.impiLineDescription);
-            //     formData.append(`lineItem_Requests[${i}].impiLineQuantity`, item.impiLineQuantity);
-            //     formData.append(`lineItem_Requests[${i}].impiLineDiscount`, item.impiLineDiscount);
-            //     formData.append(`lineItem_Requests[${i}].impiLineUnitPrice`, item.impiLineUnitPrice);
-            //     const quantity = parseFloat(item.impiLineQuantity);
-            //     const unitPrice = parseFloat(item.impiLineUnitPrice);
-            //     const discount = parseFloat(item.impiLineDiscount);
-            //     const calculateAmount = quantity * unitPrice * (1 - (discount / 100));
-            //     // Append the calculated amount to the FormData object
-            //     formData.append(`lineItem_Requests[${i}].impiLineAmount`, calculateAmount.toString());
-            // }
-
-
             // Check if ImpiHeaderInvoiceType is Tax Invoice, then include PINO
             if (newData.ImpiHeaderInvoiceType === 'Tax Invoice') {
-                formData.append('PINO', newData.PINO);
+                formData.append('ImpiHeaderPiNo', newData.PINO);
             }
+            formData.append('ImpiHeaderTlApprover', 'amit.jha@teamcomputers.com');
+            formData.append('ImpiHeaderClusterApprover', 'debananda.panda@teamcomputers.com ');
+            formData.append('ImpiHeaderFinanceApprover', 'gautam.v@teamcomputers.com');
+            formData.append('ImpiHeaderProjectName', this.publicVariable.selectedProjet.name);
+            formData.append('ImpiHeaderProjectDivisionCode', this.publicVariable.selectedProjet.divisionCode);
+            formData.append('ImpiHeaderProjectDivisionName', this.publicVariable.selectedProjet.divisionName);
+            formData.append('ImpiHeaderProjectDepartmentCode', this.publicVariable.selectedProjet.departmentCode);
+            formData.append('ImpiHeaderProjectDepartmentName', this.publicVariable.selectedProjet.departmentName);
+            formData.append('RoleName', this.publicVariable.storedRole);
+            formData.append('ImpiHeaderSupportApprover', this.publicVariable.selectedProjet.supportApprover);
+            formData.append('RoleName', this.publicVariable.storedRole);
+
+            formData.append('ImpiHeaderTotalInvoiceAmount', '00');
+
+            for (let i = 0; i < this.publicVariable.expenses.length; i++) {
+                const item = this.publicVariable.expenses[i];
+                console.log("Appending data for item:", item);
+                formData.append(`lineItem_Requests[${i}].ImpiNetTotal`, '0');
+                formData.append(`lineItem_Requests[${i}].ImpiLocationCode`, 'FICCI-DL');
+                formData.append(`lineItem_Requests[${i}].ImpiQuantity`, item.quantity);
+                formData.append(`lineItem_Requests[${i}].ImpiUnitPrice`, item.unitCost);
+                formData.append(`lineItem_Requests[${i}].ImpiGstgroupCode`, item.gstGroupCode);
+                formData.append(`lineItem_Requests[${i}].ImpiGstgroupType`, 'GOODS');
+                formData.append(`lineItem_Requests[${i}].ImpiLineNo`, '10000');
+                formData.append(`lineItem_Requests[${i}].ImpiHsnsaccode`, item.hsnCode);
+                formData.append(`lineItem_Requests[${i}].ImpiType`, item.natureOfExpense);
+            }
+
+
+
             this.publicVariable.isProcess = true;
             // Submit the formData
             this.publicVariable.Subscription.add(
@@ -512,25 +529,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
     }
 
 
-    onAddLine() {
-        if (this.publicVariable.expenseForm.valid) {
-            if (this.isEditing) {
-                // Updating an existing record
-                this.publicVariable.expenses[this.publicVariable.editingIndex] = this.publicVariable.expenseForm.value;
-                this.publicVariable.editingIndex = -1;
-                this.toastr.success('Expense updated successfully', 'Success');
-            } else {
-                // Adding a new record
-                this.publicVariable.expenses.push(this.publicVariable.expenseForm.value);
-                this.toastr.success('Expense added successfully', 'Success');
-            }
-            this.publicVariable.expenseForm.reset();
-            this.isEditing = false;
-        } else {
-            this.markexpenseFormControlsAsTouched();
-            this.toastr.error('Please fill out all required fields', 'Error');
-        }
-    }
+
 
     editExpense(data: any, index: number) {
         this.publicVariable.expenseForm.patchValue({
@@ -558,7 +557,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
     }
 
     calculateGSTBaseAmount(e: any): number {
-            // change gstPercentage in gst
+        // change gstPercentage in gst
         const gstPercentage = 5;
         return (e.quantity * e.unitCost) * (1 + gstPercentage / 100);
     }
@@ -585,7 +584,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
         this.calculateTotalBaseAmount();
         this.calculateTotalGSTAmount();
         this.calculateNetTotal();
-      }
+    }
 
     markexpenseFormControlsAsTouched(): void {
         ['natureOfExpense', 'quantity', 'gstGroupCode', 'hsnCode', 'unitCost'].forEach(controlName => {
