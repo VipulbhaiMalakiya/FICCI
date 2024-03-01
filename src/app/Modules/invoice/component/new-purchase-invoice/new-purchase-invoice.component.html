@@ -318,26 +318,24 @@
                         </div>
                     </div>
 
-
-
-                    <div class="col-md-4 col-sm-6">
+                    <div class="col-md-4 col-sm-6" *ngIf="publicVariable.expenses.length > 0">
                         <div class="form-group">
                             <label>(Total Base Amount)</label>
-                            <input type="text" value="" class="form-control" required="">
+                            <input type="text"  class="form-control" [value]="calculateTotalBaseAmount()" placeholder="Total Base Amount" disabled="">
                         </div>
                     </div>
 
-                    <div class="col-md-4 col-sm-6">
+                    <div class="col-md-4 col-sm-6" *ngIf="publicVariable.expenses.length > 0">
                         <div class="form-group">
                             <label>(Total GST Amount)</label>
-                            <input type="text" value="" class="form-control" required="">
+                            <input type="text"  class="form-control" [value]="calculateTotalGSTAmount()" placeholder="Total GST Amount" disabled="">
                         </div>
                     </div>
 
-                    <div class="col-md-4 col-sm-6">
+                    <div class="col-md-4 col-sm-6"  *ngIf="publicVariable.expenses.length > 0">
                         <div class="form-group">
                             <label>(Net total)</label>
-                            <input type="text" value="" class="form-control" required="">
+                            <input type="text"  class="form-control" [value]="calculateNetTotal()"  placeholder ="Net total" disabled="">
                         </div>
                     </div>
 
@@ -345,7 +343,7 @@
             </form>
 
         </div>
-        <div class="dasboard-table pi-table mb-0">
+        <div class="dasboard-table pi-table mb-0" *ngIf="publicVariable.expenses.length > 0">
 
             <div class="table-responsive">
 
@@ -371,13 +369,13 @@
                             <td>{{i + 1}}</td>
                             <td></td>
                             <td>{{e.natureOfExpense }}</td>
+                            <td>{{e.quantity}}</td>
                             <td>{{e.unitCost}}</td>
-                            <td>2500</td>
-                            <td>125000</td>
+                            <td>{{e.quantity * e.unitCost}}</td>
                             <td>{{e.gstGroupCode }}</td>
                             <td>{{e.hsnCode}}</td>
-                            <td>125000</td>
-                            <td>22500</td>
+                            <td>{{ calculateGSTBaseAmount(e) }}</td>
+                            <td>{{ calculateGSTAmount(e) }}</td>
                             <td><span class="table-btns">
                                     <a href="javascript:void(0)" (click)="editExpense(e,i)"><img
                                             src="../assets/images/edit-icon.svg" alt=""></a>
@@ -394,7 +392,7 @@
             </div>
 
         </div>
-        <div class="text-end"><a href="#" class="common-btn w-auto">Calculate</a></div>
+        <div class="text-end" *ngIf="publicVariable.expenses.length > 0"><a href="javascript:void(0)"  (click)="onCalculateClick()" class="common-btn w-auto">Calculate</a></div>
         <div class="note-para">
             <p>Upload Only Digitally Signed Attachments (Sales Invoice, Purchase Order, Challan,
                 Sample Copy, Other Documents)* <span class="text-danger">(Max File Size 5 MB

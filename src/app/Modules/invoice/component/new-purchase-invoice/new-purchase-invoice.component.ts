@@ -533,7 +533,35 @@ export class NewPurchaseInvoiceComponent implements OnInit {
         }).catch(() => { });
     }
 
+    calculateGSTBaseAmount(e: any): number {
+            // change gstPercentage in gst
+        const gstPercentage = 5;
+        return (e.quantity * e.unitCost) * (1 + gstPercentage / 100);
+    }
 
+    calculateGSTAmount(e: any): number {
+        const gstBaseAmount = this.calculateGSTBaseAmount(e);
+        return gstBaseAmount - (e.quantity * e.unitCost);
+    }
+
+
+    calculateTotalBaseAmount(): number {
+        return this.publicVariable.expenses.reduce((total, expense) => total + (expense.quantity * expense.unitCost), 0);
+    }
+
+    calculateTotalGSTAmount(): number {
+        return this.publicVariable.expenses.reduce((total, expense) => total + this.calculateGSTAmount(expense), 0);
+    }
+
+    calculateNetTotal(): number {
+        return this.calculateTotalBaseAmount() + this.calculateTotalGSTAmount();
+    }
+
+    onCalculateClick(): void {
+        this.calculateTotalBaseAmount();
+        this.calculateTotalGSTAmount();
+        this.calculateNetTotal();
+      }
 
     markexpenseFormControlsAsTouched(): void {
         ['natureOfExpense', 'quantity', 'gstGroupCode', 'hsnCode', 'unitCost'].forEach(controlName => {
