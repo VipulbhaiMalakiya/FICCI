@@ -432,7 +432,6 @@ export class NewPurchaseInvoiceComponent implements OnInit {
                 formData.append('isupdate', String(isUpdate));
                 this.publicVariable.selectedProjet = this.publicVariable.projectList.find(project => project.code == newData.ImpiHeaderProjectCode);
                 this.publicVariable.selectCustomer = this.publicVariable.GetCustomerList.find(customer => customer.custName == newData.ImpiHeaderCustomerName);
-                formData.append('ImpiHeaderAttachment', this.ImpiHeaderAttachment);
                 formData.append('ImpiHeaderInvoiceType', newData.ImpiHeaderInvoiceType);
                 formData.append('ImpiHeaderProjectCode', this.publicVariable.selectedProjet.code);
                 formData.append('ImpiHeaderPanNo', newData.ImpiHeaderPanNo);
@@ -467,7 +466,6 @@ export class NewPurchaseInvoiceComponent implements OnInit {
                 formData.append('RoleName', this.publicVariable.storedRole);
                 formData.append('ImpiHeaderSupportApprover', this.publicVariable.selectedProjet.supportApprover);
                 formData.append('RoleName', this.publicVariable.storedRole);
-
                 for (let i = 0; i < this.publicVariable.expenses.length; i++) {
                     const item = this.publicVariable.expenses[i];
                     formData.append(`lineItem_Requests[${i}].ImpiNetTotal`, '0');
@@ -485,11 +483,16 @@ export class NewPurchaseInvoiceComponent implements OnInit {
                     const calculateAmount = impiQuantity * unitPrice;
                     formData.append(`lineItem_Requests[${i}].ImpiLineAmount`, calculateAmount.toString());
                     impiHeaderTotalInvoiceAmount += calculateAmount;
-
                     // Increment line number for next iteration
                     lineNo += 10000; // Increment by 10000 for each row
                 }
                 formData.append('impiHeaderTotalInvoiceAmount', String(impiHeaderTotalInvoiceAmount));
+
+                //  uploadedFiles is an array of File objects
+                this.uploadedFiles.forEach(file => {
+                    formData.append('ImpiHeaderAttachment', file);
+                });
+
                 this.publicVariable.isProcess = true;
                 // Submit the formData
                 this.publicVariable.Subscription.add(
