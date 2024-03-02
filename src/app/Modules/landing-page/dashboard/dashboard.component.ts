@@ -403,6 +403,8 @@ export class DashboardComponent {
             console.error('ID is undefined or null');
         }
     }
+
+
     onDeletePI(id: any) {
         const modalRef = this.modalService.open(ConfirmationDialogModalComponent, { size: "sm", centered: true, backdrop: "static" });
         var componentInstance = modalRef.componentInstance as ConfirmationDialogModalComponent;
@@ -439,6 +441,13 @@ export class DashboardComponent {
     onViewPI(data: invoiceStatusModule): void {
         if (data.headerId) {
             this.router.navigate(['invoice/status/view', data.headerId], { state: { data: data } });
+        } else {
+            console.error('ID is undefined or null');
+        }
+    }
+    onApprovalPI(data: invoiceStatusModule):void{
+        if (data.headerId) {
+            this.router.navigate(['invoice/approval/view', data.headerId], { state: { data: data } });
         } else {
             console.error('ID is undefined or null');
         }
