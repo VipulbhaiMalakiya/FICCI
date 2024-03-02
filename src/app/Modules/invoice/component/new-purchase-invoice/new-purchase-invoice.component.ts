@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, AppService, ConfirmationDialogModalComponent, CustomersService, FormBuilder, InvoicesService, NgbModal, Router, ToastrService, Validators, alphanumericWithSpacesValidator, gstValidator, panValidator, publicVariable } from '../../Export/invoce';
 import { FormArray, FormGroup } from '@angular/forms';
 import { finalize, timeout } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 
 @Component({
@@ -16,6 +17,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
     data: any;
     public isEditing: boolean = false;
     uploadedFiles: File[] = [];
+    FilePath:any;
 
 
     constructor(private appService: AppService,
@@ -195,11 +197,9 @@ export class NewPurchaseInvoiceComponent implements OnInit {
             modifiedBy: file.imadModifiedBy,
             modifiedOn: file.imadModifiedOn
           }));
-
-          console.log(this.uploadedFiles);
-
-
     }
+
+
 
     loadProjectList(): void {
         try {
@@ -403,6 +403,13 @@ export class NewPurchaseInvoiceComponent implements OnInit {
 
     deleteFile(index: number) {
         this.uploadedFiles.splice(index, 1);
+    }
+
+    downalodFile(fileUrl:any){
+
+        this.FilePath = `${environment.fileURL}${ fileUrl.fileUrl}`;
+        window.open( this.FilePath, '_blank');
+
     }
 
     onAddLine() {
