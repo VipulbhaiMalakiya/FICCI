@@ -488,6 +488,13 @@ export class DashboardComponent {
             console.error('ID is undefined or null');
         }
     }
+    onViewAccountPI(data: invoiceStatusModule): void {
+        if (data.headerId) {
+            this.router.navigate(['invoice/accounts/view', data.headerId], { state: { data: data } });
+        } else {
+            console.error('ID is undefined or null');
+        }
+    }
 
     toTitleCase(str: string): string {
         return str.toLowerCase().split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
