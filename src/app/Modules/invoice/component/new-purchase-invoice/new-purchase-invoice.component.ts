@@ -147,12 +147,17 @@ export class NewPurchaseInvoiceComponent implements OnInit {
     }
 
     patchFormData(data: any): void {
+        console.log(data);
+
         this.publicVariable.dataForm.patchValue({
             headerid: data.headerId,
             ImpiHeaderInvoiceType: data.impiHeaderInvoiceType,
             ImpiHeaderProjectCode: data.impiHeaderProjectCode,
-            ImpiHeaderDepartment: data.impiHeaderDepartment,
-            ImpiHeaderDivison: data.impiHeaderDivison,
+            ImpiHeaderDepartment: data.impiHeaderProjectDepartmentName,
+
+            ImpiHeaderDivison: data.impiHeaderProjectDivisionName,
+            Project: data.impiHeaderProjectName,
+
             ImpiHeaderPanNo: data.impiHeaderPanNo,
             ImpiHeaderGstNo: data.impiHeaderGstNo,
             PINO: [''], //api missing
@@ -171,7 +176,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
             ImpiHeaderPaymentTerms: data.impiHeaderPaymentTerms,
             ImpiHeaderRemarks: data.impiHeaderRemarks,
             IsDraft: data.isDraft,
-            Project: data.Project
+
         });
 
         this.publicVariable.expenses = data.lineItem_Requests;
