@@ -220,22 +220,43 @@ export class DashboardComponent {
                 })
             );
 
+             // Observable for the third API call
+             const accountInvoiceObservable = this.IAPI.getApproveAccountInvoice().pipe(
+                timeout(120000), // Timeout set to 2 minutes (120000 milliseconds)
+                catchError((error: any) => {
+                    console.error('Error loading approve invoice list:', error);
+                    return throwError(error);
+                }),
+                finalize(() => {
+                    this.publicVariable.isProcess = false;
+                })
+            );
+
             // Combining both observables
-            forkJoin([purchaseInvoiceObservable, approveInvoiceObservable]).subscribe({
-                next: ([purchaseResponse, approveResponse]: [any, any]) => {
-                    // Check if data is not null and iterable for both responses
+            forkJoin([purchaseInvoiceObservable, approveInvoiceObservable, accountInvoiceObservable]).subscribe({
+                next: ([purchaseResponse, approveResponse, accountResponse]: [any, any, any]) => {
+                    // Check if data is not null and iterable for purchaseResponse
                     if (purchaseResponse.data && Array.isArray(purchaseResponse.data)) {
                         this.dashboardData = purchaseResponse.data;
                     } else {
                         console.warn('Purchase response data is null or not iterable');
                         this.dashboardData = [];
                     }
+            
+                    // Concatenate approveResponse.data with dashboardData if it's iterable
                     if (approveResponse.data && Array.isArray(approveResponse.data)) {
                         this.dashboardData = [...this.dashboardData, ...approveResponse.data];
                     } else {
                         console.warn('Approve response data is null or not iterable');
                     }
-
+            
+                    // Concatenate accountResponse.data with dashboardData if it's iterable
+                    if (accountResponse.data && Array.isArray(accountResponse.data)) {
+                        this.dashboardData = [...this.dashboardData, ...accountResponse.data];
+                    } else {
+                        console.warn('Account response data is null or not iterable');
+                    }
+            
                     // Processing the merged data
                     this.countDataByInvoies(this.dashboardData);
                     this.loadInoivceStatusList(this.customerStatus);
@@ -246,6 +267,7 @@ export class DashboardComponent {
                     this.publicVariable.isProcess = false;
                 }
             });
+            
         } catch (error) {
             console.error('Error loading invoice lists:', error);
             this.publicVariable.isProcess = false;
@@ -253,6 +275,7 @@ export class DashboardComponent {
     }
 
     countDataByInvoies(data: any[]): void {
+        
         const counts: any = {
             'DRAFT': 0,
             'PENDING WITH TL APPROVER': 0,
