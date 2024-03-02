@@ -40,7 +40,7 @@ export interface invoiceStatusModule {
     impiHeaderCustomerPhoneNo: string
     impiHeaderCreatedBy: string
     impiHeaderTotalInvoiceAmount: number
-    impiHeaderAttachment: string
+
     impiHeaderPaymentTerms: string
     impiHeaderRemarks: string
     impiHeaderSubmittedDate: string
@@ -52,7 +52,23 @@ export interface invoiceStatusModule {
     impiHeaderFinanceApprover: string
     impiHeaderSupportApprover: any
     lineItem_Requests: LineItemRequest[]
+    impiHeaderAttachment: Attachment[]
 }
+
+export interface Attachment {
+    imadId: number
+    imadRecordNo: any
+    imadScreenName: string
+    imadFileName: string
+    imadFileType: string
+    imadFileSize: string
+    imadFileUrl: string
+    imadActive: boolean
+    imadCreatedBy: string
+    imadCreatedOn: string
+    imadModifiedBy: any
+    imadModifiedOn: any
+  }
 
 export interface LineItemRequest {
     impiLineDescription: string

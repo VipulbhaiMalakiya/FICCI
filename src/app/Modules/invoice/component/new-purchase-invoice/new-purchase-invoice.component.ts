@@ -147,7 +147,6 @@ export class NewPurchaseInvoiceComponent implements OnInit {
     }
 
     patchFormData(data: any): void {
-        console.log(data);
 
         this.publicVariable.dataForm.patchValue({
             headerid: data.headerId,
@@ -180,6 +179,26 @@ export class NewPurchaseInvoiceComponent implements OnInit {
         });
 
         this.publicVariable.expenses = data.lineItem_Requests;
+        this.uploadedFiles = data.impiHeaderAttachment;
+
+        this.uploadedFiles = data.impiHeaderAttachment.map((file: any) => ({
+            id: file.imadId,
+            recordNo: file.imadRecordNo,
+            screenName: file.imadScreenName,
+            name: file.imadFileName,
+            type: file.imadFileType,
+            fileSize: file.imadFileSize,
+            fileUrl: file.imadFileUrl,
+            active: file.imadActive,
+            createdBy: file.imadCreatedBy,
+            createdOn: file.imadCreatedOn,
+            modifiedBy: file.imadModifiedBy,
+            modifiedOn: file.imadModifiedOn
+          }));
+
+          console.log(this.uploadedFiles);
+
+
     }
 
     loadProjectList(): void {
@@ -360,7 +379,6 @@ export class NewPurchaseInvoiceComponent implements OnInit {
                 event.target.value = null;
                 return;
             }
-
             this.uploadedFiles.push(file);
         }
     }
