@@ -27,6 +27,8 @@ export class DashboardComponent {
     PIApprovedAccounts: number = 0;
     PIRejectedbyAccounts: number = 0;
     PIALL: number = 0;
+    PIforapproval: number = 0;
+
     dashboardData: any;
     invoiceStatuslistData: invoiceStatusModule[] = [];
 
@@ -264,6 +266,7 @@ export class DashboardComponent {
             'REJECTED BY TL APPROVER': 0,
             'REJECTED BY CH APPROVER': 0,
             'REJECTED BY ACCOUNTS APPROVER': 0,
+            'FOR APPROVAL':0,
             'ALL': 0
         };
 
@@ -276,8 +279,10 @@ export class DashboardComponent {
             || item.headerStatus === 'PENDING WITH ACCOUNTS APPROVER');
         counts['PENDING WITH TL APPROVER'] = pendingData.length;
 
-
-
+        const forapproval = data.filter(item => item.headerStatus === 'PENDING WITH TL APPROVER'
+        || item.headerStatus === 'PENDING WITH CH APPROVER'
+        || item.headerStatus === 'PENDING WITH ACCOUNTS APPROVER');
+        counts['FOR APPROVAL'] = forapproval.length;
 
         const approvedData = data.filter(item => item.headerStatus === 'APPROVED BY ACCOUNTS APPROVER');
         counts['APPROVED BY ACCOUNTS APPROVER'] = approvedData.length;
@@ -292,6 +297,7 @@ export class DashboardComponent {
 
         // Update counts
         this.PIisDRAFT = counts['DRAFT'];
+        this.PIforapproval= counts['FOR APPROVAL'];
         this.PIPendingApproval = counts['PENDING WITH TL APPROVER'];
         this.PIApprovedAccounts = counts['APPROVED BY ACCOUNTS APPROVER'];
         this.PIRejectedbyAccounts = counts['REJECTED BY CH APPROVER'];
