@@ -161,7 +161,11 @@ export class ViewPiAccountsInboxComponent implements OnInit, OnDestroy {
     onSubmit(action: boolean) {
         if (this.publicVariable.dataForm.valid) {
             const newData = this.publicVariable.dataForm.value;
-
+            if (!action && !newData.remarks) {
+                // Show JavaScript alert if action is false and remarks field is empty
+                window.alert('Remarks are required.');
+                return; 
+            }
             const newConfig: any = {
                 headerId: this.data.headerId,
                 isApproved: action,
