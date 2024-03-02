@@ -12,6 +12,7 @@ export class ViewInvoiceStatusComponent {
     data: any;
     FilePath:any;
     publicVariable = new publicVariable();
+    uploadedFiles: File[] = [];
 
     constructor(private route: ActivatedRoute,private CAPI: CustomersService,) { }
 
@@ -20,11 +21,32 @@ export class ViewInvoiceStatusComponent {
             this.headerId = +params['id'];
         });
         this.data = history.state.data;
-        console.log(this.data);
+        this.uploadedFiles = this.data.impiHeaderAttachment;
 
+        if (this.data.impiHeaderAttachment) {
+            this.uploadedFiles = this.data.impiHeaderAttachment.map((file: any) => ({
+                id: file.imadId,
+                recordNo: file.imadRecordNo,
+                screenName: file.imadScreenName,
+                name: file.imadFileName,
+                type: file.imadFileType,
+                fileSize: file.imadFileSize,
+                fileUrl: file.imadFileUrl,
+                active: file.imadActive,
+                createdBy: file.imadCreatedBy,
+                createdOn: file.imadCreatedOn,
+                modifiedBy: file.imadModifiedBy,
+                modifiedOn: file.imadModifiedOn
+            }));
+            this.loadStateList();
+        } else {
+            // Handle the case when this.data.impiHeaderAttachment is null or undefined
+            // For example, you might want to set uploadedFiles to an empty array or handle it differently based on your application logic.
+            this.uploadedFiles = [];
+            this.handleLoadingError()
 
-        this.FilePath = `${environment.fileURL}${ this.data.impiHeaderAttachment}`;
-        this.loadStateList();
+        }
+
     }
 
     loadStateList() {
@@ -53,7 +75,30 @@ export class ViewInvoiceStatusComponent {
         return state ? state.stateName : null;
     }
 
+    getFileType(type: string): string {
+        // Convert file type to readable format
+        switch (type) {
+            case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
+                return '.xlsx';
+            case 'application/vnd.ms-excel':
+                return '.xls';
+            case 'application/msword':
+                return '.doc';
+            case 'text/csv':
+                return '.csv';
+            case 'application/pdf':
+                return '.pdf';
+            default:
+                return 'Unknown';
+        }
+    }
 
+    downalodFile(fileUrl: any) {
+
+        this.FilePath = `${environment.fileURL}${fileUrl.fileUrl}`;
+        window.open(this.FilePath, '_blank');
+
+    }
     handleLoadingError() {
         this.publicVariable.isProcess = false; // Set status to false on error
     }

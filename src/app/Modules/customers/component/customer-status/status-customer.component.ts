@@ -59,28 +59,6 @@ export class StatusCustomerComponent implements OnInit {
         this.publicVariable.Subscription.add(subscription);
     }
 
-    // loadCityList() {
-    //     try {
-    //         const subscription = this.API.getCityList().subscribe({
-    //             next: (response: any) => {
-    //                 this.publicVariable.cityList = response.data;
-    //                 this.loadCustomerStatusList();
-
-    //             },
-    //             error: (error) => {
-    //                 console.error('Error loading city list:', error);
-    //                 console.error('Failed to load city list. Please try again later.');
-    //             },
-    //         });
-
-    //         this.publicVariable.Subscription.add(subscription);
-    //     } catch (error) {
-    //         console.error('Error loading city list:', error);
-    //         console.error('An unexpected error occurred. Please try again later.');
-    //     }
-    // }
-
-
 
     getCityName(cityId: string): string | undefined {
         const city = this.publicVariable.cityList.find((c: any) => c.cityId === cityId);

@@ -182,10 +182,30 @@
 
     </div>
 
-    <div class="col-md-9 col-xs-12 col-sm-12 attach-col">
-        <div class="row align-items-center">
-            <div class="col-sm-2"><b>Attachment</b></div>
-            <div class="col-sm-9"  ><a href="{{FilePath}}" download   style="color:#1382D7;">{{data.impiHeaderAttachment}}</a></div>
+
+    <div class="dasboard-table pi-table mb-0" *ngIf="uploadedFiles.length > 0">
+        <div class="table-responsive">
+            <table class="table table-bordered text-nowrap">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>File Type</th>
+                    <th>File Name</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let file of uploadedFiles; let i = index">
+                    <td>{{ i + 1 }}</td>
+                    <td>{{ getFileType(file.type) }}</td>
+                    <td>{{ file.name }}</td>
+                    <td>
+                      <a href="javascript:void(0)" (click)="downalodFile(file)"><img src="../assets/images/download-icon.svg" alt="" class="me-2"></a>
+
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
         </div>
     </div>
 
