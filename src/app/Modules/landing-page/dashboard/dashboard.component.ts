@@ -362,8 +362,6 @@ export class DashboardComponent {
             console.error('ID is undefined or null');
         }
     }
-
-
     onDeletePI(id: any) {
         const modalRef = this.modalService.open(ConfirmationDialogModalComponent, { size: "sm", centered: true, backdrop: "static" });
         var componentInstance = modalRef.componentInstance as ConfirmationDialogModalComponent;
