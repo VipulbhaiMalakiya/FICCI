@@ -169,8 +169,6 @@
                             <td>{{e.impiQuantity * e.impiUnitPrice}}</td>
                             <td>{{e.impiGstgroupCode }}</td>
                             <td>{{e.impiHsnsaccode}}</td>
-
-
                         </tr>
                     </tbody>
                 </table>
@@ -196,7 +194,6 @@
                         <td>{{ file.name }}</td>
                         <td>
                           <a href="javascript:void(0)" (click)="downalodFile(file)"><img src="../assets/images/download-icon.svg" alt="" class="me-2"></a>
-
                         </td>
                       </tr>
                     </tbody>
@@ -206,7 +203,7 @@
         <div class="col-md-9 mt-4">
             <div class="form-group">
                 <label>Payment Terms</label>
-                <textarea class="form-control h-100" cols="2" rows="3" disabled=""
+                <textarea class="form-control h-50" cols="1" rows="1" disabled=""
                     readonly="">{{data.impiHeaderPaymentTerms}}</textarea>
             </div>
         </div>
@@ -215,7 +212,7 @@
         <div class="col-md-9 mt-3">
             <div class="form-group">
                 <label>Remarks</label>
-                <textarea class="form-control h-100" cols="2" rows="3" disabled=""
+                <textarea class="form-control h-50" cols="1" rows="1" disabled=""
                     readonly="">{{data.impiHeaderRemarks}}</textarea>
             </div>
         </div>
@@ -223,7 +220,7 @@
             <div class="col-md-9 mt-3">
                 <div class="form-group">
                     <label>Remarks</label>
-                    <textarea class="form-control h-100" cols="3" rows="5" formControlName="remarks"></textarea>
+                    <textarea class="form-control h-50" cols="2" rows="2" formControlName="remarks"></textarea>
 
                 </div>
             </div>
