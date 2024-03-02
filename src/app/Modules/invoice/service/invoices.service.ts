@@ -26,7 +26,7 @@ export class InvoicesService {
     private FILEDELETE = `${environment.apiURL}IMAD?imadId=`;
 
     deleteFile(id: number): Observable<any> {
-        return this.http.delete<any>(`${this.FILEDELETE}/${id}`).pipe(this.retry);
+        return this.http.delete<any>(`${this.FILEDELETE}${id}`).pipe(this.retry);
     }
 
     getApproveInvoice(): Observable<any[]> {
