@@ -21,6 +21,8 @@ export class ViewInvoiceStatusComponent {
             this.headerId = +params['id'];
         });
         this.data = history.state.data;
+        console.log(this.data);
+
         this.uploadedFiles = this.data.impiHeaderAttachment;
 
         if (this.data.impiHeaderAttachment) {
