@@ -401,8 +401,6 @@ export class NewPurchaseInvoiceComponent implements OnInit {
             this.markexpenseFormControlsAsTouched();
             this.toastr.error('Please fill out all required fields', 'Error');
         }
-
-
     }
 
 
@@ -425,7 +423,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
                 const newData = this.publicVariable.dataForm.value;
                 const isUpdate = !!newData.headerid;
                 let impiHeaderTotalInvoiceAmount = 0; // Initialize the total amount
-
+                let lineNo = 10000;
                 const formData = new FormData();
 
                 if (isUpdate) {
@@ -470,7 +468,6 @@ export class NewPurchaseInvoiceComponent implements OnInit {
                 formData.append('ImpiHeaderSupportApprover', this.publicVariable.selectedProjet.supportApprover);
                 formData.append('RoleName', this.publicVariable.storedRole);
 
-
                 for (let i = 0; i < this.publicVariable.expenses.length; i++) {
                     const item = this.publicVariable.expenses[i];
                     formData.append(`lineItem_Requests[${i}].ImpiNetTotal`, '0');
@@ -479,7 +476,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
                     formData.append(`lineItem_Requests[${i}].ImpiUnitPrice`, item.impiUnitPrice);
                     formData.append(`lineItem_Requests[${i}].ImpiGstgroupCode`, item.impiGstgroupCode);
                     formData.append(`lineItem_Requests[${i}].ImpiGstgroupType`, 'GOODS');
-                    formData.append(`lineItem_Requests[${i}].ImpiLineNo`, '10000');
+                    formData.append(`lineItem_Requests[${i}].ImpiLineNo`, String(lineNo));
                     formData.append(`lineItem_Requests[${i}].ImpiHsnsaccode`, item.impiHsnsaccode);
                     formData.append(`lineItem_Requests[${i}].documentType`, item.documentType);
                     // Calculate the amount here
@@ -487,9 +484,10 @@ export class NewPurchaseInvoiceComponent implements OnInit {
                     const unitPrice = parseFloat(item.impiUnitPrice);
                     const calculateAmount = impiQuantity * unitPrice;
                     formData.append(`lineItem_Requests[${i}].ImpiLineAmount`, calculateAmount.toString());
-
                     impiHeaderTotalInvoiceAmount += calculateAmount;
 
+                    // Increment line number for next iteration
+                    lineNo += 10000; // Increment by 10000 for each row
                 }
                 formData.append('impiHeaderTotalInvoiceAmount', String(impiHeaderTotalInvoiceAmount));
                 this.publicVariable.isProcess = true;
@@ -519,7 +517,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
                 this.markFormControlsAsTouched();
             }
         }
-        else{
+        else {
             this.toastr.error('Please add expenses before submitting.', 'Error');
         }
 
