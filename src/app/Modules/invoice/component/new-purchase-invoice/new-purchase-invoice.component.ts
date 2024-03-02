@@ -538,10 +538,6 @@ export class NewPurchaseInvoiceComponent implements OnInit {
         return this.publicVariable.dataForm.controls[controlName].touched && this.publicVariable.dataForm.controls[controlName].hasError(errorName);
     }
 
-
-
-
-
     deleteExpense(index: number) {
         const modalRef = this.modalService.open(ConfirmationDialogModalComponent, { size: "sm", centered: true, backdrop: "static" });
         var componentInstance = modalRef.componentInstance as ConfirmationDialogModalComponent;

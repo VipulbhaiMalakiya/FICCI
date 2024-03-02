@@ -265,10 +265,9 @@
                         <div class="form-group">
                             <label for="Quantity">Quantity</label>
                             <input type="text" class="form-control" id="Quantity" placeholder="Quantity"
-                                formControlName="impiQuantity" />
+                                formControlName="impiQuantity" (input)="onInputChange($event)" />
                             <div *ngIf="shouldShowExpenseError('impiQuantity','required')" class="text-danger">This field is
                                 required</div>
-
                         </div>
                     </div>
 
@@ -279,9 +278,7 @@
                                 placeholder="Select " [searchable]="true" [virtualScroll]="true" [bufferAmount]="10"
                                 (change)="onGSTGroupChange($event)" formControlName="impiGstgroupCode">
                             </ng-select>
-                            <div *ngIf="shouldShowExpenseError('impiGstgroupCode','required')" class="text-danger">This
-                                field is
-                                required</div>
+                            <div *ngIf="shouldShowExpenseError('impiGstgroupCode','required')" class="text-danger">This field is required</div>
                         </div>
                     </div>
 
@@ -304,7 +301,7 @@
                         <div class="form-group">
                             <label>Direct Unit Cost</label>
                             <input type="text" class="form-control" placeholder="Direct Unit Cost"
-                                formControlName="impiUnitPrice">
+                                formControlName="impiUnitPrice" (input)="priceValidator($event)">
                             <div *ngIf="shouldShowExpenseError('impiUnitPrice','required')" class="text-danger">This field is
                                 required</div>
                         </div>
