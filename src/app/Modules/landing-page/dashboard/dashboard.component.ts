@@ -39,7 +39,7 @@ export class DashboardComponent {
         private toastr: ToastrService,
         private API: CustomersService,
         private IAPI: InvoicesService
-    ) {}
+    ) { }
 
     ngOnInit(): void {
         this.loadCustomerStatusCountList();
@@ -198,8 +198,6 @@ export class DashboardComponent {
 
     }
 
-
-
     loadPurchaseInvoiceList(): void {
         try {
             // Observable for the first API call
@@ -254,8 +252,6 @@ export class DashboardComponent {
         }
     }
 
-
-
     countDataByInvoies(data: any[]): void {
         const counts: any = {
             'DRAFT': 0,
@@ -266,7 +262,7 @@ export class DashboardComponent {
             'REJECTED BY TL APPROVER': 0,
             'REJECTED BY CH APPROVER': 0,
             'REJECTED BY ACCOUNTS APPROVER': 0,
-            'FOR APPROVAL':0,
+            'FOR APPROVAL': 0,
             'ALL': 0
         };
 
@@ -274,14 +270,16 @@ export class DashboardComponent {
         const draftData = data.filter(item => item.headerStatus === 'DRAFT');
         counts['DRAFT'] = draftData.length;
 
-        const pendingData = data.filter(item => item.headerStatus === 'PENDING WITH TL APPROVER'
+        const pendingData = data.filter(item =>
+            item.createdBy === this.publicVariable.storedEmail
+            && item.headerStatus === 'PENDING WITH TL APPROVER'
             || item.headerStatus === 'PENDING WITH CH APPROVER'
             || item.headerStatus === 'PENDING WITH ACCOUNTS APPROVER');
         counts['PENDING WITH TL APPROVER'] = pendingData.length;
 
         const forapproval = data.filter(item => item.headerStatus === 'PENDING WITH TL APPROVER'
-        || item.headerStatus === 'PENDING WITH CH APPROVER'
-        || item.headerStatus === 'PENDING WITH ACCOUNTS APPROVER');
+            || item.headerStatus === 'PENDING WITH CH APPROVER'
+            || item.headerStatus === 'PENDING WITH ACCOUNTS APPROVER');
         counts['FOR APPROVAL'] = forapproval.length;
 
         const approvedData = data.filter(item => item.headerStatus === 'APPROVED BY ACCOUNTS APPROVER');
@@ -297,7 +295,7 @@ export class DashboardComponent {
 
         // Update counts
         this.PIisDRAFT = counts['DRAFT'];
-        this.PIforapproval= counts['FOR APPROVAL'];
+        this.PIforapproval = counts['FOR APPROVAL'];
         this.PIPendingApproval = counts['PENDING WITH TL APPROVER'];
         this.PIApprovedAccounts = counts['APPROVED BY ACCOUNTS APPROVER'];
         this.PIRejectedbyAccounts = counts['REJECTED BY CH APPROVER'];
@@ -398,7 +396,7 @@ export class DashboardComponent {
         }
     }
 
-    onApproval(data: customerStatusListModel){
+    onApproval(data: customerStatusListModel) {
         if (data.customerId) {
             this.router.navigate(['customer/accounts/remarks/', data.customerId], { state: { data: data } });
         } else {
