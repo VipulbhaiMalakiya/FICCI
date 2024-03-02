@@ -271,7 +271,7 @@ export class DashboardComponent {
         counts['DRAFT'] = draftData.length;
 
         const pendingData = data.filter(item =>
-            // item.createdBy === this.publicVariable.storedEmail &&
+            item.impiHeaderCreatedBy === this.publicVariable.storedEmail &&
             (item.headerStatus === 'PENDING WITH TL APPROVER' ||
                 item.headerStatus === 'PENDING WITH CH APPROVER' ||
                 item.headerStatus === 'PENDING WITH ACCOUNTS APPROVER' ||
@@ -318,7 +318,7 @@ export class DashboardComponent {
                 break;
             case 'PENDING WITH APPROVER':
                 filteredData = this.dashboardData.filter((item: any) =>
-                    // item.createdBy === this.publicVariable.storedEmail &&
+                    item.impiHeaderCreatedBy === this.publicVariable.storedEmail &&
                     (item.headerStatus === 'PENDING WITH TL APPROVER' ||
                         item.headerStatus === 'PENDING WITH CH APPROVER' ||
                         item.headerStatus === 'PENDING WITH ACCOUNTS APPROVER' ||
