@@ -150,7 +150,6 @@
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th>Line No</th>
                             <th width="38%">Nature of Expense</th>
                             <th>Quantity</th>
                             <th>Direct Unit Cost</th>
@@ -164,7 +163,6 @@
 
                         <tr *ngFor="let e of data.lineItem_Requests; let i = index">
                             <td>{{i + 1}}</td>
-                            <td></td>
                             <td>{{e.documentType | titlecase }}</td>
                             <td>{{e.impiQuantity}}</td>
                             <td>{{e.impiUnitPrice}}</td>
