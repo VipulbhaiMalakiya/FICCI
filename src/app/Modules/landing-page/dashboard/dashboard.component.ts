@@ -197,25 +197,62 @@ export class DashboardComponent {
     }
 
 
+
     loadPurchaseInvoiceList(): void {
         try {
-            const subscription = this.IAPI.getPurchaseInvoice_New().subscribe({
-                next: (response: any) => {
-                    this.countDataByInvoies(response.data);
-                    this.dashboardData = response.data;
+            // Observable for the first API call
+            const purchaseInvoiceObservable = this.IAPI.getPurchaseInvoice_New().pipe(
+                catchError((error: any) => {
+                    console.error('Error loading purchase invoice list:', error);
+                    return throwError(error);
+                })
+            );
 
+            // Observable for the second API call
+            const approveInvoiceObservable = this.IAPI.getApproveInvoice().pipe(
+                timeout(120000), // Timeout set to 2 minutes (120000 milliseconds)
+                catchError((error: any) => {
+                    console.error('Error loading approve invoice list:', error);
+                    return throwError(error);
+                }),
+                finalize(() => {
+                    this.publicVariable.isProcess = false;
+                })
+            );
+
+            // Combining both observables
+            forkJoin([purchaseInvoiceObservable, approveInvoiceObservable]).subscribe({
+                next: ([purchaseResponse, approveResponse]: [any, any]) => {
+                    // Check if data is not null and iterable for both responses
+                    if (purchaseResponse.data && Array.isArray(purchaseResponse.data)) {
+                        this.dashboardData = purchaseResponse.data;
+                    } else {
+                        console.warn('Purchase response data is null or not iterable');
+                        this.dashboardData = [];
+                    }
+                    if (approveResponse.data && Array.isArray(approveResponse.data)) {
+                        this.dashboardData = [...this.dashboardData, ...approveResponse.data];
+                    } else {
+                        console.warn('Approve response data is null or not iterable');
+                    }
+
+                    // Processing the merged data
+                    this.countDataByInvoies(this.dashboardData);
                     this.loadInoivceStatusList(this.customerStatus);
+                    this.publicVariable.isProcess = false;
                 },
-                error: (error) => {
-                    console.error('Error loading project list:', error);
+                error: (error: any) => {
+                    this.toastr.error('Error loading invoice lists', error.name);
+                    this.publicVariable.isProcess = false;
                 }
             });
-
-            this.publicVariable.Subscription.add(subscription);
         } catch (error) {
-            console.error('Error loading project list:', error);
+            console.error('Error loading invoice lists:', error);
+            this.publicVariable.isProcess = false;
         }
     }
+
+
 
     countDataByInvoies(data: any[]): void {
         const counts: any = {
