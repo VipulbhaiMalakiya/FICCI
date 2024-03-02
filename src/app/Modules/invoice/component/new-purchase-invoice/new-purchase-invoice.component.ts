@@ -420,10 +420,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
 
 
     onSubmit(action: boolean): void {
-        // console.log( this.publicVariable.expenses);
-
         if (this.publicVariable.expenses.length > 0) {
-
             if (this.publicVariable.dataForm.valid) {
                 const newData = this.publicVariable.dataForm.value;
                 const isUpdate = !!newData.headerid;
