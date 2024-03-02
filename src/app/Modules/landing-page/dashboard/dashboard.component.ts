@@ -271,10 +271,11 @@ export class DashboardComponent {
         counts['DRAFT'] = draftData.length;
 
         const pendingData = data.filter(item =>
-            item.createdBy === this.publicVariable.storedEmail
-            && item.headerStatus === 'PENDING WITH TL APPROVER'
-            || item.headerStatus === 'PENDING WITH CH APPROVER'
-            || item.headerStatus === 'PENDING WITH ACCOUNTS APPROVER');
+            item.createdBy === this.publicVariable.storedEmail &&
+                (item.headerStatus === 'PENDING WITH TL APPROVER' ||
+                    item.headerStatus === 'PENDING WITH CH APPROVER' ||
+                    item.headerStatus === 'PENDING WITH ACCOUNTS APPROVER' ||
+                    item.customerStatus === 'PENDING WITH FINANCE APPROVER'));
         counts['PENDING WITH TL APPROVER'] = pendingData.length;
 
         const forapproval = data.filter(item => item.headerStatus === 'PENDING WITH TL APPROVER'
@@ -315,7 +316,7 @@ export class DashboardComponent {
                 break;
             case 'PENDING WITH APPROVER':
                 filteredData = this.dashboardData.filter((item: any) =>
-                // item.createdBy === this.publicVariable.storedEmail &&
+                item.createdBy === this.publicVariable.storedEmail &&
                 (item.headerStatus === 'PENDING WITH TL APPROVER' ||
                     item.headerStatus === 'PENDING WITH CH APPROVER' ||
                     item.headerStatus === 'PENDING WITH ACCOUNTS APPROVER' ||
