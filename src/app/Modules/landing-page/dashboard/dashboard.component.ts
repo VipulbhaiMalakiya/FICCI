@@ -272,19 +272,20 @@ export class DashboardComponent {
 
         const pendingData = data.filter(item =>
             item.createdBy === this.publicVariable.storedEmail &&
-                (item.headerStatus === 'PENDING WITH TL APPROVER' ||
-                    item.headerStatus === 'PENDING WITH CH APPROVER' ||
-                    item.headerStatus === 'PENDING WITH ACCOUNTS APPROVER' ||
-                    item.customerStatus === 'PENDING WITH FINANCE APPROVER'));
+            (item.headerStatus === 'PENDING WITH TL APPROVER' ||
+                item.headerStatus === 'PENDING WITH CH APPROVER' ||
+                item.headerStatus === 'PENDING WITH ACCOUNTS APPROVER' ||
+                item.headerStatus === 'PENDING WITH FINANCE APPROVER'));
         counts['PENDING WITH TL APPROVER'] = pendingData.length;
 
         const forapproval = data.filter(item => item.headerStatus === 'PENDING WITH TL APPROVER'
             || item.headerStatus === 'PENDING WITH CH APPROVER'
-            || item.headerStatus === 'PENDING WITH ACCOUNTS APPROVER');
+            || item.headerStatus === 'PENDING WITH ACCOUNTS APPROVER'
+            || item.headerStatus === 'PENDING WITH FINANCE APPROVER');
         counts['FOR APPROVAL'] = forapproval.length;
 
         const approvedData = data.filter(item => item.headerStatus === 'APPROVED BY ACCOUNTS APPROVER');
-        counts['APPROVED BY ACCOUNTS APPROVER'] = approvedData.length;
+        counts['PENDING WITH FINANCE APPROVER'] = approvedData.length;
 
         const rejectedData = data.filter(item => item.headerStatus === 'REJECTED BY TL APPROVER'
             || item.headerStatus === 'REJECTED BY CH APPROVER'
@@ -316,11 +317,11 @@ export class DashboardComponent {
                 break;
             case 'PENDING WITH APPROVER':
                 filteredData = this.dashboardData.filter((item: any) =>
-                item.createdBy === this.publicVariable.storedEmail &&
-                (item.headerStatus === 'PENDING WITH TL APPROVER' ||
-                    item.headerStatus === 'PENDING WITH CH APPROVER' ||
-                    item.headerStatus === 'PENDING WITH ACCOUNTS APPROVER' ||
-                    item.customerStatus === 'PENDING WITH FINANCE APPROVER'));
+                    item.createdBy === this.publicVariable.storedEmail &&
+                    (item.headerStatus === 'PENDING WITH TL APPROVER' ||
+                        item.headerStatus === 'PENDING WITH CH APPROVER' ||
+                        item.headerStatus === 'PENDING WITH ACCOUNTS APPROVER' ||
+                        item.headerStatus === 'PENDING WITH FINANCE APPROVER'));
                 break;
             case 'APPROVED BY ACCOUNTS APPROVER':
                 filteredData = this.dashboardData.filter((item: any) =>
@@ -334,6 +335,19 @@ export class DashboardComponent {
                     item.headerStatus === 'REJECTED BY CH APPROVER' ||
                     item.headerStatus === 'REJECTED BY ACCOUNTS APPROVER' ||
                     item.headerStatus === 'REJECTED BY FINANCE APPROVER'));
+                break;
+            case 'FOR APPROVAL':
+                filteredData = this.dashboardData.filter((item: any) => (
+                    item.headerStatus === 'PENDING WITH TL APPROVER' ||
+                    item.headerStatus === 'PENDING WITH CH APPROVER' ||
+                    item.headerStatus === 'PENDING WITH ACCOUNTS APPROVER' ||
+                    item.headerStatus === 'PENDING WITH FINANCE APPROVER'
+                ));
+                break;
+                case 'ALL':
+                filteredData = this.publicVariable.storedRole !== 'Accounts' ?
+                    this.dashboardData.filter((item: any) => item.createdBy === this.publicVariable.storedEmail) :
+                    this.dashboardData;
                 break;
             default:
                 filteredData = this.dashboardData
@@ -446,7 +460,7 @@ export class DashboardComponent {
             console.error('ID is undefined or null');
         }
     }
-    onApprovalPI(data: invoiceStatusModule):void{
+    onApprovalPI(data: invoiceStatusModule): void {
         if (data.headerId) {
             this.router.navigate(['invoice/approval/view', data.headerId], { state: { data: data } });
         } else {
