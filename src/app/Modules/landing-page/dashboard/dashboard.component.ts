@@ -271,7 +271,7 @@ export class DashboardComponent {
         counts['DRAFT'] = draftData.length;
 
         const pendingData = data.filter(item =>
-            item.createdBy === this.publicVariable.storedEmail &&
+            // item.createdBy === this.publicVariable.storedEmail &&
             (item.headerStatus === 'PENDING WITH TL APPROVER' ||
                 item.headerStatus === 'PENDING WITH CH APPROVER' ||
                 item.headerStatus === 'PENDING WITH ACCOUNTS APPROVER' ||
@@ -292,6 +292,7 @@ export class DashboardComponent {
             || item.headerStatus === 'REJECTED BY ACCOUNTS APPROVER');
         counts['REJECTED BY CH APPROVER'] = rejectedData.length;
 
+        
         // Calculate total count
         counts['ALL'] = data.length;
 
@@ -299,7 +300,7 @@ export class DashboardComponent {
         this.PIisDRAFT = counts['DRAFT'];
         this.PIforapproval = counts['FOR APPROVAL'];
         this.PIPendingApproval = counts['PENDING WITH TL APPROVER'];
-        this.PIApprovedAccounts = counts['APPROVED BY ACCOUNTS APPROVER'];
+        this.PIApprovedAccounts = counts['PENDING WITH FINANCE APPROVER'];
         this.PIRejectedbyAccounts = counts['REJECTED BY CH APPROVER'];
         this.PIALL = counts['ALL'];
         this.publicVariable.count = counts['ALL']; // Total count
@@ -317,7 +318,7 @@ export class DashboardComponent {
                 break;
             case 'PENDING WITH APPROVER':
                 filteredData = this.dashboardData.filter((item: any) =>
-                    item.createdBy === this.publicVariable.storedEmail &&
+                    // item.createdBy === this.publicVariable.storedEmail &&
                     (item.headerStatus === 'PENDING WITH TL APPROVER' ||
                         item.headerStatus === 'PENDING WITH CH APPROVER' ||
                         item.headerStatus === 'PENDING WITH ACCOUNTS APPROVER' ||
@@ -325,7 +326,6 @@ export class DashboardComponent {
                 break;
             case 'APPROVED BY ACCOUNTS APPROVER':
                 filteredData = this.dashboardData.filter((item: any) =>
-                    // item.createdBy === this.publicVariable.storedEmail &&
                     item.headerStatus === 'APPROVED BY ACCOUNTS APPROVER');
                 break;
             case 'REJECTED BY CH APPROVER':
@@ -345,9 +345,7 @@ export class DashboardComponent {
                 ));
                 break;
                 case 'ALL':
-                filteredData = this.publicVariable.storedRole !== 'Accounts' ?
-                    this.dashboardData.filter((item: any) => item.createdBy === this.publicVariable.storedEmail) :
-                    this.dashboardData;
+               filteredData = this.dashboardData
                 break;
             default:
                 filteredData = this.dashboardData
