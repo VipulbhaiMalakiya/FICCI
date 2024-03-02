@@ -183,20 +183,27 @@ export class NewPurchaseInvoiceComponent implements OnInit {
         this.publicVariable.expenses = data.lineItem_Requests;
         this.uploadedFiles = data.impiHeaderAttachment;
 
-        this.uploadedFiles = data.impiHeaderAttachment.map((file: any) => ({
-            id: file.imadId,
-            recordNo: file.imadRecordNo,
-            screenName: file.imadScreenName,
-            name: file.imadFileName,
-            type: file.imadFileType,
-            fileSize: file.imadFileSize,
-            fileUrl: file.imadFileUrl,
-            active: file.imadActive,
-            createdBy: file.imadCreatedBy,
-            createdOn: file.imadCreatedOn,
-            modifiedBy: file.imadModifiedBy,
-            modifiedOn: file.imadModifiedOn
-        }));
+        if (data.impiHeaderAttachment !== null && data.impiHeaderAttachment !== undefined) {
+            this.uploadedFiles = data.impiHeaderAttachment.map((file: any) => ({
+                id: file.imadId,
+                recordNo: file.imadRecordNo,
+                screenName: file.imadScreenName,
+                name: file.imadFileName,
+                type: file.imadFileType,
+                fileSize: file.imadFileSize,
+                fileUrl: file.imadFileUrl,
+                active: file.imadActive,
+                createdBy: file.imadCreatedBy,
+                createdOn: file.imadCreatedOn,
+                modifiedBy: file.imadModifiedBy,
+                modifiedOn: file.imadModifiedOn
+            }));
+        } else {
+            // Handle the case when data.impiHeaderAttachment is null or undefined
+            // For example, you might want to set uploadedFiles to an empty array or handle it differently based on your application logic.
+            this.uploadedFiles = [];
+        }
+
     }
 
 
