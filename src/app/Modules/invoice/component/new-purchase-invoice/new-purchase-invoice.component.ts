@@ -12,7 +12,6 @@ import { finalize, timeout } from 'rxjs';
 export class NewPurchaseInvoiceComponent implements OnInit {
 
     publicVariable = new publicVariable();
-    ImpiHeaderAttachment: any;
     Id?: number;
     data: any;
     public isEditing: boolean = false;
