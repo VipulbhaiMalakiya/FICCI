@@ -158,10 +158,9 @@
                 </thead>
                 <tbody>
 
-                    <tr *ngFor="let e of data.lineItem_Requests
-                    ; let i = index">
+                    <tr *ngFor="let e of data.lineItem_Requests; let i = index">
                         <td>{{i + 1}}</td>
-                        <td></td>
+                        <td>{{e.impiLineNo}}</td>
                         <td>{{e.documentType | titlecase }}</td>
                         <td>{{e.impiQuantity}}</td>
                         <td>{{e.impiUnitPrice}}</td>
