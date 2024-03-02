@@ -20,20 +20,25 @@ export class InvoicesService {
     private ApproverURL = `${environment.apiURL}ApproveInvoice`;
     private ApproverAccountURL = `${environment.apiURL}Account/GetInvoice`;
     private GetCustomerAPI = `${environment.apiURL}DropDown/GetCustomer`;
-    private GetCOAMasterAPI =  `${environment.apiURL}DropDown/GetCOAMaster`;
+    private GetCOAMasterAPI = `${environment.apiURL}DropDown/GetCOAMaster`;
     private GetGSTGroupAPI = `${environment.apiURL}DropDown/GetGSTGroup`;
     private GetHSNSACAPI = `${environment.apiURL}DropDown/GetHSNSAC?gstCode=`;
+    private FILEDELETE = `${environment.apiURL}IMAD?imadId=`;
+
+    deleteFile(id: number): Observable<any> {
+        return this.http.delete<any>(`${this.FILEDELETE}/${id}`).pipe(this.retry);
+    }
 
     getApproveInvoice(): Observable<any[]> {
         const url = `${this.ApproveInvoiceURL}${localStorage.getItem('userEmail') ?? ''}`;
         return this.http.get<any[]>(url).pipe(this.retry);
     }
 
-    GetHSNSACLIist(gstCode:any){
+    GetHSNSACLIist(gstCode: any) {
         const url = `${this.GetHSNSACAPI}${gstCode}`;
         return this.http.get<any>(url);
     }
-    GetGSTGroupList():Observable<any[]> {
+    GetGSTGroupList(): Observable<any[]> {
         return this.http.get<any[]>(`${this.GetGSTGroupAPI}`).pipe(this.retry);
     }
 
@@ -62,7 +67,7 @@ export class InvoicesService {
     }
 
     delete(id: number): Observable<any> {
-      return this.http.delete<any>(`${this.apiUrl}/${id}`).pipe(this.retry);
+        return this.http.delete<any>(`${this.apiUrl}/${id}`).pipe(this.retry);
     }
     getCustomerStatusNew(): Observable<any[]> {
         const url = `${this.getCustomerStatusNewURL}${localStorage.getItem('userEmail') ?? ''}`;

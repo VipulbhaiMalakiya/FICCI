@@ -17,7 +17,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
     data: any;
     public isEditing: boolean = false;
     uploadedFiles: File[] = [];
-    FilePath:any;
+    FilePath: any;
 
 
     constructor(private appService: AppService,
@@ -196,7 +196,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
             createdOn: file.imadCreatedOn,
             modifiedBy: file.imadModifiedBy,
             modifiedOn: file.imadModifiedOn
-          }));
+        }));
     }
 
 
@@ -401,14 +401,37 @@ export class NewPurchaseInvoiceComponent implements OnInit {
         }
     }
 
-    deleteFile(index: number) {
-        this.uploadedFiles.splice(index, 1);
+    deleteFile(index: number, file: any) {
+
+        const modalRef = this.modalService.open(ConfirmationDialogModalComponent, { size: "sm", centered: true, backdrop: "static" });
+        var componentInstance = modalRef.componentInstance as ConfirmationDialogModalComponent;
+        componentInstance.message = "Do you really want to delete these records? This process cannot be undone ?";
+        modalRef.result.then((canDelete: boolean) => {
+            if (canDelete) {
+                this.publicVariable.isProcess = true;
+                this.API.deleteFile(file.id).subscribe({
+                    next: (res: any) => {
+                        this.toastr.success(res.message, 'Success');
+                        this.publicVariable.isProcess = false;
+                        this.uploadedFiles.splice(index, 1);
+
+
+                    },
+                    error: (error) => {
+                        this.publicVariable.isProcess = false;
+                        this.toastr.error(error.error.message, 'Error');
+                    }
+                });
+
+            }
+        }).catch(() => { });
+
     }
 
-    downalodFile(fileUrl:any){
+    downalodFile(fileUrl: any) {
 
-        this.FilePath = `${environment.fileURL}${ fileUrl.fileUrl}`;
-        window.open( this.FilePath, '_blank');
+        this.FilePath = `${environment.fileURL}${fileUrl.fileUrl}`;
+        window.open(this.FilePath, '_blank');
 
     }
 
