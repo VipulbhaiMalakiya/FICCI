@@ -53,6 +53,10 @@ export interface invoiceStatusModule {
     impiHeaderSupportApprover: any
     lineItem_Requests: LineItemRequest[]
     impiHeaderAttachment: Attachment[]
+    impiHeaderTlApproverRemarks:string
+    impiHeaderFinanceRemarks:string
+    impiHeaderClusterApproverRemarks:string
+    accountApproverRemarks:string
 }
 
 export interface Attachment {
@@ -101,6 +105,10 @@ export interface invoiceApproveModule {
     headerStatusId: number
     statusName: string
     approverEmail: string
+    impiHeaderTlApproverRemarks:string
+    impiHeaderFinanceRemarks:string
+    impiHeaderClusterApproverRemarks:string
+    accountApproverRemarks:string
   }
 
   export interface GetCustomerModel {
