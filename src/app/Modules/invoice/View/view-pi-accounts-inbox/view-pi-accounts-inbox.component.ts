@@ -58,7 +58,7 @@ export class ViewPiAccountsInboxComponent implements OnInit, OnDestroy {
         this.publicVariable.mailForm = this.fb.group({
             emailTo: ['', [Validators.required]],
             subject: ['', [Validators.required]],
-            body: [''],
+            body: ['', [Validators.required]],
             attachment: [''],
         })
     }
@@ -210,21 +210,50 @@ export class ViewPiAccountsInboxComponent implements OnInit, OnDestroy {
     onSendEmail() {
         if (this.publicVariable.mailForm.valid) {
             const newData = this.publicVariable.mailForm.value;
-            const newConfig: any = {
-                emailTo: newData.emailTo,
-                subject: newData.subject,
-                body: newData.body,
-                attachment: newData.attachment,
-            }
+            const formData = new FormData();
+            formData.append('MailTo', newData.emailTo);
+            formData.append('MailCC', '');
+            formData.append('MailSubject', newData.subject);
+            formData.append('MailBody', newData.body);
+            formData.append('LoginId', this.publicVariable.storedEmail);
+            formData.append('ResourceType','');
+            formData.append('ResourceId','');
+            formData.append('Attachments',newData.attachment);
+
+            this.publicVariable.isProcess = true;
+            // Submit the formData
+            this.publicVariable.Subscription.add(
+                this.API.create(formData).subscribe({
+                    next: (res: any) => {
+                        if (res.status === true) {
+                            this.toastr.success(res.message, 'Success');
+                            this.router.navigate(['invoice/accounts']);
+                            this.publicVariable.dataForm.reset();
+                        } else {
+                            this.toastr.error(res.message, 'Error');
+                            this.publicVariable.isProcess = false;
+                        }
+                    },
+                    error: (error: any) => {
+                        this.publicVariable.isProcess = false;
+                        this.toastr.error(error.error.message || 'An error occurred. Please try again later.', 'Error');
+                    },
+                    complete: () => {
+                        this.publicVariable.isProcess = false;
+                    }
+                })
+            );
         } else {
             this.markFormControlsAsTouchedemail();
 
         }
+
+
     }
 
 
     markFormControlsAsTouchedemail(): void {
-        ['emailTo','subject'].forEach(controlName => {
+        ['emailTo','subject','body'].forEach(controlName => {
             this.publicVariable.mailForm.controls[controlName].markAsTouched();
         });
     }

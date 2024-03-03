@@ -21,8 +21,7 @@ export class ViewInvoiceStatusComponent {
             this.headerId = +params['id'];
         });
         this.data = history.state.data;
-        console.log(this.data);
-
+        this.loadStateList();
         this.uploadedFiles = this.data.impiHeaderAttachment;
 
         if (this.data.impiHeaderAttachment) {
@@ -40,10 +39,7 @@ export class ViewInvoiceStatusComponent {
                 modifiedBy: file.imadModifiedBy,
                 modifiedOn: file.imadModifiedOn
             }));
-            this.loadStateList();
         } else {
-            // Handle the case when this.data.impiHeaderAttachment is null or undefined
-            // For example, you might want to set uploadedFiles to an empty array or handle it differently based on your application logic.
             this.uploadedFiles = [];
             this.handleLoadingError()
 

@@ -245,8 +245,7 @@
                     <div class="col-sm-9">
                         <input type="text" class="form-control" id="email" placeholder="Mail to"
                             formControlName="emailTo">
-                        <div *ngIf="shouldShowError('emailTo','required')" class="text-danger">Phone
-                            number is required.</div>
+                        <div *ngIf="shouldShowError('emailTo','required')" class="text-danger">Mail to is required.</div>
                     </div>
                 </div>
 
@@ -255,8 +254,7 @@
                     <div class="col-sm-9">
                         <input type="text" class="form-control" placeholder="Subject" formControlName="subject"
                             id="Subject">
-                        <div *ngIf="shouldShowError('subject','required')" class="text-danger">Phone
-                            number is required.</div>
+                        <div *ngIf="shouldShowError('subject','required')" class="text-danger">Subject is required.</div>
                     </div>
                 </div>
 
@@ -266,7 +264,7 @@
 
                         <div class="NgxEditor__Wrapper">
                             <angular-editor [config]="editorConfig" id="Body" formControlName="body"></angular-editor>
-
+                            <div *ngIf="shouldShowError('body','required')" class="text-danger">Body is required.</div>
                         </div>
                     </div>
                 </div>

@@ -39,8 +39,8 @@ export class ViewPiApprovalComponent {
             this.headerId = +params['id'];
         });
         this.data = history.state.data;
-        this.uploadedFiles = this.data.impiHeaderAttachment;
-
+        this.loadStateList();
+        this.uploadedFiles = this.data.impiHeaderAttachment
         if (this.data.impiHeaderAttachment) {
             this.uploadedFiles = this.data.impiHeaderAttachment.map((file: any) => ({
                 id: file.imadId,
@@ -56,10 +56,7 @@ export class ViewPiApprovalComponent {
                 modifiedBy: file.imadModifiedBy,
                 modifiedOn: file.imadModifiedOn
             }));
-            this.loadStateList();
         } else {
-            // Handle the case when this.data.impiHeaderAttachment is null or undefined
-            // For example, you might want to set uploadedFiles to an empty array or handle it differently based on your application logic.
             this.uploadedFiles = [];
             this.handleLoadingError()
 
@@ -127,11 +124,11 @@ export class ViewPiApprovalComponent {
         if (this.publicVariable.dataForm.valid) {
             const newData = this.publicVariable.dataForm.value;
 
-           
+
         if (!action && !newData.remarks) {
             // Show JavaScript alert if action is false and remarks field is empty
             window.alert('Remarks are required.');
-            return; 
+            return;
         }
 
             const newConfig: any = {
