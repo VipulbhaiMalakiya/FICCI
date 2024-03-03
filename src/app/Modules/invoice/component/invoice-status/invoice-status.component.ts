@@ -52,7 +52,6 @@ export class InvoiceStatusComponent implements OnInit {
         }
     }
 
-
     toTitleCase(str: string): string {
         return str.toLowerCase().split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
     }
@@ -119,18 +118,14 @@ export class InvoiceStatusComponent implements OnInit {
         }
     }
 
-
-
     getStateNameById(stateId:string) {
         const state = this.publicVariable.stateList.find(state => state.stateCode === stateId);
         return state ? state.stateName : null;
     }
 
-
     handleLoadingError() {
         this.publicVariable.isProcess = false; // Set status to false on error
     }
-
 
     onDownload() {
         const exportData = this.publicVariable.invoiceStatuslistData.map((x) => ({

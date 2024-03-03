@@ -32,24 +32,4 @@ select.ng-valid.ng-touched {
 .ng-dropdown-panel .ng-dropdown-panel-items .ng-option {
     font-size: 13px;
 }
-/* repace to main css file */
-/* .pagination li {
-    font-size: 13px;
-    min-width: 30px;
-    min-height: 30px;
-    color: #000;
-    margin: 0 7px;
-    line-height: 30px;
-    border-radius: 5px;
-    text-align: center;
-    background: none;
-    border: 1px solid #ccc;
-    border-radius: 5px !important;
-}
 
-.pagination li.current {
-    z-index: 1;
-    color: #fff;
-    background-color: #FF8201;
-    border-color: #FF8201;
-} */

@@ -68,6 +68,7 @@ export class ViewPiAccountsInboxComponent implements OnInit, OnDestroy {
             this.headerId = +params['id'];
         });
         this.data = history.state.data;
+        this.loadStateList();
         this.uploadedFiles = this.data.impiHeaderAttachment;
 
         if (this.data.impiHeaderAttachment) {
@@ -85,10 +86,8 @@ export class ViewPiAccountsInboxComponent implements OnInit, OnDestroy {
                 modifiedBy: file.imadModifiedBy,
                 modifiedOn: file.imadModifiedOn
             }));
-            this.loadStateList();
+
         } else {
-            // Handle the case when this.data.impiHeaderAttachment is null or undefined
-            // For example, you might want to set uploadedFiles to an empty array or handle it differently based on your application logic.
             this.uploadedFiles = [];
             this.handleLoadingError()
 
@@ -164,7 +163,7 @@ export class ViewPiAccountsInboxComponent implements OnInit, OnDestroy {
             if (!action && !newData.remarks) {
                 // Show JavaScript alert if action is false and remarks field is empty
                 window.alert('Remarks are required.');
-                return; 
+                return;
             }
             const newConfig: any = {
                 headerId: this.data.headerId,
@@ -173,6 +172,8 @@ export class ViewPiAccountsInboxComponent implements OnInit, OnDestroy {
                 statusId: this.data.headerStatusId,
                 remarks: newData.remarks,
             }
+            this.isApprove = true;
+            return
             this.publicVariable.isProcess = true;
             this.publicVariable.Subscription.add(
                 this.API.isApproverRemarks(newConfig).subscribe({
