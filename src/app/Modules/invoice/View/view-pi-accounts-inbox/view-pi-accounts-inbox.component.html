@@ -200,24 +200,63 @@
                   </table>
             </div>
         </div>
-        <div class="col-md-9 mt-4">
-            <div class="form-group">
-                <label>Payment Terms</label>
-                <textarea class="form-control h-50" cols="1" rows="1" disabled=""
-                    readonly="">{{data.impiHeaderPaymentTerms}}</textarea>
-            </div>
-        </div>
+        <div class="mastersform-sec mb-3">
 
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Payment Terms</label>
+                        <textarea class="form-control h-100" cols="2" rows="2" disabled=""
+                            readonly="">{{data.impiHeaderPaymentTerms}}</textarea>
+                    </div>
+                </div>
 
-        <div class="col-md-9 mt-3">
-            <div class="form-group">
-                <label>Remarks</label>
-                <textarea class="form-control h-50" cols="1" rows="1" disabled=""
-                    readonly="">{{data.impiHeaderRemarks}}</textarea>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Remarks</label>
+                        <textarea class="form-control h-100" cols="2" rows="2" disabled=""
+                            readonly="">{{data.impiHeaderRemarks}}</textarea> </div>
+                </div>
             </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group"  *ngIf="data.impiHeaderTlApproverRemarks">
+                        <label>Tl Remarks</label>
+                        <textarea class="form-control h-100" cols="2" rows="2" disabled=""
+                            readonly="">{{data.impiHeaderTlApproverRemarks}}</textarea> </div>
+                </div>
+
+                <div class="col-md-6" *ngIf="data.impiHeaderClusterApproverRemarks">
+                    <div class="form-group">
+                        <label>CH Remarks</label>
+                        <textarea class="form-control h-100" cols="2" rows="2" disabled=""
+                        readonly="">{{data.impiHeaderClusterApproverRemarks}}</textarea>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6" *ngIf="data.impiHeaderFinanceRemarks">
+                    <div class="form-group">
+                        <label>Finance Remarks</label>
+                        <textarea class="form-control h-100" cols="2" rows="2" disabled=""
+                        readonly="">{{data.impiHeaderFinanceRemarks}}</textarea>
+                    </div>
+                </div>
+
+                <div class="col-md-6" *ngIf="data.accountApproverRemarks">
+                    <div class="form-group">
+                        <label>Accounts Remarks</label>
+                        <textarea class="form-control h-100" cols="2" rows="2" disabled=""
+                        readonly="">{{data.accountApproverRemarks}}</textarea>
+                    </div>
+                </div>
+            </div>
+
         </div>
         <form [formGroup]="publicVariable.dataForm">
-            <div class="col-md-9 mt-3">
+            <div class="col-md-12 mt-3">
                 <div class="form-group">
                     <label>Remarks</label>
                     <textarea class="form-control h-50" cols="2" rows="2" formControlName="remarks"></textarea>

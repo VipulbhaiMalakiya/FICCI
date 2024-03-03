@@ -204,7 +204,7 @@
     <div class="mastersform-sec mb-3">
 
         <div class="row">
-            <div class="col-md-6 mt-4">
+            <div class="col-md-6">
                 <div class="form-group">
                     <label>Payment Terms</label>
                     <textarea class="form-control h-100" cols="2" rows="2" disabled=""
@@ -212,7 +212,7 @@
                 </div>
             </div>
 
-            <div class="col-md-6 mt-4">
+            <div class="col-md-6">
                 <div class="form-group">
                     <label>Remarks</label>
                     <textarea class="form-control h-100" cols="2" rows="2" disabled=""
@@ -221,14 +221,14 @@
         </div>
 
         <div class="row">
-            <div class="col-md-6 mt-4">
+            <div class="col-md-6">
                 <div class="form-group"  *ngIf="data.impiHeaderTlApproverRemarks">
                     <label>Tl Remarks</label>
                     <textarea class="form-control h-100" cols="2" rows="2" disabled=""
                         readonly="">{{data.impiHeaderTlApproverRemarks}}</textarea> </div>
             </div>
 
-            <div class="col-md-6 mt-4" *ngIf="data.impiHeaderClusterApproverRemarks">
+            <div class="col-md-6" *ngIf="data.impiHeaderClusterApproverRemarks">
                 <div class="form-group">
                     <label>CH Remarks</label>
                     <textarea class="form-control h-100" cols="2" rows="2" disabled=""
@@ -238,7 +238,7 @@
         </div>
 
         <div class="row">
-            <div class="col-md-6 mt-4" *ngIf="data.impiHeaderFinanceRemarks">
+            <div class="col-md-6" *ngIf="data.impiHeaderFinanceRemarks">
                 <div class="form-group">
                     <label>Finance Remarks</label>
                     <textarea class="form-control h-100" cols="2" rows="2" disabled=""
@@ -246,7 +246,7 @@
                 </div>
             </div>
 
-            <div class="col-md-6 mt-4" *ngIf="data.accountApproverRemarks">
+            <div class="col-md-6" *ngIf="data.accountApproverRemarks">
                 <div class="form-group">
                     <label>Accounts Remarks</label>
                     <textarea class="form-control h-100" cols="2" rows="2" disabled=""
