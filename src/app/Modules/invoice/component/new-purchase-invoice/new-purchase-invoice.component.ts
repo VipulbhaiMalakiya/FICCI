@@ -581,6 +581,8 @@ export class NewPurchaseInvoiceComponent implements OnInit {
         }
         else {
             this.toastr.error('Please add expenses before submitting.', 'Error');
+            window.alert('Please add expenses before submitting.');
+            return
         }
 
     }
