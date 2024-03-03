@@ -67,6 +67,9 @@ export class ViewPiAccountsInboxComponent implements OnInit, OnDestroy {
         this.route.params.subscribe(params => {
             this.headerId = +params['id'];
         });
+        if (this.data = history.state.data) {
+            this.patchFormData(this.data);
+        }
         this.data = history.state.data;
         this.loadStateList();
         this.uploadedFiles = this.data.impiHeaderAttachment;
@@ -94,6 +97,14 @@ export class ViewPiAccountsInboxComponent implements OnInit, OnDestroy {
         }
 
 
+    }
+
+
+    patchFormData(data: any): void {
+        this.publicVariable.mailForm.patchValue({
+            emailTo : data.impiHeaderCustomerEmailId,
+            subject : data.impiHeaderInvoiceType
+        });
     }
 
     ngOnDestroy(): void {
@@ -172,8 +183,6 @@ export class ViewPiAccountsInboxComponent implements OnInit, OnDestroy {
                 statusId: this.data.headerStatusId,
                 remarks: newData.remarks,
             }
-            this.isApprove = true;
-            return
             this.publicVariable.isProcess = true;
             this.publicVariable.Subscription.add(
                 this.API.isApproverRemarks(newConfig).subscribe({
@@ -212,7 +221,7 @@ export class ViewPiAccountsInboxComponent implements OnInit, OnDestroy {
             const newData = this.publicVariable.mailForm.value;
             const formData = new FormData();
             formData.append('MailTo', newData.emailTo);
-            formData.append('MailCC', '');
+            formData.append('MailCC', newData.emailTo);
             formData.append('MailSubject', newData.subject);
             formData.append('MailBody', newData.body);
             formData.append('LoginId', this.publicVariable.storedEmail);
@@ -223,7 +232,7 @@ export class ViewPiAccountsInboxComponent implements OnInit, OnDestroy {
             this.publicVariable.isProcess = true;
             // Submit the formData
             this.publicVariable.Subscription.add(
-                this.API.create(formData).subscribe({
+                this.API.sendEmail(formData).subscribe({
                     next: (res: any) => {
                         if (res.status === true) {
                             this.toastr.success(res.message, 'Success');

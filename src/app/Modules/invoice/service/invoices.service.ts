@@ -24,6 +24,12 @@ export class InvoicesService {
     private GetGSTGroupAPI = `${environment.apiURL}DropDown/GetGSTGroup`;
     private GetHSNSACAPI = `${environment.apiURL}DropDown/GetHSNSAC?gstCode=`;
     private FILEDELETE = `${environment.apiURL}IMAD?imadId=`;
+    private MailURL  = `${environment.apiURL}Mail`;
+
+
+    sendEmail(formData: FormData): Observable<any> {
+        return this.http.post<any>(`${this.MailURL}`, formData).pipe(this.retry);
+    }
 
     deleteFile(id: number): Observable<any> {
         return this.http.delete<any>(`${this.FILEDELETE}${id}`).pipe(this.retry);
