@@ -10,7 +10,11 @@ export class SearchFilterPipe implements PipeTransform {
         }
         searchText = searchText.toLowerCase();
         return items.filter(item => {
-            return item.imeM_EmpId.toLowerCase().includes(searchText) || item.imeM_Name.toLowerCase().includes(searchText);
+            return item.imeM_EmpId.toLowerCase().includes(searchText)
+            || item.imeM_Name.toLowerCase().includes(searchText)
+            || item.imeM_Email.toLowerCase().includes(searchText)
+            || item.imeM_Username.toLowerCase().includes(searchText)
+            || item.roleName.toLowerCase().includes(searchText);
         });
     }
 }
