@@ -171,8 +171,15 @@
                 <div class="col-md-4 col-sm-6">
                     <div class="form-group">
                         <label for="city">City</label>
-                        <input type="text" class="form-control" id="city" placeholder="city"
-                            formControlName="ImpiHeaderCustomerCity" />
+                            <ng-select [items]="publicVariable.cityList" #select bindLabel="cityName" bindValue="cityName"
+                            placeholder="Select" formControlName="ImpiHeaderCustomerCity" [searchable]="true"
+                            [searchFn]="citySearchFn"
+                            [virtualScroll]="true" [bufferAmount]="10"
+                            (change)="onCitySelectionChange()">
+                            <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
+                                <small>{{item.cityCode}} - {{item.cityName}}</small>
+                            </ng-template>
+                        </ng-select>
                         <div *ngIf="shouldShowError('ImpiHeaderCustomerCity','required')" class="text-danger">This field
                             is required
                         </div>

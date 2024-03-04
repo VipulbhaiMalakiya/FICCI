@@ -254,6 +254,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
             const subscription = this.CAPI.getStateList().subscribe({
                 next: (response: any) => {
                     this.publicVariable.stateList = response.data;
+                    this.loadCityList();
                 },
                 error: (error) => {
                     console.error('Error loading project list:', error);
@@ -265,6 +266,27 @@ export class NewPurchaseInvoiceComponent implements OnInit {
         } catch (error) {
             console.error('Error loading project list:', error);
             this.handleLoadingError()
+        }
+    }
+
+    loadCityList() {
+        try {
+            const subscription = this.CAPI.getCityList().subscribe({
+                next: (response: any) => {
+                    this.publicVariable.cityList = response.data;
+                },
+                error: (error) => {
+                    console.error('Error loading city list:', error);
+                    console.error('Failed to load city list. Please try again later.');
+                    this.handleLoadingError();
+                },
+            });
+
+            this.publicVariable.Subscription.add(subscription);
+        } catch (error) {
+            console.error('Error loading city list:', error);
+            console.error('An unexpected error occurred. Please try again later.');
+            this.handleLoadingError();
         }
     }
 
@@ -440,6 +462,29 @@ export class NewPurchaseInvoiceComponent implements OnInit {
         this.FilePath = `${environment.fileURL}${fileUrl.fileUrl}`;
         window.open(this.FilePath, '_blank');
 
+    }
+
+    citySearchFn(term: string, item: any) {
+        const concatenatedString = `${item.countryCode} ${item.cityName}`.toLowerCase();
+        return concatenatedString.includes(term.toLowerCase());
+    }
+
+    onCitySelectionChange() {
+
+        const selectedCityName = this.publicVariable.dataForm.get('ImpiHeaderCustomerCity')?.value;
+        const selectedCity = this.publicVariable.cityList.find(city => city.cityName === selectedCityName);
+
+
+
+        if (selectedCity) {
+            this.publicVariable.dataForm.patchValue({
+                ImpiHeaderCustomerPinCode: selectedCity.cityCode
+            })
+        } else {
+            this.publicVariable.dataForm.patchValue({
+                ImpiHeaderCustomerPinCode: null
+            })
+        }
     }
 
     onAddLine() {
