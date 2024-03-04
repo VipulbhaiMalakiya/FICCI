@@ -1,7 +1,7 @@
 <div class="inner-content">
     <h3 class="content-title">PI Invoice Status</h3>
 
-    <div class="page-btns-col">
+    <div class="page-btns-col" *ngIf="publicVariable.invoiceStatuslistData && publicVariable.invoiceStatuslistData.length > 0">
         <div class="tblsort">
             <label class="col-form-label">Show</label>
             <select id="itemsPerPageSelect" class="form-select" [(ngModel)]="publicVariable.tableSize"
