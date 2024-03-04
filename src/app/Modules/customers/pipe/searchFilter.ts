@@ -11,7 +11,16 @@ export class SearchFilterPipe implements PipeTransform {
         }
         searchText = searchText.toLowerCase();
         return items.filter(item => {
-            return item.customerName.toLowerCase().includes(searchText) || item.cityList.cityName.toLowerCase().includes(searchText);
+            return item.customerName.toLowerCase().includes(searchText) ||
+             item.cityList.cityName.toLowerCase().includes(searchText)
+             || item.address.toLowerCase().includes(searchText)
+             || item.phoneNumber.toLowerCase().includes(searchText)
+             || item.gstNumber.toLowerCase().includes(searchText)
+             || item.pan.toLowerCase().includes(searchText)
+             || item.createdOn.toLowerCase().includes(searchText)
+             || item.createdBy.toLowerCase().includes(searchText)
+             || item.customerStatus.toLowerCase().includes(searchText)
+             ;
         });
     }
 }
