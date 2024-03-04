@@ -67,6 +67,8 @@ export class ViewPiAccountsInboxComponent implements OnInit, OnDestroy {
         this.route.params.subscribe(params => {
             this.headerId = +params['id'];
         });
+     
+        
         if (this.data = history.state.data) {
             this.patchFormData(this.data);
         }
@@ -221,14 +223,13 @@ export class ViewPiAccountsInboxComponent implements OnInit, OnDestroy {
             const newData = this.publicVariable.mailForm.value;
             const formData = new FormData();
             formData.append('MailTo', newData.emailTo);
-            formData.append('MailCC', newData.emailTo);
+            // formData.append('MailCC', newData.emailTo);
             formData.append('MailSubject', newData.subject);
             formData.append('MailBody', newData.body);
             formData.append('LoginId', this.publicVariable.storedEmail);
-            formData.append('ResourceType','');
-            formData.append('ResourceId','');
+            formData.append('ResourceType',this.data.impiHeaderInvoiceType);
+            formData.append('ResourceId',this.data.headerId);
             formData.append('Attachments',newData.attachment);
-
             this.publicVariable.isProcess = true;
             // Submit the formData
             this.publicVariable.Subscription.add(
