@@ -40,7 +40,7 @@ export interface invoiceStatusModule {
     impiHeaderCustomerPhoneNo: string
     impiHeaderCreatedBy: string
     impiHeaderTotalInvoiceAmount: number
-
+    accountApprover:string
     impiHeaderPaymentTerms: string
     impiHeaderRemarks: string
     impiHeaderSubmittedDate: string
