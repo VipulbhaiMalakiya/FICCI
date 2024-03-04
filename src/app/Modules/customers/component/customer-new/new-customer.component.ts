@@ -86,7 +86,7 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
             name: data.customerName,
             name2: data.customerLastName,
             address: data.address,
-            address2: data.address,
+            address2: data.address2,
             countryCode: data.countryList.countryCode,
             stateCode: data.stateList.stateCode,
             cityCode: data.cityList.cityCode,
