@@ -178,30 +178,21 @@
                                     <tr>
                                         <th>#</th>
                                         <th>Status</th>
-                                        <th>Remarks By</th>
                                         <th>Remarks On</th>
                                         <th>Remarks</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-
                                     <tr *ngFor="let i of this.data.workFlowHistory;let in = index">
                                         <td>{{in + 1}}</td>
                                         <td>{{i.imwdPendingAt | titlecase}}</td>
-                                        <td>{{i.imwdInitiatedBy |titlecase}}</td>
                                         <td>{{i.imwdCreatedOn | date:'medium':'IST'}}</td>
                                         <td>{{i.imwdRemarks | titlecase}}</td>
                                     </tr>
-
-
-
-
                                 </tbody>
                             </table>
 
                         </div>
-
-
 
                     </div>
 

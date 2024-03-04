@@ -37,7 +37,8 @@ export class ViewInvoiceStatusComponent {
                 createdBy: file.imadCreatedBy,
                 createdOn: file.imadCreatedOn,
                 modifiedBy: file.imadModifiedBy,
-                modifiedOn: file.imadModifiedOn
+                modifiedOn: file.imadModifiedOn,
+
             }));
         } else {
             this.uploadedFiles = [];
