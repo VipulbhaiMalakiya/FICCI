@@ -38,7 +38,8 @@
         "Statuslist",
         "titlecase",
         "toastr",
-        "Touchedemail"
+        "Touchedemail",
+        "Validatek"
     ],
     "angular-schematics.schematicsDefaultOptions": {
         "angular-*": {

@@ -24,15 +24,30 @@ export class CustomersService {
     private countryListURL = `${environment.apiURL}DropDown/GetCountry`;
     private GetStateURl = `${environment.apiURL}DropDown/GetState`;
     private GetCityURl = `${environment.apiURL}DropDown/GetCity`;
-    private GetStatusList =  `${environment.apiURL}Customer/GetStatusCustomerList`;
+    private GetStatusList = `${environment.apiURL}Customer/GetStatusCustomerList`;
+
+    private CheckGSTURL = `${environment.apiURL}CheckValidation/CheckGST?GST=`;
+    private CheckPANURL = `${environment.apiURL}CheckValidation/CheckPAN?PAN=`;
+
     private retry: any = retry(1); // Retry the request up to 2 times in case of failure
 
+
+
+    ValidateGST(data: any): Observable<any[]> {
+        const url = `${this.CheckGSTURL}${data}`;
+        return this.http.get<any[]>(url).pipe(this.retry);
+    }
+
+    ValidatePAN(data: any): Observable<any[]> {
+        const url = `${this.CheckPANURL}${data}`;
+        return this.http.get<any[]>(url).pipe(this.retry);
+    }
 
 
     dashboardCustomerstatus(data: any): Observable<any> {
         return this.http.post<any>(`${this.GetStatusList}`, data).pipe(this.retry);
     }
-    
+
     getGstCustomerType(): Observable<any[]> {
         return this.http.get<any[]>(`${this.gustomerTypeURL}`).pipe(this.retry);
     }
@@ -79,12 +94,12 @@ export class CustomersService {
     }
 
     AccountsCustomer(): Observable<any[]> {
-       const url = `${this.ApproveCustomerURL}${localStorage.getItem('userEmail') ?? ''}`;
+        const url = `${this.ApproveCustomerURL}${localStorage.getItem('userEmail') ?? ''}`;
         return this.http.get<any[]>(url).pipe(this.retry);
     }
 
     getCustomerStatuaccount(): Observable<any[]> {
         const url = `${this.AccountURL}${localStorage.getItem('userEmail') ?? ''}`;
-         return this.http.get<any[]>(url).pipe(this.retry);
-     }
+        return this.http.get<any[]>(url).pipe(this.retry);
+    }
 }

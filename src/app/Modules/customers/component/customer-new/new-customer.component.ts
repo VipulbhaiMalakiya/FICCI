@@ -66,11 +66,39 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
         if ((this.data = history.state.data)) {
             this.patchFormData(this.data);
         }
+
+
     }
 
     get isAccount() {
         return this.publicVariable.storedRole == 'Accounts';
     }
+
+
+
+    ValidateGST() {
+        try {
+            const gst = this.publicVariable.dataForm.get('GSTRegistrationNo')?.value;
+
+            const subscription = this.API.ValidateGST(gst).subscribe({
+                next: (response: any) => {
+                    console.log(response);
+
+                },
+                error: (error) => {
+                    console.error('Error loading data:', error);
+                    this.handleLoadingError();
+                },
+            });
+
+            this.publicVariable.Subscription.add(subscription);
+        } catch (error) {
+            console.error('Error loading data list:', error);
+            this.handleLoadingError();
+        }
+    }
+
+
 
     ngOnDestroy() {
         if (this.publicVariable.Subscription) {
