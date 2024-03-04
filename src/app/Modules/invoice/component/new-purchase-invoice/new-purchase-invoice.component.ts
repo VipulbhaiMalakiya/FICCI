@@ -514,16 +514,24 @@ export class NewPurchaseInvoiceComponent implements OnInit {
                 if (newData.ImpiHeaderInvoiceType === 'Tax Invoice') {
                     formData.append('ImpiHeaderPiNo', newData.PINO);
                 }
+
+                //Static Code
                 formData.append('ImpiHeaderTlApprover', 'amit.jha@teamcomputers.com');
                 formData.append('ImpiHeaderClusterApprover', 'debananda.panda@teamcomputers.com ');
                 formData.append('ImpiHeaderFinanceApprover', 'gautam.v@teamcomputers.com');
+
+                //Dynamic Code
+                // formData.append('ImpiHeaderTlApprover', this.publicVariable.selectedProjet.tlApprover);
+                // formData.append('ImpiHeaderClusterApprover', this.publicVariable.selectedProjet.chApprover);
+                // formData.append('ImpiHeaderFinanceApprover', this.publicVariable.selectedProjet.financeApprover);
+
+                 formData.append('ImpiHeaderSupportApprover', this.publicVariable.selectedProjet.supportApprover);
                 formData.append('ImpiHeaderProjectName', this.publicVariable.selectedProjet.name);
                 formData.append('ImpiHeaderProjectDivisionCode', this.publicVariable.selectedProjet.divisionCode);
                 formData.append('ImpiHeaderProjectDivisionName', this.publicVariable.selectedProjet.divisionName);
                 formData.append('ImpiHeaderProjectDepartmentCode', this.publicVariable.selectedProjet.departmentCode);
                 formData.append('ImpiHeaderProjectDepartmentName', this.publicVariable.selectedProjet.departmentName);
                 formData.append('RoleName', this.publicVariable.storedRole);
-                formData.append('ImpiHeaderSupportApprover', this.publicVariable.selectedProjet.supportApprover);
                 formData.append('RoleName', this.publicVariable.storedRole);
                 for (let i = 0; i < this.publicVariable.expenses.length; i++) {
                     const item = this.publicVariable.expenses[i];
