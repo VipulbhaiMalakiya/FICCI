@@ -10,10 +10,21 @@ export class SearchFilterPipe1 implements PipeTransform {
         }
         searchText = searchText.toLowerCase();
         return items.filter(item => {
-            return item.impiHeaderProjectCode.toLowerCase().includes(searchText)
-                || item.impiHeaderInvoiceType.toLowerCase().includes(searchText)
+            const totalInvoiceAmount = String(item.impiHeaderTotalInvoiceAmount);
+            return item.impiHeaderInvoiceType.toLowerCase().includes(searchText)
+                || item.impiHeaderProjectCode.toLowerCase().includes(searchText)
+                || item.impiHeaderProjectName.toLowerCase().includes(searchText)
                 || item.impiHeaderProjectDepartmentName.toLowerCase().includes(searchText)
-                || item.impiHeaderCustomerName.toLowerCase().includes(searchText);
+                || item.impiHeaderProjectDivisionName.toLowerCase().includes(searchText)
+                || item.impiHeaderCustomerName.toLowerCase().includes(searchText)
+                || item.impiHeaderCustomerCity.toLowerCase().includes(searchText)
+                || totalInvoiceAmount.includes(searchText)
+                || item.impiHeaderTlApprover.toLowerCase().includes(searchText)
+                || item.impiHeaderClusterApprover.toLowerCase().includes(searchText)
+                || item.impiHeaderFinanceApprover.toLowerCase().includes(searchText)
+                || item.impiHeaderSubmittedDate.toLowerCase().includes(searchText)
+                || item.impiHeaderCreatedBy.toLowerCase().includes(searchText)
+                || item.headerStatus.toLowerCase().includes(searchText);
         });
     }
 }
