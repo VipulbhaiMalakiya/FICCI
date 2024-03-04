@@ -192,7 +192,7 @@
                         <th>#</th>
                         <th>File Type</th>
                         <th>File Name</th>
-                        <th>Action</th>
+                        <th *ngIf="!data.isDraft">Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -200,7 +200,7 @@
                         <td>{{ i + 1 }}</td>
                         <td>{{ getFileType(file.type) }}</td>
                         <td>{{ file.name }}</td>
-                        <td>
+                        <td *ngIf="!data.isDraft">
                             <a href="javascript:void(0)" (click)="downalodFile(file)"><img
                                     src="../assets/images/download-icon.svg" alt="" class="me-2"></a>
 
