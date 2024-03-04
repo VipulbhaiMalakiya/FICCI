@@ -14,7 +14,8 @@ export class SearchFilterPipe implements PipeTransform {
             || item.imeM_Name.toLowerCase().includes(searchText)
             || item.imeM_Email.toLowerCase().includes(searchText)
             || item.imeM_Username.toLowerCase().includes(searchText)
-            || item.roleName.toLowerCase().includes(searchText);
+            || item.roleName.toLowerCase().includes(searchText)
+            || (typeof item.isActive === 'boolean' && item.isActive === (searchText === 'yes'));;
         });
     }
 }
