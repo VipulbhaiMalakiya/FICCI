@@ -233,7 +233,7 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group"  *ngIf="data.impiHeaderTlApproverRemarks">
-                    <label>Tl Remarks</label>
+                    <label>TL {{data.impiHeaderTlApprover | titlecase}} - {{data.tlApproveDate | date:'medium':'IST'}}</label>
                     <textarea class="form-control h-100" cols="2" rows="2" disabled=""
                         readonly="">{{data.impiHeaderTlApproverRemarks}}</textarea> </div>
             </div>
