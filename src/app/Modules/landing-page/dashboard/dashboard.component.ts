@@ -242,21 +242,21 @@ export class DashboardComponent {
                         console.warn('Purchase response data is null or not iterable');
                         this.dashboardData = [];
                     }
-            
+
                     // Concatenate approveResponse.data with dashboardData if it's iterable
                     if (approveResponse.data && Array.isArray(approveResponse.data)) {
                         this.dashboardData = [...this.dashboardData, ...approveResponse.data];
                     } else {
                         console.warn('Approve response data is null or not iterable');
                     }
-            
+
                     // Concatenate accountResponse.data with dashboardData if it's iterable
                     if (accountResponse.data && Array.isArray(accountResponse.data)) {
                         this.dashboardData = [...this.dashboardData, ...accountResponse.data];
                     } else {
                         console.warn('Account response data is null or not iterable');
                     }
-            
+
                     // Processing the merged data
                     this.countDataByInvoies(this.dashboardData);
                     this.loadInoivceStatusList(this.customerStatus);
@@ -267,7 +267,7 @@ export class DashboardComponent {
                     this.publicVariable.isProcess = false;
                 }
             });
-            
+
         } catch (error) {
             console.error('Error loading invoice lists:', error);
             this.publicVariable.isProcess = false;
@@ -275,7 +275,7 @@ export class DashboardComponent {
     }
 
     countDataByInvoies(data: any[]): void {
-        
+
         const counts: any = {
             'DRAFT': 0,
             'PENDING WITH TL APPROVER': 0,
@@ -315,7 +315,7 @@ export class DashboardComponent {
             || item.headerStatus === 'REJECTED BY ACCOUNTS APPROVER');
         counts['REJECTED BY CH APPROVER'] = rejectedData.length;
 
-        
+
         // Calculate total count
         counts['ALL'] = data.length;
 
@@ -564,7 +564,6 @@ export class DashboardComponent {
             'Tl Approver': x?.impiHeaderTlApprover ? this.toTitleCase(x.impiHeaderTlApprover) : '',
             'Cl Approver': x?.impiHeaderClusterApprover ? this.toTitleCase(x.impiHeaderClusterApprover) : '',
             'Finance Approver': x?.impiHeaderFinanceApprover ? this.toTitleCase(x.impiHeaderFinanceApprover) : '',
-            'Support Approver': x?.impiHeaderSupportApprover ? this.toTitleCase(x.impiHeaderSupportApprover) : '',
             'Created On': x?.impiHeaderSubmittedDate ? formatDate(x.impiHeaderSubmittedDate, 'medium', 'en-IN', 'IST') : '',
             'Created By': x?.impiHeaderCreatedBy ? this.toTitleCase(x.impiHeaderCreatedBy) : '',
             "Update Date": x?.impiHeaderModifiedDate ? formatDate(x.impiHeaderModifiedDate, 'medium', 'en-IN', 'IST') : '',
@@ -575,7 +574,7 @@ export class DashboardComponent {
             'PO No.', 'Department', 'Divison', 'Category',
             'Vendor Name', 'Address', 'State', 'City', 'Pincode',
             'Phone No', "Email ID", 'Contact Person', 'Customer  GST Number', 'PAN No', 'Amount', 'Payment Terms',
-            'impiHeaderRemarks', 'Tl Approver', 'Cl Approver', 'Finance Approver', 'Support Approver', 'Created On', 'Created By', 'Update Date',
+            'impiHeaderRemarks', 'Tl Approver', 'Cl Approver', 'Finance Approver', 'Created On', 'Created By', 'Update Date',
             'Status'
         ];
         this.appService.exportAsExcelFile(exportData, 'PI Invoice Status', headers);
