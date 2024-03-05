@@ -8,6 +8,7 @@ import { ViewInvoiceStatusComponent } from './View/view-invoice-status/view-invo
 import { ViewPiApprovalComponent } from './View/view-pi-approval/view-pi-approval.component';
 import { ViewPiAccountsInboxComponent } from './View/view-pi-accounts-inbox/view-pi-accounts-inbox.component';
 import { AuthGuard } from 'src/app/guard/auth.guard';
+import { EmailComponent } from './send-email/email/email.component';
 
 const routes: Routes = [
     { path: '', redirectTo: 'status', pathMatch: 'full' },
@@ -50,6 +51,10 @@ const routes: Routes = [
         path: 'accounts/view/:id', component: ViewPiAccountsInboxComponent,
         canActivate: [AuthGuard],
         data: { expectedRoles: ['Admin','Accounts'] }
+    },
+    {
+        path:'accounts/email',
+        component:EmailComponent
     }
 ];
 

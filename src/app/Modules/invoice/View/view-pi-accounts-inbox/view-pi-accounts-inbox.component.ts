@@ -21,20 +21,6 @@ export class ViewPiAccountsInboxComponent implements OnInit, OnDestroy {
     publicVariable = new publicVariable();
     uploadedFiles: File[] = [];
 
-    editorConfig: AngularEditorConfig = {
-
-        editable: true,
-        spellcheck: true,
-        height: "10rem",
-        minHeight: "5rem",
-        placeholder: "Enter text here...",
-        translate: "no",
-        defaultParagraphSeparator: "p",
-        defaultFontName: "Arial",
-        sanitize: false,
-    };
-
-
     constructor(private fb: FormBuilder,
         private modalService: NgbModal,
         private toastr: ToastrService,
@@ -45,7 +31,6 @@ export class ViewPiAccountsInboxComponent implements OnInit, OnDestroy {
         private CAPI: CustomersService,
     ) {
         this.initializeForm();
-        this.initializeFormmailForm();
     }
 
     private initializeForm(): void {
@@ -54,21 +39,13 @@ export class ViewPiAccountsInboxComponent implements OnInit, OnDestroy {
         })
     }
 
-    private initializeFormmailForm(): void {
-        this.publicVariable.mailForm = this.fb.group({
-            emailTo: ['', [Validators.required]],
-            subject: ['', [Validators.required]],
-            body: ['', [Validators.required]],
-            attachment: [''],
-        })
-    }
 
     ngOnInit() {
         this.route.params.subscribe(params => {
             this.headerId = +params['id'];
         });
-     
-        
+
+
         if (this.data = history.state.data) {
             this.patchFormData(this.data);
         }
@@ -185,6 +162,8 @@ export class ViewPiAccountsInboxComponent implements OnInit, OnDestroy {
                 statusId: this.data.headerStatusId,
                 remarks: newData.remarks,
             }
+            this.router.navigate(['invoice/accounts/email'], { state: { data: this.data } });
+            return
             this.publicVariable.isProcess = true;
             this.publicVariable.Subscription.add(
                 this.API.isApproverRemarks(newConfig).subscribe({
@@ -218,58 +197,6 @@ export class ViewPiAccountsInboxComponent implements OnInit, OnDestroy {
 
     }
 
-    onSendEmail() {
-        if (this.publicVariable.mailForm.valid) {
-            const newData = this.publicVariable.mailForm.value;
-            const formData = new FormData();
-            formData.append('MailTo', newData.emailTo);
-            // formData.append('MailCC', newData.emailTo);
-            formData.append('MailSubject', newData.subject);
-            formData.append('MailBody', newData.body);
-            formData.append('LoginId', this.publicVariable.storedEmail);
-            formData.append('ResourceType',this.data.impiHeaderInvoiceType);
-            formData.append('ResourceId',this.data.headerId);
-            formData.append('Attachments',newData.attachment);
-            this.publicVariable.isProcess = true;
-            // Submit the formData
-            this.publicVariable.Subscription.add(
-                this.API.sendEmail(formData).subscribe({
-                    next: (res: any) => {
-                        if (res.status === true) {
-                            this.toastr.success(res.message, 'Success');
-                            this.router.navigate(['invoice/accounts']);
-                            this.publicVariable.dataForm.reset();
-                        } else {
-                            this.toastr.error(res.message, 'Error');
-                            this.publicVariable.isProcess = false;
-                        }
-                    },
-                    error: (error: any) => {
-                        this.publicVariable.isProcess = false;
-                        this.toastr.error(error.error.message || 'An error occurred. Please try again later.', 'Error');
-                    },
-                    complete: () => {
-                        this.publicVariable.isProcess = false;
-                    }
-                })
-            );
-        } else {
-            this.markFormControlsAsTouchedemail();
 
-        }
-
-
-    }
-
-
-    markFormControlsAsTouchedemail(): void {
-        ['emailTo','subject','body'].forEach(controlName => {
-            this.publicVariable.mailForm.controls[controlName].markAsTouched();
-        });
-    }
-
-    shouldShowError(controlName: string, errorName: string): boolean {
-        return this.publicVariable.mailForm.controls[controlName].touched &&  this.publicVariable.mailForm.controls[controlName].hasError(errorName);
-    }
 }
 

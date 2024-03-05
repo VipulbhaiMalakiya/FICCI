@@ -16,6 +16,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { NumberToWordsPipe1 } from './pipe/numberToWords';
 import { SearchFilterPipe1 } from './pipe/searchFilter';
 import { AngularEditorModule } from '@kolkov/angular-editor';
+import { EmailComponent } from './send-email/email/email.component';
 
 
 
@@ -29,7 +30,8 @@ import { AngularEditorModule } from '@kolkov/angular-editor';
         NumberToWordsPipe1,
         ViewPiApprovalComponent,
         ViewPiAccountsInboxComponent,
-        SearchFilterPipe1
+        SearchFilterPipe1,
+        EmailComponent
     ],
     imports: [
         CommonModule,
