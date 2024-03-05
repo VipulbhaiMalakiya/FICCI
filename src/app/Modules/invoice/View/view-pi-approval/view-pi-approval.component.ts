@@ -167,13 +167,13 @@ export class ViewPiApprovalComponent {
 
     }
 
-    markFormControlsAsTouched(): void {
-        ['remarks'].forEach(controlName => {
-            this.publicVariable.dataForm.controls[controlName].markAsTouched();
-        });
-    }
+        markFormControlsAsTouched(): void {
+            ['remarks'].forEach(controlName => {
+                this.publicVariable.dataForm.controls[controlName].markAsTouched();
+            });
+        }
 
-    shouldShowError(controlName: string, errorName: string): boolean {
-        return this.publicVariable.dataForm.controls[controlName].touched && this.publicVariable.dataForm.controls[controlName].hasError(errorName);
-    }
+        shouldShowError(controlName: string, errorName: string): boolean {
+            return this.publicVariable.dataForm.controls[controlName].touched && this.publicVariable.dataForm.controls[controlName].hasError(errorName);
+        }
 }

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute, CustomersService, publicVariable } from '../../Export/invoce';
+import { ActivatedRoute, CustomersService, FormBuilder, InvoicesService, Router, ToastrService, Validators, publicVariable } from '../../Export/invoce';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -14,14 +14,26 @@ export class ViewInvoiceStatusComponent {
     publicVariable = new publicVariable();
     uploadedFiles: File[] = [];
 
-    constructor(private route: ActivatedRoute,private CAPI: CustomersService,) { }
+    constructor(private route: ActivatedRoute,private CAPI: CustomersService,
+         private API: InvoicesService,
+         private toastr: ToastrService,
+         private router: Router,
+         private fb: FormBuilder,
+         ) {
+            this.initializeForm();
+         }
+
+         private initializeForm(): void {
+            this.publicVariable.dataForm = this.fb.group({
+                remarks:['', Validators.required],
+            })
+        }
 
     ngOnInit() {
         this.route.params.subscribe(params => {
             this.headerId = +params['id'];
         });
         this.data = history.state.data;
-        console.log(this.data);
 
         this.loadStateList();
         this.uploadedFiles = this.data.impiHeaderAttachment;
@@ -95,13 +107,63 @@ export class ViewInvoiceStatusComponent {
     }
 
     downalodFile(fileUrl: any) {
-
         this.FilePath = `${environment.fileURL}${fileUrl.fileUrl}`;
         window.open(this.FilePath, '_blank');
 
     }
     handleLoadingError() {
         this.publicVariable.isProcess = false; // Set status to false on error
+    }
+
+    onSubmit() {
+        if (this.publicVariable.dataForm.valid) {
+            const newData = this.publicVariable.dataForm.value;
+            const newConfig: any = {
+                headerId: this.data.headerId,
+                loginId: this.publicVariable.storedEmail,
+                statusId: this.data.headerStatusId,
+                remarks: newData.remarks,
+            }
+
+            console.log(newConfig);
+
+            // this.publicVariable.isProcess = true;
+            // this.publicVariable.Subscription.add(
+            //     this.API.isApproverRemarks(newConfig).subscribe({
+            //         next: (res: any) => {
+            //             if (res.status === true) {
+            //                 this.toastr.success(res.message, 'Success');
+            //                 this.router.navigate(['invoice/approval']);
+            //                 this.publicVariable.dataForm.reset();
+            //             } else {
+            //                 this.toastr.error(res.message, 'Error');
+            //             }
+            //         },
+            //         error: (error: any) => {
+            //             this.publicVariable.isProcess = false;
+            //             this.toastr.error(error.error.message || 'An error occurred. Please try again later.', 'Error');
+            //         },
+            //         complete: () => {
+            //             this.publicVariable.isProcess = false;
+            //         }
+            //     })
+            // );
+
+        } else {
+            this.markFormControlsAsTouched();
+
+        }
+
+    }
+
+    markFormControlsAsTouched(): void {
+        ['remarks'].forEach(controlName => {
+            this.publicVariable.dataForm.controls[controlName].markAsTouched();
+        });
+    }
+
+    shouldShowError(controlName: string, errorName: string): boolean {
+        return this.publicVariable.dataForm.controls[controlName].touched && this.publicVariable.dataForm.controls[controlName].hasError(errorName);
     }
 
 }
