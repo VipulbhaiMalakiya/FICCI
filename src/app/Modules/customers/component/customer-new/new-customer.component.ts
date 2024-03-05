@@ -89,7 +89,7 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
                         // You can update the UI to indicate that the GST number is valid
                     } else {
                         // GST number already exists
-                        console.log('GST number already exists');
+                        alert('GST number already exists');
                         this.gstExists = true;
                         return
                         // You can update the UI to indicate that the GST number already exists
@@ -120,7 +120,7 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
                         // You can update the UI to indicate that the PAN number is valid
                     } else {
                         // PAN number already exists
-                        console.log('PAN number already exists');
+                        alert('PAN number already exists');
                         this.panExists = true;
                         return
                         // You can update the UI to indicate that the PAN number already exists
