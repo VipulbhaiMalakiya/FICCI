@@ -158,4 +158,8 @@ export class AccountsInboxComponent implements OnInit {
         this.publicVariable.invoiceStatuslistData
 
     }
+
+    onSendEmail(d:any){
+
+    }
 }
