@@ -18,7 +18,7 @@ export class InvoicesService {
     private retry: any = retry(1); // Retry the request up to 2 times in case of failure
     private ApproveInvoiceURL = `${environment.apiURL}ApproveInvoice?email=`;
     private ApproverURL = `${environment.apiURL}ApproveInvoice`;
-    private ApproverAccountURL = `${environment.apiURL}Account/GetInvoice`;
+    private ApproverAccountURL = `${environment.apiURL}Account/GetInvoice?loginid=`;
     private GetCustomerAPI = `${environment.apiURL}DropDown/GetCustomer`;
     private GetCOAMasterAPI = `${environment.apiURL}DropDown/GetCOAMaster`;
     private GetGSTGroupAPI = `${environment.apiURL}DropDown/GetGSTGroup`;
@@ -62,7 +62,9 @@ export class InvoicesService {
         return this.http.get<any[]>(`${this.GetCustomerAPI}`).pipe(this.retry);
     }
     getApproveAccountInvoice(): Observable<any[]> {
-        return this.http.get<any[]>(`${this.ApproverAccountURL}`).pipe(this.retry);
+
+        const url = `${this.ApproverAccountURL}${localStorage.getItem('userEmail') ?? ''}`;
+        return this.http.get<any[]>(url).pipe(this.retry);
     }
 
     getProjects(): Observable<any[]> {

@@ -87,7 +87,9 @@
                                             src="../assets/images/view-icon.svg" alt="" /></a>
 
 
-                                    <a href="javascript:void(0);" (click)="onSendEmail(d)"><img
+                                    <a href="javascript:void(0);" (click)="onSendEmail(d)"
+                                        *ngIf="d.headerStatus === 'APPROVED BY ACCOUNTS APPROVER' "
+                                    ><img
                                             src="../assets/images/email-icon.svg" alt="" /></a>
                                 </span>
                             </td>
