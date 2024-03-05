@@ -275,7 +275,7 @@
 
     </div>
 
-    <form [formGroup]="publicVariable.dataForm" (ngSubmit)="onSubmit()">
+    <form *ngIf="data.impiHeaderCreatedBy === this.publicVariable.storedEmail" [formGroup]="publicVariable.dataForm" (ngSubmit)="onSubmit()">
         <div class="col-md-12 mt-3">
             <div class="form-group">
                 <label>Remarks</label>
