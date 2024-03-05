@@ -527,8 +527,21 @@ export class NewPurchaseInvoiceComponent implements OnInit {
 
     validateGST() {
         try {
-            const gst = this.publicVariable.dataForm.get('GSTRegistrationNo')?.value;
-            const subscription = this.CAPI.ValidateGST(gst).subscribe({
+            let gst:any;
+
+            const selectedId = this.publicVariable.dataForm.get('ImpiHeaderCustomerName')?.value;
+
+            if (selectedId) {
+                this.publicVariable.selectCustomer = this.publicVariable.GetCustomerList.find(customer => customer.custName == selectedId);
+                if (this.publicVariable.selectCustomer) {
+                    gst = this.publicVariable.selectCustomer.gstregistrationNo
+
+                }
+            } else {
+                gst = this.publicVariable.dataForm.get('GSTRegistrationNo')?.value;
+            }
+
+            const subscription = this.CAPI.ValidateGST(selectedId).subscribe({
                 next: (response: any) => {
                     if (response.status) {
                         // GST number does not exist
