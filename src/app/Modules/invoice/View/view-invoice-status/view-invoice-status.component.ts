@@ -142,33 +142,30 @@ export class ViewInvoiceStatusComponent {
             const newConfig: any = {
                 headerId: this.data.headerId,
                 loginId: this.publicVariable.storedEmail,
-                statusId: this.data.headerStatusId,
                 remarks: newData.remarks,
             }
 
-            console.log(newConfig);
-
-            // this.publicVariable.isProcess = true;
-            // this.publicVariable.Subscription.add(
-            //     this.API.isApproverRemarks(newConfig).subscribe({
-            //         next: (res: any) => {
-            //             if (res.status === true) {
-            //                 this.toastr.success(res.message, 'Success');
-            //                 this.router.navigate(['invoice/status']);
-            //                 this.publicVariable.dataForm.reset();
-            //             } else {
-            //                 this.toastr.error(res.message, 'Error');
-            //             }
-            //         },
-            //         error: (error: any) => {
-            //             this.publicVariable.isProcess = false;
-            //             this.toastr.error(error.error.message || 'An error occurred. Please try again later.', 'Error');
-            //         },
-            //         complete: () => {
-            //             this.publicVariable.isProcess = false;
-            //         }
-            //     })
-            // );
+            this.publicVariable.isProcess = true;
+            this.publicVariable.Subscription.add(
+                this.API.isCancelPI(newConfig).subscribe({
+                    next: (res: any) => {
+                        if (res.status === true) {
+                            this.toastr.success(res.message, 'Success');
+                            this.router.navigate(['invoice/status']);
+                            this.publicVariable.dataForm.reset();
+                        } else {
+                            this.toastr.error(res.message, 'Error');
+                        }
+                    },
+                    error: (error: any) => {
+                        this.publicVariable.isProcess = false;
+                        this.toastr.error(error.error.message || 'An error occurred. Please try again later.', 'Error');
+                    },
+                    complete: () => {
+                        this.publicVariable.isProcess = false;
+                    }
+                })
+            );
 
         } else {
             this.markFormControlsAsTouched();

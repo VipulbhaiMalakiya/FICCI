@@ -26,6 +26,12 @@ export class InvoicesService {
     private FILEDELETE = `${environment.apiURL}IMAD?imadId=`;
     private MailURL  = `${environment.apiURL}Mail`;
 
+    private CancelEmployeeURL = `${environment.apiURL}PurchaseInvoice_New/CancelEmployee`;
+
+
+    isCancelPI(data: any): Observable<any[]> {
+        return this.http.post<any[]>(`${this.CancelEmployeeURL}`, data).pipe(this.retry);
+    }
 
     sendEmail(formData: FormData): Observable<any> {
         return this.http.post<any>(`${this.MailURL}`, formData).pipe(this.retry);
