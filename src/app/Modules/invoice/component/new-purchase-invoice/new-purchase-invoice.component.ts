@@ -104,6 +104,13 @@ export class NewPurchaseInvoiceComponent implements OnInit {
         }
     }
 
+
+    getNameById(impiGlNo: any): string {
+        const item = this.publicVariable.COAMasterList.find((item: any) => item.no === impiGlNo);
+        return item ? item.name : '';
+      }
+
+
     loadGetGSTGroupList(): void {
         try {
             const subscription = this.API.GetGSTGroupList().subscribe({
@@ -181,8 +188,6 @@ export class NewPurchaseInvoiceComponent implements OnInit {
         });
 
         this.publicVariable.expenses = data.lineItem_Requests;
-        console.log(this.publicVariable.expenses);
-
         this.uploadedFiles = data.impiHeaderAttachment;
 
         if (data.impiHeaderAttachment !== null && data.impiHeaderAttachment !== undefined) {
