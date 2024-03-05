@@ -3,31 +3,31 @@ import { ActivatedRoute, CustomersService, FormBuilder, InvoicesService, Router,
 import { environment } from 'src/environments/environment';
 
 @Component({
-  selector: 'app-view-invoice-status',
-  templateUrl: './view-invoice-status.component.html',
-  styleUrls: ['./view-invoice-status.component.css']
+    selector: 'app-view-invoice-status',
+    templateUrl: './view-invoice-status.component.html',
+    styleUrls: ['./view-invoice-status.component.css']
 })
 export class ViewInvoiceStatusComponent {
     headerId?: number;
     data: any;
-    FilePath:any;
+    FilePath: any;
     publicVariable = new publicVariable();
     uploadedFiles: File[] = [];
 
-    constructor(private route: ActivatedRoute,private CAPI: CustomersService,
-         private API: InvoicesService,
-         private toastr: ToastrService,
-         private router: Router,
-         private fb: FormBuilder,
-         ) {
-            this.initializeForm();
-         }
+    constructor(private route: ActivatedRoute, private CAPI: CustomersService,
+        private API: InvoicesService,
+        private toastr: ToastrService,
+        private router: Router,
+        private fb: FormBuilder,
+    ) {
+        this.initializeForm();
+    }
 
-         private initializeForm(): void {
-            this.publicVariable.dataForm = this.fb.group({
-                remarks:['', Validators.required],
-            })
-        }
+    private initializeForm(): void {
+        this.publicVariable.dataForm = this.fb.group({
+            remarks: ['', Validators.required],
+        })
+    }
 
     ngOnInit() {
         this.route.params.subscribe(params => {
@@ -84,7 +84,7 @@ export class ViewInvoiceStatusComponent {
     }
 
 
-    getStateNameById(stateId:string) {
+    getStateNameById(stateId: string) {
         const state = this.publicVariable.stateList.find(state => state.stateCode === stateId);
         return state ? state.stateName : null;
     }
@@ -134,7 +134,7 @@ export class ViewInvoiceStatusComponent {
     getNameById(impiGlNo: any): string {
         const item = this.publicVariable.COAMasterList.find((item: any) => item.no === impiGlNo);
         return item ? item.name : '';
-      }
+    }
 
     onSubmit() {
         if (this.publicVariable.dataForm.valid) {

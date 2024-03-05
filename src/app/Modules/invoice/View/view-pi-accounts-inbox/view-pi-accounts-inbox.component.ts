@@ -47,6 +47,7 @@ export class ViewPiAccountsInboxComponent implements OnInit, OnDestroy {
 
         this.data = history.state.data;
         this.loadStateList();
+        this.loadCOAMasterList();
         this.uploadedFiles = this.data.impiHeaderAttachment;
 
         if (this.data.impiHeaderAttachment) {
@@ -130,6 +131,27 @@ export class ViewPiAccountsInboxComponent implements OnInit, OnDestroy {
         this.FilePath = `${environment.fileURL}${fileUrl.fileUrl}`;
         window.open(this.FilePath, '_blank');
 
+    }
+
+    loadCOAMasterList(): void {
+        try {
+            const subscription = this.API.GetCOAMasterList().subscribe({
+                next: (response: any) => {
+                    this.publicVariable.COAMasterList = response.data;
+                },
+                error: (error) => {
+                    console.error('Error loading project list:', error);
+                }
+            });
+
+            this.publicVariable.Subscription.add(subscription);
+        } catch (error) {
+            console.error('Error loading project list:', error);
+        }
+    }
+    getNameById(impiGlNo: any): string {
+        const item = this.publicVariable.COAMasterList.find((item: any) => item.no === impiGlNo);
+        return item ? item.name : '';
     }
 
     handleLoadingError() {
