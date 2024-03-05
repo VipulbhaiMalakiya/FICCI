@@ -67,28 +67,7 @@ export class EmailComponent {
 
 
         this.data = history.state.data;
-        this.uploadedFiles = this.data.impiHeaderAttachment;
 
-        if (this.data.impiHeaderAttachment) {
-            this.uploadedFiles = this.data.impiHeaderAttachment.map((file: any) => ({
-                id: file.imadId,
-                recordNo: file.imadRecordNo,
-                screenName: file.imadScreenName,
-                name: file.imadFileName,
-                type: file.imadFileType,
-                fileSize: file.imadFileSize,
-                fileUrl: file.imadFileUrl,
-                active: file.imadActive,
-                createdBy: file.imadCreatedBy,
-                createdOn: file.imadCreatedOn,
-                modifiedBy: file.imadModifiedBy,
-                modifiedOn: file.imadModifiedOn
-            }));
-
-        } else {
-            this.uploadedFiles = [];
-
-        }
 
 
     }
@@ -102,8 +81,8 @@ export class EmailComponent {
             formData.append('MailSubject', newData.subject);
             formData.append('MailBody', newData.body);
             formData.append('LoginId', this.publicVariable.storedEmail);
-            formData.append('ResourceType',this.data.impiHeaderInvoiceType);
-            formData.append('ResourceId',this.data.headerId);
+            formData.append('ResourceType', this._emailMaster.impiHeaderInvoiceType);
+            formData.append('ResourceId', this._emailMaster.headerId);
             formData.append('Attachments',newData.attachment);
             this.publicVariable.isProcess = true;
             // Submit the formData
