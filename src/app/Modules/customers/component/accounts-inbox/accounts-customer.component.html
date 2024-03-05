@@ -69,8 +69,7 @@
                             <td>{{d.createdBy}}</td>
                             <td>{{d.customerStatus | titlecase}}</td>
                             <td>
-                                <span class="table-btns" *ngIf="publicVariable.storedRole !== 'Admin' &&
-                                (d.customerStatus == 'PENDING WITH ACCOUNTS APPROVER')">
+                                <span class="table-btns" >
                                     <a href="javascript:void(0);" (click)="onEdit(d)"><img
                                             src="../assets/images/view-icon.svg" alt=""></a>
                                 </span>
