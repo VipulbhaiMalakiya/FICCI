@@ -54,6 +54,10 @@ export class EmailComponent {
 
 
         this.data = history.state.data;
+
+        if (this.data = history.state.data) {
+            this.patchFormData(this.data);
+        }
         this.uploadedFiles = this.data.impiHeaderAttachment;
 
         if (this.data.impiHeaderAttachment) {
@@ -78,6 +82,12 @@ export class EmailComponent {
         }
 
 
+    }
+    patchFormData(data: any): void {
+        this.publicVariable.mailForm.patchValue({
+            emailTo : data.impiHeaderCustomerEmailId,
+            subject : data.impiHeaderInvoiceType
+        });
     }
 
     onSendEmail() {

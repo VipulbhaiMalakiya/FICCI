@@ -45,10 +45,6 @@ export class ViewPiAccountsInboxComponent implements OnInit, OnDestroy {
             this.headerId = +params['id'];
         });
 
-
-        if (this.data = history.state.data) {
-            this.patchFormData(this.data);
-        }
         this.data = history.state.data;
         this.loadStateList();
         this.uploadedFiles = this.data.impiHeaderAttachment;
@@ -79,12 +75,7 @@ export class ViewPiAccountsInboxComponent implements OnInit, OnDestroy {
     }
 
 
-    patchFormData(data: any): void {
-        this.publicVariable.mailForm.patchValue({
-            emailTo : data.impiHeaderCustomerEmailId,
-            subject : data.impiHeaderInvoiceType
-        });
-    }
+
 
     ngOnDestroy(): void {
     }
