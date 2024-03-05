@@ -317,8 +317,8 @@
                                 <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th>Status</th>
                                         <th>Pending at</th>
+                                        <th>Action Performed By</th>
                                         <th>Remarks By</th>
                                         <th>Remarks On</th>
                                         <th>Remarks</th>
@@ -328,6 +328,7 @@
 
                                     <tr *ngFor="let i of this.data.workFlowHistory;let in = index">
                                         <td>{{in + 1}}</td>
+                                        <td>{{i.imwdPendingEmailAt | titlecase}}</td>
                                         <td>{{i.imwdPendingAt | titlecase}}</td>
                                         <td>{{i.imwdInitiatedBy |titlecase}}</td>
                                         <td>{{i.imwdCreatedOn | date:'medium':'IST'}}</td>
