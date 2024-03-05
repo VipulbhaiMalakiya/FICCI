@@ -262,11 +262,11 @@
                     <div class="col-md-4 col-sm-6">
                         <div class="form-group">
                             <label>Nature of Expense</label>
-                            <ng-select [items]="publicVariable.COAMasterList" #select bindLabel="name" bindValue="name"
+                            <ng-select [items]="publicVariable.COAMasterList" #select bindLabel="name" bindValue="no"
                                 placeholder="Select " [searchable]="true" [virtualScroll]="true" [bufferAmount]="10"
-                                formControlName="documentType">
+                                formControlName="impiGlNo">
                             </ng-select>
-                            <div *ngIf="shouldShowExpenseError('documentType','required')" class="text-danger">This
+                            <div *ngIf="shouldShowExpenseError('impiGlNo','required')" class="text-danger">This
                                 field is required</div>
                         </div>
                     </div>
@@ -377,7 +377,7 @@
 
                         <tr *ngFor="let e of publicVariable.expenses; let i = index">
                             <td>{{i + 1}}</td>
-                            <td>{{e.documentType }}</td>
+                            <td>{{e.impiGlNo }}</td>
                             <td>{{e.impiQuantity}}</td>
                             <td>{{e.impiUnitPrice}}</td>
                             <td>{{e.impiQuantity * e.impiUnitPrice}}</td>

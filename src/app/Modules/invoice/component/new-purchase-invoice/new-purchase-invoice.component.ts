@@ -66,7 +66,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
 
     private createExpenseForm(): void {
         this.publicVariable.expenseForm = this.fb.group({
-            documentType: [null, Validators.required],
+            impiGlNo: [null, Validators.required],
             impiQuantity: ['', Validators.required],
             impiGstgroupCode: [null, Validators.required],
             impiHsnsaccode: [null, Validators.required],
@@ -181,6 +181,8 @@ export class NewPurchaseInvoiceComponent implements OnInit {
         });
 
         this.publicVariable.expenses = data.lineItem_Requests;
+        console.log(this.publicVariable.expenses);
+
         this.uploadedFiles = data.impiHeaderAttachment;
 
         if (data.impiHeaderAttachment !== null && data.impiHeaderAttachment !== undefined) {
@@ -509,7 +511,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
         this.publicVariable.expenseForm.patchValue({
             impiGstgroupCode: data.impiGstgroupCode,
             impiHsnsaccode: data.impiHsnsaccode,
-            documentType: data.documentType,
+            impiGlNo: data.impiGlNo,
             impiQuantity: data.impiQuantity,
             impiUnitPrice: data.impiUnitPrice,
         });
@@ -600,8 +602,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
                 formData.append('RoleName', this.publicVariable.storedRole);
                 for (let i = 0; i < this.publicVariable.expenses.length; i++) {
                     const item = this.publicVariable.expenses[i];
-                    let GL: any = this.publicVariable.COAMasterList.find(gl => gl.name == item.documentType);
-
+                    let GL: any = this.publicVariable.COAMasterList.find(gl => gl.no == item.impiGlNo);
                     formData.append(`lineItem_Requests[${i}].ImpiNetTotal`, '0');
                     formData.append(`lineItem_Requests[${i}].ImpiLocationCode`, 'FICCI-DL');
                     formData.append(`lineItem_Requests[${i}].ImpiQuantity`, item.impiQuantity);
@@ -611,15 +612,14 @@ export class NewPurchaseInvoiceComponent implements OnInit {
                     formData.append(`lineItem_Requests[${i}].ImpiLineNo`, String(lineNo));
                     formData.append(`lineItem_Requests[${i}].ImpiHsnsaccode`, item.impiHsnsaccode);
                     formData.append(`lineItem_Requests[${i}].ImpiGlNo`, GL.no);
-
-                    formData.append(`lineItem_Requests[${i}].documentType`, '');
-                    formData.append(`lineItem_Requests[${i}].ImpiType`,GL.name);
+                    formData.append(`lineItem_Requests[${i}].documentType`, 'Invoice');
+                    formData.append(`lineItem_Requests[${i}].ImpiType`,'G/L Account');
                     formData.append(`lineItem_Requests[${i}].ImpiDocumentNo`,'');
                     formData.append(`lineItem_Requests[${i}].ImpiGstBaseAmount`,'');
                     formData.append(`lineItem_Requests[${i}].ImpiTotalGstAmount`,'');
                     formData.append(`lineItem_Requests[${i}].ImpiNetTotal`,'');
                     formData.append(`lineItem_Requests[${i}].ImpiLinePiNo`,'');
-                    
+
 
                     // Calculate the amount here
                     const impiQuantity = parseFloat(item.impiQuantity);
@@ -637,7 +637,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
                     formData.append('ImpiHeaderAttachment', file);
                 });
 
-                
+
                 this.publicVariable.isProcess = true;
                 // Submit the formData
                 this.publicVariable.Subscription.add(
@@ -729,7 +729,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
     }
 
     markexpenseFormControlsAsTouched(): void {
-        ['documentType', 'impiQuantity', 'impiGstgroupCode', 'impiHsnsaccode', 'impiUnitPrice'].forEach(controlName => {
+        ['impiGlNo', 'impiQuantity', 'impiGstgroupCode', 'impiHsnsaccode', 'impiUnitPrice'].forEach(controlName => {
             this.publicVariable.expenseForm.controls[controlName].markAsTouched();
         });
     }
