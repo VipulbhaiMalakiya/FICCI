@@ -189,9 +189,13 @@
                 <div class="col-md-3 col-sm-6">
                     <div class="form-group">
                         <label>P.A.N. No. <sup class="text-danger">*</sup></label>
-                        <input type="text" class="form-control" formControlName="PANNo" placeholder="P.A.N. No." />
+                        <input type="text" class="form-control" formControlName="PANNo" placeholder="P.A.N. No."
+                        (blur)="ValidatePAN()" />
                         <div *ngIf="shouldShowError('PANNo', 'invalidPAN')" class="text-danger">
                             Please enter a valid PAN Number.
+                        </div>
+                        <div *ngIf="panExists" class="text-danger">
+                            PAN number already exists.
                         </div>
                     </div>
                 </div>

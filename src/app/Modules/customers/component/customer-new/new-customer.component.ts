@@ -22,7 +22,7 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
     customerId?: number;
     data: any;
     gstExists: boolean = false;
-
+    panExists :boolean = false;
     constructor(
         private fb: FormBuilder,
         private modalService: NgbModal,
@@ -108,8 +108,36 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
         }
     }
 
+    ValidatePAN() {
+        try {
+            const pan = this.publicVariable.dataForm.get('GSTRegistrationNo')?.value;
+            const subscription = this.API.ValidatePAN(pan).subscribe({
+                next: (response: any) => {
+                    if (response.status) {
+                        // PAN number does not exist
+                        console.log('PAN number does not exist');
+                        this.panExists = false;
+                        // You can update the UI to indicate that the PAN number is valid
+                    } else {
+                        // PAN number already exists
+                        console.log('PAN number already exists');
+                        this.panExists = true;
+                        return
+                        // You can update the UI to indicate that the PAN number already exists
+                    }
+                },
+                error: (error) => {
+                    console.error('Error loading data:', error);
+                    this.handleLoadingError();
+                },
+            });
 
-
+            this.publicVariable.Subscription.add(subscription);
+        } catch (error) {
+            console.error('Error loading data list:', error);
+            this.handleLoadingError();
+        }
+    }
 
     ngOnDestroy() {
         if (this.publicVariable.Subscription) {
