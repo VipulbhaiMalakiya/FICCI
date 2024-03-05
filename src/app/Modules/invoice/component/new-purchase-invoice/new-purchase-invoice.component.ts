@@ -18,7 +18,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
     public isEditing: boolean = false;
     uploadedFiles: File[] = [];
     FilePath: any;
-
+    gstExists: boolean = false;
 
     constructor(private appService: AppService,
         private modalService: NgbModal,
@@ -473,9 +473,6 @@ export class NewPurchaseInvoiceComponent implements OnInit {
 
         const selectedCityName = this.publicVariable.dataForm.get('ImpiHeaderCustomerCity')?.value;
         const selectedCity = this.publicVariable.cityList.find(city => city.cityName === selectedCityName);
-
-
-
         if (selectedCity) {
             this.publicVariable.dataForm.patchValue({
                 ImpiHeaderCustomerPinCode: selectedCity.cityCode
@@ -521,9 +518,42 @@ export class NewPurchaseInvoiceComponent implements OnInit {
     }
 
 
+    validateGST() {
+        try {
+            const gst = this.publicVariable.dataForm.get('GSTRegistrationNo')?.value;
+            const subscription = this.CAPI.ValidateGST(gst).subscribe({
+                next: (response: any) => {
+                    if (response.status) {
+                        // GST number does not exist
+                        console.log('GST number does not exist');
+                        this.gstExists = false;
+                        // You can update the UI to indicate that the GST number is valid
+                    } else {
+                        // GST number already exists
+                        console.log('GST number already exists');
+                        this.gstExists = true;
+                        return
+                        // You can update the UI to indicate that the GST number already exists
+                    }
+                },
+                error: (error) => {
+                    console.error('Error loading data:', error);
+                    this.handleLoadingError();
+                },
+            });
+
+            this.publicVariable.Subscription.add(subscription);
+        } catch (error) {
+            console.error('Error loading data list:', error);
+            this.handleLoadingError();
+        }
+    }
+
+
+
     onSubmit(action: boolean): void {
         if (this.publicVariable.expenses.length > 0) {
-            if (this.publicVariable.dataForm.valid) {
+            if (this.publicVariable.dataForm.valid  && !this.gstExists) {
                 const newData = this.publicVariable.dataForm.value;
                 const isUpdate = !!newData.headerid;
                 let impiHeaderTotalInvoiceAmount = 0; // Initialize the total amount

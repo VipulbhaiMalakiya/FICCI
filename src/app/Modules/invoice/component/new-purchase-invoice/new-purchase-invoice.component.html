@@ -204,9 +204,12 @@
                     <div class="form-group">
                         <label for="GSTNumber">GST Number</label>
                         <input type="text" class="form-control" id="GSTNumber" placeholder="GST Number"
-                            formControlName="ImpiHeaderCustomerGstNo" />
+                            formControlName="ImpiHeaderCustomerGstNo" (blur)="validateGST()" />
                         <div *ngIf="shouldShowError('ImpiHeaderCustomerGstNo','invalidGST')" class="text-danger"> Please
                             enter a valid GST Registration Number. (05AAACF1282E1Z5)</div>
+                            <div *ngIf="gstExists" class="text-danger">
+                                GST number already exists.
+                            </div>
                     </div>
                 </div>
 
