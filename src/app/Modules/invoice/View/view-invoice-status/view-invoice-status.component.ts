@@ -33,6 +33,7 @@ export class ViewInvoiceStatusComponent {
         this.route.params.subscribe(params => {
             this.headerId = +params['id'];
         });
+        this.loadCOAMasterList();
         this.data = history.state.data;
 
         this.loadStateList();
@@ -114,6 +115,26 @@ export class ViewInvoiceStatusComponent {
     handleLoadingError() {
         this.publicVariable.isProcess = false; // Set status to false on error
     }
+    loadCOAMasterList(): void {
+        try {
+            const subscription = this.API.GetCOAMasterList().subscribe({
+                next: (response: any) => {
+                    this.publicVariable.COAMasterList = response.data;
+                },
+                error: (error) => {
+                    console.error('Error loading project list:', error);
+                }
+            });
+
+            this.publicVariable.Subscription.add(subscription);
+        } catch (error) {
+            console.error('Error loading project list:', error);
+        }
+    }
+    getNameById(impiGlNo: any): string {
+        const item = this.publicVariable.COAMasterList.find((item: any) => item.no === impiGlNo);
+        return item ? item.name : '';
+      }
 
     onSubmit() {
         if (this.publicVariable.dataForm.valid) {
