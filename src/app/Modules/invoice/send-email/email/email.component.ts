@@ -1,6 +1,7 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { ActivatedRoute, CustomersService, FormBuilder, InvoicesService, NgbModal, Router, ToastrService, Validators, publicVariable } from '../../Export/invoce';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-email',
@@ -29,8 +30,8 @@ export class EmailComponent {
 
         editable: true,
         spellcheck: true,
-        height: "10rem",
-        minHeight: "5rem",
+        height: "5em",
+        minHeight: "3rem",
         placeholder: "Enter text here...",
         translate: "no",
         defaultParagraphSeparator: "p",
@@ -47,11 +48,14 @@ export class EmailComponent {
         private API: InvoicesService,
         private route: ActivatedRoute,
         private CAPI: CustomersService,
+        private activeModal: NgbActiveModal,
     ) {
         this.initializeFormmailForm();
     }
 
-
+    onCancel() {
+        this.activeModal.dismiss();
+      }
 
     private initializeFormmailForm(): void {
         this.publicVariable.mailForm = this.fb.group({
@@ -64,49 +68,12 @@ export class EmailComponent {
 
 
     ngOnInit() {
-
-
         this.data = history.state.data;
-
-
-
     }
 
     onSendEmail() {
         if (this.publicVariable.mailForm.valid) {
-            const newData = this.publicVariable.mailForm.value;
-            const formData = new FormData();
-            formData.append('MailTo', newData.emailTo);
-            // formData.append('MailCC', newData.emailTo);
-            formData.append('MailSubject', newData.subject);
-            formData.append('MailBody', newData.body);
-            formData.append('LoginId', this.publicVariable.storedEmail);
-            formData.append('ResourceType', this._emailMaster.impiHeaderInvoiceType);
-            formData.append('ResourceId', this._emailMaster.headerId);
-            formData.append('Attachments',newData.attachment);
-            this.publicVariable.isProcess = true;
-            // Submit the formData
-            this.publicVariable.Subscription.add(
-                this.API.sendEmail(formData).subscribe({
-                    next: (res: any) => {
-                        if (res.status === true) {
-                            this.toastr.success(res.message, 'Success');
-                            this.router.navigate(['invoice/accounts']);
-                            this.publicVariable.dataForm.reset();
-                        } else {
-                            this.toastr.error(res.message, 'Error');
-                            this.publicVariable.isProcess = false;
-                        }
-                    },
-                    error: (error: any) => {
-                        this.publicVariable.isProcess = false;
-                        this.toastr.error(error.error.message || 'An error occurred. Please try again later.', 'Error');
-                    },
-                    complete: () => {
-                        this.publicVariable.isProcess = false;
-                    }
-                })
-            );
+            this.activeModal.close(this.publicVariable.mailForm.value);
         } else {
             this.markFormControlsAsTouchedemail();
 

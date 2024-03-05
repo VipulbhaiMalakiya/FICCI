@@ -112,7 +112,7 @@ export class AccountsInboxComponent implements OnInit {
     onDownload() {
         const exportData = this.publicVariable.invoiceStatuslistData.map((x) => ({
             "PO No.": x?.impiHeaderProjectCode || '',
-            'Project' :x?.impiHeaderProjectName ? this.toTitleCase(x.impiHeaderProjectName) : '',
+            'Project': x?.impiHeaderProjectName ? this.toTitleCase(x.impiHeaderProjectName) : '',
             Department: x?.impiHeaderProjectDepartmentName ? this.toTitleCase(x.impiHeaderProjectDepartmentName) : '',
             Divison: x?.impiHeaderProjectDivisionName ? this.toTitleCase(x.impiHeaderProjectDivisionName) : '',
             Category: x?.impiHeaderInvoiceType ? this.toTitleCase(x.impiHeaderInvoiceType) : '',
@@ -133,17 +133,17 @@ export class AccountsInboxComponent implements OnInit {
             'Cl Approver': x?.impiHeaderClusterApprover ? this.toTitleCase(x.impiHeaderClusterApprover) : '',
             'Finance Approver': x?.impiHeaderFinanceApprover ? this.toTitleCase(x.impiHeaderFinanceApprover) : '',
             'Accounts Approver': x?.accountApprover ? this.toTitleCase(x.accountApprover) : '',
-            'Created On':x?.impiHeaderSubmittedDate ? formatDate(x.impiHeaderSubmittedDate, 'medium', 'en-IN', 'IST') : '',
+            'Created On': x?.impiHeaderSubmittedDate ? formatDate(x.impiHeaderSubmittedDate, 'medium', 'en-IN', 'IST') : '',
             'Created By': x?.impiHeaderCreatedBy ? this.toTitleCase(x.impiHeaderCreatedBy) : '',
             "Update Date": x?.impiHeaderModifiedDate ? formatDate(x.impiHeaderModifiedDate, 'medium', 'en-IN', 'IST') : '',
-            'Status':x?.headerStatus ? this.toTitleCase(x?.headerStatus) : '',
+            'Status': x?.headerStatus ? this.toTitleCase(x?.headerStatus) : '',
         }));
 
         const headers = [
-            'PO No.','Project', 'Department', 'Divison', 'Category',
+            'PO No.', 'Project', 'Department', 'Divison', 'Category',
             'Vendor Name', 'Address', 'State', 'City', 'Pincode',
             'Phone No', "Email ID", 'Contact Person', 'Customer  GST Number', 'PAN No', 'Amount', 'Payment Terms',
-            'impiHeaderRemarks', 'Tl Approver', 'Cl Approver', 'Finance Approver', 'Accounts Approver','Created On', 'Created By','Update Date',
+            'impiHeaderRemarks', 'Tl Approver', 'Cl Approver', 'Finance Approver', 'Accounts Approver', 'Created On', 'Created By', 'Update Date',
             'Status'
         ];
         this.appService.exportAsExcelFile(exportData, 'PI Invoice Status', headers);
@@ -157,10 +157,9 @@ export class AccountsInboxComponent implements OnInit {
         this.publicVariable.tableSize = event.target.value;
         this.publicVariable.page = 1;
         this.publicVariable.invoiceStatuslistData
-
     }
 
-    onSendEmail(dataItem:any){
+    onSendEmail(dataItem: any) {
         this.publicVariable.isProcess = true;
         const modalRef = this.modalService.open(EmailComponent, { size: "xl" });
         if (modalRef) {
@@ -170,8 +169,46 @@ export class AccountsInboxComponent implements OnInit {
             this.publicVariable.isProcess = false;
         }
         var componentInstance = modalRef.componentInstance as EmailComponent;
-
         componentInstance.isEmail = dataItem;
+
+        modalRef.result.then((data: any) => {
+            if (data) {
+
+                const newData = data;
+                const formData = new FormData();
+                formData.append('MailTo', newData.emailTo);
+                formData.append('MailCC', newData.emailTo);
+                formData.append('MailSubject', newData.subject);
+                formData.append('MailBody', newData.body);
+                formData.append('LoginId', this.publicVariable.storedEmail);
+                formData.append('ResourceType', dataItem.impiHeaderInvoiceType);
+                formData.append('ResourceId', dataItem.headerId);
+                formData.append('Attachments', newData.attachment);
+                this.publicVariable.isProcess = true;
+
+                //Submit the formData
+                this.publicVariable.Subscription.add(
+                    this.API.sendEmail(formData).subscribe({
+                        next: (res: any) => {
+                            if (res.status === true) {
+                                this.toastr.success(res.message, 'Success');
+                                this.loadApproveInvoiceList();
+                            } else {
+                                this.toastr.error(res.message, 'Error');
+                                this.publicVariable.isProcess = false;
+                            }
+                        },
+                        error: (error: any) => {
+                            this.publicVariable.isProcess = false;
+                            this.toastr.error(error.error.message || 'An error occurred. Please try again later.', 'Error');
+                        },
+                        complete: () => {
+                            this.publicVariable.isProcess = false;
+                        }
+                    })
+                );
+            }
+        }).catch(() => { });
 
     }
 }
