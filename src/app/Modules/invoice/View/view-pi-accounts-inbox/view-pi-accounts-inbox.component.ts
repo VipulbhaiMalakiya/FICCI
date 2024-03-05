@@ -153,20 +153,14 @@ export class ViewPiAccountsInboxComponent implements OnInit, OnDestroy {
                 statusId: this.data.headerStatusId,
                 remarks: newData.remarks,
             }
-            this.router.navigate(['invoice/accounts/email'], { state: { data: this.data } });
-            return
             this.publicVariable.isProcess = true;
             this.publicVariable.Subscription.add(
                 this.API.isApproverRemarks(newConfig).subscribe({
                     next: (res: any) => {
                         if (res.status === true) {
                             this.toastr.success(res.message, 'Success');
-                            if (action === true) {
-                                this.isApprove = true;
-                            }else{
-                                this.router.navigate(['invoice/accounts']);
-                                this.publicVariable.dataForm.reset();
-                            }
+                            this.router.navigate(['invoice/accounts']);
+                            this.publicVariable.dataForm.reset();
 
                         } else {
                             this.toastr.error(res.message, 'Error');
