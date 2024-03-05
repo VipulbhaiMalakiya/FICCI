@@ -22,6 +22,7 @@ export class SearchFilterPipe1 implements PipeTransform {
                 || item.impiHeaderTlApprover.toLowerCase().includes(searchText)
                 || item.impiHeaderClusterApprover.toLowerCase().includes(searchText)
                 || item.impiHeaderFinanceApprover.toLowerCase().includes(searchText)
+                || item.accountApprover.toLowerCase().includes(searchText)
                 || item.impiHeaderSubmittedDate.toLowerCase().includes(searchText)
                 || item.impiHeaderCreatedBy.toLowerCase().includes(searchText)
                 || item.headerStatus.toLowerCase().includes(searchText);
