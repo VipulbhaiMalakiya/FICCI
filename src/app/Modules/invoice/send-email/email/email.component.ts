@@ -11,6 +11,19 @@ export class EmailComponent {
     publicVariable = new publicVariable();
     uploadedFiles: File[] = [];
     data: any;
+    private _emailMaster: any | undefined;
+
+
+    set isEmail(value: any) {
+        this._emailMaster = value;
+        this.data = value;
+        if (this._emailMaster) {
+            this.publicVariable.mailForm.patchValue({
+                emailTo : this._emailMaster.impiHeaderCustomerEmailId,
+                subject : this._emailMaster.impiHeaderInvoiceType
+            });
+        }
+      }
 
     editorConfig: AngularEditorConfig = {
 
@@ -54,10 +67,6 @@ export class EmailComponent {
 
 
         this.data = history.state.data;
-
-        if (this.data = history.state.data) {
-            this.patchFormData(this.data);
-        }
         this.uploadedFiles = this.data.impiHeaderAttachment;
 
         if (this.data.impiHeaderAttachment) {
@@ -82,12 +91,6 @@ export class EmailComponent {
         }
 
 
-    }
-    patchFormData(data: any): void {
-        this.publicVariable.mailForm.patchValue({
-            emailTo : data.impiHeaderCustomerEmailId,
-            subject : data.impiHeaderInvoiceType
-        });
     }
 
     onSendEmail() {

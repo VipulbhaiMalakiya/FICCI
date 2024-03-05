@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AppService, CustomersService, InvoicesService, NgbModal, Router, ToastrService, formatDate, publicVariable } from '../../Export/invoce';
 import { timeout, finalize } from 'rxjs';
 import { invoiceStatusModule } from '../../interface/invoice';
+import { EmailComponent } from '../../send-email/email/email.component';
 
 @Component({
     selector: 'app-accounts-inbox',
@@ -159,7 +160,18 @@ export class AccountsInboxComponent implements OnInit {
 
     }
 
-    onSendEmail(d:any){
+    onSendEmail(dataItem:any){
+        this.publicVariable.isProcess = true;
+        const modalRef = this.modalService.open(EmailComponent, { size: "xl" });
+        if (modalRef) {
+            this.publicVariable.isProcess = false;
+        }
+        else {
+            this.publicVariable.isProcess = false;
+        }
+        var componentInstance = modalRef.componentInstance as EmailComponent;
+
+        componentInstance.isEmail = dataItem;
 
     }
 }
