@@ -4,6 +4,7 @@ import { timeout, finalize, catchError, throwError } from 'rxjs';
 import { InvoicesService } from '../../invoice/service/invoices.service';
 import { invoiceApproveModule, invoiceStatusModule } from '../../invoice/interface/invoice';
 import { forkJoin } from 'rxjs';
+import { EmailComponent } from '../../invoice/send-email/email/email.component';
 
 
 @Component({
@@ -583,6 +584,56 @@ export class DashboardComponent {
         this.appService.exportAsExcelFile(exportData, 'PI Invoice Status', headers);
     }
 
+    onSendEmail(dataItem: any) {
+        this.publicVariable.isProcess = true;
+        const modalRef = this.modalService.open(EmailComponent, { size: "xl" });
+        if (modalRef) {
+            this.publicVariable.isProcess = false;
+        }
+        else {
+            this.publicVariable.isProcess = false;
+        }
+        var componentInstance = modalRef.componentInstance as EmailComponent;
+        componentInstance.isEmail = dataItem;
 
+        modalRef.result.then((data: any) => {
+            if (data) {
+
+                const newData = data;
+                const formData = new FormData();
+                formData.append('MailTo', newData.emailTo);
+                formData.append('MailCC', newData.emailTo);
+                formData.append('MailSubject', newData.subject);
+                formData.append('MailBody', newData.body);
+                formData.append('LoginId', this.publicVariable.storedEmail);
+                formData.append('ResourceType', dataItem.impiHeaderInvoiceType);
+                formData.append('ResourceId', dataItem.headerId);
+                formData.append('Attachments', newData.attachment);
+                this.publicVariable.isProcess = true;
+
+                //Submit the formData
+                this.publicVariable.Subscription.add(
+                    this.IAPI.sendEmail(formData).subscribe({
+                        next: (res: any) => {
+                            if (res.status === true) {
+                                this.toastr.success(res.message, 'Success');
+                            } else {
+                                this.toastr.error(res.message, 'Error');
+                                this.publicVariable.isProcess = false;
+                            }
+                        },
+                        error: (error: any) => {
+                            this.publicVariable.isProcess = false;
+                            this.toastr.error(error.error.message || 'An error occurred. Please try again later.', 'Error');
+                        },
+                        complete: () => {
+                            this.publicVariable.isProcess = false;
+                        }
+                    })
+                );
+            }
+        }).catch(() => { });
+
+    }
 
 }
