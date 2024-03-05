@@ -298,7 +298,7 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
     }
 
     onSubmit(action: boolean): void {
-        if (this.publicVariable.dataForm.valid) {
+        if (this.publicVariable.dataForm.valid && !this.panExists && !this.gstExists) {
             const newData = this.publicVariable.dataForm.value;
             const isUpdate = !!newData.customerId;
             const newConfig: any = {
