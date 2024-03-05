@@ -4,14 +4,14 @@ import { environment } from 'src/environments/environment';
 import { CustomersService, FormBuilder, InvoicesService, NgbModal, ToastrService, Validators, publicVariable } from '../../Export/invoce';
 
 @Component({
-  selector: 'app-view-pi-approval',
-  templateUrl: './view-pi-approval.component.html',
-  styleUrls: ['./view-pi-approval.component.css']
+    selector: 'app-view-pi-approval',
+    templateUrl: './view-pi-approval.component.html',
+    styleUrls: ['./view-pi-approval.component.css']
 })
 export class ViewPiApprovalComponent {
     headerId?: number;
     data: any;
-    FilePath:any;
+    FilePath: any;
     publicVariable = new publicVariable();
     uploadedFiles: File[] = [];
 
@@ -40,6 +40,7 @@ export class ViewPiApprovalComponent {
         });
         this.data = history.state.data;
         this.loadStateList();
+        this.loadCOAMasterList();
         this.uploadedFiles = this.data.impiHeaderAttachment
         if (this.data.impiHeaderAttachment) {
             this.uploadedFiles = this.data.impiHeaderAttachment.map((file: any) => ({
@@ -62,6 +63,27 @@ export class ViewPiApprovalComponent {
 
         }
     }
+
+    loadCOAMasterList(): void {
+        try {
+            const subscription = this.API.GetCOAMasterList().subscribe({
+                next: (response: any) => {
+                    this.publicVariable.COAMasterList = response.data;
+                },
+                error: (error) => {
+                    console.error('Error loading project list:', error);
+                }
+            });
+
+            this.publicVariable.Subscription.add(subscription);
+        } catch (error) {
+            console.error('Error loading project list:', error);
+        }
+    }
+    getNameById(impiGlNo: any): string {
+        const item = this.publicVariable.COAMasterList.find((item: any) => item.no === impiGlNo);
+        return item ? item.name : '';
+      }
 
 
     loadStateList() {
@@ -86,7 +108,7 @@ export class ViewPiApprovalComponent {
 
 
 
-    getStateNameById(stateId:string) {
+    getStateNameById(stateId: string) {
         const state = this.publicVariable.stateList.find(state => state.stateCode === stateId);
         return state ? state.stateName : null;
     }
@@ -125,11 +147,11 @@ export class ViewPiApprovalComponent {
             const newData = this.publicVariable.dataForm.value;
 
 
-        if (!action && !newData.remarks) {
-            // Show JavaScript alert if action is false and remarks field is empty
-            window.alert('Remarks are required.');
-            return;
-        }
+            if (!action && !newData.remarks) {
+                // Show JavaScript alert if action is false and remarks field is empty
+                window.alert('Remarks are required.');
+                return;
+            }
 
             const newConfig: any = {
                 headerId: this.data.headerId,
@@ -167,13 +189,13 @@ export class ViewPiApprovalComponent {
 
     }
 
-        markFormControlsAsTouched(): void {
-            ['remarks'].forEach(controlName => {
-                this.publicVariable.dataForm.controls[controlName].markAsTouched();
-            });
-        }
+    markFormControlsAsTouched(): void {
+        ['remarks'].forEach(controlName => {
+            this.publicVariable.dataForm.controls[controlName].markAsTouched();
+        });
+    }
 
-        shouldShowError(controlName: string, errorName: string): boolean {
-            return this.publicVariable.dataForm.controls[controlName].touched && this.publicVariable.dataForm.controls[controlName].hasError(errorName);
-        }
+    shouldShowError(controlName: string, errorName: string): boolean {
+        return this.publicVariable.dataForm.controls[controlName].touched && this.publicVariable.dataForm.controls[controlName].hasError(errorName);
+    }
 }
