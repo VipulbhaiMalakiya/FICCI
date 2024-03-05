@@ -275,7 +275,7 @@
 
     </div>
 
-    <form *ngIf="data.impiHeaderCreatedBy === this.publicVariable.storedEmail" [formGroup]="publicVariable.dataForm" (ngSubmit)="onSubmit()">
+    <form *ngIf="data.impiHeaderCreatedBy === this.publicVariable.storedEmail && data.headerStatus !== 'CANCEL BY EMPLOYEE'" [formGroup]="publicVariable.dataForm" (ngSubmit)="onSubmit()">
         <div class="col-md-12 mt-3">
             <div class="form-group">
                 <label>Remarks</label>
@@ -317,22 +317,22 @@
                                 <thead>
                                     <tr>
                                         <th>#</th>
+                                        <th>Status</th>
                                         <th>Pending at</th>
                                         <th>Action Performed By</th>
-                                        <th>Remarks By</th>
-                                        <th>Remarks On</th>
                                         <th>Remarks</th>
+                                        <th>Remarks On</th>
                                     </tr>
                                 </thead>
                                 <tbody>
 
                                     <tr *ngFor="let i of this.data.workFlowHistory;let in = index">
                                         <td>{{in + 1}}</td>
+                                        <td>{{i.imwdPendingAt}}</td>
                                         <td>{{i.imwdPendingEmailAt | titlecase}}</td>
-                                        <td>{{i.imwdPendingAt | titlecase}}</td>
-                                        <td>{{i.imwdInitiatedBy |titlecase}}</td>
-                                        <td>{{i.imwdCreatedOn | date:'medium':'IST'}}</td>
+                                        <td>{{i.imwdInitiatedBy | titlecase}}</td>
                                         <td>{{i.imwdRemarks | titlecase}}</td>
+                                        <td>{{i.imwdCreatedOn | date:'medium':'IST'}}</td>
                                     </tr>
 
 
