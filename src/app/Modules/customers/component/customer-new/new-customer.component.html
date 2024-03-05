@@ -176,9 +176,12 @@
                     <div class="form-group">
                         <label>GST Registration No. <sup class="text-danger">*</sup></label>
                         <input type="text" class="form-control" placeholder="GST Registration No."
-                            formControlName="GSTRegistrationNo"  />
+                            formControlName="GSTRegistrationNo" (blur)="validateGST()" />
                         <div *ngIf="shouldShowError('GSTRegistrationNo', 'invalidGST')" class="text-danger">
                             Please enter a valid GST Registration Number. (05AAACF1282E1Z5)
+                        </div>
+                        <div *ngIf="gstExists" class="text-danger">
+                            GST number already exists.
                         </div>
                     </div>
                 </div>
@@ -187,7 +190,6 @@
                     <div class="form-group">
                         <label>P.A.N. No. <sup class="text-danger">*</sup></label>
                         <input type="text" class="form-control" formControlName="PANNo" placeholder="P.A.N. No." />
-
                         <div *ngIf="shouldShowError('PANNo', 'invalidPAN')" class="text-danger">
                             Please enter a valid PAN Number.
                         </div>

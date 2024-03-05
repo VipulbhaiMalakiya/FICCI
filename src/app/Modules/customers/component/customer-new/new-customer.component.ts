@@ -21,6 +21,7 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
     publicVariable = new publicVariable();
     customerId?: number;
     data: any;
+    gstExists: boolean = false;
 
     constructor(
         private fb: FormBuilder,
@@ -76,14 +77,23 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
 
 
 
-    ValidateGST() {
+    validateGST() {
         try {
             const gst = this.publicVariable.dataForm.get('GSTRegistrationNo')?.value;
-
             const subscription = this.API.ValidateGST(gst).subscribe({
                 next: (response: any) => {
-                    console.log(response);
-
+                    if (response.status) {
+                        // GST number does not exist
+                        console.log('GST number does not exist');
+                        this.gstExists = false;
+                        // You can update the UI to indicate that the GST number is valid
+                    } else {
+                        // GST number already exists
+                        console.log('GST number already exists');
+                        this.gstExists = true;
+                        return
+                        // You can update the UI to indicate that the GST number already exists
+                    }
                 },
                 error: (error) => {
                     console.error('Error loading data:', error);
@@ -97,6 +107,7 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
             this.handleLoadingError();
         }
     }
+
 
 
 
