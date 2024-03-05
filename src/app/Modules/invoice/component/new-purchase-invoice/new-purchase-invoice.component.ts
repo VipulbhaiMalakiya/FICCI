@@ -553,7 +553,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
 
     onSubmit(action: boolean): void {
         if (this.publicVariable.expenses.length > 0) {
-            if (this.publicVariable.dataForm.valid  && !this.gstExists) {
+            if (this.publicVariable.dataForm.valid && !this.gstExists) {
                 const newData = this.publicVariable.dataForm.value;
                 const isUpdate = !!newData.headerid;
                 let impiHeaderTotalInvoiceAmount = 0; // Initialize the total amount
@@ -591,19 +591,17 @@ export class NewPurchaseInvoiceComponent implements OnInit {
                 formData.append('ImpiHeaderTlApprover', this.publicVariable.selectedProjet.tlApprover);
                 formData.append('ImpiHeaderClusterApprover', this.publicVariable.selectedProjet.chApprover);
                 formData.append('ImpiHeaderFinanceApprover', this.publicVariable.selectedProjet.financeApprover);
-                 formData.append('ImpiHeaderSupportApprover', this.publicVariable.selectedProjet.supportApprover);
+                formData.append('ImpiHeaderSupportApprover', this.publicVariable.selectedProjet.supportApprover);
                 formData.append('ImpiHeaderProjectName', this.publicVariable.selectedProjet.name);
                 formData.append('ImpiHeaderProjectDivisionCode', this.publicVariable.selectedProjet.divisionCode);
                 formData.append('ImpiHeaderProjectDivisionName', this.publicVariable.selectedProjet.divisionName);
                 formData.append('ImpiHeaderProjectDepartmentCode', this.publicVariable.selectedProjet.departmentCode);
                 formData.append('ImpiHeaderProjectDepartmentName', this.publicVariable.selectedProjet.departmentName);
                 formData.append('RoleName', this.publicVariable.storedRole);
-                formData.append('RoleName', this.publicVariable.storedRole);
                 for (let i = 0; i < this.publicVariable.expenses.length; i++) {
                     const item = this.publicVariable.expenses[i];
-                    let GL:any = this.publicVariable.COAMasterList.find(gl => gl.name ==  item.documentType);
-                    console.log(GL);
-                    
+                    let GL: any = this.publicVariable.COAMasterList.find(gl => gl.name == item.documentType);
+
                     formData.append(`lineItem_Requests[${i}].ImpiNetTotal`, '0');
                     formData.append(`lineItem_Requests[${i}].ImpiLocationCode`, 'FICCI-DL');
                     formData.append(`lineItem_Requests[${i}].ImpiQuantity`, item.impiQuantity);
@@ -613,8 +611,15 @@ export class NewPurchaseInvoiceComponent implements OnInit {
                     formData.append(`lineItem_Requests[${i}].ImpiLineNo`, String(lineNo));
                     formData.append(`lineItem_Requests[${i}].ImpiHsnsaccode`, item.impiHsnsaccode);
                     formData.append(`lineItem_Requests[${i}].ImpiGlNo`, GL.no);
-                  //  formData.append(`lineItem_Requests[${i}].documentType`, item.documentType);
-                   
+
+                    formData.append(`lineItem_Requests[${i}].documentType`, '');
+                    formData.append(`lineItem_Requests[${i}].ImpiType`,GL.name);
+                    formData.append(`lineItem_Requests[${i}].ImpiDocumentNo`,'');
+                    formData.append(`lineItem_Requests[${i}].ImpiGstBaseAmount`,'');
+                    formData.append(`lineItem_Requests[${i}].ImpiTotalGstAmount`,'');
+                    formData.append(`lineItem_Requests[${i}].ImpiNetTotal`,'');
+                    formData.append(`lineItem_Requests[${i}].ImpiLinePiNo`,'');
+                    
 
                     // Calculate the amount here
                     const impiQuantity = parseFloat(item.impiQuantity);
@@ -632,7 +637,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
                     formData.append('ImpiHeaderAttachment', file);
                 });
 
-                return
+                
                 this.publicVariable.isProcess = true;
                 // Submit the formData
                 this.publicVariable.Subscription.add(
