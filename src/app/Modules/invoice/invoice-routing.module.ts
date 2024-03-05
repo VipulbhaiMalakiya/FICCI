@@ -54,7 +54,8 @@ const routes: Routes = [
     },
     {
         path:'accounts/email',
-        component:EmailComponent
+        component:EmailComponent,
+        data: { expectedRoles: ['Accounts'] }
     }
 ];
 
