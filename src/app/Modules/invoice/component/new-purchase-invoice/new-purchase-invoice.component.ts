@@ -559,7 +559,6 @@ export class NewPurchaseInvoiceComponent implements OnInit {
                 let impiHeaderTotalInvoiceAmount = 0; // Initialize the total amount
                 let lineNo = 10000;
                 const formData = new FormData();
-
                 if (isUpdate) {
                     formData.append('headerid', isUpdate ? newData.headerid : undefined);
                 }
@@ -602,6 +601,9 @@ export class NewPurchaseInvoiceComponent implements OnInit {
                 formData.append('RoleName', this.publicVariable.storedRole);
                 for (let i = 0; i < this.publicVariable.expenses.length; i++) {
                     const item = this.publicVariable.expenses[i];
+                    let GL:any = this.publicVariable.COAMasterList.find(gl => gl.name ==  item.documentType);
+                    console.log(GL);
+                    
                     formData.append(`lineItem_Requests[${i}].ImpiNetTotal`, '0');
                     formData.append(`lineItem_Requests[${i}].ImpiLocationCode`, 'FICCI-DL');
                     formData.append(`lineItem_Requests[${i}].ImpiQuantity`, item.impiQuantity);
@@ -610,7 +612,10 @@ export class NewPurchaseInvoiceComponent implements OnInit {
                     formData.append(`lineItem_Requests[${i}].ImpiGstgroupType`, 'GOODS');
                     formData.append(`lineItem_Requests[${i}].ImpiLineNo`, String(lineNo));
                     formData.append(`lineItem_Requests[${i}].ImpiHsnsaccode`, item.impiHsnsaccode);
-                    formData.append(`lineItem_Requests[${i}].documentType`, item.documentType);
+                    formData.append(`lineItem_Requests[${i}].ImpiGlNo`, GL.no);
+                  //  formData.append(`lineItem_Requests[${i}].documentType`, item.documentType);
+                   
+
                     // Calculate the amount here
                     const impiQuantity = parseFloat(item.impiQuantity);
                     const unitPrice = parseFloat(item.impiUnitPrice);
@@ -627,6 +632,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
                     formData.append('ImpiHeaderAttachment', file);
                 });
 
+                return
                 this.publicVariable.isProcess = true;
                 // Submit the formData
                 this.publicVariable.Subscription.add(
