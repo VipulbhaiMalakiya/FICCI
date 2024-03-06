@@ -313,7 +313,8 @@ export class DashboardComponent {
 
         const rejectedData = data.filter(item => item.headerStatus === 'REJECTED BY TL APPROVER'
             || item.headerStatus === 'REJECTED BY CH APPROVER'
-            || item.headerStatus === 'REJECTED BY ACCOUNTS APPROVER');
+            || item.headerStatus === 'REJECTED BY ACCOUNTS APPROVER'
+            || item.headerStatus === 'CANCEL BY EMPLOYEE');
         counts['REJECTED BY CH APPROVER'] = rejectedData.length;
 
 
@@ -358,7 +359,8 @@ export class DashboardComponent {
                 (item.headerStatus === 'REJECTED BY TL APPROVER' ||
                     item.headerStatus === 'REJECTED BY CH APPROVER' ||
                     item.headerStatus === 'REJECTED BY ACCOUNTS APPROVER' ||
-                    item.headerStatus === 'REJECTED BY FINANCE APPROVER'));
+                    item.headerStatus === 'REJECTED BY FINANCE APPROVER' || 
+                    item.headerStatus === 'CANCEL BY EMPLOYEE'));
                 break;
             case 'FOR APPROVAL':
                 filteredData = this.dashboardData.filter((item: any) => (
