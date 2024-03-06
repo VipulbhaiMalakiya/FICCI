@@ -15,7 +15,6 @@ export class AuthService {
     private userRole: string = '';
     private userEmail: string = '';
     private apiUrl = `${environment.apiURL}UserAuth`;
-    private loginTimeKey = 'loginTime';
     constructor(private http: HttpClient, private toastr: ToastrService, private router: Router) { }
     login(email: string, password: string): Observable<any> {
         const body = { email: email, password: password };
@@ -25,13 +24,10 @@ export class AuthService {
                     const userRole = response.data.roleName;
                     const userEmail = response.data.email;
                     const name =response.data.name;
-                    // Save login time to local storage
-                    const loginTime = new Date().getTime();
                     localStorage.setItem('userRole', userRole);
                     localStorage.setItem('userEmail', userEmail);
                     localStorage.setItem('userName', name);
-                    localStorage.setItem(this.loginTimeKey, loginTime.toString());
-                    localStorage.setItem('token', response.token);
+                    localStorage.setItem('token', response.data.token);
                     return { token: response.data.token, role: userRole };
                 } else {
                     this.toastr.error('Invalid credentials', 'Error');
@@ -60,10 +56,9 @@ export class AuthService {
         const storedRole = localStorage.getItem('userRole');
         const storedToken = localStorage.getItem('token');
         const storedEmail = localStorage.getItem('userEmail');
-        const storedLoginTime = localStorage.getItem(this.loginTimeKey);
 
         // Check if all necessary items are present
-        return storedRole !== null && storedToken !== null && storedLoginTime !== null && storedEmail !==null;
+        return storedRole !== null && storedToken !== null  && storedEmail !==null;
     }
 
 }
