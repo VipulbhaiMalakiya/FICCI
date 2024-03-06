@@ -19,7 +19,8 @@ export class NewPurchaseInvoiceComponent implements OnInit {
     uploadedFiles: File[] = [];
     FilePath: any;
     gstExists: boolean = false;
-    panExists :boolean = false;
+    panExists: boolean = false;
+    gstHeaderExists: boolean = false;
 
     constructor(private appService: AppService,
         private modalService: NgbModal,
@@ -109,7 +110,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
     getNameById(impiGlNo: any): string {
         const item = this.publicVariable.COAMasterList.find((item: any) => item.no === impiGlNo);
         return item ? item.name : '';
-      }
+    }
 
 
     loadGetGSTGroupList(): void {
@@ -528,7 +529,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
 
     validateGST() {
         try {
-            let gst:any;
+            let gst: any;
 
             const selectedId = this.publicVariable.dataForm.get('ImpiHeaderCustomerName')?.value;
 
@@ -602,10 +603,41 @@ export class NewPurchaseInvoiceComponent implements OnInit {
         }
     }
 
+    validateHeaderGST() {
+        try {
+            const gst = this.publicVariable.dataForm.get('ImpiHeaderGstNo')?.value;
+            const subscription = this.CAPI.ValidateGST(gst).subscribe({
+                next: (response: any) => {
+                    if (response.status) {
+                        // GST number does not exist
+                        console.log('GST number does not exist');
+                        this.gstHeaderExists = false;
+                        // You can update the UI to indicate that the GST number is valid
+                    } else {
+                        // GST number already exists
+                        alert('GST number already exists');
+                        this.gstHeaderExists = true;
+                        return
+                        // You can update the UI to indicate that the GST number already exists
+                    }
+                },
+                error: (error) => {
+                    console.error('Error loading data:', error);
+                    this.handleLoadingError();
+                },
+            });
+
+            this.publicVariable.Subscription.add(subscription);
+        } catch (error) {
+            console.error('Error loading data list:', error);
+            this.handleLoadingError();
+        }
+    }
+
 
     onSubmit(action: boolean): void {
         if (this.publicVariable.expenses.length > 0) {
-            if (this.publicVariable.dataForm.valid && !this.gstExists && !this.panExists) {
+            if (this.publicVariable.dataForm.valid && !this.gstExists && !this.panExists && !this.gstHeaderExists) {
                 const newData = this.publicVariable.dataForm.value;
                 const isUpdate = !!newData.headerid;
                 let impiHeaderTotalInvoiceAmount = 0; // Initialize the total amount
@@ -663,12 +695,12 @@ export class NewPurchaseInvoiceComponent implements OnInit {
                     formData.append(`lineItem_Requests[${i}].ImpiHsnsaccode`, item.impiHsnsaccode);
                     formData.append(`lineItem_Requests[${i}].ImpiGlNo`, GL.no);
                     formData.append(`lineItem_Requests[${i}].documentType`, 'Invoice');
-                    formData.append(`lineItem_Requests[${i}].ImpiType`,'G/L Account');
-                    formData.append(`lineItem_Requests[${i}].ImpiDocumentNo`,'');
-                    formData.append(`lineItem_Requests[${i}].ImpiGstBaseAmount`,'');
-                    formData.append(`lineItem_Requests[${i}].ImpiTotalGstAmount`,'');
-                    formData.append(`lineItem_Requests[${i}].ImpiNetTotal`,'');
-                    formData.append(`lineItem_Requests[${i}].ImpiLinePiNo`,'');
+                    formData.append(`lineItem_Requests[${i}].ImpiType`, 'G/L Account');
+                    formData.append(`lineItem_Requests[${i}].ImpiDocumentNo`, '');
+                    formData.append(`lineItem_Requests[${i}].ImpiGstBaseAmount`, '');
+                    formData.append(`lineItem_Requests[${i}].ImpiTotalGstAmount`, '');
+                    formData.append(`lineItem_Requests[${i}].ImpiNetTotal`, '');
+                    formData.append(`lineItem_Requests[${i}].ImpiLinePiNo`, '');
 
 
                     // Calculate the amount here
