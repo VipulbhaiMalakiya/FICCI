@@ -276,7 +276,8 @@
     </div>
 
     <form
-        *ngIf="data.impiHeaderCreatedBy === this.publicVariable.storedEmail && data.headerStatus !== 'CANCEL BY EMPLOYEE' && data.headerStatus !== 'DRAFT'"
+        *ngIf="data.impiHeaderCreatedBy === this.publicVariable.storedEmail && data.headerStatus !== 'CANCEL BY EMPLOYEE' && data.headerStatus !== 'DRAFT'
+        && data.headerStatus !== 'REJECTED BY ACCOUNTS APPROVER'"
         [formGroup]="publicVariable.dataForm" (ngSubmit)="onSubmit()">
         <div class="col-md-12 mt-3">
             <div class="form-group">
