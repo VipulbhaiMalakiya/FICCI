@@ -110,7 +110,7 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
 
     ValidatePAN() {
         try {
-            const pan = this.publicVariable.dataForm.get('GSTRegistrationNo')?.value;
+            const pan = this.publicVariable.dataForm.get('PANNo')?.value;
             const subscription = this.API.ValidatePAN(pan).subscribe({
                 next: (response: any) => {
                     if (response.status) {
