@@ -240,7 +240,7 @@
 
         <div class="row">
             <div class="col-md-6">
-                <div class="form-group"  *ngIf="data.impiHeaderTlApproverRemarks">
+                <div class="form-group" *ngIf="data.impiHeaderTlApproverRemarks">
                     <label>Tl Remarks </label>
                     <textarea class="form-control h-100" cols="2" rows="2" disabled=""
                         readonly="">{{data.impiHeaderTlApproverRemarks}}</textarea> </div>
@@ -250,7 +250,7 @@
                 <div class="form-group">
                     <label>CH Remarks</label>
                     <textarea class="form-control h-100" cols="2" rows="2" disabled=""
-                    readonly="">{{data.impiHeaderClusterApproverRemarks}}</textarea>
+                        readonly="">{{data.impiHeaderClusterApproverRemarks}}</textarea>
                 </div>
             </div>
         </div>
@@ -260,7 +260,7 @@
                 <div class="form-group">
                     <label>Finance Remarks</label>
                     <textarea class="form-control h-100" cols="2" rows="2" disabled=""
-                    readonly="">{{data.impiHeaderFinanceRemarks}}</textarea>
+                        readonly="">{{data.impiHeaderFinanceRemarks}}</textarea>
                 </div>
             </div>
 
@@ -268,18 +268,20 @@
                 <div class="form-group">
                     <label>Accounts Remarks</label>
                     <textarea class="form-control h-100" cols="2" rows="2" disabled=""
-                    readonly="">{{data.accountApproverRemarks}}</textarea>
+                        readonly="">{{data.accountApproverRemarks}}</textarea>
                 </div>
             </div>
         </div>
 
     </div>
 
-    <form *ngIf="data.impiHeaderCreatedBy === this.publicVariable.storedEmail && data.headerStatus !== 'CANCEL BY EMPLOYEE'" [formGroup]="publicVariable.dataForm" (ngSubmit)="onSubmit()">
+    <form
+        *ngIf="data.impiHeaderCreatedBy === this.publicVariable.storedEmail && data.headerStatus !== 'CANCEL BY EMPLOYEE' && data.headerStatus !== 'DRAFT'"
+        [formGroup]="publicVariable.dataForm" (ngSubmit)="onSubmit()">
         <div class="col-md-12 mt-3">
             <div class="form-group">
                 <label>Remarks</label>
-                <textarea class="form-control h-50" cols="2" rows="2"  formControlName="remarks" ></textarea>
+                <textarea class="form-control h-50" cols="2" rows="2" formControlName="remarks"></textarea>
                 <div *ngIf="shouldShowError('remarks','required')" class="text-danger">This field is required
                 </div>
             </div>
@@ -287,7 +289,7 @@
 
         <div class="col-md-12 mt-4">
             <div class="form-group mb-0 mt-2">
-                <button type="submit" class="common-btn w-auto"  >Cancel</button>
+                <button type="submit" class="common-btn w-auto">Cancel</button>
             </div>
         </div>
     </form>
