@@ -262,7 +262,7 @@
             </div>
 
         </div>
-        <form [formGroup]="publicVariable.dataForm">
+        <form [formGroup]="publicVariable.dataForm" *ngIf="data.impiHeaderCreatedBy === this.publicVariable.storedEmail && data.headerStatus !== 'CANCEL BY EMPLOYEE'" [formGroup]="publicVariable.dataForm">
             <div class="col-md-12 mt-3">
                 <div class="form-group">
                     <label>Remarks</label>
