@@ -29,7 +29,7 @@ export class EmailComponent {
             });
         }
 
-        this.uploadedFiles = this._emailMaster.attachment;
+        // this.uploadedFiles = this._emailMaster.attachment;
 
         // if (this._emailMaster.attachment !== null && this._emailMaster.attachment !== undefined) {
         //     this.uploadedFiles = this._emailMaster.attachment.map((file: any) => ({
