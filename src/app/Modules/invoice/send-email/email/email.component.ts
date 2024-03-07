@@ -123,7 +123,6 @@ export class EmailComponent {
     }
 
     downalodFile(fileUrl: any) {
-
         this.FilePath = `${environment.fileURL}${fileUrl.fileUrl}`;
         window.open(this.FilePath, '_blank');
 
