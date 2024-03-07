@@ -19,11 +19,14 @@ export class EmailComponent {
 
     set isEmail(value: any) {
         this._emailMaster = value;
+        console.log(this._emailMaster);
+
         this.data = value;
         if (this._emailMaster) {
             this.publicVariable.mailForm.patchValue({
-                emailTo: this._emailMaster.impiHeaderCustomerEmailId,
-                subject: this._emailMaster.impiHeaderInvoiceType
+                emailTo: this._emailMaster.impiHeaderCustomerEmailId ? this._emailMaster.impiHeaderCustomerEmailId : this._emailMaster.immdMailTo,
+                subject: this._emailMaster.impiHeaderInvoiceType ? this._emailMaster.impiHeaderInvoiceType : this._emailMaster.immdMailSubject,
+                body: this._emailMaster.immdMailBody ? this._emailMaster.immdMailBody : ''
             });
         }
     }
