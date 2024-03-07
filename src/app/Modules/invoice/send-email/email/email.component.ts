@@ -125,12 +125,9 @@ export class EmailComponent {
     downalodFile(fileUrl: any) {
         this.FilePath = `${environment.fileURL}${fileUrl.fileUrl}`;
         window.open(this.FilePath, '_blank');
-
     }
 
-
     deleteFile(index: number, file: any) {
-
         const modalRef = this.modalService.open(ConfirmationDialogModalComponent, { size: "sm", centered: true, backdrop: "static" });
         var componentInstance = modalRef.componentInstance as ConfirmationDialogModalComponent;
         componentInstance.message = "Do you really want to delete these records? This process cannot be undone ?";

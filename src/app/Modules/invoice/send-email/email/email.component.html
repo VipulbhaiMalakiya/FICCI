@@ -39,21 +39,8 @@
                 <div class="mb-3 row attach-col2">
                     <label for="formFile" class="col-sm-2 col-form-label">Attachment</label>
                     <div class="col-sm-9">
-                        <input class="form-control" type="file" id="formFile" formControlName="attachment" multiple>
-                    </div>
-                </div>
-
-                <div class="col-md-9 col-xs-12 col-sm-12 attach-col">
-                    <div class="row align-items-center">
-                        <div class="col-sm-2"><b>Attachment</b></div>
-                        <div class="col-sm-3 text-sm-end">Upload Document</div>
-                        <div class="col-sm-6">
-                            <div class="input-group">
-                                <input type="file" class="form-control" id="inputGroupFile02" accept=".pdf,.xlsx,.csv" multiple
-                                    (change)="onFilesSelected($event)" />
-                                <label class="input-group-text" for="inputGroupFile02">Upload</label>
-                            </div>
-                        </div>
+                        <input class="form-control" type="file" id="formFile" formControlName="attachment" accept=".pdf,.xlsx,.csv" multiple
+                        (change)="onFilesSelected($event)">
                     </div>
                 </div>
 
