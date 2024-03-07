@@ -80,13 +80,10 @@
                             <td>{{d.impiHeaderSubmittedDate | date:'medium':'IST'}}</td>
                             <td>{{d.impiHeaderCreatedBy | titlecase}}</td>
                             <td>{{d.headerStatus | titlecase}}</td>
-
                             <td>
                                 <span class="table-btns">
                                     <a href="javascript:void(0);" (click)="onView(d)"><img
                                             src="../assets/images/view-icon.svg" alt="" /></a>
-
-
                                     <a href="javascript:void(0);" (click)="onSendEmail(d)"
                                         *ngIf="d.headerStatus === 'APPROVED BY ACCOUNTS APPROVER' "><img
                                             src="../assets/images/email-icon.svg" alt="" /></a>

@@ -133,20 +133,20 @@ export class EmailComponent {
         componentInstance.message = "Do you really want to delete these records? This process cannot be undone ?";
         modalRef.result.then((canDelete: boolean) => {
             if (canDelete) {
-                this.publicVariable.isProcess = true;
-                this.API.deleteFile(file.id).subscribe({
-                    next: (res: any) => {
-                        this.toastr.success(res.message, 'Success');
-                        this.publicVariable.isProcess = false;
-                        this.uploadedFiles.splice(index, 1);
+                this.uploadedFiles.splice(index, 1);
+                if(file.id){
+                    this.API.deleteFile(file.id).subscribe({
+                        next: (res: any) => {
+                            this.toastr.success(res.message, 'Success');
+                            this.publicVariable.isProcess = false;
+                        },
+                        error: (error) => {
+                            this.publicVariable.isProcess = false;
+                            this.toastr.error(error.error.message, 'Error');
+                        }
+                    });
+                }
 
-
-                    },
-                    error: (error) => {
-                        this.publicVariable.isProcess = false;
-                        this.toastr.error(error.error.message, 'Error');
-                    }
-                });
 
             }
         }).catch(() => { });
