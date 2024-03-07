@@ -25,9 +25,13 @@ export class InvoicesService {
     private GetHSNSACAPI = `${environment.apiURL}DropDown/GetHSNSAC?gstCode=`;
     private FILEDELETE = `${environment.apiURL}IMAD?imadId=`;
     private MailURL  = `${environment.apiURL}Mail`;
-
     private CancelEmployeeURL = `${environment.apiURL}PurchaseInvoice_New/CancelEmployee`;
+    private LastestEmailURL = `${environment.apiURL}Mail/LastestEmail?invoiceId=`;
 
+    IsLatestEmail(id:any): Observable<any[]> {
+        const url = `${this.LastestEmailURL}${id}`;
+        return this.http.get<any[]>(url).pipe(this.retry);
+    }
 
     isCancelPI(data: any): Observable<any[]> {
         return this.http.post<any[]>(`${this.CancelEmployeeURL}`, data).pipe(this.retry);
