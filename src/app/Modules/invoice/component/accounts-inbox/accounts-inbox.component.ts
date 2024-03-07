@@ -62,8 +62,6 @@ export class AccountsInboxComponent implements OnInit {
         this.publicVariable.Subscription.add(subscription);
     }
 
-
-
     onView(data: invoiceStatusModule): void {
         if (data.headerId) {
             this.router.navigate(['invoice/accounts/view', data.headerId], { state: { data: data } });
@@ -96,14 +94,10 @@ export class AccountsInboxComponent implements OnInit {
         }
     }
 
-
-
     getStateNameById(stateId: string) {
         const state = this.publicVariable.stateList.find(state => state.stateCode === stateId);
         return state ? state.stateName : null;
     }
-
-
 
     handleLoadingError() {
         this.publicVariable.isProcess = false; // Set status to false on error
@@ -159,21 +153,14 @@ export class AccountsInboxComponent implements OnInit {
         this.publicVariable.invoiceStatuslistData
     }
 
-    onSendEmail(dataItem: any) {
+    sendEmail(dataItem: any) {
         this.publicVariable.isProcess = true;
         const modalRef = this.modalService.open(EmailComponent, { size: "xl" });
-        if (modalRef) {
-            this.publicVariable.isProcess = false;
-        }
-        else {
-            this.publicVariable.isProcess = false;
-        }
         var componentInstance = modalRef.componentInstance as EmailComponent;
         componentInstance.isEmail = dataItem;
 
         modalRef.result.then((data: any) => {
             if (data) {
-
                 const newData = data;
                 const formData = new FormData();
                 formData.append('MailTo', newData.emailTo);
@@ -184,13 +171,11 @@ export class AccountsInboxComponent implements OnInit {
                 formData.append('ResourceType', dataItem.impiHeaderInvoiceType);
                 formData.append('ResourceId', dataItem.headerId);
 
-                //  uploadedFiles is an array of File objects
                 newData.attachment.forEach((file: any) => {
                     formData.append('Attachments', file);
                 });
-                this.publicVariable.isProcess = true;
 
-                //Submit the formData
+                this.publicVariable.isProcess = true;
                 this.publicVariable.Subscription.add(
                     this.API.sendEmail(formData).subscribe({
                         next: (res: any) => {
@@ -199,11 +184,9 @@ export class AccountsInboxComponent implements OnInit {
                                 this.loadApproveInvoiceList();
                             } else {
                                 this.toastr.error(res.message, 'Error');
-                                this.publicVariable.isProcess = false;
                             }
                         },
                         error: (error: any) => {
-                            this.publicVariable.isProcess = false;
                             this.toastr.error(error.error.message || 'An error occurred. Please try again later.', 'Error');
                         },
                         complete: () => {
@@ -212,7 +195,17 @@ export class AccountsInboxComponent implements OnInit {
                     })
                 );
             }
-        }).catch(() => { });
-
+        }).catch(() => {
+            this.publicVariable.isProcess = false;
+        });
     }
+
+    onediteEmail(dataItem: any) {
+        this.sendEmail(dataItem);
+    }
+
+    onSendEmail(dataItem: any) {
+        this.sendEmail(dataItem);
+    }
+
 }
