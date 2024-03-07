@@ -143,3 +143,33 @@ export interface invoiceApproveModule {
     hsnCode:string,
     hsnGroup:string
  }
+
+ export interface InvoiceSummaryModel {
+    no: string
+    postingDate: string
+    invoice_no: string
+    sellToCustomerNo: string
+    sellToCustomerName: string
+    sellToCustomerName2: string
+    projectCode: string
+    dimensionSetID: string
+    departmentName: string
+    departmentCode: string
+    divisionCode: string
+    divisionName: string
+    approverTL: string
+    approverCH: string
+    approverSupport: string
+    financeApprover: string
+    invoicePortalOrder: boolean
+    invoicePortalSubmitted: boolean
+    createdByUser: string
+    sellToCity: any
+    sellToAddress: any
+    sellToAddress2: any
+    sellToPostCode: any
+    sellToCountryRegionCode: any
+    gsT_No: any
+    paN_NO: any
+    taxLineDetails: any
+  }

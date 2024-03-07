@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AppService, ConfirmationDialogModalComponent, CustomersService, NgbModal, Router, ToastrService, customerStatusListModel, formatDate, publicVariable } from '../../customers/Export/new-customer';
 import { timeout, finalize, catchError, throwError } from 'rxjs';
 import { InvoicesService } from '../../invoice/service/invoices.service';
-import { invoiceApproveModule, invoiceStatusModule } from '../../invoice/interface/invoice';
+import { InvoiceSummaryModel, invoiceApproveModule, invoiceStatusModule } from '../../invoice/interface/invoice';
 import { forkJoin } from 'rxjs';
 import { EmailComponent } from '../../invoice/send-email/email/email.component';
 
@@ -29,6 +29,7 @@ export class DashboardComponent {
     PIRejectedbyAccounts: number = 0;
     PIALL: number = 0;
     PIforapproval: number = 0;
+    InvoiceSummaryList : InvoiceSummaryModel[] = [];
 
     dashboardData: any;
     invoiceStatuslistData: invoiceStatusModule[] = [];
@@ -359,7 +360,7 @@ export class DashboardComponent {
                 (item.headerStatus === 'REJECTED BY TL APPROVER' ||
                     item.headerStatus === 'REJECTED BY CH APPROVER' ||
                     item.headerStatus === 'REJECTED BY ACCOUNTS APPROVER' ||
-                    item.headerStatus === 'REJECTED BY FINANCE APPROVER' || 
+                    item.headerStatus === 'REJECTED BY FINANCE APPROVER' ||
                     item.headerStatus === 'CANCEL BY EMPLOYEE'));
                 break;
             case 'FOR APPROVAL':
@@ -636,6 +637,39 @@ export class DashboardComponent {
             }
         }).catch(() => { });
 
+    }
+
+    loadInvoiceSummary(){
+        this.publicVariable.isProcess = true;
+        const subscription = this.IAPI.GetInvoiceSummary().pipe(
+            timeout(120000), // Timeout set to 2 minutes (120000 milliseconds)
+            finalize(() => {
+                this.publicVariable.isProcess = false;
+            })
+        ).subscribe({
+            next: (response: any) => {
+                if (response.data && Array.isArray(response.data)) {
+                    this.InvoiceSummaryList = response.data;
+                    this.publicVariable.count = response.data.length;
+                } else {
+                    // Handle case where response data is null or not an array
+                    this.InvoiceSummaryList = [];
+                    this.publicVariable.count = 0;
+                    console.warn('Response data is null or not an array:', response.data);
+                }
+                this.publicVariable.isProcess = false;
+            },
+            error: (error: any) => {
+                if (error.name === 'TimeoutError') {
+                    this.toastr.error('Operation timed out after 2 minutes', error.name);
+                } else {
+                    this.toastr.error('Error loading user list', error.name);
+                }
+                this.publicVariable.isProcess = false;
+            }
+        });
+
+        this.publicVariable.Subscription.add(subscription);
     }
 
 }
