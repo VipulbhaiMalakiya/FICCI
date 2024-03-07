@@ -10,6 +10,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { SharedModule } from '../../shared/shared.module';
 import { SearchFilterPipe1 } from '../pipe/searchpi';
+import { invoiceFilterPipe } from '../pipe/InvoiceSummary';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import { SearchFilterPipe1 } from '../pipe/searchpi';
         DashboardComponent,
         SearchFilterPipe,
         ApprovalSearchFilterPipe,
-        SearchFilterPipe1
+        SearchFilterPipe1,
+        invoiceFilterPipe
     ],
     imports: [
         CommonModule,
