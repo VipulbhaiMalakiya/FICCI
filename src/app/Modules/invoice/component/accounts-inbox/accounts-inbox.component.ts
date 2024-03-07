@@ -163,7 +163,7 @@ export class AccountsInboxComponent implements OnInit {
                 const newData = data;
                 const formData = new FormData();
                 formData.append('MailTo', newData.emailTo);
-                formData.append('MailCC', data.impiHeaderCreatedBy);
+                formData.append('MailCC', data.impiHeaderCreatedBy );
                 formData.append('MailSubject', newData.subject);
                 formData.append('MailBody', newData.body);
                 formData.append('LoginId', this.publicVariable.storedEmail);
@@ -207,7 +207,7 @@ export class AccountsInboxComponent implements OnInit {
             })
         ).subscribe({
             next: (response: any) => {
-                this.sendEmail(response.data);
+                this.sendEmail(response);
                 this.publicVariable.isProcess = false;
             },
             error: (error: any) => {
