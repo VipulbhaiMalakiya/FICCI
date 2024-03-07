@@ -361,7 +361,7 @@
             </form>
 
         </div>
-        <div class="dasboard-table pi-table mb-0" *ngIf="publicVariable.expenses.length > 0">
+        <div class="dasboard-table pi-table mb-0"  *ngIf="publicVariable.expenses && publicVariable.expenses.length > 0">
 
             <div class="table-responsive">
 
@@ -430,7 +430,7 @@
             </div>
         </div>
 
-        <div class="dasboard-table pi-table mb-0" *ngIf="uploadedFiles.length > 0">
+        <div class="dasboard-table pi-table mb-0"  *ngIf="uploadedFiles && uploadedFiles.length > 0">
             <div class="table-responsive">
                 <table class="table table-bordered text-nowrap">
                     <thead>

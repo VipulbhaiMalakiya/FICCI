@@ -16,7 +16,8 @@ export class NewPurchaseInvoiceComponent implements OnInit {
     Id?: number;
     data: any;
     public isEditing: boolean = false;
-    uploadedFiles: File[] = [];
+    uploadedFiles: any[] = [];
+
     FilePath: any;
     gstExists: boolean = false;
     panExists: boolean = false;
@@ -636,7 +637,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
 
 
     onSubmit(action: boolean): void {
-        if (this.publicVariable.expenses.length > 0) {            
+        if (this.publicVariable.expenses.length > 0) {
             if (this.publicVariable.dataForm.valid && !this.gstExists && !this.panExists && !this.gstHeaderExists) {
                 const newData = this.publicVariable.dataForm.value;
                 const isUpdate = !!newData.headerid;
