@@ -24,11 +24,16 @@ export class InvoicesService {
     private GetGSTGroupAPI = `${environment.apiURL}DropDown/GetGSTGroup`;
     private GetHSNSACAPI = `${environment.apiURL}DropDown/GetHSNSAC?gstCode=`;
     private FILEDELETE = `${environment.apiURL}IMAD?imadId=`;
-    private MailURL  = `${environment.apiURL}Mail`;
+    private MailURL = `${environment.apiURL}Mail`;
     private CancelEmployeeURL = `${environment.apiURL}PurchaseInvoice_New/CancelEmployee`;
     private LastestEmailURL = `${environment.apiURL}Mail/LastestEmail?invoiceId=`;
+    private InvoiceSummaryURL = `${environment.apiURL}NavERP/GetInvoiceSummary`;
 
-    IsLatestEmail(id:any): Observable<any[]> {
+
+    GetInvoiceSummary(): Observable<any[]> {
+        return this.http.get<any[]>(`${this.InvoiceSummaryURL}`).pipe(this.retry);
+    }
+    IsLatestEmail(id: any): Observable<any[]> {
         const url = `${this.LastestEmailURL}${id}`;
         return this.http.get<any[]>(url).pipe(this.retry);
     }
