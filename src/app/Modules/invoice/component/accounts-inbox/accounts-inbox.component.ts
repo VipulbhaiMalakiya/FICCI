@@ -157,43 +157,7 @@ export class AccountsInboxComponent implements OnInit {
         this.publicVariable.isProcess = true;
         const modalRef = this.modalService.open(EmailComponent, { size: "xl" });
         var componentInstance = modalRef.componentInstance as EmailComponent;
-
-
-
-        const subscription = this.API.IsLatestEmail(dataItem).pipe(
-            timeout(120000), // Timeout set to 2 minutes (120000 milliseconds)
-            finalize(() => {
-                this.publicVariable.isProcess = false;
-            })
-        ).subscribe({
-            next: (response: any) => {
-                if (response.data && Array.isArray(response.data)) {
-                    this.publicVariable.invoiceStatuslistData = response.data;
-                    this.publicVariable.count = response.data.length;
-                    this.loadStateList();
-                } else {
-                    // Handle case where response data is null or not an array
-                    this.publicVariable.invoiceStatuslistData = [];
-                    this.publicVariable.count = 0;
-                    console.warn('Response data is null or not an array:', response.data);
-                }
-                this.publicVariable.isProcess = false;
-            },
-            error: (error: any) => {
-                if (error.name === 'TimeoutError') {
-                    this.toastr.error('Operation timed out after 2 minutes', error.name);
-                } else {
-                    this.toastr.error('Error loading user list', error.name);
-                }
-                this.publicVariable.isProcess = false;
-            }
-        });
-
-        this.publicVariable.Subscription.add(subscription);
-
-
         componentInstance.isEmail = dataItem;
-
         modalRef.result.then((data: any) => {
             if (data) {
                 const newData = data;
