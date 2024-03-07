@@ -157,6 +157,9 @@ export class AccountsInboxComponent implements OnInit {
         this.publicVariable.isProcess = true;
         const modalRef = this.modalService.open(EmailComponent, { size: "xl" });
         var componentInstance = modalRef.componentInstance as EmailComponent;
+
+
+
         componentInstance.isEmail = dataItem;
 
         modalRef.result.then((data: any) => {
