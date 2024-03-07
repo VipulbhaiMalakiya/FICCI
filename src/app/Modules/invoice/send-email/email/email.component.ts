@@ -161,7 +161,7 @@ export class EmailComponent {
                 emailTo: newData.emailTo,
                 subject: newData.subject,
                 body: newData.body,
-                attachment: this.uploadedFiles
+                attachment: this.uploadedFiles,
             }
             this.activeModal.close(newConfig);
         } else {
