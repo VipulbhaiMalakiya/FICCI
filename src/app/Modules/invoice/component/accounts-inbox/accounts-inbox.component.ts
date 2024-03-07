@@ -3,6 +3,7 @@ import { AppService, CustomersService, InvoicesService, NgbModal, Router, Toastr
 import { timeout, finalize } from 'rxjs';
 import { invoiceStatusModule } from '../../interface/invoice';
 import { EmailComponent } from '../../send-email/email/email.component';
+import { UpdateEmailComponent } from '../../update-email/update-email.component';
 
 @Component({
     selector: 'app-accounts-inbox',
@@ -214,9 +215,10 @@ export class AccountsInboxComponent implements OnInit {
         ).subscribe({
             next: (response: any) => {
                 this.publicVariable.isProcess = true;
-                const modalRef = this.modalService.open(EmailComponent, { size: "xl" });
-                var componentInstance = modalRef.componentInstance as EmailComponent;
+                const modalRef = this.modalService.open(UpdateEmailComponent, { size: "xl" });
+                var componentInstance = modalRef.componentInstance as UpdateEmailComponent;
                 componentInstance.isEmail = response;
+                let updateEmail = response.data;                
                 modalRef.result.then((data: any) => {
                     if (data) {
                         const newData = data;
@@ -225,9 +227,9 @@ export class AccountsInboxComponent implements OnInit {
                         formData.append('MailSubject', newData.subject);
                         formData.append('MailBody', newData.body);
                         formData.append('LoginId', this.publicVariable.storedEmail);
-                        formData.append('MailCC', dataItem.immdMailCc);
-                        formData.append('ResourceType', dataItem.resourceType);
-                        formData.append('ResourceId', dataItem.resourceId);
+                        formData.append('MailCC', updateEmail.immdMailCc);
+                        formData.append('ResourceType', updateEmail.resourceType);
+                        formData.append('ResourceId', updateEmail.resourceId);
                         newData.attachment.forEach((file: any) => {
                             formData.append('Attachments', file);
                         });
