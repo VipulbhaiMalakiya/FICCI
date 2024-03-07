@@ -5,9 +5,9 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { environment } from 'src/environments/environment';
 
 @Component({
-  selector: 'app-email',
-  templateUrl: './email.component.html',
-  styleUrls: ['./email.component.css']
+    selector: 'app-email',
+    templateUrl: './email.component.html',
+    styleUrls: ['./email.component.css']
 })
 export class EmailComponent {
     publicVariable = new publicVariable();
@@ -22,11 +22,11 @@ export class EmailComponent {
         this.data = value;
         if (this._emailMaster) {
             this.publicVariable.mailForm.patchValue({
-                emailTo : this._emailMaster.impiHeaderCustomerEmailId,
-                subject : this._emailMaster.impiHeaderInvoiceType
+                emailTo: this._emailMaster.impiHeaderCustomerEmailId,
+                subject: this._emailMaster.impiHeaderInvoiceType
             });
         }
-      }
+    }
 
     editorConfig: AngularEditorConfig = {
 
@@ -57,7 +57,7 @@ export class EmailComponent {
 
     onCancel() {
         this.activeModal.dismiss();
-      }
+    }
 
     private initializeFormmailForm(): void {
         this.publicVariable.mailForm = this.fb.group({
@@ -134,7 +134,7 @@ export class EmailComponent {
         modalRef.result.then((canDelete: boolean) => {
             if (canDelete) {
                 this.uploadedFiles.splice(index, 1);
-                if(file.id){
+                if (file.id) {
                     this.API.deleteFile(file.id).subscribe({
                         next: (res: any) => {
                             this.toastr.success(res.message, 'Success');
@@ -146,18 +146,21 @@ export class EmailComponent {
                         }
                     });
                 }
-
-
             }
         }).catch(() => { });
 
     }
 
-
-
     onSendEmail() {
         if (this.publicVariable.mailForm.valid) {
-            this.activeModal.close(this.publicVariable.mailForm.value);
+            const newData = this.publicVariable.mailForm.value;
+            const newConfig: any = {
+                emailTo: newData.emailTo,
+                subject: newData.subject,
+                body: newData.body,
+                attachment: this.uploadedFiles
+            }
+            this.activeModal.close(newConfig);
         } else {
             this.markFormControlsAsTouchedemail();
 
@@ -167,12 +170,12 @@ export class EmailComponent {
 
 
     markFormControlsAsTouchedemail(): void {
-        ['emailTo','subject','body'].forEach(controlName => {
+        ['emailTo', 'subject', 'body'].forEach(controlName => {
             this.publicVariable.mailForm.controls[controlName].markAsTouched();
         });
     }
 
     shouldShowError(controlName: string, errorName: string): boolean {
-        return this.publicVariable.mailForm.controls[controlName].touched &&  this.publicVariable.mailForm.controls[controlName].hasError(errorName);
+        return this.publicVariable.mailForm.controls[controlName].touched && this.publicVariable.mailForm.controls[controlName].hasError(errorName);
     }
 }

@@ -177,13 +177,17 @@ export class AccountsInboxComponent implements OnInit {
                 const newData = data;
                 const formData = new FormData();
                 formData.append('MailTo', newData.emailTo);
-                formData.append('MailCC', newData.emailTo);
+                formData.append('MailCC', data.impiHeaderCreatedBy);
                 formData.append('MailSubject', newData.subject);
                 formData.append('MailBody', newData.body);
                 formData.append('LoginId', this.publicVariable.storedEmail);
                 formData.append('ResourceType', dataItem.impiHeaderInvoiceType);
                 formData.append('ResourceId', dataItem.headerId);
-                formData.append('Attachments', newData.attachment);
+
+                //  uploadedFiles is an array of File objects
+                newData.attachment.forEach((file: any) => {
+                    formData.append('Attachments', file);
+                });
                 this.publicVariable.isProcess = true;
 
                 //Submit the formData
