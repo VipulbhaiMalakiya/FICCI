@@ -17,6 +17,7 @@ import { NumberToWordsPipe1 } from './pipe/numberToWords';
 import { SearchFilterPipe1 } from './pipe/searchFilter';
 import { AngularEditorModule } from '@kolkov/angular-editor';
 import { EmailComponent } from './send-email/email/email.component';
+import { UpdateEmailComponent } from './update-email/update-email.component';
 
 
 
@@ -31,7 +32,8 @@ import { EmailComponent } from './send-email/email/email.component';
         ViewPiApprovalComponent,
         ViewPiAccountsInboxComponent,
         SearchFilterPipe1,
-        EmailComponent
+        EmailComponent,
+        UpdateEmailComponent
     ],
     imports: [
         CommonModule,
