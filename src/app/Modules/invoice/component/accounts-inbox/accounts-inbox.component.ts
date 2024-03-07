@@ -154,6 +154,8 @@ export class AccountsInboxComponent implements OnInit {
     }
 
     sendEmail(dataItem: any) {
+        console.log(dataItem);
+
         this.publicVariable.isProcess = true;
         const modalRef = this.modalService.open(EmailComponent, { size: "xl" });
         var componentInstance = modalRef.componentInstance as EmailComponent;
@@ -200,7 +202,22 @@ export class AccountsInboxComponent implements OnInit {
     }
 
     onediteEmail(dataItem: any) {
-        this.sendEmail(dataItem);
+        const subscription = this.API.IsLatestEmail(dataItem.headerId).pipe(
+            timeout(120000),
+            finalize(() => {
+                this.publicVariable.isProcess = false;
+            })
+        ).subscribe({
+            next: (response: any) => {
+                this.sendEmail(response.data);
+                this.publicVariable.isProcess = false;
+            },
+            error: (error: any) => {
+                this.publicVariable.isProcess = false;
+            }
+        });
+
+        this.publicVariable.Subscription.add(subscription);
     }
 
     onSendEmail(dataItem: any) {
