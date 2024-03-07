@@ -163,13 +163,13 @@ export class AccountsInboxComponent implements OnInit {
                 const newData = data;
                 const formData = new FormData();
                 formData.append('MailTo', newData.emailTo);
-                formData.append('MailCC', data.impiHeaderCreatedBy );
                 formData.append('MailSubject', newData.subject);
                 formData.append('MailBody', newData.body);
                 formData.append('LoginId', this.publicVariable.storedEmail);
-                formData.append('ResourceType', dataItem.impiHeaderInvoiceType);
-                formData.append('ResourceId', dataItem.headerId);
-
+                formData.append('MailCC', dataItem.impiHeaderCreatedBy );
+                formData.append('ResourceType', dataItem.impiHeaderInvoiceType );
+                formData.append('ResourceId', dataItem.headerId );
+              
                 newData.attachment.forEach((file: any) => {
                     formData.append('Attachments', file);
                 });
@@ -199,27 +199,73 @@ export class AccountsInboxComponent implements OnInit {
         });
     }
 
-    onediteEmail(dataItem: any) {
-        const subscription = this.API.IsLatestEmail(dataItem.headerId).pipe(
-            timeout(120000),
-            finalize(() => {
-                this.publicVariable.isProcess = false;
-            })
-        ).subscribe({
-            next: (response: any) => {
-                this.sendEmail(response);
-                this.publicVariable.isProcess = false;
-            },
-            error: (error: any) => {
-                this.publicVariable.isProcess = false;
-            }
-        });
-
-        this.publicVariable.Subscription.add(subscription);
-    }
 
     onSendEmail(dataItem: any) {
         this.sendEmail(dataItem);
     }
+
+    
+    // onediteEmail(dataItem: any) {
+    //     const subscription = this.API.IsLatestEmail(dataItem.headerId).pipe(
+    //         timeout(120000),
+    //         finalize(() => {
+    //             this.publicVariable.isProcess = false;
+    //         })
+    //     ).subscribe({
+    //         next: (response: any) => {
+    //             this.publicVariable.isProcess = true;
+    //             const modalRef = this.modalService.open(EmailComponent, { size: "xl" });
+    //             var componentInstance = modalRef.componentInstance as EmailComponent;
+    //             componentInstance.isEmail = response;
+    //             modalRef.result.then((data: any) => {
+    //                 if (data) {
+    //                     const newData = data;
+    //                     const formData = new FormData();
+    //                     formData.append('MailTo', newData.emailTo);
+    //                     formData.append('MailSubject', newData.subject);
+    //                     formData.append('MailBody', newData.body);
+    //                     formData.append('LoginId', this.publicVariable.storedEmail);
+    //                     formData.append('MailCC', dataItem.immdMailCc);
+    //                     formData.append('ResourceType', dataItem.resourceType);
+    //                     formData.append('ResourceId', dataItem.resourceId);
+    //                     newData.attachment.forEach((file: any) => {
+    //                         formData.append('Attachments', file);
+    //                     });
+        
+    //                     this.publicVariable.isProcess = true;
+    //                     this.publicVariable.Subscription.add(
+    //                         this.API.sendEmail(formData).subscribe({
+    //                             next: (res: any) => {
+    //                                 if (res.status === true) {
+    //                                     this.toastr.success(res.message, 'Success');
+    //                                     this.loadApproveInvoiceList();
+    //                                 } else {
+    //                                     this.toastr.error(res.message, 'Error');
+    //                                 }
+    //                             },
+    //                             error: (error: any) => {
+    //                                 this.toastr.error(error.error.message || 'An error occurred. Please try again later.', 'Error');
+    //                             },
+    //                             complete: () => {
+    //                                 this.publicVariable.isProcess = false;
+    //                             }
+    //                         })
+    //                     );
+    //                 }
+    //             }).catch(() => {
+    //                 this.publicVariable.isProcess = false;
+    //             });
+    //             this.publicVariable.isProcess = false;
+    //         },
+    //         error: (error: any) => {
+    //             this.publicVariable.isProcess = false;
+    //         }
+    //     });
+
+    //     this.publicVariable.Subscription.add(subscription);
+
+
+     
+    // }
 
 }
