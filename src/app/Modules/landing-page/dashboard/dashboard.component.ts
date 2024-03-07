@@ -5,6 +5,7 @@ import { InvoicesService } from '../../invoice/service/invoices.service';
 import { InvoiceSummaryModel, invoiceApproveModule, invoiceStatusModule } from '../../invoice/interface/invoice';
 import { forkJoin } from 'rxjs';
 import { EmailComponent } from '../../invoice/send-email/email/email.component';
+import { UpdateEmailComponent } from '../../invoice/update-email/update-email.component';
 
 
 @Component({
@@ -589,57 +590,6 @@ export class DashboardComponent {
         this.appService.exportAsExcelFile(exportData, 'PI Invoice Status', headers);
     }
 
-    onSendEmail(dataItem: any) {
-        this.publicVariable.isProcess = true;
-        const modalRef = this.modalService.open(EmailComponent, { size: "xl" });
-        if (modalRef) {
-            this.publicVariable.isProcess = false;
-        }
-        else {
-            this.publicVariable.isProcess = false;
-        }
-        var componentInstance = modalRef.componentInstance as EmailComponent;
-        componentInstance.isEmail = dataItem;
-
-        modalRef.result.then((data: any) => {
-            if (data) {
-
-                const newData = data;
-                const formData = new FormData();
-                formData.append('MailTo', newData.emailTo);
-                formData.append('MailCC', newData.emailTo);
-                formData.append('MailSubject', newData.subject);
-                formData.append('MailBody', newData.body);
-                formData.append('LoginId', this.publicVariable.storedEmail);
-                formData.append('ResourceType', dataItem.impiHeaderInvoiceType);
-                formData.append('ResourceId', dataItem.headerId);
-                formData.append('Attachments', newData.attachment);
-                this.publicVariable.isProcess = true;
-
-                //Submit the formData
-                this.publicVariable.Subscription.add(
-                    this.IAPI.sendEmail(formData).subscribe({
-                        next: (res: any) => {
-                            if (res.status === true) {
-                                this.toastr.success(res.message, 'Success');
-                            } else {
-                                this.toastr.error(res.message, 'Error');
-                                this.publicVariable.isProcess = false;
-                            }
-                        },
-                        error: (error: any) => {
-                            this.publicVariable.isProcess = false;
-                            this.toastr.error(error.error.message || 'An error occurred. Please try again later.', 'Error');
-                        },
-                        complete: () => {
-                            this.publicVariable.isProcess = false;
-                        }
-                    })
-                );
-            }
-        }).catch(() => { });
-
-    }
 
     loadInvoiceSummary(){
         this.publicVariable.isProcess = true;
@@ -672,6 +622,122 @@ export class DashboardComponent {
         });
 
         this.publicVariable.Subscription.add(subscription);
+    }
+
+    sendEmail(dataItem: any) {
+        this.publicVariable.isProcess = true;
+        const modalRef = this.modalService.open(EmailComponent, { size: "xl" });
+        var componentInstance = modalRef.componentInstance as EmailComponent;
+        componentInstance.isEmail = dataItem;
+        modalRef.result.then((data: any) => {
+            if (data) {
+                const newData = data;
+                const formData = new FormData();
+                formData.append('MailTo', newData.emailTo);
+                formData.append('MailSubject', newData.subject);
+                formData.append('MailBody', newData.body);
+                formData.append('LoginId', this.publicVariable.storedEmail);
+                formData.append('MailCC', dataItem.impiHeaderCreatedBy );
+                formData.append('ResourceType', dataItem.impiHeaderInvoiceType );
+                formData.append('ResourceId', dataItem.headerId );
+              
+                newData.attachment.forEach((file: any) => {
+                    formData.append('Attachments', file);
+                });
+
+                this.publicVariable.isProcess = true;
+                this.publicVariable.Subscription.add(
+                    this.IAPI.sendEmail(formData).subscribe({
+                        next: (res: any) => {
+                            if (res.status === true) {
+                                this.toastr.success(res.message, 'Success');
+                                // this.loadApproveInvoiceList();
+                            } else {
+                                this.toastr.error(res.message, 'Error');
+                            }
+                        },
+                        error: (error: any) => {
+                            this.toastr.error(error.error.message || 'An error occurred. Please try again later.', 'Error');
+                        },
+                        complete: () => {
+                            this.publicVariable.isProcess = false;
+                        }
+                    })
+                );
+            }
+        }).catch(() => {
+            this.publicVariable.isProcess = false;
+        });
+    }
+
+
+    onSendEmail(dataItem: any) {
+        this.sendEmail(dataItem);
+    }
+
+    
+    onediteEmail(dataItem: any) {
+        const subscription = this.IAPI.IsLatestEmail(dataItem.headerId).pipe(
+            timeout(120000),
+            finalize(() => {
+                this.publicVariable.isProcess = false;
+            })
+        ).subscribe({
+            next: (response: any) => {
+                this.publicVariable.isProcess = true;
+                const modalRef = this.modalService.open(UpdateEmailComponent, { size: "xl" });
+                var componentInstance = modalRef.componentInstance as UpdateEmailComponent;
+                componentInstance.isEmail = response;
+                let updateEmail = response.data;                
+                modalRef.result.then((data: any) => {
+                    if (data) {
+                        const newData = data;
+                        const formData = new FormData();
+                        formData.append('MailTo', newData.emailTo);
+                        formData.append('MailSubject', newData.subject);
+                        formData.append('MailBody', newData.body);
+                        formData.append('LoginId', this.publicVariable.storedEmail);
+                        formData.append('MailCC', updateEmail.immdMailCc);
+                        formData.append('ResourceType', updateEmail.resourceType);
+                        formData.append('ResourceId', updateEmail.resourceId);
+                        newData.attachment.forEach((file: any) => {
+                            formData.append('Attachments', file);
+                        });
+        
+                        this.publicVariable.isProcess = true;
+                        this.publicVariable.Subscription.add(
+                            this.IAPI.sendEmail(formData).subscribe({
+                                next: (res: any) => {
+                                    if (res.status === true) {
+                                        this.toastr.success(res.message, 'Success');
+                                        // this.loadApproveInvoiceList();
+                                    } else {
+                                        this.toastr.error(res.message, 'Error');
+                                    }
+                                },
+                                error: (error: any) => {
+                                    this.toastr.error(error.error.message || 'An error occurred. Please try again later.', 'Error');
+                                },
+                                complete: () => {
+                                    this.publicVariable.isProcess = false;
+                                }
+                            })
+                        );
+                    }
+                }).catch(() => {
+                    this.publicVariable.isProcess = false;
+                });
+                this.publicVariable.isProcess = false;
+            },
+            error: (error: any) => {
+                this.publicVariable.isProcess = false;
+            }
+        });
+
+        this.publicVariable.Subscription.add(subscription);
+
+
+     
     }
 
 }
