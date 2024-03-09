@@ -334,7 +334,7 @@ export class DashboardComponent {
 
 
         // Calculate total count
-        counts['ALL'] =  [data.length, this.PostedTaxInvoiceCount];
+        counts['ALL'] =  data.length;
 
         // Update counts
         this.PIisDRAFT = counts['DRAFT'];
