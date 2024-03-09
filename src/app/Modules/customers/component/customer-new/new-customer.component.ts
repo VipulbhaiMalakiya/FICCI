@@ -53,6 +53,8 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
             contact: ['', [Validators.required, alphanumericWithSpacesValidator(), Validators.maxLength(100)]],
             PANNo: ['', [Validators.required, panValidator()]],
             isDraft: [false],
+            CustomerRemarks: [''],
+
         });
     }
 
@@ -322,6 +324,7 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
                 pan: newData.PANNo.trim(),
                 loginId: this.publicVariable.storedEmail,
                 roleName: this.publicVariable.storedRole,
+                CustomerRemarks: newData.CustomerRemarks.trim()
             };
             this.publicVariable.isProcess = true;
             this.publicVariable.Subscription.add(
