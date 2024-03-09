@@ -270,7 +270,7 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
         return concatenatedString.includes(term.toLowerCase());
     }
     citySearchFn(term: string, item: any) {
-        const concatenatedString = `${item.countryCode} ${item.cityName}`.toLowerCase();
+        const concatenatedString = `${item.cityCode} ${item.cityName}`.toLowerCase();
         return concatenatedString.includes(term.toLowerCase());
     }
 
