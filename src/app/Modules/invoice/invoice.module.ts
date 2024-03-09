@@ -18,6 +18,7 @@ import { SearchFilterPipe1 } from './pipe/searchFilter';
 import { AngularEditorModule } from '@kolkov/angular-editor';
 import { EmailComponent } from './send-email/email/email.component';
 import { UpdateEmailComponent } from './update-email/update-email.component';
+import { PostedTaxInvoiceComponent } from './View/posted-tax-invoice/posted-tax-invoice.component';
 
 
 
@@ -33,7 +34,8 @@ import { UpdateEmailComponent } from './update-email/update-email.component';
         ViewPiAccountsInboxComponent,
         SearchFilterPipe1,
         EmailComponent,
-        UpdateEmailComponent
+        UpdateEmailComponent,
+        PostedTaxInvoiceComponent
     ],
     imports: [
         CommonModule,

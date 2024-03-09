@@ -9,6 +9,7 @@ import { ViewPiApprovalComponent } from './View/view-pi-approval/view-pi-approva
 import { ViewPiAccountsInboxComponent } from './View/view-pi-accounts-inbox/view-pi-accounts-inbox.component';
 import { AuthGuard } from 'src/app/guard/auth.guard';
 import { EmailComponent } from './send-email/email/email.component';
+import { PostedTaxInvoiceComponent } from './View/posted-tax-invoice/posted-tax-invoice.component';
 
 const routes: Routes = [
     { path: '', redirectTo: 'status', pathMatch: 'full' },
@@ -56,6 +57,10 @@ const routes: Routes = [
         path:'accounts/email',
         component:EmailComponent,
         data: { expectedRoles: ['Accounts'] }
+    },
+    {
+        path:'tax-invoice/view/:id',
+        component:PostedTaxInvoiceComponent
     }
 ];
 
