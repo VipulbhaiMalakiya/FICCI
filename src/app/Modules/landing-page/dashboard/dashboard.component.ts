@@ -32,6 +32,7 @@ export class DashboardComponent {
     PIforapproval: number = 0;
     PostedTaxInvoiceCount : number = 0;
     InvoiceSummaryList : InvoiceSummaryModel[] = [];
+    Cancelled:number = 0;
 
     dashboardData: any;
     invoiceStatuslistData: invoiceStatusModule[] = [];
@@ -291,6 +292,7 @@ export class DashboardComponent {
             'REJECTED BY CH APPROVER': 0,
             'REJECTED BY ACCOUNTS APPROVER': 0,
             'FOR APPROVAL': 0,
+            'Cancelled':0,
             'ALL': 0
         };
 
@@ -319,8 +321,14 @@ export class DashboardComponent {
         const rejectedData = data.filter(item => item.headerStatus === 'REJECTED BY TL APPROVER'
             || item.headerStatus === 'REJECTED BY CH APPROVER'
             || item.headerStatus === 'REJECTED BY ACCOUNTS APPROVER'
-            || item.headerStatus === 'CANCEL BY EMPLOYEE');
+            );
         counts['REJECTED BY CH APPROVER'] = rejectedData.length;
+
+        const cancelData = data.filter(item =>
+        item.headerStatus === 'CANCEL BY EMPLOYEE');
+    counts['Cancelled'] = cancelData.length;
+
+        // Cancelled
 
 
         // Calculate total count
@@ -333,6 +341,7 @@ export class DashboardComponent {
         this.PIApprovedAccounts = counts['PENDING WITH FINANCE APPROVER'];
         this.PIRejectedbyAccounts = counts['REJECTED BY CH APPROVER'];
         this.PIALL = counts['ALL'];
+        this.Cancelled = counts['Cancelled'];
         this.publicVariable.count = counts['ALL']; // Total count
     }
 
@@ -365,9 +374,14 @@ export class DashboardComponent {
                 (item.headerStatus === 'REJECTED BY TL APPROVER' ||
                     item.headerStatus === 'REJECTED BY CH APPROVER' ||
                     item.headerStatus === 'REJECTED BY ACCOUNTS APPROVER' ||
-                    item.headerStatus === 'REJECTED BY FINANCE APPROVER' ||
-                    item.headerStatus === 'CANCEL BY EMPLOYEE'));
+                    item.headerStatus === 'REJECTED BY FINANCE APPROVER' ));
                 break;
+                case 'Cancelled':
+                    filteredData = this.dashboardData.filter((item: any) =>
+                    // item.createdBy === this.publicVariable.storedEmail &&
+                    (
+                        item.headerStatus === 'CANCEL BY EMPLOYEE'));
+                    break;
             case 'FOR APPROVAL':
                 filteredData = this.dashboardData.filter((item: any) => (
                     item.headerStatus === 'PENDING WITH TL APPROVER' ||
