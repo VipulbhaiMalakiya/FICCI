@@ -30,6 +30,7 @@ export class DashboardComponent {
     PIRejectedbyAccounts: number = 0;
     PIALL: number = 0;
     PIforapproval: number = 0;
+    PostedTaxInvoiceCount : number = 0;
     InvoiceSummaryList : InvoiceSummaryModel[] = [];
 
     dashboardData: any;
@@ -264,6 +265,7 @@ export class DashboardComponent {
                     this.countDataByInvoies(this.dashboardData);
                     this.loadInoivceStatusList(this.customerStatus);
                     this.publicVariable.isProcess = false;
+                    this.loadInvoiceSummary();
                 },
                 error: (error: any) => {
                     this.toastr.error('Error loading invoice lists', error.name);
@@ -602,11 +604,11 @@ export class DashboardComponent {
             next: (response: any) => {
                 if (response.data && Array.isArray(response.data)) {
                     this.InvoiceSummaryList = response.data;
-                    this.publicVariable.count = response.data.length;
+                    this.PostedTaxInvoiceCount = response.data.length;
                 } else {
                     // Handle case where response data is null or not an array
                     this.InvoiceSummaryList = [];
-                    this.publicVariable.count = 0;
+                    this.PostedTaxInvoiceCount = 0;
                     console.warn('Response data is null or not an array:', response.data);
                 }
                 this.publicVariable.isProcess = false;
@@ -640,7 +642,7 @@ export class DashboardComponent {
                 formData.append('MailCC', dataItem.impiHeaderCreatedBy );
                 formData.append('ResourceType', dataItem.impiHeaderInvoiceType );
                 formData.append('ResourceId', dataItem.headerId );
-              
+
                 newData.attachment.forEach((file: any) => {
                     formData.append('Attachments', file);
                 });
@@ -675,7 +677,7 @@ export class DashboardComponent {
         this.sendEmail(dataItem);
     }
 
-    
+
     onediteEmail(dataItem: any) {
         const subscription = this.IAPI.IsLatestEmail(dataItem.headerId).pipe(
             timeout(120000),
@@ -688,7 +690,7 @@ export class DashboardComponent {
                 const modalRef = this.modalService.open(UpdateEmailComponent, { size: "xl" });
                 var componentInstance = modalRef.componentInstance as UpdateEmailComponent;
                 componentInstance.isEmail = response;
-                let updateEmail = response.data;                
+                let updateEmail = response.data;
                 modalRef.result.then((data: any) => {
                     if (data) {
                         const newData = data;
@@ -703,7 +705,7 @@ export class DashboardComponent {
                         newData.attachment.forEach((file: any) => {
                             formData.append('Attachments', file);
                         });
-        
+
                         this.publicVariable.isProcess = true;
                         this.publicVariable.Subscription.add(
                             this.IAPI.sendEmail(formData).subscribe({
@@ -737,7 +739,7 @@ export class DashboardComponent {
         this.publicVariable.Subscription.add(subscription);
 
 
-     
+
     }
 
 }
