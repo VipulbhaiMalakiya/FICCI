@@ -522,7 +522,11 @@ export class DashboardComponent {
     }
 
     InvoicedView(data:any):void{
-
+        if (data.invoice_no) {
+            this.router.navigate(['invoice/accounts/view', data.invoice_no], { state: { data: data } });
+        } else {
+            console.error('ID is undefined or null');
+        }
     }
 
     toTitleCase(str: string): string {
