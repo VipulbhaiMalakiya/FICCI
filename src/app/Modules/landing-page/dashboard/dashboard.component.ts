@@ -237,6 +237,8 @@ export class DashboardComponent {
                 })
             );
 
+
+
             // Combining both observables
             forkJoin([purchaseInvoiceObservable, approveInvoiceObservable, accountInvoiceObservable]).subscribe({
                 next: ([purchaseResponse, approveResponse, accountResponse]: [any, any, any]) => {
@@ -332,7 +334,7 @@ export class DashboardComponent {
 
 
         // Calculate total count
-        counts['ALL'] = data.length;
+        counts['ALL'] =  [data.length, this.PostedTaxInvoiceCount];
 
         // Update counts
         this.PIisDRAFT = counts['DRAFT'];
