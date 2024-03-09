@@ -148,7 +148,6 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
     }
 
     patchFormData(data: any): void {
-
         this.publicVariable.dataForm.patchValue({
             customerId: data.customerId,
             customerNo: data.customerCode,
@@ -167,6 +166,7 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
             contact: data.contact,
             PANNo: data.pan,
             isDraft: data.isDraft,
+            CustomerRemarks: data.customerRemarks,
         });
     }
 

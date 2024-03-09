@@ -34,6 +34,8 @@ export class AccountsRemarksComponent {
             this.customerId = +params['id'];
         });
         this.data = history.state.data;
+        console.log(this?.data);
+
         this.publicVariable.isProcess = false;
 
     }
@@ -44,7 +46,7 @@ export class AccountsRemarksComponent {
             if (!action && !newData.remarks) {
                 // Show JavaScript alert if action is false and remarks field is empty
                 window.alert('Remarks are required.');
-                return; 
+                return;
             }
             let statusId: number = !action ? this.data.customerStatusId : this.data.customerStatusId;
             const newConfig: any = {

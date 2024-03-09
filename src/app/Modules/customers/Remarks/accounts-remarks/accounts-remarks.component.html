@@ -119,6 +119,27 @@
             </div>
 
 
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label>Remarks</label>
+                    <textarea class="form-control h-100" cols="3" rows="2"
+                    value="{{data.customerRemarks | titlecase}}"
+                    disabled readonly ></textarea>
+                </div>
+            </div>
+
+
+
+            <div class="col-md-12" *ngIf="data.accountRemarks">
+                <div class="form-group">
+                    <label>Accounts Remarks</label>
+                    <textarea class="form-control h-100" cols="3"
+                    rows="2" value="{{data.accountRemarks | titlecase}}"
+                    disabled readonly ></textarea>
+                </div>
+            </div>
+
+
             <form [formGroup]="publicVariable.dataForm"  *ngIf="publicVariable.storedRole !== 'Admin' &&
             (data.customerStatus == 'PENDING WITH ACCOUNTS APPROVER')">
                 <div class="col-md-9">

@@ -149,24 +149,23 @@
                 </div>
             </div>
 
-            <div class="col-md-12">
+            <div class="col-md-12" *ngIf="data.customerRemarks">
                 <div class="form-group">
                     <label>Remarks</label>
                     <textarea class="form-control h-100" cols="3" rows="2"
                     value="{{data.customerRemarks | titlecase}}"
-                     ></textarea>
+                    disabled readonly></textarea>
                 </div>
             </div>
 
 
 
-            <div class="col-md-12">
+            <div class="col-md-12" *ngIf="data.accountRemarks">
                 <div class="form-group">
                     <label>Accounts Remarks</label>
                     <textarea class="form-control h-100" cols="3"
                     rows="2" value="{{data.accountRemarks | titlecase}}"
-                    ></textarea>
-
+                    disabled readonly></textarea>
                 </div>
             </div>
         </div>
