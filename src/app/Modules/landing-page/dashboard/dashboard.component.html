@@ -17,7 +17,7 @@
         </ul>
         <div class="tab-content" id="pills-tabContent">
             <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
-                <div class="data-tabs">
+                <div class="data-tabs" *ngIf="this.publicVariable.storedRole !== 'Accounts'">
                     <ul class="nav nav-pills" role="tablist">
                         <li class="nav-item">
                             <a class="nav-link active tabbg-1" data-bs-toggle="pill" href="#home"
@@ -63,6 +63,55 @@
                         </li>
                     </ul>
                 </div>
+
+                <div class="data-tabs" *ngIf="this.publicVariable.storedRole == 'Accounts'">
+                    <ul class="nav nav-pills" role="tablist">
+
+                        <li class="nav-item" >
+                            <a class="nav-link tabbg-6" data-bs-toggle="pill" href="#home"
+                                (click)="loadCustomerStatusList('FOR APPROVAL')">
+                                <small>For Approval</small>
+                                <span>{{this.forapproval}}</span>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link tabbg-3" data-bs-toggle="pill" href="#home"
+                                (click)="loadCustomerStatusList('APPROVED BY ACCOUNTS APPROVER')">
+                                <small>Approved</small>
+                                <span>{{this.ApprovedAccounts }}</span>
+                            </a>
+                        </li>
+
+
+                        <li class="nav-item">
+                            <a class="nav-link tabbg-4" data-bs-toggle="pill" href="#home"
+                                (click)="loadCustomerStatusList('REJECTED BY CH APPROVER')">
+                                <small>Reject</small>
+                                <span>{{this.RejectedbyAccounts }}</span>
+                            </a>
+                        </li>
+
+                        <!-- <li class="nav-item">
+                            <a class="nav-link tabbg-2" data-bs-toggle="pill" href="#home"
+                                (click)="loadCustomerStatusList('PENDING WITH APPROVER')">
+                                <small>Pending Approval</small>
+                                <span>{{this.PendingApproval }}</span>
+                            </a>
+                        </li> -->
+
+
+
+                        <li class="nav-item">
+                            <a class="nav-link tabbg-5" data-bs-toggle="pill" href="#home"
+                                (click)="loadCustomerStatusList('ALL')">
+                                <small>All</small>
+                                <span>{{this.ALL }}</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
                 <div class="data-tabs-content">
 
                     <!--Customer Tab  -->
