@@ -200,8 +200,8 @@
             <!--PI tab-pane-->
 
             <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
-                <div class="data-tabs">
-                    <ul class="nav nav-pills" role="tablist"  *ngIf="this.publicVariable.storedRole !== 'Accounts'">
+                <div class="data-tabs" *ngIf="this.publicVariable.storedRole !== 'Accounts'">
+                    <ul class="nav nav-pills" role="tablist">
 
 
                         <li class="nav-item">
@@ -268,8 +268,80 @@
 
 
                     </ul>
+
+
                 </div>
 
+                <div class="data-tabs" *ngIf="this.publicVariable.storedRole == 'Accounts'">
+                    <ul class="nav nav-pills" role="tablist">
+
+
+
+                        <li class="nav-item">
+                            <a class="nav-link tabbg-6" data-bs-toggle="pill" href="#PIhome"
+                                (click)="loadInoivceStatusList('FOR APPROVAL')">
+                                <small>For Approval</small>
+                                <span>{{this.PIforapproval}}</span>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link tabbg-3" data-bs-toggle="pill" href="#PIhome"
+                                (click)="loadInoivceStatusList('APPROVED BY ACCOUNTS APPROVER')">
+                                <small>Approved</small>
+                                <span>{{PIApprovedAccounts}}</span>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link tabbg-4" data-bs-toggle="pill" href="#PIhome"
+                                (click)="loadInoivceStatusList('REJECTED BY CH APPROVER')">
+                                <small>Rejected</small>
+                                <span>{{PIRejectedbyAccounts}}</span>
+                            </a>
+                        </li>
+
+
+                        <li class="nav-item">
+                            <a class="nav-link tabbg-4" data-bs-toggle="pill" href="#PIhome"
+                                (click)="loadInoivceStatusList('REJECTED BY CH APPROVER')">
+                                <small>Cancelled</small>
+                                <span>{{PIRejectedbyAccounts}}</span>
+                            </a>
+                        </li>
+
+
+                        <li class="nav-item">
+                            <a class="nav-link tabbg-4" data-bs-toggle="pill" href="#PIhome"
+                                (click)="loadInoivceStatusList('REJECTED BY CH APPROVER')">
+                                <small>Invoiced</small>
+                                <span>{{PIRejectedbyAccounts}}</span>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link tabbg-4" data-bs-toggle="pill" href="#PIhome"
+                                (click)="loadInoivceStatusList('REJECTED BY CH APPROVER')">
+                                <small>Reversal</small>
+                                <span>{{PIRejectedbyAccounts}}</span>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link tabbg-5" data-bs-toggle="pill" href="#PIhome"
+                                (click)="loadInoivceStatusList('ALL')">
+                                <small>All</small>
+                                <span>{{PIALL}}</span>
+                            </a>
+                        </li>
+
+
+
+
+                    </ul>
+
+
+                </div>
                 <div class="data-tabs-content">
 
                     <!-- Tab panes -->
@@ -389,12 +461,13 @@
                                                                 data-bs-target="#deleterecord-modal"><img
                                                                     src="../assets/images/delete-icon.svg" alt="" /></a>
 
-                                                                    <a href="javascript:void(0);" (click)="onSendEmail(d)"
-                                                                    *ngIf="d.headerStatus === 'APPROVED BY ACCOUNTS APPROVER' && publicVariable.storedRole == 'Accounts' "><img
-                                                                        src="../assets/images/email-icon.svg" alt="" /></a>
-                                                                <a href="javascript:void(0);" (click)="onediteEmail(d)"
-                                                                    *ngIf="d.headerStatus === 'MAIL SENT BY ACCOUNT TO CUSTOMER' && publicVariable.storedRole == 'Accounts' "><img
-                                                                        src="../assets/images/email-edit-icon.svg" alt="" /></a>
+                                                            <a href="javascript:void(0);" (click)="onSendEmail(d)"
+                                                                *ngIf="d.headerStatus === 'APPROVED BY ACCOUNTS APPROVER' && publicVariable.storedRole == 'Accounts' "><img
+                                                                    src="../assets/images/email-icon.svg" alt="" /></a>
+                                                            <a href="javascript:void(0);" (click)="onediteEmail(d)"
+                                                                *ngIf="d.headerStatus === 'MAIL SENT BY ACCOUNT TO CUSTOMER' && publicVariable.storedRole == 'Accounts' "><img
+                                                                    src="../assets/images/email-edit-icon.svg"
+                                                                    alt="" /></a>
                                                         </span>
                                                     </td>
                                                 </tr>
@@ -449,8 +522,7 @@
                                             src="../assets/images/excel-icon.png" alt=""></button>
                                 </div>
                                 <div class="topbr-btns">
-                                    <div class="btn-group"
-                                        *ngIf="InvoiceSummaryList && InvoiceSummaryList.length > 0">
+                                    <div class="btn-group" *ngIf="InvoiceSummaryList && InvoiceSummaryList.length > 0">
                                         <div class="table-search"><input type="text" class="form-control"
                                                 [(ngModel)]="publicVariable.searchText" name="name" id="name"
                                                 placeholder="Search here"></div>
@@ -481,7 +553,7 @@
                                             <tbody>
 
                                                 <tr
-                                                *ngFor="let d of  this.InvoiceSummaryList | searchFilter1: publicVariable.searchText| paginate: {itemsPerPage: publicVariable.tableSize,currentPage: publicVariable.page,totalItems: publicVariable.count};let i = index">
+                                                    *ngFor="let d of  this.InvoiceSummaryList | searchFilter1: publicVariable.searchText| paginate: {itemsPerPage: publicVariable.tableSize,currentPage: publicVariable.page,totalItems: publicVariable.count};let i = index">
                                                     <td>{{i + 1}}</td>
                                                     <td>{{d.no}}</td>
                                                     <td>{{d.postingDate}}</td>
@@ -516,8 +588,7 @@
                                     </div>
 
 
-                                    <div class="clearfix"
-                                        *ngIf="InvoiceSummaryList && InvoiceSummaryList.length > 0">
+                                    <div class="clearfix" *ngIf="InvoiceSummaryList && InvoiceSummaryList.length > 0">
                                         <div class="hint-text">Showing <b>{{this.publicVariable.tableSize}}</b> out of
                                             <b>{{
                                                 publicVariable.count }}</b>
