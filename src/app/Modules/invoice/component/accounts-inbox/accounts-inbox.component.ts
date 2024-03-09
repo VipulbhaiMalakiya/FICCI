@@ -155,7 +155,6 @@ export class AccountsInboxComponent implements OnInit {
     }
 
     sendEmail(dataItem: any) {
-        this.publicVariable.isProcess = true;
         const modalRef = this.modalService.open(EmailComponent, { size: "xl" });
         var componentInstance = modalRef.componentInstance as EmailComponent;
         componentInstance.isEmail = dataItem;
@@ -170,15 +169,16 @@ export class AccountsInboxComponent implements OnInit {
                 formData.append('MailCC', dataItem.impiHeaderCreatedBy );
                 formData.append('ResourceType', dataItem.impiHeaderInvoiceType );
                 formData.append('ResourceId', dataItem.headerId );
-              
+
                 newData.attachment.forEach((file: any) => {
                     formData.append('Attachments', file);
                 });
 
-                this.publicVariable.isProcess = true;
+
                 this.publicVariable.Subscription.add(
                     this.API.sendEmail(formData).subscribe({
                         next: (res: any) => {
+                            this.publicVariable.isProcess = true;
                             if (res.status === true) {
                                 this.toastr.success(res.message, 'Success');
                                 this.loadApproveInvoiceList();
@@ -205,7 +205,7 @@ export class AccountsInboxComponent implements OnInit {
         this.sendEmail(dataItem);
     }
 
-    
+
     onediteEmail(dataItem: any) {
         const subscription = this.API.IsLatestEmail(dataItem.headerId).pipe(
             timeout(120000),
@@ -218,7 +218,7 @@ export class AccountsInboxComponent implements OnInit {
                 const modalRef = this.modalService.open(UpdateEmailComponent, { size: "xl" });
                 var componentInstance = modalRef.componentInstance as UpdateEmailComponent;
                 componentInstance.isEmail = response;
-                let updateEmail = response.data;                
+                let updateEmail = response.data;
                 modalRef.result.then((data: any) => {
                     if (data) {
                         const newData = data;
@@ -233,7 +233,7 @@ export class AccountsInboxComponent implements OnInit {
                         newData.attachment.forEach((file: any) => {
                             formData.append('Attachments', file);
                         });
-        
+
                         this.publicVariable.isProcess = true;
                         this.publicVariable.Subscription.add(
                             this.API.sendEmail(formData).subscribe({
@@ -267,7 +267,7 @@ export class AccountsInboxComponent implements OnInit {
         this.publicVariable.Subscription.add(subscription);
 
 
-     
+
     }
 
 }
