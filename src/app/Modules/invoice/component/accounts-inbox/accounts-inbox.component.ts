@@ -155,6 +155,8 @@ export class AccountsInboxComponent implements OnInit {
     }
 
     sendEmail(dataItem: any) {
+        this.publicVariable.isProcess = true;
+
         const modalRef = this.modalService.open(EmailComponent, { size: "xl" });
         var componentInstance = modalRef.componentInstance as EmailComponent;
         componentInstance.isEmail = dataItem;
@@ -173,11 +175,11 @@ export class AccountsInboxComponent implements OnInit {
                 newData.attachment.forEach((file: any) => {
                     formData.append('Attachments', file);
                 });
+                this.publicVariable.isProcess = true;
 
                 this.publicVariable.Subscription.add(
                     this.API.sendEmail(formData).subscribe({
                         next: (res: any) => {
-                            this.publicVariable.isProcess = true;
                             if (res.status === true) {
                                 this.toastr.success(res.message, 'Success');
                                 this.loadApproveInvoiceList();
