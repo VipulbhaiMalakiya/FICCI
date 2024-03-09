@@ -77,6 +77,8 @@ export interface customerStatusListModel {
     stateList: StateList
     countryList: CountryList
     workFlowHistory: WorkFlowHistory[]
+    accountRemarks:string
+    customerRemarks:string
 
 }
 export interface WorkFlowHistory {

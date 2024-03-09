@@ -19,7 +19,6 @@ export class CustomerStatusComponent implements OnInit {
             this.customerId = +params['id'];
         });
         this.data = history.state.data;
-
     }
 
 
