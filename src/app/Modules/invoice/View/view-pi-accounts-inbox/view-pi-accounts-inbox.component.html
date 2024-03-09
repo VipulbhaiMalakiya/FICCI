@@ -5,7 +5,16 @@
     <div class="inner-content" *ngIf="!isApprove">
 
         <h3 class="content-title">PI Approval Inbox</h3>
+        <div class="pipage-radio">
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="ImpiHeaderInvoiceType" id="flexRadioDefault1" value="Proforma Invoice" checked />
 
+                <label class="form-check-label" for="flexRadioDefault1">
+                    {{data.impiHeaderInvoiceType | titlecase}}
+                </label>
+            </div>
+
+        </div>
         <div class="mastersform-sec mb-0">
             <div class="row">
 
