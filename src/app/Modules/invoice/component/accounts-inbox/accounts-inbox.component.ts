@@ -174,7 +174,6 @@ export class AccountsInboxComponent implements OnInit {
                     formData.append('Attachments', file);
                 });
 
-
                 this.publicVariable.Subscription.add(
                     this.API.sendEmail(formData).subscribe({
                         next: (res: any) => {
