@@ -364,7 +364,7 @@
                         <li class="nav-item">
                             <a class="nav-link tabbg-5" data-bs-toggle="pill" href="#menu4"
                                 (click)="loadInvoiceSummary()">
-                                <small>Posted Tax Invoice</small>
+                                <small>Invoiced</small>
                                 <span>{{PostedTaxInvoiceCount}}</span>
                             </a>
                         </li>
@@ -599,7 +599,7 @@
                                                     <th>Project Code</th>
                                                     <th>Department</th>
                                                     <th>Division </th>
-                                                    <!-- <th class="action-cl">Action</th> -->
+                                                    <th class="action-cl">Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -615,15 +615,11 @@
                                                     <td>{{d.projectCode}}</td>
                                                     <td>{{d.departmentName}}</td>
                                                     <td>{{d.divisionName}}</td>
-                                                    <!-- <td><span class="table-btns">
-                                                            <a href="view-customerstatus.html"><img
-                                                                    src="images/view-icon.svg" alt=""></a>
-                                                            <a href="#"><img src="images/edit-icon.svg" alt=""></a>
-                                                            <a href="javascript:void(0)" data-bs-toggle="modal"
-                                                                data-bs-target="#deleterecord-modal"><img
-                                                                    src="images/delete-icon.svg" alt=""></a>
+                                                    <td><span class="table-btns">
+                                                            <a href="javascript:void(0);" (click)="InvoicedView(d)"><img
+                                                                    src="../assets/images/view-icon.svg" alt=""></a>
                                                         </span>
-                                                    </td> -->
+                                                    </td>
                                                 </tr>
 
 
