@@ -29,6 +29,11 @@ export class InvoicesService {
     private LastestEmailURL = `${environment.apiURL}Mail/LastestEmail?invoiceId=`;
     private InvoiceSummaryURL = `${environment.apiURL}NavERP/GetInvoiceSummary`;
     private TaxInvoiceInformationURL = `${environment.apiURL}NavERP/GetTaxInvoiceInformation`;
+    private GetTaxInvoiceAttachmentURL = `${environment.apiURL}NavERP/GetTaxInvoiceAttachment`;
+
+    GetTaxInvoiceAttachment(): Observable<any[]> {
+        return this.http.get<any[]>(`${this.GetTaxInvoiceAttachmentURL}`).pipe(this.retry);
+    }
 
     GetTaxInvoiceInformation(): Observable<any[]> {
         return this.http.get<any[]>(`${this.TaxInvoiceInformationURL}`).pipe(this.retry);

@@ -14,6 +14,7 @@ export class PostedTaxInvoiceComponent {
     invoice_no?: number;
     data: any;
     TaxInvoicedata: any;
+    InvoiceAttachment:any;
     publicVariable = new publicVariable();
 
 
@@ -31,6 +32,8 @@ export class PostedTaxInvoiceComponent {
             this.invoice_no = +params['id'];
         });
         this.data = history.state.data;
+        console.log("GetInvoiceSummary" ,this.data);
+
         this.loadTaxInvoiceInformation();
     }
 
@@ -41,7 +44,7 @@ export class PostedTaxInvoiceComponent {
                 next: (response: any) => {
                     this.TaxInvoicedata = response.data;
                     this.filterTaxInvoiceByInvoiceNo(this.data.invoice_no);
-                    this.handleLoadingError()
+                    this.loadTaxInvoiceAttachment();
                 },
                 error: (error) => {
                     console.error('Error loading project list:', error);
@@ -63,10 +66,44 @@ export class PostedTaxInvoiceComponent {
             filteredInvoicesObject[invoice.invoice_no] = invoice;
         });
         this.TaxInvoicedata = filteredInvoicesObject;
+        console.log("GetTaxInvoiceInformation", this.TaxInvoicedata);
+
     }
 
     handleLoadingError() {
         this.publicVariable.isProcess = false; // Set status to false on error
     }
+
+    loadTaxInvoiceAttachment() {
+        try {
+            const subscription = this.API.GetTaxInvoiceAttachment().subscribe({
+                next: (response: any) => {
+                    this.InvoiceAttachment = response.data;
+                    this.filterTaxInvoiceAttachmentByInvoiceNo("7TI/APR22/0078");
+                    this.handleLoadingError()
+                },
+                error: (error) => {
+                    console.error('Error loading project list:', error);
+                    this.handleLoadingError()
+                },
+            });
+
+            this.publicVariable.Subscription.add(subscription);
+        } catch (error) {
+            console.error('Error loading project list:', error);
+            this.handleLoadingError()
+        }
+    }
+    filterTaxInvoiceAttachmentByInvoiceNo(invoiceNo: string) {
+        const TaxInvoicedataArray = this.InvoiceAttachment.filter((invoice: any) => invoice.invoiceNo === invoiceNo);
+
+        const filteredInvoicesObject: any = {};
+        TaxInvoicedataArray.forEach((invoice: any) => {
+            filteredInvoicesObject[invoice.invoiceNo] = invoice;
+        });
+        this.InvoiceAttachment = filteredInvoicesObject;
+        console.log("GetTaxInvoiceAttachment", this.InvoiceAttachment);
+    }
+
 
 }
