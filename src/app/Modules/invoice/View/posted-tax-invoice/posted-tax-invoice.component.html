@@ -114,9 +114,6 @@
                 </div>
             </div>
 
-
-
-
         </div>
 
     </div>
@@ -128,26 +125,36 @@
                 <thead>
                     <tr>
                         <th>#</th>
-                        <th width="38%">Nature of Expense</th>
-                        <th>Quantity</th>
-                        <th>Direct Unit Cost</th>
-                        <th>Line Amount</th>
+                        <th width="38%">Document No</th>
+                        <th>GST Credit</th>
                         <th>GST Group Code</th>
-                        <th>HSN/SAC Code</th>
-
+                        <th>GST Group Type</th>
+                        <th>HSN SAC Code</th>
+                        <th>NO</th>
+                        <th>line No</th>
+                        <th>Location Code</th>
+                        <th>Type</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                        <th>Total Amount</th>
                     </tr>
                 </thead>
                 <tbody>
 
-                    <tr *ngFor="let e of data.lineItem_Requests; let i = index">
+                    <tr *ngFor="let e of TaxInvoiceinfo?.getTaxInvoiceInfoLines; let i = index">
                         <td>{{i + 1}}</td>
-                        <td>{{e.impiQuantity}}</td>
-                        <td>{{e.impiUnitPrice}}</td>
-                        <td>{{e.impiQuantity * e.impiUnitPrice}}</td>
-                        <td>{{e.impiGstgroupCode }}</td>
-                        <td>{{e.impiHsnsaccode}}</td>
-
-
+                        <td>{{e.documentNo}}</td>
+                        <td>{{e.gSTCredit}}</td>
+                        <td>{{e.gSTGroupCode}}</td>
+                        <td>{{e.gST_Group_Type}}</td>
+                        <td>{{e.hSN_SAC_Code}}</td>
+                        <td>{{e.no_}}</td>
+                        <td>{{e.lineNo}}</td>
+                        <td>{{e.locationCode}}</td>
+                        <td>{{e.type}}</td>
+                        <td>{{e.quantity}}</td>
+                        <td>{{e.unitPrice}}</td>
+                        <td>{{e.lineAmount}}</td>
                     </tr>
                 </tbody>
             </table>
@@ -169,16 +176,16 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- <tr *ngFor="let file of uploadedFiles; let i = index">
+                    <tr *ngFor="let file of InvoiceAttachment; let i = index">
                         <td>{{ i + 1 }}</td>
-                        <td>{{ getFileType(file.type) }}</td>
-                        <td>{{ file.name }}</td>
+                        <td>{{ file.fileExtension }}</td>
+                        <td>{{ file.fileName }}</td>
                         <td *ngIf="!data.isDraft">
                             <a href="javascript:void(0)" (click)="downalodFile(file)"><img
                                     src="../assets/images/download-icon.svg" alt="" class="me-2"></a>
 
                         </td>
-                    </tr> -->
+                    </tr>
                 </tbody>
             </table>
         </div>

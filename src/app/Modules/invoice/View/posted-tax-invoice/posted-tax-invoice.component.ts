@@ -4,6 +4,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { CustomersService, publicVariable } from '../../Export/invoce';
 import { InvoicesService } from '../../service/invoices.service';
+import { environment } from 'src/environments/environment';
+import { FileService } from '../../service/FileService';
 
 @Component({
     selector: 'app-posted-tax-invoice',
@@ -17,6 +19,7 @@ export class PostedTaxInvoiceComponent {
     TaxInvoiceinfo:any = {};
     InvoiceAttachment:any;
     publicVariable = new publicVariable();
+    FilePath: any;
 
 
     constructor(private route: ActivatedRoute, private CAPI: CustomersService,
@@ -25,6 +28,7 @@ export class PostedTaxInvoiceComponent {
         private router: Router,
         private fb: FormBuilder,
         private cd: ChangeDetectorRef,
+        private fileService: FileService
     ) {
 
     }
@@ -106,16 +110,20 @@ export class PostedTaxInvoiceComponent {
         }
 
         const TaxInvoicedataArray = this.InvoiceAttachment.filter((invoice: any) => invoice.invoiceNo === invoiceNo);
-        const filteredInvoicesObject: any = {};
-        TaxInvoicedataArray.forEach((invoice: any) => {
-            filteredInvoicesObject[invoice.invoiceNo] = invoice;
-        });
-        this.InvoiceAttachment = filteredInvoicesObject;
+
+        this.InvoiceAttachment = TaxInvoicedataArray;
         console.log("GetTaxInvoiceAttachment", this.InvoiceAttachment);
     }
 
     handleLoadingError() {
         this.publicVariable.isProcess = false; // Set status to false on error
+    }
+
+    downalodFile(fileUrl: any) {
+        const base64String = fileUrl.attachment;
+        const fileName = fileUrl.fileName;
+        const fileType = `application/${fileUrl.fileType}`;
+        this.fileService.downloadFile(base64String, fileName, fileType);
     }
 
 }
