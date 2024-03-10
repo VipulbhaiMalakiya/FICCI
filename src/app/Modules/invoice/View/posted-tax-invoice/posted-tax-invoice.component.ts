@@ -97,11 +97,11 @@ export class PostedTaxInvoiceComponent {
     filterTaxInvoiceAttachmentByInvoiceNo(invoiceNo: string) {
         const TaxInvoicedataArray = this.InvoiceAttachment.filter((invoice: any) => invoice.invoiceNo === invoiceNo);
 
-        const filteredInvoicesObject: any = {};
-        TaxInvoicedataArray.forEach((invoice: any) => {
-            filteredInvoicesObject[invoice.invoiceNo] = invoice;
-        });
-        this.InvoiceAttachment = filteredInvoicesObject;
+        // const filteredInvoicesObject: any = {};
+        // TaxInvoicedataArray.forEach((invoice: any) => {
+        //     filteredInvoicesObject[invoice.invoiceNo] = invoice;
+        // });
+        this.InvoiceAttachment = TaxInvoicedataArray;
         console.log("GetTaxInvoiceAttachment", this.InvoiceAttachment);
     }
 
