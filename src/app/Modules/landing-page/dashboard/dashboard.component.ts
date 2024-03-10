@@ -578,9 +578,9 @@ export class DashboardComponent {
 
     onDownloadInvoiceSummary(){
         const exportData = this.InvoiceSummaryList.map((x) => ({
-            "No.": x?.no || '',
-            "postingDate.": x?.postingDate || '',
-            "invoice_no.": x?.postingDate || '',
+            "No ": x?.no || '',
+            "postingDate": x?.postingDate || '',
+            "invoice_no": x?.postingDate || '',
             "CustomerNo": x?.sellToCustomerNo || '',
             "CustomerName": x?.sellToCustomerName || '',
             "CustomerName2": x?.sellToCustomerName2 || '',
