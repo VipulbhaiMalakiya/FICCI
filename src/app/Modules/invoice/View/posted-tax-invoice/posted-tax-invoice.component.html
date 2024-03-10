@@ -198,7 +198,7 @@
                 <div class="form-group">
                     <label>Payment Terms</label>
                     <textarea class="form-control h-100" cols="2" rows="2" disabled=""
-                        readonly="">{{data.impiHeaderPaymentTerms}}</textarea>
+                        readonly=""> WIP</textarea>
                 </div>
             </div>
 
@@ -206,46 +206,58 @@
                 <div class="form-group">
                     <label>Initial Remarks</label>
                     <textarea class="form-control h-100" cols="2" rows="2" disabled=""
-                        readonly="">{{data.impiHeaderRemarks}}</textarea> </div>
+                        readonly="">WIP</textarea> </div>
             </div>
-        </div>
-
-        <div class="row">
             <div class="col-md-6">
-                <div class="form-group" *ngIf="data.impiHeaderTlApproverRemarks">
+                <div class="form-group" >
                     <label>Tl Remarks </label>
                     <textarea class="form-control h-100" cols="2" rows="2" disabled=""
-                        readonly="">{{data.impiHeaderTlApproverRemarks}}</textarea> </div>
+                        readonly="">WIP</textarea> </div>
             </div>
 
-            <div class="col-md-6" *ngIf="data.impiHeaderClusterApproverRemarks">
+            <div class="col-md-6" >
                 <div class="form-group">
                     <label>CH Remarks</label>
                     <textarea class="form-control h-100" cols="2" rows="2" disabled=""
-                        readonly="">{{data.impiHeaderClusterApproverRemarks}}</textarea>
+                        readonly="">WIP</textarea>
                 </div>
             </div>
-        </div>
 
-        <div class="row">
-            <div class="col-md-6" *ngIf="data.impiHeaderFinanceRemarks">
+            <div class="col-md-6" >
                 <div class="form-group">
                     <label>Finance Remarks</label>
                     <textarea class="form-control h-100" cols="2" rows="2" disabled=""
-                        readonly="">{{data.impiHeaderFinanceRemarks}}</textarea>
+                        readonly="">WIP</textarea>
                 </div>
             </div>
 
-            <div class="col-md-6" *ngIf="data.accountApproverRemarks">
+            <div class="col-md-6" >
                 <div class="form-group">
                     <label>Accounts Remarks</label>
                     <textarea class="form-control h-100" cols="2" rows="2" disabled=""
-                        readonly="">{{data.accountApproverRemarks}}</textarea>
+                        readonly="">WIP</textarea>
                 </div>
             </div>
         </div>
 
     </div>
+
+    <form [formGroup]="publicVariable.dataForm" (ngSubmit)="onSubmit()">
+        <div class="col-md-12 mt-3">
+            <div class="form-group">
+                <label>Remarks</label>
+                <textarea class="form-control h-50" cols="2" rows="2" formControlName="remarks"></textarea>
+                <div *ngIf="shouldShowError('remarks','required')" class="text-danger">This field is required
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-12 mt-4">
+            <div class="form-group mb-0 mt-2">
+                <button type="submit" class="common-btn w-auto">Cancel</button>
+            </div>
+        </div>
+    </form>
 
 
 </div>
