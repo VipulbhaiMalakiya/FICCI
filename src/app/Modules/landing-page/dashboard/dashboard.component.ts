@@ -576,6 +576,47 @@ export class DashboardComponent {
         this.appService.exportAsExcelFile(exportData, 'Customer Status', headers);
     }
 
+    onDownloadInvoiceSummary(){
+        const exportData = this.InvoiceSummaryList.map((x) => ({
+            "No.": x?.no || '',
+            "postingDate.": x?.postingDate || '',
+            "invoice_no.": x?.postingDate || '',
+            "CustomerNo": x?.sellToCustomerNo || '',
+            "CustomerName": x?.sellToCustomerName || '',
+            "CustomerName2": x?.sellToCustomerName2 || '',
+            "projectCode": x?.projectCode || '',
+            "dimensionSetID": x?.dimensionSetID || '',
+            "departmentName": x?.departmentName || '',
+            "departmentCode": x?.departmentCode || '',
+            "divisionCode": x?.divisionCode || '',
+            "divisionName": x?.divisionName || '',
+            "approverTL" :  x?.approverTL || '',
+            "approverCH" :  x?.approverCH || '',
+            "approverSupport" :  x?.approverSupport || '',
+            "financeApprover" :  x?.financeApprover || '',
+            "invoicePortalOrder" :  x?.invoicePortalOrder || '',
+            "invoicePortalSubmitted":x?.invoicePortalSubmitted || '',
+            "createdByUser":x?.createdByUser || '',
+            "ToCity":x?.sellToCity || '',
+            "Address":x?.sellToAddress || '',
+            "Address2":x?.sellToAddress2 || '',
+            "PostCode":x?.sellToPostCode || '',
+            "gsT_No":x?.gsT_No || '',
+            "paN_NO":x?.paN_NO || '',
+            "cancelled":x?.cancelled || '',
+            "cancelRemark":x?.cancelRemark || '',
+            "status":x?.status || '',
+            "getTaxInvoiceInfoLines":x?.getTaxInvoiceInfoLines || '',
+        }));
+
+        const headers = ['No','postingDate','invoice_no','CustomerNo','CustomerName','projectCode',
+        'dimensionSetID' ,'departmentName','departmentCode','divisionCode','divisionName','approverTL',
+        'approverCH','approverSupport','financeApprover','invoicePortalOrder','invoicePortalSubmitted',
+        'createdByUser','City','Address','Address2','PostCode','gsT_No','paN_NO','cancelled','cancelRemark',
+        'status','getTaxInvoiceInfoLines'
+    ];
+        this.appService.exportAsExcelFile(exportData, 'Invoiced', headers);
+    }
 
     getStateNameById(stateId: string) {
         const state = this.publicVariable.stateList.find(state => state.stateCode === stateId);

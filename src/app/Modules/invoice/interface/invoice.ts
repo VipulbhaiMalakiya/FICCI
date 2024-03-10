@@ -172,4 +172,8 @@ export interface invoiceApproveModule {
     gsT_No: any
     paN_NO: any
     taxLineDetails: any
+    cancelled:any
+    cancelRemark:any
+    getTaxInvoiceInfoLines:any
+    status:any
   }
