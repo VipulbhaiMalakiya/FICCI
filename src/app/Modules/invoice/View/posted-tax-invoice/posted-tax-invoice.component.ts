@@ -74,9 +74,9 @@ export class PostedTaxInvoiceComponent {
         TaxInvoicedataArray.forEach((invoice: any) => {
             filteredInvoicesObject[invoice.invoice_no] = invoice;
         });
+
         this.TaxInvoicedata = filteredInvoicesObject;
         console.log("GetTaxInvoiceInformation", this.TaxInvoicedata);
-
 
     }
 
