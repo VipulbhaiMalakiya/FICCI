@@ -35,7 +35,6 @@ export class PostedTaxInvoiceComponent {
         });
         this.data = history.state.data;
         this.loadTaxInvoiceInformation();
-        console.log("GetInvoiceSummary" ,this.data);
     }
 
 

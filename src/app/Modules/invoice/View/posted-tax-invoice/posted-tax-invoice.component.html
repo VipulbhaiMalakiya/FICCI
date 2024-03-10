@@ -67,11 +67,20 @@
 
             <div class="col-md-4 col-sm-6">
                 <div class="form-group">
+                    <label>Customer No</label>
+                    <input type="text" [value]="TaxInvoiceinfo?.sellToCustomerNo || 'N/A'" class="form-control"
+                        disabled="" readonly="">
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6">
+                <div class="form-group">
                     <label>Customer Name</label>
                     <input type="text" [value]="TaxInvoiceinfo?.sellToCustomerName || 'N/A'" class="form-control"
                         disabled="" readonly="">
                 </div>
             </div>
+
+
 
             <div class="col-md-4 col-sm-6">
                 <div class="form-group">
@@ -82,11 +91,18 @@
                 </div>
             </div>
 
+            <div class="col-md-4 col-sm-6">
+                <div class="form-group">
+                    <label>CountryRegionCode
+                    </label>
+                    <input type="text"  [value]="TaxInvoiceinfo?.sellToCountryRegionCode || 'N/A'" class="form-control" disabled="" readonly="">
+                </div>
+            </div>
 
             <div class="col-md-4 col-sm-6">
                 <div class="form-group">
                     <label>City</label>
-                    <input type="text" value="{{data.sellToCity}}" class="form-control" disabled="" readonly="">
+                    <input type="text"  [value]="TaxInvoiceinfo?.sellToCity || 'N/A'" class="form-control" disabled="" readonly="">
                 </div>
             </div>
 
@@ -94,16 +110,10 @@
             <div class="col-md-4 col-sm-6">
                 <div class="form-group">
                     <label>Pincode</label>
-                    <input type="text" value="{{data.sellToPostCode}}" class="form-control" disabled="" readonly="">
+                    <input type="text"  [value]="TaxInvoiceinfo?.sellToPostCode || 'N/A'" class="form-control" disabled="" readonly="">
                 </div>
             </div>
 
-            <div class="col-md-4 col-sm-6">
-                <div class="form-group">
-                    <label>GST Number</label>
-                    <input type="text" value="{{data.gsT_No}}" class="form-control" disabled="" readonly="">
-                </div>
-            </div>
 
 
 
