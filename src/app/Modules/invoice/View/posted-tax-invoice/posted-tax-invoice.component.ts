@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -14,6 +14,7 @@ export class PostedTaxInvoiceComponent {
     invoice_no?: number;
     data: any;
     TaxInvoicedata?: any;
+    TaxInvoiceinfo:any = {};
     InvoiceAttachment:any;
     publicVariable = new publicVariable();
 
@@ -23,6 +24,7 @@ export class PostedTaxInvoiceComponent {
         private toastr: ToastrService,
         private router: Router,
         private fb: FormBuilder,
+        private cd: ChangeDetectorRef,
     ) {
 
     }
@@ -44,6 +46,7 @@ export class PostedTaxInvoiceComponent {
                     this.TaxInvoicedata = response.data;
                     this.filterTaxInvoiceByInvoiceNo(this.data.invoice_no);
                     this.loadTaxInvoiceAttachment();
+                    this.cd.detectChanges();
                 },
                 error: (error) => {
                     console.error('Error loading project list:', error);
@@ -70,18 +73,10 @@ export class PostedTaxInvoiceComponent {
             return;
         }
 
-        const filteredInvoicesObject: any = {};
-        TaxInvoicedataArray.forEach((invoice: any) => {
-            filteredInvoicesObject[invoice.invoice_no] = invoice;
-        });
+         this.TaxInvoiceinfo = TaxInvoicedataArray[0];
+        this.cd.detectChanges();
+        console.log("GetTaxInvoiceInformation", TaxInvoicedataArray[0]);
 
-        this.TaxInvoicedata = filteredInvoicesObject;
-        console.log("GetTaxInvoiceInformation", this.TaxInvoicedata);
-
-    }
-
-    handleLoadingError() {
-        this.publicVariable.isProcess = false; // Set status to false on error
     }
 
     loadTaxInvoiceAttachment() {
@@ -90,22 +85,27 @@ export class PostedTaxInvoiceComponent {
                 next: (response: any) => {
                     this.InvoiceAttachment = response.data;
                     this.filterTaxInvoiceAttachmentByInvoiceNo("7TI/APR22/0078");
-                    this.handleLoadingError()
+                    this.handleLoadingError();
                 },
                 error: (error) => {
                     console.error('Error loading project list:', error);
-                    this.handleLoadingError()
+                    this.handleLoadingError();
                 },
             });
 
             this.publicVariable.Subscription.add(subscription);
         } catch (error) {
             console.error('Error loading project list:', error);
-            this.handleLoadingError()
+            this.handleLoadingError();
         }
     }
 
     filterTaxInvoiceAttachmentByInvoiceNo(invoiceNo: string) {
+        if (!this.InvoiceAttachment || !Array.isArray(this.InvoiceAttachment)) {
+            console.error("InvoiceAttachment is not properly initialized or is not an array.");
+            return;
+        }
+
         const TaxInvoicedataArray = this.InvoiceAttachment.filter((invoice: any) => invoice.invoiceNo === invoiceNo);
         const filteredInvoicesObject: any = {};
         TaxInvoicedataArray.forEach((invoice: any) => {
@@ -114,4 +114,9 @@ export class PostedTaxInvoiceComponent {
         this.InvoiceAttachment = filteredInvoicesObject;
         console.log("GetTaxInvoiceAttachment", this.InvoiceAttachment);
     }
+
+    handleLoadingError() {
+        this.publicVariable.isProcess = false; // Set status to false on error
+    }
+
 }

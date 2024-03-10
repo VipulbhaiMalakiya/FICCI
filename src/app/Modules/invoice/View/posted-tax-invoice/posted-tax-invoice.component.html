@@ -22,38 +22,35 @@
             <div class="col-md-4 col-sm-6">
                 <div class="form-group">
                     <label>Project Code</label>
-                    <input type="text" value="{{data.projectCode}}" class="form-control" disabled=""
-                        readonly="">
+                    <input type="text" [value]="TaxInvoiceinfo?.projectCode || 'N/A'" class="form-control" disabled="" readonly="">
                 </div>
             </div>
 
             <div class="col-md-4 col-sm-6">
                 <div class="form-group">
                     <label>Department</label>
-                    <input type="text" value="{{data.departmentName}}" class="form-control" disabled=""
-                        readonly="">
+                    <input type="text"  [value]="TaxInvoiceinfo?.departmentName || 'N/A'" class="form-control" disabled="" readonly="">
                 </div>
             </div>
 
             <div class="col-md-4 col-sm-6">
                 <div class="form-group">
                     <label>Division</label>
-                    <input type="text" value="{{data.divisionName}}" class="form-control" disabled=""
-                        readonly="">
+                    <input type="text" [value]="TaxInvoiceinfo?.divisionName || 'N/A'" class="form-control" disabled="" readonly="">
                 </div>
             </div>
 
             <div class="col-md-4 col-sm-6">
                 <div class="form-group">
                     <label>PAN No</label>
-                    <input type="text" value="{{data.paN_NO}}" class="form-control" disabled="" readonly="">
+                    <input type="text"  [value]="TaxInvoiceinfo?.paN_NO || 'N/A'" class="form-control" disabled="" readonly="">
                 </div>
             </div>
 
             <div class="col-md-4 col-sm-6">
                 <div class="form-group">
                     <label>GST No</label>
-                    <input type="text" value="{{data.gsT_No}}" class="form-control" disabled="" readonly="">
+                    <input type="text"  [value]="TaxInvoiceinfo?.gsT_No || 'N/A'" class="form-control" disabled="" readonly="">
                 </div>
             </div>
 
@@ -71,15 +68,16 @@
             <div class="col-md-4 col-sm-6">
                 <div class="form-group">
                     <label>Customer Name</label>
-                    <input type="text" value="{{data.sellToCustomerName}}" class="form-control" disabled=""
-                        readonly="">
+                    <input type="text" [value]="TaxInvoiceinfo?.sellToCustomerName || 'N/A'" class="form-control"
+                        disabled="" readonly="">
                 </div>
             </div>
 
             <div class="col-md-4 col-sm-6">
                 <div class="form-group">
                     <label>Address</label>
-                    <input type="text" [value]="TaxInvoicedata.sellToAddress" class="form-control" disabled readonly>
+                    <input type="text" [value]="TaxInvoiceinfo?.sellToAddress || 'N/A'" class="form-control" disabled
+                        readonly>
 
                 </div>
             </div>
@@ -88,8 +86,7 @@
             <div class="col-md-4 col-sm-6">
                 <div class="form-group">
                     <label>City</label>
-                    <input type="text" value="{{data.sellToCity}}" class="form-control" disabled=""
-                        readonly="">
+                    <input type="text" value="{{data.sellToCity}}" class="form-control" disabled="" readonly="">
                 </div>
             </div>
 
@@ -97,16 +94,14 @@
             <div class="col-md-4 col-sm-6">
                 <div class="form-group">
                     <label>Pincode</label>
-                    <input type="text" value="{{data.sellToPostCode}}" class="form-control" disabled=""
-                        readonly="">
+                    <input type="text" value="{{data.sellToPostCode}}" class="form-control" disabled="" readonly="">
                 </div>
             </div>
 
             <div class="col-md-4 col-sm-6">
                 <div class="form-group">
                     <label>GST Number</label>
-                    <input type="text" value="{{data.gsT_No}}" class="form-control" disabled=""
-                        readonly="">
+                    <input type="text" value="{{data.gsT_No}}" class="form-control" disabled="" readonly="">
                 </div>
             </div>
 
@@ -152,7 +147,7 @@
     </div>
 
 
-    <div class="dasboard-table pi-table mb-0" >
+    <div class="dasboard-table pi-table mb-0">
         <div class="table-responsive">
             <table class="table table-bordered text-nowrap">
                 <thead>
