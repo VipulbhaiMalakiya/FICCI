@@ -108,22 +108,19 @@ export class PostedTaxInvoiceComponent {
             console.error("InvoiceAttachment is not properly initialized or is not an array.");
             return;
         }
-
         const TaxInvoicedataArray = this.InvoiceAttachment.filter((invoice: any) => invoice.invoiceNo === invoiceNo);
-
         this.InvoiceAttachment = TaxInvoicedataArray;
-        console.log("GetTaxInvoiceAttachment", this.InvoiceAttachment);
     }
-
-    handleLoadingError() {
-        this.publicVariable.isProcess = false; // Set status to false on error
-    }
-
     downalodFile(fileUrl: any) {
         const base64String = fileUrl.attachment;
         const fileName = fileUrl.fileName;
         const fileType = `application/${fileUrl.fileType}`;
         this.fileService.downloadFile(base64String, fileName, fileType);
     }
+    handleLoadingError() {
+        this.publicVariable.isProcess = false; // Set status to false on error
+    }
+
+
 
 }
