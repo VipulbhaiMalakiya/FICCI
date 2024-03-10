@@ -30,9 +30,10 @@ export class DashboardComponent {
     PIRejectedbyAccounts: number = 0;
     PIALL: number = 0;
     PIforapproval: number = 0;
-    PostedTaxInvoiceCount : number = 0;
-    InvoiceSummaryList : InvoiceSummaryModel[] = [];
-    Cancelled:number = 0;
+    PostedTaxInvoiceCount: number = 0;
+    InvoiceSummaryList: InvoiceSummaryModel[] = [];
+    Cancelled: number = 0;
+    Reversal: number = 0;
 
     dashboardData: any;
     invoiceStatuslistData: invoiceStatusModule[] = [];
@@ -225,8 +226,8 @@ export class DashboardComponent {
                 })
             );
 
-             // Observable for the third API call
-             const accountInvoiceObservable = this.IAPI.getApproveAccountInvoice().pipe(
+            // Observable for the third API call
+            const accountInvoiceObservable = this.IAPI.getApproveAccountInvoice().pipe(
                 timeout(120000), // Timeout set to 2 minutes (120000 milliseconds)
                 catchError((error: any) => {
                     console.error('Error loading approve invoice list:', error);
@@ -294,7 +295,8 @@ export class DashboardComponent {
             'REJECTED BY CH APPROVER': 0,
             'REJECTED BY ACCOUNTS APPROVER': 0,
             'FOR APPROVAL': 0,
-            'Cancelled':0,
+            'Cancelled': 0,
+            'Reversal': 0,
             'ALL': 0
         };
 
@@ -317,24 +319,28 @@ export class DashboardComponent {
         counts['FOR APPROVAL'] = forapproval.length;
 
         const approvedData = data.filter(item => item.headerStatus === 'APPROVED BY ACCOUNTS APPROVER'
-        || item.headerStatus ==='MAIL SENT BY ACCOUNT TO CUSTOMER');
+            || item.headerStatus === 'MAIL SENT BY ACCOUNT TO CUSTOMER');
         counts['PENDING WITH FINANCE APPROVER'] = approvedData.length;
 
         const rejectedData = data.filter(item => item.headerStatus === 'REJECTED BY TL APPROVER'
             || item.headerStatus === 'REJECTED BY CH APPROVER'
             || item.headerStatus === 'REJECTED BY ACCOUNTS APPROVER'
-            );
+        );
         counts['REJECTED BY CH APPROVER'] = rejectedData.length;
 
         const cancelData = data.filter(item =>
-        item.headerStatus === 'CANCEL BY EMPLOYEE');
-    counts['Cancelled'] = cancelData.length;
+            item.headerStatus === 'CANCEL BY EMPLOYEE');
+        counts['Cancelled'] = cancelData.length;
+
+        const ReversalData = data.filter(item =>
+            item.headerStatus === '');
+        counts['Reversal'] = ReversalData.length
 
         // Cancelled
 
 
         // Calculate total count
-        counts['ALL'] =  data.length;
+        counts['ALL'] = data.length;
 
         // Update counts
         this.PIisDRAFT = counts['DRAFT'];
@@ -344,6 +350,7 @@ export class DashboardComponent {
         this.PIRejectedbyAccounts = counts['REJECTED BY CH APPROVER'];
         this.PIALL = counts['ALL'];
         this.Cancelled = counts['Cancelled'];
+        this.Reversal = counts['Reversal'];
         this.publicVariable.count = counts['ALL']; // Total count
     }
 
@@ -368,7 +375,7 @@ export class DashboardComponent {
             case 'APPROVED BY ACCOUNTS APPROVER':
                 filteredData = this.dashboardData.filter((item: any) =>
                     item.headerStatus === 'APPROVED BY ACCOUNTS APPROVER'
-                    || item.headerStatus ==='MAIL SENT BY ACCOUNT TO CUSTOMER');
+                    || item.headerStatus === 'MAIL SENT BY ACCOUNT TO CUSTOMER');
                 break;
             case 'REJECTED BY CH APPROVER':
                 filteredData = this.dashboardData.filter((item: any) =>
@@ -376,14 +383,20 @@ export class DashboardComponent {
                 (item.headerStatus === 'REJECTED BY TL APPROVER' ||
                     item.headerStatus === 'REJECTED BY CH APPROVER' ||
                     item.headerStatus === 'REJECTED BY ACCOUNTS APPROVER' ||
-                    item.headerStatus === 'REJECTED BY FINANCE APPROVER' ));
+                    item.headerStatus === 'REJECTED BY FINANCE APPROVER'));
                 break;
-                case 'Cancelled':
-                    filteredData = this.dashboardData.filter((item: any) =>
-                    // item.createdBy === this.publicVariable.storedEmail &&
-                    (
-                        item.headerStatus === 'CANCEL BY EMPLOYEE'));
-                    break;
+            case 'Cancelled':
+                filteredData = this.dashboardData.filter((item: any) =>
+                // item.createdBy === this.publicVariable.storedEmail &&
+                (
+                    item.headerStatus === 'CANCEL BY EMPLOYEE'));
+                break;
+            case 'Reversal':
+                filteredData = this.dashboardData.filter((item: any) =>
+                // item.createdBy === this.publicVariable.storedEmail &&
+                (
+                    item.headerStatus === ''));
+                break;
             case 'FOR APPROVAL':
                 filteredData = this.dashboardData.filter((item: any) => (
                     item.headerStatus === 'PENDING WITH TL APPROVER' ||
@@ -392,8 +405,8 @@ export class DashboardComponent {
                     item.headerStatus === 'PENDING WITH FINANCE APPROVER'
                 ));
                 break;
-                case 'ALL':
-               filteredData = this.dashboardData
+            case 'ALL':
+                filteredData = this.dashboardData
                 break;
             default:
                 filteredData = this.dashboardData
@@ -521,7 +534,7 @@ export class DashboardComponent {
         }
     }
 
-    InvoicedView(data:any):void{
+    InvoicedView(data: any): void {
         if (data.invoice_no) {
             this.router.navigate(['invoice/tax-invoice/view', data.invoice_no], { state: { data: data } });
         } else {
@@ -578,7 +591,7 @@ export class DashboardComponent {
     onDownloadPI() {
         const exportData = this.invoiceStatuslistData.map((x) => ({
             "PO No.": x?.impiHeaderProjectCode || '',
-            'Project' :x?.impiHeaderProjectName ? this.toTitleCase(x.impiHeaderProjectName) : '',
+            'Project': x?.impiHeaderProjectName ? this.toTitleCase(x.impiHeaderProjectName) : '',
             Department: x?.impiHeaderProjectDepartmentName ? this.toTitleCase(x.impiHeaderProjectDepartmentName) : '',
             Divison: x?.impiHeaderProjectDivisionName ? this.toTitleCase(x.impiHeaderProjectDivisionName) : '',
             Category: x?.impiHeaderInvoiceType ? this.toTitleCase(x.impiHeaderInvoiceType) : '',
@@ -607,17 +620,17 @@ export class DashboardComponent {
         }));
 
         const headers = [
-            'PO No.','Project', 'Department', 'Divison', 'Category',
+            'PO No.', 'Project', 'Department', 'Divison', 'Category',
             'Vendor Name', 'Address', 'State', 'City', 'Pincode',
             'Phone No', "Email ID", 'Contact Person', 'Customer  GST Number', 'PAN No', 'Amount', 'Payment Terms',
-            'impiHeaderRemarks', 'Tl Approver', 'Cl Approver', 'Finance Approver', 'Accounts Approver','Created On', 'Created By', 'Update Date',
+            'impiHeaderRemarks', 'Tl Approver', 'Cl Approver', 'Finance Approver', 'Accounts Approver', 'Created On', 'Created By', 'Update Date',
             'Status'
         ];
         this.appService.exportAsExcelFile(exportData, 'PI Invoice Status', headers);
     }
 
 
-    loadInvoiceSummary(){
+    loadInvoiceSummary() {
         this.publicVariable.isProcess = true;
         const subscription = this.IAPI.GetInvoiceSummary().pipe(
             timeout(120000), // Timeout set to 2 minutes (120000 milliseconds)
@@ -663,9 +676,9 @@ export class DashboardComponent {
                 formData.append('MailSubject', newData.subject);
                 formData.append('MailBody', newData.body);
                 formData.append('LoginId', this.publicVariable.storedEmail);
-                formData.append('MailCC', dataItem.impiHeaderCreatedBy );
-                formData.append('ResourceType', dataItem.impiHeaderInvoiceType );
-                formData.append('ResourceId', dataItem.headerId );
+                formData.append('MailCC', dataItem.impiHeaderCreatedBy);
+                formData.append('ResourceType', dataItem.impiHeaderInvoiceType);
+                formData.append('ResourceId', dataItem.headerId);
 
                 newData.attachment.forEach((file: any) => {
                     formData.append('Attachments', file);

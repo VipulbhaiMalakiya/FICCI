@@ -30,6 +30,7 @@ export class InvoicesService {
     private InvoiceSummaryURL = `${environment.apiURL}NavERP/GetInvoiceSummary`;
 
 
+
     GetInvoiceSummary(): Observable<any[]> {
         return this.http.get<any[]>(`${this.InvoiceSummaryURL}`).pipe(this.retry);
     }
