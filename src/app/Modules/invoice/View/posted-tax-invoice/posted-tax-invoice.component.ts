@@ -13,7 +13,7 @@ import { InvoicesService } from '../../service/invoices.service';
 export class PostedTaxInvoiceComponent {
     invoice_no?: number;
     data: any;
-    TaxInvoicedata: any;
+    TaxInvoicedata?: any;
     InvoiceAttachment:any;
     publicVariable = new publicVariable();
 
@@ -43,32 +43,42 @@ export class PostedTaxInvoiceComponent {
             const subscription = this.API.GetTaxInvoiceInformation().subscribe({
                 next: (response: any) => {
                     this.TaxInvoicedata = response.data;
-                    this.filterTaxInvoiceByInvoiceNo(this.data.invoice_no);
+                    this.filterTaxInvoiceByInvoiceNo(this.data.invoice_no); // Move this line here
                     this.loadTaxInvoiceAttachment();
                 },
                 error: (error) => {
                     console.error('Error loading project list:', error);
-                    this.handleLoadingError()
+                    this.handleLoadingError();
                 },
             });
 
             this.publicVariable.Subscription.add(subscription);
         } catch (error) {
             console.error('Error loading project list:', error);
-            this.handleLoadingError()
+            this.handleLoadingError();
         }
     }
 
     filterTaxInvoiceByInvoiceNo(invoiceNo: string) {
+        if (!this.TaxInvoicedata || !Array.isArray(this.TaxInvoicedata)) {
+            console.error("TaxInvoicedata is not properly initialized or is not an array.");
+            return;
+        }
+
         const TaxInvoicedataArray = this.TaxInvoicedata.filter((invoice: any) => invoice.invoice_no === invoiceNo);
+        if (TaxInvoicedataArray.length === 0) {
+            console.log("No invoices found for the provided invoice number.");
+            return;
+        }
+
         const filteredInvoicesObject: any = {};
         TaxInvoicedataArray.forEach((invoice: any) => {
             filteredInvoicesObject[invoice.invoice_no] = invoice;
         });
         this.TaxInvoicedata = filteredInvoicesObject;
         console.log("GetTaxInvoiceInformation", this.TaxInvoicedata);
-
     }
+
 
     handleLoadingError() {
         this.publicVariable.isProcess = false; // Set status to false on error
@@ -97,11 +107,11 @@ export class PostedTaxInvoiceComponent {
     filterTaxInvoiceAttachmentByInvoiceNo(invoiceNo: string) {
         const TaxInvoicedataArray = this.InvoiceAttachment.filter((invoice: any) => invoice.invoiceNo === invoiceNo);
 
-        // const filteredInvoicesObject: any = {};
-        // TaxInvoicedataArray.forEach((invoice: any) => {
-        //     filteredInvoicesObject[invoice.invoiceNo] = invoice;
-        // });
-        this.InvoiceAttachment = TaxInvoicedataArray;
+        const filteredInvoicesObject: any = {};
+        TaxInvoicedataArray.forEach((invoice: any) => {
+            filteredInvoicesObject[invoice.invoiceNo] = invoice;
+        });
+        this.InvoiceAttachment = filteredInvoicesObject;
         console.log("GetTaxInvoiceAttachment", this.InvoiceAttachment);
     }
 

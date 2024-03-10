@@ -1,249 +1,120 @@
 <app-loading *ngIf="publicVariable.isProcess"></app-loading>
 
-<div class="inner-content">
-    <!-- <div class="approver-form">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="comments-history-icon" data-bs-toggle="modal" data-bs-target="#workflow-modal">
-                    <img src="../assets/images/file-history-icon.png" alt="">
-                </div>
-            </div>
-        </div>
-    </div> -->
-    <h3 class="content-title">Posted Tex invoice</h3>
 
-    <div class="pipage-radio">
+
+<div class="inner-content">
+
+    <h3 class="content-title">Posted Tax Invoice</h3>
+
+    <!-- <div class="pipage-radio">
         <div class="form-check">
             <input class="form-check-input" type="radio" name="ImpiHeaderInvoiceType" id="flexRadioDefault1" value="Proforma Invoice" checked />
 
             <label class="form-check-label" for="flexRadioDefault1">
-                {{data.impiHeaderInvoiceType | titlecase}}
+                {{TaxInvoicedata.impiHeaderInvoiceType | titlecase}}
             </label>
         </div>
 
-    </div>
+    </div> -->
     <div class="mastersform-sec mb-0">
         <div class="row">
 
             <div class="col-md-4 col-sm-6">
                 <div class="form-group">
-                    <label>CH Approver</label>
-                    <input type="text" value="{{data.approverCH | titlecase}}" class="form-control" disabled=""
+                    <label>Project Code</label>
+                    <input type="text" value="{{data.projectCode}}" class="form-control" disabled=""
                         readonly="">
                 </div>
             </div>
 
             <div class="col-md-4 col-sm-6">
                 <div class="form-group">
-                    <label>Project Name</label>
-                    <input type="text" value="{{data.impiHeaderProjectName | titlecase}}" class="form-control" disabled=""
+                    <label>Department</label>
+                    <input type="text" value="{{data.departmentName}}" class="form-control" disabled=""
                         readonly="">
                 </div>
             </div>
 
             <div class="col-md-4 col-sm-6">
                 <div class="form-group">
-                    <label>Support Approver</label>
-                    <input type="text" value="{{data.approverSupport | titlecase}}" class="form-control" disabled=""
+                    <label>Division</label>
+                    <input type="text" value="{{data.divisionName}}" class="form-control" disabled=""
                         readonly="">
                 </div>
             </div>
 
             <div class="col-md-4 col-sm-6">
                 <div class="form-group">
-                    <label>TL Approver</label>
-                    <input type="text" value="{{data.approverTL | titlecase}}" class="form-control" disabled=""
-                        readonly="">
+                    <label>PAN No</label>
+                    <input type="text" value="{{data.paN_NO}}" class="form-control" disabled="" readonly="">
                 </div>
             </div>
 
             <div class="col-md-4 col-sm-6">
                 <div class="form-group">
-                    <label>Finance Approver</label>
-                    <input type="text" value="{{data.financeApprover }}" class="form-control" disabled="" readonly="">
-                </div>
-            </div>
-            <div class="col-md-4 col-sm-6">
-                <div class="form-group">
-                    <label>Cancelled</label>
-                    <input type="text" value="{{data.cancelled}}" class="form-control" disabled="" readonly="">
-                </div>
-            </div>
-
-            <div class="col-md-4 col-sm-6">
-                <div class="form-group">
-                    <label>Created By</label>
-                    <input type="text" value="{{data.createdByUser}}" class="form-control" disabled="" readonly="">
-                </div>
-            </div>
-
-            <div class="col-md-4 col-sm-6">
-                <div class="form-group">
-                    <label>Department Code</label>
-                    <input type="text" value="{{data.departmentCode}}" class="form-control" disabled="" readonly="">
-                </div>
-            </div>
-
-            <div class="col-md-4 col-sm-6">
-                <div class="form-group">
-                    <label>Department Name</label>
-                    <input type="text" value="{{data.departmentName | titlecase}}" class="form-control" disabled="" readonly="">
-                </div>
-            </div>
-
-            <div class="col-md-4 col-sm-6">
-                <div class="form-group">
-                    <label>DimensionSetID</label>
-                    <input type="text" value="{{data.dimensionSetID }}" class="form-control" disabled="" readonly="">
-                </div>
-            </div>
-
-            <div class="col-md-4 col-sm-6">
-                <div class="form-group">
-                    <label>divisionCode</label>
-                    <input type="text" value="{{data.divisionCode }}" class="form-control" disabled="" readonly="">
-                </div>
-            </div>
-
-            <div class="col-md-4 col-sm-6">
-                <div class="form-group">
-                    <label>divisionName</label>
-                    <input type="text" value="{{data.divisionName }}" class="form-control" disabled="" readonly="">
-                </div>
-            </div>
-
-            <div class="col-md-4 col-sm-6">
-                <div class="form-group">
-                    <label>gsT_No</label>
-                    <input type="text" value="{{data.gsT_No }}" class="form-control" disabled="" readonly="">
-                </div>
-            </div>
-
-            <div class="col-md-4 col-sm-6">
-                <div class="form-group">
-                    <label>invoicePortalOrder</label>
-                    <input type="text" value="{{data.invoicePortalOrder }}" class="form-control" disabled="" readonly="">
-                </div>
-            </div>
-
-            <div class="col-md-4 col-sm-6">
-                <div class="form-group">
-                    <label>invoicePortalSubmitted</label>
-                    <input type="text" value="{{data.invoicePortalSubmitted }}" class="form-control" disabled="" readonly="">
+                    <label>GST No</label>
+                    <input type="text" value="{{data.gsT_No}}" class="form-control" disabled="" readonly="">
                 </div>
             </div>
 
 
-            <div class="col-md-4 col-sm-6">
-                <div class="form-group">
-                    <label>invoice_no</label>
-                    <input type="text" value="{{data.invoice_no }}" class="form-control" disabled="" readonly="">
-                </div>
-            </div>
-
-            <div class="col-md-4 col-sm-6">
-                <div class="form-group">
-                    <label>no</label>
-                    <input type="text" value="{{data.no }}" class="form-control" disabled="" readonly="">
-                </div>
-            </div>
-
-            <div class="col-md-4 col-sm-6">
-                <div class="form-group">
-                    <label>paN_NO</label>
-                    <input type="text" value="{{data.paN_NO }}" class="form-control" disabled="" readonly="">
-                </div>
-            </div>
-
-            <div class="col-md-4 col-sm-6">
-                <div class="form-group">
-                    <label>postingDate</label>
-                    <input type="text" value="{{data.postingDate }}" class="form-control" disabled="" readonly="">
-                </div>
-            </div>
-
-            <div class="col-md-4 col-sm-6">
-                <div class="form-group">
-                    <label>projectCode</label>
-                    <input type="text" value="{{data.projectCode }}" class="form-control" disabled="" readonly="">
-                </div>
-            </div>
-
-            <div class="col-md-4 col-sm-6">
-                <div class="form-group">
-                    <label>sellToAddress</label>
-                    <input type="text" value="{{data.sellToAddress }}" class="form-control" disabled="" readonly="">
-                </div>
-            </div>
-
-            <div class="col-md-4 col-sm-6">
-                <div class="form-group">
-                    <label>sellToAddress2</label>
-                    <input type="text" value="{{data.sellToAddress2 }}" class="form-control" disabled="" readonly="">
-                </div>
-            </div>
-
-            <div class="col-md-4 col-sm-6">
-                <div class="form-group">
-                    <label>sellToCity</label>
-                    <input type="text" value="{{data.sellToCity }}" class="form-control" disabled="" readonly="">
-                </div>
-            </div>
-
-            <div class="col-md-4 col-sm-6">
-                <div class="form-group">
-                    <label>sellToCountryRegionCode</label>
-                    <input type="text" value="{{data.sellToCountryRegionCode }}" class="form-control" disabled="" readonly="">
-                </div>
-            </div>
-
-            <div class="col-md-4 col-sm-6">
-                <div class="form-group">
-                    <label>sellToCustomerName</label>
-                    <input type="text" value="{{data.sellToCustomerName }}" class="form-control" disabled="" readonly="">
-                </div>
-            </div>
-
-            <div class="col-md-4 col-sm-6">
-                <div class="form-group">
-                    <label>sellToCustomerName2</label>
-                    <input type="text" value="{{data.sellToCustomerName2 }}" class="form-control" disabled="" readonly="">
-                </div>
-            </div>
-
-            <div class="col-md-4 col-sm-6">
-                <div class="form-group">
-                    <label>sellToCustomerNo</label>
-                    <input type="text" value="{{data.sellToCustomerNo }}" class="form-control" disabled="" readonly="">
-                </div>
-            </div>
-
-            <div class="col-md-4 col-sm-6">
-                <div class="form-group">
-                    <label>sellToPostCode</label>
-                    <input type="text" value="{{data.sellToPostCode }}" class="form-control" disabled="" readonly="">
-                </div>
-            </div>
-
-            <div class="col-md-4 col-sm-6">
-                <div class="form-group">
-                    <label>status</label>
-                    <input type="text" value="{{data.status }}" class="form-control" disabled="" readonly="">
-                </div>
-            </div>
-
-            <div class="col-md-4 col-sm-6">
-                <div class="form-group">
-                    <label>taxLineDetails</label>
-                    <input type="text" value="{{data.taxLineDetails }}" class="form-control" disabled="" readonly="">
-                </div>
-            </div>
 
         </div>
 
     </div>
 
+    <div class="pi-pagetitle">Customer Details</div>
 
+    <div class="mastersform-sec mb-0">
+        <div class="row">
+
+            <div class="col-md-4 col-sm-6">
+                <div class="form-group">
+                    <label>Customer Name</label>
+                    <input type="text" value="{{data.sellToCustomerName}}" class="form-control" disabled=""
+                        readonly="">
+                </div>
+            </div>
+
+            <div class="col-md-4 col-sm-6">
+                <div class="form-group">
+                    <label>Address</label>
+                    <input type="text" value="{{data.sellToAddress}}" class="form-control" disabled=""
+                        readonly="">
+                </div>
+            </div>
+
+
+            <div class="col-md-4 col-sm-6">
+                <div class="form-group">
+                    <label>City</label>
+                    <input type="text" value="{{data.sellToCity}}" class="form-control" disabled=""
+                        readonly="">
+                </div>
+            </div>
+
+
+            <div class="col-md-4 col-sm-6">
+                <div class="form-group">
+                    <label>Pincode</label>
+                    <input type="text" value="{{data.sellToPostCode}}" class="form-control" disabled=""
+                        readonly="">
+                </div>
+            </div>
+
+            <div class="col-md-4 col-sm-6">
+                <div class="form-group">
+                    <label>GST Number</label>
+                    <input type="text" value="{{data.gsT_No}}" class="form-control" disabled=""
+                        readonly="">
+                </div>
+            </div>
+
+
+
+        </div>
+
+    </div>
 
     <div class="dasboard-table pi-table">
 
@@ -265,7 +136,6 @@
 
                     <tr *ngFor="let e of data.lineItem_Requests; let i = index">
                         <td>{{i + 1}}</td>
-                        <!-- <td>{{ getNameById(e.impiGlNo) }}</td> -->
                         <td>{{e.impiQuantity}}</td>
                         <td>{{e.impiUnitPrice}}</td>
                         <td>{{e.impiQuantity * e.impiUnitPrice}}</td>
@@ -282,7 +152,7 @@
     </div>
 
 
-    <!-- <div class="dasboard-table pi-table mb-0" *ngIf="uploadedFiles.length > 0">
+    <div class="dasboard-table pi-table mb-0" >
         <div class="table-responsive">
             <table class="table table-bordered text-nowrap">
                 <thead>
@@ -294,7 +164,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let file of uploadedFiles; let i = index">
+                    <!-- <tr *ngFor="let file of uploadedFiles; let i = index">
                         <td>{{ i + 1 }}</td>
                         <td>{{ getFileType(file.type) }}</td>
                         <td>{{ file.name }}</td>
@@ -303,11 +173,11 @@
                                     src="../assets/images/download-icon.svg" alt="" class="me-2"></a>
 
                         </td>
-                    </tr>
+                    </tr> -->
                 </tbody>
             </table>
         </div>
-    </div> -->
+    </div>
 
     <div class="mastersform-sec mb-3">
 
@@ -366,7 +236,4 @@
     </div>
 
 
-
 </div>
-
-
