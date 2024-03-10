@@ -32,9 +32,8 @@ export class PostedTaxInvoiceComponent {
             this.invoice_no = +params['id'];
         });
         this.data = history.state.data;
-        console.log("GetInvoiceSummary" ,this.data);
-
         this.loadTaxInvoiceInformation();
+        console.log("GetInvoiceSummary" ,this.data);
     }
 
 
@@ -43,7 +42,7 @@ export class PostedTaxInvoiceComponent {
             const subscription = this.API.GetTaxInvoiceInformation().subscribe({
                 next: (response: any) => {
                     this.TaxInvoicedata = response.data;
-                    this.filterTaxInvoiceByInvoiceNo(this.data.invoice_no); // Move this line here
+                    this.filterTaxInvoiceByInvoiceNo(this.data.invoice_no);
                     this.loadTaxInvoiceAttachment();
                 },
                 error: (error) => {
@@ -77,8 +76,9 @@ export class PostedTaxInvoiceComponent {
         });
         this.TaxInvoicedata = filteredInvoicesObject;
         console.log("GetTaxInvoiceInformation", this.TaxInvoicedata);
-    }
 
+
+    }
 
     handleLoadingError() {
         this.publicVariable.isProcess = false; // Set status to false on error
@@ -104,9 +104,9 @@ export class PostedTaxInvoiceComponent {
             this.handleLoadingError()
         }
     }
+
     filterTaxInvoiceAttachmentByInvoiceNo(invoiceNo: string) {
         const TaxInvoicedataArray = this.InvoiceAttachment.filter((invoice: any) => invoice.invoiceNo === invoiceNo);
-
         const filteredInvoicesObject: any = {};
         TaxInvoicedataArray.forEach((invoice: any) => {
             filteredInvoicesObject[invoice.invoiceNo] = invoice;
@@ -114,6 +114,4 @@ export class PostedTaxInvoiceComponent {
         this.InvoiceAttachment = filteredInvoicesObject;
         console.log("GetTaxInvoiceAttachment", this.InvoiceAttachment);
     }
-
-
 }
