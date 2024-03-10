@@ -28,9 +28,11 @@ export class InvoicesService {
     private CancelEmployeeURL = `${environment.apiURL}PurchaseInvoice_New/CancelEmployee`;
     private LastestEmailURL = `${environment.apiURL}Mail/LastestEmail?invoiceId=`;
     private InvoiceSummaryURL = `${environment.apiURL}NavERP/GetInvoiceSummary`;
+    private TaxInvoiceInformationURL = `${environment.apiURL}NavERP/GetTaxInvoiceInformation`;
 
-
-
+    GetTaxInvoiceInformation(): Observable<any[]> {
+        return this.http.get<any[]>(`${this.TaxInvoiceInformationURL}`).pipe(this.retry);
+    }
     GetInvoiceSummary(): Observable<any[]> {
         return this.http.get<any[]>(`${this.InvoiceSummaryURL}`).pipe(this.retry);
     }
