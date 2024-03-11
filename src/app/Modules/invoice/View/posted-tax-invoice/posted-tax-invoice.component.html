@@ -19,6 +19,21 @@
     <div class="mastersform-sec mb-0">
         <div class="row">
 
+
+            <div class="col-md-4 col-sm-6">
+                <div class="form-group">
+                    <label>Invoice No</label>
+                    <input type="text" [value]="TaxInvoiceinfo?.invoice_no || 'N/A'" class="form-control" disabled="" readonly="">
+                </div>
+            </div>
+
+            <div class="col-md-4 col-sm-6">
+                <div class="form-group">
+                    <label>Document No</label>
+                    <input type="text"  [value]="TaxInvoiceinfo?.no || 'N/A'" class="form-control" disabled="" readonly="">
+                </div>
+            </div>
+
             <div class="col-md-4 col-sm-6">
                 <div class="form-group">
                     <label>Project Code</label>
