@@ -2,7 +2,15 @@
 <app-loading *ngIf="publicVariable.isProcess"></app-loading>
 
 <div class="inner-content">
-
+    <div class="approver-form">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="comments-history-icon" data-bs-toggle="modal" data-bs-target="#workflow-modal">
+                    <img src="../assets/images/file-history-icon.png" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
     <h3 class="content-title">Customer Accounts Remarks</h3>
 
     <div class="mastersform-sec">
@@ -167,3 +175,53 @@
     </div>
 
   </div>
+<!-----Modal----->
+
+<div class="modal fade common-modal" id="workflow-modal" tabindex="-1" role="dialog"
+    aria-labelledby="testimonialmodalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title text-center w-100 small-title">Workflow Histroy</div>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-0">
+
+                <div class="dashboard-data">
+
+                    <div class="dasboard-table mb-0">
+
+                        <div class="table-responsive">
+
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Status</th>
+                                        <th>Remarks By</th>
+                                        <th>Remarks On</th>
+                                        <th>Remarks</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let i of this.data.workFlowHistory;let in = index">
+                                        <td>{{in + 1}}</td>
+                                        <td>{{i.imwdPendingAt | titlecase}}</td>
+                                        <td>{{i.imwdInitiatedBy |titlecase}}</td>
+                                        <td>{{i.imwdCreatedOn | date:'medium':'IST'}}</td>
+                                        <td>{{i.imwdRemarks | titlecase}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
