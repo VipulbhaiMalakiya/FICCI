@@ -125,17 +125,16 @@
                 <thead>
                     <tr>
                         <th>#</th>
-                        <th width="38%">Document No</th>
-                        <th>GST Credit</th>
+                        <!-- <th width="38%">Document No</th> -->
+                        <!-- <th>GST Credit</th> -->
+                        <th>Line No</th>
+                        <th>Type</th>
+                        <th>GL Accounts</th>
+                        <th>Price</th>
                         <th>GST Group Code</th>
                         <th>GST Group Type</th>
                         <th>HSN SAC Code</th>
-                        <th>NO</th>
-                        <th>line No</th>
                         <th>Location Code</th>
-                        <th>Type</th>
-                        <th>Quantity</th>
-                        <th>Price</th>
                         <th>Total Amount</th>
                     </tr>
                 </thead>
@@ -143,17 +142,16 @@
 
                     <tr *ngFor="let e of TaxInvoiceinfo?.getTaxInvoiceInfoLines; let i = index">
                         <td>{{i + 1}}</td>
-                        <td>{{e.documentNo}}</td>
-                        <td>{{e.gSTCredit}}</td>
+                        <!-- <td>{{e.documentNo}}</td> -->
+                        <!-- <td>{{e.gSTCredit}}</td> -->
+                        <td>{{e.lineNo}}</td>
+                        <td>{{e.type}}</td>
+                        <td>{{e.no_}}</td>
+                        <td>{{e.unitPrice}}</td>
                         <td>{{e.gSTGroupCode}}</td>
                         <td>{{e.gST_Group_Type}}</td>
                         <td>{{e.hSN_SAC_Code}}</td>
-                        <td>{{e.no_}}</td>
-                        <td>{{e.lineNo}}</td>
                         <td>{{e.locationCode}}</td>
-                        <td>{{e.type}}</td>
-                        <td>{{e.quantity}}</td>
-                        <td>{{e.unitPrice}}</td>
                         <td>{{e.lineAmount}}</td>
                     </tr>
                 </tbody>
@@ -191,7 +189,7 @@
         </div>
     </div>
 
-    <div class="mastersform-sec mb-3">
+    <!-- <div class="mastersform-sec mb-3">
 
         <div class="row">
             <div class="col-md-6">
@@ -240,7 +238,7 @@
             </div>
         </div>
 
-    </div>
+    </div> -->
 
     <form [formGroup]="publicVariable.dataForm" (ngSubmit)="onSubmit()">
         <div class="col-md-12 mt-3">
@@ -254,7 +252,7 @@
 
         <div class="col-md-12 mt-4">
             <div class="form-group mb-0 mt-2">
-                <button type="submit" class="common-btn w-auto">Cancel</button>
+                <button type="submit" class="common-btn w-auto">Submit</button>
             </div>
         </div>
     </form>
