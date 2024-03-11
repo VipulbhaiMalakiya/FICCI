@@ -273,7 +273,7 @@
                         <li class="nav-item">
                             <a class="nav-link tabbg-3" data-bs-toggle="pill" href="#PIhome"
                                 (click)="loadInoivceStatusList('APPROVED BY ACCOUNTS APPROVER')">
-                                <small>Approved Accounts</small>
+                                <small>Approved Invoice</small>
                                 <span>{{PIApprovedAccounts}}</span>
                             </a>
                         </li>
@@ -285,6 +285,14 @@
                                 <span>{{PIRejectedbyAccounts}}</span>
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link tabbg-4" data-bs-toggle="pill" href="#PIhome"
+                                (click)="loadInoivceStatusList('Cancelled')">
+                                <small>Cancelled Invoice</small>
+                                <span>{{Cancelled}}</span>
+                            </a>
+                        </li>
+
                         <li class="nav-item" *ngIf="this.publicVariable.storedRole === 'Approver'">
                             <a class="nav-link tabbg-6" data-bs-toggle="pill" href="#PIhome"
                                 (click)="loadInoivceStatusList('FOR APPROVAL')">
@@ -299,6 +307,14 @@
                                 <span>{{this.PIforapproval}}</span>
                             </a>
                         </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link tabbg-5" data-bs-toggle="pill" href="#menu4"
+                                (click)="loadInvoiceSummary()">
+                                <small>Posted Invoice</small>
+                                <span>{{PostedTaxInvoiceCount}}</span>
+                            </a>
+                        </li>
                         <li class="nav-item">
                             <a class="nav-link tabbg-5" data-bs-toggle="pill" href="#PIhome"
                                 (click)="loadInoivceStatusList('ALL')">
@@ -307,13 +323,6 @@
                             </a>
                         </li>
 
-                        <li class="nav-item">
-                            <a class="nav-link tabbg-5" data-bs-toggle="pill" href="#menu4"
-                                (click)="loadInvoiceSummary()">
-                                <small>Posted Tax Invoice</small>
-                                <span>{{PostedTaxInvoiceCount}}</span>
-                            </a>
-                        </li>
 
 
                     </ul>
