@@ -53,37 +53,36 @@
                                             [routerLinkActiveOptions]="{ exact: true }"><img
                                                 src="../assets/images/dashboard-icon.png" alt=""> Dashboard</a></h3>
                                 </div>
-                                <div class="left-men" routerLinkActive="active"
-                                *ngIf="isEmployee || isAccount || isAdmin">
+                                <div class="left-men" routerLinkActive="active">
                                     <h3><img src="../assets/images/customer-icon.png" alt=""> Customer</h3>
                                     <a routerLink="/customer/new" class="menu-list-title" routerLinkActive="active"
                                         [routerLinkActiveOptions]="{ exact: true }"
-                                        *ngIf="isEmployee">New Customer</a>
+                                        *ngIf="!isAdmin && !isAccount">New Customer</a>
                                     <a routerLink="/customer/status" class="menu-list-title"
                                         routerLinkActive="active"
-                                        *ngIf="isEmployee || isAdmin">Customer Status</a>
-                                    <a routerLink="/customer/approval" class="menu-list-title"
+                                        *ngIf="!isAccount">Customer Status</a>
+                                    <!-- <a routerLink="/customer/approval" class="menu-list-title"
                                         routerLinkActive="active"
                                         *ngIf="isEmployee" >Approval
-                                        Inbox</a>
+                                        Inbox</a> -->
                                     <a routerLink="/customer/accounts" class="menu-list-title"
                                         routerLinkActive="active"
                                         *ngIf="isAccount">Accounts
                                         Inbox</a>
                                 </div>
 
-                                <div class="left-men" routerLinkActive="active">
+                                <div class="left-men" routerLinkActive="active" *ngIf="!isAccount">
                                     <h3><img src="../assets/images/invoice-icon.png" alt=""> Purchase Invoice</h3>
                                     <a routerLink="/invoice/new" class="menu-list-title" routerLinkActive="active"
                                         [routerLinkActiveOptions]="{ exact: true }"
                                         *ngIf="isEmployee">New Purchase Invoice</a>
                                     <a routerLink="/invoice/status" class="menu-list-title"
-                                        routerLinkActive="active"
-                                        *ngIf="isEmployee || isAdmin" >Invoice Status</a>
+                                        routerLinkActive="active" *ngIf="isAdmin || isEmployee"
+                                        >Invoice Status</a>
                                     <a routerLink="/invoice/approval" class="menu-list-title"
                                         routerLinkActive="active" *ngIf="isApprover" >Approval Inbox</a>
-                                    <a routerLink="/invoice/accounts" class="menu-list-title"
-                                        routerLinkActive="active" *ngIf="isAccount">Accounts Inbox</a>
+                                    <!-- <a routerLink="/invoice/accounts" class="menu-list-title"
+                                        routerLinkActive="active" *ngIf="isAccount">Accounts Inbox</a> -->
                                 </div>
 
                                 <div class="left-men" routerLinkActive="active" *ngIf="isAdmin">
