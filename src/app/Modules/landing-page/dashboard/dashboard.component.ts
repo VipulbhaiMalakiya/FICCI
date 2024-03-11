@@ -325,11 +325,12 @@ export class DashboardComponent {
         const rejectedData = data.filter(item => item.headerStatus === 'REJECTED BY TL APPROVER'
             || item.headerStatus === 'REJECTED BY CH APPROVER'
             || item.headerStatus === 'REJECTED BY ACCOUNTS APPROVER'
+
         );
         counts['REJECTED BY CH APPROVER'] = rejectedData.length;
 
         const cancelData = data.filter(item =>
-            item.headerStatus === 'CANCEL BY EMPLOYEE');
+            item.headerStatus === 'CANCEL BY EMPLOYEE' || item.headerStatus === 'CANCELLATION REQUEST APPROVED BY FINANCE');
         counts['Cancelled'] = cancelData.length;
 
         const ReversalData = data.filter(item =>
@@ -384,13 +385,14 @@ export class DashboardComponent {
                 (item.headerStatus === 'REJECTED BY TL APPROVER' ||
                     item.headerStatus === 'REJECTED BY CH APPROVER' ||
                     item.headerStatus === 'REJECTED BY ACCOUNTS APPROVER' ||
-                    item.headerStatus === 'REJECTED BY FINANCE APPROVER'));
+                    item.headerStatus === 'REJECTED BY FINANCE APPROVER'
+                   ));
                 break;
             case 'Cancelled':
                 filteredData = this.dashboardData.filter((item: any) =>
                 // item.createdBy === this.publicVariable.storedEmail &&
                 (
-                    item.headerStatus === 'CANCEL BY EMPLOYEE'));
+                    item.headerStatus === 'CANCEL BY EMPLOYEE' || item.headerStatus === 'CANCELLATION REQUEST APPROVED BY FINANCE'));
                 break;
             case 'Reversal':
                 filteredData = this.dashboardData.filter((item: any) =>
@@ -577,7 +579,7 @@ export class DashboardComponent {
         this.appService.exportAsExcelFile(exportData, 'Customer Status', headers);
     }
 
-    onDownloadInvoiceSummary(){
+    onDownloadInvoiceSummary() {
         const exportData = this.InvoiceSummaryList.map((x) => ({
             "No ": x?.no || '',
             "postingDate": x?.postingDate || '',
@@ -591,31 +593,31 @@ export class DashboardComponent {
             "departmentCode": x?.departmentCode || '',
             "divisionCode": x?.divisionCode || '',
             "divisionName": x?.divisionName || '',
-            "approverTL" :  x?.approverTL || '',
-            "approverCH" :  x?.approverCH || '',
-            "approverSupport" :  x?.approverSupport || '',
-            "financeApprover" :  x?.financeApprover || '',
-            "invoicePortalOrder" :  x?.invoicePortalOrder || '',
-            "invoicePortalSubmitted":x?.invoicePortalSubmitted || '',
-            "createdByUser":x?.createdByUser || '',
-            "ToCity":x?.sellToCity || '',
-            "Address":x?.sellToAddress || '',
-            "Address2":x?.sellToAddress2 || '',
-            "PostCode":x?.sellToPostCode || '',
-            "gsT_No":x?.gsT_No || '',
-            "paN_NO":x?.paN_NO || '',
-            "cancelled":x?.cancelled || '',
-            "cancelRemark":x?.cancelRemark || '',
-            "status":x?.status || '',
-            "getTaxInvoiceInfoLines":x?.getTaxInvoiceInfoLines || '',
+            "approverTL": x?.approverTL || '',
+            "approverCH": x?.approverCH || '',
+            "approverSupport": x?.approverSupport || '',
+            "financeApprover": x?.financeApprover || '',
+            "invoicePortalOrder": x?.invoicePortalOrder || '',
+            "invoicePortalSubmitted": x?.invoicePortalSubmitted || '',
+            "createdByUser": x?.createdByUser || '',
+            "ToCity": x?.sellToCity || '',
+            "Address": x?.sellToAddress || '',
+            "Address2": x?.sellToAddress2 || '',
+            "PostCode": x?.sellToPostCode || '',
+            "gsT_No": x?.gsT_No || '',
+            "paN_NO": x?.paN_NO || '',
+            "cancelled": x?.cancelled || '',
+            "cancelRemark": x?.cancelRemark || '',
+            "status": x?.status || '',
+            "getTaxInvoiceInfoLines": x?.getTaxInvoiceInfoLines || '',
         }));
 
-        const headers = ['No','postingDate','invoice_no','CustomerNo','CustomerName','projectCode',
-        'dimensionSetID' ,'departmentName','departmentCode','divisionCode','divisionName','approverTL',
-        'approverCH','approverSupport','financeApprover','invoicePortalOrder','invoicePortalSubmitted',
-        'createdByUser','City','Address','Address2','PostCode','gsT_No','paN_NO','cancelled','cancelRemark',
-        'status','getTaxInvoiceInfoLines'
-    ];
+        const headers = ['No', 'postingDate', 'invoice_no', 'CustomerNo', 'CustomerName', 'projectCode',
+            'dimensionSetID', 'departmentName', 'departmentCode', 'divisionCode', 'divisionName', 'approverTL',
+            'approverCH', 'approverSupport', 'financeApprover', 'invoicePortalOrder', 'invoicePortalSubmitted',
+            'createdByUser', 'City', 'Address', 'Address2', 'PostCode', 'gsT_No', 'paN_NO', 'cancelled', 'cancelRemark',
+            'status', 'getTaxInvoiceInfoLines'
+        ];
         this.appService.exportAsExcelFile(exportData, 'Invoiced', headers);
     }
 
