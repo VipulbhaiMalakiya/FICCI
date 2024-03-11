@@ -429,9 +429,7 @@
                                                                 <img src="../assets/images/view-icon.svg" alt="">
                                                             </a>
 
-                                                            <!-- <a href="javascript:void(0);" (click)="onSendEmail(d)"
-                                                                *ngIf="d.headerStatus === 'APPROVED BY ACCOUNTS APPROVER' &&  this.publicVariable.storedRole == 'Accounts' "><img
-                                                                    src="../assets/images/email-icon.svg" alt="" /></a> -->
+
 
                                                             <a *ngIf="publicVariable.storedRole !== 'Admin' &&
                                                                     (d.isDraft ||
@@ -555,6 +553,9 @@
                                                     <td><span class="table-btns">
                                                             <a href="javascript:void(0);" (click)="InvoicedView(d)"><img
                                                                     src="../assets/images/view-icon.svg" alt=""></a>
+
+                                                                    <a href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#workflow-modal"><img
+                                                                        src="../assets/images/download-icone.svg" alt="" /></a>
                                                         </span>
                                                     </td>
                                                 </tr>
@@ -604,4 +605,60 @@
     <!--main-data-navs-->
 
 
+</div>
+
+<!-----Modal----->
+
+<div class="modal fade common-modal" id="workflow-modal" tabindex="-1" role="dialog"
+    aria-labelledby="testimonialmodalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title text-center w-100 small-title">payment information</div>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-0">
+
+                <div class="dashboard-data">
+
+                    <div class="dasboard-table mb-0">
+
+                        <div class="table-responsive">
+
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Payment No</th>
+                                        <th>Payment Date</th>
+                                        <th>Amount</th>
+                                        <th>Type</th>
+                                        <th>Bank Name</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    <!-- <tr *ngFor="let i of this.data.workFlowHistory;let in = index">
+                                        <td>{{in + 1}}</td>
+                                        <td>{{i.imwdPendingAt | titlecase}}</td>
+                                        <td>{{i.imwdPendingEmailAt | titlecase}}</td>
+                                        <td>{{i.imwdInitiatedBy | titlecase}}</td>
+                                        <td>{{i.imwdRemarks | titlecase}}</td>
+                                        <td>{{i.imwdCreatedOn | date:'medium':'IST'}}</td>
+                                    </tr> -->
+                                </tbody>
+                            </table>
+
+                        </div>
+
+
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
 </div>
