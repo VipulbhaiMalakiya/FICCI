@@ -23,7 +23,7 @@ export class DashboardComponent {
     RejectedbyAccounts: number = 0;
     ALL: number = 0;
     forapproval: number = 0;
-
+    storedRole: string = '';
     PIisDRAFT: number = 0;
     PIPendingApproval: number = 0;
     PIApprovedAccounts: number = 0;
@@ -50,6 +50,7 @@ export class DashboardComponent {
     ngOnInit(): void {
         this.loadCustomerStatusCountList();
         this.publicVariable.storedEmail = localStorage.getItem('userEmail') ?? '';
+        this.storedRole = localStorage.getItem('userRole') ?? '';
     }
 
 
@@ -673,6 +674,10 @@ export class DashboardComponent {
         ];
         this.appService.exportAsExcelFile(exportData, 'PI Invoice Status', headers);
     }
+
+    get isAccount() {
+        return this.storedRole == 'Accounts';
+      }
 
 
     loadInvoiceSummary() {
