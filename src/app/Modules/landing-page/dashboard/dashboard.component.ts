@@ -325,6 +325,7 @@ export class DashboardComponent {
         const rejectedData = data.filter(item => item.headerStatus === 'REJECTED BY TL APPROVER'
             || item.headerStatus === 'REJECTED BY CH APPROVER'
             || item.headerStatus === 'REJECTED BY ACCOUNTS APPROVER'
+            ||item.headerStatus  ==='REJECTED BY FINANCE APPROVER'
 
         );
         counts['REJECTED BY CH APPROVER'] = rejectedData.length;
