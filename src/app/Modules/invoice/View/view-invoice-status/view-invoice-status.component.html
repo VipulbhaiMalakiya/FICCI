@@ -188,11 +188,9 @@
                         <td>{{ getNameById(e.impiGlNo) }}</td>
                         <td>{{e.impiQuantity}}</td>
                         <td>{{e.impiUnitPrice}}</td>
-                        <td>{{e.impiQuantity * e.impiUnitPrice}}</td>
+                        <td>{{ e.impiUnitPrice}}</td>
                         <td>{{e.impiGstgroupCode }}</td>
                         <td>{{e.impiHsnsaccode}}</td>
-
-
                     </tr>
                 </tbody>
             </table>
@@ -231,6 +229,8 @@
 
     <div class="mastersform-sec mb-3">
 
+
+
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
@@ -246,9 +246,6 @@
                     <textarea class="form-control h-100" cols="2" rows="2" disabled=""
                         readonly="">{{data.impiHeaderRemarks}}</textarea> </div>
             </div>
-        </div>
-
-        <div class="row">
             <div class="col-md-6">
                 <div class="form-group" *ngIf="data.impiHeaderTlApproverRemarks">
                     <label>Tl Remarks </label>
@@ -263,9 +260,6 @@
                         readonly="">{{data.impiHeaderClusterApproverRemarks}}</textarea>
                 </div>
             </div>
-        </div>
-
-        <div class="row">
             <div class="col-md-6" *ngIf="data.impiHeaderFinanceRemarks">
                 <div class="form-group">
                     <label>Finance Remarks</label>
@@ -282,6 +276,8 @@
                 </div>
             </div>
         </div>
+
+
 
     </div>
 
@@ -347,10 +343,6 @@
                                         <td>{{i.imwdRemarks | titlecase}}</td>
                                         <td>{{i.imwdCreatedOn | date:'medium':'IST'}}</td>
                                     </tr>
-
-
-
-
                                 </tbody>
                             </table>
 
