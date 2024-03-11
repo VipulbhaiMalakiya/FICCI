@@ -253,7 +253,7 @@
                     <ul class="nav nav-pills" role="tablist">
 
 
-                        <li class="nav-item" *ngIf="this.publicVariable.storedRole !== 'Employee'">
+                        <li class="nav-item" *ngIf="this.publicVariable.storedRole === 'Employee'">
                             <a class="nav-link active tabbg-1" data-bs-toggle="pill" href="#PIhome"
                                 (click)="loadInoivceStatusList('DRAFT')">
                                 <small>Draft</small>
