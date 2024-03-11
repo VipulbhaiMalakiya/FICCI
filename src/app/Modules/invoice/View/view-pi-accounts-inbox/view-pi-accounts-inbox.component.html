@@ -218,6 +218,7 @@
         </div>
         <div class="mastersform-sec mb-3">
 
+
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
@@ -233,9 +234,6 @@
                         <textarea class="form-control h-100" cols="2" rows="2" disabled=""
                             readonly="">{{data.impiHeaderRemarks}}</textarea> </div>
                 </div>
-            </div>
-
-            <div class="row">
                 <div class="col-md-6">
                     <div class="form-group"  *ngIf="data.impiHeaderTlApproverRemarks">
                         <label>Tl Remarks</label>
@@ -250,9 +248,6 @@
                         readonly="">{{data.impiHeaderClusterApproverRemarks}}</textarea>
                     </div>
                 </div>
-            </div>
-
-            <div class="row">
                 <div class="col-md-6" *ngIf="data.impiHeaderFinanceRemarks">
                     <div class="form-group">
                         <label>Finance Remarks</label>
@@ -260,14 +255,13 @@
                         readonly="">{{data.impiHeaderFinanceRemarks}}</textarea>
                     </div>
                 </div>
-
-                <!-- <div class="col-md-6" *ngIf="data.accountApproverRemarks">
+                <div class="col-md-6" *ngIf="data.cancelRemarks">
                     <div class="form-group">
-                        <label>Accounts Remarks</label>
+                        <label>Cancel Remarks</label>
                         <textarea class="form-control h-100" cols="2" rows="2" disabled=""
-                        readonly="">{{data.accountApproverRemarks}}</textarea>
+                        readonly="">{{data.cancelRemarks}}</textarea>
                     </div>
-                </div> -->
+                </div>
             </div>
 
         </div>

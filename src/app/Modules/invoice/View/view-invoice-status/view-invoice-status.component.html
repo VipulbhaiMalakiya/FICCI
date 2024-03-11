@@ -275,6 +275,14 @@
                         readonly="">{{data.accountApproverRemarks}}</textarea>
                 </div>
             </div>
+
+            <div class="col-md-6" *ngIf="data.cancelRemarks">
+                <div class="form-group">
+                    <label>Cancel Remarks</label>
+                    <textarea class="form-control h-100" cols="2" rows="2" disabled=""
+                    readonly="">{{data.cancelRemarks}}</textarea>
+                </div>
+            </div>
         </div>
 
 
