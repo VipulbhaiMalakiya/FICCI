@@ -75,6 +75,7 @@ export interface Attachment {
     imadCreatedOn: string
     imadModifiedBy: any
     imadModifiedOn: any
+    doctype?:any
   }
 
 export interface LineItemRequest {

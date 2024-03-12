@@ -13,7 +13,7 @@ export class ViewPiApprovalComponent {
     data: any;
     FilePath: any;
     publicVariable = new publicVariable();
-    uploadedFiles: File[] = [];
+    uploadedFiles: any[] = [];
 
 
     constructor(private fb: FormBuilder,
@@ -43,7 +43,9 @@ export class ViewPiApprovalComponent {
         this.loadCOAMasterList();
         this.uploadedFiles = this.data.impiHeaderAttachment
         if (this.data.impiHeaderAttachment) {
+            
             this.uploadedFiles = this.data.impiHeaderAttachment.map((file: any) => ({
+                
                 id: file.imadId,
                 recordNo: file.imadRecordNo,
                 screenName: file.imadScreenName,
@@ -55,8 +57,11 @@ export class ViewPiApprovalComponent {
                 createdBy: file.imadCreatedBy,
                 createdOn: file.imadCreatedOn,
                 modifiedBy: file.imadModifiedBy,
-                modifiedOn: file.imadModifiedOn
+                modifiedOn: file.imadModifiedOn,
+                doctype:file.doctype
             }));
+            console.log(  this.uploadedFiles);
+            
         } else {
             this.uploadedFiles = [];
             this.handleLoadingError()

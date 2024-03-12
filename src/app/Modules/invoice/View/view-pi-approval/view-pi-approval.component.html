@@ -13,7 +13,8 @@
     <h3 class="content-title">Customer Approval Inbox</h3>
     <div class="pipage-radio">
         <div class="form-check">
-            <input class="form-check-input" type="radio" name="ImpiHeaderInvoiceType" id="flexRadioDefault1" value="Proforma Invoice" checked />
+            <input class="form-check-input" type="radio" name="ImpiHeaderInvoiceType" id="flexRadioDefault1"
+                value="Proforma Invoice" checked />
 
             <label class="form-check-label" for="flexRadioDefault1">
                 {{data.impiHeaderInvoiceType | titlecase}}
@@ -49,7 +50,8 @@
             <div class="col-md-4 col-sm-6">
                 <div class="form-group">
                     <label>Division</label>
-                    <input type="text" value="{{data.impiHeaderProjectDivisionName}}" class="form-control" disabled="" readonly="">
+                    <input type="text" value="{{data.impiHeaderProjectDivisionName}}" class="form-control" disabled=""
+                        readonly="">
                 </div>
             </div>
 
@@ -69,15 +71,13 @@
             <div class="col-md-4 col-sm-6">
                 <div class="form-group">
                     <label>Starting Date</label>
-                    <input type="text" value="{{data.startDate}}" class="form-control" disabled=""
-                        readonly="">
+                    <input type="text" value="{{data.startDate}}" class="form-control" disabled="" readonly="">
                 </div>
             </div>
             <div class="col-md-4 col-sm-6">
                 <div class="form-group">
                     <label>End Date</label>
-                    <input type="text" value="{{data.endDate}}" class="form-control" disabled=""
-                        readonly="">
+                    <input type="text" value="{{data.endDate}}" class="form-control" disabled="" readonly="">
                 </div>
             </div>
             <!--show tax-invoice-only
@@ -123,8 +123,8 @@
             <div class="col-md-4 col-sm-6">
                 <div class="form-group">
                     <label>State</label>
-                    <input type="text" value="{{getStateNameById(data.impiHeaderCustomerState)}}" class="form-control" disabled=""
-                        readonly="">
+                    <input type="text" value="{{getStateNameById(data.impiHeaderCustomerState)}}" class="form-control"
+                        disabled="" readonly="">
                 </div>
             </div>
 
@@ -215,25 +215,29 @@
         <div class="table-responsive">
             <table class="table table-bordered text-nowrap">
                 <thead>
-                  <tr>
-                    <th>#</th>
-                    <th>File Type</th>
-                    <th>File Name</th>
-                    <th>Action</th>
-                  </tr>
+                    <tr>
+                        <th>#</th>
+                        <th>Category</th>
+
+                        <th>File Type</th>
+                        <th>File Name</th>
+                        <th>Action</th>
+                    </tr>
                 </thead>
                 <tbody>
-                  <tr *ngFor="let file of uploadedFiles; let i = index">
-                    <td>{{ i + 1 }}</td>
-                    <td>{{ getFileType(file.type) }}</td>
-                    <td>{{ file.name }}</td>
-                    <td>
-                      <a href="javascript:void(0)" (click)="downalodFile(file)"><img src="../assets/images/download-icon.svg" alt="" class="me-2"></a>
+                    <tr *ngFor="let file of uploadedFiles; let i = index">
+                        <td>{{ i + 1 }}</td>
+                        <td>{{file.doctype}}</td>
+                        <td>{{ getFileType(file.type) }}</td>
+                        <td>{{ file.name }}</td>
+                        <td>
+                            <a href="javascript:void(0)" (click)="downalodFile(file)"><img
+                                    src="../assets/images/download-icon.svg" alt="" class="me-2"></a>
 
-                    </td>
-                  </tr>
+                        </td>
+                    </tr>
                 </tbody>
-              </table>
+            </table>
         </div>
     </div>
 
@@ -256,7 +260,7 @@
             </div>
 
             <div class="col-md-6" *ngIf="data.impiHeaderTlApproverRemarks">
-                <div class="form-group"  >
+                <div class="form-group">
                     <label>Tl Remarks</label>
                     <textarea class="form-control h-100" cols="2" rows="2" disabled=""
                         readonly="">{{data.impiHeaderTlApproverRemarks}}</textarea> </div>
@@ -266,7 +270,7 @@
                 <div class="form-group">
                     <label>CH Remarks</label>
                     <textarea class="form-control h-100" cols="2" rows="2" disabled=""
-                    readonly="">{{data.impiHeaderClusterApproverRemarks}}</textarea>
+                        readonly="">{{data.impiHeaderClusterApproverRemarks}}</textarea>
                 </div>
             </div>
 
@@ -274,7 +278,7 @@
                 <div class="form-group">
                     <label>Finance Remarks</label>
                     <textarea class="form-control h-100" cols="2" rows="2" disabled=""
-                    readonly="">{{data.impiHeaderFinanceRemarks}}</textarea>
+                        readonly="">{{data.impiHeaderFinanceRemarks}}</textarea>
                 </div>
             </div>
 
@@ -282,7 +286,7 @@
                 <div class="form-group">
                     <label>Cancel Remarks</label>
                     <textarea class="form-control h-100" cols="2" rows="2" disabled=""
-                    readonly="">{{data.cancelRemarks}}</textarea>
+                        readonly="">{{data.cancelRemarks}}</textarea>
                 </div>
             </div>
         </div>
@@ -291,11 +295,12 @@
 
     </div>
 
-    <form [formGroup]="publicVariable.dataForm"  *ngIf="data.headerStatus == 'PENDING WITH FINANCE APPROVER' || data.headerStatus === 'PENDING WITH TL APPROVER' ||data.headerStatus ===  'PENDING WITH CH APPROVER' || data.headerStatus === 'PENDING WITH TL APPROVER' ||data.headerStatus ===  'CANCEL BY EMPLOYEE'  " >
+    <form [formGroup]="publicVariable.dataForm"
+        *ngIf="data.headerStatus == 'PENDING WITH FINANCE APPROVER' || data.headerStatus === 'PENDING WITH TL APPROVER' ||data.headerStatus ===  'PENDING WITH CH APPROVER' || data.headerStatus === 'PENDING WITH TL APPROVER' ||data.headerStatus ===  'CANCEL BY EMPLOYEE'  ">
         <div class="col-md-12 mt-3">
             <div class="form-group">
                 <label>Remarks</label>
-                <textarea class="form-control h-50" cols="2" rows="2"  formControlName="remarks" ></textarea>
+                <textarea class="form-control h-50" cols="2" rows="2" formControlName="remarks"></textarea>
 
             </div>
         </div>
@@ -303,7 +308,7 @@
         <div class="col-md-12 mt-4">
             <div class="form-group mb-0 mt-2">
                 <button type="submit" class="btn btn-danger w-auto me-2" (click)="onSubmit(false)">Reject</button>
-                <button type="submit" class="common-btn w-auto"  (click)="onSubmit(true)">Approve</button>
+                <button type="submit" class="common-btn w-auto" (click)="onSubmit(true)">Approve</button>
             </div>
         </div>
     </form>
