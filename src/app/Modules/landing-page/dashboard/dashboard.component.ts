@@ -316,10 +316,12 @@ export class DashboardComponent {
         const forapproval = data.filter(item => item.headerStatus === 'PENDING WITH TL APPROVER'
             || item.headerStatus === 'PENDING WITH CH APPROVER'
             || item.headerStatus === 'PENDING WITH ACCOUNTS APPROVER'
-            || item.headerStatus === 'PENDING WITH FINANCE APPROVER');
+            || item.headerStatus === 'PENDING WITH FINANCE APPROVER'
+            );
         counts['FOR APPROVAL'] = forapproval.length;
 
         const approvedData = data.filter(item => item.headerStatus === 'APPROVED BY ACCOUNTS APPROVER'
+
             || item.headerStatus === 'MAIL SENT BY ACCOUNT TO CUSTOMER' || item.headerStatus === 'APPROVED BY FINANCE');
         counts['PENDING WITH FINANCE APPROVER'] = approvedData.length;
 
@@ -332,7 +334,7 @@ export class DashboardComponent {
         counts['REJECTED BY CH APPROVER'] = rejectedData.length;
 
         const cancelData = data.filter(item =>
-            item.headerStatus === 'CANCEL BY EMPLOYEE' || item.headerStatus === 'CANCELLATION APPROVED BY FINANCE');
+            item.headerStatus === 'CANCEL BY EMPLOYEE' );
         counts['Cancelled'] = cancelData.length;
 
         const ReversalData = data.filter(item =>
