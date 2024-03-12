@@ -51,7 +51,8 @@ export class NewPurchaseInvoiceComponent implements OnInit {
             PINO: [''], //api missing
             ImpiHeaderCustomerName: [null, [Validators.required]],
             ImpiHeaderCustomerCode: [''], //new filed
-            ImpiHeaderCustomerAddress: ['', [Validators.required]],
+            ImpiHeaderCustomerAddress:  ['', [Validators.required, alphanumericWithSpacesValidator(), Validators.maxLength(100)]],
+            
             ImpiHeaderCustomerState: [null, [Validators.required]],
             ImpiHeaderCustomerCity: [null, [Validators.required]],
             ImpiHeaderCustomerPinCode: ['', [Validators.required, Validators.pattern(/^\d{6}$/)]],

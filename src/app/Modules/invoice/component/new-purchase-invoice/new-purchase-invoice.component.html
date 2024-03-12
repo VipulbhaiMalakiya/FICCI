@@ -189,8 +189,17 @@
                         <label for="address">Address <sup class="text-danger">*</sup></label>
                         <input type="text" id="address" placeholder="Address"
                             formControlName="ImpiHeaderCustomerAddress" class="form-control" />
-                        <div *ngIf="shouldShowError('ImpiHeaderCustomerAddress','required')" class="text-danger">This
-                            field is required</div>
+                  
+                            <div *ngIf="shouldShowError('ImpiHeaderCustomerAddress', 'required')" class="text-danger">
+                                Email is required.
+                            </div>
+                            <div *ngIf="shouldShowError('ImpiHeaderCustomerAddress', 'email')" class="text-danger">
+                                Please enter a valid email address.
+                            </div>
+    
+                            <div *ngIf="shouldShowError('ImpiHeaderCustomerAddress', 'maxlength')" class="text-danger">
+                                Email must be less than 80 characters.
+                            </div>
 
                     </div>
                 </div>
