@@ -208,6 +208,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
         this.uploadedFiles = data.impiHeaderAttachment;
 
         if (data.impiHeaderAttachment !== null && data.impiHeaderAttachment !== undefined) {
+            
             this.uploadedFiles = data.impiHeaderAttachment.map((file: any) => ({
                 id: file.imadId,
                 recordNo: file.imadRecordNo,
