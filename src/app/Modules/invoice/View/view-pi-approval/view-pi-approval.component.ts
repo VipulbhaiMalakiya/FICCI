@@ -60,7 +60,6 @@ export class ViewPiApprovalComponent {
                 modifiedOn: file.imadModifiedOn,
                 doctype:file.doctype
             }));
-            console.log(  this.uploadedFiles);
             
         } else {
             this.uploadedFiles = [];
