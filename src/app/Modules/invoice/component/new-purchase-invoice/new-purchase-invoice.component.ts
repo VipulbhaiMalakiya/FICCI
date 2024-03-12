@@ -54,7 +54,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
             ImpiHeaderCustomerState: [null, [Validators.required]],
             ImpiHeaderCustomerCity: [null, [Validators.required]],
             ImpiHeaderCustomerPinCode: ['', [Validators.required, Validators.pattern(/^\d{6}$/)]],
-            ImpiHeaderCustomerGstNo: ['', [Validators.required, gstValidator()]],
+            ImpiHeaderCustomerGstNo: [null, [Validators.required, gstValidator()]],
             ImpiHeaderCustomerContactPerson: ['', [Validators.required, alphanumericWithSpacesValidator()]],
             ImpiHeaderCustomerEmailId: ['', [Validators.required, Validators.email]],
             ImpiHeaderCustomerPhoneNo: ['', [Validators.required, Validators.pattern(/^[6-9]\d{9}$/)]],
@@ -341,6 +341,38 @@ export class NewPurchaseInvoiceComponent implements OnInit {
         }
     }
 
+    onSelectGSTCustomer(): void {
+        const selectedId = this.publicVariable.dataForm.get('ImpiHeaderCustomerGstNo')?.value;
+
+        if (selectedId) {
+            this.publicVariable.selectCustomer = this.publicVariable.GetCustomerList.find(customer => customer.gstregistrationNo == selectedId);
+            if (this.publicVariable.selectCustomer) {
+                this.publicVariable.dataForm.patchValue({
+                    ImpiHeaderCustomerAddress: this.publicVariable.selectCustomer.custAddress,
+                    ImpiHeaderCustomerPinCode: this.publicVariable.selectCustomer.pinCode,
+                    ImpiHeaderCustomerName: this.publicVariable.selectCustomer.custName,
+                    ImpiHeaderCustomerContactPerson: this.publicVariable.selectCustomer.contact,
+                    ImpiHeaderCustomerEmailId: this.publicVariable.selectCustomer.email,
+                    ImpiHeaderCustomerPhoneNo: this.publicVariable.selectCustomer.primaryContactNo,
+                    ImpiHeaderCustomerState: this.publicVariable.selectCustomer.stateCode,
+                    ImpiHeaderCustomerCity: this.publicVariable.selectCustomer.city,
+                });
+            }
+        } else {
+            this.publicVariable.dataForm.patchValue({
+                ImpiHeaderCustomerAddress: null,
+                ImpiHeaderCustomerPinCode: null,
+                ImpiHeaderCustomerName: null,
+                ImpiHeaderCustomerContactPerson: null,
+                ImpiHeaderCustomerEmailId: null,
+                ImpiHeaderCustomerPhoneNo: null,
+                ImpiHeaderCustomerState: null,
+                ImpiHeaderCustomerCity: null
+
+            });
+        }
+    }
+
     handleLoadingError() {
         this.publicVariable.isProcess = false; // Set status to false on error
     }
@@ -482,6 +514,12 @@ export class NewPurchaseInvoiceComponent implements OnInit {
         const concatenatedString = `${item.countryCode} ${item.cityName}`.toLowerCase();
         return concatenatedString.includes(term.toLowerCase());
     }
+
+    gstSearchFn(term: string, item: any) {
+        const concatenatedString = `${item.no} ${item.name}`.toLowerCase();
+        return concatenatedString.includes(term.toLowerCase());
+    }
+
 
     onCitySelectionChange() {
 

@@ -162,7 +162,27 @@
                         </div>
                     </div>
                 </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="form-group">
+                        <label for="ImpiHeaderCustomerGstNo">GST Number <sup class="text-danger">*</sup></label>
+                        <div class="flex-field">
+                            <ng-select [items]="publicVariable.GetCustomerList" #select class="w-100"
+                                bindLabel="gstregistrationNo" bindValue="gstregistrationNo" placeholder="Select customer"
+                                formControlName="ImpiHeaderCustomerGstNo" (change)="onSelectGSTCustomer()"
+                                [searchable]="true" [searchFn]="customerSearchFn" [virtualScroll]="true"
+                                [bufferAmount]="10">
+                                <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
+                                    <div><span>{{item.gstregistrationNo}}</span></div>
+                                </ng-template>
+                            </ng-select>
 
+                            <!-- <div class="add-btn"><a routerLink="/customer/new" target="_blank">+</a></div> -->
+                        </div>
+                        <div *ngIf="shouldShowError('ImpiHeaderCustomerGstNo','required')" class="text-danger">This field
+                            is required
+                        </div>
+                    </div>
+                </div>
                 <div class="col-md-4 col-sm-6">
                     <div class="form-group">
                         <label for="address">Address <sup class="text-danger">*</sup></label>
@@ -220,7 +240,7 @@
                     </div>
                 </div>
 
-                <div class="col-md-4 col-sm-6">
+                <!-- <div class="col-md-4 col-sm-6">
                     <div class="form-group">
                         <label for="GSTNumber">GST Number <sup class="text-danger">*</sup></label>
                         <input type="text" class="form-control" id="GSTNumber" placeholder="GST Number"
@@ -231,7 +251,7 @@
                                 GST number already exists.
                             </div>
                     </div>
-                </div>
+                </div> -->
 
                 <div class="col-md-4 col-sm-6">
                     <div class="form-group">
@@ -281,10 +301,14 @@
                 <div class="row">
                     <div class="col-md-4 col-sm-6">
                         <div class="form-group">
-                            <label>Nature of Expense <sup class="text-danger">*</sup></label>
+                            <label>Nature of Income<sup class="text-danger">*</sup></label>
                             <ng-select [items]="publicVariable.COAMasterList" #select bindLabel="name" bindValue="no"
                                 placeholder="Select " [searchable]="true" [virtualScroll]="true" [bufferAmount]="10"
-                                formControlName="impiGlNo">
+                                formControlName="impiGlNo"
+                                [searchFn]="gstSearchFn">
+                                <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
+                                    <small>{{item.no}} - {{item.name}}</small>
+                                </ng-template>
                             </ng-select>
                             <div *ngIf="shouldShowExpenseError('impiGlNo','required')" class="text-danger">This
                                 field is required</div>
@@ -382,7 +406,7 @@
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th width="38%">Nature of Expense</th>
+                            <th width="38%">Nature of Income</th>
                             <th>Quantity</th>
                             <th>Direct Unit Cost</th>
                             <th>Line Amount</th>
