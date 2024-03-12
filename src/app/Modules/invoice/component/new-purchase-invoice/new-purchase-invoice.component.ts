@@ -64,8 +64,8 @@ export class NewPurchaseInvoiceComponent implements OnInit {
             ImpiHeaderPaymentTerms: [''],
             ImpiHeaderRemarks: [''],
             IsDraft: [false],
-            startingdate:[{ value: '', disabled: true }, [Validators.required]],
-            enddate:[{ value: '', disabled: true }, [Validators.required]],
+            startDate :[{ value: '', disabled: true }, [Validators.required]],
+            endDate:[{ value: '', disabled: true }, [Validators.required]],
 
         });
     }
@@ -802,7 +802,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
         ['ImpiHeaderInvoiceType', 'ImpiHeaderProjectCode', 'ImpiHeaderDepartment', 'ImpiHeaderDivison', 'ImpiHeaderPanNo', 'ImpiHeaderGstNo',
             'ImpiHeaderCustomerName', 'ImpiHeaderCustomerAddress', 'ImpiHeaderCustomerState', 'ImpiHeaderCustomerCity', 'ImpiHeaderCustomerPinCode', 'ImpiHeaderCustomerEmailId',
             'ImpiHeaderCustomerGstNo', 'ImpiHeaderCustomerContactPerson', 'ImpiHeaderCustomerPhoneNo', 'items',
-            'startingdate','enddate'
+            'startDate','endDate'
         ].forEach(controlName => {
             this.publicVariable.dataForm.controls[controlName].markAsTouched();
         });
