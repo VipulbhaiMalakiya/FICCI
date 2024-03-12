@@ -444,6 +444,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
         // Check if a category is selected
         if (! this.publicVariable.dataForm.get('TypeofAttachment')?.value) {
             alert('Please select a category before selecting files.');
+            event.target.value = null;
             return;
         }
         const selectedFiles: FileList = event.target.files;
