@@ -66,7 +66,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
             IsDraft: [false],
             startDate :[{ value: '', disabled: true }, [Validators.required]],
             endDate:[{ value: '', disabled: true }, [Validators.required]],
-            TypeofAttachment:['', [Validators.required]]
+            TypeofAttachment:['']
         });
     }
 
