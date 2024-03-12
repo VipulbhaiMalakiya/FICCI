@@ -450,11 +450,12 @@ export class NewPurchaseInvoiceComponent implements OnInit {
     onFilesSelected(event: any) {
 
         // Check if a category is selected
-        if (! this.publicVariable.dataForm.get('TypeofAttachment')?.value) {
-            alert('Please select a category before selecting files.');
-            event.target.value = null;
-            return;
-        }
+        const selectedCategory = this.publicVariable.dataForm.get('TypeofAttachment')?.value;
+    if (!selectedCategory) {
+        alert('Please select a category before selecting files.');
+        event.target.value = null;
+        return;
+    }
         const selectedFiles: FileList = event.target.files;
         const allowedTypes = ['application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', // .xlsx
             'application/vnd.ms-excel', // .xls
@@ -479,7 +480,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
                 event.target.value = null;
                 return;
             }
-            this.uploadedFiles.push(file);
+            this.uploadedFiles.push({ file: file, category: selectedCategory });
 
         }
     }
@@ -795,8 +796,8 @@ export class NewPurchaseInvoiceComponent implements OnInit {
 
                     for (let i = 0; i < this.uploadedFiles.length; i++) {
                         const item = this.uploadedFiles[i];
-                        formData.append(`DocType[${i}].doctype`, newData.TypeofAttachment);
-                        formData.append(`DocType[${i}].content`, item);
+                        formData.append(`DocType[${i}].doctype`, item.category);
+                        formData.append(`DocType[${i}].content`, item.file);
                     }
 
 
