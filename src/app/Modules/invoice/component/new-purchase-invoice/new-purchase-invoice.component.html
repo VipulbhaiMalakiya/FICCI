@@ -141,7 +141,7 @@
             <div class="row">
                 <div class="col-md-4 col-sm-6">
                     <div class="form-group">
-                        <label for="CustomerName">Customer Name</label>
+                        <label for="CustomerName">Customer Name <sup class="text-danger">*</sup></label>
                         <div class="flex-field">
                             <ng-select [items]="publicVariable.GetCustomerList" #select class="w-100"
                                 bindLabel="custName" bindValue="custName" placeholder="Select customer"
@@ -165,7 +165,7 @@
 
                 <div class="col-md-4 col-sm-6">
                     <div class="form-group">
-                        <label for="address">Address</label>
+                        <label for="address">Address <sup class="text-danger">*</sup></label>
                         <input type="text" id="address" placeholder="Address"
                             formControlName="ImpiHeaderCustomerAddress" class="form-control" />
                         <div *ngIf="shouldShowError('ImpiHeaderCustomerAddress','required')" class="text-danger">This
@@ -175,7 +175,7 @@
                 </div>
                 <div class="col-md-4 col-sm-6">
                     <div class="form-group">
-                        <label for="state">State</label>
+                        <label for="state">State <sup class="text-danger">*</sup></label>
                         <ng-select [items]="publicVariable.stateList" #select bindLabel="stateName"
                             bindValue="stateCode" placeholder="Select " formControlName="ImpiHeaderCustomerState"
                             [searchable]="true" [searchFn]="stateSearchFn" [virtualScroll]="true" [bufferAmount]="10">
@@ -190,7 +190,7 @@
                 </div>
                 <div class="col-md-4 col-sm-6">
                     <div class="form-group">
-                        <label for="city">City</label>
+                        <label for="city">City <sup class="text-danger">*</sup></label>
                             <ng-select [items]="publicVariable.cityList" #select bindLabel="cityName" bindValue="cityName"
                             placeholder="Select" formControlName="ImpiHeaderCustomerCity" [searchable]="true"
                             [searchFn]="citySearchFn"
@@ -208,7 +208,7 @@
                 </div>
                 <div class="col-md-4 col-sm-6">
                     <div class="form-group">
-                        <label for="pincode">Pincode</label>
+                        <label for="pincode">Pincode <sup class="text-danger">*</sup></label>
                         <input type="text" formControlName="ImpiHeaderCustomerPinCode" placeholder="Pincode"
                             (input)="onInputChange($event)" class="form-control" />
                         <div *ngIf="shouldShowError('ImpiHeaderCustomerPinCode','required')" class="text-danger"> Pin
@@ -222,7 +222,7 @@
 
                 <div class="col-md-4 col-sm-6">
                     <div class="form-group">
-                        <label for="GSTNumber">GST Number</label>
+                        <label for="GSTNumber">GST Number <sup class="text-danger">*</sup></label>
                         <input type="text" class="form-control" id="GSTNumber" placeholder="GST Number"
                             formControlName="ImpiHeaderCustomerGstNo" (blur)="validateGST()" />
                         <div *ngIf="shouldShowError('ImpiHeaderCustomerGstNo','invalidGST')" class="text-danger"> Please
@@ -235,7 +235,7 @@
 
                 <div class="col-md-4 col-sm-6">
                     <div class="form-group">
-                        <label for="ContactPerson">Contact Person</label>
+                        <label for="ContactPerson">Contact Person <sup class="text-danger">*</sup></label>
                         <input type="text" placeholder="Contact Person" id="ContactPerson"
                             formControlName="ImpiHeaderCustomerContactPerson" class="form-control" />
                         <div *ngIf="shouldShowError('ImpiHeaderCustomerContactPerson', 'alphanumericWithSpaces')"
@@ -248,7 +248,7 @@
 
                 <div class="col-md-4 col-sm-6">
                     <div class="form-group">
-                        <label for="EmailID">Email ID</label>
+                        <label for="EmailID">Email ID <sup class="text-danger">*</sup></label>
                         <input type="text" placeholder="Email ID" id="EmailID"
                             formControlName="ImpiHeaderCustomerEmailId" class="form-control" />
                         <div *ngIf="shouldShowError('ImpiHeaderCustomerEmailId','required')" class="text-danger">Email
@@ -261,7 +261,7 @@
 
                 <div class="col-md-4 col-sm-6">
                     <div class="form-group">
-                        <label for="PhoneNo">Phone No.</label>
+                        <label for="PhoneNo">Phone No. <sup class="text-danger">*</sup></label>
                         <input type="text" class="form-control" id="PhoneNo" (input)="onInputChange($event)"
                             placeholder="Phone No" formControlName="ImpiHeaderCustomerPhoneNo" />
                         <div *ngIf="shouldShowError('ImpiHeaderCustomerPhoneNo','required')" class="text-danger">Phone
@@ -281,7 +281,7 @@
                 <div class="row">
                     <div class="col-md-4 col-sm-6">
                         <div class="form-group">
-                            <label>Nature of Expense</label>
+                            <label>Nature of Expense <sup class="text-danger">*</sup></label>
                             <ng-select [items]="publicVariable.COAMasterList" #select bindLabel="name" bindValue="no"
                                 placeholder="Select " [searchable]="true" [virtualScroll]="true" [bufferAmount]="10"
                                 formControlName="impiGlNo">
@@ -293,7 +293,7 @@
 
                     <div class="col-md-4 col-sm-6">
                         <div class="form-group">
-                            <label for="Quantity">Quantity</label>
+                            <label for="Quantity">Quantity <sup class="text-danger">*</sup></label>
                             <input type="text" class="form-control" id="Quantity" placeholder="Quantity"
                                 formControlName="impiQuantity" (input)="onInputChange($event)" />
                             <div *ngIf="shouldShowExpenseError('impiQuantity','required')" class="text-danger">This field is
@@ -303,7 +303,7 @@
 
                     <div class="col-md-4 col-sm-6">
                         <div class="form-group">
-                            <label>GST Group Code</label>
+                            <label>GST Group Code <sup class="text-danger">*</sup></label>
                             <ng-select [items]="publicVariable.GSTGroupList" #select bindLabel="code" bindValue="code"
                                 placeholder="Select " [searchable]="true" [virtualScroll]="true" [bufferAmount]="10"
                                 (change)="onGSTGroupChange($event)" formControlName="impiGstgroupCode">
@@ -314,7 +314,7 @@
 
                     <div class="col-md-4 col-sm-6">
                         <div class="form-group">
-                            <label>HSN/SAC Code</label>
+                            <label>HSN/SAC Code <sup class="text-danger">*</sup></label>
                             <ng-select [items]="publicVariable.HSNSACList" #select bindLabel="hsnCode"
                                 bindValue="hsnCode" placeholder="Select " [searchable]="true" [virtualScroll]="true"
                                 [bufferAmount]="10" formControlName="impiHsnsaccode">
@@ -329,7 +329,7 @@
 
                     <div class="col-md-4 col-sm-6">
                         <div class="form-group">
-                            <label>Direct Unit Cost</label>
+                            <label>Direct Unit Cost <sup class="text-danger">*</sup></label>
                             <input type="text" class="form-control" placeholder="Direct Unit Cost"
                                 formControlName="impiUnitPrice" (input)="priceValidator($event)">
                             <div *ngIf="shouldShowExpenseError('impiUnitPrice','required')" class="text-danger">This field is
