@@ -440,6 +440,12 @@ export class NewPurchaseInvoiceComponent implements OnInit {
 
     //!update Code required validation and category check
     onFilesSelected(event: any) {
+
+        // Check if a category is selected
+        if (! this.publicVariable.dataForm.get('TypeofAttachment')?.value) {
+            alert('Please select a category before selecting files.');
+            return;
+        }
         const selectedFiles: FileList = event.target.files;
         const allowedTypes = ['application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', // .xlsx
             'application/vnd.ms-excel', // .xls
