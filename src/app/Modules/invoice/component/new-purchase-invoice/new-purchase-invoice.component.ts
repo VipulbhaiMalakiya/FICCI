@@ -783,11 +783,14 @@ export class NewPurchaseInvoiceComponent implements OnInit {
                     }
                     formData.append('impiHeaderTotalInvoiceAmount', String(impiHeaderTotalInvoiceAmount));
 
-                    //  uploadedFiles is an array of File objects
-                    this.uploadedFiles.forEach(file => {
-                        formData.append('TypeofAttachment', newData.TypeofAttachment);
-                        formData.append('ImpiHeaderAttachment', file);
-                    });
+
+
+                    for (let i = 0; i < this.uploadedFiles.length; i++) {
+                        const item = this.uploadedFiles[i];
+                        formData.append(`DocType[${i}].doctype`, newData.TypeofAttachment);
+                        formData.append(`DocType[${i}].content`, item);
+                    }
+
 
 
                     this.publicVariable.isProcess = true;
