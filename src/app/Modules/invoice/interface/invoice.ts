@@ -13,6 +13,8 @@ export interface projectModel {
     chApprover: string
     financeApprover: string
     supportApprover: string
+    startDate:string
+    endDate:string
 }
 
 
