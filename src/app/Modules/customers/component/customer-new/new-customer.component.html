@@ -51,8 +51,8 @@
                         <div *ngIf="shouldShowError('address', 'maxlength')" class="text-danger">
                             address must be less than 100 characters.
                         </div>
-                        <div *ngIf="shouldShowError('address', 'alphanumericWithSpaces')" class="text-danger">
-                            address must be alphanumeric.
+                        <div *ngIf="shouldShowError('address', 'forbiddenCharacters')" class="text-danger">
+                            Special characters are not allowed in the address
                         </div>
                     </div>
                 </div>
@@ -63,8 +63,8 @@
                         <div *ngIf="shouldShowError('address2', 'maxlength')" class="text-danger">
                             address2 must be less than 100 characters.
                         </div>
-                        <div *ngIf="shouldShowError('address2', 'alphanumericWithSpaces')" class="text-danger">
-                            address2 must be alphanumeric.
+                        <div *ngIf="shouldShowError('address2', 'forbiddenCharacters')" class="text-danger">
+                            Special characters are not allowed in the address2
                         </div>
                     </div>
                 </div>

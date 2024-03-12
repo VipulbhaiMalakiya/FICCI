@@ -12,6 +12,7 @@ import {
     panValidator,
     publicVariable,
 } from '../../Export/new-customer';
+import { AbstractControl, ValidatorFn } from '@angular/forms';
 @Component({
     selector: 'app-new-customer',
     templateUrl: './new-customer.component.html',
@@ -40,8 +41,8 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
             customerNo: ['', [Validators.maxLength(20)]],
             name: ['', [Validators.required, alphanumericWithSpacesValidator(), Validators.maxLength(100)]],
             name2: ['',[alphanumericWithSpacesValidator(), Validators.maxLength(100)]],
-            address: ['', [Validators.required, alphanumericWithSpacesValidator(), Validators.maxLength(100)]],
-            address2: ['',[alphanumericWithSpacesValidator(), Validators.maxLength(100)]],
+            address: ['', [Validators.required, this.addressValidator(), Validators.maxLength(100)]],
+            address2: ['',[this.addressValidator(), Validators.maxLength(100)]],
             countryCode: [null, [Validators.required]],
             stateCode: [null, [Validators.required]],
             cityCode: [null, [Validators.required]],
@@ -57,6 +58,14 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
 
         });
     }
+
+    addressValidator(): ValidatorFn {
+        return (control: AbstractControl): { [key: string]: any } | null => {
+          const forbidden = /[^a-zA-Z0-9\s.,\-]/.test(control.value);
+          return forbidden ? { 'forbiddenCharacters': { value: control.value } } : null;
+        };
+      }
+      
 
     ngOnInit(): void {
         this.loadCountryList();
