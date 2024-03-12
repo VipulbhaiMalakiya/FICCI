@@ -45,8 +45,8 @@ export class NewPurchaseInvoiceComponent implements OnInit {
             Project: [{ value: '', disabled: true }, [Validators.required]],
             ImpiHeaderDepartment: [{ value: '', disabled: true }, [Validators.required]],
             ImpiHeaderDivison: [{ value: '', disabled: true }, [Validators.required]],
-            ImpiHeaderPanNo: [{ value: '07AAACF1282E1Z1', disabled: true }, [Validators.required]],
-            ImpiHeaderGstNo: [{ value: 'AAACF1282E', disabled: true }, [Validators.required]],
+            ImpiHeaderPanNo: [ {value: 'AAACF1282E', disabled: true }, [Validators.required]],
+            ImpiHeaderGstNo: [ { value: '07AAACF1282E1Z1', disabled: true }, [Validators.required]],
             PINO: [''], //api missing
             ImpiHeaderCustomerName: [null, [Validators.required]],
             ImpiHeaderCustomerCode: [''], //new filed
@@ -384,14 +384,18 @@ export class NewPurchaseInvoiceComponent implements OnInit {
                 this.publicVariable.dataForm.patchValue({
                     ImpiHeaderDepartment: this.publicVariable.selectedProjet.departmentName,
                     ImpiHeaderDivison: this.publicVariable.selectedProjet.divisionName,
-                    Project: this.publicVariable.selectedProjet.name
-
+                    Project: this.publicVariable.selectedProjet.name,
+                    startDate:this.publicVariable.selectedProjet.startDate,
+                    endDate:this.publicVariable.selectedProjet.endDate,
                 });
             }
         } else {
             this.publicVariable.dataForm.patchValue({
                 ImpiHeaderDepartment: null,
                 ImpiHeaderDivison: null,
+                Project:null,
+                startDate:null,
+                endDate:null
             });
         }
     }
@@ -694,6 +698,11 @@ export class NewPurchaseInvoiceComponent implements OnInit {
                 this.publicVariable.selectCustomer = this.publicVariable.GetCustomerList.find(customer => customer.custName == newData.ImpiHeaderCustomerName);
                 formData.append('ImpiHeaderInvoiceType', newData.ImpiHeaderInvoiceType);
                 formData.append('ImpiHeaderProjectCode', this.publicVariable.selectedProjet.code);
+
+                formData.append('startDate', this.publicVariable.selectedProjet.startDate);
+                formData.append('endDate', this.publicVariable.selectedProjet.endDate);
+
+
                 formData.append('ImpiHeaderPanNo', newData.ImpiHeaderPanNo);
                 formData.append('ImpiHeaderGstNo', newData.ImpiHeaderGstNo);
                 formData.append('ImpiHeaderCustomerName', newData.ImpiHeaderCustomerName);

@@ -1,7 +1,7 @@
 <app-loading *ngIf="publicVariable.isProcess"></app-loading>
 
 <div class="inner-content">
-    <h3 class="content-title">Customer New Purchase Invoice</h3>
+    <h3 class="content-title"> New Customer Invoice</h3>
 
     <form [formGroup]="publicVariable.dataForm">
         <input type="hidden" formControlName="headerid">
@@ -451,8 +451,7 @@
         <!-- <div class="text-end" *ngIf="publicVariable.expenses.length > 0"><a href="javascript:void(0)"
                 (click)="onCalculateClick()" class="common-btn w-auto">Calculate</a></div> -->
         <div class="note-para">
-            <p>Upload Only Digitally Signed Attachments (Sales Invoice, Purchase Order, Challan,
-                Sample Copy, Other Documents)* <span class="text-danger">(Max File Size 5 MB
+            <p>Upload Attachments (PO,E-Mail Confirmation,LOI,Other Documents)*<span class="text-danger">(Max File Size 5 MB
                     only)</span></p>
         </div>
 
@@ -462,12 +461,12 @@
                 <div class="col-sm-2"><b>Attachment</b></div>
                 <div class="col-sm-3">
                     <div class="form-group">
-                        <label>Category</label>
                         <select class="form-select" formControlName="TypeofAttachment">
                             <option value="">Select</option>
                             <option value="PO">PO</option>
                             <option value="Email-confirmation">Email-confirmation</option>
                             <option value="LOI">LOI</option>
+                            <option value="Others">Others</option>
 
                         </select>
                         <div *ngIf="shouldShowError('TypeofAttachment','required')" class="text-danger">This field is
