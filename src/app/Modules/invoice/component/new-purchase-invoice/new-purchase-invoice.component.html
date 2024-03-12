@@ -166,7 +166,7 @@
                     <div class="form-group">
                         <label for="ImpiHeaderCustomerGstNo">GST Number <sup class="text-danger">*</sup></label>
                         <div class="flex-field">
-                            <ng-select [items]="publicVariable.GetCustomerList" #select class="w-100"
+                            <ng-select [items]="GetCustomerGSTList" #select class="w-100"
                                 bindLabel="gstregistrationNo" bindValue="gstregistrationNo"
                                 placeholder="Select customer" formControlName="ImpiHeaderCustomerGstNo"
                                 (change)="onSelectGSTCustomer()" [searchable]="true" [searchFn]="customerSearchFn"

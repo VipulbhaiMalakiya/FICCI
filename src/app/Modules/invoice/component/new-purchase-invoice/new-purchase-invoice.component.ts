@@ -22,6 +22,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
     gstExists: boolean = false;
     panExists: boolean = false;
     gstHeaderExists: boolean = false;
+    GetCustomerGSTList: any[] = [];
 
     constructor(private appService: AppService,
         private modalService: NgbModal,
@@ -45,8 +46,8 @@ export class NewPurchaseInvoiceComponent implements OnInit {
             Project: [{ value: '', disabled: true }, [Validators.required]],
             ImpiHeaderDepartment: [{ value: '', disabled: true }, [Validators.required]],
             ImpiHeaderDivison: [{ value: '', disabled: true }, [Validators.required]],
-            ImpiHeaderPanNo: [ {value: 'AAACF1282E', disabled: true }, [Validators.required]],
-            ImpiHeaderGstNo: [ { value: '07AAACF1282E1Z1', disabled: true }, [Validators.required]],
+            ImpiHeaderPanNo: [{ value: 'AAACF1282E', disabled: true }, [Validators.required]],
+            ImpiHeaderGstNo: [{ value: '07AAACF1282E1Z1', disabled: true }, [Validators.required]],
             PINO: [''], //api missing
             ImpiHeaderCustomerName: [null, [Validators.required]],
             ImpiHeaderCustomerCode: [''], //new filed
@@ -64,9 +65,9 @@ export class NewPurchaseInvoiceComponent implements OnInit {
             ImpiHeaderPaymentTerms: [''],
             ImpiHeaderRemarks: [''],
             IsDraft: [false],
-            startDate :[{ value: '', disabled: true }, [Validators.required]],
-            endDate:[{ value: '', disabled: true }, [Validators.required]],
-            TypeofAttachment:['']
+            startDate: [{ value: '', disabled: true }, [Validators.required]],
+            endDate: [{ value: '', disabled: true }, [Validators.required]],
+            TypeofAttachment: ['']
         });
     }
 
@@ -191,8 +192,8 @@ export class NewPurchaseInvoiceComponent implements OnInit {
             ImpiHeaderRemarks: data.impiHeaderRemarks,
             IsDraft: data.isDraft,
 
-            startDate :data.startDate,
-            endDate:data.endDate,
+            startDate: data.startDate,
+            endDate: data.endDate,
 
         });
 
@@ -251,6 +252,8 @@ export class NewPurchaseInvoiceComponent implements OnInit {
         ).subscribe({
             next: (response: any) => {
                 this.publicVariable.GetCustomerList = response.data;
+                const filteredCustomers = this.publicVariable.GetCustomerList.filter(customer => customer.gstregistrationNo !== "");
+                this.GetCustomerGSTList = filteredCustomers;
                 this.loadStateList();
             },
             error: (error: any) => {
@@ -388,17 +391,17 @@ export class NewPurchaseInvoiceComponent implements OnInit {
                     ImpiHeaderDepartment: this.publicVariable.selectedProjet.departmentName,
                     ImpiHeaderDivison: this.publicVariable.selectedProjet.divisionName,
                     Project: this.publicVariable.selectedProjet.name,
-                    startDate:this.publicVariable.selectedProjet.startDate,
-                    endDate:this.publicVariable.selectedProjet.endDate,
+                    startDate: this.publicVariable.selectedProjet.startDate,
+                    endDate: this.publicVariable.selectedProjet.endDate,
                 });
             }
         } else {
             this.publicVariable.dataForm.patchValue({
                 ImpiHeaderDepartment: null,
                 ImpiHeaderDivison: null,
-                Project:null,
-                startDate:null,
-                endDate:null
+                Project: null,
+                startDate: null,
+                endDate: null
             });
         }
     }
@@ -491,7 +494,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
         modalRef.result.then((canDelete: boolean) => {
             if (canDelete) {
                 this.uploadedFiles.splice(index, 1);
-                if(file){
+                if (file) {
                     this.publicVariable.isProcess = true;
                     this.API.deleteFile(file.id).subscribe({
                         next: (res: any) => {
@@ -688,8 +691,8 @@ export class NewPurchaseInvoiceComponent implements OnInit {
 
     onSubmit(action: boolean): void {
         if (this.publicVariable.expenses.length > 0) {
-            if(this.uploadedFiles.length > 0){
-                if (this.publicVariable.dataForm.valid && !this.gstExists && !this.panExists ) {
+            if (this.uploadedFiles.length > 0) {
+                if (this.publicVariable.dataForm.valid && !this.gstExists && !this.panExists) {
                     const newData = this.publicVariable.dataForm.value;
                     const isUpdate = !!newData.headerid;
                     let impiHeaderTotalInvoiceAmount = 0; // Initialize the total amount
@@ -806,7 +809,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
                     this.markFormControlsAsTouched();
                 }
             }
-            else{
+            else {
                 this.toastr.error('File is required.', 'Error');
                 window.alert('File is required.');
             }
@@ -824,7 +827,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
         ['ImpiHeaderInvoiceType', 'ImpiHeaderProjectCode', 'ImpiHeaderDepartment', 'ImpiHeaderDivison', 'ImpiHeaderPanNo', 'ImpiHeaderGstNo',
             'ImpiHeaderCustomerName', 'ImpiHeaderCustomerAddress', 'ImpiHeaderCustomerState', 'ImpiHeaderCustomerCity', 'ImpiHeaderCustomerPinCode', 'ImpiHeaderCustomerEmailId',
             'ImpiHeaderCustomerGstNo', 'ImpiHeaderCustomerContactPerson', 'ImpiHeaderCustomerPhoneNo', 'items',
-            'startDate','endDate'
+            'startDate', 'endDate'
         ].forEach(controlName => {
             this.publicVariable.dataForm.controls[controlName].markAsTouched();
         });
