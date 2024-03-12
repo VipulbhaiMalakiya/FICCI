@@ -491,6 +491,7 @@
                     <thead>
                         <tr>
                             <th>#</th>
+                            <th>Category</th>
                             <th>File Type</th>
                             <th>File Name</th>
                             <th>Action</th>
@@ -499,8 +500,10 @@
                     <tbody>
                         <tr *ngFor="let file of uploadedFiles; let i = index">
                             <td>{{ i + 1 }}</td>
+                            <td>{{file.doctype}}</td>
                             <td>{{ getFileType(file.type) }}</td>
                             <td>{{ file.name }}</td>
+
                             <td>
                                 <a *ngIf="data" href="javascript:void(0)" (click)="downalodFile(file)"><img
                                         src="../assets/images/download-icon.svg" alt="" class="me-2"></a>

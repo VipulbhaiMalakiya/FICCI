@@ -213,7 +213,8 @@ export class NewPurchaseInvoiceComponent implements OnInit {
                 createdBy: file.imadCreatedBy,
                 createdOn: file.imadCreatedOn,
                 modifiedBy: file.imadModifiedBy,
-                modifiedOn: file.imadModifiedOn
+                modifiedOn: file.imadModifiedOn,
+                doctype:file.doctype
             }));
         } else {
             // Handle the case when data.impiHeaderAttachment is null or undefined
