@@ -45,8 +45,8 @@ export class NewPurchaseInvoiceComponent implements OnInit {
             Project: [{ value: '', disabled: true }, [Validators.required]],
             ImpiHeaderDepartment: [{ value: '', disabled: true }, [Validators.required]],
             ImpiHeaderDivison: [{ value: '', disabled: true }, [Validators.required]],
-            ImpiHeaderPanNo: ['', [Validators.required, panValidator()]],
-            ImpiHeaderGstNo: ['', [Validators.required, gstValidator()]],
+            ImpiHeaderPanNo: [{ value: '07AAACF1282E1Z1', disabled: true }, [Validators.required]],
+            ImpiHeaderGstNo: [{ value: 'AAACF1282E', disabled: true }, [Validators.required]],
             PINO: [''], //api missing
             ImpiHeaderCustomerName: [null, [Validators.required]],
             ImpiHeaderCustomerCode: [''], //new filed
@@ -63,7 +63,10 @@ export class NewPurchaseInvoiceComponent implements OnInit {
             items: this.fb.array([]),
             ImpiHeaderPaymentTerms: [''],
             ImpiHeaderRemarks: [''],
-            IsDraft: [false]
+            IsDraft: [false],
+            startingdate:[{ value: '', disabled: true }, [Validators.required]],
+            enddate:[{ value: '', disabled: true }, [Validators.required]],
+
         });
     }
 
@@ -639,7 +642,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
 
     onSubmit(action: boolean): void {
         if (this.publicVariable.expenses.length > 0) {
-            if (this.publicVariable.dataForm.valid && !this.gstExists && !this.panExists && !this.gstHeaderExists) {
+            if (this.publicVariable.dataForm.valid && !this.gstExists && !this.panExists ) {
                 const newData = this.publicVariable.dataForm.value;
                 const isUpdate = !!newData.headerid;
                 let impiHeaderTotalInvoiceAmount = 0; // Initialize the total amount
@@ -760,7 +763,8 @@ export class NewPurchaseInvoiceComponent implements OnInit {
     markFormControlsAsTouched(): void {
         ['ImpiHeaderInvoiceType', 'ImpiHeaderProjectCode', 'ImpiHeaderDepartment', 'ImpiHeaderDivison', 'ImpiHeaderPanNo', 'ImpiHeaderGstNo',
             'ImpiHeaderCustomerName', 'ImpiHeaderCustomerAddress', 'ImpiHeaderCustomerState', 'ImpiHeaderCustomerCity', 'ImpiHeaderCustomerPinCode', 'ImpiHeaderCustomerEmailId',
-            'ImpiHeaderCustomerGstNo', 'ImpiHeaderCustomerContactPerson', 'ImpiHeaderCustomerPhoneNo', 'items'
+            'ImpiHeaderCustomerGstNo', 'ImpiHeaderCustomerContactPerson', 'ImpiHeaderCustomerPhoneNo', 'items',
+            'startingdate','enddate'
         ].forEach(controlName => {
             this.publicVariable.dataForm.controls[controlName].markAsTouched();
         });

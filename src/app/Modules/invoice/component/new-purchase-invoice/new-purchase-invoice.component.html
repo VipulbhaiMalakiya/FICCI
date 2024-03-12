@@ -27,7 +27,7 @@
             <div class="row">
                 <div class="col-md-4 col-sm-6">
                     <div class="form-group">
-                        <label for="projectCode">Project Code</label>
+                        <label for="projectCode">Project Code <sup class="text-danger">*</sup></label>
                         <ng-select [items]="publicVariable.projectList" #select bindLabel="code" bindValue="code"
                             placeholder="Select in Project Code" formControlName="ImpiHeaderProjectCode"
                             (change)="onSelectProject()" [searchable]="true" [searchFn]="customSearchFn"
@@ -46,7 +46,7 @@
 
                 <div class="col-md-4 col-sm-6">
                     <div class="form-group">
-                        <label for="Project">Project Name</label>
+                        <label for="Project">Project Name <sup class="text-danger">*</sup></label>
                         <input type="text" id="Project" placeholder="Project" formControlName="Project"
                             class="form-control" />
                         <div *ngIf="shouldShowError('Project','required')" class="text-danger">This field
@@ -57,7 +57,7 @@
                 </div>
                 <div class="col-md-4 col-sm-6">
                     <div class="form-group">
-                        <label for="department">Department</label>
+                        <label for="department">Department <sup class="text-danger">*</sup></label>
                         <input type="text" id="department" placeholder="Department"
                             formControlName="ImpiHeaderDepartment" class="form-control" />
                         <div *ngIf="shouldShowError('ImpiHeaderDepartment','required')" class="text-danger">This field
@@ -69,7 +69,7 @@
 
                 <div class="col-md-4 col-sm-6">
                     <div class="form-group">
-                        <label for="division">Division</label>
+                        <label for="division">Division <sup class="text-danger">*</sup></label>
                         <input type="text" id="division" placeholder="Division" formControlName="ImpiHeaderDivison"
                             class="form-control" />
                         <div *ngIf="shouldShowError('ImpiHeaderDivison','required')" class="text-danger">This field is
@@ -81,43 +81,56 @@
 
                 <div class="col-md-4 col-sm-6">
                     <div class="form-group">
-                        <label for="PANNo">PAN No</label>
+                        <label for="PANNo">PAN No <sup class="text-danger">*</sup></label>
                         <input type="text" id="PANNo" class="form-control" placeholder="PAN No"
-                            formControlName="ImpiHeaderPanNo"   (blur)="ValidatePAN()" />
-                        <div *ngIf="shouldShowError('ImpiHeaderPanNo','invalidPAN')" class="text-danger">Please enter a
-                            valid PAN Number.
-                        </div>
-                        <div *ngIf="panExists" class="text-danger">
-                            PAN number already exists.
-                        </div>
+                            formControlName="ImpiHeaderPanNo"   />
                     </div>
                 </div>
 
 
                 <div class="col-md-4 col-sm-6">
                     <div class="form-group">
-                        <label>GST No</label>
+                        <label>GST No <sup class="text-danger">*</sup></label>
                         <input type="text" placeholder="GST No" class="form-control"
-                            formControlName="ImpiHeaderGstNo" (blur)="validateHeaderGST()"  />
+                            formControlName="ImpiHeaderGstNo"  />
 
                         <div *ngIf="shouldShowError('ImpiHeaderGstNo','invalidGST')" class="text-danger"> Please enter
                             a valid GST Registration Number. (05AAACF1282E1Z5)</div>
 
-                            <div *ngIf="gstHeaderExists" class="text-danger">
-                                GST number already exists.
-                            </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-sm-6">
+                    <div class="form-group">
+                        <label for="startingdate">Starting Date <sup class="text-danger">*</sup></label>
+                        <input type="text" id="startingdate" placeholder="starting date"
+                            formControlName="startingdate" class="form-control" />
+                        <div *ngIf="shouldShowError('startingdate','required')" class="text-danger">This field
+                            is required
+                        </div>
 
                     </div>
                 </div>
 
+                <div class="col-md-4 col-sm-6">
+                    <div class="form-group">
+                        <label for="enddate">End Date <sup class="text-danger">*</sup></label>
+                        <input type="text" id="enddate" placeholder="end date"
+                            formControlName="enddate" class="form-control" />
+                        <div *ngIf="shouldShowError('enddate','required')" class="text-danger">This field
+                            is required
+                        </div>
+
+                    </div>
+                </div>
                 <!-- show tax-invoice-only -->
-                <div class="col-md-4 col-sm-6"
+                <!-- <div class="col-md-4 col-sm-6"
                     *ngIf="publicVariable.dataForm.get('ImpiHeaderInvoiceType')?.value === 'Tax Invoice'">
                     <div class="form-group">
                         <label>PI No</label>
                         <input type="text" placeholder="PI No" class="form-control" formControlName="PINO" />
                     </div>
-                </div>
+                </div> -->
 
 
             </div>
