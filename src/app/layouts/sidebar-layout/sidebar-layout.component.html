@@ -72,10 +72,10 @@
                                 </div>
 
                                 <div class="left-men" routerLinkActive="active" *ngIf="!isAccount">
-                                    <h3><img src="../assets/images/invoice-icon.png" alt=""> Purchase Invoice</h3>
+                                    <h3><img src="../assets/images/invoice-icon.png" alt=""> Customer Invoice</h3>
                                     <a routerLink="/invoice/new" class="menu-list-title" routerLinkActive="active"
                                         [routerLinkActiveOptions]="{ exact: true }"
-                                        *ngIf="isEmployee">New Purchase Invoice</a>
+                                        *ngIf="isEmployee">New Customer Invoice</a>
                                     <a routerLink="/invoice/status" class="menu-list-title"
                                         routerLinkActive="active" *ngIf="isAdmin || isEmployee"
                                         >Invoice Status</a>
