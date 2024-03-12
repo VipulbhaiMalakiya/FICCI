@@ -191,6 +191,9 @@ export class NewPurchaseInvoiceComponent implements OnInit {
             ImpiHeaderRemarks: data.impiHeaderRemarks,
             IsDraft: data.isDraft,
 
+            startDate :data.startDate,
+            endDate:data.endDate,
+
         });
 
         this.publicVariable.expenses = data.lineItem_Requests;
