@@ -348,7 +348,7 @@
 
                     <div class="col-md-4 col-sm-6">
                         <div class="form-group">
-                            <label>HSN/SAC Code <sup class="text-danger">*</sup></label>
+                            <label>HSN/SAC Code </label>
                             <ng-select [items]="publicVariable.HSNSACList" #select bindLabel="hsnCode"
                                 bindValue="hsnCode" placeholder="Select " [searchable]="true" [virtualScroll]="true"
                                 [bufferAmount]="10" formControlName="impiHsnsaccode">
@@ -356,9 +356,9 @@
                                     <small>{{item.hsnCode}} - {{item.hsnGroup}}</small>
                                 </ng-template>
                             </ng-select>
-                            <div *ngIf="shouldShowExpenseError('impiHsnsaccode','required')" class="text-danger">This
+                            <!-- <div *ngIf="shouldShowExpenseError('impiHsnsaccode','required')" class="text-danger">This
                                 field is
-                                required</div>
+                                required</div> -->
                         </div>
                     </div>
 

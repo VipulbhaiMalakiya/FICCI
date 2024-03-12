@@ -77,7 +77,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
             impiGlNo: [null, Validators.required],
             impiQuantity: ['', Validators.required],
             impiGstgroupCode: [null, Validators.required],
-            impiHsnsaccode: [null, Validators.required],
+            impiHsnsaccode: [null],
             impiUnitPrice: ['', Validators.required],
         })
     }
@@ -893,7 +893,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
     }
 
     markexpenseFormControlsAsTouched(): void {
-        ['impiGlNo', 'impiQuantity', 'impiGstgroupCode', 'impiHsnsaccode', 'impiUnitPrice'].forEach(controlName => {
+        ['impiGlNo', 'impiQuantity', 'impiGstgroupCode',  'impiUnitPrice'].forEach(controlName => {
             this.publicVariable.expenseForm.controls[controlName].markAsTouched();
         });
     }
