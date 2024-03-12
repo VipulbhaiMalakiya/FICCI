@@ -1,7 +1,8 @@
 <div class="inner-content">
     <h3 class="content-title">Customer Invoice Status</h3>
 
-    <div class="page-btns-col" *ngIf="publicVariable.invoiceStatuslistData && publicVariable.invoiceStatuslistData.length > 0">
+    <div class="page-btns-col"
+        *ngIf="publicVariable.invoiceStatuslistData && publicVariable.invoiceStatuslistData.length > 0">
         <div class="tblsort">
             <label class="col-form-label">Show</label>
             <select id="itemsPerPageSelect" class="form-select" [(ngModel)]="publicVariable.tableSize"
@@ -88,13 +89,16 @@
                                     d.headerStatus == 'REJECTED BY TL APPROVER'  ||
                                     d.headerStatus == 'REJECTED BY CH APPROVER' ||
                                     d.headerStatus == 'REJECTED BY ACCOUNTS APPROVER'
-                                    ||d.headerStatus == 'REJECTED BY FINANCE APPROVER' )" href="javascript:void(0);"
-                                        (click)="onEdit(d)"><img src="../assets/images/edit-icon.svg" alt="" /></a>
+                                    ||d.headerStatus == 'REJECTED BY FINANCE APPROVER'
+                                    ||  d.headerStatus == 'CANCELLATION APPROVED BY FINANCE' )"
+                                        href="javascript:void(0);" (click)="onEdit(d)"><img
+                                            src="../assets/images/edit-icon.svg" alt="" /></a>
                                     <a *ngIf="publicVariable.storedRole !== 'Admin' &&
                                     (d.isDraft ||
                                     d.headerStatus == 'REJECTED BY TL APPROVER'  ||
                                     d.headerStatus == 'REJECTED BY CH APPROVER' ||
-                                    d.headerStatus == 'REJECTED BY ACCOUNTS APPROVER'   || d.headerStatus == 'REJECTED BY FINANCE APPROVER')"
+                                    d.headerStatus == 'REJECTED BY ACCOUNTS APPROVER'   || d.headerStatus == 'REJECTED BY FINANCE APPROVER'
+                                    ||  d.headerStatus == 'CANCELLATION APPROVED BY FINANCE'    )"
                                         href="javascript:void(0)" (click)="onDelete(d.headerId)" data-bs-toggle="modal"
                                         data-bs-target="#deleterecord-modal"><img src="../assets/images/delete-icon.svg"
                                             alt="" /></a>
