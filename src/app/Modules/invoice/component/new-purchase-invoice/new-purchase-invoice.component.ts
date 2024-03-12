@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, AppService, ConfirmationDialogModalComponent, CustomersService, FormBuilder, InvoicesService, NgbModal, Router, ToastrService, Validators, alphanumericWithSpacesValidator, gstValidator, panValidator, publicVariable } from '../../Export/invoce';
-import { FormArray, FormGroup } from '@angular/forms';
+import { AbstractControl, FormArray, FormGroup, ValidatorFn } from '@angular/forms';
 import { finalize, timeout } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
@@ -51,7 +51,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
             PINO: [''], //api missing
             ImpiHeaderCustomerName: [null, [Validators.required]],
             ImpiHeaderCustomerCode: [''], //new filed
-            ImpiHeaderCustomerAddress:  ['', [Validators.required, Validators.maxLength(100)]],
+            ImpiHeaderCustomerAddress:  ['', [Validators.required, this.addressValidator(), Validators.maxLength(100)]],
             
             ImpiHeaderCustomerState: [null, [Validators.required]],
             ImpiHeaderCustomerCity: [null, [Validators.required]],
@@ -82,6 +82,12 @@ export class NewPurchaseInvoiceComponent implements OnInit {
         })
     }
 
+    addressValidator(): ValidatorFn {
+        return (control: AbstractControl): { [key: string]: any } | null => {
+          const forbidden = /[^a-zA-Z0-9\s.,\-]/.test(control.value);
+          return forbidden ? { 'forbiddenCharacters': { value: control.value } } : null;
+        };
+      }
 
     ngOnInit(): void {
         this.loadProjectList();

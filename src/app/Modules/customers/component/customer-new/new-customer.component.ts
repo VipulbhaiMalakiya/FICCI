@@ -49,7 +49,7 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
             postCode: ['', [Validators.required, Validators.pattern(/^\d{6}$/)]],
             GSTRegistrationNo: ['', [Validators.required, gstValidator()]],
             GSTCustomerType: [null, Validators.required],
-            email: ['', [Validators.required, Validators.email, Validators.maxLength(80)]],
+            email: ['', [Validators.required, Validators.email, Validators.maxLength(80), this.emailValidator()]],
             PrimaryContactNo: ['', [Validators.required, Validators.pattern(/^[6-9]\d{9}$/)],],
             contact: ['', [Validators.required, alphanumericWithSpacesValidator(), Validators.maxLength(100)]],
             PANNo: ['', [Validators.required, panValidator()]],
@@ -63,6 +63,20 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
         return (control: AbstractControl): { [key: string]: any } | null => {
           const forbidden = /[^a-zA-Z0-9\s.,\-]/.test(control.value);
           return forbidden ? { 'forbiddenCharacters': { value: control.value } } : null;
+        };
+      }
+
+      emailValidator(): ValidatorFn {
+        return (control: AbstractControl): { [key: string]: any } | null => {
+          const email = control.value;
+          if (email && email.length >= 2 && email.length <= 80) {
+            const atIndex = email.indexOf('@');
+            const dotIndex = email.indexOf('.', atIndex);
+            if (atIndex > 1 && dotIndex !== -1 && dotIndex - atIndex <= 11 && dotIndex - atIndex >= 3) {
+              return null; // Valid email format
+            }
+          }
+          return { 'invalidEmailFormat': { value: control.value } };
         };
       }
       

@@ -136,12 +136,15 @@
                     <div class="form-group">
                         <label>E-Mail <sup class="text-danger">*</sup></label>
                         <input type="email" class="form-control" formControlName="email" placeholder="email" />
-                        <div *ngIf="shouldShowError('email', 'required')" class="text-danger">
+                        <!-- <div *ngIf="shouldShowError('email', 'required')" class="text-danger">
                             Email is required.
-                        </div>
+                        </div> -->
                         <div *ngIf="shouldShowError('email', 'email')" class="text-danger">
                             Please enter a valid email address.
                         </div>
+
+                        <div *ngIf="shouldShowError('email', 'invalidEmailFormat')" class="text-danger">
+                            Email must contain a dot (.) after a maximum of 10 characters and a minimum of 2 characters after '@'                        </div>
 
                         <div *ngIf="shouldShowError('email', 'maxlength')" class="text-danger">
                             Email must be less than 80 characters.
