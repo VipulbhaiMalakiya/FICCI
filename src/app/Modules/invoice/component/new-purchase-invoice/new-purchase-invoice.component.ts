@@ -66,7 +66,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
             IsDraft: [false],
             startDate :[{ value: '', disabled: true }, [Validators.required]],
             endDate:[{ value: '', disabled: true }, [Validators.required]],
-
+            TypeofAttachment:['', [Validators.required]]
         });
     }
 
@@ -709,6 +709,8 @@ export class NewPurchaseInvoiceComponent implements OnInit {
                 formData.append('impiHeaderCreatedBy', this.publicVariable.storedEmail)
                 formData.append('ImpiHeaderPaymentTerms', newData.ImpiHeaderPaymentTerms);
                 formData.append('ImpiHeaderRemarks', newData.ImpiHeaderRemarks);
+
+
                 formData.append('IsDraft', action.toString());
                 formData.append('LoginId', this.publicVariable.storedEmail);
                 // Check if ImpiHeaderInvoiceType is Tax Invoice, then include PINO
@@ -759,6 +761,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
 
                 //  uploadedFiles is an array of File objects
                 this.uploadedFiles.forEach(file => {
+                    formData.append('TypeofAttachment', newData.TypeofAttachment);
                     formData.append('ImpiHeaderAttachment', file);
                 });
 
@@ -802,7 +805,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
         ['ImpiHeaderInvoiceType', 'ImpiHeaderProjectCode', 'ImpiHeaderDepartment', 'ImpiHeaderDivison', 'ImpiHeaderPanNo', 'ImpiHeaderGstNo',
             'ImpiHeaderCustomerName', 'ImpiHeaderCustomerAddress', 'ImpiHeaderCustomerState', 'ImpiHeaderCustomerCity', 'ImpiHeaderCustomerPinCode', 'ImpiHeaderCustomerEmailId',
             'ImpiHeaderCustomerGstNo', 'ImpiHeaderCustomerContactPerson', 'ImpiHeaderCustomerPhoneNo', 'items',
-            'startDate','endDate'
+            'startDate','endDate','TypeofAttachment'
         ].forEach(controlName => {
             this.publicVariable.dataForm.controls[controlName].markAsTouched();
         });

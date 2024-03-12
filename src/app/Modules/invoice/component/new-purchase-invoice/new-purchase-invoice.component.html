@@ -1,7 +1,7 @@
 <app-loading *ngIf="publicVariable.isProcess"></app-loading>
 
 <div class="inner-content">
-    <h3 class="content-title">Customer  New Purchase Invoice</h3>
+    <h3 class="content-title">Customer New Purchase Invoice</h3>
 
     <form [formGroup]="publicVariable.dataForm">
         <input type="hidden" formControlName="headerid">
@@ -83,7 +83,7 @@
                     <div class="form-group">
                         <label for="PANNo">PAN No <sup class="text-danger">*</sup></label>
                         <input type="text" id="PANNo" class="form-control" placeholder="PAN No"
-                            formControlName="ImpiHeaderPanNo"   />
+                            formControlName="ImpiHeaderPanNo" />
                     </div>
                 </div>
 
@@ -92,7 +92,7 @@
                     <div class="form-group">
                         <label>GST No <sup class="text-danger">*</sup></label>
                         <input type="text" placeholder="GST No" class="form-control"
-                            formControlName="ImpiHeaderGstNo"  />
+                            formControlName="ImpiHeaderGstNo" />
 
                         <div *ngIf="shouldShowError('ImpiHeaderGstNo','invalidGST')" class="text-danger"> Please enter
                             a valid GST Registration Number. (05AAACF1282E1Z5)</div>
@@ -103,8 +103,8 @@
                 <div class="col-md-4 col-sm-6">
                     <div class="form-group">
                         <label for="startDate">Starting Date <sup class="text-danger">*</sup></label>
-                        <input type="text" id="startDate" placeholder="starting date"
-                            formControlName="startDate" class="form-control" />
+                        <input type="text" id="startDate" placeholder="starting date" formControlName="startDate"
+                            class="form-control" />
                         <div *ngIf="shouldShowError('startDate','required')" class="text-danger">This field
                             is required
                         </div>
@@ -115,8 +115,8 @@
                 <div class="col-md-4 col-sm-6">
                     <div class="form-group">
                         <label for="endDate">End Date <sup class="text-danger">*</sup></label>
-                        <input type="text" id="endDate" placeholder="end date"
-                            formControlName="endDate" class="form-control" />
+                        <input type="text" id="endDate" placeholder="end date" formControlName="endDate"
+                            class="form-control" />
                         <div *ngIf="shouldShowError('endDate','required')" class="text-danger">This field
                             is required
                         </div>
@@ -167,10 +167,10 @@
                         <label for="ImpiHeaderCustomerGstNo">GST Number <sup class="text-danger">*</sup></label>
                         <div class="flex-field">
                             <ng-select [items]="publicVariable.GetCustomerList" #select class="w-100"
-                                bindLabel="gstregistrationNo" bindValue="gstregistrationNo" placeholder="Select customer"
-                                formControlName="ImpiHeaderCustomerGstNo" (change)="onSelectGSTCustomer()"
-                                [searchable]="true" [searchFn]="customerSearchFn" [virtualScroll]="true"
-                                [bufferAmount]="10">
+                                bindLabel="gstregistrationNo" bindValue="gstregistrationNo"
+                                placeholder="Select customer" formControlName="ImpiHeaderCustomerGstNo"
+                                (change)="onSelectGSTCustomer()" [searchable]="true" [searchFn]="customerSearchFn"
+                                [virtualScroll]="true" [bufferAmount]="10">
                                 <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
                                     <div><span>{{item.gstregistrationNo}}</span></div>
                                 </ng-template>
@@ -178,7 +178,8 @@
 
                             <!-- <div class="add-btn"><a routerLink="/customer/new" target="_blank">+</a></div> -->
                         </div>
-                        <div *ngIf="shouldShowError('ImpiHeaderCustomerGstNo','required')" class="text-danger">This field
+                        <div *ngIf="shouldShowError('ImpiHeaderCustomerGstNo','required')" class="text-danger">This
+                            field
                             is required
                         </div>
                     </div>
@@ -211,10 +212,9 @@
                 <div class="col-md-4 col-sm-6">
                     <div class="form-group">
                         <label for="city">City <sup class="text-danger">*</sup></label>
-                            <ng-select [items]="publicVariable.cityList" #select bindLabel="cityName" bindValue="cityName"
+                        <ng-select [items]="publicVariable.cityList" #select bindLabel="cityName" bindValue="cityName"
                             placeholder="Select" formControlName="ImpiHeaderCustomerCity" [searchable]="true"
-                            [searchFn]="citySearchFn"
-                            [virtualScroll]="true" [bufferAmount]="10"
+                            [searchFn]="citySearchFn" [virtualScroll]="true" [bufferAmount]="10"
                             (change)="onCitySelectionChange()">
                             <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
                                 <small>{{item.cityCode}} - {{item.cityName}}</small>
@@ -304,8 +304,7 @@
                             <label>Nature of Income<sup class="text-danger">*</sup></label>
                             <ng-select [items]="publicVariable.COAMasterList" #select bindLabel="name" bindValue="no"
                                 placeholder="Select " [searchable]="true" [virtualScroll]="true" [bufferAmount]="10"
-                                formControlName="impiGlNo"
-                                [searchFn]="gstSearchFn">
+                                formControlName="impiGlNo" [searchFn]="gstSearchFn">
                                 <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
                                     <small>{{item.no}} - {{item.name}}</small>
                                 </ng-template>
@@ -320,7 +319,8 @@
                             <label for="Quantity">Quantity <sup class="text-danger">*</sup></label>
                             <input type="text" class="form-control" id="Quantity" placeholder="Quantity"
                                 formControlName="impiQuantity" (input)="onInputChange($event)" />
-                            <div *ngIf="shouldShowExpenseError('impiQuantity','required')" class="text-danger">This field is
+                            <div *ngIf="shouldShowExpenseError('impiQuantity','required')" class="text-danger">This
+                                field is
                                 required</div>
                         </div>
                     </div>
@@ -332,7 +332,8 @@
                                 placeholder="Select " [searchable]="true" [virtualScroll]="true" [bufferAmount]="10"
                                 (change)="onGSTGroupChange($event)" formControlName="impiGstgroupCode">
                             </ng-select>
-                            <div *ngIf="shouldShowExpenseError('impiGstgroupCode','required')" class="text-danger">This field is required</div>
+                            <div *ngIf="shouldShowExpenseError('impiGstgroupCode','required')" class="text-danger">This
+                                field is required</div>
                         </div>
                     </div>
 
@@ -346,7 +347,8 @@
                                     <small>{{item.hsnCode}} - {{item.hsnGroup}}</small>
                                 </ng-template>
                             </ng-select>
-                            <div *ngIf="shouldShowExpenseError('impiHsnsaccode','required')" class="text-danger">This field is
+                            <div *ngIf="shouldShowExpenseError('impiHsnsaccode','required')" class="text-danger">This
+                                field is
                                 required</div>
                         </div>
                     </div>
@@ -356,7 +358,8 @@
                             <label>Direct Unit Cost <sup class="text-danger">*</sup></label>
                             <input type="text" class="form-control" placeholder="Direct Unit Cost"
                                 formControlName="impiUnitPrice" (input)="priceValidator($event)">
-                            <div *ngIf="shouldShowExpenseError('impiUnitPrice','required')" class="text-danger">This field is
+                            <div *ngIf="shouldShowExpenseError('impiUnitPrice','required')" class="text-danger">This
+                                field is
                                 required</div>
                         </div>
                     </div>
@@ -369,7 +372,7 @@
 
                         </div>
                     </div>
-<!--
+                    <!--
                     <div class="col-md-4 col-sm-6" *ngIf="publicVariable.expenses.length > 0">
                         <div class="form-group">
                             <label>(Total Base Amount)</label>
@@ -398,7 +401,7 @@
             </form>
 
         </div>
-        <div class="dasboard-table pi-table mb-0"  *ngIf="publicVariable.expenses && publicVariable.expenses.length > 0">
+        <div class="dasboard-table pi-table mb-0" *ngIf="publicVariable.expenses && publicVariable.expenses.length > 0">
 
             <div class="table-responsive">
 
@@ -453,11 +456,27 @@
                     only)</span></p>
         </div>
 
-        <div class="col-md-9 col-xs-12 col-sm-12 attach-col">
+
+        <div class="col-md-12 col-xs-12 col-sm-12 attach-col">
             <div class="row align-items-center">
                 <div class="col-sm-2"><b>Attachment</b></div>
-                <div class="col-sm-3 text-sm-end">Upload Document</div>
-                <div class="col-sm-6">
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label>Category</label>
+                        <select class="form-select" formControlName="TypeofAttachment">
+                            <option value="">Select</option>
+                            <option value="PO">PO</option>
+                            <option value="Email-confirmation">Email-confirmation</option>
+                            <option value="LOI">LOI</option>
+
+                        </select>
+                        <div *ngIf="shouldShowError('TypeofAttachment','required')" class="text-danger">This field is
+                            required
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-2 text-sm-end">Upload Document</div>
+                <div class="col-sm-5">
                     <div class="input-group">
                         <input type="file" class="form-control" id="inputGroupFile02" accept=".pdf,.xlsx,.csv" multiple
                             (change)="onFilesSelected($event)" />
@@ -467,30 +486,31 @@
             </div>
         </div>
 
-        <div class="dasboard-table pi-table mb-0"  *ngIf="uploadedFiles && uploadedFiles.length > 0">
+        <div class="dasboard-table pi-table mb-0" *ngIf="uploadedFiles && uploadedFiles.length > 0">
             <div class="table-responsive">
                 <table class="table table-bordered text-nowrap">
                     <thead>
-                      <tr>
-                        <th>#</th>
-                        <th>File Type</th>
-                        <th>File Name</th>
-                        <th>Action</th>
-                      </tr>
+                        <tr>
+                            <th>#</th>
+                            <th>File Type</th>
+                            <th>File Name</th>
+                            <th>Action</th>
+                        </tr>
                     </thead>
                     <tbody>
-                      <tr *ngFor="let file of uploadedFiles; let i = index">
-                        <td>{{ i + 1 }}</td>
-                        <td>{{ getFileType(file.type) }}</td>
-                        <td>{{ file.name }}</td>
-                        <td>
-                          <a *ngIf="data" href="javascript:void(0)" (click)="downalodFile(file)"><img src="../assets/images/download-icon.svg" alt="" class="me-2"></a>
-                          <a href="javascript:void(0)" (click)="deleteFile(i,file)"><img src="../assets/images/delete-icon.svg"
-                              alt=""></a>
-                        </td>
-                      </tr>
+                        <tr *ngFor="let file of uploadedFiles; let i = index">
+                            <td>{{ i + 1 }}</td>
+                            <td>{{ getFileType(file.type) }}</td>
+                            <td>{{ file.name }}</td>
+                            <td>
+                                <a *ngIf="data" href="javascript:void(0)" (click)="downalodFile(file)"><img
+                                        src="../assets/images/download-icon.svg" alt="" class="me-2"></a>
+                                <a href="javascript:void(0)" (click)="deleteFile(i,file)"><img
+                                        src="../assets/images/delete-icon.svg" alt=""></a>
+                            </td>
+                        </tr>
                     </tbody>
-                  </table>
+                </table>
             </div>
         </div>
         <div class="mastersform-sec mb-3">
