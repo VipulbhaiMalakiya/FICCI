@@ -332,7 +332,7 @@ export class DashboardComponent {
         counts['REJECTED BY CH APPROVER'] = rejectedData.length;
 
         const cancelData = data.filter(item =>
-            item.headerStatus === 'CANCEL BY EMPLOYEE' || item.headerStatus === 'CANCELLATION REQUEST APPROVED BY FINANCE');
+            item.headerStatus === 'CANCEL BY EMPLOYEE' || item.headerStatus === 'CANCELLATION APPROVED BY FINANCE');
         counts['Cancelled'] = cancelData.length;
 
         const ReversalData = data.filter(item =>
@@ -394,7 +394,7 @@ export class DashboardComponent {
                 filteredData = this.dashboardData.filter((item: any) =>
                 // item.createdBy === this.publicVariable.storedEmail &&
                 (
-                    item.headerStatus === 'CANCEL BY EMPLOYEE' || item.headerStatus === 'CANCELLATION REQUEST APPROVED BY FINANCE'));
+                    item.headerStatus === 'CANCEL BY EMPLOYEE' || item.headerStatus === 'CANCELLATION APPROVED BY FINANCE'));
                 break;
             case 'Reversal':
                 filteredData = this.dashboardData.filter((item: any) =>
