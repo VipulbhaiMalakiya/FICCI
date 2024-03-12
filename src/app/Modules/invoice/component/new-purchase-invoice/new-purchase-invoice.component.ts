@@ -438,7 +438,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
         return this.publicVariable.dataForm.get('items') as FormArray;
     }
 
-    //!update Code required validation and category check
+
     onFilesSelected(event: any) {
 
         // Check if a category is selected
