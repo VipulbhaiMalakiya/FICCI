@@ -472,6 +472,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
                 return;
             }
             this.uploadedFiles.push(file);
+
         }
     }
 
