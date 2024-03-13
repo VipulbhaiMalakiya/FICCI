@@ -352,6 +352,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
                 });
                 this.getErpDetailCustNo(this.publicVariable.selectCustomer.custNo);
             } else {
+               
                 this.setFormFieldsToNull(); // Call function to set form fields to null
             }
         } else {
@@ -376,7 +377,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
     
             this.publicVariable.Subscription.add(subscription);
         } catch (error) {
-            console.error('Error loading project list:', error);
+            console.error('Error loading  list:', error);
             this.handleLoadingError();
             this.setFormFieldsToNull(); 
         }
