@@ -422,7 +422,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
             this.publicVariable.dataForm.patchValue({
                 ImpiHeaderCustomerAddress: null,
                 ImpiHeaderCustomerPinCode: null,
-                ImpiHeaderCustomerName: null,
+                // ImpiHeaderCustomerName: null,
                 ImpiHeaderCustomerContactPerson: null,
                 ImpiHeaderCustomerEmailId: null,
                 ImpiHeaderCustomerPhoneNo: null,
