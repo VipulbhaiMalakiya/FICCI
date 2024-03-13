@@ -183,6 +183,11 @@ export class NewPurchaseInvoiceComponent implements OnInit {
         return concatenatedString.includes(term.toLowerCase());
     }
 
+    customerGSTSearchFn(term: string, item: any) {
+        const concatenatedString = ` ${item.gstregistrationNo}`.toLowerCase();
+        return concatenatedString.includes(term.toLowerCase());
+    }
+
     patchFormData(data: any): void {
 
         this.publicVariable.dataForm.patchValue({
@@ -275,8 +280,6 @@ export class NewPurchaseInvoiceComponent implements OnInit {
         ).subscribe({
             next: (response: any) => {
                 this.publicVariable.GetCustomerList = response.data;
-                const filteredCustomers = this.publicVariable.GetCustomerList.filter(customer => customer.gstregistrationNo !== "");
-                this.GetCustomerGSTList = filteredCustomers;
                 this.loadStateList();
             },
             error: (error: any) => {
@@ -349,7 +352,22 @@ export class NewPurchaseInvoiceComponent implements OnInit {
                     
                 });
 
-                
+                try {
+                    const subscription = this.API.getErpDetailCustNo(this.publicVariable.selectCustomer.gstregistrationNo).subscribe({
+                        next: (response: any) => {
+                            this.GetCustomerGSTList = response.data;
+                        },
+                        error: (error) => {
+                            console.error('Error loading project list:', error);
+                            this.handleLoadingError()
+                        },
+                    });
+        
+                    this.publicVariable.Subscription.add(subscription);
+                } catch (error) {
+                    console.error('Error loading project list:', error);
+                    this.handleLoadingError()
+                }
             }
         } else {
             this.publicVariable.dataForm.patchValue({
@@ -556,6 +574,8 @@ export class NewPurchaseInvoiceComponent implements OnInit {
         const concatenatedString = `${item.no} ${item.name}`.toLowerCase();
         return concatenatedString.includes(term.toLowerCase());
     }
+
+    
 
 
     onCitySelectionChange() {
