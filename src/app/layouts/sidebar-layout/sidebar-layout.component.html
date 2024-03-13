@@ -77,7 +77,7 @@
                                        
                                         *ngIf="isEmployee">New Customer Invoice</a>
                                     <a routerLink="/invoice/status" class="menu-list-title"
-                                        routerLinkActive="active" *ngIf="isAdmin || isEmployee"
+                                        routerLinkActive="active" *ngIf="isAdmin || isEmployee || isApprover"
                                         >Invoice Status</a>
                                     <a routerLink="/invoice/approval" class="menu-list-title"
                                         routerLinkActive="active" *ngIf="isApprover" >Approval Inbox</a>
