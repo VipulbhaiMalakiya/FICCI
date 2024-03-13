@@ -343,29 +343,22 @@ export class NewPurchaseInvoiceComponent implements OnInit {
 
     onSelectCustomer(): void {
         const selectedId = this.publicVariable.dataForm.get('ImpiHeaderCustomerName')?.value;
-
+    
         if (selectedId) {
             this.publicVariable.selectCustomer = this.publicVariable.GetCustomerList.find(customer => customer.custName == selectedId);
             if (this.publicVariable.selectCustomer) {
                 this.publicVariable.dataForm.patchValue({
                     ImpiHeaderCustomerGstNo: this.publicVariable.selectCustomer.gstregistrationNo,
                 });
-                this.getErpDetailCustNo(this.publicVariable.selectCustomer.custNo)
-             
+                this.getErpDetailCustNo(this.publicVariable.selectCustomer.custNo);
+            } else {
+                this.setFormFieldsToNull(); // Call function to set form fields to null
             }
         } else {
-            this.publicVariable.dataForm.patchValue({
-                ImpiHeaderCustomerAddress: null,
-                ImpiHeaderCustomerPinCode: null,
-                ImpiHeaderCustomerGstNo: null,
-                ImpiHeaderCustomerContactPerson: null,
-                ImpiHeaderCustomerEmailId: null,
-                ImpiHeaderCustomerPhoneNo: null,
-                ImpiHeaderCustomerState: null,
-                ImpiHeaderCustomerCity: null
-            });
+            this.setFormFieldsToNull(); // Call function to set form fields to null
         }
     }
+    
 
     getErpDetailCustNo(data: any) {
         try {
@@ -408,9 +401,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
         try {
             const subscription = this.API.getGstRegistrationNo(data).subscribe({
                 next: (response: any) => {
-                    this.GstRegistrationDetail = response.data;
-                    console.log(this.GstRegistrationDetail );
-                    
+                    this.GstRegistrationDetail = response.data;                    
                     this.onSelectGSTCustomer();
                 },
                 error: (error) => {
