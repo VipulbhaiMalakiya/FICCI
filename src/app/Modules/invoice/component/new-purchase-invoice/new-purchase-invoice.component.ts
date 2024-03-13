@@ -95,7 +95,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
           if (email && email.length >= 2 && email.length <= 80) {
             const atIndex = email.indexOf('@');
             const dotIndex = email.indexOf('.', atIndex);
-            if (atIndex > 1 && dotIndex !== -1 && dotIndex - atIndex <= 11 && dotIndex - atIndex >= 3) {
+            if (atIndex > 1 && dotIndex !== -1 && dotIndex - atIndex <= 20 && dotIndex - atIndex >= 3) {
               return null; // Valid email format
             }
           }

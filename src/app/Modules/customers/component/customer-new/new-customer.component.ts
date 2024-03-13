@@ -72,14 +72,14 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
           if (email && email.length >= 2 && email.length <= 80) {
             const atIndex = email.indexOf('@');
             const dotIndex = email.indexOf('.', atIndex);
-            if (atIndex > 1 && dotIndex !== -1 && dotIndex - atIndex <= 11 && dotIndex - atIndex >= 3) {
+            if (atIndex > 1 && dotIndex !== -1 && dotIndex - atIndex <= 20 && dotIndex - atIndex >= 3) {
               return null; // Valid email format
             }
           }
           return { 'invalidEmailFormat': { value: control.value } };
         };
       }
-      
+
 
     ngOnInit(): void {
         this.loadCountryList();
