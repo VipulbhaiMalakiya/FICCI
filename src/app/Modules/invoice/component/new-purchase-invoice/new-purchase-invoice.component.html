@@ -279,11 +279,13 @@
                 <div class="col-md-4 col-sm-6">
                     <div class="form-group">
                         <label for="EmailID">Email ID <sup class="text-danger">*</sup></label>
-                        <input type="text" placeholder="Email ID" id="EmailID"
+                        <input type="email" placeholder="Email ID" id="EmailID"
                             formControlName="ImpiHeaderCustomerEmailId" class="form-control" />
                         <div *ngIf="shouldShowError('ImpiHeaderCustomerEmailId','required')" class="text-danger">Email
                             is required.
                         </div>
+                        <div *ngIf="shouldShowError('ImpiHeaderCustomerEmailId', 'invalidEmailFormat')" class="text-danger">
+                            Email must contain a dot (.) after a maximum of 10 characters and a minimum of 2 characters after '@'                        </div>
                         <div *ngIf="shouldShowError('ImpiHeaderCustomerEmailId','email')" class="text-danger"> Please
                             enter a valid email address.</div>
                     </div>

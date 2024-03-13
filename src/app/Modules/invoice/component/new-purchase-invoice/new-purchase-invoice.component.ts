@@ -58,7 +58,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
             ImpiHeaderCustomerPinCode: ['', [Validators.required, Validators.pattern(/^\d{6}$/)]],
             ImpiHeaderCustomerGstNo: [null, [Validators.required, gstValidator()]],
             ImpiHeaderCustomerContactPerson: ['', [Validators.required, alphanumericWithSpacesValidator()]],
-            ImpiHeaderCustomerEmailId: ['', [Validators.required, Validators.email]],
+            ImpiHeaderCustomerEmailId: ['', [Validators.required, Validators.email, this.emailValidator()]],
             ImpiHeaderCustomerPhoneNo: ['', [Validators.required, Validators.pattern(/^[6-9]\d{9}$/)]],
             ImpiHeaderCreatedBy: [''],
             ImpiHeaderTotalInvoiceAmount: [''],//api new filed
@@ -88,6 +88,20 @@ export class NewPurchaseInvoiceComponent implements OnInit {
             return forbidden ? { 'forbiddenCharacters': { value: control.value } } : null;
         };
     }
+
+    emailValidator(): ValidatorFn {
+        return (control: AbstractControl): { [key: string]: any } | null => {
+          const email = control.value;
+          if (email && email.length >= 2 && email.length <= 80) {
+            const atIndex = email.indexOf('@');
+            const dotIndex = email.indexOf('.', atIndex);
+            if (atIndex > 1 && dotIndex !== -1 && dotIndex - atIndex <= 11 && dotIndex - atIndex >= 3) {
+              return null; // Valid email format
+            }
+          }
+          return { 'invalidEmailFormat': { value: control.value } };
+        };
+      }
 
     ngOnInit(): void {
         this.loadProjectList();
