@@ -50,13 +50,13 @@
 
                                 <div class="left-men" routerLinkActive="active">
                                     <h3><a routerLink="dashboard" routerLinkActive="active"
-                                            [routerLinkActiveOptions]="{ exact: true }"><img
+                                           ><img
                                                 src="../assets/images/dashboard-icon.png" alt=""> Dashboard</a></h3>
                                 </div>
                                 <div class="left-men" routerLinkActive="active">
                                     <h3><img src="../assets/images/customer-icon.png" alt=""> Customer</h3>
                                     <a routerLink="/customer/new" class="menu-list-title" routerLinkActive="active"
-                                        [routerLinkActiveOptions]="{ exact: true }"
+                                       
                                         *ngIf="!isAdmin && !isAccount">New Customer</a>
                                     <a routerLink="/customer/status" class="menu-list-title"
                                         routerLinkActive="active"
@@ -74,7 +74,7 @@
                                 <div class="left-men" routerLinkActive="active" *ngIf="!isAccount">
                                     <h3><img src="../assets/images/invoice-icon.png" alt=""> Customer Invoice</h3>
                                     <a routerLink="/invoice/new" class="menu-list-title" routerLinkActive="active"
-                                        [routerLinkActiveOptions]="{ exact: true }"
+                                       
                                         *ngIf="isEmployee">New Customer Invoice</a>
                                     <a routerLink="/invoice/status" class="menu-list-title"
                                         routerLinkActive="active" *ngIf="isAdmin || isEmployee"
@@ -89,9 +89,9 @@
                                     <h3><img src="../assets/images/master-icon.png" alt=""> Masters</h3>
                                     <a routerLink="/masters/configuration-list" class="menu-list-title"
                                         routerLinkActive="active"
-                                        [routerLinkActiveOptions]="{ exact: true }">Configuration List</a>
+                                       >Configuration List</a>
                                     <a routerLink="/masters/users" class="menu-list-title" routerLinkActive="active"
-                                        [routerLinkActiveOptions]="{ exact: true }">User Master</a>
+                                       >User Master</a>
                                 </div>
 
 
