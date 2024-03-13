@@ -184,7 +184,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
     }
 
     customerGSTSearchFn(term: string, item: any) {
-        const concatenatedString = ` ${item.gstregistrationNo}`.toLowerCase();
+        const concatenatedString = ` ${item.gstNumber}`.toLowerCase();
         return concatenatedString.includes(term.toLowerCase());
     }
 
@@ -349,66 +349,69 @@ export class NewPurchaseInvoiceComponent implements OnInit {
             if (this.publicVariable.selectCustomer) {
                 this.publicVariable.dataForm.patchValue({
                     ImpiHeaderCustomerGstNo: this.publicVariable.selectCustomer.gstregistrationNo,
-                    
                 });
-
-                try {
-                    const subscription = this.API.getErpDetailCustNo(this.publicVariable.selectCustomer.gstregistrationNo).subscribe({
-                        next: (response: any) => {
-                            this.GetCustomerGSTList = response.data;
-                        },
-                        error: (error) => {
-                            console.error('Error loading project list:', error);
-                            this.handleLoadingError()
-                        },
-                    });
-        
-                    this.publicVariable.Subscription.add(subscription);
-                } catch (error) {
-                    console.error('Error loading project list:', error);
-                    this.handleLoadingError()
-                }
+                this.getErpDetailCustNo(this.publicVariable.selectCustomer.custNo)
+              
             }
         } else {
             this.publicVariable.dataForm.patchValue({
-             
                 ImpiHeaderCustomerGstNo: null,
-           
 
             });
         }
     }
 
-    onSelectGSTCustomer(): void {
-        const selectedId = this.publicVariable.dataForm.get('ImpiHeaderCustomerGstNo')?.value;
-
-        if (selectedId) {
-            this.publicVariable.selectCustomer = this.publicVariable.GetCustomerList.find(customer => customer.gstregistrationNo == selectedId);
-            if (this.publicVariable.selectCustomer) {
-                this.publicVariable.dataForm.patchValue({
-                    ImpiHeaderCustomerAddress: this.publicVariable.selectCustomer.custAddress,
-                    ImpiHeaderCustomerPinCode: this.publicVariable.selectCustomer.pinCode,
-                    ImpiHeaderCustomerName: this.publicVariable.selectCustomer.custName,
-                    ImpiHeaderCustomerContactPerson: this.publicVariable.selectCustomer.contact,
-                    ImpiHeaderCustomerEmailId: this.publicVariable.selectCustomer.email,
-                    ImpiHeaderCustomerPhoneNo: this.publicVariable.selectCustomer.primaryContactNo,
-                    ImpiHeaderCustomerState: this.publicVariable.selectCustomer.stateCode,
-                    ImpiHeaderCustomerCity: this.publicVariable.selectCustomer.city,
-                });
-            }
-        } else {
-            this.publicVariable.dataForm.patchValue({
-                ImpiHeaderCustomerAddress: null,
-                ImpiHeaderCustomerPinCode: null,
-                ImpiHeaderCustomerName: null,
-                ImpiHeaderCustomerContactPerson: null,
-                ImpiHeaderCustomerEmailId: null,
-                ImpiHeaderCustomerPhoneNo: null,
-                ImpiHeaderCustomerState: null,
-                ImpiHeaderCustomerCity: null
-
+    getErpDetailCustNo(data:any){
+        try {
+            const subscription = this.API.getErpDetailCustNo(data).subscribe({
+                next: (response: any) => {
+                    this.GetCustomerGSTList = response.data;
+                    console.log(this.GetCustomerGSTList[0].gstNumber);
+                    
+                },
+                error: (error) => {
+                    console.error('Error loading project list:', error);
+                    this.handleLoadingError()
+                },
             });
+
+            this.publicVariable.Subscription.add(subscription);
+        } catch (error) {
+            console.error('Error loading project list:', error);
+            this.handleLoadingError()
         }
+    }
+
+    onSelectGSTCustomer(): void {
+        // const selectedId = this.publicVariable.dataForm.get('ImpiHeaderCustomerGstNo')?.value;
+
+        // if (selectedId) {
+        //     this.publicVariable.selectCustomer = this.publicVariable.GetCustomerList.find(customer => customer.gstregistrationNo == selectedId);
+        //     if (this.publicVariable.selectCustomer) {
+        //         this.publicVariable.dataForm.patchValue({
+        //             ImpiHeaderCustomerAddress: this.publicVariable.selectCustomer.custAddress,
+        //             ImpiHeaderCustomerPinCode: this.publicVariable.selectCustomer.pinCode,
+        //             ImpiHeaderCustomerName: this.publicVariable.selectCustomer.custName,
+        //             ImpiHeaderCustomerContactPerson: this.publicVariable.selectCustomer.contact,
+        //             ImpiHeaderCustomerEmailId: this.publicVariable.selectCustomer.email,
+        //             ImpiHeaderCustomerPhoneNo: this.publicVariable.selectCustomer.primaryContactNo,
+        //             ImpiHeaderCustomerState: this.publicVariable.selectCustomer.stateCode,
+        //             ImpiHeaderCustomerCity: this.publicVariable.selectCustomer.city,
+        //         });
+        //     }
+        // } else {
+        //     this.publicVariable.dataForm.patchValue({
+        //         ImpiHeaderCustomerAddress: null,
+        //         ImpiHeaderCustomerPinCode: null,
+        //         ImpiHeaderCustomerName: null,
+        //         ImpiHeaderCustomerContactPerson: null,
+        //         ImpiHeaderCustomerEmailId: null,
+        //         ImpiHeaderCustomerPhoneNo: null,
+        //         ImpiHeaderCustomerState: null,
+        //         ImpiHeaderCustomerCity: null
+
+        //     });
+        // }
     }
 
     handleLoadingError() {

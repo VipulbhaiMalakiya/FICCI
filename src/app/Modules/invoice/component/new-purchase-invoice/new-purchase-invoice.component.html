@@ -167,12 +167,12 @@
                         <label for="ImpiHeaderCustomerGstNo">GST Number <sup class="text-danger">*</sup></label>
                         <div class="flex-field">
                             <ng-select [items]="GetCustomerGSTList" #select class="w-100"
-                                bindLabel="gstregistrationNo" bindValue="gstregistrationNo"
+                                bindLabel="gstNumber" bindValue="gstNumber"
                                 placeholder="Select customer" formControlName="ImpiHeaderCustomerGstNo"
                                 (change)="onSelectGSTCustomer()" [searchable]="true" [searchFn]="customerGSTSearchFn"
                                 [virtualScroll]="true" [bufferAmount]="10">
                                 <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
-                                    <div><span>{{item.gstregistrationNo}}</span></div>
+                                    <div><span>{{item.gstNumber}}</span></div>
                                 </ng-template>
                             </ng-select>
 
