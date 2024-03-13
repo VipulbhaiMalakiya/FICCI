@@ -13,6 +13,12 @@
                     <input type="text" class="form-control" id="email" placeholder="Mail to"
                         formControlName="emailTo">
                     <div *ngIf="shouldShowError('emailTo','required')" class="text-danger">Mail to is required.</div>
+                    <div *ngIf="shouldShowError('emailTo', 'invalidEmailFormat')" class="text-danger">
+                        Please enter a valid email address.</div>
+
+                    <div *ngIf="shouldShowError('emailTo', 'maxlength')" class="text-danger">
+                        Email must be less than 80 characters.
+                    </div>
                 </div>
             </div>
 

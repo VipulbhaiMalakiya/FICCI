@@ -3,6 +3,7 @@ import { ActivatedRoute, ConfirmationDialogModalComponent, CustomersService, For
 import { AngularEditorConfig } from '@kolkov/angular-editor';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { environment } from 'src/environments/environment';
+import { AbstractControl, ValidatorFn } from '@angular/forms';
 
 @Component({
   selector: 'app-update-email',
@@ -20,8 +21,7 @@ export class UpdateEmailComponent {
 
     set isEmail(value: any) {
         this._emailMaster = value;
-        console.log(this._emailMaster);
-        
+
         if (this._emailMaster) {
             this.publicVariable.mailForm.patchValue({
                 emailTo: this._emailMaster.data.immdMailTo ,
@@ -88,13 +88,26 @@ export class UpdateEmailComponent {
 
     private initializeFormmailForm(): void {
         this.publicVariable.mailForm = this.fb.group({
-            emailTo: ['', [Validators.required]],
+            emailTo:  ['', [Validators.required, Validators.email, Validators.maxLength(80), this.emailValidator()]],
             subject: ['', [Validators.required]],
             body: ['', [Validators.required]],
             attachment: [''],
         })
     }
 
+    emailValidator(): ValidatorFn {
+        return (control: AbstractControl): { [key: string]: any } | null => {
+            const email = control.value;
+            if (email && email.length >= 2 && email.length <= 80) {
+                const atIndex = email.indexOf('@');
+                const dotIndex = email.indexOf('.', atIndex);
+                if (atIndex > 1 && dotIndex !== -1 && dotIndex - atIndex <= 20 && dotIndex - atIndex >= 3) {
+                    return null; // Valid email format
+                }
+            }
+            return { 'invalidEmailFormat': { value: control.value } };
+        };
+    }
 
     ngOnInit() {
         this.data = history.state.data;
