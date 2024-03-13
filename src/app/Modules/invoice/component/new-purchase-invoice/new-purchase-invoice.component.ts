@@ -344,29 +344,11 @@ export class NewPurchaseInvoiceComponent implements OnInit {
         if (selectedId) {
             this.publicVariable.selectCustomer = this.publicVariable.GetCustomerList.find(customer => customer.custName == selectedId);
             if (this.publicVariable.selectCustomer) {
-                this.publicVariable.dataForm.patchValue({
-                    ImpiHeaderCustomerAddress: this.publicVariable.selectCustomer.custAddress,
-                    ImpiHeaderCustomerPinCode: this.publicVariable.selectCustomer.pinCode,
-                    ImpiHeaderCustomerGstNo: this.publicVariable.selectCustomer.gstregistrationNo,
-                    ImpiHeaderCustomerContactPerson: this.publicVariable.selectCustomer.contact,
-                    ImpiHeaderCustomerEmailId: this.publicVariable.selectCustomer.email,
-                    ImpiHeaderCustomerPhoneNo: this.publicVariable.selectCustomer.primaryContactNo,
-                    ImpiHeaderCustomerState: this.publicVariable.selectCustomer.stateCode,
-                    ImpiHeaderCustomerCity: this.publicVariable.selectCustomer.city,
-                });
+                this.publicVariable.selectCustomer.gstregistrationNo
+                console.log(this.publicVariable.selectCustomer.gstregistrationNo)
+                
             }
         } else {
-            this.publicVariable.dataForm.patchValue({
-                ImpiHeaderCustomerAddress: null,
-                ImpiHeaderCustomerPinCode: null,
-                ImpiHeaderCustomerGstNo: null,
-                ImpiHeaderCustomerContactPerson: null,
-                ImpiHeaderCustomerEmailId: null,
-                ImpiHeaderCustomerPhoneNo: null,
-                ImpiHeaderCustomerState: null,
-                ImpiHeaderCustomerCity: null
-
-            });
         }
     }
 
