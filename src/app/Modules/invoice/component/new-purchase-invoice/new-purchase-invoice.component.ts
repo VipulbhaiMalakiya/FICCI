@@ -356,7 +356,6 @@ export class NewPurchaseInvoiceComponent implements OnInit {
         } else {
             this.publicVariable.dataForm.patchValue({
                 ImpiHeaderCustomerGstNo: null,
-
             });
         }
     }
