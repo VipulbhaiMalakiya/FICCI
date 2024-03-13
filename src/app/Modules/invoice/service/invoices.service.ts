@@ -30,7 +30,12 @@ export class InvoicesService {
     private TaxInvoiceInformationURL = `${environment.apiURL}NavERP/GetTaxInvoiceInformation`;
     private GetTaxInvoiceAttachmentURL = `${environment.apiURL}NavERP/GetTaxInvoiceAttachment`;
     private ErpDetailCustNoURL = `${environment.apiURL}DropDown/ErpDetailCustNo?customerNo=`;
+    private GstRegistrationNoURL = `${environment.apiURL}DropDown/GstRegistrationNo?gstNo=`;
 
+    getGstRegistrationNo(gstNo:any): Observable<any[]> {
+        const url = `${this.GstRegistrationNoURL}${gstNo ?? ''}`;
+        return this.http.get<any[]>(url);
+    }
     getErpDetailCustNo(customerNo:any): Observable<any[]> {
         const url = `${this.ErpDetailCustNoURL}${customerNo ?? ''}`;
         return this.http.get<any[]>(url);

@@ -23,7 +23,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
     panExists: boolean = false;
     gstHeaderExists: boolean = false;
     GetCustomerGSTList: any[] = [];
-
+    GstRegistrationDetail:any[] = [];
     constructor(private appService: AppService,
         private modalService: NgbModal,
         private router: Router,
@@ -351,7 +351,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
                     ImpiHeaderCustomerGstNo: this.publicVariable.selectCustomer.gstregistrationNo,
                 });
                 this.getErpDetailCustNo(this.publicVariable.selectCustomer.custNo)
-              
+             
             }
         } else {
             this.publicVariable.dataForm.patchValue({
@@ -366,8 +366,27 @@ export class NewPurchaseInvoiceComponent implements OnInit {
             const subscription = this.API.getErpDetailCustNo(data).subscribe({
                 next: (response: any) => {
                     this.GetCustomerGSTList = response.data;
-                    console.log(this.GetCustomerGSTList[0].gstNumber);
-                    
+                    this.getGstRegistrationNo(this.GetCustomerGSTList[0].gstNumber)
+                },
+                error: (error) => {
+                    console.error('Error loading project list:', error);
+                    this.handleLoadingError()
+                },
+            });
+
+            this.publicVariable.Subscription.add(subscription);
+        } catch (error) {
+            console.error('Error loading project list:', error);
+            this.handleLoadingError()
+        }
+    }
+
+    getGstRegistrationNo(data:any){
+        try {
+            const subscription = this.API.getGstRegistrationNo(data).subscribe({
+                next: (response: any) => {
+                    this.GstRegistrationDetail = response.data;
+                    this.onSelectGSTCustomer();
                 },
                 error: (error) => {
                     console.error('Error loading project list:', error);
@@ -383,35 +402,35 @@ export class NewPurchaseInvoiceComponent implements OnInit {
     }
 
     onSelectGSTCustomer(): void {
-        // const selectedId = this.publicVariable.dataForm.get('ImpiHeaderCustomerGstNo')?.value;
+        const selectedId = this.publicVariable.dataForm.get('ImpiHeaderCustomerGstNo')?.value;
 
-        // if (selectedId) {
-        //     this.publicVariable.selectCustomer = this.publicVariable.GetCustomerList.find(customer => customer.gstregistrationNo == selectedId);
-        //     if (this.publicVariable.selectCustomer) {
-        //         this.publicVariable.dataForm.patchValue({
-        //             ImpiHeaderCustomerAddress: this.publicVariable.selectCustomer.custAddress,
-        //             ImpiHeaderCustomerPinCode: this.publicVariable.selectCustomer.pinCode,
-        //             ImpiHeaderCustomerName: this.publicVariable.selectCustomer.custName,
-        //             ImpiHeaderCustomerContactPerson: this.publicVariable.selectCustomer.contact,
-        //             ImpiHeaderCustomerEmailId: this.publicVariable.selectCustomer.email,
-        //             ImpiHeaderCustomerPhoneNo: this.publicVariable.selectCustomer.primaryContactNo,
-        //             ImpiHeaderCustomerState: this.publicVariable.selectCustomer.stateCode,
-        //             ImpiHeaderCustomerCity: this.publicVariable.selectCustomer.city,
-        //         });
-        //     }
-        // } else {
-        //     this.publicVariable.dataForm.patchValue({
-        //         ImpiHeaderCustomerAddress: null,
-        //         ImpiHeaderCustomerPinCode: null,
-        //         ImpiHeaderCustomerName: null,
-        //         ImpiHeaderCustomerContactPerson: null,
-        //         ImpiHeaderCustomerEmailId: null,
-        //         ImpiHeaderCustomerPhoneNo: null,
-        //         ImpiHeaderCustomerState: null,
-        //         ImpiHeaderCustomerCity: null
+        if (selectedId) {
+            this.publicVariable.selectCustomer = this.GstRegistrationDetail.find(customer => customer.gstNumber == selectedId);            
+            if (this.publicVariable.selectCustomer) {
+                this.publicVariable.dataForm.patchValue({
+                    ImpiHeaderCustomerAddress: this.publicVariable.selectCustomer.address,
+                    ImpiHeaderCustomerPinCode: this.publicVariable.selectCustomer.pinCode,
+                    ImpiHeaderCustomerName: this.publicVariable.selectCustomer.custName,
+                    ImpiHeaderCustomerContactPerson: this.publicVariable.selectCustomer.contact,
+                    ImpiHeaderCustomerEmailId: this.publicVariable.selectCustomer.email,
+                    ImpiHeaderCustomerPhoneNo: this.publicVariable.selectCustomer.primaryContact,
+                    ImpiHeaderCustomerState: this.publicVariable.selectCustomer.stateCode,
+                    ImpiHeaderCustomerCity: this.publicVariable.selectCustomer.city,
+                });
+            }
+        } else {
+            this.publicVariable.dataForm.patchValue({
+                ImpiHeaderCustomerAddress: null,
+                ImpiHeaderCustomerPinCode: null,
+                ImpiHeaderCustomerName: null,
+                ImpiHeaderCustomerContactPerson: null,
+                ImpiHeaderCustomerEmailId: null,
+                ImpiHeaderCustomerPhoneNo: null,
+                ImpiHeaderCustomerState: null,
+                ImpiHeaderCustomerCity: null
 
-        //     });
-        // }
+            });
+        }
     }
 
     handleLoadingError() {
