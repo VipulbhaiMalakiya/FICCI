@@ -18,18 +18,18 @@ export class ConfigurationService {
     constructor(private http: HttpClient) { }
 
     getCategoryList(): Observable<Category[]> {
-        return this.http.get<Category[]>(this.categoryListUrl).pipe(this.retry);
+        return this.http.get<Category[]>(this.categoryListUrl);
     }
     getAll(): Observable<Configuration[]> {
-        return this.http.get<Configuration[]>(`${this.apiUrl}`).pipe(this.retry);
+        return this.http.get<Configuration[]>(`${this.apiUrl}`);
     }
 
     create(data: addUpdateConfiguration): Observable<addUpdateConfiguration> {
-        return this.http.post<addUpdateConfiguration>(`${this.postURL}`, data).pipe(this.retry);
+        return this.http.post<addUpdateConfiguration>(`${this.postURL}`, data);
     }
 
     delete(id: number): Observable<any> {
-        return this.http.delete<any>(`${this.deleteURL}/${id}`).pipe(this.retry);
+        return this.http.delete<any>(`${this.deleteURL}/${id}`);
     }
 
 }

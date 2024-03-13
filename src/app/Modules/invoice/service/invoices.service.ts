@@ -15,7 +15,6 @@ export class InvoicesService {
 
     private Projectapi = `${environment.apiURL}DropDown/GetProject?id=0`;
     private PurchaseInvoice_New = `${environment.apiURL}PurchaseInvoice_New?email=`;
-    private retry: any = retry(1); // Retry the request up to 2 times in case of failure
     private ApproveInvoiceURL = `${environment.apiURL}ApproveInvoice?email=`;
     private ApproverURL = `${environment.apiURL}ApproveInvoice`;
     private ApproverAccountURL = `${environment.apiURL}Account/GetInvoice?loginid=`;
@@ -32,35 +31,35 @@ export class InvoicesService {
     private GetTaxInvoiceAttachmentURL = `${environment.apiURL}NavERP/GetTaxInvoiceAttachment`;
 
     GetTaxInvoiceAttachment(): Observable<any[]> {
-        return this.http.get<any[]>(`${this.GetTaxInvoiceAttachmentURL}`).pipe(this.retry);
+        return this.http.get<any[]>(`${this.GetTaxInvoiceAttachmentURL}`);
     }
 
     GetTaxInvoiceInformation(): Observable<any[]> {
-        return this.http.get<any[]>(`${this.TaxInvoiceInformationURL}`).pipe(this.retry);
+        return this.http.get<any[]>(`${this.TaxInvoiceInformationURL}`);
     }
     GetInvoiceSummary(): Observable<any[]> {
-        return this.http.get<any[]>(`${this.InvoiceSummaryURL}`).pipe(this.retry);
+        return this.http.get<any[]>(`${this.InvoiceSummaryURL}`);
     }
     IsLatestEmail(id: any): Observable<any[]> {
         const url = `${this.LastestEmailURL}${id}`;
-        return this.http.get<any[]>(url).pipe(this.retry);
+        return this.http.get<any[]>(url);
     }
 
     isCancelPI(data: any): Observable<any[]> {
-        return this.http.post<any[]>(`${this.CancelEmployeeURL}`, data).pipe(this.retry);
+        return this.http.post<any[]>(`${this.CancelEmployeeURL}`, data);
     }
 
     sendEmail(formData: FormData): Observable<any> {
-        return this.http.post<any>(`${this.MailURL}`, formData).pipe(this.retry);
+        return this.http.post<any>(`${this.MailURL}`, formData);
     }
 
     deleteFile(id: number): Observable<any> {
-        return this.http.delete<any>(`${this.FILEDELETE}${id}`).pipe(this.retry);
+        return this.http.delete<any>(`${this.FILEDELETE}${id}`);
     }
 
     getApproveInvoice(): Observable<any[]> {
         const url = `${this.ApproveInvoiceURL}${localStorage.getItem('userEmail') ?? ''}`;
-        return this.http.get<any[]>(url).pipe(this.retry);
+        return this.http.get<any[]>(url);
     }
 
     GetHSNSACLIist(gstCode: any) {
@@ -68,46 +67,46 @@ export class InvoicesService {
         return this.http.get<any>(url);
     }
     GetGSTGroupList(): Observable<any[]> {
-        return this.http.get<any[]>(`${this.GetGSTGroupAPI}`).pipe(this.retry);
+        return this.http.get<any[]>(`${this.GetGSTGroupAPI}`);
     }
 
     GetCOAMasterList(): Observable<any[]> {
-        return this.http.get<any[]>(`${this.GetCOAMasterAPI}`).pipe(this.retry);
+        return this.http.get<any[]>(`${this.GetCOAMasterAPI}`);
     }
 
     GetCustomerList(): Observable<any[]> {
-        return this.http.get<any[]>(`${this.GetCustomerAPI}`).pipe(this.retry);
+        return this.http.get<any[]>(`${this.GetCustomerAPI}`);
     }
     getApproveAccountInvoice(): Observable<any[]> {
 
         const url = `${this.ApproverAccountURL}${localStorage.getItem('userEmail') ?? ''}`;
-        return this.http.get<any[]>(url).pipe(this.retry);
+        return this.http.get<any[]>(url);
     }
 
     getProjects(): Observable<any[]> {
-        return this.http.get<any[]>(`${this.Projectapi}`).pipe(this.retry);
+        return this.http.get<any[]>(`${this.Projectapi}`);
     }
 
     getPurchaseInvoice_New(): Observable<any[]> {
         const url = `${this.PurchaseInvoice_New}${localStorage.getItem('userEmail') ?? ''}`;
-        return this.http.get<any[]>(url).pipe(this.retry);
+        return this.http.get<any[]>(url);
     }
 
     create(formData: FormData): Observable<any> {
-        return this.http.post<any>(`${this.apiUrl}`, formData).pipe(this.retry);
+        return this.http.post<any>(`${this.apiUrl}`, formData);
     }
 
     delete(id: number): Observable<any> {
-        return this.http.delete<any>(`${this.apiUrl}/${id}`).pipe(this.retry);
+        return this.http.delete<any>(`${this.apiUrl}/${id}`);
     }
     getCustomerStatusNew(): Observable<any[]> {
         const url = `${this.getCustomerStatusNewURL}${localStorage.getItem('userEmail') ?? ''}`;
-        return this.http.get<any[]>(url).pipe(this.retry);
+        return this.http.get<any[]>(url);
     }
 
 
 
     isApproverRemarks(data: any): Observable<any[]> {
-        return this.http.post<any[]>(`${this.ApproverURL}`, data).pipe(this.retry);
+        return this.http.post<any[]>(`${this.ApproverURL}`, data);
     }
 }
