@@ -310,14 +310,15 @@ export class DashboardComponent {
             (item.headerStatus === 'PENDING WITH TL APPROVER' ||
                 item.headerStatus === 'PENDING WITH CH APPROVER' ||
                 item.headerStatus === 'PENDING WITH ACCOUNTS APPROVER' ||
-                item.headerStatus === 'PENDING WITH FINANCE APPROVER'));
+                item.headerStatus === 'PENDING WITH FINANCE APPROVER'
+                || item.headerStatus === 'CANCEL BY EMPLOYEE'));
         counts['PENDING WITH TL APPROVER'] = pendingData.length;
 
         const forapproval = data.filter(item => item.headerStatus === 'PENDING WITH TL APPROVER'
             || item.headerStatus === 'PENDING WITH CH APPROVER'
             || item.headerStatus === 'PENDING WITH ACCOUNTS APPROVER'
             || item.headerStatus === 'PENDING WITH FINANCE APPROVER'
-            );
+        );
         counts['FOR APPROVAL'] = forapproval.length;
 
         const approvedData = data.filter(item => item.headerStatus === 'APPROVED BY ACCOUNTS APPROVER'
@@ -328,13 +329,13 @@ export class DashboardComponent {
         const rejectedData = data.filter(item => item.headerStatus === 'REJECTED BY TL APPROVER'
             || item.headerStatus === 'REJECTED BY CH APPROVER'
             || item.headerStatus === 'REJECTED BY ACCOUNTS APPROVER'
-            ||item.headerStatus  ==='REJECTED BY FINANCE APPROVER'
+            || item.headerStatus === 'REJECTED BY FINANCE APPROVER'
 
         );
         counts['REJECTED BY CH APPROVER'] = rejectedData.length;
 
         const cancelData = data.filter(item =>
-            item.headerStatus === 'CANCEL BY EMPLOYEE' );
+            item.headerStatus === 'CANCEL BY EMPLOYEE');
         counts['Cancelled'] = cancelData.length;
 
         const ReversalData = data.filter(item =>
@@ -375,7 +376,8 @@ export class DashboardComponent {
                     (item.headerStatus === 'PENDING WITH TL APPROVER' ||
                         item.headerStatus === 'PENDING WITH CH APPROVER' ||
                         item.headerStatus === 'PENDING WITH ACCOUNTS APPROVER' ||
-                        item.headerStatus === 'PENDING WITH FINANCE APPROVER'));
+                        item.headerStatus === 'PENDING WITH FINANCE APPROVER'
+                        || item.headerStatus === 'CANCEL BY EMPLOYEE'));
                 break;
             case 'APPROVED BY ACCOUNTS APPROVER':
                 filteredData = this.dashboardData.filter((item: any) =>
@@ -390,7 +392,7 @@ export class DashboardComponent {
                     item.headerStatus === 'REJECTED BY CH APPROVER' ||
                     item.headerStatus === 'REJECTED BY ACCOUNTS APPROVER' ||
                     item.headerStatus === 'REJECTED BY FINANCE APPROVER'
-                   ));
+                ));
                 break;
             case 'Cancelled':
                 filteredData = this.dashboardData.filter((item: any) =>
@@ -679,7 +681,7 @@ export class DashboardComponent {
 
     get isAccount() {
         return this.storedRole == 'Accounts';
-      }
+    }
 
 
     loadInvoiceSummary() {
