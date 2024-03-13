@@ -344,11 +344,20 @@ export class NewPurchaseInvoiceComponent implements OnInit {
         if (selectedId) {
             this.publicVariable.selectCustomer = this.publicVariable.GetCustomerList.find(customer => customer.custName == selectedId);
             if (this.publicVariable.selectCustomer) {
-                this.publicVariable.selectCustomer.gstregistrationNo
-                console.log(this.publicVariable.selectCustomer.gstregistrationNo)
+                this.publicVariable.dataForm.patchValue({
+                    ImpiHeaderCustomerGstNo: this.publicVariable.selectCustomer.gstregistrationNo,
+                    
+                });
+
                 
             }
         } else {
+            this.publicVariable.dataForm.patchValue({
+             
+                ImpiHeaderCustomerGstNo: null,
+           
+
+            });
         }
     }
 
