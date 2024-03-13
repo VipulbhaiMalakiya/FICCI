@@ -355,36 +355,62 @@ export class NewPurchaseInvoiceComponent implements OnInit {
             }
         } else {
             this.publicVariable.dataForm.patchValue({
+                ImpiHeaderCustomerAddress: null,
+                ImpiHeaderCustomerPinCode: null,
                 ImpiHeaderCustomerGstNo: null,
+                ImpiHeaderCustomerContactPerson: null,
+                ImpiHeaderCustomerEmailId: null,
+                ImpiHeaderCustomerPhoneNo: null,
+                ImpiHeaderCustomerState: null,
+                ImpiHeaderCustomerCity: null
             });
         }
     }
 
-    getErpDetailCustNo(data:any){
+    getErpDetailCustNo(data: any) {
         try {
             const subscription = this.API.getErpDetailCustNo(data).subscribe({
                 next: (response: any) => {
                     this.GetCustomerGSTList = response.data;
-                    this.getGstRegistrationNo(this.GetCustomerGSTList[0].gstNumber)
+                    this.getGstRegistrationNo(this.GetCustomerGSTList[0].gstNumber);
                 },
                 error: (error) => {
                     console.error('Error loading project list:', error);
-                    this.handleLoadingError()
+                    this.handleLoadingError();
+                    this.setFormFieldsToNull(); // Call function to set form fields to null
                 },
             });
-
+    
             this.publicVariable.Subscription.add(subscription);
         } catch (error) {
             console.error('Error loading project list:', error);
-            this.handleLoadingError()
+            this.handleLoadingError();
+            this.setFormFieldsToNull(); 
         }
     }
+    
+    // Function to set form fields to null
+    private setFormFieldsToNull() {
+        this.publicVariable.dataForm.patchValue({
+            ImpiHeaderCustomerAddress: null,
+            ImpiHeaderCustomerPinCode: null,
+            ImpiHeaderCustomerGstNo: null,
+            ImpiHeaderCustomerContactPerson: null,
+            ImpiHeaderCustomerEmailId: null,
+            ImpiHeaderCustomerPhoneNo: null,
+            ImpiHeaderCustomerState: null,
+            ImpiHeaderCustomerCity: null,
+        });
+    }
+    
 
     getGstRegistrationNo(data:any){
         try {
             const subscription = this.API.getGstRegistrationNo(data).subscribe({
                 next: (response: any) => {
                     this.GstRegistrationDetail = response.data;
+                    console.log(this.GstRegistrationDetail );
+                    
                     this.onSelectGSTCustomer();
                 },
                 error: (error) => {
