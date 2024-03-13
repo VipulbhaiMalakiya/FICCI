@@ -52,7 +52,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
             ImpiHeaderCustomerName: [null, [Validators.required]],
             ImpiHeaderCustomerCode: [''], //new filed
             ImpiHeaderCustomerAddress:  ['', [Validators.required, this.addressValidator(), Validators.maxLength(100)]],
-            
+
             ImpiHeaderCustomerState: [null, [Validators.required]],
             ImpiHeaderCustomerCity: [null, [Validators.required]],
             ImpiHeaderCustomerPinCode: ['', [Validators.required, Validators.pattern(/^\d{6}$/)]],
@@ -208,7 +208,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
         this.uploadedFiles = data.impiHeaderAttachment;
 
         if (data.impiHeaderAttachment !== null && data.impiHeaderAttachment !== undefined) {
-            
+
             this.uploadedFiles = data.impiHeaderAttachment.map((file: any) => ({
                 id: file.imadId,
                 recordNo: file.imadRecordNo,
@@ -797,7 +797,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
 
                     for (let i = 0; i < this.uploadedFiles.length; i++) {
                         const item = this.uploadedFiles[i];
-                        formData.append(`DocType[${i}].doctype`, item.category);
+                        formData.append(`DocType[${i}].doctype`, item.category || item.doctype);
                         formData.append(`DocType[${i}].content`, item.file);
                     }
 
