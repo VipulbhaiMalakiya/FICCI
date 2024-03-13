@@ -183,7 +183,8 @@
                         <label>GST Customer Type <sup class="text-danger">*</sup></label>
 
                         <ng-select [items]="publicVariable.customerTypeList" bindLabel="gstTypeName"
-                            bindValue="gstTypeId" placeholder="Select" formControlName="GSTCustomerType">
+                            bindValue="gstTypeId" placeholder="Select" formControlName="GSTCustomerType"
+                            (change)="ongstTypeChange()">
                         </ng-select>
                         <div *ngIf="shouldShowError('GSTCustomerType', 'required')" class="text-danger">
                             This field is required
@@ -195,9 +196,9 @@
                         <label>GST Registration No. <sup class="text-danger">*</sup></label>
                         <input type="text" class="form-control" placeholder="GST Registration No."
                             formControlName="GSTRegistrationNo" (blur)="validateGST()" />
-                        <div *ngIf="shouldShowError('GSTRegistrationNo', 'invalidGST')" class="text-danger">
+                        <!-- <div *ngIf="shouldShowError('GSTRegistrationNo', 'invalidGST')" class="text-danger">
                             Please enter a valid GST Registration Number. (05AAACF1282E1Z5)
-                        </div>
+                        </div> -->
                         <div *ngIf="gstExists" class="text-danger">
                             GST number already exists.
                         </div>

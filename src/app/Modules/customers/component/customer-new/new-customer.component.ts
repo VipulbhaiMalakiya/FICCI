@@ -47,7 +47,7 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
             stateCode: [null, [Validators.required]],
             cityCode: [null, [Validators.required]],
             postCode: ['', [Validators.required, Validators.pattern(/^\d{6}$/)]],
-            GSTRegistrationNo: ['', [Validators.required, gstValidator()]],
+            GSTRegistrationNo: ['', ],
             GSTCustomerType: [null, Validators.required],
             email: ['', [Validators.required, Validators.email, Validators.maxLength(80), this.emailValidator()]],
             PrimaryContactNo: ['', [Validators.required, Validators.pattern(/^[6-9]\d{9}$/)],],
@@ -297,6 +297,11 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
         return concatenatedString.includes(term.toLowerCase());
     }
 
+    ongstTypeChange() {
+        // Clear the GST registration number when the dropdown selection changes
+        this.publicVariable.dataForm?.get('GSTRegistrationNo')?.setValue('');
+    }
+
     onCitySelectionChange() {
         const selectedId = this.publicVariable.dataForm.get('cityCode')?.value;
         console.log(selectedId);
@@ -324,7 +329,13 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
 
     onSubmit(action: boolean): void {
         if (this.publicVariable.dataForm.valid && !this.panExists && !this.gstExists) {
+
+
             const newData = this.publicVariable.dataForm.value;
+            if (newData.GSTCustomerType !== 2 && newData.GSTRegistrationNo == '') {
+                alert('GST number required!');
+                return
+            }
             const isUpdate = !!newData.customerId;
             const newConfig: any = {
                 isupdate: isUpdate,
@@ -387,7 +398,6 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
             'stateCode',
             'cityCode',
             'postCode',
-            'GSTRegistrationNo',
             'GSTCustomerType',
             'email',
             'PrimaryContactNo',
