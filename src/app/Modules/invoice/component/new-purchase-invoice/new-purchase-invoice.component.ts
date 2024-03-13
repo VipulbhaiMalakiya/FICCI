@@ -712,7 +712,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
 
     onSubmit(action: boolean): void {
         if (this.publicVariable.expenses.length > 0) {
-            if (this.uploadedFiles.length > 0) {
+            if (action || this.uploadedFiles.length > 0) {
                 if (this.publicVariable.dataForm.valid && !this.gstExists && !this.panExists) {
                     const newData = this.publicVariable.dataForm.value;
                     const isUpdate = !!newData.headerid;
