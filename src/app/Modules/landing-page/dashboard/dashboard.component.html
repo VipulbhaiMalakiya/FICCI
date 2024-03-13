@@ -66,7 +66,7 @@
                 <div class="data-tabs" *ngIf="this.publicVariable.storedRole == 'Accounts'">
                     <ul class="nav nav-pills" role="tablist">
 
-                        <li class="nav-item" >
+                        <li class="nav-item">
                             <a class="nav-link tabbg-6" data-bs-toggle="pill" href="#home"
                                 (click)="loadCustomerStatusList('FOR APPROVAL')">
                                 <small>For Approval</small>
@@ -248,14 +248,13 @@
             <!--PI tab-pane-->
 
             <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
-                <div class="data-tabs" >
+                <div class="data-tabs">
                     <ul class="nav nav-pills" role="tablist">
 
 
                         <li class="nav-item" *ngIf="this.publicVariable.storedRole === 'Employee'">
-                            <a class="nav-link  tabbg-1"
-                            [class.active]="this.publicVariable.storedRole === 'Employee'"  data-bs-toggle="pill" href="#PIhome"
-                                (click)="loadInoivceStatusList('DRAFT')">
+                            <a class="nav-link  tabbg-1" [class.active]="this.publicVariable.storedRole === 'Employee'"
+                                data-bs-toggle="pill" href="#PIhome" (click)="loadInoivceStatusList('DRAFT')">
                                 <small>Draft</small>
                                 <span>{{PIisDRAFT}}</span>
                             </a>
@@ -271,7 +270,8 @@
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link  tabbg-3"  [class.active]="this.publicVariable.storedRole !== 'Employee'"  data-bs-toggle="pill" href="#PIhome"
+                            <a class="nav-link  tabbg-3" [class.active]="this.publicVariable.storedRole !== 'Employee'"
+                                data-bs-toggle="pill" href="#PIhome"
                                 (click)="loadInoivceStatusList('APPROVED BY ACCOUNTS APPROVER')">
                                 <small>Approved </small>
                                 <span>{{PIApprovedAccounts}}</span>
@@ -336,7 +336,7 @@
                     <!-- Tab panes -->
                     <div class="tab-content">
 
-                        <div id="PIhome" class="tab-pane active" ><br>
+                        <div id="PIhome" class="tab-pane active"><br>
 
                             <div class="page-btns-col">
 
@@ -431,18 +431,20 @@
 
 
 
-                                                            <a *ngIf="publicVariable.storedRole !== 'Admin' &&
+                                                            <a *ngIf="publicVariable.storedRole !== 'Admin' && publicVariable.storedRole !== 'Approver' &&
                                                                     (d.isDraft ||
                                                                     d.headerStatus == 'REJECTED BY TL APPROVER'  ||
                                                                     d.headerStatus == 'REJECTED BY CH APPROVER' ||
-                                                                    d.headerStatus == 'REJECTED BY ACCOUNTS APPROVER' ||  d.headerStatus == 'REJECTED BY FINANCE APPROVER')"
+                                                                    d.headerStatus == 'REJECTED BY ACCOUNTS APPROVER' ||  d.headerStatus == 'REJECTED BY FINANCE APPROVER'
+                                                                    ||  d.headerStatus == 'CANCELLATION APPROVED BY FINANCE')"
                                                                 href="javascript:void(0);" (click)="onEditPI(d)"><img
                                                                     src="../assets/images/edit-icon.svg" alt="" /></a>
-                                                            <a *ngIf="publicVariable.storedRole !== 'Admin' &&
+                                                            <a *ngIf="publicVariable.storedRole !== 'Admin' && publicVariable.storedRole !== 'Approver' &&
                                                                     (d.isDraft ||
                                                                     d.headerStatus == 'REJECTED BY TL APPROVER'  ||
                                                                     d.headerStatus == 'REJECTED BY CH APPROVER' ||
-                                                                    d.headerStatus == 'REJECTED BY ACCOUNTS APPROVER'  ||d.headerStatus == 'REJECTED BY FINANCE APPROVER')"
+                                                                    d.headerStatus == 'REJECTED BY ACCOUNTS APPROVER'  ||d.headerStatus == 'REJECTED BY FINANCE APPROVER'
+                                                                    ||  d.headerStatus == 'CANCELLATION APPROVED BY FINANCE' )"
                                                                 href="javascript:void(0)"
                                                                 (click)="onDeletePI(d.headerId)" data-bs-toggle="modal"
                                                                 data-bs-target="#deleterecord-modal"><img
@@ -554,8 +556,10 @@
                                                             <a href="javascript:void(0);" (click)="InvoicedView(d)"><img
                                                                     src="../assets/images/view-icon.svg" alt=""></a>
 
-                                                                    <a href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#workflow-modal"><img
-                                                                        src="../assets/images/download-icone.svg" alt="" /></a>
+                                                            <a href="javascript:void(0);" data-bs-toggle="modal"
+                                                                data-bs-target="#workflow-modal"><img
+                                                                    src="../assets/images/download-icone.svg"
+                                                                    alt="" /></a>
                                                         </span>
                                                     </td>
                                                 </tr>
