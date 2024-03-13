@@ -511,12 +511,15 @@ export class NewPurchaseInvoiceComponent implements OnInit {
         componentInstance.message = "Do you really want to delete these records? This process cannot be undone ?";
         modalRef.result.then((canDelete: boolean) => {
             if (canDelete) {
-                this.uploadedFiles.splice(index, 1);
+
                 if (file) {
                     this.publicVariable.isProcess = true;
+                    console.log(file);
+
                     this.API.deleteFile(file.id).subscribe({
                         next: (res: any) => {
                             this.toastr.success(res.message, 'Success');
+                            this.uploadedFiles.splice(index, 1);
                             this.publicVariable.isProcess = false;
                         },
                         error: (error) => {
@@ -799,7 +802,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
                         const item = this.uploadedFiles[i];
 
                         // Check if item.file is defined before appending
-                        if (item.file &&  item.category) {
+                        if (item.file && item.category) {
                             formData.append(`DocType[${i}].doctype`, item.category);
                             formData.append(`DocType[${i}].content`, item.file);
                         }
