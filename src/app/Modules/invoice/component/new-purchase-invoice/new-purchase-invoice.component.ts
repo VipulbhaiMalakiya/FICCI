@@ -51,7 +51,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
             PINO: [''], //api missing
             ImpiHeaderCustomerName: [null, [Validators.required]],
             ImpiHeaderCustomerCode: [''], //new filed
-            ImpiHeaderCustomerAddress:  ['', [Validators.required, this.addressValidator(), Validators.maxLength(100)]],
+            ImpiHeaderCustomerAddress: ['', [Validators.required, this.addressValidator(), Validators.maxLength(100)]],
 
             ImpiHeaderCustomerState: [null, [Validators.required]],
             ImpiHeaderCustomerCity: [null, [Validators.required]],
@@ -84,10 +84,10 @@ export class NewPurchaseInvoiceComponent implements OnInit {
 
     addressValidator(): ValidatorFn {
         return (control: AbstractControl): { [key: string]: any } | null => {
-          const forbidden = /[^a-zA-Z0-9\s.,\-]/.test(control.value);
-          return forbidden ? { 'forbiddenCharacters': { value: control.value } } : null;
+            const forbidden = /[^a-zA-Z0-9\s.,\-]/.test(control.value);
+            return forbidden ? { 'forbiddenCharacters': { value: control.value } } : null;
         };
-      }
+    }
 
     ngOnInit(): void {
         this.loadProjectList();
@@ -222,7 +222,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
                 createdOn: file.imadCreatedOn,
                 modifiedBy: file.imadModifiedBy,
                 modifiedOn: file.imadModifiedOn,
-                doctype:file.doctype
+                doctype: file.doctype
             }));
         } else {
             // Handle the case when data.impiHeaderAttachment is null or undefined
@@ -452,11 +452,11 @@ export class NewPurchaseInvoiceComponent implements OnInit {
 
         // Check if a category is selected
         const selectedCategory = this.publicVariable.dataForm.get('TypeofAttachment')?.value;
-    if (!selectedCategory) {
-        alert('Please select a category before selecting files.');
-        event.target.value = null;
-        return;
-    }
+        if (!selectedCategory) {
+            alert('Please select a category before selecting files.');
+            event.target.value = null;
+            return;
+        }
         const selectedFiles: FileList = event.target.files;
         const allowedTypes = ['application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', // .xlsx
             'application/vnd.ms-excel', // .xls
@@ -797,8 +797,12 @@ export class NewPurchaseInvoiceComponent implements OnInit {
 
                     for (let i = 0; i < this.uploadedFiles.length; i++) {
                         const item = this.uploadedFiles[i];
-                        formData.append(`DocType[${i}].doctype`, item.category || item.doctype);
-                        formData.append(`DocType[${i}].content`, item.file);
+
+                        // Check if item.file is defined before appending
+                        if (item.file &&  item.category) {
+                            formData.append(`DocType[${i}].doctype`, item.category);
+                            formData.append(`DocType[${i}].content`, item.file);
+                        }
                     }
 
 
@@ -901,7 +905,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
     }
 
     markexpenseFormControlsAsTouched(): void {
-        ['impiGlNo', 'impiQuantity', 'impiGstgroupCode',  'impiUnitPrice'].forEach(controlName => {
+        ['impiGlNo', 'impiQuantity', 'impiGstgroupCode', 'impiUnitPrice'].forEach(controlName => {
             this.publicVariable.expenseForm.controls[controlName].markAsTouched();
         });
     }
