@@ -323,7 +323,7 @@ export class DashboardComponent {
         counts['FOR APPROVAL'] = forapproval.length;
 
         const approvedData = data.filter(item => item.headerStatus === 'APPROVED BY ACCOUNTS APPROVER'
-
+            ||item.headerStatus  ==='MAIL SENT BY FINANCE TO CUSTOMER'
             || item.headerStatus === 'MAIL SENT BY ACCOUNT TO CUSTOMER' || item.headerStatus === 'APPROVED BY FINANCE');
         counts['PENDING WITH FINANCE APPROVER'] = approvedData.length;
 
@@ -384,7 +384,8 @@ export class DashboardComponent {
                 filteredData = this.dashboardData.filter((item: any) =>
                     item.headerStatus === 'APPROVED BY ACCOUNTS APPROVER'
                     || item.headerStatus === 'MAIL SENT BY ACCOUNT TO CUSTOMER'
-                    || item.headerStatus === 'APPROVED BY FINANCE');
+                    || item.headerStatus === 'APPROVED BY FINANCE'
+                    ||item.headerStatus  ==='MAIL SENT BY FINANCE TO CUSTOMER');
                 break;
             case 'REJECTED BY CH APPROVER':
                 filteredData = this.dashboardData.filter((item: any) =>
