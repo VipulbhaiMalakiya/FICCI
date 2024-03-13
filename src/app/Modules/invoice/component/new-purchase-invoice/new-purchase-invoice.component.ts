@@ -511,10 +511,10 @@ export class NewPurchaseInvoiceComponent implements OnInit {
         componentInstance.message = "Do you really want to delete these records? This process cannot be undone ?";
         modalRef.result.then((canDelete: boolean) => {
             if (canDelete) {
+                this.uploadedFiles.splice(index, 1);
 
                 if (file) {
                     this.publicVariable.isProcess = true;
-                    console.log(file);
 
                     this.API.deleteFile(file.id).subscribe({
                         next: (res: any) => {
