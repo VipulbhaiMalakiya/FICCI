@@ -17,7 +17,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
     data: any;
     public isEditing: boolean = false;
     uploadedFiles: any[] = [];
-
+    inseetdFiles: any[] = [];
     FilePath: any;
     gstExists: boolean = false;
     panExists: boolean = false;
@@ -482,7 +482,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
                 return;
             }
             this.uploadedFiles.push({ file: file, category: selectedCategory });
-
+            this.inseetdFiles.push({ file: file, category: selectedCategory });
         }
     }
 
@@ -519,7 +519,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
                     this.API.deleteFile(file.id).subscribe({
                         next: (res: any) => {
                             this.toastr.success(res.message, 'Success');
-                            this.uploadedFiles.splice(index, 1);
+                            // this.uploadedFiles.splice(index, 1);
                             this.publicVariable.isProcess = false;
                         },
                         error: (error) => {
@@ -797,10 +797,8 @@ export class NewPurchaseInvoiceComponent implements OnInit {
                     formData.append('impiHeaderTotalInvoiceAmount', String(impiHeaderTotalInvoiceAmount));
 
 
-
-                    for (let i = 0; i < this.uploadedFiles.length; i++) {
-                        const item = this.uploadedFiles[i];
-
+                    for (let i = 0; i < this.inseetdFiles.length; i++) {
+                        const item = this.inseetdFiles[i];
                         // Check if item.file is defined before appending
                         if (item.file && item.category) {
                             formData.append(`DocType[${i}].doctype`, item.category);
