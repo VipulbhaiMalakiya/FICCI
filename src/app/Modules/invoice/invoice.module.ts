@@ -14,12 +14,12 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { SharedModule } from '../shared/shared.module';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { NumberToWordsPipe1 } from './pipe/numberToWords';
-import { SearchFilterPipe1 } from './pipe/searchFilter';
 import { AngularEditorModule } from '@kolkov/angular-editor';
 import { EmailComponent } from './send-email/email/email.component';
 import { UpdateEmailComponent } from './update-email/update-email.component';
 import { PostedTaxInvoiceComponent } from './View/posted-tax-invoice/posted-tax-invoice.component';
 import { PostedTextInvoiceComponent } from './component/posted-text-invoice/posted-text-invoice.component';
+import { SearchFilterPipe1 } from './pipe/searchFilter';
 
 
 
@@ -37,7 +37,7 @@ import { PostedTextInvoiceComponent } from './component/posted-text-invoice/post
         EmailComponent,
         UpdateEmailComponent,
         PostedTaxInvoiceComponent,
-        PostedTextInvoiceComponent
+        PostedTextInvoiceComponent,
     ],
     imports: [
         CommonModule,
@@ -47,7 +47,7 @@ import { PostedTextInvoiceComponent } from './component/posted-text-invoice/post
         NgSelectModule,
         SharedModule,
         NgxPaginationModule,
-        AngularEditorModule
+        AngularEditorModule,
     ]
 })
 export class InvoiceModule { }
