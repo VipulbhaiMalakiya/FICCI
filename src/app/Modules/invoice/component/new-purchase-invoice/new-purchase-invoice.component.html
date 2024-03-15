@@ -92,7 +92,7 @@
                     <div class="form-group">
                         <label>GST No <sup class="text-danger">*</sup></label>
                         <input type="text" placeholder="GST No" class="form-control"
-                            formControlName="ImpiHeaderGstNo" />
+                            formControlName="ImpiHeaderGstNo" maxlength="20" />
 
                         <div *ngIf="shouldShowError('ImpiHeaderGstNo','invalidGST')" class="text-danger"> Please enter
                             a valid GST Registration Number. (05AAACF1282E1Z5)</div>
@@ -240,7 +240,7 @@
                     <div class="form-group">
                         <label for="pincode">Pincode <sup class="text-danger">*</sup></label>
                         <input type="text" formControlName="ImpiHeaderCustomerPinCode" placeholder="Pincode"
-                            (input)="onInputChange($event)" class="form-control" />
+                            (input)="onInputChange($event)" class="form-control" maxlength="15" />
                         <div *ngIf="shouldShowError('ImpiHeaderCustomerPinCode','required')" class="text-danger"> Pin
                             Code is
                             required.
@@ -296,7 +296,7 @@
                     <div class="form-group">
                         <label for="PhoneNo">Phone No. <sup class="text-danger">*</sup></label>
                         <input type="text" class="form-control" id="PhoneNo" (input)="onInputChange($event)"
-                            placeholder="Phone No" formControlName="ImpiHeaderCustomerPhoneNo" />
+                            placeholder="Phone No" formControlName="ImpiHeaderCustomerPhoneNo" maxlength="15" />
                         <div *ngIf="shouldShowError('ImpiHeaderCustomerPhoneNo','required')" class="text-danger">Phone
                             number is required.</div>
                         <div *ngIf="shouldShowError('ImpiHeaderCustomerPhoneNo','pattern')" class="text-danger">Invalid
