@@ -60,7 +60,10 @@ const routes: Routes = [
     },
     {
         path:'tax-invoice/view/:id',
-        component:PostedTaxInvoiceComponent
+        component:PostedTaxInvoiceComponent,
+        canActivate: [AuthGuard],
+        data: { expectedRoles: ['Admin', 'Approver', 'Employee', 'Accounts'] }
+
     }
 ];
 
