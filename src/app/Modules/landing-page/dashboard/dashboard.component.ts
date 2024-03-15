@@ -323,7 +323,7 @@ export class DashboardComponent {
         counts['FOR APPROVAL'] = forapproval.length;
 
         const approvedData = data.filter(item => item.headerStatus === 'APPROVED BY ACCOUNTS APPROVER'
-            ||item.headerStatus  ==='MAIL SENT BY FINANCE TO CUSTOMER'
+            || item.headerStatus === 'MAIL SENT BY FINANCE TO CUSTOMER'
             || item.headerStatus === 'MAIL SENT BY ACCOUNT TO CUSTOMER' || item.headerStatus === 'APPROVED BY FINANCE');
         counts['PENDING WITH FINANCE APPROVER'] = approvedData.length;
 
@@ -385,7 +385,7 @@ export class DashboardComponent {
                     item.headerStatus === 'APPROVED BY ACCOUNTS APPROVER'
                     || item.headerStatus === 'MAIL SENT BY ACCOUNT TO CUSTOMER'
                     || item.headerStatus === 'APPROVED BY FINANCE'
-                    ||item.headerStatus  ==='MAIL SENT BY FINANCE TO CUSTOMER');
+                    || item.headerStatus === 'MAIL SENT BY FINANCE TO CUSTOMER');
                 break;
             case 'REJECTED BY CH APPROVER':
                 filteredData = this.dashboardData.filter((item: any) =>
@@ -400,7 +400,7 @@ export class DashboardComponent {
                 filteredData = this.dashboardData.filter((item: any) =>
                 // item.createdBy === this.publicVariable.storedEmail &&
                 (
-                     item.headerStatus === 'CANCELLATION APPROVED BY FINANCE'));
+                    item.headerStatus === 'CANCELLATION APPROVED BY FINANCE'));
                 break;
             case 'Reversal':
                 filteredData = this.dashboardData.filter((item: any) =>
@@ -697,8 +697,14 @@ export class DashboardComponent {
         ).subscribe({
             next: (response: any) => {
                 if (response.data && Array.isArray(response.data)) {
-                    this.InvoiceSummaryList = response.data;
-                    this.PostedTaxInvoiceCount = response.data.length;
+
+                    // Filter the data by createdBy
+                    this.InvoiceSummaryList = response.data.filter((item: any) => item.createdByUser === this.publicVariable.storedEmail);
+                    this.PostedTaxInvoiceCount = this.InvoiceSummaryList.length;
+
+
+                    // this.InvoiceSummaryList = response.data;
+                    // this.PostedTaxInvoiceCount = response.data.length;
                 } else {
                     // Handle case where response data is null or not an array
                     this.InvoiceSummaryList = [];
