@@ -63,8 +63,6 @@ export class ApprovalInboxComponent implements OnInit {
         this.publicVariable.Subscription.add(subscription);
     }
 
-
-
     onView(data: invoiceStatusModule): void {
         if (data.headerId) {
             this.router.navigate(['invoice/approval/view', data.headerId], { state: { data: data } });
@@ -180,7 +178,14 @@ export class ApprovalInboxComponent implements OnInit {
                 formData.append('ResourceId', dataItem.headerId );
 
                 newData.attachment.forEach((file: any) => {
-                    formData.append('Attachments', file);
+                    if (file instanceof File) {
+                        formData.append('Attachments', file);
+                    } else {
+                        // If it's not a File object, you might need to access the file data differently based on your data structure
+                        // For example, if file is an object with a property named 'data' containing the file data
+                        // formData.append('Attachments', file.data);
+                        // Adjust this according to your data structure
+                    }
                 });
                 this.publicVariable.isProcess = true;
 
@@ -239,7 +244,14 @@ export class ApprovalInboxComponent implements OnInit {
                         formData.append('ResourceType', updateEmail.resourceType);
                         formData.append('ResourceId', updateEmail.resourceId);
                         newData.attachment.forEach((file: any) => {
-                            formData.append('Attachments', file);
+                            if (file instanceof File) {
+                                formData.append('Attachments', file);
+                            } else {
+                                // If it's not a File object, you might need to access the file data differently based on your data structure
+                                // For example, if file is an object with a property named 'data' containing the file data
+                                // formData.append('Attachments', file.data);
+                                // Adjust this according to your data structure
+                            }
                         });
 
                         this.publicVariable.isProcess = true;
