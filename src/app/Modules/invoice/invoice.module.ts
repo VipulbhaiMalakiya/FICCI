@@ -20,6 +20,7 @@ import { UpdateEmailComponent } from './update-email/update-email.component';
 import { PostedTaxInvoiceComponent } from './View/posted-tax-invoice/posted-tax-invoice.component';
 import { PostedTextInvoiceComponent } from './component/posted-text-invoice/posted-text-invoice.component';
 import { SearchFilterPipe1 } from './pipe/searchFilter';
+import { SearchFilterPipe2 } from './pipe/searchpi';
 
 
 
@@ -38,6 +39,7 @@ import { SearchFilterPipe1 } from './pipe/searchFilter';
         UpdateEmailComponent,
         PostedTaxInvoiceComponent,
         PostedTextInvoiceComponent,
+        SearchFilterPipe2
     ],
     imports: [
         CommonModule,
