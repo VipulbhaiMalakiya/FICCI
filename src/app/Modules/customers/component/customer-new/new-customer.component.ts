@@ -61,7 +61,7 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
 
     addressValidator(): ValidatorFn {
         return (control: AbstractControl): { [key: string]: any } | null => {
-          const forbidden = /[^a-zA-Z0-9\s.,\-]/.test(control.value);
+          const forbidden = /[^a-zA-Z0-9\s\-]/.test(control.value);
           return forbidden ? { 'forbiddenCharacters': { value: control.value } } : null;
         };
       }
