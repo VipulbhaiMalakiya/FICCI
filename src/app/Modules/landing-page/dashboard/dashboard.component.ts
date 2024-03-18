@@ -779,62 +779,7 @@ export class DashboardComponent {
     }
 
 
-    sendEmail1(dataItem: any) {
-        this.publicVariable.isProcess = true;
 
-        const modalRef = this.modalService.open(PostedEmailComponent, { size: "xl" });
-        var componentInstance = modalRef.componentInstance as PostedEmailComponent;
-        componentInstance.isEmail = dataItem;
-        modalRef.result.then((data: any) => {
-            if (data) {
-                const newData = data;
-                const formData = new FormData();
-                formData.append('MailTo', newData.emailTo);
-                formData.append('MailSubject', newData.subject);
-                formData.append('MailBody', newData.body);
-                formData.append('LoginId', this.publicVariable.storedEmail);
-                formData.append('MailCC', 'vipul.malakiya@teamcomputers.com' );
-                formData.append('ResourceType', 'Invoice' );
-                formData.append('ResourceId','1' );
-
-                newData.attachment.forEach((file: any) => {
-                    if (file instanceof File) {
-                        formData.append('Attachments', file);
-                    } else {
-                        // If it's not a File object, you might need to access the file data differently based on your data structure
-                        // For example, if file is an object with a property named 'data' containing the file data
-                        // formData.append('Attachments', file.data);
-                        // Adjust this according to your data structure
-                    }
-                });
-                this.publicVariable.isProcess = true;
-
-                this.publicVariable.Subscription.add(
-                    this.IAPI.sendEmail(formData).subscribe({
-                        next: (res: any) => {
-                            if (res.status === true) {
-                                this.toastr.success(res.message, 'Success');
-                            } else {
-                                this.toastr.error(res.message, 'Error');
-                            }
-                        },
-                        error: (error: any) => {
-                            this.toastr.error(error.error.message || 'An error occurred. Please try again later.', 'Error');
-                        },
-                        complete: () => {
-                            this.publicVariable.isProcess = false;
-                        }
-                    })
-                );
-            }
-        }).catch(() => {
-            this.publicVariable.isProcess = false;
-        });
-    }
-
-    onSendEmail1(dataItem: any) {
-        this.sendEmail(dataItem);
-    }
 
 
     onediteEmail(dataItem: any) {
@@ -897,8 +842,64 @@ export class DashboardComponent {
 
         this.publicVariable.Subscription.add(subscription);
 
-
-
     }
 
+
+    sendEmail111(dataItem: any) {
+        this.publicVariable.isProcess = true;
+
+        const modalRef = this.modalService.open(PostedEmailComponent, { size: "xl" });
+        var componentInstance = modalRef.componentInstance as PostedEmailComponent;
+        componentInstance.isEmail = dataItem;
+        modalRef.result.then((data: any) => {
+            if (data) {
+                const newData = data;
+                const formData = new FormData();
+                formData.append('MailTo', newData.emailTo);
+                formData.append('MailSubject', newData.subject);
+                formData.append('MailBody', newData.body);
+                formData.append('LoginId', this.publicVariable.storedEmail);
+                formData.append('MailCC', 'vipul.malakiya@teamcomputers.com' );
+                formData.append('ResourceType', 'Invoice' );
+                formData.append('ResourceId','1' );
+
+                newData.attachment.forEach((file: any) => {
+                    if (file instanceof File) {
+                        formData.append('Attachments', file);
+                    } else {
+                        // If it's not a File object, you might need to access the file data differently based on your data structure
+                        // For example, if file is an object with a property named 'data' containing the file data
+                        // formData.append('Attachments', file.data);
+                        // Adjust this according to your data structure
+                    }
+                });
+                this.publicVariable.isProcess = true;
+
+                this.publicVariable.Subscription.add(
+                    this.IAPI.sendEmail(formData).subscribe({
+                        next: (res: any) => {
+                            if (res.status === true) {
+                                this.toastr.success(res.message, 'Success');
+                            } else {
+                                this.toastr.error(res.message, 'Error');
+                            }
+                        },
+                        error: (error: any) => {
+                            this.toastr.error(error.error.message || 'An error occurred. Please try again later.', 'Error');
+                        },
+                        complete: () => {
+                            this.publicVariable.isProcess = false;
+                        }
+                    })
+                );
+            }
+        }).catch(() => {
+            this.publicVariable.isProcess = false;
+        });
+    }
+
+
+    onTextSendEmail(dataItem: any) {
+        this.sendEmail111(dataItem);
+    }
 }

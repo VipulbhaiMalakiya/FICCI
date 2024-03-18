@@ -23,7 +23,6 @@ export class PostedEmailComponent {
 
     set isEmail(value: any) {
         this._emailMaster = value;
-
         if (this._emailMaster) {
             this.publicVariable.mailForm.patchValue({
                 emailTo: this._emailMaster.createdByUser,
