@@ -172,9 +172,10 @@ export class PostedEmailComponent {
 
 
     downalodFile(fileUrl: any) {
+
         const base64String = fileUrl.attachment;
-        const fileName = fileUrl.fileName;
-        const fileType = `application/${fileUrl.fileType}`;
+        const fileName = fileUrl.name;
+        const fileType = `application/${fileUrl.type}`;
         this.fileService.downloadFile(base64String, fileName, fileType);
     }
 

@@ -859,9 +859,9 @@ export class DashboardComponent {
                 formData.append('MailSubject', newData.subject);
                 formData.append('MailBody', newData.body);
                 formData.append('LoginId', this.publicVariable.storedEmail);
-                formData.append('MailCC', 'vipul.malakiya@teamcomputers.com' );
-                formData.append('ResourceType', 'Invoice' );
-                formData.append('ResourceId','1' );
+                formData.append('MailCC', 'vipul.malakiya@teamcomputers.com');
+                formData.append('ResourceType', 'Invoice');
+                formData.append('ResourceId', '1');
 
                 newData.attachment.forEach((file: any) => {
                     if (file instanceof File) {
