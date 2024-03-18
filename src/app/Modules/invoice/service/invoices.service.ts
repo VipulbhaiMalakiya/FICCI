@@ -27,7 +27,7 @@ export class InvoicesService {
     private CancelEmployeeURL = `${environment.apiURL}PurchaseInvoice_New/CancelEmployee`;
     private LastestEmailURL = `${environment.apiURL}Mail/LastestEmail?invoiceId=`;
     private InvoiceSummaryURL = `${environment.apiURL}NavERP/GetInvoiceSummary?User=`;
-    private TaxInvoiceInformationURL = `${environment.apiURL}NavERP/GetTaxInvoiceInformation`;
+    private TaxInvoiceInformationURL = `${environment.apiURL}NavERP/GetTaxInvoiceInformation?User=`;
     private GetTaxInvoiceAttachmentURL = `${environment.apiURL}NavERP/GetTaxInvoiceAttachment`;
     private ErpDetailCustNoURL = `${environment.apiURL}DropDown/ErpDetailCustNo?customerNo=`;
     private GstRegistrationNoURL = `${environment.apiURL}DropDown/GstRegistrationNo?gstNo=`;
@@ -41,12 +41,15 @@ export class InvoicesService {
         return this.http.get<any[]>(url);
     }
 
-    GetTaxInvoiceAttachment(): Observable<any[]> {
-        return this.http.get<any[]>(`${this.GetTaxInvoiceAttachmentURL}`);
-    }
+    GetTaxInvoiceAttachment(InvoiceNo: string): Observable<any[]> {
+        const userEmail = localStorage.getItem('userEmail');
+        const url = `${this.TaxInvoiceInformationURL}?User=${userEmail}&InvoiceNo=${InvoiceNo}`;
+        return this.http.get<any[]>(url);
+      }
 
     GetTaxInvoiceInformation(): Observable<any[]> {
-        return this.http.get<any[]>(`${this.TaxInvoiceInformationURL}`);
+        const url = `${this.TaxInvoiceInformationURL}${localStorage.getItem('userEmail') ?? ''}`;
+        return this.http.get<any[]>(url);
     }
     GetInvoiceSummary(): Observable<any[]> {
         // return this.http.get<any[]>(`${this.InvoiceSummaryURL}`);
