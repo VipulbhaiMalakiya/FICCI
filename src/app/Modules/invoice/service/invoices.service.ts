@@ -28,7 +28,7 @@ export class InvoicesService {
     private LastestEmailURL = `${environment.apiURL}Mail/LastestEmail?invoiceId=`;
     private InvoiceSummaryURL = `${environment.apiURL}NavERP/GetInvoiceSummary?User=`;
     private TaxInvoiceInformationURL = `${environment.apiURL}NavERP/GetTaxInvoiceInformation?InvoiceNo=`;
-    private GetTaxInvoiceAttachmentURL = `${environment.apiURL}NavERP/GetTaxInvoiceAttachment`;
+    private GetTaxInvoiceAttachmentURL = `${environment.apiURL}NavERP/GetTaxInvoiceAttachment?User=`;
     private ErpDetailCustNoURL = `${environment.apiURL}DropDown/ErpDetailCustNo?customerNo=`;
     private GstRegistrationNoURL = `${environment.apiURL}DropDown/GstRegistrationNo?gstNo=`;
 
@@ -43,7 +43,7 @@ export class InvoicesService {
 
     GetTaxInvoiceAttachment(InvoiceNo: string): Observable<any[]> {
         const userEmail = localStorage.getItem('userEmail');
-        const url = `${this.TaxInvoiceInformationURL}?User=${userEmail}&InvoiceNo=${InvoiceNo}`;
+        const url = `${this.GetTaxInvoiceAttachmentURL}${userEmail}&InvoiceNo=${InvoiceNo}`;
         return this.http.get<any[]>(url);
       }
 
