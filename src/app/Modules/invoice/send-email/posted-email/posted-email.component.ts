@@ -28,28 +28,31 @@ export class PostedEmailComponent {
             });
         }
 
-        // this.uploadedFiles = this._emailMaster.impiHeaderAttachment;
-        // if (this._emailMaster.attachment !== null && this._emailMaster.impiHeaderAttachment !== undefined) {
-        //     this.uploadedFiles = this._emailMaster.impiHeaderAttachment
-        //     .map((file: any) => ({
-        //         id: file.imadId,
-        //         recordNo: file.imadRecordNo,
-        //         screenName: file.imadScreenName,
-        //         name: file.imadFileName,
-        //         type: file.imadFileType,
-        //         fileSize: file.imadFileSize,
-        //         fileUrl: file.imadFileUrl,
-        //         active: file.imadActive,
-        //         createdBy: file.imadCreatedBy,
-        //         createdOn: file.imadCreatedOn,
-        //         modifiedBy: file.imadModifiedBy,
-        //         modifiedOn: file.imadModifiedOn
-        //     }));
-        // } else {
-        //     // Handle the case when data.impiHeaderAttachment is null or undefined
-        //     // For example, you might want to set uploadedFiles to an empty array or handle it differently based on your application logic.
-        //     this.uploadedFiles = [];
-        // }
+        console.log(this._emailMaster);
+
+
+        this.uploadedFiles = this._emailMaster.impiHeaderAttachment;
+        if (this._emailMaster.attachment !== null && this._emailMaster.impiHeaderAttachment !== undefined) {
+            this.uploadedFiles = this._emailMaster.impiHeaderAttachment
+            .map((file: any) => ({
+                id: file.imadId,
+                recordNo: file.imadRecordNo,
+                screenName: file.imadScreenName,
+                name: file.imadFileName,
+                type: file.imadFileType,
+                fileSize: file.imadFileSize,
+                fileUrl: file.imadFileUrl,
+                active: file.imadActive,
+                createdBy: file.imadCreatedBy,
+                createdOn: file.imadCreatedOn,
+                modifiedBy: file.imadModifiedBy,
+                modifiedOn: file.imadModifiedOn
+            }));
+        } else {
+            // Handle the case when data.impiHeaderAttachment is null or undefined
+            // For example, you might want to set uploadedFiles to an empty array or handle it differently based on your application logic.
+            this.uploadedFiles = [];
+        }
     }
 
     editorConfig: AngularEditorConfig = {
