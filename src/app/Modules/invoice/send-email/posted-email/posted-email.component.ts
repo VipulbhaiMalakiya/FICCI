@@ -4,6 +4,7 @@ import { environment } from 'src/environments/environment';
 import { AbstractControl, FormBuilder, ValidatorFn, Validators } from '@angular/forms';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { FileService } from '../../service/FileService';
 
 @Component({
   selector: 'app-posted-email',
@@ -39,7 +40,8 @@ export class PostedEmailComponent {
                 .map((file: any) => ({
                     name: file.fileName,
                     type: file.fileExtension,
-                    fileExtension:file.fileExtension
+                    fileExtension:file.fileExtension,
+                    attachment:file.attachment
                 }));
                 this.publicVariable.isProcess = false;
             },
@@ -77,6 +79,7 @@ export class PostedEmailComponent {
         private route: ActivatedRoute,
         private CAPI: CustomersService,
         private activeModal: NgbActiveModal,
+        private fileService: FileService
     ) {
         this.initializeFormmailForm();
     }
@@ -167,9 +170,12 @@ export class PostedEmailComponent {
         }
     }
 
+
     downalodFile(fileUrl: any) {
-        this.FilePath = `${environment.fileURL}${fileUrl.fileUrl}`;
-        window.open(this.FilePath, '_blank');
+        const base64String = fileUrl.attachment;
+        const fileName = fileUrl.fileName;
+        const fileType = `application/${fileUrl.fileType}`;
+        this.fileService.downloadFile(base64String, fileName, fileType);
     }
 
     deleteFile(index: number, file: any) {
