@@ -54,7 +54,7 @@ export class PostedTaxInvoiceComponent {
                 next: (response: any) => {
                     this.TaxInvoicedata = response.data;
                     this.filterTaxInvoiceByInvoiceNo(this.data.invoice_no);
-                    this.loadTaxInvoiceAttachment();
+                    this.loadTaxInvoiceAttachment(this.data.invoice_no)
                     this.cd.detectChanges();
                 },
                 error: (error) => {
@@ -86,12 +86,11 @@ export class PostedTaxInvoiceComponent {
         this.cd.detectChanges();
     }
 
-    loadTaxInvoiceAttachment() {
+    loadTaxInvoiceAttachment(invoice:string) {
         try {
-            const subscription = this.API.GetTaxInvoiceAttachment().subscribe({
+            const subscription = this.API.GetTaxInvoiceAttachment(invoice).subscribe({
                 next: (response: any) => {
                     this.InvoiceAttachment = response.data;
-                    this.filterTaxInvoiceAttachmentByInvoiceNo("7TI/APR22/0078");
                     this.handleLoadingError();
                 },
                 error: (error) => {
@@ -107,14 +106,7 @@ export class PostedTaxInvoiceComponent {
         }
     }
 
-    filterTaxInvoiceAttachmentByInvoiceNo(invoiceNo: string) {
-        if (!this.InvoiceAttachment || !Array.isArray(this.InvoiceAttachment)) {
-            console.error("InvoiceAttachment is not properly initialized or is not an array.");
-            return;
-        }
-        const TaxInvoicedataArray = this.InvoiceAttachment.filter((invoice: any) => invoice.invoiceNo === invoiceNo);
-        this.InvoiceAttachment = TaxInvoicedataArray;
-    }
+
     downalodFile(fileUrl: any) {
         const base64String = fileUrl.attachment;
         const fileName = fileUrl.fileName;
