@@ -260,7 +260,13 @@
                             </a>
                         </li>
 
-
+                        <li class="nav-item" *ngIf="this.publicVariable.storedRole === 'Approver'">
+                            <a class="nav-link tabbg-6"   [class.active]="this.publicVariable.storedRole === 'Approver'"  data-bs-toggle="pill" href="#PIhome"
+                                (click)="loadInoivceStatusList('FOR APPROVAL')">
+                                <small>For Approval</small>
+                                <span>{{this.PIforapproval}}</span>
+                            </a>
+                        </li>
                         <li class="nav-item" *ngIf="this.publicVariable.storedRole === 'Employee'">
                             <a class="nav-link tabbg-2" data-bs-toggle="pill" href="#PIhome"
                                 (click)="loadInoivceStatusList('PENDING WITH APPROVER')">
@@ -270,7 +276,7 @@
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link  tabbg-3" [class.active]="this.publicVariable.storedRole !== 'Employee'"
+                            <a class="nav-link  tabbg-3"
                                 data-bs-toggle="pill" href="#PIhome"
                                 (click)="loadInoivceStatusList('APPROVED BY ACCOUNTS APPROVER')">
                                 <small>Approved </small>
@@ -293,13 +299,7 @@
                             </a>
                         </li>
 
-                        <li class="nav-item" *ngIf="this.publicVariable.storedRole === 'Approver'">
-                            <a class="nav-link tabbg-6" data-bs-toggle="pill" href="#PIhome"
-                                (click)="loadInoivceStatusList('FOR APPROVAL')">
-                                <small>For Approval</small>
-                                <span>{{this.PIforapproval}}</span>
-                            </a>
-                        </li>
+
                         <!-- <li class="nav-item" *ngIf="this.publicVariable.storedRole === 'Accounts'">
                             <a class="nav-link tabbg-6" data-bs-toggle="pill" href="#PIhome"
                                 (click)="loadInoivceStatusList('FOR APPROVAL')">
