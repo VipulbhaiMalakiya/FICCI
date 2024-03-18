@@ -8,8 +8,8 @@
 
         <div class="tblsort" *ngIf="InvoiceSummaryList && InvoiceSummaryList.length > 0">
             <label class="col-form-label">Show</label>
-            <select id="itemsPerPageSelect" class="form-select"
-                [(ngModel)]="publicVariable.tableSize" (change)="onTableSizeChange($event)">
+            <select id="itemsPerPageSelect" class="form-select" [(ngModel)]="publicVariable.tableSize"
+                (change)="onTableSizeChange($event)">
                 <option *ngFor="let size of publicVariable.tableSizes" [value]="size">{{ size }}
                 </option>
             </select>
@@ -22,8 +22,7 @@
         <div class="topbr-btns">
             <div class="btn-group" *ngIf="InvoiceSummaryList && InvoiceSummaryList.length > 0">
                 <div class="table-search"><input type="text" class="form-control"
-                        [(ngModel)]="publicVariable.searchText" name="name" id="name"
-                        placeholder="Search here"></div>
+                        [(ngModel)]="publicVariable.searchText" name="name" id="name" placeholder="Search here"></div>
             </div>
         </div>
     </div>
@@ -66,9 +65,12 @@
                                             src="../assets/images/view-icon.svg" alt=""></a>
 
                                     <a href="javascript:void(0);" data-bs-toggle="modal"
-                                        data-bs-target="#workflow-modal"><img
-                                            src="../assets/images/download-icone.svg"
+                                        data-bs-target="#workflow-modal"><img src="../assets/images/download-icone.svg"
                                             alt="" /></a>
+
+                                    <a href="javascript:void(0);" (click)="onSendEmail(d)"
+                                       ><img
+                                            src="../assets/images/email-icon.svg" alt="" /></a>
                                 </span>
                             </td>
                         </tr>
