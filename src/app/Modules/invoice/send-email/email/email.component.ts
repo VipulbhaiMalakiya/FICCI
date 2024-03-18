@@ -143,6 +143,8 @@ export class EmailComponent {
             }
             this.uploadedFiles.push(file);
         }
+          // Clear the file input after successful file selection
+          event.target.value = null;
     }
 
 
