@@ -23,7 +23,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
     panExists: boolean = false;
     gstHeaderExists: boolean = false;
     GetCustomerGSTList: any[] = [];
-    GstRegistrationDetail:any[] = [];
+    GstRegistrationDetail: any[] = [];
     constructor(private appService: AppService,
         private modalService: NgbModal,
         private router: Router,
@@ -91,17 +91,17 @@ export class NewPurchaseInvoiceComponent implements OnInit {
 
     emailValidator(): ValidatorFn {
         return (control: AbstractControl): { [key: string]: any } | null => {
-          const email = control.value;
-          if (email && email.length >= 2 && email.length <= 80) {
-            const atIndex = email.indexOf('@');
-            const dotIndex = email.indexOf('.', atIndex);
-            if (atIndex > 1 && dotIndex !== -1 && dotIndex - atIndex <= 20 && dotIndex - atIndex >= 3) {
-              return null; // Valid email format
+            const email = control.value;
+            if (email && email.length >= 2 && email.length <= 80) {
+                const atIndex = email.indexOf('@');
+                const dotIndex = email.indexOf('.', atIndex);
+                if (atIndex > 1 && dotIndex !== -1 && dotIndex - atIndex <= 20 && dotIndex - atIndex >= 3) {
+                    return null; // Valid email format
+                }
             }
-          }
-          return { 'invalidEmailFormat': { value: control.value } };
+            return { 'invalidEmailFormat': { value: control.value } };
         };
-      }
+    }
 
     ngOnInit(): void {
         this.loadProjectList();
@@ -343,7 +343,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
 
     onSelectCustomer(): void {
         const selectedId = this.publicVariable.dataForm.get('ImpiHeaderCustomerName')?.value;
-    
+
         if (selectedId) {
             this.publicVariable.selectCustomer = this.publicVariable.GetCustomerList.find(customer => customer.custName == selectedId);
             if (this.publicVariable.selectCustomer) {
@@ -352,14 +352,14 @@ export class NewPurchaseInvoiceComponent implements OnInit {
                 });
                 this.getErpDetailCustNo(this.publicVariable.selectCustomer.custNo);
             } else {
-               
+
                 this.setFormFieldsToNull(); // Call function to set form fields to null
             }
         } else {
             this.setFormFieldsToNull(); // Call function to set form fields to null
         }
     }
-    
+
 
     getErpDetailCustNo(data: any) {
         try {
@@ -374,15 +374,15 @@ export class NewPurchaseInvoiceComponent implements OnInit {
                     this.setFormFieldsToNull(); // Call function to set form fields to null
                 },
             });
-    
+
             this.publicVariable.Subscription.add(subscription);
         } catch (error) {
             console.error('Error loading  list:', error);
             this.handleLoadingError();
-            this.setFormFieldsToNull(); 
+            this.setFormFieldsToNull();
         }
     }
-    
+
     // Function to set form fields to null
     private setFormFieldsToNull() {
         this.publicVariable.dataForm.patchValue({
@@ -396,13 +396,13 @@ export class NewPurchaseInvoiceComponent implements OnInit {
             ImpiHeaderCustomerCity: null,
         });
     }
-    
 
-    getGstRegistrationNo(data:any){
+
+    getGstRegistrationNo(data: any) {
         try {
             const subscription = this.API.getGstRegistrationNo(data).subscribe({
                 next: (response: any) => {
-                    this.GstRegistrationDetail = response.data;                    
+                    this.GstRegistrationDetail = response.data;
                     this.onSelectGSTCustomer();
                 },
                 error: (error) => {
@@ -422,7 +422,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
         const selectedId = this.publicVariable.dataForm.get('ImpiHeaderCustomerGstNo')?.value;
 
         if (selectedId) {
-            this.publicVariable.selectCustomer = this.GstRegistrationDetail.find(customer => customer.gstNumber == selectedId);            
+            this.publicVariable.selectCustomer = this.GstRegistrationDetail.find(customer => customer.gstNumber == selectedId);
             if (this.publicVariable.selectCustomer) {
                 this.publicVariable.dataForm.patchValue({
                     ImpiHeaderCustomerAddress: this.publicVariable.selectCustomer.address,
@@ -546,6 +546,9 @@ export class NewPurchaseInvoiceComponent implements OnInit {
             this.uploadedFiles.push({ file: file, category: selectedCategory });
             this.inseetdFiles.push({ file: file, category: selectedCategory });
         }
+        // Clear the file input after successful file selection
+        event.target.value = null;
+        this.publicVariable.dataForm?.get('TypeofAttachment')?.reset('');
     }
 
     getFileType(type: string): string {
@@ -614,7 +617,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
         return concatenatedString.includes(term.toLowerCase());
     }
 
-    
+
 
 
     onCitySelectionChange() {
