@@ -50,10 +50,10 @@ export class PostedTaxInvoiceComponent {
 
     loadTaxInvoiceInformation() {
         try {
-            const subscription = this.API.GetTaxInvoiceInformation(this.data.invoice_no).subscribe({
+            const subscription = this.API.GetTaxInvoiceInformation("SI121683").subscribe({
                 next: (response: any) => {
                     this.TaxInvoicedata = response.data;
-                    this.filterTaxInvoiceByInvoiceNo(this.data.invoice_no);
+                    this.filterTaxInvoiceByInvoiceNo("SI121683");
                     this.loadTaxInvoiceAttachment(this.data.no)
                     this.cd.detectChanges();
                 },
