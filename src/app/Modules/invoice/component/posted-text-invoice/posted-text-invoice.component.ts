@@ -53,12 +53,12 @@ export class PostedTextInvoiceComponent {
 
                     // Filter the data by createdBy
                     // this.InvoiceSummaryList = response.data;
-                    this.InvoiceSummaryList = response.data.filter((item: any) => item.createdByUser === this.publicVariable.storedEmail);
-                    this.PostedTaxInvoiceCount = this.InvoiceSummaryList.length;
+                    // this.InvoiceSummaryList = response.data.filter((item: any) => item.createdByUser === this.publicVariable.storedEmail);
+                    // this.PostedTaxInvoiceCount = this.InvoiceSummaryList.length;
 
 
-                    // this.InvoiceSummaryList = response.data;
-                    // this.PostedTaxInvoiceCount = response.data.length;
+                    this.InvoiceSummaryList = response.data;
+                    this.PostedTaxInvoiceCount = response.data.length;
                 } else {
                     // Handle case where response data is null or not an array
                     this.InvoiceSummaryList = [];
