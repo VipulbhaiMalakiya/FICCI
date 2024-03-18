@@ -50,7 +50,7 @@ export class PostedTaxInvoiceComponent {
 
     loadTaxInvoiceInformation() {
         try {
-            const subscription = this.API.GetTaxInvoiceInformation().subscribe({
+            const subscription = this.API.GetTaxInvoiceInformation(this.data.invoice_no).subscribe({
                 next: (response: any) => {
                     this.TaxInvoicedata = response.data;
                     this.filterTaxInvoiceByInvoiceNo(this.data.invoice_no);
