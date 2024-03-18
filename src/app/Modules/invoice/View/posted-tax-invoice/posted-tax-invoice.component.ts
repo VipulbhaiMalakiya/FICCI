@@ -54,7 +54,7 @@ export class PostedTaxInvoiceComponent {
                 next: (response: any) => {
                     this.TaxInvoicedata = response.data;
                     this.filterTaxInvoiceByInvoiceNo(this.data.invoice_no);
-                    this.loadTaxInvoiceAttachment(this.data.invoice_no)
+                    this.loadTaxInvoiceAttachment(this.data.no)
                     this.cd.detectChanges();
                 },
                 error: (error) => {

@@ -146,9 +146,9 @@ export class PostedTextInvoiceComponent {
                 formData.append('MailSubject', newData.subject);
                 formData.append('MailBody', newData.body);
                 formData.append('LoginId', this.publicVariable.storedEmail);
-                formData.append('MailCC', dataItem.impiHeaderCreatedBy );
-                formData.append('ResourceType', dataItem.impiHeaderInvoiceType );
-                formData.append('ResourceId', dataItem.headerId );
+                // formData.append('MailCC', dataItem.impiHeaderCreatedBy );
+                // formData.append('ResourceType', dataItem.impiHeaderInvoiceType );
+                // formData.append('ResourceId', dataItem.headerId );
 
                 newData.attachment.forEach((file: any) => {
                     if (file instanceof File) {
@@ -162,24 +162,23 @@ export class PostedTextInvoiceComponent {
                 });
                 this.publicVariable.isProcess = true;
 
-                // this.publicVariable.Subscription.add(
-                //     this.API.sendEmail(formData).subscribe({
-                //         next: (res: any) => {
-                //             if (res.status === true) {
-                //                 this.toastr.success(res.message, 'Success');
-                //                 this.loadApproveInvoiceList();
-                //             } else {
-                //                 this.toastr.error(res.message, 'Error');
-                //             }
-                //         },
-                //         error: (error: any) => {
-                //             this.toastr.error(error.error.message || 'An error occurred. Please try again later.', 'Error');
-                //         },
-                //         complete: () => {
-                //             this.publicVariable.isProcess = false;
-                //         }
-                //     })
-                // );
+                this.publicVariable.Subscription.add(
+                    this.IAPI.sendEmail(formData).subscribe({
+                        next: (res: any) => {
+                            if (res.status === true) {
+                                this.toastr.success(res.message, 'Success');
+                            } else {
+                                this.toastr.error(res.message, 'Error');
+                            }
+                        },
+                        error: (error: any) => {
+                            this.toastr.error(error.error.message || 'An error occurred. Please try again later.', 'Error');
+                        },
+                        complete: () => {
+                            this.publicVariable.isProcess = false;
+                        }
+                    })
+                );
             }
         }).catch(() => {
             this.publicVariable.isProcess = false;
