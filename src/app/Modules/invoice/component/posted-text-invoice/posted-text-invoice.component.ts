@@ -146,9 +146,9 @@ export class PostedTextInvoiceComponent {
                 formData.append('MailSubject', newData.subject);
                 formData.append('MailBody', newData.body);
                 formData.append('LoginId', this.publicVariable.storedEmail);
-                // formData.append('MailCC', dataItem.impiHeaderCreatedBy );
-                // formData.append('ResourceType', dataItem.impiHeaderInvoiceType );
-                // formData.append('ResourceId', dataItem.headerId );
+                formData.append('MailCC', 'vipul.malakiya@teamcomputers.com' );
+                formData.append('ResourceType', 'Invoice' );
+                formData.append('ResourceId','1' );
 
                 newData.attachment.forEach((file: any) => {
                     if (file instanceof File) {
