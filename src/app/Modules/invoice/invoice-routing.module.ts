@@ -11,6 +11,7 @@ import { AuthGuard } from 'src/app/guard/auth.guard';
 import { EmailComponent } from './send-email/email/email.component';
 import { PostedTaxInvoiceComponent } from './View/posted-tax-invoice/posted-tax-invoice.component';
 import { PostedTextInvoiceComponent } from './component/posted-text-invoice/posted-text-invoice.component';
+import { CreditmemoComponent } from './component/creditmemo/creditmemo.component';
 
 const routes: Routes = [
     { path: '', redirectTo: 'status', pathMatch: 'full' },
@@ -68,6 +69,12 @@ const routes: Routes = [
     {
         path:'tax-invoice',
         component:PostedTextInvoiceComponent,
+        canActivate: [AuthGuard],
+        data: { expectedRoles: ['Admin', 'Approver', 'Employee', 'Accounts'] }
+    },
+    {
+        path:'credit-memo',
+        component:CreditmemoComponent,
         canActivate: [AuthGuard],
         data: { expectedRoles: ['Admin', 'Approver', 'Employee', 'Accounts'] }
     }

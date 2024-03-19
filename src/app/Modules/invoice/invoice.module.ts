@@ -22,6 +22,7 @@ import { PostedTextInvoiceComponent } from './component/posted-text-invoice/post
 import { SearchFilterPipe1 } from './pipe/searchFilter';
 import { SearchFilterPipe2 } from './pipe/searchpi';
 import { PostedEmailComponent } from './send-email/posted-email/posted-email.component';
+import { CreditmemoComponent } from './component/creditmemo/creditmemo.component';
 
 
 
@@ -41,7 +42,8 @@ import { PostedEmailComponent } from './send-email/posted-email/posted-email.com
         PostedTaxInvoiceComponent,
         PostedTextInvoiceComponent,
         SearchFilterPipe2,
-        PostedEmailComponent
+        PostedEmailComponent,
+        CreditmemoComponent
     ],
     imports: [
         CommonModule,
