@@ -12,7 +12,8 @@
                 <div class="form-group">
                     <label>Invoice No</label>
                     <ng-select [items]="InvoiceSummaryList" #select bindLabel="invoice_no" bindValue="invoice_no"
-                        placeholder="Select Invoice " [searchable]="true" [virtualScroll]="true" [bufferAmount]="10">
+                        placeholder="Select Invoice" formControlName="invoice_no" [searchable]="true"
+                        [virtualScroll]="true" [bufferAmount]="10">
                     </ng-select>
                 </div>
 
@@ -21,8 +22,7 @@
             <div class="col-md-4 col-sm-6">
                 <div class="form-group">
                     <label>Document No</label>
-                    <input type="text" [value]="TaxInvoiceinfo?.no || 'N/A'" class="form-control" disabled=""
-                        readonly="">
+                    <input type="text" class="form-control" readonly="">
                 </div>
             </div>
 

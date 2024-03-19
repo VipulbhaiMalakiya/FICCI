@@ -35,6 +35,7 @@ export class CreditmemoComponent {
     private initializeForm(): void {
         this.publicVariable.dataForm = this.fb.group({
             remarks: ['', Validators.required],
+            invoice_no:['', Validators.required],
         })
     }
 
