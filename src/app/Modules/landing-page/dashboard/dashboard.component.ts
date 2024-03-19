@@ -84,6 +84,7 @@ export class DashboardComponent {
 
         forkJoin([statusSubscription, accountSubscription]).subscribe({
             next: ([statusResponse, accountResponse]: [any, any]) => {
+                console.log(accountResponse);
 
                 this.dashboardData = [...statusResponse.data, ...accountResponse.data];
                 this.countDataByStatus(this.dashboardData);
