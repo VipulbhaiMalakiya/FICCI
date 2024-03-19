@@ -5,9 +5,9 @@ import { timeout, finalize } from 'rxjs';
 import { PostedEmailComponent } from '../../send-email/posted-email/posted-email.component';
 
 @Component({
-  selector: 'app-posted-text-invoice',
-  templateUrl: './posted-text-invoice.component.html',
-  styleUrls: ['./posted-text-invoice.component.css']
+    selector: 'app-posted-text-invoice',
+    templateUrl: './posted-text-invoice.component.html',
+    styleUrls: ['./posted-text-invoice.component.css']
 })
 export class PostedTextInvoiceComponent {
     publicVariable = new publicVariable();
@@ -146,20 +146,36 @@ export class PostedTextInvoiceComponent {
                 formData.append('MailSubject', newData.subject);
                 formData.append('MailBody', newData.body);
                 formData.append('LoginId', this.publicVariable.storedEmail);
-                formData.append('MailCC', 'vipul.malakiya@teamcomputers.com' );
-                formData.append('ResourceType', 'Invoice' );
-                formData.append('ResourceId','1' );
+                formData.append('MailCC', 'vipul.malakiya@teamcomputers.com');
+                formData.append('ResourceType', 'Invoice');
+                formData.append('ResourceId', '1');
 
                 newData.attachment.forEach((file: any) => {
                     if (file instanceof File) {
                         formData.append('Attachments', file);
                     } else {
-                        // If it's not a File object, you might need to access the file data differently based on your data structure
-                        // For example, if file is an object with a property named 'data' containing the file data
-                        // formData.append('Attachments', file.data);
-                        // Adjust this according to your data structure
+
+                        const base64Data = file.attachment; // Your base64 encoded attachment data
+                        const decodedData = atob(base64Data); // Decode base64 data
+
+                        // Convert the decoded data to Uint8Array
+                        const bytes = new Uint8Array(decodedData.length);
+                        for (let i = 0; i < decodedData.length; i++) {
+                            bytes[i] = decodedData.charCodeAt(i);
+                        }
+
+                        // Create a Blob from the Uint8Array
+                        const blob = new Blob([bytes.buffer], { type: 'application/pdf' });
+
+                        // Create a File object with a unique name
+                         file = new File([blob], `${file.name}.${file.type}`, { type: 'application/pdf' });
+
+                        formData.append('Attachments', file);
                     }
                 });
+
+
+
                 this.publicVariable.isProcess = true;
 
                 this.publicVariable.Subscription.add(
