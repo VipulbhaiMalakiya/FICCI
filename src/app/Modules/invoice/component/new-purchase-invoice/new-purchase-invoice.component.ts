@@ -366,7 +366,6 @@ export class NewPurchaseInvoiceComponent implements OnInit {
             const subscription = this.API.getErpDetailCustNo(data).subscribe({
                 next: (response: any) => {
                     this.GetCustomerGSTList = response.data;
-                    this.getGstRegistrationNo(this.GetCustomerGSTList[0].gstNumber);
                 },
                 error: (error) => {
                     console.error('Error loading project list:', error);
@@ -399,11 +398,48 @@ export class NewPurchaseInvoiceComponent implements OnInit {
 
 
     getGstRegistrationNo(data: any) {
+
+    }
+
+    onSelectGSTCustomer(): void {
+
+
+
+        const selectedId = this.publicVariable.dataForm.get('ImpiHeaderCustomerGstNo')?.value;
+
         try {
-            const subscription = this.API.getGstRegistrationNo(data).subscribe({
+
+            const subscription = this.API.getGstRegistrationNo(selectedId).subscribe({
                 next: (response: any) => {
                     this.GstRegistrationDetail = response.data;
-                    this.onSelectGSTCustomer();
+
+                    if (selectedId) {
+                        this.publicVariable.selectCustomer = this.GstRegistrationDetail.find(customer => customer.gstNumber == selectedId);
+                        if (this.publicVariable.selectCustomer) {
+                            this.publicVariable.dataForm.patchValue({
+                                ImpiHeaderCustomerAddress: this.publicVariable.selectCustomer.address,
+                                ImpiHeaderCustomerPinCode: this.publicVariable.selectCustomer.pinCode,
+                                ImpiHeaderCustomerName: this.publicVariable.selectCustomer.custName,
+                                ImpiHeaderCustomerContactPerson: this.publicVariable.selectCustomer.contact,
+                                ImpiHeaderCustomerEmailId: this.publicVariable.selectCustomer.email,
+                                ImpiHeaderCustomerPhoneNo: this.publicVariable.selectCustomer.primaryContact,
+                                ImpiHeaderCustomerState: this.publicVariable.selectCustomer.stateCode,
+                                ImpiHeaderCustomerCity: this.publicVariable.selectCustomer.city,
+                            });
+                        }
+                    } else {
+                        this.publicVariable.dataForm.patchValue({
+                            ImpiHeaderCustomerAddress: null,
+                            ImpiHeaderCustomerPinCode: null,
+                            // ImpiHeaderCustomerName: null,
+                            ImpiHeaderCustomerContactPerson: null,
+                            ImpiHeaderCustomerEmailId: null,
+                            ImpiHeaderCustomerPhoneNo: null,
+                            ImpiHeaderCustomerState: null,
+                            ImpiHeaderCustomerCity: null
+
+                        });
+                    }
                 },
                 error: (error) => {
                     console.error('Error loading project list:', error);
@@ -416,38 +452,8 @@ export class NewPurchaseInvoiceComponent implements OnInit {
             console.error('Error loading project list:', error);
             this.handleLoadingError()
         }
-    }
 
-    onSelectGSTCustomer(): void {
-        const selectedId = this.publicVariable.dataForm.get('ImpiHeaderCustomerGstNo')?.value;
 
-        if (selectedId) {
-            this.publicVariable.selectCustomer = this.GstRegistrationDetail.find(customer => customer.gstNumber == selectedId);
-            if (this.publicVariable.selectCustomer) {
-                this.publicVariable.dataForm.patchValue({
-                    ImpiHeaderCustomerAddress: this.publicVariable.selectCustomer.address,
-                    ImpiHeaderCustomerPinCode: this.publicVariable.selectCustomer.pinCode,
-                    ImpiHeaderCustomerName: this.publicVariable.selectCustomer.custName,
-                    ImpiHeaderCustomerContactPerson: this.publicVariable.selectCustomer.contact,
-                    ImpiHeaderCustomerEmailId: this.publicVariable.selectCustomer.email,
-                    ImpiHeaderCustomerPhoneNo: this.publicVariable.selectCustomer.primaryContact,
-                    ImpiHeaderCustomerState: this.publicVariable.selectCustomer.stateCode,
-                    ImpiHeaderCustomerCity: this.publicVariable.selectCustomer.city,
-                });
-            }
-        } else {
-            this.publicVariable.dataForm.patchValue({
-                ImpiHeaderCustomerAddress: null,
-                ImpiHeaderCustomerPinCode: null,
-                // ImpiHeaderCustomerName: null,
-                ImpiHeaderCustomerContactPerson: null,
-                ImpiHeaderCustomerEmailId: null,
-                ImpiHeaderCustomerPhoneNo: null,
-                ImpiHeaderCustomerState: null,
-                ImpiHeaderCustomerCity: null
-
-            });
-        }
     }
 
     handleLoadingError() {
