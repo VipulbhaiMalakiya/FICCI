@@ -35,7 +35,7 @@ export class DashboardComponent {
     InvoiceSummaryList: InvoiceSummaryModel[] = [];
     Cancelled: number = 0;
     Reversal: number = 0;
-    storeIsFinance!:boolean;
+    storeIsFinance!: boolean;
     dashboardData: any;
     invoiceStatuslistData: invoiceStatusModule[] = [];
 
@@ -57,9 +57,9 @@ export class DashboardComponent {
         this.storeIsFinance = isFinanceValue === 'true'; // Convert string to boolean
     }
 
-    get isFinance(){
+    get isFinance() {
         return this.storeIsFinance == true;
-      }
+    }
     loadCustomerStatusCountList(): void {
         // Observable for the first API call
         const statusSubscription = this.API.getCustomerStatusNew().pipe(
@@ -123,7 +123,7 @@ export class DashboardComponent {
         counts['DRAFT'] = draftData.length;
 
         const foraprovalData = data.filter((item: any) =>
-            (item.customerStatus === 'PENDING WITH ACCOUNTS APPROVER' ||item.customerStatus ===  'PENDING WITH FINANCE APPROVER'));
+            (item.customerStatus === 'PENDING WITH ACCOUNTS APPROVER' || item.customerStatus === 'PENDING WITH FINANCE APPROVER'));
         counts['FOR APPROVAL'] = foraprovalData.length;
 
 
@@ -137,16 +137,17 @@ export class DashboardComponent {
 
 
         const approvedData = data.filter(item => item.customerStatus === 'APPROVED BY ACCOUNTS APPROVER'
-        ||item.customerStatus === 'APPROVED BY FINANCE');
+            || item.customerStatus === 'APPROVED BY FINANCE');
         counts['APPROVED BY ACCOUNTS APPROVER'] = approvedData.length;
 
         const rejectedData = data.filter(item => item.customerStatus === 'REJECTED BY TL APPROVER'
             || item.customerStatus === 'REJECTED BY CH APPROVER'
-            || item.customerStatus === 'REJECTED BY ACCOUNTS APPROVER');
+            || item.customerStatus === 'REJECTED BY ACCOUNTS APPROVER'
+            || item.customerStatus === 'REJECTED BY FINANCE APPROVER');
         counts['REJECTED BY CH APPROVER'] = rejectedData.length;
 
         // Calculate total count
-        const allData =data;
+        const allData = data;
         counts['ALL'] = allData.length;
 
         // Update counts
@@ -189,10 +190,11 @@ export class DashboardComponent {
                 (item.customerStatus === 'REJECTED BY TL APPROVER' ||
                     item.customerStatus === 'REJECTED BY CH APPROVER' ||
                     item.customerStatus === 'REJECTED BY ACCOUNTS APPROVER' ||
-                    item.customerStatus === 'REJECTED BY FINANCE APPROVER'));
+                    item.customerStatus === 'REJECTED BY FINANCE APPROVER'
+                    || item.customerStatus === 'REJECTED BY FINANCE APPROVER'));
                 break;
             case 'FOR APPROVAL':
-                filteredData = this.dashboardData.filter((item: any) => (item.customerStatus === 'PENDING WITH ACCOUNTS APPROVER' || item.customerStatus ===  'PENDING WITH FINANCE APPROVER'));
+                filteredData = this.dashboardData.filter((item: any) => (item.customerStatus === 'PENDING WITH ACCOUNTS APPROVER' || item.customerStatus === 'PENDING WITH FINANCE APPROVER'));
                 break;
 
             case 'ALL':
@@ -886,7 +888,7 @@ export class DashboardComponent {
                         const blob = new Blob([bytes.buffer], { type: 'application/pdf' });
 
                         // Create a File object with a unique name
-                         file = new File([blob], `${file.name}.${file.type}`, { type: 'application/pdf' });
+                        file = new File([blob], `${file.name}.${file.type}`, { type: 'application/pdf' });
 
                         formData.append('Attachments', file);
                     }
