@@ -3,7 +3,7 @@
 <div class="inner-content">
 
     <h3 class="content-title"> Invoice Credit Memo</h3>
-
+    <form [formGroup]="publicVariable.dataForm" (ngSubmit)="onSubmit()">
     <div class="mastersform-sec mb-0">
         <div class="row">
 
@@ -11,7 +11,7 @@
             <div class="col-md-4 col-sm-6">
                 <div class="form-group">
                     <label>Invoice No</label>
-                    <ng-select [items]="InvoiceSummaryList" #select bindLabel="invoice_no" bindValue="invoice_no"
+                    <ng-select (change)="onSelectInvoie()"  [items]="InvoiceSummaryList" #select bindLabel="invoice_no" bindValue="invoice_no"
                         placeholder="Select Invoice" formControlName="invoice_no" [searchable]="true"
                         [virtualScroll]="true" [bufferAmount]="10">
                     </ng-select>
@@ -206,7 +206,7 @@
 
 
 
-    <form [formGroup]="publicVariable.dataForm" (ngSubmit)="onSubmit()">
+
         <div class="col-md-12 mt-3">
             <div class="form-group">
                 <label>Remarks</label>

@@ -5,9 +5,9 @@ import { finalize, timeout } from 'rxjs';
 import { InvoiceSummaryModel, invoiceStatusModule } from '../../interface/invoice';
 
 @Component({
-  selector: 'app-creditmemo',
-  templateUrl: './creditmemo.component.html',
-  styleUrls: ['./creditmemo.component.css']
+    selector: 'app-creditmemo',
+    templateUrl: './creditmemo.component.html',
+    styleUrls: ['./creditmemo.component.css']
 })
 export class CreditmemoComponent {
 
@@ -35,7 +35,7 @@ export class CreditmemoComponent {
     private initializeForm(): void {
         this.publicVariable.dataForm = this.fb.group({
             remarks: ['', Validators.required],
-            invoice_no:['', Validators.required],
+            invoice_no: [null, Validators.required],
         })
     }
 
@@ -80,18 +80,25 @@ export class CreditmemoComponent {
     }
 
 
-    loadTaxInvoiceInformation() {
+    onSelectInvoie(): void {
+        const selectedId: any = this.publicVariable.dataForm.get('invoice_no')?.value;
+        this.loadTaxInvoiceInformation(selectedId);
+
+    }
+
+    loadTaxInvoiceInformation(data: any) {
         try {
 
-            // const subscription = this.API.GetTaxInvoiceInformation("SI121683").subscribe({
 
-                const subscription = this.API.GetTaxInvoiceInformation(this.data.invoice_no).subscribe({
+            const subscription = this.API.GetTaxInvoiceInformation(data).subscribe({
                 next: (response: any) => {
                     this.TaxInvoicedata = response.data;
-                    // this.filterTaxInvoiceByInvoiceNo("SI121683");
 
-                    this.filterTaxInvoiceByInvoiceNo(this.data.invoice_no);
-                    this.loadTaxInvoiceAttachment(this.data.no)
+                    // this.filterTaxInvoiceByInvoiceNo(data);
+                    // this.loadTaxInvoiceAttachment(this.data.no)
+
+                    this.filterTaxInvoiceByInvoiceNo("SI121683");
+
                     this.cd.detectChanges();
                 },
                 error: (error) => {
@@ -120,6 +127,7 @@ export class CreditmemoComponent {
         }
 
         this.TaxInvoiceinfo = TaxInvoicedataArray[0];
+
         this.cd.detectChanges();
     }
 
