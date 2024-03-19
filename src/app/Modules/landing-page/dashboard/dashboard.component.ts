@@ -123,7 +123,7 @@ export class DashboardComponent {
         counts['DRAFT'] = draftData.length;
 
         const foraprovalData = data.filter((item: any) =>
-            (item.customerStatus === 'PENDING WITH ACCOUNTS APPROVER'));
+            (item.customerStatus === 'PENDING WITH ACCOUNTS APPROVER' ||item.customerStatus ===  'PENDING WITH FINANCE APPROVER'));
         counts['FOR APPROVAL'] = foraprovalData.length;
 
 
@@ -192,7 +192,7 @@ export class DashboardComponent {
                     item.customerStatus === 'REJECTED BY FINANCE APPROVER'));
                 break;
             case 'FOR APPROVAL':
-                filteredData = this.dashboardData.filter((item: any) => (item.customerStatus === 'PENDING WITH ACCOUNTS APPROVER'));
+                filteredData = this.dashboardData.filter((item: any) => (item.customerStatus === 'PENDING WITH ACCOUNTS APPROVER' || item.customerStatus ===  'PENDING WITH FINANCE APPROVER'));
                 break;
 
             case 'ALL':
