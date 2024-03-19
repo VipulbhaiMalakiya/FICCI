@@ -347,9 +347,9 @@ export class NewPurchaseInvoiceComponent implements OnInit {
         if (selectedId) {
             this.publicVariable.selectCustomer = this.publicVariable.GetCustomerList.find(customer => customer.custName == selectedId);
             if (this.publicVariable.selectCustomer) {
-                this.publicVariable.dataForm.patchValue({
-                    ImpiHeaderCustomerGstNo: this.publicVariable.selectCustomer.gstregistrationNo,
-                });
+                // this.publicVariable.dataForm.patchValue({
+                //     ImpiHeaderCustomerGstNo: this.publicVariable.selectCustomer.gstregistrationNo,
+                // });
                 this.getErpDetailCustNo(this.publicVariable.selectCustomer.custNo);
             } else {
 
@@ -412,8 +412,9 @@ export class NewPurchaseInvoiceComponent implements OnInit {
             const subscription = this.API.getGstRegistrationNo(selectedId).subscribe({
                 next: (response: any) => {
                     this.GstRegistrationDetail = response.data;
+                    console.log(this.GstRegistrationDetail );
 
-                    if (selectedId) {
+                    if (this.GstRegistrationDetail) {
                         this.publicVariable.selectCustomer = this.GstRegistrationDetail.find(customer => customer.gstNumber == selectedId);
                         if (this.publicVariable.selectCustomer) {
                             this.publicVariable.dataForm.patchValue({
@@ -444,6 +445,17 @@ export class NewPurchaseInvoiceComponent implements OnInit {
                 error: (error) => {
                     console.error('Error loading project list:', error);
                     this.handleLoadingError()
+                    this.publicVariable.dataForm.patchValue({
+                        ImpiHeaderCustomerAddress: null,
+                        ImpiHeaderCustomerPinCode: null,
+                        // ImpiHeaderCustomerName: null,
+                        ImpiHeaderCustomerContactPerson: null,
+                        ImpiHeaderCustomerEmailId: null,
+                        ImpiHeaderCustomerPhoneNo: null,
+                        ImpiHeaderCustomerState: null,
+                        ImpiHeaderCustomerCity: null
+
+                    });
                 },
             });
 
@@ -451,6 +463,17 @@ export class NewPurchaseInvoiceComponent implements OnInit {
         } catch (error) {
             console.error('Error loading project list:', error);
             this.handleLoadingError()
+            this.publicVariable.dataForm.patchValue({
+                ImpiHeaderCustomerAddress: null,
+                ImpiHeaderCustomerPinCode: null,
+                // ImpiHeaderCustomerName: null,
+                ImpiHeaderCustomerContactPerson: null,
+                ImpiHeaderCustomerEmailId: null,
+                ImpiHeaderCustomerPhoneNo: null,
+                ImpiHeaderCustomerState: null,
+                ImpiHeaderCustomerCity: null
+
+            });
         }
 
 
