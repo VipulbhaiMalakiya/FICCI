@@ -360,6 +360,14 @@ export class NewPurchaseInvoiceComponent implements OnInit {
         }
     }
 
+    onSelectStateCustomer():void{
+
+        this.publicVariable.dataForm.patchValue({
+            ImpiHeaderCustomerPinCode: null,
+            ImpiHeaderCustomerCity: null,
+        });
+    }
+
 
     getErpDetailCustNo(data: any) {
         try {

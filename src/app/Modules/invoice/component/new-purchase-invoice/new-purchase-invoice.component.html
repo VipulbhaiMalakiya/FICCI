@@ -209,8 +209,9 @@
                         <label for="state">State <sup class="text-danger">*</sup></label>
                         <ng-select [items]="publicVariable.stateList" #select bindLabel="stateName"
                             bindValue="stateCode" placeholder="Select " formControlName="ImpiHeaderCustomerState"
-                            [searchable]="true" [searchFn]="stateSearchFn" [virtualScroll]="true" [bufferAmount]="10">
-                            <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
+                            (change)="onSelectStateCustomer()"  [searchable]="true" [searchFn]="stateSearchFn" [virtualScroll]="true" [bufferAmount]="10">
+                            <ng-template ng-option-tmp let-item="item" let-search="searchTerm"
+                            >
                                 <small>{{item.stateCode}} - {{item.stateName}}</small>
                             </ng-template>
                         </ng-select>
