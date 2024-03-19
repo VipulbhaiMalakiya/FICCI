@@ -81,6 +81,7 @@ export class DashboardComponent {
                 return throwError(error);
             })
         );
+
         forkJoin([statusSubscription, accountSubscription]).subscribe({
             next: ([statusResponse, accountResponse]: [any, any]) => {
 
