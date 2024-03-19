@@ -343,7 +343,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
 
     onSelectCustomer(): void {
         const selectedId = this.publicVariable.dataForm.get('ImpiHeaderCustomerName')?.value;
-
+        this.setFormFieldsToNull();
         if (selectedId) {
             this.publicVariable.selectCustomer = this.publicVariable.GetCustomerList.find(customer => customer.custName == selectedId);
             if (this.publicVariable.selectCustomer) {
@@ -429,33 +429,13 @@ export class NewPurchaseInvoiceComponent implements OnInit {
                             });
                         }
                     } else {
-                        this.publicVariable.dataForm.patchValue({
-                            ImpiHeaderCustomerAddress: null,
-                            ImpiHeaderCustomerPinCode: null,
-                            // ImpiHeaderCustomerName: null,
-                            ImpiHeaderCustomerContactPerson: null,
-                            ImpiHeaderCustomerEmailId: null,
-                            ImpiHeaderCustomerPhoneNo: null,
-                            ImpiHeaderCustomerState: null,
-                            ImpiHeaderCustomerCity: null
-
-                        });
+                        this.setFormFieldsToNull();
                     }
                 },
                 error: (error) => {
                     console.error('Error loading project list:', error);
                     this.handleLoadingError()
-                    this.publicVariable.dataForm.patchValue({
-                        ImpiHeaderCustomerAddress: null,
-                        ImpiHeaderCustomerPinCode: null,
-                        // ImpiHeaderCustomerName: null,
-                        ImpiHeaderCustomerContactPerson: null,
-                        ImpiHeaderCustomerEmailId: null,
-                        ImpiHeaderCustomerPhoneNo: null,
-                        ImpiHeaderCustomerState: null,
-                        ImpiHeaderCustomerCity: null
-
-                    });
+                    this.setFormFieldsToNull();
                 },
             });
 
@@ -463,17 +443,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
         } catch (error) {
             console.error('Error loading project list:', error);
             this.handleLoadingError()
-            this.publicVariable.dataForm.patchValue({
-                ImpiHeaderCustomerAddress: null,
-                ImpiHeaderCustomerPinCode: null,
-                // ImpiHeaderCustomerName: null,
-                ImpiHeaderCustomerContactPerson: null,
-                ImpiHeaderCustomerEmailId: null,
-                ImpiHeaderCustomerPhoneNo: null,
-                ImpiHeaderCustomerState: null,
-                ImpiHeaderCustomerCity: null
-
-            });
+            this.setFormFieldsToNull();
         }
 
 
