@@ -18,7 +18,7 @@ const routes: Routes = [
     {
         path: 'new', component: NewCustomerComponent,
         canActivate: [AuthGuard],
-        data: { expectedRoles: [ 'Approver', 'Employee', 'Accounts'] }
+        data: { expectedRoles: [ 'Approver', 'Employee', 'Accounts' ,'Approver'] }
     },
     {
         path: 'approval', component: ApprovalCustomerComponent,
@@ -28,7 +28,7 @@ const routes: Routes = [
     {
         path: 'accounts', component: AccountsCustomerComponent,
         canActivate: [AuthGuard],
-        data: { expectedRoles: ['Admin', 'Accounts'] }
+        data: { expectedRoles: ['Admin', 'Accounts','Approver'] }
     },
     {
         path: 'status/view/:id', component: CustomerStatusComponent,
@@ -43,11 +43,11 @@ const routes: Routes = [
     {
         path: 'approval/remarks/:id', component: ApprovalRemarksComponent,
         canActivate: [AuthGuard],
-        data: { expectedRoles: ['Admin', 'Approver'] }
+        data: { expectedRoles: ['Admin', 'Approver' ,'Approver'] }
     },
     {
         path: 'accounts/remarks/:id', component: AccountsRemarksComponent, canActivate: [AuthGuard],
-        data: { expectedRoles: ['Admin','Accounts'] }
+        data: { expectedRoles: ['Admin','Accounts','Approver'] }
     }
 ];
 
