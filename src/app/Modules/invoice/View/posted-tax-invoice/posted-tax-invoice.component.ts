@@ -52,14 +52,14 @@ export class PostedTaxInvoiceComponent {
     loadTaxInvoiceInformation() {
         try {
 
-            const subscription = this.API.GetTaxInvoiceInformation("SI121683").subscribe({
+            // const subscription = this.API.GetTaxInvoiceInformation("SI121683").subscribe({
 
-                // const subscription = this.API.GetTaxInvoiceInformation(this.data.invoice_no).subscribe({
+                const subscription = this.API.GetTaxInvoiceInformation(this.data.invoice_no).subscribe({
                 next: (response: any) => {
                     this.TaxInvoicedata = response.data;
-                    this.filterTaxInvoiceByInvoiceNo("SI121683");
+                    // this.filterTaxInvoiceByInvoiceNo("SI121683");
 
-                    // this.filterTaxInvoiceByInvoiceNo(this.data.invoice_no);
+                    this.filterTaxInvoiceByInvoiceNo(this.data.invoice_no);
                     this.loadTaxInvoiceAttachment(this.data.no)
                     this.cd.detectChanges();
                 },
