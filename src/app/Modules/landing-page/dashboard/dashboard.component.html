@@ -436,7 +436,7 @@
                                                                     d.headerStatus == 'REJECTED BY TL APPROVER'  ||
                                                                     d.headerStatus == 'REJECTED BY CH APPROVER' ||
                                                                     d.headerStatus == 'REJECTED BY ACCOUNTS APPROVER' ||  d.headerStatus == 'REJECTED BY FINANCE APPROVER'
-                                                                    ||  d.headerStatus == 'CANCELLATION APPROVED BY FINANCE')"
+                                                                    )"
                                                                 href="javascript:void(0);" (click)="onEditPI(d)"><img
                                                                     src="../assets/images/edit-icon.svg" alt="" /></a>
                                                             <a *ngIf="publicVariable.storedRole !== 'Admin' && publicVariable.storedRole !== 'Approver' &&
@@ -444,7 +444,7 @@
                                                                     d.headerStatus == 'REJECTED BY TL APPROVER'  ||
                                                                     d.headerStatus == 'REJECTED BY CH APPROVER' ||
                                                                     d.headerStatus == 'REJECTED BY ACCOUNTS APPROVER'  ||d.headerStatus == 'REJECTED BY FINANCE APPROVER'
-                                                                    ||  d.headerStatus == 'CANCELLATION APPROVED BY FINANCE' )"
+                                                                  )"
                                                                 href="javascript:void(0)"
                                                                 (click)="onDeletePI(d.headerId)" data-bs-toggle="modal"
                                                                 data-bs-target="#deleterecord-modal"><img
