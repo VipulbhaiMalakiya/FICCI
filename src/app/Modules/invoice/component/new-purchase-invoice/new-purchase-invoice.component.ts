@@ -630,6 +630,11 @@ export class NewPurchaseInvoiceComponent implements OnInit {
     onCitySelectionChange() {
 
         const selectedCityName = this.publicVariable.dataForm.get('ImpiHeaderCustomerCity')?.value;
+
+        this.publicVariable.dataForm.patchValue({
+            ImpiHeaderCustomerPinCode: null
+        })
+
         const selectedCity = this.publicVariable.cityList.find(city => city.cityName === selectedCityName);
         if (selectedCity) {
             this.publicVariable.dataForm.patchValue({
