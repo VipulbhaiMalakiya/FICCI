@@ -36,6 +36,7 @@ export class CreditmemoComponent {
         this.publicVariable.dataForm = this.fb.group({
             remarks: ['', Validators.required],
             invoice_no: [null, Validators.required],
+            TaxInvoiceinfo:['', Validators.required],
         })
     }
 
@@ -94,10 +95,10 @@ export class CreditmemoComponent {
                 next: (response: any) => {
                     this.TaxInvoicedata = response.data;
 
-                    // this.filterTaxInvoiceByInvoiceNo(data);
+                    this.filterTaxInvoiceByInvoiceNo(data);
                     // this.loadTaxInvoiceAttachment(this.data.no)
 
-                    this.filterTaxInvoiceByInvoiceNo("SI121683");
+                    // this.filterTaxInvoiceByInvoiceNo("SI121683");
 
                     this.cd.detectChanges();
                 },
@@ -127,6 +128,10 @@ export class CreditmemoComponent {
         }
 
         this.TaxInvoiceinfo = TaxInvoicedataArray[0];
+
+        this.publicVariable.dataForm.patchValue({
+            TaxInvoiceinfo: this.TaxInvoiceinfo.TaxInvoiceinfo
+        })
 
         this.cd.detectChanges();
     }
