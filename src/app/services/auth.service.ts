@@ -28,6 +28,7 @@ export class AuthService {
                     localStorage.setItem('userEmail', userEmail);
                     localStorage.setItem('userName', name);
                     localStorage.setItem('token', response.data.token);
+                    localStorage.setItem('IsFinance',response.data.invoice_IsFinanceApprover)
                     return { token: response.data.token, role: userRole };
                 } else {
                     this.toastr.error('Invalid credentials', 'Error');
