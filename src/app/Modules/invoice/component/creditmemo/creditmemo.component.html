@@ -22,15 +22,14 @@
             <div class="col-md-4 col-sm-6">
                 <div class="form-group">
                     <label>Document No</label>
-                    <input type="text" class="form-control" placeholder="Document No">
+                    <input type="text" class="form-control" placeholder="Document No" formControlName="no">
                 </div>
             </div>
 
             <div class="col-md-4 col-sm-6">
                 <div class="form-group">
                     <label>Project Code</label>
-                    <input type="text" [value]="TaxInvoiceinfo?.projectCode || 'N/A'" class="form-control" disabled=""
-                        readonly="">
+                    <input type="text" class="form-control" formControlName="projectCode" placeholder ="Project Code">
                 </div>
             </div>
 

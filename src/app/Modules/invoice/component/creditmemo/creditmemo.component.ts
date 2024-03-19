@@ -36,7 +36,8 @@ export class CreditmemoComponent {
         this.publicVariable.dataForm = this.fb.group({
             remarks: ['', Validators.required],
             invoice_no: [null, Validators.required],
-            TaxInvoiceinfo:['', Validators.required],
+            no:['', Validators.required],
+            projectCode:['', Validators.required],
         })
     }
 
@@ -130,7 +131,8 @@ export class CreditmemoComponent {
         this.TaxInvoiceinfo = TaxInvoicedataArray[0];
 
         this.publicVariable.dataForm.patchValue({
-            TaxInvoiceinfo: this.TaxInvoiceinfo.TaxInvoiceinfo
+            no: this.TaxInvoiceinfo.no,
+            projectCode:this.TaxInvoiceinfo.projectCode,
         })
 
         this.cd.detectChanges();
