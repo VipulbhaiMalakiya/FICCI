@@ -16,8 +16,8 @@ export class PostedTaxInvoiceComponent {
     invoice_no?: number;
     data: any;
     TaxInvoicedata?: any;
-    TaxInvoiceinfo:any = {};
-    InvoiceAttachment:any;
+    TaxInvoiceinfo: any = {};
+    InvoiceAttachment: any;
     publicVariable = new publicVariable();
     FilePath: any;
 
@@ -51,11 +51,15 @@ export class PostedTaxInvoiceComponent {
 
     loadTaxInvoiceInformation() {
         try {
-            //"SI121683"
-            const subscription = this.API.GetTaxInvoiceInformation(this.data.invoice_no).subscribe({
+
+            const subscription = this.API.GetTaxInvoiceInformation("SI121683").subscribe({
+
+                // const subscription = this.API.GetTaxInvoiceInformation(this.data.invoice_no).subscribe({
                 next: (response: any) => {
                     this.TaxInvoicedata = response.data;
-                    this.filterTaxInvoiceByInvoiceNo(this.data.invoice_no);
+                    this.filterTaxInvoiceByInvoiceNo("SI121683");
+
+                    // this.filterTaxInvoiceByInvoiceNo(this.data.invoice_no);
                     this.loadTaxInvoiceAttachment(this.data.no)
                     this.cd.detectChanges();
                 },
@@ -84,11 +88,11 @@ export class PostedTaxInvoiceComponent {
             return;
         }
 
-         this.TaxInvoiceinfo = TaxInvoicedataArray[0];
+        this.TaxInvoiceinfo = TaxInvoicedataArray[0];
         this.cd.detectChanges();
     }
 
-    loadTaxInvoiceAttachment(invoice:string) {
+    loadTaxInvoiceAttachment(invoice: string) {
         try {
             const subscription = this.API.GetTaxInvoiceAttachment(invoice).subscribe({
                 next: (response: any) => {
