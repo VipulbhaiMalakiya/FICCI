@@ -140,13 +140,14 @@ export class PostedTextInvoiceComponent {
         componentInstance.isEmail = dataItem;
         modalRef.result.then((data: any) => {
             if (data) {
+
                 const newData = data;
                 const formData = new FormData();
                 formData.append('MailTo', newData.emailTo);
                 formData.append('MailSubject', newData.subject);
                 formData.append('MailBody', newData.body);
                 formData.append('LoginId', this.publicVariable.storedEmail);
-                formData.append('MailCC', 'vipul.malakiya@teamcomputers.com');
+                formData.append('MailCC', newData.MailCC);
                 formData.append('ResourceType', 'Invoice');
                 formData.append('ResourceId', '1');
 

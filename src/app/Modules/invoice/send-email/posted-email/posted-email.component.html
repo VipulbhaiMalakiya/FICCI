@@ -25,6 +25,20 @@
             </div>
 
             <div class="mb-3 row">
+                <label for="MailCC" class="col-sm-2 col-form-label">MailCC</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control" id="MailCC" placeholder="MailCC"
+                        formControlName="MailCC">
+                    <div *ngIf="shouldShowError('MailCC','required')" class="text-danger">Mail CC is required.</div>
+                    <div *ngIf="shouldShowError('MailCC', 'invalidEmailFormat')" class="text-danger">
+                        Please enter a valid email address.</div>
+
+                    <div *ngIf="shouldShowError('MailCC', 'maxlength')" class="text-danger">
+                        Email must be less than 80 characters.
+                    </div>
+                </div>
+            </div>
+            <div class="mb-3 row">
                 <label for="Subject" class="col-sm-2 col-form-label">Subject</label>
                 <div class="col-sm-9">
                     <input type="text" class="form-control" placeholder="Subject" formControlName="subject"

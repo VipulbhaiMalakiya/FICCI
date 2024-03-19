@@ -93,6 +93,7 @@ export class PostedEmailComponent {
             emailTo: ['', [Validators.required, Validators.email, Validators.maxLength(80), this.emailValidator()]],
             subject: ['', [Validators.required]],
             body: ['', [Validators.required]],
+            MailCC: ['', [Validators.required, Validators.email, Validators.maxLength(80), this.emailValidator()]],
             attachment: [''],
         })
 
@@ -208,6 +209,7 @@ export class PostedEmailComponent {
             const newData = this.publicVariable.mailForm.value;
             const newConfig: any = {
                 emailTo: newData.emailTo,
+                MailCC:newData.MailCC,
                 subject: newData.subject,
                 body: newData.body,
                 attachment: this.uploadedFiles,
@@ -222,7 +224,7 @@ export class PostedEmailComponent {
 
 
     markFormControlsAsTouchedemail(): void {
-        ['emailTo', 'subject', 'body'].forEach(controlName => {
+        ['emailTo','MailCC', 'subject', 'body'].forEach(controlName => {
             this.publicVariable.mailForm.controls[controlName].markAsTouched();
         });
     }
