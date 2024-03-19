@@ -155,7 +155,7 @@
 
 
             <form [formGroup]="publicVariable.dataForm"  *ngIf="publicVariable.storedRole !== 'Admin' &&
-            (data.customerStatus == 'PENDING WITH ACCOUNTS APPROVER')">
+            (data.customerStatus == 'PENDING WITH ACCOUNTS APPROVER' || data.customerStatus == 'PENDING WITH FINANCE APPROVER')">
                 <div class="col-md-9">
                     <div class="form-group">
                         <label>Remarks</label>
