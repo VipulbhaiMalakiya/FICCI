@@ -173,6 +173,10 @@
                                 [virtualScroll]="true" [bufferAmount]="10">
                                 <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
                                     <div><span>{{item.gstNumber}}</span></div>
+
+                                    <div><span>{{item.gstNumber}}</span> - <span>{{item.custName | titlecase}}</span></div>
+                                    <small *ngIf="item.panNo || item.gstregistrationNo">{{item.panNo}} -
+                                        {{item.gstregistrationNo}}</small>
                                 </ng-template>
                             </ng-select>
 
