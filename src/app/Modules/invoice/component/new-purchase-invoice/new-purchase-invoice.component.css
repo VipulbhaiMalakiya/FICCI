@@ -1,3 +1,7 @@
 .text-danger {
   font-size: 12px;
 }
+.flex-field .ng-select {
+    max-width: 85%;
+    flex: 0 0 85%;
+}
