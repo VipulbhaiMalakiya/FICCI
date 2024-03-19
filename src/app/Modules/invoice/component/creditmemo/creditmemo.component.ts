@@ -1,6 +1,8 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { ActivatedRoute, CustomersService, FormBuilder, InvoicesService, Router, ToastrService, Validators, publicVariable } from '../../Export/invoce';
 import { FileService } from '../../service/FileService';
+import { finalize, timeout } from 'rxjs';
+import { InvoiceSummaryModel, invoiceStatusModule } from '../../interface/invoice';
 
 @Component({
   selector: 'app-creditmemo',
@@ -16,7 +18,8 @@ export class CreditmemoComponent {
     InvoiceAttachment: any;
     publicVariable = new publicVariable();
     FilePath: any;
-
+    invoiceStatuslistData: invoiceStatusModule[] = [];
+    InvoiceSummaryList: InvoiceSummaryModel[] = [];
 
     constructor(private route: ActivatedRoute, private CAPI: CustomersService,
         private API: InvoicesService,
@@ -36,14 +39,51 @@ export class CreditmemoComponent {
     }
 
     ngOnInit() {
-        this.route.params.subscribe(params => {
-            this.invoice_no = +params['id'];
-        });
-        this.data = history.state.data;
+        // this.route.params.subscribe(params => {
+        //     this.invoice_no = +params['id'];
+        // });
+        // this.data = history.state.data;
+        this.loadInvoiceSummary();
 
     }
 
+    loadInvoiceSummary() {
+        this.publicVariable.isProcess = true;
+        const subscription = this.API.GetInvoiceSummary().pipe(
+            timeout(120000), // Timeout set to 2 minutes (120000 milliseconds)
+            finalize(() => {
+                this.publicVariable.isProcess = false;
+            })
+        ).subscribe({
+            next: (response: any) => {
+                if (response.data && Array.isArray(response.data)) {
 
+                    // // Filter the data by createdBy
+                    // this.InvoiceSummaryList = response.data.filter((item: any) => item.createdByUser === this.publicVariable.storedEmail);
+                    // this.PostedTaxInvoiceCount = this.InvoiceSummaryList.length;
+
+
+                    this.InvoiceSummaryList = response.data;
+
+                } else {
+                    // Handle case where response data is null or not an array
+                    this.InvoiceSummaryList = [];
+                    console.warn('Response data is null or not an array:', response.data);
+                }
+                this.publicVariable.isProcess = false;
+            },
+            error: (error: any) => {
+                if (error.name === 'TimeoutError') {
+                    this.toastr.error('Operation timed out after 2 minutes', error.name);
+                } else {
+                    this.toastr.error('Error loading user list', error.name);
+                }
+                this.publicVariable.isProcess = false;
+            }
+        });
+
+        this.publicVariable.Subscription.add(subscription);
+    }
 
 
     loadTaxInvoiceInformation() {
