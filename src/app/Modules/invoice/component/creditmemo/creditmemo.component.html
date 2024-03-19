@@ -11,49 +11,58 @@
             <div class="col-md-4 col-sm-6">
                 <div class="form-group">
                     <label>Invoice No</label>
-                    <input type="text" [value]="TaxInvoiceinfo?.invoice_no || 'N/A'" class="form-control" disabled="" readonly="">
+                    <ng-select [items]="InvoiceSummaryList" #select bindLabel="invoice_no" bindValue="invoice_no"
+                        placeholder="Select Invoice " [searchable]="true" [virtualScroll]="true" [bufferAmount]="10">
+                    </ng-select>
                 </div>
+
             </div>
 
             <div class="col-md-4 col-sm-6">
                 <div class="form-group">
                     <label>Document No</label>
-                    <input type="text"  [value]="TaxInvoiceinfo?.no || 'N/A'" class="form-control" disabled="" readonly="">
+                    <input type="text" [value]="TaxInvoiceinfo?.no || 'N/A'" class="form-control" disabled=""
+                        readonly="">
                 </div>
             </div>
 
             <div class="col-md-4 col-sm-6">
                 <div class="form-group">
                     <label>Project Code</label>
-                    <input type="text" [value]="TaxInvoiceinfo?.projectCode || 'N/A'" class="form-control" disabled="" readonly="">
+                    <input type="text" [value]="TaxInvoiceinfo?.projectCode || 'N/A'" class="form-control" disabled=""
+                        readonly="">
                 </div>
             </div>
 
             <div class="col-md-4 col-sm-6">
                 <div class="form-group">
                     <label>Department</label>
-                    <input type="text"  [value]="TaxInvoiceinfo?.departmentName || 'N/A'" class="form-control" disabled="" readonly="">
+                    <input type="text" [value]="TaxInvoiceinfo?.departmentName || 'N/A'" class="form-control"
+                        disabled="" readonly="">
                 </div>
             </div>
 
             <div class="col-md-4 col-sm-6">
                 <div class="form-group">
                     <label>Division</label>
-                    <input type="text" [value]="TaxInvoiceinfo?.divisionName || 'N/A'" class="form-control" disabled="" readonly="">
+                    <input type="text" [value]="TaxInvoiceinfo?.divisionName || 'N/A'" class="form-control" disabled=""
+                        readonly="">
                 </div>
             </div>
 
             <div class="col-md-4 col-sm-6">
                 <div class="form-group">
                     <label>PAN No</label>
-                    <input type="text"  [value]="TaxInvoiceinfo?.paN_NO || 'N/A'" class="form-control" disabled="" readonly="">
+                    <input type="text" [value]="TaxInvoiceinfo?.paN_NO || 'N/A'" class="form-control" disabled=""
+                        readonly="">
                 </div>
             </div>
 
             <div class="col-md-4 col-sm-6">
                 <div class="form-group">
                     <label>GST No</label>
-                    <input type="text"  [value]="TaxInvoiceinfo?.gsT_No || 'N/A'" class="form-control" disabled="" readonly="">
+                    <input type="text" [value]="TaxInvoiceinfo?.gsT_No || 'N/A'" class="form-control" disabled=""
+                        readonly="">
                 </div>
             </div>
 
@@ -98,14 +107,16 @@
                 <div class="form-group">
                     <label>CountryRegionCode
                     </label>
-                    <input type="text"  [value]="TaxInvoiceinfo?.sellToCountryRegionCode || 'N/A'" class="form-control" disabled="" readonly="">
+                    <input type="text" [value]="TaxInvoiceinfo?.sellToCountryRegionCode || 'N/A'" class="form-control"
+                        disabled="" readonly="">
                 </div>
             </div>
 
             <div class="col-md-4 col-sm-6">
                 <div class="form-group">
                     <label>City</label>
-                    <input type="text"  [value]="TaxInvoiceinfo?.sellToCity || 'N/A'" class="form-control" disabled="" readonly="">
+                    <input type="text" [value]="TaxInvoiceinfo?.sellToCity || 'N/A'" class="form-control" disabled=""
+                        readonly="">
                 </div>
             </div>
 
@@ -113,7 +124,8 @@
             <div class="col-md-4 col-sm-6">
                 <div class="form-group">
                     <label>Post Code</label>
-                    <input type="text"  [value]="TaxInvoiceinfo?.sellToPostCode || 'N/A'" class="form-control" disabled="" readonly="">
+                    <input type="text" [value]="TaxInvoiceinfo?.sellToPostCode || 'N/A'" class="form-control"
+                        disabled="" readonly="">
                 </div>
             </div>
 
@@ -165,7 +177,7 @@
     </div>
 
 
-    <div class="dasboard-table pi-table mb-0">
+    <!-- <div class="dasboard-table pi-table mb-0">
         <div class="table-responsive">
             <table class="table table-bordered text-nowrap">
                 <thead>
@@ -190,7 +202,7 @@
                 </tbody>
             </table>
         </div>
-    </div>
+    </div> -->
 
 
 
