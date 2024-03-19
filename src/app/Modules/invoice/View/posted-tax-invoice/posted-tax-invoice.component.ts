@@ -44,16 +44,18 @@ export class PostedTaxInvoiceComponent {
             this.invoice_no = +params['id'];
         });
         this.data = history.state.data;
+
         this.loadTaxInvoiceInformation();
     }
 
 
     loadTaxInvoiceInformation() {
         try {
-            const subscription = this.API.GetTaxInvoiceInformation("SI121683").subscribe({
+            //"SI121683"
+            const subscription = this.API.GetTaxInvoiceInformation(this.data.invoice_no).subscribe({
                 next: (response: any) => {
                     this.TaxInvoicedata = response.data;
-                    this.filterTaxInvoiceByInvoiceNo("SI121683");
+                    this.filterTaxInvoiceByInvoiceNo(this.data.invoice_no);
                     this.loadTaxInvoiceAttachment(this.data.no)
                     this.cd.detectChanges();
                 },
