@@ -169,7 +169,7 @@
                             <ng-select [items]="GetCustomerGSTList" #select class="w-100"
                                 bindLabel="gstNumber" bindValue="gstNumber"
                                 placeholder="Select customer" formControlName="ImpiHeaderCustomerGstNo"
-                                (change)="onSelectGSTCustomer()" [searchable]="true" [searchFn]="customerGSTSearchFn"
+                                (change)="onSelectGSTCustomer($event)" [searchable]="true" [searchFn]="customerGSTSearchFn"
                                 [virtualScroll]="true" [bufferAmount]="10">
                                 <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
                                     <div><span>{{item.custNo}} -{{item.gstNumber}}</span> - <span>{{item.customerName | titlecase}}</span></div>
