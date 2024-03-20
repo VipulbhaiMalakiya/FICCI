@@ -111,7 +111,6 @@ export class NewPurchaseInvoiceComponent implements OnInit {
         if (this.data = history.state.data) {
             this.patchFormData(this.data);
         }
-        this.patchFormData(this.data);
         this.loadCOAMasterList();
         this.loadGetGSTGroupList();
     }
@@ -185,50 +184,51 @@ export class NewPurchaseInvoiceComponent implements OnInit {
     }
 
     customerGSTSearchFn(term: string, item: any) {
-        const concatenatedString = ` ${item.gstNumber} ${item.customerName} ${item.address} ${item.address2} ${item.city}`.toLowerCase();
+        const concatenatedString = ` ${item.gstNumber}`.toLowerCase();
         return concatenatedString.includes(term.toLowerCase());
     }
 
     patchFormData(data: any): void {
+
         this.publicVariable.dataForm.patchValue({
-            headerid: data?.headerId,
-            ImpiHeaderInvoiceType: data?.impiHeaderInvoiceType,
-            ImpiHeaderProjectCode: data?.impiHeaderProjectCode,
-            ImpiHeaderDepartment: data?.impiHeaderProjectDepartmentName,
+            headerid: data.headerId,
+            ImpiHeaderInvoiceType: data.impiHeaderInvoiceType,
+            ImpiHeaderProjectCode: data.impiHeaderProjectCode,
+            ImpiHeaderDepartment: data.impiHeaderProjectDepartmentName,
 
-            ImpiHeaderDivison: data?.impiHeaderProjectDivisionName,
-            Project: data?.impiHeaderProjectName,
+            ImpiHeaderDivison: data.impiHeaderProjectDivisionName,
+            Project: data.impiHeaderProjectName,
 
-            ImpiHeaderPanNo: data?.impiHeaderPanNo,
-            ImpiHeaderGstNo: data?.impiHeaderGstNo,
+            ImpiHeaderPanNo: data.impiHeaderPanNo,
+            ImpiHeaderGstNo: data.impiHeaderGstNo,
             PINO: [''], //api missing
-            ImpiHeaderCustomerName: data?.impiHeaderCustomerName,
-            ImpiHeaderCustomerCode: data?.impiHeaderCustomerCode,
-            ImpiHeaderCustomerAddress: data?.impiHeaderCustomerAddress,
-            ImpiHeaderCustomerState: data?.impiHeaderCustomerState,
-            ImpiHeaderCustomerCity: data?.impiHeaderCustomerCity,
-            ImpiHeaderCustomerPinCode: data?.impiHeaderCustomerPinCode,
-            ImpiHeaderCustomerGstNo: data?.impiHeaderCustomerGstNo,
-            ImpiHeaderCustomerContactPerson: data?.impiHeaderCustomerContactPerson,
-            ImpiHeaderCustomerEmailId: data?.impiHeaderCustomerEmailId,
-            ImpiHeaderCustomerPhoneNo: data?.impiHeaderCustomerPhoneNo,
-            ImpiHeaderCreatedBy: data?.impiHeaderCreatedBy,
-            ImpiHeaderTotalInvoiceAmount: data?.impiHeaderTotalInvoiceAmount,
-            ImpiHeaderPaymentTerms: data?.impiHeaderPaymentTerms,
-            ImpiHeaderRemarks: data?.impiHeaderRemarks,
-            IsDraft: data?.isDraft,
+            ImpiHeaderCustomerName: data.impiHeaderCustomerName,
+            ImpiHeaderCustomerCode: data.impiHeaderCustomerCode,
+            ImpiHeaderCustomerAddress: data.impiHeaderCustomerAddress,
+            ImpiHeaderCustomerState: data.impiHeaderCustomerState,
+            ImpiHeaderCustomerCity: data.impiHeaderCustomerCity,
+            ImpiHeaderCustomerPinCode: data.impiHeaderCustomerPinCode,
+            ImpiHeaderCustomerGstNo: data.impiHeaderCustomerGstNo,
+            ImpiHeaderCustomerContactPerson: data.impiHeaderCustomerContactPerson,
+            ImpiHeaderCustomerEmailId: data.impiHeaderCustomerEmailId,
+            ImpiHeaderCustomerPhoneNo: data.impiHeaderCustomerPhoneNo,
+            ImpiHeaderCreatedBy: data.impiHeaderCreatedBy,
+            ImpiHeaderTotalInvoiceAmount: data.impiHeaderTotalInvoiceAmount,
+            ImpiHeaderPaymentTerms: data.impiHeaderPaymentTerms,
+            ImpiHeaderRemarks: data.impiHeaderRemarks,
+            IsDraft: data.isDraft,
 
-            startDate: data?.startDate,
-            endDate: data?.endDate,
+            startDate: data.startDate,
+            endDate: data.endDate,
 
         });
 
-        this.publicVariable.expenses = data?.lineItem_Requests;
-        this.uploadedFiles = data?.impiHeaderAttachment;
+        this.publicVariable.expenses = data.lineItem_Requests;
+        this.uploadedFiles = data.impiHeaderAttachment;
 
         if (data.impiHeaderAttachment !== null && data.impiHeaderAttachment !== undefined) {
 
-            this.uploadedFiles = data?.impiHeaderAttachment.map((file: any) => ({
+            this.uploadedFiles = data.impiHeaderAttachment.map((file: any) => ({
                 id: file.imadId,
                 recordNo: file.imadRecordNo,
                 screenName: file.imadScreenName,
@@ -893,9 +893,9 @@ export class NewPurchaseInvoiceComponent implements OnInit {
                             next: (res: any) => {
                                 if (res.status === true) {
                                     this.toastr.success(res.message, 'Success');
-                                    // this.patchFormData(res.request)
-                                    this.router.navigate(['invoice/status']);
-                                    this.publicVariable.dataForm.reset();
+                                    this.patchFormData(res.request)
+                                    // this.router.navigate(['invoice/status']);
+                                    // this.publicVariable.dataForm.reset();
                                 } else {
                                     this.toastr.error(res.message, 'Error');
                                     this.publicVariable.isProcess = false;
@@ -982,7 +982,6 @@ export class NewPurchaseInvoiceComponent implements OnInit {
         // this.calculateTotalBaseAmount();
         // this.calculateTotalGSTAmount();
         // this.calculateNetTotal();
-
         this.onSubmit(true)
     }
 
