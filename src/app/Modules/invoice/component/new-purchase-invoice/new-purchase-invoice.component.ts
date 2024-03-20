@@ -3,6 +3,7 @@ import { ActivatedRoute, AppService, ConfirmationDialogModalComponent, Customers
 import { AbstractControl, FormArray, FormGroup, ValidatorFn } from '@angular/forms';
 import { finalize, timeout } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { event } from 'jquery';
 
 
 @Component({
@@ -51,7 +52,8 @@ export class NewPurchaseInvoiceComponent implements OnInit {
             PINO: [''], //api missing
             ImpiHeaderCustomerName: [null, [Validators.required]],
             ImpiHeaderCustomerCode: [''], //new filed
-            ImpiHeaderCustomerAddress: ['', [Validators.required, this.addressValidator(), Validators.maxLength(100)]],
+            // ImpiHeaderCustomerAddress: ['', [Validators.required, this.addressValidator(), Validators.maxLength(100)]],
+            ImpiHeaderCustomerAddress: ['', [Validators.required, Validators.maxLength(100)]],
 
             ImpiHeaderCustomerState: [null, [Validators.required]],
             ImpiHeaderCustomerCity: [null, [Validators.required]],
@@ -360,7 +362,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
         }
     }
 
-    onSelectStateCustomer():void{
+    onSelectStateCustomer(): void {
 
         this.publicVariable.dataForm.patchValue({
             ImpiHeaderCustomerPinCode: null,
@@ -412,19 +414,9 @@ export class NewPurchaseInvoiceComponent implements OnInit {
     onSelectGSTCustomer(selectedItem: any): void {
 
 
-        console.log(selectedItem);
-        
-        const selectedId = this.publicVariable.dataForm.get('ImpiHeaderCustomerGstNo')?.value;
-        let selectDATA= this.GetCustomerGSTList.find(customer => customer.gstNumber == selectedId);
-        console.log(selectDATA.custNo);
-
-        // this.GetCustomerGSTList
-
-        console.log(selectedItem);
-        
         let peramiter = {
-            gst : selectedId,
-            custNo :selectDATA.custNo
+            gst: selectedItem.gstNumber,
+            code: selectedItem.code
         }
 
 
@@ -435,7 +427,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
                     this.GstRegistrationDetail = response.data;
 
                     if (this.GstRegistrationDetail) {
-                        this.publicVariable.selectCustomer = this.GstRegistrationDetail.find(customer => customer.gstNumber == selectedId);
+                        this.publicVariable.selectCustomer = this.GstRegistrationDetail.find(customer => customer.code == selectedItem.code);
                         if (this.publicVariable.selectCustomer) {
                             this.publicVariable.dataForm.patchValue({
                                 ImpiHeaderCustomerAddress: this.publicVariable.selectCustomer.address,
@@ -902,9 +894,9 @@ export class NewPurchaseInvoiceComponent implements OnInit {
                         this.API.create(formData).subscribe({
                             next: (res: any) => {
                                 if (res.status === true) {
-                                    this.data   =res.request;
+                                    this.data = res.request;
                                     this.toastr.success(res.message, 'Success');
-                                    this.patchFormData( this.data)
+                                    this.patchFormData(this.data)
                                     // this.router.navigate(['invoice/status']);
                                     // this.publicVariable.dataForm.reset();
                                 } else {

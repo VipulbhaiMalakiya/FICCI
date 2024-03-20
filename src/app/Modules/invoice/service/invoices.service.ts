@@ -33,7 +33,7 @@ export class InvoicesService {
     private GstRegistrationNoURL = `${environment.apiURL}DropDown/GstRegistrationNo?gstNo=`;
 
     getGstRegistrationNo(data:any): Observable<any[]> {
-        const url = `${this.GstRegistrationNoURL}${data.gst ?? ''}&CustNo=${data.custNo}`;
+        const url = `${this.GstRegistrationNoURL}${data.gst ?? ''}&code=${data.code}`;
         return this.http.get<any[]>(url);
     }
     getErpDetailCustNo(customerNo: any): Observable<any[]> {
