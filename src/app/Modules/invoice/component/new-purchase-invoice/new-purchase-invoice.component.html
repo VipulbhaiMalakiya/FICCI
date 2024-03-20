@@ -488,7 +488,7 @@
 
         </div>
         <div class="text-end" *ngIf="publicVariable.expenses.length > 0"><a href="javascript:void(0)"
-                (click)="onCalculateClick()" class="common-btn w-auto">Calculate</a></div>
+            (click)="onCalculateClick('Calculate')" class="common-btn w-auto">Calculate</a></div>
         <div class="note-para">
             <p>Upload Attachments (PO,E-Mail Confirmation,LOI,Other Documents)*<span class="text-danger">(Max File Size 5 MB
                     only)</span></p>
@@ -575,9 +575,9 @@
                 <div class="form-group mb-0 mt-4">
                     <input type="checkbox" class="btn-check" formControlName="IsDraft" id="btn-check"
                         autocomplete="off">
-                    <label class="btn btn-secondary w-auto mb-0 me-2" for="btn-check" (click)="onSubmit(true)">Save as
+                    <label class="btn btn-secondary w-auto mb-0 me-2" for="btn-check" (click)="onSubmit('Draft')">Save as
                         Draft</label>
-                    <button type="submit" class="common-btn w-auto" (click)="onSubmit(false)">Submit</button>
+                    <button type="submit" class="common-btn w-auto" (click)="onSubmit('Submit')">Submit</button>
                 </div>
             </div>
         </div>
