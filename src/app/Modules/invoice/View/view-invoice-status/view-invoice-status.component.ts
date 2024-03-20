@@ -12,7 +12,7 @@ export class ViewInvoiceStatusComponent {
     data: any;
     FilePath: any;
     publicVariable = new publicVariable();
-    uploadedFiles: File[] = [];
+    uploadedFiles: any[] = [];
 
     constructor(private route: ActivatedRoute, private CAPI: CustomersService,
         private API: InvoicesService,
@@ -52,6 +52,7 @@ export class ViewInvoiceStatusComponent {
                 createdOn: file.imadCreatedOn,
                 modifiedBy: file.imadModifiedBy,
                 modifiedOn: file.imadModifiedOn,
+                doctype:file.doctype
 
             }));
         } else {
