@@ -793,15 +793,17 @@ export class NewPurchaseInvoiceComponent implements OnInit {
 
     onSubmit(Action: string): void {
 
+
+        if(Action !=='Calculate' && !this.isCalculate){
+            alert("First line item calculate");
+            return
+        }
         let action = true;
         if (Action == "Submit")
             action = false;
         // debugger;
         if (this.publicVariable.expenses.length > 0) {
-            if (!this.isCalculate) {
-                alert("First line item calculate");
-                return
-            }
+
             if (action || this.uploadedFiles.length > 0) {
                 if (this.publicVariable.dataForm.valid && !this.gstExists && !this.panExists) {
                     const newData = this.publicVariable.dataForm.value;
