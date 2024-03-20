@@ -420,7 +420,6 @@ export class NewPurchaseInvoiceComponent implements OnInit {
             const subscription = this.API.getGstRegistrationNo(selectedId).subscribe({
                 next: (response: any) => {
                     this.GstRegistrationDetail = response.data;
-                    console.log(this.GstRegistrationDetail );
 
                     if (this.GstRegistrationDetail) {
                         this.publicVariable.selectCustomer = this.GstRegistrationDetail.find(customer => customer.gstNumber == selectedId);
