@@ -978,9 +978,11 @@ export class NewPurchaseInvoiceComponent implements OnInit {
     }
 
     onCalculateClick(): void {
-        this.calculateTotalBaseAmount();
-        this.calculateTotalGSTAmount();
-        this.calculateNetTotal();
+        // this.calculateTotalBaseAmount();
+        // this.calculateTotalGSTAmount();
+        // this.calculateNetTotal();
+
+        this.onSubmit(true)
     }
 
     markexpenseFormControlsAsTouched(): void {
