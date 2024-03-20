@@ -25,6 +25,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
     gstHeaderExists: boolean = false;
     GetCustomerGSTList: any[] = [];
     GstRegistrationDetail: any[] = [];
+    isCalculate:boolean = false;
     constructor(private appService: AppService,
         private modalService: NgbModal,
         private router: Router,
@@ -407,9 +408,6 @@ export class NewPurchaseInvoiceComponent implements OnInit {
     }
 
 
-    getGstRegistrationNo(data: any) {
-
-    }
 
     onSelectGSTCustomer(selectedItem: any): void {
 
@@ -800,6 +798,10 @@ export class NewPurchaseInvoiceComponent implements OnInit {
             action = false;
         // debugger;
         if (this.publicVariable.expenses.length > 0) {
+            if (!this.isCalculate) {
+                alert("First line item calculate");
+                return
+            }
             if (action || this.uploadedFiles.length > 0) {
                 if (this.publicVariable.dataForm.valid && !this.gstExists && !this.panExists) {
                     const newData = this.publicVariable.dataForm.value;
@@ -1006,6 +1008,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
         // this.calculateTotalGSTAmount();
         // this.calculateNetTotal();
         this.onSubmit(Action);
+        this.isCalculate = true;
     }
 
     markexpenseFormControlsAsTouched(): void {
