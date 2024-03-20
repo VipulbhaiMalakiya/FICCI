@@ -111,6 +111,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
         if (this.data = history.state.data) {
             this.patchFormData(this.data);
         }
+        this.patchFormData(this.data);
         this.loadCOAMasterList();
         this.loadGetGSTGroupList();
     }
@@ -189,10 +190,6 @@ export class NewPurchaseInvoiceComponent implements OnInit {
     }
 
     patchFormData(data: any): void {
-
-
-        console.log(data);
-
         this.publicVariable.dataForm.patchValue({
             headerid: data?.headerId,
             ImpiHeaderInvoiceType: data?.impiHeaderInvoiceType,
@@ -896,8 +893,8 @@ export class NewPurchaseInvoiceComponent implements OnInit {
                             next: (res: any) => {
                                 if (res.status === true) {
                                     this.toastr.success(res.message, 'Success');
-                                    this.patchFormData(res.request)
-                                    // this.router.navigate(['invoice/status']);
+                                    // this.patchFormData(res.request)
+                                    this.router.navigate(['invoice/status']);
                                     this.publicVariable.dataForm.reset();
                                 } else {
                                     this.toastr.error(res.message, 'Error');
