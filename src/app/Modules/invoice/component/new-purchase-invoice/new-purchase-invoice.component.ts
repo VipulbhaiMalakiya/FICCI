@@ -896,9 +896,9 @@ export class NewPurchaseInvoiceComponent implements OnInit {
                                 if (res.status === true) {
                                     this.data = res.request;
                                     this.toastr.success(res.message, 'Success');
-                                    this.patchFormData(this.data)
-                                    // this.router.navigate(['invoice/status']);
-                                    // this.publicVariable.dataForm.reset();
+                                //    this.patchFormData(this.data)
+                                   this.router.navigate(['invoice/status']);
+                                    this.publicVariable.dataForm.reset();
                                 } else {
                                     this.toastr.error(res.message, 'Error');
                                     this.publicVariable.isProcess = false;
