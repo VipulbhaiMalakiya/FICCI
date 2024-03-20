@@ -415,7 +415,7 @@
                         <div class="form-group">
                             <label>(Total Base Amount)</label>
                             <input type="text" class="form-control"
-                                placeholder="Total Base Amount" disabled="">
+                                placeholder="Total Base Amount" [value] = "data.baseAmount" disabled="">
                         </div>
                     </div>
 
@@ -423,7 +423,7 @@
                         <div class="form-group">
                             <label>(Total GST Amount)</label>
                             <input type="text" class="form-control"
-                                placeholder="Total GST Amount" disabled="">
+                                placeholder="Total GST Amount" disabled="" [value] = "data.totalGSTAmount">
                         </div>
                     </div>
 
@@ -431,7 +431,7 @@
                         <div class="form-group">
                             <label>(Net total)</label>
                             <input type="text" class="form-control"
-                                placeholder="Net total" disabled="">
+                                placeholder="Net total" disabled="" [value] = "data.impiHeaderTotalInvoiceAmount">
                         </div>
                     </div>
                     </div>

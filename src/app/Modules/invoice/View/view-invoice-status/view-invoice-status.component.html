@@ -14,7 +14,8 @@
 
     <div class="pipage-radio">
         <div class="form-check">
-            <input class="form-check-input" type="radio" name="ImpiHeaderInvoiceType" id="flexRadioDefault1" value="Proforma Invoice" checked />
+            <input class="form-check-input" type="radio" name="ImpiHeaderInvoiceType" id="flexRadioDefault1"
+                value="Proforma Invoice" checked />
 
             <label class="form-check-label" for="flexRadioDefault1">
                 {{data.impiHeaderInvoiceType | titlecase}}
@@ -74,15 +75,13 @@
             <div class="col-md-4 col-sm-6">
                 <div class="form-group">
                     <label>Starting Date</label>
-                    <input type="text" value="{{data.startDate}}" class="form-control" disabled=""
-                        readonly="">
+                    <input type="text" value="{{data.startDate}}" class="form-control" disabled="" readonly="">
                 </div>
             </div>
             <div class="col-md-4 col-sm-6">
                 <div class="form-group">
                     <label>End Date</label>
-                    <input type="text" value="{{data.endDate}}" class="form-control" disabled=""
-                        readonly="">
+                    <input type="text" value="{{data.endDate}}" class="form-control" disabled="" readonly="">
                 </div>
             </div>
             <!--show tax-invoice-only
@@ -176,7 +175,32 @@
                 </div>
             </div>
 
+
+            <div class="col-md-4 col-sm-6">
+                <div class="form-group">
+                    <label>(Total Base Amount)</label>
+                    <input type="text" class="form-control" placeholder="Total Base Amount" [value]="data.baseAmount"
+                        disabled="">
+                </div>
+            </div>
+
+            <div class="col-md-4 col-sm-6">
+                <div class="form-group">
+                    <label>(Total GST Amount)</label>
+                    <input type="text" class="form-control" placeholder="Total GST Amount" disabled=""
+                        [value]="data.totalGSTAmount">
+                </div>
+            </div>
+
+            <div class="col-md-4 col-sm-6">
+                <div class="form-group">
+                    <label>(Net total)</label>
+                    <input type="text" class="form-control" placeholder="Net total" disabled=""
+                        [value]="data.impiHeaderTotalInvoiceAmount">
+                </div>
+            </div>
         </div>
+
 
     </div>
 
@@ -265,7 +289,7 @@
                         readonly="">{{data.impiHeaderRemarks}}</textarea> </div>
             </div>
             <div class="col-md-6" *ngIf="data.impiHeaderTlApproverRemarks">
-                <div class="form-group" >
+                <div class="form-group">
                     <label>Tl Remarks </label>
                     <textarea class="form-control h-100" cols="2" rows="2" disabled=""
                         readonly="">{{data.impiHeaderTlApproverRemarks}}</textarea> </div>
@@ -298,7 +322,7 @@
                 <div class="form-group">
                     <label>Cancel Remarks</label>
                     <textarea class="form-control h-100" cols="2" rows="2" disabled=""
-                    readonly="">{{data.cancelRemarks}}</textarea>
+                        readonly="">{{data.cancelRemarks}}</textarea>
                 </div>
             </div>
         </div>
@@ -309,7 +333,8 @@
 
     <form
         *ngIf="data.impiHeaderCreatedBy === this.publicVariable.storedEmail && data.headerStatus !== 'CANCEL BY EMPLOYEE' && data.headerStatus !== 'DRAFT'
-        && data.headerStatus !== 'REJECTED BY ACCOUNTS APPROVER'  && data.headerStatus !== 'CANCELLATION REQUEST APPROVED BY FINANCE' && data.headerStatus !== 'MAIL SENT BY FINANCE TO CUSTOMER' && data.headerStatus !== 'CANCELLATION APPROVED BY FINANCE' "    [formGroup]="publicVariable.dataForm" (ngSubmit)="onSubmit()">
+        && data.headerStatus !== 'REJECTED BY ACCOUNTS APPROVER'  && data.headerStatus !== 'CANCELLATION REQUEST APPROVED BY FINANCE' && data.headerStatus !== 'MAIL SENT BY FINANCE TO CUSTOMER' && data.headerStatus !== 'CANCELLATION APPROVED BY FINANCE' "
+        [formGroup]="publicVariable.dataForm" (ngSubmit)="onSubmit()">
         <div class="col-md-12 mt-3">
             <div class="form-group">
                 <label>Remarks</label>
