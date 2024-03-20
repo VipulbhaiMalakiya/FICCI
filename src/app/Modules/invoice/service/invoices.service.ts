@@ -32,8 +32,8 @@ export class InvoicesService {
     private ErpDetailCustNoURL = `${environment.apiURL}DropDown/ErpDetailCustNo?customerNo=`;
     private GstRegistrationNoURL = `${environment.apiURL}DropDown/GstRegistrationNo?gstNo=`;
 
-    getGstRegistrationNo(gstNo: any): Observable<any[]> {
-        const url = `${this.GstRegistrationNoURL}${gstNo ?? ''}`;
+    getGstRegistrationNo(data:any): Observable<any[]> {
+        const url = `${this.GstRegistrationNoURL}${data.gst ?? ''}&CustNo=${data.custNo}`;
         return this.http.get<any[]>(url);
     }
     getErpDetailCustNo(customerNo: any): Observable<any[]> {

@@ -415,9 +415,16 @@ export class NewPurchaseInvoiceComponent implements OnInit {
 
         const selectedId = this.publicVariable.dataForm.get('ImpiHeaderCustomerGstNo')?.value;
 
+
+        let peramiter = {
+            gst : selectedId,
+            custNo : this.publicVariable.selectCustomer.custNo
+        }
+
+
         try {
 
-            const subscription = this.API.getGstRegistrationNo(selectedId).subscribe({
+            const subscription = this.API.getGstRegistrationNo(peramiter).subscribe({
                 next: (response: any) => {
                     this.GstRegistrationDetail = response.data;
 
