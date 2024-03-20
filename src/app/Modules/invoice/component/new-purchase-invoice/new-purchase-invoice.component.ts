@@ -910,10 +910,14 @@ export class NewPurchaseInvoiceComponent implements OnInit {
 
                                     if (Action == "Calculate") {
                                         this.patchFormData(this.data);
-                                        this.toastr.success('Tax Calculated Successfully !!', 'Success');
+                                        this.toastr.success('Tax Calculated Successfully !!', 'Success', {
+                                            positionClass: 'toast-bottom-center'
+                                        });
                                     }
                                     else {
-                                        this.toastr.success(res.message, 'Success');
+                                        this.toastr.success(res.message, 'Success', {
+                                            positionClass: 'toast-bottom-center'
+                                        });
                                         this.router.navigate(['invoice/status']);
                                         this.publicVariable.dataForm.reset();
                                     }
