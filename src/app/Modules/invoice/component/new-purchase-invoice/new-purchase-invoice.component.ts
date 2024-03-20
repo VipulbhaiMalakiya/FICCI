@@ -189,47 +189,49 @@ export class NewPurchaseInvoiceComponent implements OnInit {
     }
 
     patchFormData(data: any): void {
+
+
         console.log(data);
 
         this.publicVariable.dataForm.patchValue({
-            headerid: data.headerId,
-            ImpiHeaderInvoiceType: data.impiHeaderInvoiceType,
-            ImpiHeaderProjectCode: data.impiHeaderProjectCode,
-            ImpiHeaderDepartment: data.impiHeaderProjectDepartmentName,
+            headerid: data?.headerId,
+            ImpiHeaderInvoiceType: data?.impiHeaderInvoiceType,
+            ImpiHeaderProjectCode: data?.impiHeaderProjectCode,
+            ImpiHeaderDepartment: data?.impiHeaderProjectDepartmentName,
 
-            ImpiHeaderDivison: data.impiHeaderProjectDivisionName,
-            Project: data.impiHeaderProjectName,
+            ImpiHeaderDivison: data?.impiHeaderProjectDivisionName,
+            Project: data?.impiHeaderProjectName,
 
-            ImpiHeaderPanNo: data.impiHeaderPanNo,
-            ImpiHeaderGstNo: data.impiHeaderGstNo,
+            ImpiHeaderPanNo: data?.impiHeaderPanNo,
+            ImpiHeaderGstNo: data?.impiHeaderGstNo,
             PINO: [''], //api missing
-            ImpiHeaderCustomerName: data.impiHeaderCustomerName,
-            ImpiHeaderCustomerCode: data.impiHeaderCustomerCode,
-            ImpiHeaderCustomerAddress: data.impiHeaderCustomerAddress,
-            ImpiHeaderCustomerState: data.impiHeaderCustomerState,
-            ImpiHeaderCustomerCity: data.impiHeaderCustomerCity,
-            ImpiHeaderCustomerPinCode: data.impiHeaderCustomerPinCode,
-            ImpiHeaderCustomerGstNo: data.impiHeaderCustomerGstNo,
-            ImpiHeaderCustomerContactPerson: data.impiHeaderCustomerContactPerson,
-            ImpiHeaderCustomerEmailId: data.impiHeaderCustomerEmailId,
-            ImpiHeaderCustomerPhoneNo: data.impiHeaderCustomerPhoneNo,
-            ImpiHeaderCreatedBy: data.impiHeaderCreatedBy,
-            ImpiHeaderTotalInvoiceAmount: data.impiHeaderTotalInvoiceAmount,
-            ImpiHeaderPaymentTerms: data.impiHeaderPaymentTerms,
-            ImpiHeaderRemarks: data.impiHeaderRemarks,
-            IsDraft: data.isDraft,
+            ImpiHeaderCustomerName: data?.impiHeaderCustomerName,
+            ImpiHeaderCustomerCode: data?.impiHeaderCustomerCode,
+            ImpiHeaderCustomerAddress: data?.impiHeaderCustomerAddress,
+            ImpiHeaderCustomerState: data?.impiHeaderCustomerState,
+            ImpiHeaderCustomerCity: data?.impiHeaderCustomerCity,
+            ImpiHeaderCustomerPinCode: data?.impiHeaderCustomerPinCode,
+            ImpiHeaderCustomerGstNo: data?.impiHeaderCustomerGstNo,
+            ImpiHeaderCustomerContactPerson: data?.impiHeaderCustomerContactPerson,
+            ImpiHeaderCustomerEmailId: data?.impiHeaderCustomerEmailId,
+            ImpiHeaderCustomerPhoneNo: data?.impiHeaderCustomerPhoneNo,
+            ImpiHeaderCreatedBy: data?.impiHeaderCreatedBy,
+            ImpiHeaderTotalInvoiceAmount: data?.impiHeaderTotalInvoiceAmount,
+            ImpiHeaderPaymentTerms: data?.impiHeaderPaymentTerms,
+            ImpiHeaderRemarks: data?.impiHeaderRemarks,
+            IsDraft: data?.isDraft,
 
-            startDate: data.startDate,
-            endDate: data.endDate,
+            startDate: data?.startDate,
+            endDate: data?.endDate,
 
         });
 
-        this.publicVariable.expenses = data.lineItem_Requests;
-        this.uploadedFiles = data.impiHeaderAttachment;
+        this.publicVariable.expenses = data?.lineItem_Requests;
+        this.uploadedFiles = data?.impiHeaderAttachment;
 
         if (data.impiHeaderAttachment !== null && data.impiHeaderAttachment !== undefined) {
 
-            this.uploadedFiles = data.impiHeaderAttachment.map((file: any) => ({
+            this.uploadedFiles = data?.impiHeaderAttachment.map((file: any) => ({
                 id: file.imadId,
                 recordNo: file.imadRecordNo,
                 screenName: file.imadScreenName,
