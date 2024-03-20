@@ -892,8 +892,11 @@ export class NewPurchaseInvoiceComponent implements OnInit {
                         this.API.create(formData).subscribe({
                             next: (res: any) => {
                                 if (res.status === true) {
+                                    this.data   =res.request;
                                     this.toastr.success(res.message, 'Success');
-                                    this.patchFormData(res.request)
+                                    this.patchFormData( this.data)
+
+
                                     // this.router.navigate(['invoice/status']);
                                     // this.publicVariable.dataForm.reset();
                                 } else {
