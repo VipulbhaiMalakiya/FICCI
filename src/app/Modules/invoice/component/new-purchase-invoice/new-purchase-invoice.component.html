@@ -172,7 +172,7 @@
                                 (change)="onSelectGSTCustomer()" [searchable]="true" [searchFn]="customerGSTSearchFn"
                                 [virtualScroll]="true" [bufferAmount]="10">
                                 <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
-                                    <div><span>{{item.gstNumber}}</span> - <span>{{item.customerName | titlecase}}</span></div>
+                                    <div><span>{{item.custNo}} -{{item.gstNumber}}</span> - <span>{{item.customerName | titlecase}}</span></div>
                                     <small >{{item.address | titlecase}} -{{item.address2 | titlecase}} - {{item.city | titlecase}}</small>
                                 </ng-template>
                             </ng-select>

@@ -414,11 +414,14 @@ export class NewPurchaseInvoiceComponent implements OnInit {
 
 
         const selectedId = this.publicVariable.dataForm.get('ImpiHeaderCustomerGstNo')?.value;
+        let selectDATA= this.GetCustomerGSTList.find(customer => customer.gstNumber == selectedId);
+        console.log(selectDATA.custNo);
 
+        // this.GetCustomerGSTList
 
         let peramiter = {
             gst : selectedId,
-            custNo : this.publicVariable.selectCustomer.custNo
+            custNo :selectDATA.custNo
         }
 
 
