@@ -883,9 +883,6 @@ export class NewPurchaseInvoiceComponent implements OnInit {
                             formData.append(`DocType[${i}].content`, item.file);
                         }
                     }
-
-
-
                     this.publicVariable.isProcess = true;
                     // Submit the formData
                     this.publicVariable.Subscription.add(
@@ -895,8 +892,6 @@ export class NewPurchaseInvoiceComponent implements OnInit {
                                     this.data   =res.request;
                                     this.toastr.success(res.message, 'Success');
                                     this.patchFormData( this.data)
-
-
                                     // this.router.navigate(['invoice/status']);
                                     // this.publicVariable.dataForm.reset();
                                 } else {
