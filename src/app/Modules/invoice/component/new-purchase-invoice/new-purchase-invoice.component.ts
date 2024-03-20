@@ -189,6 +189,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
     }
 
     patchFormData(data: any): void {
+        console.log(data);
 
         this.publicVariable.dataForm.patchValue({
             headerid: data.headerId,
@@ -893,7 +894,8 @@ export class NewPurchaseInvoiceComponent implements OnInit {
                             next: (res: any) => {
                                 if (res.status === true) {
                                     this.toastr.success(res.message, 'Success');
-                                    this.router.navigate(['invoice/status']);
+                                    this.patchFormData(res.request)
+                                    // this.router.navigate(['invoice/status']);
                                     this.publicVariable.dataForm.reset();
                                 } else {
                                     this.toastr.error(res.message, 'Error');
