@@ -656,10 +656,12 @@ export class NewPurchaseInvoiceComponent implements OnInit {
                 this.publicVariable.expenses[this.publicVariable.editingIndex] = this.publicVariable.expenseForm.value;
                 this.publicVariable.editingIndex = -1;
                 this.toastr.success('Expense updated successfully', 'Success');
+                alert('Expense updated successfully')
             } else {
                 // Adding a new record
                 this.publicVariable.expenses.push(this.publicVariable.expenseForm.value);
                 this.toastr.success('Expense added successfully', 'Success');
+                alert('Expense added successfully')
             }
             this.publicVariable.expenseForm.reset();
             this.isEditing = false;
