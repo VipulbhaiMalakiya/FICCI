@@ -194,7 +194,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
     patchFormData(data: any): void {
 
         this.publicVariable.dataForm.patchValue({
-            headerid: data.headerId || data.headerid,
+            headerid: (data && data.headerId) || (data && data.headerid),
             ImpiHeaderInvoiceType: data.impiHeaderInvoiceType,
             ImpiHeaderProjectCode: data.impiHeaderProjectCode,
             ImpiHeaderDepartment: data.impiHeaderProjectDepartmentName,
