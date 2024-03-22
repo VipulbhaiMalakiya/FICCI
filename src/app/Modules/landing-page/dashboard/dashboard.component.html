@@ -656,7 +656,7 @@
                                             <tbody>
 
                                                 <tr
-                                                    *ngFor="let d of  this.InvoiceSummaryList | searchFilter1: publicVariable.searchText| paginate: {itemsPerPage: publicVariable.tableSize,currentPage: publicVariable.page,totalItems: publicVariable.count};let i = index">
+                                                    *ngFor="let d of  this.PIInvoiceSummaryList | searchFilter1: publicVariable.searchText| paginate: {itemsPerPage: publicVariable.tableSize,currentPage: publicVariable.page,totalItems: publicVariable.count};let i = index">
                                                     <td>{{i + 1}}</td>
                                                     <td>{{d.no}}</td>
                                                     <td>{{d.postingDate}}</td>
