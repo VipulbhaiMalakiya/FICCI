@@ -25,7 +25,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
     gstHeaderExists: boolean = false;
     GetCustomerGSTList: any[] = [];
     GstRegistrationDetail: any[] = [];
-    isCalculate:boolean = false;
+    isCalculate: boolean = false;
     constructor(private appService: AppService,
         private modalService: NgbModal,
         private router: Router,
@@ -794,7 +794,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
     onSubmit(Action: string): void {
 
 
-        if(Action !=='Calculate' && !this.isCalculate){
+        if (Action !== 'Calculate' && !this.isCalculate) {
             alert("First line item calculate");
             return
         }
@@ -910,7 +910,9 @@ export class NewPurchaseInvoiceComponent implements OnInit {
 
                                     if (Action == "Calculate") {
                                         this.patchFormData(this.data);
-                                        this.toastr.success('Tax Calculated Successfully !!', 'Success');
+                                        this.toastr.success('Tax Calculated Successfully !!', 'Success', {
+                                            positionClass: 'toast-top-right' // Set the position to top left
+                                        });
                                     }
                                     else {
                                         this.toastr.success(res.message, 'Success');
