@@ -36,10 +36,16 @@ export class CreditmemoComponent {
         this.publicVariable.dataForm = this.fb.group({
             remarks: ['', Validators.required],
             invoice_no: [null, Validators.required],
-            no:['', Validators.required],
-            projectCode:['', Validators.required],
-            departmentName:['', Validators.required],
-            divisionName:['', Validators.required],
+            no: ['', Validators.required],
+            projectCode: ['', Validators.required],
+            departmentName: ['', Validators.required],
+            divisionName: ['', Validators.required],
+            paN_NO: ['', Validators.required],
+            gsT_No: ['', Validators.required],
+            sellToCustomerNo: ['', Validators.required],
+            sellToCustomerName: ['', Validators.required],
+            sellToAddress:['', Validators.required],
+            sellToCountryRegionCode:['', Validators.required],
         })
     }
 
@@ -134,9 +140,15 @@ export class CreditmemoComponent {
 
         this.publicVariable.dataForm.patchValue({
             no: this.TaxInvoiceinfo.no,
-            projectCode:this.TaxInvoiceinfo.projectCode,
-            departmentName:this.TaxInvoiceinfo.departmentName,
-            divisionName:this.TaxInvoiceinfo.divisionName
+            projectCode: this.TaxInvoiceinfo.projectCode,
+            departmentName: this.TaxInvoiceinfo.departmentName,
+            divisionName: this.TaxInvoiceinfo.divisionName,
+            paN_NO: this.TaxInvoiceinfo.paN_NO,
+            gsT_No: this.TaxInvoiceinfo.gsT_No,
+            sellToCustomerNo: this.TaxInvoiceinfo.sellToCustomerNo,
+            sellToCustomerName:this.TaxInvoiceinfo.sellToCustomerName,
+            sellToAddress:this.TaxInvoiceinfo.TaxInvoiceinfo,
+            sellToCountryRegionCode:this.TaxInvoiceinfo.sellToCountryRegionCode
         })
 
         this.cd.detectChanges();
@@ -212,9 +224,11 @@ export class CreditmemoComponent {
     }
 
     markFormControlsAsTouched(): void {
-        ['remarks','departmentName','no','projectCode','divisionName'].forEach(controlName => {
-            this.publicVariable.dataForm.controls[controlName].markAsTouched();
-        });
+        ['remarks', 'departmentName', 'no', 'projectCode',
+            'divisionName', 'invoice_no', 'paN_NO', 'gsT_No',
+            'sellToCustomerNo','sellToCustomerName'].forEach(controlName => {
+                this.publicVariable.dataForm.controls[controlName].markAsTouched();
+            });
     }
 
     shouldShowError(controlName: string, errorName: string): boolean {

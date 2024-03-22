@@ -43,50 +43,39 @@
             <div class="col-md-4 col-sm-6">
                 <div class="form-group">
                     <label>Division</label>
-                    <input type="text" [value]="TaxInvoiceinfo?.divisionName || 'N/A'" class="form-control" disabled=""
-                        readonly="">
+                    <input type="text" formControlName="divisionName" class="form-control" placeholder="Division">
                 </div>
             </div>
 
             <div class="col-md-4 col-sm-6">
                 <div class="form-group">
                     <label>PAN No</label>
-                    <input type="text" [value]="TaxInvoiceinfo?.paN_NO || 'N/A'" class="form-control" disabled=""
-                        readonly="">
+                    <input type="text" formControlName="paN_NO" class="form-control" placeholder="PAN No">
                 </div>
             </div>
 
             <div class="col-md-4 col-sm-6">
                 <div class="form-group">
                     <label>GST No</label>
-                    <input type="text" [value]="TaxInvoiceinfo?.gsT_No || 'N/A'" class="form-control" disabled=""
-                        readonly="">
+                    <input type="text" formControlName="gsT_No" class="form-control" placeholder="GST No">
                 </div>
             </div>
-
-
-
         </div>
-
     </div>
-
     <div class="pi-pagetitle">Customer Details</div>
-
     <div class="mastersform-sec mb-0">
         <div class="row">
 
             <div class="col-md-4 col-sm-6">
                 <div class="form-group">
                     <label>Customer No</label>
-                    <input type="text" [value]="TaxInvoiceinfo?.sellToCustomerNo || 'N/A'" class="form-control"
-                        disabled="" readonly="">
+                    <input type="text" formControlName="sellToCustomerNo" placeholder="Customer No"  class="form-control" >
                 </div>
             </div>
             <div class="col-md-4 col-sm-6">
                 <div class="form-group">
                     <label>Customer Name</label>
-                    <input type="text" [value]="TaxInvoiceinfo?.sellToCustomerName || 'N/A'" class="form-control"
-                        disabled="" readonly="">
+                    <input type="text" formControlName="sellToCustomerName" placeholder="Customer Name"  class="form-control" >
                 </div>
             </div>
 
@@ -95,8 +84,7 @@
             <div class="col-md-4 col-sm-6">
                 <div class="form-group">
                     <label>Address</label>
-                    <input type="text" [value]="TaxInvoiceinfo?.sellToAddress || 'N/A'" class="form-control" disabled
-                        readonly>
+                    <input type="text" formControlName="sellToAddress" placeholder="Address" class="form-control" >
 
                 </div>
             </div>
@@ -105,8 +93,7 @@
                 <div class="form-group">
                     <label>CountryRegionCode
                     </label>
-                    <input type="text" [value]="TaxInvoiceinfo?.sellToCountryRegionCode || 'N/A'" class="form-control"
-                        disabled="" readonly="">
+                    <input type="text"  class="form-control" placeholder ="CountryRegionCode" formControlName="sellToCountryRegionCode">
                 </div>
             </div>
 
