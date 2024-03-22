@@ -31,11 +31,18 @@ export class InvoicesService {
     private GetTaxInvoiceAttachmentURL = `${environment.apiURL}NavERP/GetTaxInvoiceAttachment?InvoiceNo=`;
     private ErpDetailCustNoURL = `${environment.apiURL}DropDown/ErpDetailCustNo?customerNo=`;
     private GstRegistrationNoURL = `${environment.apiURL}DropDown/GstRegistrationNo?gstNo=`;
+    private GstRegistrationNoAllURL = `${environment.apiURL}DropDown/GstRegistrationNoAll`;
 
     getGstRegistrationNo(data:any): Observable<any[]> {
         const url = `${this.GstRegistrationNoURL}${data.gst ?? ''}&code=${data.code}`;
         return this.http.get<any[]>(url);
     }
+
+    GstRegistrationNoAll(): Observable<any[]> {
+        return this.http.get<any[]>(`${this.GstRegistrationNoAllURL}`);
+    }
+
+
     getErpDetailCustNo(customerNo: any): Observable<any[]> {
         const url = `${this.ErpDetailCustNoURL}${customerNo ?? ''}`;
         return this.http.get<any[]>(url);

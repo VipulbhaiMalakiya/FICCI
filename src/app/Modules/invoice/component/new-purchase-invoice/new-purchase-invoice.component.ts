@@ -3,7 +3,6 @@ import { ActivatedRoute, AppService, ConfirmationDialogModalComponent, Customers
 import { AbstractControl, FormArray, FormGroup, ValidatorFn } from '@angular/forms';
 import { finalize, timeout } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { event } from 'jquery';
 
 
 @Component({
@@ -20,10 +19,12 @@ export class NewPurchaseInvoiceComponent implements OnInit {
     uploadedFiles: any[] = [];
     inseetdFiles: any[] = [];
     FilePath: any;
+    CustomerGSTNo: any;
     gstExists: boolean = false;
     panExists: boolean = false;
     gstHeaderExists: boolean = false;
     GetCustomerGSTList: any[] = [];
+    GetCustomerGSTListAll: any[] = [];
     GstRegistrationDetail: any[] = [];
     isCalculate: boolean = false;
     constructor(private appService: AppService,
@@ -53,12 +54,11 @@ export class NewPurchaseInvoiceComponent implements OnInit {
             PINO: [''], //api missing
             ImpiHeaderCustomerName: [null, [Validators.required]],
             ImpiHeaderCustomerCode: [''], //new filed
-            // ImpiHeaderCustomerAddress: ['', [Validators.required, this.addressValidator(), Validators.maxLength(100)]],
-            ImpiHeaderCustomerAddress: ['', [Validators.required, Validators.maxLength(100)]],
+            ImpiHeaderCustomerAddress: [ null, [Validators.required, Validators.maxLength(100)]],
 
             ImpiHeaderCustomerState: [null, [Validators.required]],
-            ImpiHeaderCustomerCity: [null, [Validators.required]],
-            ImpiHeaderCustomerPinCode: ['', [Validators.required, Validators.pattern(/^\d{6}$/)]],
+            ImpiHeaderCustomerCity: [ null, [Validators.required]],
+            ImpiHeaderCustomerPinCode: [ null,[Validators.required, Validators.pattern(/^\d{6}$/)]],
             ImpiHeaderCustomerGstNo: [null, [Validators.required, gstValidator()]],
             ImpiHeaderCustomerContactPerson: ['', [Validators.required, alphanumericWithSpacesValidator()]],
             ImpiHeaderCustomerEmailId: ['', [Validators.required, Validators.email, this.emailValidator()]],
@@ -113,9 +113,11 @@ export class NewPurchaseInvoiceComponent implements OnInit {
         });
         if (this.data = history.state.data) {
             this.patchFormData(this.data);
+            console.log(this.data);
         }
         this.loadCOAMasterList();
         this.loadGetGSTGroupList();
+       // this.loadgetGstRegistrationNoAll();
     }
 
     loadCOAMasterList(): void {
@@ -162,9 +164,26 @@ export class NewPurchaseInvoiceComponent implements OnInit {
     onGSTGroupChange(gstCode: any) {
         try {
 
+            debugger;
             const subscription = this.API.GetHSNSACLIist(gstCode.code).subscribe({
                 next: (response: any) => {
+
+                  console.log(response.data);
                     this.publicVariable.HSNSACList = response.data;
+                   // alert(gstCode.code);
+                   // this.publicVariable.expenseForm.controls["impiHsnsaccode"].setValue('');
+                    if(gstCode.code =="SER-05")
+                    {
+                    this.publicVariable.expenseForm.controls["impiHsnsaccode"].setValue('998363');
+                    }
+
+                    if(gstCode.code =="SER-18")
+                    {
+                    this.publicVariable.expenseForm.controls["impiHsnsaccode"].setValue('998596');
+                    }
+                  
+                    
+
                 },
                 error: (error) => {
                     console.error('Error loading project list:', error);
@@ -194,6 +213,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
     patchFormData(data: any): void {
 
         this.publicVariable.dataForm.patchValue({
+
             headerid: (data && data.headerId) || (data && data.headerid),
             ImpiHeaderInvoiceType: data.impiHeaderInvoiceType,
             ImpiHeaderProjectCode: data.impiHeaderProjectCode,
@@ -363,13 +383,31 @@ export class NewPurchaseInvoiceComponent implements OnInit {
         }
     }
 
-    onSelectStateCustomer(): void {
+    onSelectStateCustomer():void{
 
         this.publicVariable.dataForm.patchValue({
             ImpiHeaderCustomerPinCode: null,
             ImpiHeaderCustomerCity: null,
         });
     }
+
+    loadgetGstRegistrationNoAll(): void {
+        try {
+            const subscription = this.API.GstRegistrationNoAll().subscribe({
+                next: (response: any) => {
+                    this.GetCustomerGSTListAll = response.data;
+                },
+                error: (error) => {
+                    console.error('Error loading project list:', error);
+                }
+            });
+
+            this.publicVariable.Subscription.add(subscription);
+        } catch (error) {
+            console.error('Error loading project list:', error);
+        }
+    }
+
 
 
     getErpDetailCustNo(data: any) {
@@ -408,13 +446,28 @@ export class NewPurchaseInvoiceComponent implements OnInit {
     }
 
 
+    getGstRegistrationNo(data: any) {
 
-    onSelectGSTCustomer(selectedItem: any): void {
+    }
 
+    onSelectGSTCustomer(event:any): void {
+
+        debugger;
+        console.log(event);
+       // const selectedId = this.publicVariable.dataForm.get('ImpiHeaderCustomerGstNo')?.value;
+       // console.log(selectedId);
+        //let selectDATA= this.GetCustomerGSTList.find(customer => customer.code == selectedId);
+        //debugger;
+        //console.log(selectDATA.gstNumber);
+       
+        //this.CustomerGSTNo =selectDATA.gstNumber;
+        //alert(selectDATA.code);
+
+        // this.GetCustomerGSTList
 
         let peramiter = {
-            gst: selectedItem.gstNumber,
-            code: selectedItem.code
+            gst : event.gstNumber,
+            code :event.code
         }
 
 
@@ -425,7 +478,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
                     this.GstRegistrationDetail = response.data;
 
                     if (this.GstRegistrationDetail) {
-                        this.publicVariable.selectCustomer = this.GstRegistrationDetail.find(customer => customer.code == selectedItem.code);
+                        this.publicVariable.selectCustomer = this.GstRegistrationDetail.find(customer => customer.code == event.code);
                         if (this.publicVariable.selectCustomer) {
                             this.publicVariable.dataForm.patchValue({
                                 ImpiHeaderCustomerAddress: this.publicVariable.selectCustomer.address,
@@ -436,6 +489,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
                                 ImpiHeaderCustomerPhoneNo: this.publicVariable.selectCustomer.primaryContact,
                                 ImpiHeaderCustomerState: this.publicVariable.selectCustomer.stateCode,
                                 ImpiHeaderCustomerCity: this.publicVariable.selectCustomer.city,
+                                
                             });
                         }
                     } else {
@@ -458,6 +512,51 @@ export class NewPurchaseInvoiceComponent implements OnInit {
 
 
     }
+
+    // onSelectGSTCustomer(): void {
+
+    //     const selectedId = this.publicVariable.dataForm.get('ImpiHeaderCustomerGstNo')?.value;
+
+    //     try {
+
+    //         const subscription = this.API.getGstRegistrationNo(selectedId).subscribe({
+    //             next: (response: any) => {
+    //                 this.GstRegistrationDetail = response.data;
+
+    //                 if (this.GstRegistrationDetail) {
+    //                     this.publicVariable.selectCustomer = this.GstRegistrationDetail.find(customer => customer.gstNumber == selectedId);
+    //                     if (this.publicVariable.selectCustomer) {
+    //                         this.publicVariable.dataForm.patchValue({
+    //                             ImpiHeaderCustomerAddress: this.publicVariable.selectCustomer.address,
+    //                             ImpiHeaderCustomerPinCode: this.publicVariable.selectCustomer.pinCode,
+    //                             ImpiHeaderCustomerName: this.publicVariable.selectCustomer.custName,
+    //                             ImpiHeaderCustomerContactPerson: this.publicVariable.selectCustomer.contact,
+    //                             ImpiHeaderCustomerEmailId: this.publicVariable.selectCustomer.email,
+    //                             ImpiHeaderCustomerPhoneNo: this.publicVariable.selectCustomer.primaryContact,
+    //                             ImpiHeaderCustomerState: this.publicVariable.selectCustomer.stateCode,
+    //                             ImpiHeaderCustomerCity: this.publicVariable.selectCustomer.city,
+    //                         });
+    //                     }
+    //                 } else {
+    //                     this.setFormFieldsToNull();
+    //                 }
+    //             },
+    //             error: (error) => {
+    //                 console.error('Error loading project list:', error);
+    //                 this.handleLoadingError()
+    //                 this.setFormFieldsToNull();
+    //             },
+    //         });
+
+    //         this.publicVariable.Subscription.add(subscription);
+    //     } catch (error) {
+    //         console.error('Error loading project list:', error);
+    //         this.handleLoadingError()
+    //         this.setFormFieldsToNull();
+    //     }
+
+
+    // }
 
     handleLoadingError() {
         this.publicVariable.isProcess = false; // Set status to false on error
@@ -655,13 +754,13 @@ export class NewPurchaseInvoiceComponent implements OnInit {
                 // Updating an existing record
                 this.publicVariable.expenses[this.publicVariable.editingIndex] = this.publicVariable.expenseForm.value;
                 this.publicVariable.editingIndex = -1;
-                this.toastr.success('Expense updated successfully', 'Success');
-                alert('Expense updated successfully')
+                this.toastr.success('Sales Line updated successfully', 'Success');
+                alert('Sales Line  updated successfully')
             } else {
                 // Adding a new record
                 this.publicVariable.expenses.push(this.publicVariable.expenseForm.value);
-                this.toastr.success('Expense added successfully', 'Success');
-                alert('Expense added successfully')
+                this.toastr.success('Sales Line  added successfully', 'Success');
+                alert('Sales Line  added successfully')
             }
             this.publicVariable.expenseForm.reset();
             this.isEditing = false;
@@ -792,20 +891,20 @@ export class NewPurchaseInvoiceComponent implements OnInit {
         }
     }
 
+   
 
     onSubmit(Action: string): void {
 
-
         if (Action !== 'Calculate' && !this.isCalculate) {
-            alert("First line item calculate");
+            alert("Please Calculate the tax details");
             return
         }
-        let action = true;
-        if (Action == "Submit")
-            action = false;
-        // debugger;
-        if (this.publicVariable.expenses.length > 0) {
 
+       let action =true;
+       if(Action =="Submit")
+        action =false;
+        debugger;
+        if (this.publicVariable.expenses.length > 0) {
             if (action || this.uploadedFiles.length > 0) {
                 if (this.publicVariable.dataForm.valid && !this.gstExists && !this.panExists) {
                     const newData = this.publicVariable.dataForm.value;
@@ -833,7 +932,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
                     formData.append('ImpiHeaderCustomerCity', newData.ImpiHeaderCustomerCity);
                     formData.append('ImpiHeaderCustomerState', newData.ImpiHeaderCustomerState);
                     formData.append('ImpiHeaderCustomerPinCode', newData.ImpiHeaderCustomerPinCode);
-                    // formData.append('ImpiHeaderCustomerGstNo', this.CustomerGSTNo);
+                   // formData.append('ImpiHeaderCustomerGstNo', this.CustomerGSTNo);
                     formData.append('ImpiHeaderCustomerGstNo', newData.ImpiHeaderCustomerGstNo);
                     formData.append('ImpiHeaderCustomerContactPerson', newData.ImpiHeaderCustomerContactPerson);
                     formData.append('ImpiHeaderCustomerEmailId', newData.ImpiHeaderCustomerEmailId);
@@ -908,23 +1007,29 @@ export class NewPurchaseInvoiceComponent implements OnInit {
                         this.API.create(formData).subscribe({
                             next: (res: any) => {
                                 if (res.status === true) {
-                                    this.data = res.request;
+                                    this.data   =res.request;                                
 
-                                    if (Action == "Calculate") {
-                                        this.patchFormData(this.data);
-                                        this.toastr.success('Tax Calculated Successfully !!', 'Success', {
-                                            positionClass: 'toast-top-right' // Set the position to top left
-                                        });
+                                    if(Action =="Calculate")
+                                    {
+                                        this.patchFormData( this.data);
+                                        this.toastr.success('Tax Calculated Successfully !!', 'Success');
                                         alert('Tax Calculated Successfully !!');
-
-
                                     }
-                                    else {
+                                    else
+                                    {
                                         this.toastr.success(res.message, 'Success');
                                         this.router.navigate(['invoice/status']);
                                         this.publicVariable.dataForm.reset();
                                     }
 
+                                    this.toastr.success(res.message, 'Success');
+
+                                     //  this.toastr.success(res.message, 'Success');
+                                    //this.patchFormData( this.data)
+
+
+                                    //this.router.navigate(['invoice/status']);
+                                    // this.publicVariable.dataForm.reset();
                                 } else {
                                     this.toastr.error(res.message, 'Error');
                                     this.publicVariable.isProcess = false;
@@ -1006,7 +1111,8 @@ export class NewPurchaseInvoiceComponent implements OnInit {
     calculateNetTotal(): number {
         return this.calculateTotalBaseAmount() + this.calculateTotalGSTAmount();
     }
-    onCalculateClick(Action: any): void {
+
+    onCalculateClick( Action:any): void {
         // this.calculateTotalBaseAmount();
         // this.calculateTotalGSTAmount();
         // this.calculateNetTotal();

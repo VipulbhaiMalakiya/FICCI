@@ -162,18 +162,46 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-8 col-sm-6">
-                    <div class="form-group">
-                        <label for="ImpiHeaderCustomerGstNo">GST Number <sup class="text-danger">*</sup></label>
 
-                            <ng-select [items]="GetCustomerGSTList" #select class="w-100"
+                <!-- <div class="col-md-8 col-sm-6">
+                    <div class="form-group">
+                        <label for="ImpiHeaderCustomerGstNo">GST Number All <sup class="text-danger">*</sup></label>
+
+                        
+                            <ng-select [items]="loadgetGstRegistrationNoAll" #select class="w-100"
                                 bindLabel="gstNumber" bindValue="gstNumber"
                                 placeholder="Select customer" formControlName="ImpiHeaderCustomerGstNo"
                                 (change)="onSelectGSTCustomer($event)" [searchable]="true" [searchFn]="customerGSTSearchFn"
                                 [virtualScroll]="true" [bufferAmount]="10">
+                           
                                 <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
-                                    <div><span>{{item.custNo}} -{{item.gstNumber}}</span> - <span>{{item.customerName | titlecase}}</span></div>
-                                    <small >{{item.address | titlecase}} -{{item.address2 | titlecase}} - {{item.city | titlecase}}</small>
+                                    <div><span>{{item.code}}</span>-<span>{{item.gstNumber}}</span> - <span>{{item.customerName | titlecase}}</span></div>
+                                    <small >{{item.address | titlecase}} -{{item.address2 | titlecase}} - {{item.city | titlecase}}- {{item.pincode}}</small>
+                                </ng-template>
+                            </ng-select>
+
+                          
+
+                        <div *ngIf="shouldShowError('ImpiHeaderCustomerGstNo','required')" class="text-danger">This
+                            field
+                            is required
+                        </div>
+                    </div>
+                </div> -->
+
+                <div class="col-md-8 col-sm-6">
+                    <div class="form-group">
+                        <label for="ImpiHeaderCustomerGstNo">GST Number <sup class="text-danger">*</sup></label>
+                        
+                            <ng-select [items]="GetCustomerGSTList" #select class="w-100"
+                                bindLabel="gstNumber" bindValue="gstNumber"
+                                placeholder="Select GST No" formControlName="ImpiHeaderCustomerGstNo"
+                                (change)="onSelectGSTCustomer($event)" [searchable]="true" [searchFn]="customerGSTSearchFn"
+                                [virtualScroll]="true" [bufferAmount]="10">
+                           
+                                <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
+                                    <div><span>{{item.code}}</span>-<span>{{item.gstNumber}}</span> - <span>{{item.customerName | titlecase}}</span></div>
+                                    <small >{{item.address | titlecase}} -{{item.address2 | titlecase}} - {{item.city | titlecase}}- {{item.pincode}}</small>
                                 </ng-template>
                             </ng-select>
 
@@ -189,14 +217,15 @@
                     <div class="form-group">
                         <label for="address">Address <sup class="text-danger">*</sup></label>
                         <input type="text" id="address" placeholder="Address"
-                            formControlName="ImpiHeaderCustomerAddress" class="form-control no-style" readonly  />
+                            formControlName="ImpiHeaderCustomerAddress" class="form-control no-style" readonly />
+
                             <div *ngIf="shouldShowError('ImpiHeaderCustomerAddress', 'required')" class="text-danger">
-                                Email is required.
+                                Address is required.
                             </div>
 
-                            <div *ngIf="shouldShowError('ImpiHeaderCustomerAddress', 'forbiddenCharacters')" class="text-danger">
+                            <!-- <div *ngIf="shouldShowError('ImpiHeaderCustomerAddress', 'forbiddenCharacters')" class="text-danger">
                                 Special characters are not allowed in the address
-                            </div>
+                            </div> -->
 
                             <div *ngIf="shouldShowError('ImpiHeaderCustomerAddress', 'maxlength')" class="text-danger">
                                 Email must be less than 80 characters.
@@ -235,6 +264,7 @@
                                 <small>{{item.cityCode}} - {{item.cityName}}</small>
                             </ng-template>
                         </ng-select> -->
+
                         <input type="text" id="city" placeholder="City"
                         formControlName="ImpiHeaderCustomerCity" class="form-control no-style" readonly />
                         <div *ngIf="shouldShowError('ImpiHeaderCustomerCity','required')" class="text-danger">This field
@@ -247,11 +277,9 @@
                     <div class="form-group">
                         <label for="pincode">Pincode <sup class="text-danger">*</sup></label>
                         <input type="text" formControlName="ImpiHeaderCustomerPinCode" placeholder="Pincode"
-                            (input)="onInputChange($event)" class="form-control no-style" maxlength="15" readonly />
-
+                            (input)="onInputChange($event)" class="form-control" maxlength="15" />
                         <div *ngIf="shouldShowError('ImpiHeaderCustomerPinCode','required')" class="text-danger"> Pin
-                            Code is
-                            required.
+                            Code is required.
                         </div>
                         <div *ngIf="shouldShowError('ImpiHeaderCustomerPinCode','pattern')" class="text-danger"> Please
                             enter a valid 6-digit Pin Code.</div>
@@ -358,7 +386,7 @@
                         </div>
                     </div>
 
-                    <!-- <div class="col-md-4 col-sm-6">
+                    <div class="col-md-4 col-sm-6">
                         <div class="form-group">
                             <label>HSN/SAC Code </label>
                             <ng-select [items]="publicVariable.HSNSACList" #select bindLabel="hsnCode"
@@ -370,7 +398,7 @@
                             </ng-select>
 
                         </div>
-                    </div> -->
+                    </div>
 
                     <div class="col-md-4 col-sm-6">
                         <div class="form-group">
@@ -419,7 +447,7 @@
                     <div class="row">
                         <div class="col-md-4 col-sm-6" >
                         <div class="form-group">
-                            <label>(Total Base Amount)</label>
+                            <label>Total Base Amount</label>
                             <input type="text" class="form-control"
                                 placeholder="Total Base Amount" [value] = "data?.baseAmount" disabled="">
                         </div>
@@ -427,7 +455,7 @@
 
                     <div class="col-md-4 col-sm-6" >
                         <div class="form-group">
-                            <label>(Total GST Amount)</label>
+                            <label>Total GST Amount</label>
                             <input type="text" class="form-control"
                                 placeholder="Total GST Amount" disabled="" [value] = "data?.totalGSTAmount">
                         </div>
@@ -435,7 +463,7 @@
 
                     <div class="col-md-4 col-sm-6" >
                         <div class="form-group">
-                            <label>(Net total)</label>
+                            <label>Net Total</label>
                             <input type="text" class="form-control"
                                 placeholder="Net total" disabled="" [value] = "data?.impiHeaderTotalInvoiceAmount">
                         </div>
@@ -459,9 +487,10 @@
                             <th>Direct Unit Cost *(Exclusive GST)</th>
                             <th>Line Amount</th>
                             <th>GST Group Code</th>
-                            <!-- <th>HSN/SAC Code</th> -->
-                            <!-- <th>GST Base Amount</th>
-                            <th>GST Amount</th> -->
+                            <th>HSN/SAC Code</th>
+                             <th>IGST Amount</th>
+                            <th>CGST Amount</th>
+                            <th>SGST Amount</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -474,7 +503,10 @@
                             <td>{{e.impiUnitPrice}}</td>
                             <td>{{e.impiUnitPrice * e.impiQuantity}}</td>
                             <td>{{e.impiGstgroupCode }}</td>
-                            <!-- <td>{{e.impiHsnsaccode}}</td> -->
+                            <td>{{e.impiHsnsaccode}}</td>
+                              <td>{{e.impiTotalGstAmount}}</td>
+                              <td>{{e.impiNetTotal}}</td>
+                              <td>{{e.impiGstBaseAmount}}</td>
                             <!-- <td>{{ calculateGSTBaseAmount(e) }}</td>
                             <td>{{ calculateGSTAmount(e) }}</td> -->
                             <td><span class="table-btns">
@@ -494,7 +526,7 @@
 
         </div>
         <div class="text-end" *ngIf="publicVariable.expenses.length > 0"><a href="javascript:void(0)"
-            (click)="onCalculateClick('Calculate')" class="common-btn w-auto">Calculate</a></div>
+                (click)="onCalculateClick('Calculate')" class="common-btn w-auto">Calculate</a></div>
         <div class="note-para">
             <p>Upload Attachments (PO,E-Mail Confirmation,LOI,Other Documents)*<span class="text-danger">(Max File Size 5 MB
                     only)</span></p>

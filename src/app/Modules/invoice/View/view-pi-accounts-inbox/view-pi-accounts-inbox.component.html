@@ -86,6 +86,13 @@
                             readonly="">
                     </div>
                 </div>
+
+                <div class="col-md-4 col-sm-6">
+                    <div class="form-group">
+                        <label>PI No.</label>
+                        <input type="text" value="{{data.headerPiNo}}" class="form-control" disabled="" readonly="">
+                    </div>
+                </div>
                 <!--show tax-invoice-only
                 <div class="col-md-4 col-sm-6">
                   <div class="form-group">
@@ -194,6 +201,9 @@
                             <th>Line Amount</th>
                             <th>GST Group Code</th>
                             <th>HSN/SAC Code</th>
+                            <th>IGST Amount</th>
+                            <th>CGST Amount</th>
+                            <th>SGST Amount</th>
 
                         </tr>
                     </thead>
@@ -207,6 +217,9 @@
                             <td>{{ e.impiUnitPrice}}</td>
                             <td>{{e.impiGstgroupCode }}</td>
                             <td>{{e.impiHsnsaccode}}</td>
+                            <td>{{e.impiTotalGstAmount}}</td>
+                              <td>{{e.impiNetTotal}}</td>
+                              <td>{{e.impiGstBaseAmount}}</td>
                         </tr>
                     </tbody>
                 </table>

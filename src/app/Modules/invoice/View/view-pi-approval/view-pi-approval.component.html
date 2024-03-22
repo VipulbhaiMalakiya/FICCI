@@ -80,6 +80,12 @@
                     <input type="text" value="{{data.endDate}}" class="form-control" disabled="" readonly="">
                 </div>
             </div>
+            <div class="col-md-4 col-sm-6">
+                <div class="form-group">
+                    <label>PI No.</label>
+                    <input type="text" value="{{data.headerPiNo}}" class="form-control" disabled="" readonly="">
+                </div>
+            </div>
             <!--show tax-invoice-only
             <div class="col-md-4 col-sm-6">
               <div class="form-group">
@@ -156,7 +162,7 @@
 
             <div class="col-md-4 col-sm-6">
                 <div class="form-group">
-                    <label>CCustomer EmailId (To Send Invoice)</label>
+                    <label>Customer EmailId (To Send Invoice)</label>
                     <input type="text" value="{{data.impiHeaderCustomerEmailId}}" class="form-control" disabled=""
                         readonly="">
                 </div>
@@ -172,7 +178,7 @@
 
             <div class="col-md-4 col-sm-6">
                 <div class="form-group">
-                    <label>(Total Base Amount)</label>
+                    <label>Total Base Amount</label>
                     <input type="text" class="form-control" placeholder="Total Base Amount" [value]="data.baseAmount"
                         disabled="">
                 </div>
@@ -180,7 +186,7 @@
 
             <div class="col-md-4 col-sm-6">
                 <div class="form-group">
-                    <label>(Total GST Amount)</label>
+                    <label>Total GST Amount</label>
                     <input type="text" class="form-control" placeholder="Total GST Amount" disabled=""
                         [value]="data.totalGSTAmount">
                 </div>
@@ -188,7 +194,7 @@
 
             <div class="col-md-4 col-sm-6">
                 <div class="form-group">
-                    <label>(Net total)</label>
+                    <label>Net Total</label>
                     <input type="text" class="form-control" placeholder="Net total" disabled=""
                         [value]="data.impiHeaderTotalInvoiceAmount">
                 </div>
@@ -211,7 +217,14 @@
                         <th>Direct Unit Cost *(Exclusive GST)</th>
                         <th>Line Amount</th>
                         <th>GST Group Code</th>
-                        <!-- <th>HSN/SAC Code</th> -->
+                        <th>Line Amount</th>
+                        <th>GST Group Code</th>
+                        <!-- <th>GST Base Amount</th>
+                        <th>GST Amount</th> -->
+                        <th>HSN/SAC Code</th>
+                        <th>IGST Amount</th>
+                        <th>CGST Amount</th>
+                        <th>SGST Amount</th>
 
                     </tr>
                 </thead>
@@ -224,8 +237,12 @@
                         <td>{{e.impiUnitPrice}}</td>
                         <td>{{e.impiUnitPrice * e.impiQuantity}}</td>
                         <td>{{e.impiGstgroupCode }}</td>
-                        <!-- <td>{{e.impiHsnsaccode}}</td> -->
-
+                        <!-- <td>{{e.impiGstBaseAmount}}</td>
+                        <td>{{e.impiTotalGstAmount}}</td> -->
+                        <td>{{e.impiHsnsaccode}}</td>
+                        <td>{{e.impiTotalGstAmount}}</td>
+                        <td>{{e.impiNetTotal}}</td>
+                        <td>{{e.impiGstBaseAmount}}</td>
 
                     </tr>
                 </tbody>
