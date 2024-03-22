@@ -38,6 +38,8 @@ export class CreditmemoComponent {
             invoice_no: [null, Validators.required],
             no:['', Validators.required],
             projectCode:['', Validators.required],
+            departmentName:['', Validators.required],
+            divisionName:['', Validators.required],
         })
     }
 
@@ -133,6 +135,8 @@ export class CreditmemoComponent {
         this.publicVariable.dataForm.patchValue({
             no: this.TaxInvoiceinfo.no,
             projectCode:this.TaxInvoiceinfo.projectCode,
+            departmentName:this.TaxInvoiceinfo.departmentName,
+            divisionName:this.TaxInvoiceinfo.divisionName
         })
 
         this.cd.detectChanges();
@@ -208,7 +212,7 @@ export class CreditmemoComponent {
     }
 
     markFormControlsAsTouched(): void {
-        ['remarks'].forEach(controlName => {
+        ['remarks','departmentName','no','projectCode','divisionName'].forEach(controlName => {
             this.publicVariable.dataForm.controls[controlName].markAsTouched();
         });
     }
