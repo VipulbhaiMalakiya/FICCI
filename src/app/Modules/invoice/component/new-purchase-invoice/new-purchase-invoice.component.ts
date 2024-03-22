@@ -913,6 +913,9 @@ export class NewPurchaseInvoiceComponent implements OnInit {
                                         this.toastr.success('Tax Calculated Successfully !!', 'Success', {
                                             positionClass: 'toast-top-right' // Set the position to top left
                                         });
+                                        alert('Tax Calculated Successfully !!');
+
+
                                     }
                                     else {
                                         this.toastr.success(res.message, 'Success');
