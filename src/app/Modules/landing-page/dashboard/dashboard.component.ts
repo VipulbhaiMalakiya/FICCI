@@ -53,7 +53,7 @@ export class DashboardComponent {
         this.publicVariable.storedEmail = localStorage.getItem('userEmail') ?? '';
         this.storedRole = localStorage.getItem('userRole') ?? '';
         const isFinanceValue = localStorage.getItem('IsFinance');
-
+        this.loadPurchaseInvoiceList();
         this.storeIsFinance = isFinanceValue === 'true'; // Convert string to boolean
     }
 
