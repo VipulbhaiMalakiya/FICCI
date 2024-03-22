@@ -189,7 +189,9 @@
                     <div class="form-group">
                         <label for="address">Address <sup class="text-danger">*</sup></label>
                         <input type="text" id="address" placeholder="Address"
-                            formControlName="ImpiHeaderCustomerAddress" class="form-control" />
+                            formControlName="ImpiHeaderCustomerAddress" class="form-control" readonly />
+
+
 
                             <div *ngIf="shouldShowError('ImpiHeaderCustomerAddress', 'required')" class="text-danger">
                                 Email is required.
@@ -208,14 +210,18 @@
                 <div class="col-md-4 col-sm-6">
                     <div class="form-group">
                         <label for="state">State <sup class="text-danger">*</sup></label>
-                        <ng-select [items]="publicVariable.stateList" #select bindLabel="stateName"
+                        <!-- <ng-select [items]="publicVariable.stateList" #select bindLabel="stateName"
                             bindValue="stateCode" placeholder="Select " formControlName="ImpiHeaderCustomerState"
                             (change)="onSelectStateCustomer()"  [searchable]="true" [searchFn]="stateSearchFn" [virtualScroll]="true" [bufferAmount]="10">
                             <ng-template ng-option-tmp let-item="item" let-search="searchTerm"
                             >
                                 <small>{{item.stateCode}} - {{item.stateName}}</small>
                             </ng-template>
-                        </ng-select>
+                        </ng-select> -->
+
+                        <input type="text" id="state" placeholder="State"
+                        formControlName="ImpiHeaderCustomerState" class="form-control" readonly />
+
                         <div *ngIf="shouldShowError('ImpiHeaderCustomerState','required')" class="text-danger">This
                             field is required</div>
 
@@ -224,14 +230,16 @@
                 <div class="col-md-4 col-sm-6">
                     <div class="form-group">
                         <label for="city">City <sup class="text-danger">*</sup></label>
-                        <ng-select [items]="publicVariable.cityList" #select bindLabel="cityName" bindValue="cityName"
+                        <!-- <ng-select [items]="publicVariable.cityList" #select bindLabel="cityName" bindValue="cityName"
                             placeholder="Select" formControlName="ImpiHeaderCustomerCity" [searchable]="true"
                             [searchFn]="citySearchFn" [virtualScroll]="true" [bufferAmount]="10"
                             (change)="onCitySelectionChange()">
                             <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
                                 <small>{{item.cityCode}} - {{item.cityName}}</small>
                             </ng-template>
-                        </ng-select>
+                        </ng-select> -->
+                        <input type="text" id="city" placeholder="City"
+                        formControlName="ImpiHeaderCustomerCity" class="form-control" readonly />
                         <div *ngIf="shouldShowError('ImpiHeaderCustomerCity','required')" class="text-danger">This field
                             is required
                         </div>
@@ -242,7 +250,8 @@
                     <div class="form-group">
                         <label for="pincode">Pincode <sup class="text-danger">*</sup></label>
                         <input type="text" formControlName="ImpiHeaderCustomerPinCode" placeholder="Pincode"
-                            (input)="onInputChange($event)" class="form-control" maxlength="15" />
+                            (input)="onInputChange($event)" class="form-control" maxlength="15" readonly />
+
                         <div *ngIf="shouldShowError('ImpiHeaderCustomerPinCode','required')" class="text-danger"> Pin
                             Code is
                             required.
