@@ -330,6 +330,7 @@ export class DashboardComponent {
             || item.headerStatus === 'PENDING WITH ACCOUNTS APPROVER'
             || item.headerStatus === 'PENDING WITH FINANCE APPROVER'
             || item.headerStatus === 'CANCEL BY EMPLOYEE'
+            ||item.headerStatus == 'CANCELLATION APPROVED BY TL'
 
 
         );
@@ -430,6 +431,8 @@ export class DashboardComponent {
                     item.headerStatus === 'PENDING WITH ACCOUNTS APPROVER' ||
                     item.headerStatus === 'PENDING WITH FINANCE APPROVER'
                     || item.headerStatus === 'CANCEL BY EMPLOYEE'
+                    ||item.headerStatus == 'CANCELLATION APPROVED BY TL'
+
                 ));
                 break;
             case 'ALL':
