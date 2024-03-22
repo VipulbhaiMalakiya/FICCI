@@ -8,3 +8,12 @@
 .toast-container {
     z-index: 9999; /* Ensure toastr appears above other content */
 }
+
+.no-style {
+    /* Override CSS styles here to remove or disable specific styles */
+    /* For example, to remove borders, background color, and box shadow */
+    border: none;
+    background-color: transparent;
+    box-shadow: none;
+    /* Add any other styles you want to remove or disable */
+}
