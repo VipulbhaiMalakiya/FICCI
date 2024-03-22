@@ -32,6 +32,7 @@ export class DashboardComponent {
     PIALL: number = 0;
     PIforapproval: number = 0;
     PostedTaxInvoiceCount: number = 0;
+    PIPostedTaxInvoiceCount: number = 0;
     InvoiceSummaryList: InvoiceSummaryModel[] = [];
     PIInvoiceSummaryList: InvoiceSummaryModel[] = [];
 
@@ -761,11 +762,11 @@ export class DashboardComponent {
 
 
                     this.PIInvoiceSummaryList = response.data;
-                    this.PostedTaxInvoiceCount = response.data.length;
+                    this.PIPostedTaxInvoiceCount = response.data.length;
                 } else {
                     // Handle case where response data is null or not an array
                     this.PIInvoiceSummaryList = [];
-                    this.PostedTaxInvoiceCount = 0;
+                    this.PIPostedTaxInvoiceCount = 0;
                     console.warn('Response data is null or not an array:', response.data);
                 }
                 this.publicVariable.isProcess = false;
