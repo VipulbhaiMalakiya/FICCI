@@ -24,6 +24,7 @@ import { SearchFilterPipe2 } from './pipe/searchpi';
 import { PostedEmailComponent } from './send-email/posted-email/posted-email.component';
 import { CreditmemoComponent } from './component/creditmemo/creditmemo.component';
 import { PiInvoiceComponent } from './component/pi-invoice/pi-invoice.component';
+import { PiInvoiceViewComponent } from './View/pi-invoice-view/pi-invoice-view.component';
 
 
 
@@ -45,7 +46,8 @@ import { PiInvoiceComponent } from './component/pi-invoice/pi-invoice.component'
         SearchFilterPipe2,
         PostedEmailComponent,
         CreditmemoComponent,
-        PiInvoiceComponent
+        PiInvoiceComponent,
+        PiInvoiceViewComponent
     ],
     imports: [
         CommonModule,

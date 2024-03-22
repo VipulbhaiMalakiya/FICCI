@@ -83,7 +83,13 @@ const routes: Routes = [
         component:PiInvoiceComponent,
         canActivate: [AuthGuard],
         data: { expectedRoles: ['Admin', 'Approver', 'Employee', 'Accounts'] }
-    }
+    },
+    {
+        path:'pi-invoice/view/:id',
+        component:PostedTaxInvoiceComponent,
+        canActivate: [AuthGuard],
+        data: { expectedRoles: ['Admin', 'Approver', 'Employee', 'Accounts'] }
+    },
 ];
 
 @NgModule({
