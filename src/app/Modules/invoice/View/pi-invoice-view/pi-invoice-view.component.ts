@@ -50,7 +50,7 @@ export class PiInvoiceViewComponent {
 
             // const subscription = this.API.GetTaxInvoiceInformation("SI121683").subscribe({
 
-                const subscription = this.API.GetTaxInvoiceInformation(this.data.invoice_no).subscribe({
+                const subscription = this.API.GetPITaxInvoiceInformation(this.data.invoice_no).subscribe({
                 next: (response: any) => {
                     this.TaxInvoicedata = response.data;
                     // this.filterTaxInvoiceByInvoiceNo("SI121683");
@@ -90,7 +90,7 @@ export class PiInvoiceViewComponent {
 
     loadTaxInvoiceAttachment(invoice: string) {
         try {
-            const subscription = this.API.GetTaxInvoiceAttachment(invoice).subscribe({
+            const subscription = this.API.GetPITaxInvoiceAttachment(invoice).subscribe({
                 next: (response: any) => {
                     this.InvoiceAttachment = response.data;
                     this.handleLoadingError();

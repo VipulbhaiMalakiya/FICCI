@@ -49,7 +49,7 @@ export class PiInvoiceComponent {
 
     loadInvoiceSummary() {
         this.publicVariable.isProcess = true;
-        const subscription = this.IAPI.GetInvoiceSummary().pipe(
+        const subscription = this.IAPI.GetPIInvoiceSummary().pipe(
             timeout(120000), // Timeout set to 2 minutes (120000 milliseconds)
             finalize(() => {
                 this.publicVariable.isProcess = false;

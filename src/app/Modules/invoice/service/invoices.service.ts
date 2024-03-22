@@ -27,8 +27,13 @@ export class InvoicesService {
     private CancelEmployeeURL = `${environment.apiURL}PurchaseInvoice_New/CancelEmployee`;
     private LastestEmailURL = `${environment.apiURL}Mail/LastestEmail?invoiceId=`;
     private InvoiceSummaryURL = `${environment.apiURL}NavERP/GetInvoiceSummary?User=`;
+    private PIInvoiceSummaryURL = `${environment.apiURL}NavERP/GetPIInvoiceSummary?User=`;
+    private PITaxInvoiceInformationURL = `${environment.apiURL}NavERP/GetPIInvoiceInformation?InvoiceNo=`;
+
     private TaxInvoiceInformationURL = `${environment.apiURL}NavERP/GetTaxInvoiceInformation?InvoiceNo=`;
     private GetTaxInvoiceAttachmentURL = `${environment.apiURL}NavERP/GetTaxInvoiceAttachment?InvoiceNo=`;
+    private GetPITaxInvoiceAttachmentURL = `${environment.apiURL}NavERP/GetPIInvoiceAttachment?InvoiceNo=`;
+
     private ErpDetailCustNoURL = `${environment.apiURL}DropDown/ErpDetailCustNo?customerNo=`;
     private GstRegistrationNoURL = `${environment.apiURL}DropDown/GstRegistrationNo?gstNo=`;
     private GstRegistrationNoAllURL = `${environment.apiURL}DropDown/GstRegistrationNoAll`;
@@ -54,13 +59,31 @@ export class InvoicesService {
         return this.http.get<any[]>(url);
       }
 
+      GetPITaxInvoiceAttachment(InvoiceNo: string): Observable<any[]> {
+        const userEmail = localStorage.getItem('userEmail');
+        const url = `${this.GetPITaxInvoiceAttachmentURL}${InvoiceNo}`;
+        return this.http.get<any[]>(url);
+      }
+
+
     GetTaxInvoiceInformation(InvoiceNo:string): Observable<any[]> {
         const url = `${this.TaxInvoiceInformationURL}${InvoiceNo}`;
         return this.http.get<any[]>(url);
     }
+
+    GetPITaxInvoiceInformation(InvoiceNo:string): Observable<any[]> {
+        const url = `${this.PITaxInvoiceInformationURL}${InvoiceNo}`;
+        return this.http.get<any[]>(url);
+    }
+
     GetInvoiceSummary(): Observable<any[]> {
         // return this.http.get<any[]>(`${this.InvoiceSummaryURL}`);
         const url = `${this.InvoiceSummaryURL}${localStorage.getItem('userEmail') ?? ''}`;
+        return this.http.get<any[]>(url);
+    }
+    GetPIInvoiceSummary(): Observable<any[]> {
+        // return this.http.get<any[]>(`${this.InvoiceSummaryURL}`);
+        const url = `${this.PIInvoiceSummaryURL}${localStorage.getItem('userEmail') ?? ''}`;
         return this.http.get<any[]>(url);
     }
     IsLatestEmail(id: any): Observable<any[]> {
