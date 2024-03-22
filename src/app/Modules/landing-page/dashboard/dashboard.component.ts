@@ -33,6 +33,8 @@ export class DashboardComponent {
     PIforapproval: number = 0;
     PostedTaxInvoiceCount: number = 0;
     InvoiceSummaryList: InvoiceSummaryModel[] = [];
+    PIInvoiceSummaryList: InvoiceSummaryModel[] = [];
+
     Cancelled: number = 0;
     Reversal: number = 0;
     storeIsFinance!: boolean;
@@ -279,7 +281,7 @@ export class DashboardComponent {
                     this.loadInoivceStatusList(this.customerStatus);
                     this.publicVariable.isProcess = false;
                     this.loadInvoiceSummary();
-                },
+                    this.PIloadInvoiceSummary();                },
                 error: (error: any) => {
                     this.toastr.error('Error loading invoice lists', error.name);
                     this.publicVariable.isProcess = false;
@@ -724,6 +726,45 @@ export class DashboardComponent {
                 } else {
                     // Handle case where response data is null or not an array
                     this.InvoiceSummaryList = [];
+                    this.PostedTaxInvoiceCount = 0;
+                    console.warn('Response data is null or not an array:', response.data);
+                }
+                this.publicVariable.isProcess = false;
+            },
+            error: (error: any) => {
+                if (error.name === 'TimeoutError') {
+                    this.toastr.error('Operation timed out after 2 minutes', error.name);
+                } else {
+                    this.toastr.error('Error loading user list', error.name);
+                }
+                this.publicVariable.isProcess = false;
+            }
+        });
+
+        this.publicVariable.Subscription.add(subscription);
+    }
+
+    PIloadInvoiceSummary() {
+        this.publicVariable.isProcess = true;
+        const subscription = this.IAPI.GetInvoiceSummary().pipe(
+            timeout(120000), // Timeout set to 2 minutes (120000 milliseconds)
+            finalize(() => {
+                this.publicVariable.isProcess = false;
+            })
+        ).subscribe({
+            next: (response: any) => {
+                if (response.data && Array.isArray(response.data)) {
+
+                    // // Filter the data by createdBy
+                    // this.InvoiceSummaryList = response.data.filter((item: any) => item.createdByUser === this.publicVariable.storedEmail);
+                    // this.PostedTaxInvoiceCount = this.InvoiceSummaryList.length;
+
+
+                    this.PIInvoiceSummaryList = response.data;
+                    this.PostedTaxInvoiceCount = response.data.length;
+                } else {
+                    // Handle case where response data is null or not an array
+                    this.PIInvoiceSummaryList = [];
                     this.PostedTaxInvoiceCount = 0;
                     console.warn('Response data is null or not an array:', response.data);
                 }
