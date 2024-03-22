@@ -220,7 +220,7 @@
                         </ng-select> -->
 
                         <input type="text" id="state" placeholder="State"
-                        formControlName="ImpiHeaderCustomerState" class="form-control" readonly />
+                        formControlName="ImpiHeaderCustomerState" class="form-control no-style" readonly />
 
                         <div *ngIf="shouldShowError('ImpiHeaderCustomerState','required')" class="text-danger">This
                             field is required</div>
@@ -239,7 +239,7 @@
                             </ng-template>
                         </ng-select> -->
                         <input type="text" id="city" placeholder="City"
-                        formControlName="ImpiHeaderCustomerCity" class="form-control" readonly />
+                        formControlName="ImpiHeaderCustomerCity" class="form-control no-style" readonly />
                         <div *ngIf="shouldShowError('ImpiHeaderCustomerCity','required')" class="text-danger">This field
                             is required
                         </div>
@@ -250,7 +250,7 @@
                     <div class="form-group">
                         <label for="pincode">Pincode <sup class="text-danger">*</sup></label>
                         <input type="text" formControlName="ImpiHeaderCustomerPinCode" placeholder="Pincode"
-                            (input)="onInputChange($event)" class="form-control" maxlength="15" readonly />
+                            (input)="onInputChange($event)" class="form-control no-style" maxlength="15" readonly />
 
                         <div *ngIf="shouldShowError('ImpiHeaderCustomerPinCode','required')" class="text-danger"> Pin
                             Code is

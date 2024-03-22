@@ -10,10 +10,6 @@
 }
 
 .no-style {
-    /* Override CSS styles here to remove or disable specific styles */
-    /* For example, to remove borders, background color, and box shadow */
-    border: none;
-    background-color: transparent;
-    box-shadow: none;
-    /* Add any other styles you want to remove or disable */
+    background-color: var(--bs-secondary-bg);
+    opacity: 1;
 }
