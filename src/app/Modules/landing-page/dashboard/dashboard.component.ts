@@ -330,6 +330,8 @@ export class DashboardComponent {
             || item.headerStatus === 'PENDING WITH ACCOUNTS APPROVER'
             || item.headerStatus === 'PENDING WITH FINANCE APPROVER'
             || item.headerStatus === 'CANCEL BY EMPLOYEE'
+
+
         );
         counts['FOR APPROVAL'] = forapproval.length;
 
