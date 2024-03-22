@@ -5,9 +5,13 @@
     max-width: 85%;
     flex: 0 0 85%;
 }
-.toast-container {
-    z-index: 9999; /* Ensure toastr appears above other content */
+#toast-container {
+    position: fixed; /* or absolute */
+    top: 20px; /* Adjust as needed */
+    right: 20px; /* Adjust as needed */
+    z-index: 9999; /* Ensure it's higher than other elements */
 }
+
 
 .no-style {
     background-color: var(--bs-secondary-bg);
