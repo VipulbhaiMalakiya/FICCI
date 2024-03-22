@@ -337,7 +337,7 @@
     </div>
 
     <form [formGroup]="publicVariable.dataForm"
-        *ngIf="data.headerStatus == 'PENDING WITH FINANCE APPROVER' || data.headerStatus === 'PENDING WITH TL APPROVER' ||data.headerStatus ===  'PENDING WITH CH APPROVER' || data.headerStatus === 'PENDING WITH TL APPROVER' ||data.headerStatus ===  'CANCEL BY EMPLOYEE'  ">
+        *ngIf="data.headerStatus == 'PENDING WITH FINANCE APPROVER' || data.headerStatus === 'PENDING WITH TL APPROVER' ||data.headerStatus ===  'PENDING WITH CH APPROVER' || data.headerStatus === 'PENDING WITH TL APPROVER' ||data.headerStatus ===  'CANCEL BY EMPLOYEE' || data.headerStatus === 'CANCELLATION APPROVED BY TL' ">
         <div class="col-md-12 mt-3">
             <div class="form-group">
                 <label>Remarks</label>
