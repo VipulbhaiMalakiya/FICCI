@@ -346,6 +346,7 @@ export class DashboardComponent {
             || item.headerStatus === 'REJECTED BY ACCOUNTS APPROVER'
             || item.headerStatus === 'REJECTED BY FINANCE APPROVER'
             ||item.headerStatus ==='CANCELLATION REJECTED BY TL'
+            ||item.headerStatus ==='CANCELLATION REJECTED BY FINANCE'
 
         );
         counts['REJECTED BY CH APPROVER'] = rejectedData.length;
@@ -410,6 +411,8 @@ export class DashboardComponent {
                     item.headerStatus === 'REJECTED BY ACCOUNTS APPROVER' ||
                     item.headerStatus === 'REJECTED BY FINANCE APPROVER'
                     ||item.headerStatus ==='CANCELLATION REJECTED BY TL'
+                    ||item.headerStatus ==='CANCELLATION REJECTED BY FINANCE'
+
                 ));
                 break;
             case 'Cancelled':
