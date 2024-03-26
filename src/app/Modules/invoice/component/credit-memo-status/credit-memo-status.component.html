@@ -1,1 +1,130 @@
-<p>credit-memo-status works!</p>
+<div class="inner-content">
+    <h3 class="content-title">Sales credit note status</h3>
+
+    <div class="page-btns-col"
+        *ngIf="publicVariable.invoiceStatuslistData && publicVariable.invoiceStatuslistData.length > 0">
+        <div class="tblsort">
+            <label class="col-form-label">Show</label>
+            <select id="itemsPerPageSelect" class="form-select" [(ngModel)]="publicVariable.tableSize"
+                (change)="onTableSizeChange($event)">
+                <option *ngFor="let size of publicVariable.tableSizes" [value]="size">
+                    {{ size }}
+                </option>
+            </select>
+        </div>
+
+        <div class="dt-buttons">
+            <button class="gray-btns" type="button" (click)="onDownload()">
+                <img src="../assets/images/excel-icon.png" alt="" />
+            </button>
+        </div>
+
+        <!-- Example single danger button -->
+        <div class="topbr-btns">
+            <div class="btn-group">
+                <div class="table-search">
+                    <input type="text" class="form-control" [(ngModel)]="publicVariable.searchText" name="name"
+                        id="name" placeholder="Search here" />
+                </div>
+            </div>
+        </div>
+
+        <!-- <div class="common-box">
+            <a routerLink="/invoice/new" class="common-btn" *ngIf="this.publicVariable.storedRole !== 'Admin'">Add
+                New</a>
+        </div> -->
+    </div>
+
+    <div class="inner-middle-content">
+        <div class="dasboard-table">
+            <div class="table-responsive">
+                <table class="table text-nowrap">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Invoice Type</th>
+                            <th>Project Code</th>
+                            <th>Project Name</th>
+                            <th>Department</th>
+                            <th>Division</th>
+                            <th>Vendor Name</th>
+                            <th>City</th>
+                            <th>Amount</th>
+                            <th>TL Approver</th>
+                            <!-- <th>CL Approver</th> -->
+                            <th>Finance Approver</th>
+                            <!-- <th>Accounts Approver </th> -->
+                            <th>Created On</th>
+                            <th>Created By</th>
+                            <th>Status</th>
+                            <th class="action-cl">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr
+                            *ngFor="let d of  this.publicVariable.invoiceStatuslistData | searchFilter: publicVariable.searchText| paginate: {itemsPerPage: publicVariable.tableSize,currentPage: publicVariable.page,totalItems: publicVariable.count};let i = index">
+                            <td>{{i + 1}}</td>
+                            <td>{{d.impiHeaderInvoiceType | titlecase}}</td>
+                            <td>{{d.impiHeaderProjectCode}}</td>
+                            <td>{{d.impiHeaderProjectName | titlecase}}</td>
+                            <td>{{d.impiHeaderProjectDepartmentName | titlecase}}</td>
+                            <td>{{d.impiHeaderProjectDivisionName | titlecase}}</td>
+                            <td>{{d.impiHeaderCustomerName | titlecase}}</td>
+                            <td>{{d.impiHeaderCustomerCity | titlecase}}</td>
+                            <td>{{d.impiHeaderTotalInvoiceAmount | number:'1.2-2' }}</td>
+                            <td>{{d.impiHeaderTlApprover | titlecase}}</td>
+                            <!-- <td>{{d.impiHeaderClusterApprover | titlecase}}</td> -->
+                            <td>{{d.impiHeaderFinanceApprover | titlecase}}</td>
+                            <!-- <td>{{d.accountApprover | titlecase}}</td> -->
+                            <td>{{d.impiHeaderSubmittedDate | date:'medium':'IST'}}</td>
+                            <td>{{d.impiHeaderCreatedBy | titlecase}}</td>
+                            <td>{{d.headerStatus | titlecase}}</td>
+
+                            <td>
+                                <span class="table-btns">
+                                    <a href="javascript:void(0);" (click)="onView(d)"><img
+                                            src="../assets/images/view-icon.svg" alt="" /></a>
+                                    <a *ngIf="publicVariable.storedRole !== 'Admin' &&
+                                    (d.isDraft ||
+                                    d.headerStatus == 'REJECTED BY TL APPROVER'  ||
+                                    d.headerStatus == 'REJECTED BY CH APPROVER' ||
+                                    d.headerStatus == 'REJECTED BY ACCOUNTS APPROVER'
+                                    ||d.headerStatus == 'REJECTED BY FINANCE APPROVER'
+                                    )"
+                                        href="javascript:void(0);" (click)="onEdit(d)"><img
+                                            src="../assets/images/edit-icon.svg" alt="" /></a>
+                                    <a *ngIf="publicVariable.storedRole !== 'Admin' &&
+                                    (d.isDraft ||
+                                    d.headerStatus == 'REJECTED BY TL APPROVER'  ||
+                                    d.headerStatus == 'REJECTED BY CH APPROVER' ||
+                                    d.headerStatus == 'REJECTED BY ACCOUNTS APPROVER'   || d.headerStatus == 'REJECTED BY FINANCE APPROVER'
+                                       )"
+                                        href="javascript:void(0)" (click)="onDelete(d.headerId)" data-bs-toggle="modal"
+                                        data-bs-target="#deleterecord-modal"><img src="../assets/images/delete-icon.svg"
+                                            alt="" /></a>
+                                </span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div *ngIf="!publicVariable.invoiceStatuslistData || publicVariable.invoiceStatuslistData.length === 0">
+                    <p>No data found.</p>
+                </div>
+                <div class="text-center"
+                    *ngIf="(publicVariable.invoiceStatuslistData | searchFilter: publicVariable.searchText).length === 0 && publicVariable.invoiceStatuslistData.length > 0">
+                    <span class="text-danger">No results found.</span>
+                </div>
+            </div>
+
+            <div class="clearfix">
+                <div class="hint-text">Showing <b>{{this.publicVariable.tableSize}}</b> out of <b>{{
+                        publicVariable.count }}</b>
+                    entries</div>
+                <pagination-controls previousLabel="Prev" class="pagination"
+                    *ngIf="publicVariable.invoiceStatuslistData && publicVariable.invoiceStatuslistData.length > 0"
+                    nextLabel="Next" (pageChange)="onTableDataChange($event)">
+                </pagination-controls>
+            </div>
+        </div>
+    </div>
+</div>
