@@ -26,6 +26,7 @@ import { CreditmemoComponent } from './component/creditmemo/creditmemo.component
 import { PiInvoiceComponent } from './component/pi-invoice/pi-invoice.component';
 import { PiInvoiceViewComponent } from './View/pi-invoice-view/pi-invoice-view.component';
 import { CreditMemoStatusComponent } from './component/credit-memo-status/credit-memo-status.component';
+import { CreditMemoViewComponent } from './View/credit-memo-view/credit-memo-view.component';
 
 
 
@@ -49,7 +50,8 @@ import { CreditMemoStatusComponent } from './component/credit-memo-status/credit
         CreditmemoComponent,
         PiInvoiceComponent,
         PiInvoiceViewComponent,
-        CreditMemoStatusComponent
+        CreditMemoStatusComponent,
+        CreditMemoViewComponent
     ],
     imports: [
         CommonModule,

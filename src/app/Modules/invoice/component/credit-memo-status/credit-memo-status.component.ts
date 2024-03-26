@@ -65,7 +65,7 @@ export class CreditMemoStatusComponent implements OnInit {
 
     onView(data: invoiceStatusModule): void {
         if (data.headerId) {
-            this.router.navigate(['invoice/status/view', data.headerId], { state: { data: data } });
+            this.router.navigate(['invoice/credit-memo-status/view', data.headerId], { state: { data: data } });
         } else {
             console.error('ID is undefined or null');
         }

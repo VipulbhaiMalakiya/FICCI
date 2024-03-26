@@ -14,6 +14,7 @@ import { PostedTextInvoiceComponent } from './component/posted-text-invoice/post
 import { CreditmemoComponent } from './component/creditmemo/creditmemo.component';
 import { PiInvoiceComponent } from './component/pi-invoice/pi-invoice.component';
 import { CreditMemoStatusComponent } from './component/credit-memo-status/credit-memo-status.component';
+import { CreditMemoViewComponent } from './View/credit-memo-view/credit-memo-view.component';
 
 const routes: Routes = [
     { path: '', redirectTo: 'status', pathMatch: 'full' },
@@ -94,6 +95,12 @@ const routes: Routes = [
     {
         path:'credit-memo-status',
         component:CreditMemoStatusComponent,
+        canActivate: [AuthGuard],
+        data: { expectedRoles: ['Admin', 'Approver', 'Employee', 'Accounts'] }
+    },
+    {
+        path:'credit-memo-status/view/:id',
+        component:CreditMemoViewComponent,
         canActivate: [AuthGuard],
         data: { expectedRoles: ['Admin', 'Approver', 'Employee', 'Accounts'] }
     }
