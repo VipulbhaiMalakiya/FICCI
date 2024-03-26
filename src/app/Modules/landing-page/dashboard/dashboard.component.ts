@@ -421,7 +421,7 @@ export class DashboardComponent {
                         item.headerStatus === 'REJECTED BY CH APPROVER' ||
                         item.headerStatus === 'REJECTED BY ACCOUNTS APPROVER' ||
                         item.headerStatus === 'REJECTED BY FINANCE APPROVER'
-
+                        || item.headerStatus === 'CANCELLATION REJECTED BY TL'
                         || item.headerStatus === 'CANCELLATION REJECTED BY FINANCE'
 
                     ));
@@ -431,7 +431,7 @@ export class DashboardComponent {
                     // item.createdBy === this.publicVariable.storedEmail &&
                     item.impiHeaderInvoiceType == this.invoiceType &&
                     (
-                        item.headerStatus === 'CANCELLATION APPROVED BY FINANCE' ||  item.headerStatus === 'CANCELLATION REJECTED BY TL'
+                        item.headerStatus === 'CANCELLATION APPROVED BY FINANCE'
                         || item.headerStatus == 'CANCELLATION APPROVED BY TL'));
                 break;
             case 'Reversal':
