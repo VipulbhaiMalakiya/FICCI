@@ -35,7 +35,7 @@ export class DashboardComponent {
     PIPostedTaxInvoiceCount: number = 0;
     InvoiceSummaryList: InvoiceSummaryModel[] = [];
     PIInvoiceSummaryList: InvoiceSummaryModel[] = [];
-
+    invoiceType:any = 'Proforma Invoice';
     Cancelled: number = 0;
     Reversal: number = 0;
     storeIsFinance!: boolean;
@@ -52,11 +52,11 @@ export class DashboardComponent {
     ) { }
 
     ngOnInit(): void {
-        this.loadCustomerStatusCountList();
+       // this.loadCustomerStatusCountList();
         this.publicVariable.storedEmail = localStorage.getItem('userEmail') ?? '';
         this.storedRole = localStorage.getItem('userRole') ?? '';
         const isFinanceValue = localStorage.getItem('IsFinance');
-        this.loadPurchaseInvoiceList();
+        this.loadPurchaseInvoiceList(this.invoiceType);
         this.storeIsFinance = isFinanceValue === 'true'; // Convert string to boolean
     }
 
@@ -216,7 +216,7 @@ export class DashboardComponent {
 
     }
 
-    loadPurchaseInvoiceList(): void {
+    loadPurchaseInvoiceList(invoiceType : any): void {
         try {
             // Observable for the first API call
             const purchaseInvoiceObservable = this.IAPI.getPurchaseInvoice_New().pipe(
@@ -278,7 +278,7 @@ export class DashboardComponent {
                     }
 
                     // Processing the merged data
-                    this.countDataByInvoies(this.dashboardData);
+                    this.countDataByInvoies(this.dashboardData , invoiceType);
                     this.loadInoivceStatusList(this.customerStatus);
                     this.publicVariable.isProcess = false;
                     this.loadInvoiceSummary();
@@ -295,7 +295,7 @@ export class DashboardComponent {
         }
     }
 
-    countDataByInvoies(data: any[]): void {
+    countDataByInvoies(data: any[] ,invoiceType:any): void {
 
         const counts: any = {
             'DRAFT': 0,
@@ -313,11 +313,11 @@ export class DashboardComponent {
         };
 
         // Filter data for each customer status
-        const draftData = data.filter(item => item.headerStatus === 'DRAFT');
+        const draftData = data.filter(item => item.headerStatus === 'DRAFT' && item.impiHeaderInvoiceType == invoiceType);
         counts['DRAFT'] = draftData.length;
-
         const pendingData = data.filter(item =>
             item.impiHeaderCreatedBy === this.publicVariable.storedEmail &&
+
             (item.headerStatus === 'PENDING WITH TL APPROVER' ||
                 item.headerStatus === 'PENDING WITH CH APPROVER' ||
                 item.headerStatus === 'PENDING WITH ACCOUNTS APPROVER' ||
@@ -523,7 +523,7 @@ export class DashboardComponent {
                     next: (res: any) => {
                         this.toastr.success(res.message, 'Success');
                         this.publicVariable.isProcess = false;
-                        this.loadPurchaseInvoiceList();
+                        this.loadPurchaseInvoiceList(this.invoiceType);
 
                     },
                     error: (error) => {
