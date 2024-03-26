@@ -1,1 +1,414 @@
-<p>view-sales-approval works!</p>
+<app-loading *ngIf="publicVariable.isProcess"></app-loading>
+
+<div class="inner-content">
+    <div class="approver-form">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="comments-history-icon" data-bs-toggle="modal" data-bs-target="#workflow-modal">
+                    <img src="../assets/images/file-history-icon.png" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+    <h3 class="content-title">Customer Approval Inbox</h3>
+    <div class="pipage-radio">
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="ImpiHeaderInvoiceType" id="flexRadioDefault1"
+                value="Proforma Invoice" checked />
+
+            <label class="form-check-label" for="flexRadioDefault1">
+                {{data.impiHeaderInvoiceType | titlecase}}
+            </label>
+        </div>
+
+    </div>
+    <div class="mastersform-sec mb-0">
+        <div class="row">
+
+            <div class="col-md-4 col-sm-6">
+                <div class="form-group">
+                    <label>Project Code</label>
+                    <input type="text" value="{{data.impiHeaderProjectCode}}" class="form-control" disabled=""
+                        readonly="">
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6">
+                <div class="form-group">
+                    <label>Project Name</label>
+                    <input type="text" value="{{data.impiHeaderProjectName}}" class="form-control" disabled=""
+                        readonly="">
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6">
+                <div class="form-group">
+                    <label>Department</label>
+                    <input type="text" value="{{data.impiHeaderProjectDepartmentName}}" class="form-control" disabled=""
+                        readonly="">
+                </div>
+            </div>
+
+            <div class="col-md-4 col-sm-6">
+                <div class="form-group">
+                    <label>Division</label>
+                    <input type="text" value="{{data.impiHeaderProjectDivisionName}}" class="form-control" disabled=""
+                        readonly="">
+                </div>
+            </div>
+
+            <div class="col-md-4 col-sm-6">
+                <div class="form-group">
+                    <label>PAN No</label>
+                    <input type="text" value="{{data.impiHeaderPanNo}}" class="form-control" disabled="" readonly="">
+                </div>
+            </div>
+
+            <div class="col-md-4 col-sm-6">
+                <div class="form-group">
+                    <label>GST No</label>
+                    <input type="text" value="{{data.impiHeaderGstNo}}" class="form-control" disabled="" readonly="">
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6">
+                <div class="form-group">
+                    <label>Starting Date</label>
+                    <input type="text" value="{{data.startDate}}" class="form-control" disabled="" readonly="">
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6">
+                <div class="form-group">
+                    <label>End Date</label>
+                    <input type="text" value="{{data.endDate}}" class="form-control" disabled="" readonly="">
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6">
+                <div class="form-group">
+                    <label>PI No.</label>
+                    <input type="text" value="{{data.headerPiNo}}" class="form-control" disabled="" readonly="">
+                </div>
+            </div>
+            <!--show tax-invoice-only
+            <div class="col-md-4 col-sm-6">
+              <div class="form-group">
+                <label>GST No</label>
+                <input type="text" value="" class="form-control" required="">
+              </div>
+            </div>
+            -->
+
+        </div>
+
+    </div>
+
+    <div class="pi-pagetitle">Customer Details</div>
+
+    <div class="mastersform-sec mb-0">
+        <div class="row">
+
+            <div class="col-md-4 col-sm-6">
+                <div class="form-group">
+                    <label>Customer Name</label>
+                    <input type="text" value="{{data.impiHeaderCustomerName}}" class="form-control" disabled=""
+                        readonly="">
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6">
+                <div class="form-group">
+                    <label>GST Number</label>
+                    <input type="text" value="{{data.impiHeaderCustomerGstNo}}" class="form-control" disabled=""
+                        readonly="">
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6">
+                <div class="form-group">
+                    <label>Address</label>
+                    <input type="text" value="{{data.impiHeaderCustomerAddress}}" class="form-control" disabled=""
+                        readonly="">
+                </div>
+            </div>
+
+            <div class="col-md-4 col-sm-6">
+                <div class="form-group">
+                    <label>State</label>
+                    <input type="text" value="{{getStateNameById(data.impiHeaderCustomerState)}}" class="form-control"
+                        disabled="" readonly="">
+                </div>
+            </div>
+
+            <div class="col-md-4 col-sm-6">
+                <div class="form-group">
+                    <label>City</label>
+                    <input type="text" value="{{data.impiHeaderCustomerCity}}" class="form-control" disabled=""
+                        readonly="">
+                </div>
+            </div>
+
+            <div class="col-md-4 col-sm-6">
+                <div class="form-group">
+                    <label>Pincode</label>
+                    <input type="text" value="{{data.impiHeaderCustomerPinCode}}" class="form-control" disabled=""
+                        readonly="">
+                </div>
+            </div>
+
+
+
+            <div class="col-md-4 col-sm-6">
+                <div class="form-group">
+                    <label>Contact Person</label>
+                    <input type="text" value="{{data.impiHeaderCustomerContactPerson}}" class="form-control" disabled=""
+                        readonly="">
+                </div>
+            </div>
+
+            <div class="col-md-4 col-sm-6">
+                <div class="form-group">
+                    <label>Customer EmailId (To Send Invoice)</label>
+                    <input type="text" value="{{data.impiHeaderCustomerEmailId}}" class="form-control" disabled=""
+                        readonly="">
+                </div>
+            </div>
+
+            <div class="col-md-4 col-sm-6">
+                <div class="form-group">
+                    <label>Phone No.</label>
+                    <input type="text" value="{{data.impiHeaderCustomerPhoneNo}}" class="form-control" disabled=""
+                        readonly="">
+                </div>
+            </div>
+
+            <div class="col-md-4 col-sm-6">
+                <div class="form-group">
+                    <label>Total Base Amount</label>
+                    <input type="text" class="form-control" placeholder="Total Base Amount" [value]="data.baseAmount"
+                        disabled="">
+                </div>
+            </div>
+
+            <div class="col-md-4 col-sm-6">
+                <div class="form-group">
+                    <label>Total GST Amount</label>
+                    <input type="text" class="form-control" placeholder="Total GST Amount" disabled=""
+                        [value]="data.totalGSTAmount">
+                </div>
+            </div>
+
+            <div class="col-md-4 col-sm-6">
+                <div class="form-group">
+                    <label>Net Total</label>
+                    <input type="text" class="form-control" placeholder="Net total" disabled=""
+                        [value]="data.impiHeaderTotalInvoiceAmount">
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="dasboard-table pi-table">
+
+        <div class="table-responsive">
+
+            <table class="table table-bordered text-nowrap">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th width="38%">Nature of Expense</th>
+                        <th>Quantity</th>
+                        <th>Direct Unit Cost *(Exclusive GST)</th>
+                        <th>Line Amount</th>
+                        <th>GST Group Code</th>
+                        <th>Line Amount</th>
+                        <th>GST Group Code</th>
+                        <!-- <th>GST Base Amount</th>
+                        <th>GST Amount</th> -->
+                        <th>HSN/SAC Code</th>
+                        <th>IGST Amount</th>
+                        <th>CGST Amount</th>
+                        <th>SGST Amount</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr *ngFor="let e of data.lineItem_Requests; let i = index">
+                        <td>{{i + 1}}</td>
+                        <td>{{ getNameById(e.impiGlNo) }}</td>
+                        <td>{{e.impiQuantity}}</td>
+                        <td>{{e.impiUnitPrice}}</td>
+                        <td>{{e.impiUnitPrice * e.impiQuantity}}</td>
+                        <td>{{e.impiGstgroupCode }}</td>
+                        <!-- <td>{{e.impiGstBaseAmount}}</td>
+                        <td>{{e.impiTotalGstAmount}}</td> -->
+                        <td>{{e.impiHsnsaccode}}</td>
+                        <td>{{e.impiTotalGstAmount}}</td>
+                        <td>{{e.impiNetTotal}}</td>
+                        <td>{{e.impiGstBaseAmount}}</td>
+
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+
+    </div>
+
+    <div class="dasboard-table pi-table mb-0" *ngIf="uploadedFiles.length > 0">
+        <div class="table-responsive">
+            <table class="table table-bordered text-nowrap">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Category</th>
+
+                        <th>File Type</th>
+                        <th>File Name</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let file of uploadedFiles; let i = index">
+                        <td>{{ i + 1 }}</td>
+                        <td>{{file.doctype}}</td>
+                        <td>{{ getFileType(file.type) }}</td>
+                        <td>{{ file.name }}</td>
+                        <td>
+                            <a href="javascript:void(0)" (click)="downalodFile(file)"><img
+                                    src="../assets/images/download-icon.svg" alt="" class="me-2"></a>
+
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="mastersform-sec mb-3">
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Payment Terms</label>
+                    <textarea class="form-control h-100" cols="2" rows="2" disabled=""
+                        readonly="">{{data.impiHeaderPaymentTerms}}</textarea>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Initial Remarks</label>
+                    <textarea class="form-control h-100" cols="2" rows="2" disabled=""
+                        readonly="">{{data.impiHeaderRemarks}}</textarea> </div>
+            </div>
+
+            <div class="col-md-6" *ngIf="data.impiHeaderTlApproverRemarks">
+                <div class="form-group">
+                    <label>Tl Remarks</label>
+                    <textarea class="form-control h-100" cols="2" rows="2" disabled=""
+                        readonly="">{{data.impiHeaderTlApproverRemarks}}</textarea> </div>
+            </div>
+
+            <div class="col-md-6" *ngIf="data.impiHeaderClusterApproverRemarks">
+                <div class="form-group">
+                    <label>CH Remarks</label>
+                    <textarea class="form-control h-100" cols="2" rows="2" disabled=""
+                        readonly="">{{data.impiHeaderClusterApproverRemarks}}</textarea>
+                </div>
+            </div>
+
+            <div class="col-md-6" *ngIf="data.impiHeaderFinanceRemarks">
+                <div class="form-group">
+                    <label>Finance Remarks</label>
+                    <textarea class="form-control h-100" cols="2" rows="2" disabled=""
+                        readonly="">{{data.impiHeaderFinanceRemarks}}</textarea>
+                </div>
+            </div>
+
+            <div class="col-md-6" *ngIf="data.cancelRemarks">
+                <div class="form-group">
+                    <label>Cancel Remarks</label>
+                    <textarea class="form-control h-100" cols="2" rows="2" disabled=""
+                        readonly="">{{data.cancelRemarks}}</textarea>
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+
+    <form [formGroup]="publicVariable.dataForm"
+        *ngIf="data.headerStatus == 'PENDING WITH FINANCE APPROVER' || data.headerStatus === 'PENDING WITH TL APPROVER' ||data.headerStatus ===  'PENDING WITH CH APPROVER' || data.headerStatus === 'PENDING WITH TL APPROVER' ||data.headerStatus ===  'CANCEL BY EMPLOYEE' ||data.headerStatus == 'CANCELLATION APPROVED BY TL'|| data.headerStatus === 'CANCELLATION APPROVED BY TL'  ">
+        <div class="col-md-12 mt-3">
+            <div class="form-group">
+                <label>Remarks</label>
+                <textarea class="form-control h-50" cols="2" rows="2" formControlName="remarks"></textarea>
+
+            </div>
+        </div>
+
+        <div class="col-md-12 mt-4">
+            <div class="form-group mb-0 mt-2">
+                <button type="submit" class="btn btn-danger w-auto me-2" (click)="onSubmit(false)">Reject</button>
+                <button type="submit" class="common-btn w-auto" (click)="onSubmit(true)">Approve</button>
+            </div>
+        </div>
+    </form>
+
+
+</div>
+
+<!-----Modal----->
+
+<div class="modal fade common-modal" id="workflow-modal" tabindex="-1" role="dialog"
+    aria-labelledby="testimonialmodalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title text-center w-100 small-title">Workflow Histroy</div>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-0">
+
+                <div class="dashboard-data">
+
+                    <div class="dasboard-table mb-0">
+
+                        <div class="table-responsive">
+
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Status</th>
+                                        <th>Pending at</th>
+                                        <th>Action Performed By</th>
+                                        <th>Remarks</th>
+                                        <th>Remarks On</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    <tr *ngFor="let i of this.data.workFlowHistory;let in = index">
+                                        <td>{{in + 1}}</td>
+                                        <td>{{i.imwdPendingAt | titlecase}}</td>
+                                        <td>{{i.imwdPendingEmailAt | titlecase}}</td>
+                                        <td>{{i.imwdInitiatedBy | titlecase}}</td>
+                                        <td>{{i.imwdRemarks | titlecase}}</td>
+                                        <td>{{i.imwdCreatedOn | date:'medium':'IST'}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                        </div>
+
+
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
