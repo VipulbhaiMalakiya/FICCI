@@ -18,6 +18,8 @@ export class InvoicesService {
     private Projectapi = `${environment.apiURL}DropDown/GetProject?id=0`;
     private PurchaseInvoice_New = `${environment.apiURL}PurchaseInvoice_New?email=`;
     private ApproveInvoiceURL = `${environment.apiURL}ApproveInvoice?email=`;
+    private ApproveSalesInvoiceURL = `${environment.apiURL}ApproveCredit?email=`;
+    
     private ApproverURL = `${environment.apiURL}ApproveInvoice`;
     private ApproverAccountURL = `${environment.apiURL}Account/GetInvoice?loginid=`;
     private GetCustomerAPI = `${environment.apiURL}DropDown/GetCustomer`;
@@ -107,6 +109,11 @@ export class InvoicesService {
 
     getApproveInvoice(): Observable<any[]> {
         const url = `${this.ApproveInvoiceURL}${localStorage.getItem('userEmail') ?? ''}`;
+        return this.http.get<any[]>(url);
+    }
+
+    getApproveSalesInvoice(): Observable<any[]> {
+        const url = `${this.ApproveSalesInvoiceURL}${localStorage.getItem('userEmail') ?? ''}`;
         return this.http.get<any[]>(url);
     }
 
