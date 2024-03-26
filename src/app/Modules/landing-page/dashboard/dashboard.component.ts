@@ -385,7 +385,7 @@ export class DashboardComponent {
             case 'DRAFT':
                 filteredData = this.dashboardData.filter((item: any) =>
                     // item.createdBy === this.publicVariable.storedEmail &&
-                    item.headerStatus === 'DRAFT');
+                    item.headerStatus === 'DRAFT' && item.impiHeaderInvoiceType == this.invoiceType);
                 break;
             case 'PENDING WITH APPROVER':
                 filteredData = this.dashboardData.filter((item: any) =>
