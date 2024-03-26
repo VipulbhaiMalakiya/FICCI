@@ -98,8 +98,10 @@ export class CreditMemoStatusComponent implements OnInit {
     }
 
     onEdit(data: invoiceStatusModule): void {
+        console.log(data);
+        
         if (data.headerId) {
-            this.router.navigate(['invoice/status/edit', data.headerId], { state: { data: data } });
+            this.router.navigate(['invoice/credit-memo-status/edit', data.headerId], { state: { data: data } });
         } else {
             console.error('ID is undefined or null');
         }

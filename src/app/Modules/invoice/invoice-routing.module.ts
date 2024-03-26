@@ -103,6 +103,12 @@ const routes: Routes = [
         component:CreditMemoViewComponent,
         canActivate: [AuthGuard],
         data: { expectedRoles: ['Admin', 'Approver', 'Employee', 'Accounts'] }
+    },
+    {
+        path:'credit-memo-status/edit/:id',
+        component:CreditmemoComponent,
+        canActivate: [AuthGuard],
+        data: { expectedRoles: ['Admin', 'Approver', 'Employee', 'Accounts'] }
     }
 ];
 
