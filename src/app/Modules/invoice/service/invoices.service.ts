@@ -11,6 +11,7 @@ export class InvoicesService {
     constructor(private http: HttpClient) { }
 
     private apiUrl = `${environment.apiURL}PurchaseInvoice_New`;
+    private apiUrlMemo = `${environment.apiURL}SalesCreditMemo`;
     private getCustomerStatusNewURL = `${environment.apiURL}Customer?email=`;
 
     private Projectapi = `${environment.apiURL}DropDown/GetProject?id=0`;
@@ -140,6 +141,10 @@ export class InvoicesService {
 
     create(formData: FormData): Observable<any> {
         return this.http.post<any>(`${this.apiUrl}`, formData);
+    }
+
+    createMemo(formData: FormData): Observable<any> {
+        return this.http.post<any>(`${this.apiUrlMemo}`, formData);
     }
 
     delete(id: number): Observable<any> {
