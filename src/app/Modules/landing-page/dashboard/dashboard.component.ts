@@ -312,6 +312,8 @@ export class DashboardComponent {
             'ALL': 0
         };
 
+        this.invoiceType = invoiceType;
+
         // Filter data for each customer status
         const draftData = data.filter(item => item.headerStatus === 'DRAFT' && item.impiHeaderInvoiceType == invoiceType);
         counts['DRAFT'] = draftData.length;
@@ -380,7 +382,6 @@ export class DashboardComponent {
     loadInoivceStatusList(status: string): void {
         this.customerStatus = status;
         let filteredData;
-
         switch (this.customerStatus) {
             case 'DRAFT':
                 filteredData = this.dashboardData.filter((item: any) =>
