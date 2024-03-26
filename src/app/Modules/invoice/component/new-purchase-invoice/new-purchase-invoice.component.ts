@@ -58,7 +58,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
 
             ImpiHeaderCustomerState: [null, [Validators.required]],
             ImpiHeaderCustomerCity: [null, [Validators.required]],
-            ImpiHeaderCustomerPinCode: [null, [Validators.required, Validators.pattern(/^\d{6}$/)]],
+            ImpiHeaderCustomerPinCode: [null, [ Validators.pattern(/^\d{6}$/)]],
             ImpiHeaderCustomerGstNo: [null, [Validators.required, gstValidator()]],
             ImpiHeaderCustomerContactPerson: ['', [Validators.required, alphanumericWithSpacesValidator()]],
             ImpiHeaderCustomerEmailId: ['', [Validators.required, Validators.email, this.emailValidator()]],
@@ -1047,7 +1047,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
 
     markFormControlsAsTouched(): void {
         ['ImpiHeaderInvoiceType', 'ImpiHeaderProjectCode', 'ImpiHeaderDepartment', 'ImpiHeaderDivison', 'ImpiHeaderPanNo', 'ImpiHeaderGstNo',
-            'ImpiHeaderCustomerName', 'ImpiHeaderCustomerAddress', 'ImpiHeaderCustomerState', 'ImpiHeaderCustomerCity', 'ImpiHeaderCustomerPinCode', 'ImpiHeaderCustomerEmailId',
+            'ImpiHeaderCustomerName', 'ImpiHeaderCustomerAddress', 'ImpiHeaderCustomerState', 'ImpiHeaderCustomerCity','ImpiHeaderCustomerEmailId',
             'ImpiHeaderCustomerGstNo', 'ImpiHeaderCustomerContactPerson', 'ImpiHeaderCustomerPhoneNo', 'items',
             'startDate', 'endDate'
         ].forEach(controlName => {
