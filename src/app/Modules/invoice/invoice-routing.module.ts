@@ -16,6 +16,7 @@ import { PiInvoiceComponent } from './component/pi-invoice/pi-invoice.component'
 import { CreditMemoStatusComponent } from './component/credit-memo-status/credit-memo-status.component';
 import { CreditMemoViewComponent } from './View/credit-memo-view/credit-memo-view.component';
 import { ApprovalSalesInboxComponent } from './component/approval-sales-inbox/approval-sales-inbox.component';
+import { ViewSalesApprovalComponent } from './View/view-sales-approval/view-sales-approval.component';
 
 const routes: Routes = [
     { path: '', redirectTo: 'status', pathMatch: 'full' },
@@ -116,7 +117,16 @@ const routes: Routes = [
         component:ApprovalSalesInboxComponent,
         canActivate: [AuthGuard],
         data: { expectedRoles: ['Admin', 'Approver', 'Employee', 'Accounts'] }
-    }
+    },
+
+    {
+        path:'sales-approval/view/:id',
+        component:ViewSalesApprovalComponent,
+        canActivate: [AuthGuard],
+        data: { expectedRoles: ['Admin', 'Approver', 'Employee', 'Accounts'] }
+    },
+
+    
 ];
 
 @NgModule({

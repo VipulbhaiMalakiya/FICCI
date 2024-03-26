@@ -70,7 +70,7 @@ export class ApprovalSalesInboxComponent implements OnInit {
 
     onView(data: invoiceStatusModule): void {
         if (data.headerId) {
-            this.router.navigate(['invoice/approval/view', data.headerId], { state: { data: data } });
+            this.router.navigate(['invoice/sales-approval/view', data.headerId], { state: { data: data } });
         } else {
             console.error('ID is undefined or null');
         }
