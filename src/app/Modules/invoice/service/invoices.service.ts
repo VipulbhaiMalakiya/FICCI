@@ -11,6 +11,7 @@ export class InvoicesService {
     constructor(private http: HttpClient) { }
 
     private apiUrl = `${environment.apiURL}PurchaseInvoice_New`;
+    private apiSalesCreditMemoUrl = `${environment.apiURL}SalesCreditMemo?email=`;
     private apiUrlMemo = `${environment.apiURL}SalesCreditMemo`;
     private getCustomerStatusNewURL = `${environment.apiURL}Customer?email=`;
 
@@ -136,6 +137,11 @@ export class InvoicesService {
 
     getPurchaseInvoice_New(): Observable<any[]> {
         const url = `${this.PurchaseInvoice_New}${localStorage.getItem('userEmail') ?? ''}`;
+        return this.http.get<any[]>(url);
+    }
+
+    getSalesCreditMemo(): Observable<any[]> {
+        const url = `${this.apiSalesCreditMemoUrl}${localStorage.getItem('userEmail') ?? ''}`;
         return this.http.get<any[]>(url);
     }
 

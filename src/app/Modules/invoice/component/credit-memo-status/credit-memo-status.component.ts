@@ -34,9 +34,11 @@ export class CreditMemoStatusComponent implements OnInit {
     }
     loadPurchaseInvoiceList(): void {
         try {
-            const subscription = this.API.getPurchaseInvoice_New().subscribe({
+            const subscription = this.API.getSalesCreditMemo().subscribe({
                 next: (response: any) => {
                     if (response.data && Array.isArray(response.data)) {
+                        console.log(response.data);
+
                         this.publicVariable.invoiceStatuslistData = response.data;
                         this.publicVariable.count = response.data.length;
                     } else {
