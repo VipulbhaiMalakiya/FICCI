@@ -4,16 +4,17 @@
     <div class="main-data-navs">
         <ul class="nav nav-pills main-data-nav1 mb-3" id="pills-tab" role="tablist">
             <li class="nav-item" role="presentation">
-                <button class="nav-link active" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile"
-                    type="button" role="tab" aria-controls="pills-profile" aria-selected="false"
-                    (click)="loadPurchaseInvoiceList('Proforma Invoice')" *ngIf="!isAccount">Performa Invoice</button>
+                <button class="nav-link active" id="pills-profile-tab" data-bs-toggle="pill"
+                    data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile"
+                    aria-selected="false" (click)="loadPurchaseInvoiceList('Proforma Invoice')"
+                    *ngIf="!isAccount">Performa Invoice</button>
             </li>
-<!--
             <li class="nav-item" role="presentation">
-                <button class="nav-link " id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home"
-                    type="button" role="tab" aria-controls="pills-home" aria-selected="true"
-                    >Tax invoice</button>
-            </li> -->
+                <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill"
+                    data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile"
+                    aria-selected="false" (click)="loadPurchaseInvoiceList('Tax Invoice')"
+                    *ngIf="!isAccount">Tax invoice</button>
+            </li>
 
             <li class="nav-item" role="presentation">
                 <button class="nav-link " id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home"
@@ -261,7 +262,8 @@
             </div>
             <!--PI tab-pane-->
 
-            <div class="tab-pane fade show active" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+            <div class="tab-pane fade show active" id="pills-profile" role="tabpanel"
+                aria-labelledby="pills-profile-tab">
                 <div class="data-tabs">
                     <ul class="nav nav-pills" role="tablist">
 
@@ -275,8 +277,8 @@
                         </li>
 
                         <li class="nav-item" *ngIf="this.publicVariable.storedRole === 'Approver'">
-                            <a class="nav-link tabbg-6"   [class.active]="this.publicVariable.storedRole === 'Approver'"  data-bs-toggle="pill" href="#PIhome"
-                                (click)="loadInoivceStatusList('FOR APPROVAL')">
+                            <a class="nav-link tabbg-6" [class.active]="this.publicVariable.storedRole === 'Approver'"
+                                data-bs-toggle="pill" href="#PIhome" (click)="loadInoivceStatusList('FOR APPROVAL')">
                                 <small>For Approval</small>
                                 <span>{{this.PIforapproval}}</span>
                             </a>
@@ -290,8 +292,7 @@
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link  tabbg-3"
-                                data-bs-toggle="pill" href="#PIhome"
+                            <a class="nav-link  tabbg-3" data-bs-toggle="pill" href="#PIhome"
                                 (click)="loadInoivceStatusList('APPROVED BY ACCOUNTS APPROVER')">
                                 <small>Approved </small>
                                 <span>{{PIApprovedAccounts}}</span>
@@ -458,16 +459,15 @@
                                                                     d.headerStatus == 'REJECTED BY TL APPROVER'  ||
                                                                     d.headerStatus == 'REJECTED BY CH APPROVER' ||
                                                                     d.headerStatus == 'REJECTED BY ACCOUNTS APPROVER' ||  d.headerStatus == 'REJECTED BY FINANCE APPROVER'
-                                                                    )"
-                                                                href="javascript:void(0);" (click)="onEditPI(d)"><img
+                                                                    )" href="javascript:void(0);"
+                                                                (click)="onEditPI(d)"><img
                                                                     src="../assets/images/edit-icon.svg" alt="" /></a>
                                                             <a *ngIf="publicVariable.storedRole !== 'Admin' && publicVariable.storedRole !== 'Approver' &&
                                                                     (d.isDraft ||
                                                                     d.headerStatus == 'REJECTED BY TL APPROVER'  ||
                                                                     d.headerStatus == 'REJECTED BY CH APPROVER' ||
                                                                     d.headerStatus == 'REJECTED BY ACCOUNTS APPROVER'  ||d.headerStatus == 'REJECTED BY FINANCE APPROVER'
-                                                                  )"
-                                                                href="javascript:void(0)"
+                                                                  )" href="javascript:void(0)"
                                                                 (click)="onDeletePI(d.headerId)" data-bs-toggle="modal"
                                                                 data-bs-target="#deleterecord-modal"><img
                                                                     src="../assets/images/delete-icon.svg" alt="" /></a>
@@ -583,8 +583,9 @@
                                                                     src="../assets/images/download-icone.svg"
                                                                     alt="" /></a>
 
-                                                                    <a href="javascript:void(0);" (click)="onTextSendEmail(d)"><img
-                                                                        src="../assets/images/email-icon.svg" alt="" /></a>
+                                                            <a href="javascript:void(0);"
+                                                                (click)="onTextSendEmail(d)"><img
+                                                                    src="../assets/images/email-icon.svg" alt="" /></a>
                                                         </span>
                                                     </td>
                                                 </tr>
@@ -680,7 +681,8 @@
                                                     <td>{{d.departmentName}}</td>
                                                     <td>{{d.divisionName}}</td>
                                                     <td><span class="table-btns">
-                                                            <a href="javascript:void(0);" (click)="PIInvoicedView(d)"><img
+                                                            <a href="javascript:void(0);"
+                                                                (click)="PIInvoicedView(d)"><img
                                                                     src="../assets/images/view-icon.svg" alt=""></a>
 
                                                             <a href="javascript:void(0);" data-bs-toggle="modal"
@@ -688,8 +690,9 @@
                                                                     src="../assets/images/download-icone.svg"
                                                                     alt="" /></a>
 
-                                                                    <a href="javascript:void(0);" (click)="onTextSendEmail(d)"><img
-                                                                        src="../assets/images/email-icon.svg" alt="" /></a>
+                                                            <a href="javascript:void(0);"
+                                                                (click)="onTextSendEmail(d)"><img
+                                                                    src="../assets/images/email-icon.svg" alt="" /></a>
                                                         </span>
                                                     </td>
                                                 </tr>
@@ -708,7 +711,8 @@
                                     </div>
 
 
-                                    <div class="clearfix" *ngIf="PIInvoiceSummaryList && PIInvoiceSummaryList.length > 0">
+                                    <div class="clearfix"
+                                        *ngIf="PIInvoiceSummaryList && PIInvoiceSummaryList.length > 0">
                                         <div class="hint-text">Showing <b>{{this.publicVariable.tableSize}}</b> out of
                                             <b>{{
                                                 publicVariable.count }}</b>
