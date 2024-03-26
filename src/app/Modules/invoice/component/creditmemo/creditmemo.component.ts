@@ -258,8 +258,7 @@ export class CreditmemoComponent implements OnInit {
         console.log(event);
 
     }
-    patchFormData(data: any): void {
-
+    patchFormData(data: any): void {        
         this.publicVariable.dataForm.patchValue({
 
             headerid: (data && data.headerId) || (data && data.headerid),
@@ -1056,7 +1055,7 @@ export class CreditmemoComponent implements OnInit {
                                     }
                                     else {
                                         this.toastr.success(res.message, 'Success');
-                                        this.router.navigate(['invoice/status']);
+                                        this.router.navigate(['invoice/credit-memo-status']);
                                         this.publicVariable.dataForm.reset();
                                     }
 
