@@ -25,6 +25,7 @@ import { PostedEmailComponent } from './send-email/posted-email/posted-email.com
 import { CreditmemoComponent } from './component/creditmemo/creditmemo.component';
 import { PiInvoiceComponent } from './component/pi-invoice/pi-invoice.component';
 import { PiInvoiceViewComponent } from './View/pi-invoice-view/pi-invoice-view.component';
+import { CreditMemoStatusComponent } from './component/credit-memo-status/credit-memo-status.component';
 
 
 
@@ -47,7 +48,8 @@ import { PiInvoiceViewComponent } from './View/pi-invoice-view/pi-invoice-view.c
         PostedEmailComponent,
         CreditmemoComponent,
         PiInvoiceComponent,
-        PiInvoiceViewComponent
+        PiInvoiceViewComponent,
+        CreditMemoStatusComponent
     ],
     imports: [
         CommonModule,

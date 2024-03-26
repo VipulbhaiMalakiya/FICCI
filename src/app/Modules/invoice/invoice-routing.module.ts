@@ -13,6 +13,7 @@ import { PostedTaxInvoiceComponent } from './View/posted-tax-invoice/posted-tax-
 import { PostedTextInvoiceComponent } from './component/posted-text-invoice/posted-text-invoice.component';
 import { CreditmemoComponent } from './component/creditmemo/creditmemo.component';
 import { PiInvoiceComponent } from './component/pi-invoice/pi-invoice.component';
+import { CreditMemoStatusComponent } from './component/credit-memo-status/credit-memo-status.component';
 
 const routes: Routes = [
     { path: '', redirectTo: 'status', pathMatch: 'full' },
@@ -90,6 +91,12 @@ const routes: Routes = [
         canActivate: [AuthGuard],
         data: { expectedRoles: ['Admin', 'Approver', 'Employee', 'Accounts'] }
     },
+    {
+        path:'credit-memo-status',
+        component:CreditMemoStatusComponent,
+        canActivate: [AuthGuard],
+        data: { expectedRoles: ['Admin', 'Approver', 'Employee', 'Accounts'] }
+    }
 ];
 
 @NgModule({
