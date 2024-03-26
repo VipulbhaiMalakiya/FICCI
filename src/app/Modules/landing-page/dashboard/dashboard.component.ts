@@ -35,7 +35,7 @@ export class DashboardComponent {
     PIPostedTaxInvoiceCount: number = 0;
     InvoiceSummaryList: InvoiceSummaryModel[] = [];
     PIInvoiceSummaryList: InvoiceSummaryModel[] = [];
-    invoiceType: any = 'Proforma Invoice';
+    invoiceType: any = 'Tax Invoice';
     Cancelled: number = 0;
     Reversal: number = 0;
     storeIsFinance!: boolean;
