@@ -74,7 +74,8 @@ export class CreditmemoComponent implements OnInit {
             IsDraft: [false],
             startDate: [{ value: '', disabled: true }, [Validators.required]],
             endDate: [{ value: '', disabled: true }, [Validators.required]],
-            TypeofAttachment: ['']
+            TypeofAttachment: [''],
+            MemoType: [''],
         });
     }
 

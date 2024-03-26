@@ -76,14 +76,14 @@
                                     <a routerLink="/invoice/approval" class="menu-list-title" routerLinkActive="active"
                                         *ngIf="isApprover">Approval Inbox</a>
                                     <a routerLink="/invoice/credit-memo" class="menu-list-title"
-                                        routerLinkActive="active">Sales credit note</a>
+                                        routerLinkActive="active" *ngIf="isAdmin || isEmployee "> Sales credit note</a>
                                         <a routerLink="/invoice/credit-memo-status" class="menu-list-title"
                                         routerLinkActive="active">Sales credit note status</a>
                                     <a routerLink="/invoice/tax-invoice" class="menu-list-title"
-                                        routerLinkActive="active">Posted Invoice</a>
+                                        routerLinkActive="active" *ngIf=" isEmployee ">Posted Invoice</a>
 
                                         <a routerLink="/invoice/pi-invoice" class="menu-list-title"
-                                        routerLinkActive="active">PI Invoice</a>
+                                        routerLinkActive="active" *ngIf=" isEmployee ">PI Invoice</a>
                                 </div>
 
                                 <div class="left-men" routerLinkActive="active" *ngIf="isAdmin">
