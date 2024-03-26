@@ -27,6 +27,21 @@
             <div class="row">
                 <div class="col-md-4 col-sm-6">
                     <div class="form-group">
+                        <label for="projectCode">Invoice No <sup class="text-danger">*</sup></label>
+                        <ng-select [items]="InvoiceSummaryList" #select bindLabel="invoice_no" bindValue="invoice_no"
+                            placeholder="Select in Invoice No" formControlName="invoice_no"
+                            (change)="onSelectInvoice($event)" [searchable]="true" [searchFn]="custominvoiceSearchFn"
+                            [virtualScroll]="true" [bufferAmount]="10">
+
+                            <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
+                                <small>{{item.invoice_no}} - {{item.no}}</small>
+                            </ng-template>
+                        </ng-select>
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-sm-6">
+                    <div class="form-group">
                         <label for="projectCode">Project Code <sup class="text-danger">*</sup></label>
                         <ng-select [items]="publicVariable.projectList" #select bindLabel="code" bindValue="code"
                             placeholder="Select in Project Code" formControlName="ImpiHeaderProjectCode"

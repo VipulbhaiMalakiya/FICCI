@@ -27,6 +27,8 @@ export class CreditmemoComponent implements OnInit {
     GetCustomerGSTList: any[] = [];
     GetCustomerGSTListAll: any[] = [];
     GstRegistrationDetail: any[] = [];
+    InvoiceSummaryList: InvoiceSummaryModel[] = [];
+    PostedTaxInvoiceCount: number = 0;
     isCalculate: boolean = false;
     constructor(private appService: AppService,
         private modalService: NgbModal,
@@ -45,6 +47,7 @@ export class CreditmemoComponent implements OnInit {
     private initializeForm(): void {
         this.publicVariable.dataForm = this.fb.group({
             headerid: [''],
+            invoice_no:[null],
             ImpiHeaderInvoiceType: ['Proforma Invoice', Validators.required],
             ImpiHeaderProjectCode: [null, [Validators.required]],
             Project: [{ value: '', disabled: true }, [Validators.required]],
@@ -118,7 +121,48 @@ export class CreditmemoComponent implements OnInit {
         }
         this.loadCOAMasterList();
         this.loadGetGSTGroupList();
+        this.loadInvoiceSummary();
         // this.loadgetGstRegistrationNoAll();
+    }
+
+    loadInvoiceSummary() {
+        this.publicVariable.isProcess = true;
+        const subscription = this.API.GetInvoiceSummary().pipe(
+            timeout(120000), // Timeout set to 2 minutes (120000 milliseconds)
+            finalize(() => {
+                this.publicVariable.isProcess = false;
+            })
+        ).subscribe({
+            next: (response: any) => {
+                if (response.data && Array.isArray(response.data)) {
+
+                    // Filter the data by createdBy
+                    // this.InvoiceSummaryList = response.data;
+                    // this.InvoiceSummaryList = response.data.filter((item: any) => item.createdByUser === this.publicVariable.storedEmail);
+                    // this.PostedTaxInvoiceCount = this.InvoiceSummaryList.length;
+
+
+                    this.InvoiceSummaryList = response.data;
+                    this.PostedTaxInvoiceCount = response.data.length;
+                } else {
+                    // Handle case where response data is null or not an array
+                    this.InvoiceSummaryList = [];
+                    this.PostedTaxInvoiceCount = 0;
+                    console.warn('Response data is null or not an array:', response.data);
+                }
+                this.publicVariable.isProcess = false;
+            },
+            error: (error: any) => {
+                if (error.name === 'TimeoutError') {
+                    this.toastr.error('Operation timed out after 2 minutes', error.name);
+                } else {
+                    this.toastr.error('Error loading user list', error.name);
+                }
+                this.publicVariable.isProcess = false;
+            }
+        });
+
+        this.publicVariable.Subscription.add(subscription);
     }
 
     loadCOAMasterList(): void {
@@ -192,7 +236,10 @@ export class CreditmemoComponent implements OnInit {
             console.error('Error loading project list:', error);
         }
     }
-
+    custominvoiceSearchFn(term: string, item: any) {
+        const concatenatedString = `${item.invoice_no} ${item.no}`.toLowerCase();
+        return concatenatedString.includes(term.toLowerCase());
+    }
     customSearchFn(term: string, item: any) {
         const concatenatedString = `${item.code} ${item.name}`.toLowerCase();
         return concatenatedString.includes(term.toLowerCase());
@@ -207,6 +254,10 @@ export class CreditmemoComponent implements OnInit {
         return concatenatedString.includes(term.toLowerCase());
     }
 
+    onSelectInvoice(event:any){
+        console.log(event);
+
+    }
     patchFormData(data: any): void {
 
         this.publicVariable.dataForm.patchValue({
