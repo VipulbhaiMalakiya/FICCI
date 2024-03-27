@@ -24,6 +24,8 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
     data: any;
     gstExists: boolean = false;
     panExists: boolean = false;
+    gstStateCode: any;
+    stateCode: any;
     constructor(
         private fb: FormBuilder,
         private modalService: NgbModal,
@@ -34,6 +36,27 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
         private route: ActivatedRoute
     ) {
         this.initializeForm();
+    }
+
+    onSelectStateCustomer(event: any) {
+
+        this.gstStateCode = event.gstStateCode;
+        this.stateCode = event.stateCode;
+
+        this.publicVariable.dataForm.patchValue({
+            GSTRegistrationNo: null
+        })
+
+        this.setGstValidator();
+
+    }
+
+    private setGstValidator() {
+        const gstRegistrationNoControl = this.publicVariable.dataForm.get('GSTRegistrationNo');
+        if (gstRegistrationNoControl) {
+            gstRegistrationNoControl.setValidators([gstValidator(this.gstStateCode)]);
+            gstRegistrationNoControl.updateValueAndValidity();
+        }
     }
     private initializeForm(): void {
         this.publicVariable.dataForm = this.fb.group({
@@ -47,7 +70,7 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
             stateCode: [null, [Validators.required]],
             cityCode: [null, [Validators.required]],
             postCode: ['', [Validators.required, Validators.pattern(/^\d{6}$/)]],
-            GSTRegistrationNo: ['', [gstValidator()]],
+            GSTRegistrationNo: [''],
             GSTCustomerType: [null, Validators.required],
             email: ['', [Validators.required, Validators.email, Validators.maxLength(80), this.emailValidator()]],
             PrimaryContactNo: ['', [Validators.required, Validators.pattern(/^[6-9]\d{9}$/)],],
@@ -65,6 +88,8 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
             return forbidden ? { 'forbiddenCharacters': { value: control.value } } : null;
         };
     }
+
+
 
     emailValidator(): ValidatorFn {
         return (control: AbstractControl): { [key: string]: any } | null => {
@@ -99,6 +124,8 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
     get isAccount() {
         return this.publicVariable.storedRole == 'Accounts';
     }
+
+
 
 
 
@@ -304,7 +331,6 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
 
     onCitySelectionChange() {
         const selectedId = this.publicVariable.dataForm.get('cityCode')?.value;
-        console.log(selectedId);
 
         if (selectedId) {
             this.publicVariable.dataForm.patchValue({

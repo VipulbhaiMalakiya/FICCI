@@ -90,7 +90,8 @@
                         <ng-select [items]="publicVariable.stateList" #select bindLabel="stateName"
                             bindValue="stateCode" placeholder="Select " formControlName="stateCode" [searchable]="true"
                             [searchFn]="stateSearchFn"
-                            [virtualScroll]="true" [bufferAmount]="10">
+                            [virtualScroll]="true" [bufferAmount]="10"
+                            (change)="onSelectStateCustomer($event)">
                             <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
                                 <small>{{item.stateCode}} - {{item.stateName}}</small>
                             </ng-template>
