@@ -11,6 +11,7 @@ export class InvoicesService {
     constructor(private http: HttpClient) { }
 
     private apiUrl = `${environment.apiURL}PurchaseInvoice_New`;
+    private apiApproveCreditUrl = `${environment.apiURL}ApproveCredit`; 
     private apiSalesCreditMemoUrl = `${environment.apiURL}SalesCreditMemo?email=`;
     private apiUrlMemo = `${environment.apiURL}SalesCreditMemo`;
     private getCustomerStatusNewURL = `${environment.apiURL}Customer?email=`;
@@ -172,5 +173,8 @@ export class InvoicesService {
 
     isApproverRemarks(data: any): Observable<any[]> {
         return this.http.post<any[]>(`${this.ApproverURL}`, data);
+    }
+    isSalesApproverRemarks(data: any): Observable<any[]> {
+        return this.http.post<any[]>(`${this.apiApproveCreditUrl}`, data);
     }
 }

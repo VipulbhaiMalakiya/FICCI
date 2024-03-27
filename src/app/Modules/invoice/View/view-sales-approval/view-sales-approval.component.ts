@@ -162,7 +162,7 @@ export class ViewSalesApprovalComponent {
             }
 
             const newConfig: any = {
-                headerId: this.data.headerId,
+                creditId: this.data.headerId,
                 isApproved: action,
                 loginId: this.publicVariable.storedEmail,
                 statusId: this.data.headerStatusId,
@@ -170,11 +170,11 @@ export class ViewSalesApprovalComponent {
             }
             this.publicVariable.isProcess = true;
             this.publicVariable.Subscription.add(
-                this.API.isApproverRemarks(newConfig).subscribe({
+                this.API.isSalesApproverRemarks(newConfig).subscribe({
                     next: (res: any) => {
                         if (res.status === true) {
                             this.toastr.success(res.message, 'Success');
-                            this.router.navigate(['invoice/approval']);
+                            this.router.navigate(['invoice/sales-approval']);
                             this.publicVariable.dataForm.reset();
                         } else {
                             this.toastr.error(res.message, 'Error');
