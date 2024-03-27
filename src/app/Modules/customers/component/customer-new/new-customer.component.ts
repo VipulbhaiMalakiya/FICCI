@@ -54,7 +54,7 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
             contact: ['', [Validators.required, alphanumericWithSpacesValidator(), Validators.maxLength(100)]],
             PANNo: ['', [Validators.required, panValidator()]],
             isDraft: [false],
-            CustomerRemarks: [''],
+            CustomerRemarks: ['',[Validators.required]],
 
         });
     }
@@ -402,6 +402,7 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
             'email',
             'PrimaryContactNo',
             'contact',
+            'CustomerRemarks'
             // 'PANNo',
         ].forEach((controlName) => {
             this.publicVariable.dataForm.controls[controlName].markAsTouched();

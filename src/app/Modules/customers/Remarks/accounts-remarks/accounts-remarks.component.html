@@ -158,7 +158,7 @@
             (data.customerStatus == 'PENDING WITH ACCOUNTS APPROVER' || data.customerStatus == 'PENDING WITH FINANCE APPROVER')">
                 <div class="col-md-9">
                     <div class="form-group">
-                        <label>Remarks</label>
+                        <label>Remarks <sup class="text-danger">*</sup></label>
                         <textarea class="form-control h-100" cols="3" rows="5"  formControlName="remarks" ></textarea>
                         <div *ngIf="shouldShowError('remarks', 'required')" class="text-danger">
                             This field is required

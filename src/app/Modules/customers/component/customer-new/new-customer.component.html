@@ -227,8 +227,11 @@
 
                 <div class="col-md-9">
                     <div class="form-group">
-                        <label>Remarks</label>
+                        <label>Remarks <sup class="text-danger">*</sup></label>
                         <textarea class="form-control h-100" cols="3" rows="3"  formControlName="CustomerRemarks" ></textarea>
+                        <div *ngIf="shouldShowError('CustomerRemarks', 'required')" class="text-danger">
+                            this fields required.
+                        </div>
                     </div>
                 </div>
 
