@@ -254,8 +254,42 @@ export class CreditmemoComponent implements OnInit {
     }
 
     onSelectInvoice(event:any){
-        console.log(event);
 
+        let data  = event;
+        console.log(data);
+        this.publicVariable.dataForm.patchValue({
+
+            headerid: (data && data.headerId) || (data && data.headerid),
+            // ImpiHeaderInvoiceType: data.impiHeaderInvoiceType,
+            ImpiHeaderProjectCode: data.projectCode,
+            // ImpiHeaderDepartment: data.impiHeaderProjectDepartmentName,
+
+            // ImpiHeaderDivison: data.impiHeaderProjectDivisionName,
+            // Project: data.impiHeaderProjectName,
+
+            // ImpiHeaderPanNo: data.impiHeaderPanNo,
+            // ImpiHeaderGstNo: data.impiHeaderGstNo,
+            // PINO: [''], //api missing
+            // ImpiHeaderCustomerName: data.impiHeaderCustomerName,
+            // ImpiHeaderCustomerCode: data.impiHeaderCustomerCode,
+            // ImpiHeaderCustomerAddress: data.impiHeaderCustomerAddress,
+            // ImpiHeaderCustomerState: data.impiHeaderCustomerState,
+            // ImpiHeaderCustomerCity: data.impiHeaderCustomerCity,
+            // ImpiHeaderCustomerPinCode: data.impiHeaderCustomerPinCode,
+            // ImpiHeaderCustomerGstNo: data.impiHeaderCustomerGstNo,
+            // ImpiHeaderCustomerContactPerson: data.impiHeaderCustomerContactPerson,
+            // ImpiHeaderCustomerEmailId: data.impiHeaderCustomerEmailId,
+            // ImpiHeaderCustomerPhoneNo: data.impiHeaderCustomerPhoneNo,
+            // ImpiHeaderCreatedBy: data.impiHeaderCreatedBy,
+            // ImpiHeaderTotalInvoiceAmount: data.impiHeaderTotalInvoiceAmount,
+            // ImpiHeaderPaymentTerms: data.impiHeaderPaymentTerms,
+            // ImpiHeaderRemarks: data.impiHeaderRemarks,
+            // IsDraft: data.isDraft,
+
+            // startDate: data.startDate,
+            // endDate: data.endDate,
+
+        });
     }
     patchFormData(data: any): void {
         this.publicVariable.dataForm.patchValue({
