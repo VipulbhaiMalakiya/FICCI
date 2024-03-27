@@ -317,40 +317,40 @@ export class CreditmemoComponent implements OnInit {
     invoicepatchFormData(data: any): void {
         console.log(data);
 
-        this.publicVariable.dataForm.patchValue({
+        // this.publicVariable.dataForm.patchValue({
 
-            headerid: '',
-            ImpiHeaderInvoiceType: '',
-            ImpiHeaderProjectCode: data.projectCode,
-            ImpiHeaderDepartment: data.departmentName,
-            ImpiHeaderDivison: data.divisionName,
-            Project: '',
+        //     headerid: '',
+        //     ImpiHeaderInvoiceType: '',
+        //     ImpiHeaderProjectCode: data.projectCode,
+        //     ImpiHeaderDepartment: data.departmentName,
+        //     ImpiHeaderDivison: data.divisionName,
+        //     Project: '',
 
-            // ImpiHeaderPanNo: data.impiHeaderPanNo,
-            // ImpiHeaderGstNo: data.impiHeaderGstNo,
-            // PINO: [''], //api missing
-            // ImpiHeaderCustomerName: data.impiHeaderCustomerName,
-            // ImpiHeaderCustomerCode: data.impiHeaderCustomerCode,
-            // ImpiHeaderCustomerAddress: data.impiHeaderCustomerAddress,
-            // ImpiHeaderCustomerState: data.impiHeaderCustomerState,
-            // ImpiHeaderCustomerCity: data.impiHeaderCustomerCity,
-            // ImpiHeaderCustomerPinCode: data.impiHeaderCustomerPinCode,
-            // ImpiHeaderCustomerGstNo: data.impiHeaderCustomerGstNo,
-            // ImpiHeaderCustomerContactPerson: data.impiHeaderCustomerContactPerson,
-            // ImpiHeaderCustomerEmailId: data.impiHeaderCustomerEmailId,
-            // ImpiHeaderCustomerPhoneNo: data.impiHeaderCustomerPhoneNo,
-            // ImpiHeaderCreatedBy: data.impiHeaderCreatedBy,
-            // ImpiHeaderTotalInvoiceAmount: data.impiHeaderTotalInvoiceAmount,
-            // ImpiHeaderPaymentTerms: data.impiHeaderPaymentTerms,
-            // ImpiHeaderRemarks: data.impiHeaderRemarks,
-            // IsDraft: data.isDraft,
+        //     // ImpiHeaderPanNo: data.impiHeaderPanNo,
+        //     // ImpiHeaderGstNo: data.impiHeaderGstNo,
+        //     // PINO: [''], //api missing
+        //     // ImpiHeaderCustomerName: data.impiHeaderCustomerName,
+        //     // ImpiHeaderCustomerCode: data.impiHeaderCustomerCode,
+        //     // ImpiHeaderCustomerAddress: data.impiHeaderCustomerAddress,
+        //     // ImpiHeaderCustomerState: data.impiHeaderCustomerState,
+        //     // ImpiHeaderCustomerCity: data.impiHeaderCustomerCity,
+        //     // ImpiHeaderCustomerPinCode: data.impiHeaderCustomerPinCode,
+        //     // ImpiHeaderCustomerGstNo: data.impiHeaderCustomerGstNo,
+        //     // ImpiHeaderCustomerContactPerson: data.impiHeaderCustomerContactPerson,
+        //     // ImpiHeaderCustomerEmailId: data.impiHeaderCustomerEmailId,
+        //     // ImpiHeaderCustomerPhoneNo: data.impiHeaderCustomerPhoneNo,
+        //     // ImpiHeaderCreatedBy: data.impiHeaderCreatedBy,
+        //     // ImpiHeaderTotalInvoiceAmount: data.impiHeaderTotalInvoiceAmount,
+        //     // ImpiHeaderPaymentTerms: data.impiHeaderPaymentTerms,
+        //     // ImpiHeaderRemarks: data.impiHeaderRemarks,
+        //     // IsDraft: data.isDraft,
 
-            // startDate: data.startDate,
-            // endDate: data.endDate,
+        //     // startDate: data.startDate,
+        //     // endDate: data.endDate,
 
-        });
+        // });
 
-        this.publicVariable.expenses = data.lineItem_Requests;
+        // this.publicVariable.expenses = data.getTaxInvoiceInfoLines;
     }
 
     patchFormData(data: any): void {
