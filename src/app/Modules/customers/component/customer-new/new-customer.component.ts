@@ -371,6 +371,10 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
 
     onSubmit(action: boolean): void {
 
+        if (this.publicVariable.dataForm.value.GSTCustomerType !== 2 && this.publicVariable.dataForm.value.GSTRegistrationNo == '') {
+            alert('GST number required!');
+            return
+        }
         if (this.publicVariable.dataForm.valid) {
 
             const newData = this.publicVariable.dataForm.value;
