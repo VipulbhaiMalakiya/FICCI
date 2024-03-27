@@ -26,6 +26,8 @@ export class CreditmemoComponent implements OnInit {
     gstHeaderExists: boolean = false;
     GetCustomerGSTList: any[] = [];
     GetCustomerGSTListAll: any[] = [];
+    TaxInvoicedata?: any;
+    TaxInvoiceinfo: any = {};
     GstRegistrationDetail: any[] = [];
     InvoiceSummaryList: InvoiceSummaryModel[] = [];
     PostedTaxInvoiceCount: number = 0;
@@ -37,7 +39,8 @@ export class CreditmemoComponent implements OnInit {
         private fb: FormBuilder,
         private API: InvoicesService,
         private CAPI: CustomersService,
-        private route: ActivatedRoute
+        private route: ActivatedRoute,
+        private cd: ChangeDetectorRef,
 
     ) {
         this.initializeForm();
@@ -255,17 +258,73 @@ export class CreditmemoComponent implements OnInit {
 
     onSelectInvoice(event:any){
 
-        let data  = event;
+        //let data  = event.invoice_no;
+
+        this.loadTaxInvoiceInformation(event.invoice_no)
+
+
+
+    }
+
+    loadTaxInvoiceInformation(invoice_no:any) {
+        try {
+
+            const subscription = this.API.GetTaxInvoiceInformation("SI121683").subscribe({
+
+               // const subscription = this.API.GetTaxInvoiceInformation(invoice_no).subscribe({
+                next: (response: any) => {
+                    this.TaxInvoicedata = response.data;
+                     this.filterTaxInvoiceByInvoiceNo("SI121683");
+
+                     //this.filterTaxInvoiceByInvoiceNo(invoice_no);
+                    this.cd.detectChanges();
+                },
+                error: (error) => {
+                    console.error('Error loading project list:', error);
+                    this.handleLoadingError();
+                },
+            });
+
+            this.publicVariable.Subscription.add(subscription);
+        } catch (error) {
+            console.error('Error loading project list:', error);
+            this.handleLoadingError();
+        }
+    }
+
+    filterTaxInvoiceByInvoiceNo(invoiceNo: string) {
+        if (!this.TaxInvoicedata || !Array.isArray(this.TaxInvoicedata)) {
+            console.error("TaxInvoicedata is not properly initialized or is not an array.");
+            return;
+        }
+
+        const TaxInvoicedataArray = this.TaxInvoicedata.filter((invoice: any) => invoice.invoice_no === invoiceNo);
+        if (TaxInvoicedataArray.length === 0) {
+            console.log("No invoices found for the provided invoice number.");
+            return;
+        }
+
+        this.TaxInvoiceinfo = TaxInvoicedataArray[0];
+
+
+        this.invoicepatchFormData(this.TaxInvoiceinfo);
+
+
+        this.cd.detectChanges();
+    }
+
+
+    invoicepatchFormData(data: any): void {
         console.log(data);
+
         this.publicVariable.dataForm.patchValue({
 
-            headerid: (data && data.headerId) || (data && data.headerid),
-            // ImpiHeaderInvoiceType: data.impiHeaderInvoiceType,
+            headerid: '',
+            ImpiHeaderInvoiceType: '',
             ImpiHeaderProjectCode: data.projectCode,
-            // ImpiHeaderDepartment: data.impiHeaderProjectDepartmentName,
-
-            // ImpiHeaderDivison: data.impiHeaderProjectDivisionName,
-            // Project: data.impiHeaderProjectName,
+            ImpiHeaderDepartment: data.departmentName,
+            ImpiHeaderDivison: data.divisionName,
+            Project: '',
 
             // ImpiHeaderPanNo: data.impiHeaderPanNo,
             // ImpiHeaderGstNo: data.impiHeaderGstNo,
@@ -290,9 +349,10 @@ export class CreditmemoComponent implements OnInit {
             // endDate: data.endDate,
 
         });
-        //this.publicVariable.expenses = data.lineItem_Requests;
 
+        this.publicVariable.expenses = data.lineItem_Requests;
     }
+
     patchFormData(data: any): void {
         this.publicVariable.dataForm.patchValue({
 
