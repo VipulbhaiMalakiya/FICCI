@@ -47,6 +47,8 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
             GSTRegistrationNo: null
         })
 
+
+
         this.setGstValidator();
         // this.setPANValidator();
 
@@ -61,13 +63,7 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
         }
     }
 
-    // private setPANValidator(){
-    //     const panNoControl = this.publicVariable.dataForm.get('PANNo');
-    //     if (panNoControl) {
-    //         panNoControl.setValidators([panValidator(this.stateCode)]);
-    //         panNoControl.updateValueAndValidity();
-    //     }
-    // }
+
 
     private initializeForm(): void {
         this.publicVariable.dataForm = this.fb.group({
@@ -365,7 +361,9 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
     }
 
     onSubmit(action: boolean): void {
+
         if (this.publicVariable.dataForm.valid) {
+
             const newData = this.publicVariable.dataForm.value;
             if (newData.GSTCustomerType !== 2 && newData.GSTRegistrationNo == '') {
                 alert('GST number required!');
