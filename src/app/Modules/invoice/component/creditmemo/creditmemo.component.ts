@@ -121,7 +121,6 @@ export class CreditmemoComponent implements OnInit {
         }
         this.loadCOAMasterList();
         this.loadGetGSTGroupList();
-        this.loadInvoiceSummary();
         // this.loadgetGstRegistrationNoAll();
     }
 
@@ -258,7 +257,7 @@ export class CreditmemoComponent implements OnInit {
         console.log(event);
 
     }
-    patchFormData(data: any): void {        
+    patchFormData(data: any): void {
         this.publicVariable.dataForm.patchValue({
 
             headerid: (data && data.headerId) || (data && data.headerid),
@@ -389,6 +388,8 @@ export class CreditmemoComponent implements OnInit {
             const subscription = this.CAPI.getCityList().subscribe({
                 next: (response: any) => {
                     this.publicVariable.cityList = response.data;
+                 this.loadInvoiceSummary();
+
                 },
                 error: (error) => {
                     console.error('Error loading city list:', error);
@@ -953,7 +954,7 @@ export class CreditmemoComponent implements OnInit {
                     }
                     formData.append('MemoType', 'Partial');
                     formData.append('creditMemoAmount', '10.00');
-                    
+
                     formData.append('isupdate', String(isUpdate));
                     this.publicVariable.selectedProjet = this.publicVariable.projectList.find(project => project.code == newData.ImpiHeaderProjectCode);
                     this.publicVariable.selectCustomer = this.publicVariable.GetCustomerList.find(customer => customer.custName == newData.ImpiHeaderCustomerName);
