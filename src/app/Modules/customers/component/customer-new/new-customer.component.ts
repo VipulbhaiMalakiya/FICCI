@@ -328,7 +328,7 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
     }
 
     onSubmit(action: boolean): void {
-        if (this.publicVariable.dataForm.valid && !this.panExists && !this.gstExists) {
+        if (this.publicVariable.dataForm.valid && !this.gstExists) {
 
 
             const newData = this.publicVariable.dataForm.value;
@@ -402,7 +402,7 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
             'email',
             'PrimaryContactNo',
             'contact',
-            'PANNo',
+            // 'PANNo',
         ].forEach((controlName) => {
             this.publicVariable.dataForm.controls[controlName].markAsTouched();
         });
