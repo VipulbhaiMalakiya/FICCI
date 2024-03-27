@@ -47,7 +47,7 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
             stateCode: [null, [Validators.required]],
             cityCode: [null, [Validators.required]],
             postCode: ['', [Validators.required, Validators.pattern(/^\d{6}$/)]],
-            GSTRegistrationNo: ['', ],
+            GSTRegistrationNo: ['', this.gstExists],
             GSTCustomerType: [null, Validators.required],
             email: ['', [Validators.required, Validators.email, Validators.maxLength(80), this.emailValidator()]],
             PrimaryContactNo: ['', [Validators.required, Validators.pattern(/^[6-9]\d{9}$/)],],
