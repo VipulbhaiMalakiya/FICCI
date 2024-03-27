@@ -47,8 +47,6 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
             GSTRegistrationNo: null
         })
 
-
-
         this.setGstValidator();
         // this.setPANValidator();
 
@@ -56,12 +54,19 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
     }
 
     private setGstValidator() {
-        const gstRegistrationNoControl = this.publicVariable.dataForm.get('GSTRegistrationNo');
+        const gstRegistrationNoControl = this.publicVariable.dataForm?.get('GSTRegistrationNo');
         if (gstRegistrationNoControl) {
-            gstRegistrationNoControl.setValidators([gstValidator(this.gstStateCode)]);
-            gstRegistrationNoControl.updateValueAndValidity();
+            const gstCustomerTypeControl = this.publicVariable.dataForm?.get('GSTCustomerType');
+            if (gstCustomerTypeControl?.value == 2) {
+                gstRegistrationNoControl.clearValidators(); // Remove all validators
+                gstRegistrationNoControl.updateValueAndValidity();
+            } else {
+                gstRegistrationNoControl.setValidators([Validators.required, gstValidator(this.gstStateCode)]);
+                gstRegistrationNoControl.updateValueAndValidity();
+            }
         }
     }
+
 
 
 
