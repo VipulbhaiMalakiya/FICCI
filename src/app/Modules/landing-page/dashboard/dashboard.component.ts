@@ -296,7 +296,7 @@ export class DashboardComponent {
         }
     }
 
-    loadSalesCreditNote():void{
+    loadSalesCreditNote(): void {
         try {
             // Observable for the first API call
             const purchaseInvoiceObservable = this.IAPI.getSalesCreditMemo().pipe(
@@ -332,7 +332,7 @@ export class DashboardComponent {
                     // Concatenate approveResponse.data with dashboardData if it's iterable
                     if (approveResponse.data && Array.isArray(approveResponse.data)) {
                         this.dashboardData = [...this.dashboardData, ...approveResponse.data];
-                        console.log( this.dashboardData);
+                        console.log(this.dashboardData);
 
                     } else {
                         console.warn('Approve response data is null or not iterable');
@@ -377,7 +377,7 @@ export class DashboardComponent {
         };
 
         // Filter data for each customer status
-        const draftData = data.filter(item => item.headerStatus === 'DRAFT' );
+        const draftData = data.filter(item => item.headerStatus === 'DRAFT');
         counts['DRAFT'] = draftData.length;
         const pendingData = data.filter(item =>
             item.impiHeaderCreatedBy === this.publicVariable.storedEmail &&
@@ -389,7 +389,7 @@ export class DashboardComponent {
                 || item.headerStatus === 'CANCEL BY EMPLOYEE'));
         counts['PENDING WITH TL APPROVER'] = pendingData.length;
 
-        const forapproval = data.filter(item =>  (item.headerStatus === 'PENDING WITH TL APPROVER'
+        const forapproval = data.filter(item => (item.headerStatus === 'PENDING WITH TL APPROVER'
             || item.headerStatus === 'PENDING WITH CH APPROVER'
             || item.headerStatus === 'PENDING WITH ACCOUNTS APPROVER'
             || item.headerStatus === 'PENDING WITH FINANCE APPROVER'
@@ -400,13 +400,13 @@ export class DashboardComponent {
         ));
         counts['FOR APPROVAL'] = forapproval.length;
 
-        const approvedData = data.filter(item =>  (item.headerStatus === 'APPROVED BY ACCOUNTS APPROVER'
+        const approvedData = data.filter(item => (item.headerStatus === 'APPROVED BY ACCOUNTS APPROVER'
             || item.headerStatus === 'MAIL SENT BY FINANCE TO CUSTOMER'
             || item.headerStatus === 'APPROVED BY TL'
             || item.headerStatus === 'MAIL SENT BY ACCOUNT TO CUSTOMER' || item.headerStatus === 'APPROVED BY FINANCE'));
         counts['PENDING WITH FINANCE APPROVER'] = approvedData.length;
 
-        const rejectedData = data.filter(item =>  (item.headerStatus === 'REJECTED BY TL APPROVER'
+        const rejectedData = data.filter(item => (item.headerStatus === 'REJECTED BY TL APPROVER'
             || item.headerStatus === 'REJECTED BY CH APPROVER'
             || item.headerStatus === 'REJECTED BY ACCOUNTS APPROVER'
             || item.headerStatus === 'REJECTED BY FINANCE APPROVER'
@@ -418,7 +418,7 @@ export class DashboardComponent {
         counts['REJECTED BY CH APPROVER'] = rejectedData.length;
 
         const cancelData = data.filter(item =>
-            item.headerStatus === 'CANCELLATION APPROVED BY FINANCE' || item.headerStatus == 'CANCELLATION APPROVED BY TL' );
+            item.headerStatus === 'CANCELLATION APPROVED BY FINANCE' || item.headerStatus == 'CANCELLATION APPROVED BY TL');
         counts['Cancelled'] = cancelData.length;
 
         const ReversalData = data.filter(item =>
@@ -623,7 +623,7 @@ export class DashboardComponent {
             case 'DRAFT':
                 filteredData = this.dashboardData.filter((item: any) =>
                     // item.createdBy === this.publicVariable.storedEmail &&
-                    item.headerStatus === 'DRAFT' );
+                    item.headerStatus === 'DRAFT');
                 break;
             case 'PENDING WITH APPROVER':
                 filteredData = this.dashboardData.filter((item: any) =>
@@ -637,33 +637,33 @@ export class DashboardComponent {
                 break;
             case 'APPROVED BY ACCOUNTS APPROVER':
                 filteredData = this.dashboardData.filter((item: any) =>
-                  (
-                        item.headerStatus === 'APPROVED BY ACCOUNTS APPROVER'
-                        || item.headerStatus === 'MAIL SENT BY ACCOUNT TO CUSTOMER'
-                        || item.headerStatus === 'APPROVED BY FINANCE'
-                        || item.headerStatus === 'APPROVED BY TL'
-                        || item.headerStatus === 'MAIL SENT BY FINANCE TO CUSTOMER'));
+                (
+                    item.headerStatus === 'APPROVED BY ACCOUNTS APPROVER'
+                    || item.headerStatus === 'MAIL SENT BY ACCOUNT TO CUSTOMER'
+                    || item.headerStatus === 'APPROVED BY FINANCE'
+                    || item.headerStatus === 'APPROVED BY TL'
+                    || item.headerStatus === 'MAIL SENT BY FINANCE TO CUSTOMER'));
                 break;
             case 'REJECTED BY CH APPROVER':
                 filteredData = this.dashboardData.filter((item: any) =>
-                    // item.createdBy === this.publicVariable.storedEmail &&
-                    // item.impiHeaderInvoiceType == this.invoiceType &&
-                    (item.headerStatus === 'REJECTED BY TL APPROVER' ||
-                        item.headerStatus === 'REJECTED BY CH APPROVER' ||
-                        item.headerStatus === 'REJECTED BY ACCOUNTS APPROVER' ||
-                        item.headerStatus === 'REJECTED BY FINANCE APPROVER'
-                        || item.headerStatus === 'CANCELLATION REJECTED BY TL'
-                        || item.headerStatus === 'CANCELLATION REJECTED BY FINANCE'
+                // item.createdBy === this.publicVariable.storedEmail &&
+                // item.impiHeaderInvoiceType == this.invoiceType &&
+                (item.headerStatus === 'REJECTED BY TL APPROVER' ||
+                    item.headerStatus === 'REJECTED BY CH APPROVER' ||
+                    item.headerStatus === 'REJECTED BY ACCOUNTS APPROVER' ||
+                    item.headerStatus === 'REJECTED BY FINANCE APPROVER'
+                    || item.headerStatus === 'CANCELLATION REJECTED BY TL'
+                    || item.headerStatus === 'CANCELLATION REJECTED BY FINANCE'
 
-                    ));
+                ));
                 break;
             case 'Cancelled':
                 filteredData = this.dashboardData.filter((item: any) =>
-                    // item.createdBy === this.publicVariable.storedEmail &&
-                    // item.impiHeaderInvoiceType == this.invoiceType &&
-                    (
-                        item.headerStatus === 'CANCELLATION APPROVED BY FINANCE'
-                        || item.headerStatus == 'CANCELLATION APPROVED BY TL'));
+                // item.createdBy === this.publicVariable.storedEmail &&
+                // item.impiHeaderInvoiceType == this.invoiceType &&
+                (
+                    item.headerStatus === 'CANCELLATION APPROVED BY FINANCE'
+                    || item.headerStatus == 'CANCELLATION APPROVED BY TL'));
                 break;
             case 'Reversal':
                 filteredData = this.dashboardData.filter((item: any) =>
@@ -673,16 +673,16 @@ export class DashboardComponent {
                 break;
             case 'FOR APPROVAL':
                 filteredData = this.dashboardData.filter((item: any) =>
-                    // item.impiHeaderInvoiceType == this.invoiceType &&
-                     (
-                        item.headerStatus === 'PENDING WITH TL APPROVER' ||
-                        item.headerStatus === 'PENDING WITH CH APPROVER' ||
-                        item.headerStatus === 'PENDING WITH ACCOUNTS APPROVER' ||
-                        item.headerStatus === 'PENDING WITH FINANCE APPROVER'
-                        || item.headerStatus === 'CANCEL BY EMPLOYEE'
+                // item.impiHeaderInvoiceType == this.invoiceType &&
+                (
+                    item.headerStatus === 'PENDING WITH TL APPROVER' ||
+                    item.headerStatus === 'PENDING WITH CH APPROVER' ||
+                    item.headerStatus === 'PENDING WITH ACCOUNTS APPROVER' ||
+                    item.headerStatus === 'PENDING WITH FINANCE APPROVER'
+                    || item.headerStatus === 'CANCEL BY EMPLOYEE'
 
 
-                    ));
+                ));
                 break;
             case 'ALL':
                 filteredData = this.dashboardData;
@@ -799,18 +799,23 @@ export class DashboardComponent {
 
     onViewPI(data: invoiceStatusModule): void {
         if (data.headerId) {
-            this.router.navigate(['invoice/status/view', data.headerId], { state: { data: data } });
+            if (this.storedRole == 'Employee') {
+                this.router.navigate(['invoice/status/view', data.headerId], { state: { data: data } });
+            }
+            else {
+                this.router.navigate(['invoice/approval/view', data.headerId], { state: { data: data } });
+            }
         } else {
             console.error('ID is undefined or null');
         }
     }
 
-    onViewSales(data: invoiceStatusModule){
+    onViewSales(data: invoiceStatusModule) {
         if (data.headerId) {
-            if(this.storedRole == 'Employee'){
+            if (this.storedRole == 'Employee') {
                 this.router.navigate(['invoice/credit-memo-status/view', data.headerId], { state: { data: data } });
             }
-            else{
+            else {
                 this.router.navigate(['invoice/sales-approval/view', data.headerId], { state: { data: data } });
             }
         } else {
