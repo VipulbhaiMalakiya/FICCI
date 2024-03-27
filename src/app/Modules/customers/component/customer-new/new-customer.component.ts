@@ -23,7 +23,7 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
     customerId?: number;
     data: any;
     gstExists: boolean = false;
-    panExists :boolean = false;
+    panExists: boolean = false;
     constructor(
         private fb: FormBuilder,
         private modalService: NgbModal,
@@ -40,9 +40,9 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
             customerId: [''],
             customerNo: ['', [Validators.maxLength(20)]],
             name: ['', [Validators.required, alphanumericWithSpacesValidator(), Validators.maxLength(100)]],
-            name2: ['',[alphanumericWithSpacesValidator(), Validators.maxLength(100)]],
+            name2: ['', [alphanumericWithSpacesValidator(), Validators.maxLength(100)]],
             address: ['', [Validators.required, this.addressValidator(), Validators.maxLength(100)]],
-            address2: ['',[this.addressValidator(), Validators.maxLength(100)]],
+            address2: ['', [this.addressValidator(), Validators.maxLength(100)]],
             countryCode: [null, [Validators.required]],
             stateCode: [null, [Validators.required]],
             cityCode: [null, [Validators.required]],
@@ -54,31 +54,31 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
             contact: ['', [Validators.required, alphanumericWithSpacesValidator(), Validators.maxLength(100)]],
             PANNo: ['', [Validators.required, panValidator()]],
             isDraft: [false],
-            CustomerRemarks: ['',[Validators.required]],
+            CustomerRemarks: ['', [Validators.required]],
 
         });
     }
 
     addressValidator(): ValidatorFn {
         return (control: AbstractControl): { [key: string]: any } | null => {
-          const forbidden = /[^a-zA-Z0-9\s\-]/.test(control.value);
-          return forbidden ? { 'forbiddenCharacters': { value: control.value } } : null;
+            const forbidden = /[^a-zA-Z0-9\s\-]/.test(control.value);
+            return forbidden ? { 'forbiddenCharacters': { value: control.value } } : null;
         };
-      }
+    }
 
-      emailValidator(): ValidatorFn {
+    emailValidator(): ValidatorFn {
         return (control: AbstractControl): { [key: string]: any } | null => {
-          const email = control.value;
-          if (email && email.length >= 2 && email.length <= 80) {
-            const atIndex = email.indexOf('@');
-            const dotIndex = email.indexOf('.', atIndex);
-            if (atIndex > 1 && dotIndex !== -1 && dotIndex - atIndex <= 20 && dotIndex - atIndex >= 3) {
-              return null; // Valid email format
+            const email = control.value;
+            if (email && email.length >= 2 && email.length <= 80) {
+                const atIndex = email.indexOf('@');
+                const dotIndex = email.indexOf('.', atIndex);
+                if (atIndex > 1 && dotIndex !== -1 && dotIndex - atIndex <= 20 && dotIndex - atIndex >= 3) {
+                    return null; // Valid email format
+                }
             }
-          }
-          return { 'invalidEmailFormat': { value: control.value } };
+            return { 'invalidEmailFormat': { value: control.value } };
         };
-      }
+    }
 
 
     ngOnInit(): void {
