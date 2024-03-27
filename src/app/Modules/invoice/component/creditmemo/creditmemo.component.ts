@@ -267,6 +267,7 @@ export class CreditmemoComponent implements OnInit {
     }
 
     loadTaxInvoiceInformation(invoice_no:any) {
+        this.publicVariable.isProcess = true;
         try {
 
             const subscription = this.API.GetTaxInvoiceInformation("SI121683").subscribe({
@@ -275,7 +276,7 @@ export class CreditmemoComponent implements OnInit {
                 next: (response: any) => {
                     this.TaxInvoicedata = response.data;
                      this.filterTaxInvoiceByInvoiceNo("SI121683");
-
+                     this.publicVariable.isProcess = false;
                      //this.filterTaxInvoiceByInvoiceNo(invoice_no);
                     this.cd.detectChanges();
                 },
@@ -317,14 +318,14 @@ export class CreditmemoComponent implements OnInit {
     invoicepatchFormData(data: any): void {
         console.log(data);
 
-        // this.publicVariable.dataForm.patchValue({
+        this.publicVariable.dataForm.patchValue({
 
-        //     headerid: '',
-        //     ImpiHeaderInvoiceType: '',
-        //     ImpiHeaderProjectCode: data.projectCode,
-        //     ImpiHeaderDepartment: data.departmentName,
-        //     ImpiHeaderDivison: data.divisionName,
-        //     Project: '',
+            headerid: '',
+            ImpiHeaderInvoiceType: '',
+            ImpiHeaderProjectCode: data.projectCode,
+            ImpiHeaderDepartment: data.departmentName,
+            ImpiHeaderDivison: data.divisionName,
+            Project: '',
 
             // ImpiHeaderPanNo: data.impiHeaderPanNo,
             // ImpiHeaderGstNo: data.impiHeaderGstNo,
@@ -348,7 +349,7 @@ export class CreditmemoComponent implements OnInit {
             // startDate: data.startDate,
             // endDate: data.endDate,
 
-        // });
+        });
 
         // this.publicVariable.expenses = data.getTaxInvoiceInfoLines;
     }
