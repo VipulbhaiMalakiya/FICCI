@@ -52,20 +52,7 @@
                                     <h3><a routerLink="dashboard" routerLinkActive="active"><img
                                                 src="../assets/images/dashboard-icon.png" alt=""> Dashboard</a></h3>
                                 </div>
-                                <div class="left-men" routerLinkActive="active">
-                                    <h3><img src="../assets/images/customer-icon.png" alt=""> Customer</h3>
-                                    <a routerLink="/customer/new" class="menu-list-title" routerLinkActive="active"
-                                        *ngIf="!isAdmin && !isAccount">New Customer</a>
-                                    <a routerLink="/customer/status" class="menu-list-title" routerLinkActive="active"
-                                        *ngIf="!isAccount">Customer Status</a>
-                                    <!-- <a routerLink="/customer/approval" class="menu-list-title"
-                                        routerLinkActive="active"
-                                        *ngIf="isEmployee" >Approval
-                                        Inbox</a> -->
-                                    <a routerLink="/customer/accounts" class="menu-list-title" routerLinkActive="active"
-                                        *ngIf="isAccount || isFinance">Accounts
-                                        Inbox</a>
-                                </div>
+
 
                                 <div class="left-men" routerLinkActive="active" *ngIf="!isAccount">
                                     <h3><img src="../assets/images/invoice-icon.png" alt=""> Customer Invoice</h3>
@@ -88,6 +75,21 @@
                                         <a routerLink="/invoice/sales-approval" class="menu-list-title"
                                         routerLinkActive="active" *ngIf=" isApprover ">Sales Approval</a>
 
+                                </div>
+
+                                <div class="left-men" routerLinkActive="active">
+                                    <h3><img src="../assets/images/customer-icon.png" alt=""> Customer</h3>
+                                    <a routerLink="/customer/new" class="menu-list-title" routerLinkActive="active"
+                                        *ngIf="!isAdmin && !isAccount">New Customer</a>
+                                    <a routerLink="/customer/status" class="menu-list-title" routerLinkActive="active"
+                                        *ngIf="!isAccount">Customer Status</a>
+                                    <!-- <a routerLink="/customer/approval" class="menu-list-title"
+                                        routerLinkActive="active"
+                                        *ngIf="isEmployee" >Approval
+                                        Inbox</a> -->
+                                    <a routerLink="/customer/accounts" class="menu-list-title" routerLinkActive="active"
+                                        *ngIf="isAccount || isFinance">Accounts
+                                        Inbox</a>
                                 </div>
 
                                 <div class="left-men" routerLinkActive="active" *ngIf="isAdmin">
