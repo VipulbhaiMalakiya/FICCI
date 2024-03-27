@@ -188,7 +188,7 @@
 
                         <ng-select [items]="publicVariable.customerTypeList" bindLabel="gstTypeName"
                             bindValue="gstTypeId" placeholder="Select" formControlName="GSTCustomerType"
-                            (change)="ongstTypeChange()"
+                            (change)="ongstTypeChange($event)"
                             maxlength="20">
                         </ng-select>
                         <div *ngIf="shouldShowError('GSTCustomerType', 'required')" class="text-danger">

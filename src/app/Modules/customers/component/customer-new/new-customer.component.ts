@@ -38,34 +38,7 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
         this.initializeForm();
     }
 
-    onSelectStateCustomer(event: any) {
 
-        this.gstStateCode = event.gstStateCode;
-        this.stateCode = event.stateCode;
-
-        this.publicVariable.dataForm.patchValue({
-            GSTRegistrationNo: null
-        })
-
-        this.setGstValidator();
-        // this.setPANValidator();
-
-
-    }
-
-    private setGstValidator() {
-        const gstRegistrationNoControl = this.publicVariable.dataForm?.get('GSTRegistrationNo');
-        if (gstRegistrationNoControl) {
-            const gstCustomerTypeControl = this.publicVariable.dataForm?.get('GSTCustomerType');
-            if (gstCustomerTypeControl?.value == 2) {
-                gstRegistrationNoControl.clearValidators(); // Remove all validators
-                gstRegistrationNoControl.updateValueAndValidity();
-            } else {
-                gstRegistrationNoControl.setValidators([Validators.required, gstValidator(this.gstStateCode)]);
-                gstRegistrationNoControl.updateValueAndValidity();
-            }
-        }
-    }
 
 
 
@@ -336,10 +309,41 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
         return concatenatedString.includes(term.toLowerCase());
     }
 
-    ongstTypeChange() {
+    ongstTypeChange(event:any) {
         // Clear the GST registration number when the dropdown selection changes
         this.publicVariable.dataForm?.get('GSTRegistrationNo')?.setValue('');
+        this.setGstValidator();
+
     }
+
+    onSelectStateCustomer(event: any) {
+
+        this.gstStateCode = event.gstStateCode;
+        this.stateCode = event.stateCode;
+
+        this.publicVariable.dataForm.patchValue({
+            GSTRegistrationNo: null
+        })
+
+        // this.setPANValidator();
+
+
+    }
+
+    private setGstValidator() {
+        const gstRegistrationNoControl = this.publicVariable.dataForm?.get('GSTRegistrationNo');
+        if (gstRegistrationNoControl) {
+            const gstCustomerTypeControl = this.publicVariable.dataForm?.get('GSTCustomerType');
+            if (gstCustomerTypeControl?.value == 2) {
+                gstRegistrationNoControl.clearValidators(); // Remove all validators
+                gstRegistrationNoControl.setValue(''); // Clear the value
+            } else {
+                gstRegistrationNoControl.setValidators([Validators.required, gstValidator(this.gstStateCode)]);
+            }
+            gstRegistrationNoControl.updateValueAndValidity();
+        }
+    }
+    
 
     onCitySelectionChange() {
         const selectedId = this.publicVariable.dataForm.get('cityCode')?.value;
