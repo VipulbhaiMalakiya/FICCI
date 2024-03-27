@@ -290,6 +290,8 @@ export class CreditmemoComponent implements OnInit {
             // endDate: data.endDate,
 
         });
+        //this.publicVariable.expenses = data.lineItem_Requests;
+
     }
     patchFormData(data: any): void {
         this.publicVariable.dataForm.patchValue({
