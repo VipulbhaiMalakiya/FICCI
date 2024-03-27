@@ -3,11 +3,11 @@ import { ActivatedRoute, CustomersService, FormBuilder, InvoicesService, Router,
 import { FileService } from '../../service/FileService';
 
 @Component({
-  selector: 'app-pi-invoice-view',
-  templateUrl: './pi-invoice-view.component.html',
-  styleUrls: ['./pi-invoice-view.component.css']
+  selector: 'app-pi-invoice-view-new',
+  templateUrl: './pi-invoice-view-new.component.html',
+  styleUrls: ['./pi-invoice-view-new.component.css']
 })
-export class PiInvoiceViewComponent {
+export class PiInvoiceViewNewComponent {
 
     invoice_no?: number;
     data: any;
@@ -40,7 +40,6 @@ export class PiInvoiceViewComponent {
             this.invoice_no = +params['id'];
         });
         this.data = history.state.data;
-        console.log(this.data);
 
         this.loadTaxInvoiceInformation();
     }
@@ -51,12 +50,12 @@ export class PiInvoiceViewComponent {
 
             // const subscription = this.API.GetTaxInvoiceInformation("SI121683").subscribe({
 
-                const subscription = this.API.GetPITaxInvoiceInformation(this.data.invoice_no).subscribe({
+                const subscription = this.API.GetPITaxInvoiceInformation(this.data.no).subscribe({
                 next: (response: any) => {
                     this.TaxInvoicedata = response.data;
                     // this.filterTaxInvoiceByInvoiceNo("SI121683");
 
-                    this.filterTaxInvoiceByInvoiceNo(this.data.invoice_no);
+                    this.filterTaxInvoiceByInvoiceNo(this.data.no);
                     this.loadTaxInvoiceAttachment(this.data.no)
                     this.cd.detectChanges();
                 },

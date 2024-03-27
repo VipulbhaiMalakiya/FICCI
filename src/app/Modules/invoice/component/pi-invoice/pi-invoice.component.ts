@@ -88,8 +88,8 @@ export class PiInvoiceComponent {
     }
 
     InvoicedView(data: any): void {
-        if (data.invoice_no) {
-            this.router.navigate(['invoice/pi-invoice/view', data.invoice_no], { state: { data: data } });
+        if (data.no) {
+            this.router.navigate(['invoice/pi-invoice/view', data.no], { state: { data: data } });
         } else {
             console.error('ID is undefined or null');
         }

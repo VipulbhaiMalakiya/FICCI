@@ -29,6 +29,7 @@ import { CreditMemoStatusComponent } from './component/credit-memo-status/credit
 import { CreditMemoViewComponent } from './View/credit-memo-view/credit-memo-view.component';
 import { ApprovalSalesInboxComponent } from './component/approval-sales-inbox/approval-sales-inbox.component';
 import { ViewSalesApprovalComponent } from './View/view-sales-approval/view-sales-approval.component';
+import { PiInvoiceViewNewComponent } from './View/pi-invoice-view-new/pi-invoice-view-new.component';
 
 
 
@@ -55,7 +56,8 @@ import { ViewSalesApprovalComponent } from './View/view-sales-approval/view-sale
         CreditMemoStatusComponent,
         CreditMemoViewComponent,
         ApprovalSalesInboxComponent,
-        ViewSalesApprovalComponent
+        ViewSalesApprovalComponent,
+        PiInvoiceViewNewComponent
     ],
     imports: [
         CommonModule,
