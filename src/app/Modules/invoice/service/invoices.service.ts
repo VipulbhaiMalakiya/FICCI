@@ -11,7 +11,7 @@ export class InvoicesService {
     constructor(private http: HttpClient) { }
 
     private apiUrl = `${environment.apiURL}PurchaseInvoice_New`;
-    private apiApproveCreditUrl = `${environment.apiURL}ApproveCredit`; 
+    private apiApproveCreditUrl = `${environment.apiURL}ApproveCredit`;
     private apiSalesCreditMemoUrl = `${environment.apiURL}SalesCreditMemo?email=`;
     private apiUrlMemo = `${environment.apiURL}SalesCreditMemo`;
     private getCustomerStatusNewURL = `${environment.apiURL}Customer?email=`;
@@ -20,7 +20,7 @@ export class InvoicesService {
     private PurchaseInvoice_New = `${environment.apiURL}PurchaseInvoice_New?email=`;
     private ApproveInvoiceURL = `${environment.apiURL}ApproveInvoice?email=`;
     private ApproveSalesInvoiceURL = `${environment.apiURL}ApproveCredit?email=`;
-    
+
     private ApproverURL = `${environment.apiURL}ApproveInvoice`;
     private ApproverAccountURL = `${environment.apiURL}Account/GetInvoice?loginid=`;
     private GetCustomerAPI = `${environment.apiURL}DropDown/GetCustomer`;
@@ -144,7 +144,7 @@ export class InvoicesService {
     }
 
     getPurchaseInvoice_New(): Observable<any[]> {
-        const url = `${this.PurchaseInvoice_New}${localStorage.getItem('userEmail') ?? ''}`;
+        const url = `${this.PurchaseInvoice_New}${localStorage.getItem('userEmail') ?? ''}&departmentName=${localStorage.getItem('department') ?? ''}`;
         return this.http.get<any[]>(url);
     }
 
