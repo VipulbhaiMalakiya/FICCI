@@ -183,9 +183,9 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
                         // You can update the UI to indicate that the PAN number is valid
                     } else {
                         // PAN number already exists
-                        alert('PAN number already exists');
+                        alert('Customers with the same PAN Number and different GST Number already exist');
                         this.panExists = true;
-                        return
+                        // return
                         // You can update the UI to indicate that the PAN number already exists
                     }
                 },
