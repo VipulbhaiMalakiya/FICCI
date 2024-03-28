@@ -391,13 +391,13 @@ export class CreditmemoComponent implements OnInit {
             ImpiHeaderProjectCode: data.impiHeaderProjectCode,
             ImpiHeaderDepartment: data.impiHeaderProjectDepartmentName,
             MemoType:data.memoType,
-            invoice_no :data.headerPiNo,
+            invoice_no :data.impiHeaderPiNo,
             ImpiHeaderDivison: data.impiHeaderProjectDivisionName,
             Project: data.impiHeaderProjectName,
             creditMemoAmount:data.memoAmount,
             ImpiHeaderPanNo: data.impiHeaderPanNo,
             ImpiHeaderGstNo: data.impiHeaderGstNo,
-            PINO: [''], //api missing
+            PINO: data.impiHeaderPiNo, //api missing
             ImpiHeaderCustomerName: data.impiHeaderCustomerName,
             ImpiHeaderCustomerCode: data.impiHeaderCustomerCode,
             ImpiHeaderCustomerAddress: data.impiHeaderCustomerAddress,
