@@ -390,10 +390,11 @@ export class CreditmemoComponent implements OnInit {
             ImpiHeaderInvoiceType: data.impiHeaderInvoiceType,
             ImpiHeaderProjectCode: data.impiHeaderProjectCode,
             ImpiHeaderDepartment: data.impiHeaderProjectDepartmentName,
-
+            MemoType:data.memoType,
+            invoice_no :data.headerPiNo,
             ImpiHeaderDivison: data.impiHeaderProjectDivisionName,
             Project: data.impiHeaderProjectName,
-
+            creditMemoAmount:data.memoAmount,
             ImpiHeaderPanNo: data.impiHeaderPanNo,
             ImpiHeaderGstNo: data.impiHeaderGstNo,
             PINO: [''], //api missing
@@ -1059,6 +1060,9 @@ export class CreditmemoComponent implements OnInit {
 
     onSubmit(Action: string): void {
 
+
+
+        
         if (Action !== 'Calculate' && !this.isCalculate) {
             alert("Please Calculate the tax details");
             return
@@ -1079,7 +1083,7 @@ export class CreditmemoComponent implements OnInit {
                     if (isUpdate) {
                         formData.append('headerid', isUpdate ? newData.headerid : undefined);
                     }
-                    formData.append('MemoType', 'Partial');
+                    formData.append('MemoType',newData.MemoType);
                     formData.append('creditMemoAmount', newData.creditMemoAmount);
 
                     formData.append('isupdate', String(isUpdate));
