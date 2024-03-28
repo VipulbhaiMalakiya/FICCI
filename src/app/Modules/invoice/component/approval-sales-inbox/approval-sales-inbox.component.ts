@@ -9,6 +9,7 @@ import { invoiceStatusModule } from '../../interface/invoice';
 import { EmailComponent } from '../../send-email/email/email.component';
 import { InvoicesService } from '../../service/invoices.service';
 import { UpdateEmailComponent } from '../../update-email/update-email.component';
+import { CreditSalesEmailComponent } from '../../send-email/credit-sales-email/credit-sales-email.component';
 
 @Component({
   selector: 'app-approval-sales-inbox',
@@ -167,8 +168,8 @@ export class ApprovalSalesInboxComponent implements OnInit {
     sendEmail(dataItem: any) {
         this.publicVariable.isProcess = true;
 
-        const modalRef = this.modalService.open(EmailComponent, { size: "xl" });
-        var componentInstance = modalRef.componentInstance as EmailComponent;
+        const modalRef = this.modalService.open(CreditSalesEmailComponent, { size: "xl" });
+        var componentInstance = modalRef.componentInstance as CreditSalesEmailComponent;
         componentInstance.isEmail = dataItem;
         modalRef.result.then((data: any) => {
             if (data) {
@@ -179,7 +180,7 @@ export class ApprovalSalesInboxComponent implements OnInit {
                 formData.append('MailBody', newData.body);
                 formData.append('LoginId', this.publicVariable.storedEmail);
                 formData.append('MailCC', dataItem.impiHeaderCreatedBy );
-                formData.append('ResourceType', dataItem.impiHeaderInvoiceType );
+                formData.append('ResourceType', '1');
                 formData.append('ResourceId', dataItem.headerId );
 
                 newData.attachment.forEach((file: any) => {
