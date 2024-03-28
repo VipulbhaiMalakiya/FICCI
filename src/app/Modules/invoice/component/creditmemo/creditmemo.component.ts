@@ -400,7 +400,7 @@ export class CreditmemoComponent implements OnInit {
             creditMemoAmount:data.memoAmount,
             ImpiHeaderPanNo: data.impiHeaderPanNo,
             ImpiHeaderGstNo: data.impiHeaderGstNo,
-            PINO: data.impiHeaderPiNo, //api missing
+            PINO: data.headerPiNo, //api missing
             ImpiHeaderCustomerName: data.impiHeaderCustomerName,
             ImpiHeaderCustomerCode: data.impiHeaderCustomerCode,
             ImpiHeaderCustomerAddress: data.impiHeaderCustomerAddress,
@@ -1087,7 +1087,7 @@ export class CreditmemoComponent implements OnInit {
                         formData.append('headerid', isUpdate ? newData.headerid : undefined);
                     }
                     formData.append('MemoType',newData.MemoType);
-                    formData.append('creditMemoAmount', newData.creditMemoAmount);
+                    formData.append('memoAmount', newData.creditMemoAmount);
 
                     formData.append('isupdate', String(isUpdate));
                     this.publicVariable.selectedProjet = this.publicVariable.projectList.find(project => project.code == newData.ImpiHeaderProjectCode);
@@ -1119,7 +1119,7 @@ export class CreditmemoComponent implements OnInit {
                     formData.append('LoginId', this.publicVariable.storedEmail);
                     // Check if ImpiHeaderInvoiceType is Tax Invoice, then include PINO
                     if (newData.ImpiHeaderInvoiceType === 'Tax Invoice') {
-                        formData.append('ImpiHeaderPiNo', newData.invoice_no);
+                        formData.append('headerPiNo', newData.invoice_no);
                     }
                     formData.append('ImpiHeaderTlApprover', this.publicVariable.selectedProjet.tlApprover);
                     formData.append('ImpiHeaderClusterApprover', this.publicVariable.selectedProjet.chApprover);
