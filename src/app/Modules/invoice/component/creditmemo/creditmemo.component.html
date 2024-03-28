@@ -35,7 +35,7 @@
 
                 <div class="col-md-4 col-sm-6">
                     <div class="form-group">
-                        <label for="MemoType">Memo Type</label>
+                        <label for="MemoType">Memo Type <sup class="text-danger">*</sup></label>
                         <select id="MemoType" id="MemoType" formControlName="MemoType" class="form-select">
                             <option value="">Select Memo type</option>
                             <option value="partial">Partial</option>
@@ -46,7 +46,7 @@
 
                 <div class="col-md-4 col-sm-6">
                     <div class="form-group">
-                        <label for="projectCode">Project Code <sup class="text-danger">*</sup></label>
+                        <label for="projectCode">Project Code </label>
                         <!-- <ng-select [items]="publicVariable.projectList" #select bindLabel="code" bindValue="code"
                             placeholder="Select in Project Code" formControlName="ImpiHeaderProjectCode"
                             (change)="onSelectProject()" [searchable]="true" [searchFn]="customSearchFn"
@@ -67,7 +67,7 @@
 
                 <div class="col-md-4 col-sm-6">
                     <div class="form-group">
-                        <label for="Project">Project Name <sup class="text-danger">*</sup></label>
+                        <label for="Project">Project Name </label>
                         <input type="text" id="Project" placeholder="Project" formControlName="Project"
                             class="form-control" />
                         <div *ngIf="shouldShowError('Project','required')" class="text-danger">This field
@@ -78,7 +78,7 @@
                 </div>
                 <div class="col-md-4 col-sm-6">
                     <div class="form-group">
-                        <label for="department">Department <sup class="text-danger">*</sup></label>
+                        <label for="department">Department </label>
                         <input type="text" id="department" placeholder="Department"
                             formControlName="ImpiHeaderDepartment" class="form-control" />
                         <div *ngIf="shouldShowError('ImpiHeaderDepartment','required')" class="text-danger">This field
@@ -90,7 +90,7 @@
 
                 <div class="col-md-4 col-sm-6">
                     <div class="form-group">
-                        <label for="division">Division <sup class="text-danger">*</sup></label>
+                        <label for="division">Division </label>
                         <input type="text" id="division" placeholder="Division" formControlName="ImpiHeaderDivison"
                             class="form-control" />
                         <div *ngIf="shouldShowError('ImpiHeaderDivison','required')" class="text-danger">This field is
@@ -102,7 +102,7 @@
 
                 <div class="col-md-4 col-sm-6">
                     <div class="form-group">
-                        <label for="PANNo">PAN No <sup class="text-danger">*</sup></label>
+                        <label for="PANNo">PAN No </label>
                         <input type="text" id="PANNo" class="form-control" placeholder="PAN No"
                             formControlName="ImpiHeaderPanNo" />
                     </div>
@@ -111,7 +111,7 @@
 
                 <div class="col-md-4 col-sm-6">
                     <div class="form-group">
-                        <label>GST No <sup class="text-danger">*</sup></label>
+                        <label>GST No </label>
                         <input type="text" placeholder="GST No" class="form-control" formControlName="ImpiHeaderGstNo"
                             maxlength="20" />
 
@@ -123,7 +123,7 @@
 
                 <div class="col-md-4 col-sm-6">
                     <div class="form-group">
-                        <label for="startDate">Starting Date <sup class="text-danger">*</sup></label>
+                        <label for="startDate">Starting Date </label>
                         <input type="text" id="startDate" placeholder="starting date" formControlName="startDate"
                             class="form-control" />
                         <div *ngIf="shouldShowError('startDate','required')" class="text-danger">This field
@@ -135,7 +135,7 @@
 
                 <div class="col-md-4 col-sm-6">
                     <div class="form-group">
-                        <label for="endDate">End Date <sup class="text-danger">*</sup></label>
+                        <label for="endDate">End Date </label>
                         <input type="text" id="endDate" placeholder="end date" formControlName="endDate"
                             class="form-control" />
                         <div *ngIf="shouldShowError('endDate','required')" class="text-danger">This field
@@ -162,7 +162,7 @@
             <div class="row">
                 <div class="col-md-4 col-sm-6">
                     <div class="form-group">
-                        <label for="CustomerName">Customer Name <sup class="text-danger">*</sup></label>
+                        <label for="CustomerName">Customer Name </label>
                         <div class="flex-field">
                             <ng-select [items]="publicVariable.GetCustomerList" #select class="w-100"
                                 bindLabel="custName" bindValue="custName" placeholder="Select customer"
@@ -186,7 +186,7 @@
 
                 <!-- <div class="col-md-8 col-sm-6">
                     <div class="form-group">
-                        <label for="ImpiHeaderCustomerGstNo">GST Number All <sup class="text-danger">*</sup></label>
+                        <label for="ImpiHeaderCustomerGstNo">GST Number All </label>
 
 
                             <ng-select [items]="loadgetGstRegistrationNoAll" #select class="w-100"
@@ -212,7 +212,7 @@
 
                 <div class="col-md-8 col-sm-6">
                     <div class="form-group">
-                        <label for="ImpiHeaderCustomerGstNo">GST Number <sup class="text-danger">*</sup></label>
+                        <label for="ImpiHeaderCustomerGstNo">GST Number </label>
 
                         <ng-select [items]="GetCustomerGSTList" #select class="w-100 " bindLabel="gstNumber"
                             bindValue="gstNumber" placeholder="Select GST No" formControlName="ImpiHeaderCustomerGstNo"
@@ -238,7 +238,7 @@
                 </div>
                 <div class="col-md-8 col-sm-6">
                     <div class="form-group">
-                        <label for="address">Address <sup class="text-danger">*</sup></label>
+                        <label for="address">Address </label>
                         <input type="text" id="address" placeholder="Address"
                             formControlName="ImpiHeaderCustomerAddress" class="form-control no-style" readonly />
 
@@ -258,7 +258,7 @@
                 </div>
                 <div class="col-md-4 col-sm-6">
                     <div class="form-group">
-                        <label for="state">State <sup class="text-danger">*</sup></label>
+                        <label for="state">State </label>
                         <!-- <ng-select [items]="publicVariable.stateList" #select bindLabel="stateName"
                             bindValue="stateCode" placeholder="Select " formControlName="ImpiHeaderCustomerState"
                             (change)="onSelectStateCustomer()"  [searchable]="true" [searchFn]="stateSearchFn" [virtualScroll]="true" [bufferAmount]="10">
@@ -278,7 +278,7 @@
                 </div>
                 <div class="col-md-4 col-sm-6">
                     <div class="form-group">
-                        <label for="city">City <sup class="text-danger">*</sup></label>
+                        <label for="city">City </label>
                         <!-- <ng-select [items]="publicVariable.cityList" #select bindLabel="cityName" bindValue="cityName"
                             placeholder="Select" formControlName="ImpiHeaderCustomerCity" [searchable]="true"
                             [searchFn]="citySearchFn" [virtualScroll]="true" [bufferAmount]="10"
@@ -312,7 +312,7 @@
 
                 <!-- <div class="col-md-4 col-sm-6">
                     <div class="form-group">
-                        <label for="GSTNumber">GST Number <sup class="text-danger">*</sup></label>
+                        <label for="GSTNumber">GST Number </label>
                         <input type="text" class="form-control" id="GSTNumber" placeholder="GST Number"
                             formControlName="ImpiHeaderCustomerGstNo" (blur)="validateGST()" />
                         <div *ngIf="shouldShowError('ImpiHeaderCustomerGstNo','invalidGST')" class="text-danger"> Please
@@ -325,7 +325,7 @@
 
                 <div class="col-md-4 col-sm-6">
                     <div class="form-group">
-                        <label for="ContactPerson">Contact Person <sup class="text-danger">*</sup></label>
+                        <label for="ContactPerson">Contact Person </label>
                         <input type="text" placeholder="Contact Person" id="ContactPerson"
                             formControlName="ImpiHeaderCustomerContactPerson" [readonly]="true" class="form-control no-style " />
                         <div *ngIf="shouldShowError('ImpiHeaderCustomerContactPerson', 'alphanumericWithSpaces')"
@@ -338,7 +338,7 @@
 
                 <div class="col-md-4 col-sm-6">
                     <div class="form-group">
-                        <label for="EmailID">Customer EmailId (To Send Invoice) <sup class="text-danger">*</sup></label>
+                        <label for="EmailID">Customer EmailId (To Send Invoice) </label>
                         <input type="email" placeholder="Email ID" id="EmailID"
                             formControlName="ImpiHeaderCustomerEmailId" class="form-control"
                             [readonly]="true" class="form-control no-style "/>
@@ -356,7 +356,7 @@
 
                 <div class="col-md-4 col-sm-6">
                     <div class="form-group">
-                        <label for="PhoneNo">Phone No. <sup class="text-danger">*</sup></label>
+                        <label for="PhoneNo">Phone No. </label>
                         <input type="text" class="form-control" id="PhoneNo" (input)="onInputChange($event)"
                             placeholder="Phone No" formControlName="ImpiHeaderCustomerPhoneNo" maxlength="15"
                             [readonly]="true" class="form-control no-style "/>
@@ -377,7 +377,7 @@
                 <div class="row" *ngIf="isEdit">
                     <div class="col-md-4 col-sm-6">
                         <div class="form-group">
-                            <label>Nature of Income<sup class="text-danger">*</sup></label>
+                            <label>Nature of Income</label>
                             <ng-select [items]="publicVariable.COAMasterList" #select bindLabel="name" bindValue="no"
                                 placeholder="Select " [searchable]="true" [virtualScroll]="true" [bufferAmount]="10"
                                 formControlName="impiGlNo" [searchFn]="gstSearchFn"
@@ -393,7 +393,7 @@
 
                     <div class="col-md-4 col-sm-6">
                         <div class="form-group">
-                            <label for="Quantity">Quantity <sup class="text-danger">*</sup></label>
+                            <label for="Quantity">Quantity </label>
                             <input type="text" class="form-control no-style" readonly id="Quantity"
                                 placeholder="Quantity" formControlName="impiQuantity" (input)="onInputChange($event)" />
                             <div *ngIf="shouldShowExpenseError('impiQuantity','required')" class="text-danger">This
@@ -404,7 +404,7 @@
 
                     <div class="col-md-4 col-sm-6">
                         <div class="form-group">
-                            <label>GST Group Code <sup class="text-danger">*</sup></label>
+                            <label>GST Group Code </label>
                             <ng-select [items]="publicVariable.GSTGroupList" #select bindLabel="code" bindValue="code"
                                 placeholder="Select " [searchable]="true" [virtualScroll]="true" [bufferAmount]="10"
                                 (change)="onGSTGroupChange($event)" formControlName="impiGstgroupCode"
@@ -432,7 +432,7 @@
 
                     <div class="col-md-4 col-sm-6">
                         <div class="form-group">
-                            <label>Direct Unit Cost <sup class="text-danger">*</sup> (Exclusive GST)</label>
+                            <label>Direct Unit Cost  (Exclusive GST)</label>
                             <input type="text" class="form-control" placeholder="Direct Unit Cost"
                                 formControlName="impiUnitPrice" (input)="priceValidator($event)">
                             <div *ngIf="shouldShowExpenseError('impiUnitPrice','required')" class="text-danger">This

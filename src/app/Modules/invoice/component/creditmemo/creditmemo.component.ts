@@ -1228,6 +1228,7 @@ export class CreditmemoComponent implements OnInit {
 
     markFormControlsAsTouched(): void {
         [
+            'invoice_no','MemoType'
         ].forEach(controlName => {
             this.publicVariable.dataForm.controls[controlName].markAsTouched();
         });
