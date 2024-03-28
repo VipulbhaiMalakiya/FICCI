@@ -323,20 +323,8 @@ export class CreditmemoComponent implements OnInit {
             headerid: '',
             ImpiHeaderInvoiceType: '',
             ImpiHeaderProjectCode: data.projectCode,
-            ImpiHeaderDepartment: data.departmentName,
-            ImpiHeaderDivison: data.divisionName,
-            Project: '',
+            PINO: data.invoice_no
 
-            // ImpiHeaderPanNo: data.impiHeaderPanNo,
-            // ImpiHeaderGstNo: data.impiHeaderGstNo,
-            // PINO: [''], //api missing
-            // ImpiHeaderCustomerName: data.impiHeaderCustomerName,
-            // ImpiHeaderCustomerCode: data.impiHeaderCustomerCode,
-            // ImpiHeaderCustomerAddress: data.impiHeaderCustomerAddress,
-            // ImpiHeaderCustomerState: data.impiHeaderCustomerState,
-            // ImpiHeaderCustomerCity: data.impiHeaderCustomerCity,
-            // ImpiHeaderCustomerPinCode: data.impiHeaderCustomerPinCode,
-            // ImpiHeaderCustomerGstNo: data.impiHeaderCustomerGstNo,
             // ImpiHeaderCustomerContactPerson: data.impiHeaderCustomerContactPerson,
             // ImpiHeaderCustomerEmailId: data.impiHeaderCustomerEmailId,
             // ImpiHeaderCustomerPhoneNo: data.impiHeaderCustomerPhoneNo,
@@ -345,10 +333,49 @@ export class CreditmemoComponent implements OnInit {
             // ImpiHeaderPaymentTerms: data.impiHeaderPaymentTerms,
             // ImpiHeaderRemarks: data.impiHeaderRemarks,
 
-            startDate: data.postingDate,
-            endDate: '',
+
 
         });
+
+        const selectedId = this.publicVariable.dataForm.get('ImpiHeaderProjectCode')?.value;
+        if (selectedId) {
+            this.publicVariable.selectedProjet = this.publicVariable.projectList.find(project => project.code == selectedId);
+            if (this.publicVariable.selectedProjet) {
+                this.publicVariable.dataForm.patchValue({
+                    ImpiHeaderDepartment: this.publicVariable.selectedProjet.departmentName,
+                    ImpiHeaderDivison: this.publicVariable.selectedProjet.divisionName,
+                    Project: this.publicVariable.selectedProjet.name,
+                    startDate: this.publicVariable.selectedProjet.startDate,
+                    endDate: this.publicVariable.selectedProjet.endDate,
+                });
+            }
+        } else {
+            this.publicVariable.dataForm.patchValue({
+                ImpiHeaderDepartment: null,
+                ImpiHeaderDivison: null,
+                Project: null,
+                startDate: null,
+                endDate: null
+            });
+        }
+
+
+        const customerNo = data.sellToCustomerNo;
+        this.setFormFieldsToNull();
+        if (customerNo) {
+            this.publicVariable.selectCustomer = this.publicVariable.GetCustomerList.find(customer => customer.custNo == customerNo);
+            if (this.publicVariable.selectCustomer) {
+                this.publicVariable.dataForm.patchValue({
+                    ImpiHeaderCustomerName: this.publicVariable.selectCustomer.custName,
+                });
+                this.getErpDetailCustNo(this.publicVariable.selectCustomer.custNo);
+            } else {
+
+                this.setFormFieldsToNull(); // Call function to set form fields to null
+            }
+        } else {
+            this.setFormFieldsToNull(); // Call function to set form fields to null
+        }
 
         // Assuming data.getTaxInvoiceInfoLines contains the array of invoice line items
         this.publicVariable.expenses = data.getTaxInvoiceInfoLines.map((item: any) => {
