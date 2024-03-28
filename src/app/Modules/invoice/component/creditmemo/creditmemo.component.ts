@@ -392,9 +392,9 @@ export class CreditmemoComponent implements OnInit {
                 impiUnitPrice: item.unitPrice,
                 lineAmount: item.lineAmount,
                 gSTCredit: item.gSTCredit,
-                gSTGroupCode: item.gSTGroupCode,
+                impiGstgroupCode: item.gSTGroupCode,
                 gST_Group_Type: item.gST_Group_Type,
-                hSN_SAC_Code: item.hSN_SAC_Code,
+                impiHsnsaccode: item.hSN_SAC_Code,
                 // Add more properties as needed
             };
         });
