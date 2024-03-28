@@ -318,6 +318,11 @@ export class CreditmemoComponent implements OnInit {
     invoicepatchFormData(data: any): void {
         console.log(data);
 
+        // let peramiter = {
+        //     gst:'',
+        //     code: ''
+        // }
+
         this.publicVariable.dataForm.patchValue({
 
             headerid: '',
