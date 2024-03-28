@@ -53,32 +53,32 @@ export class CreditmemoComponent implements OnInit {
         this.publicVariable.dataForm = this.fb.group({
             headerid: [''],
             invoice_no: [null],
-            ImpiHeaderInvoiceType: ['Proforma Invoice'],
-            ImpiHeaderProjectCode: [null, [Validators.required]],
-            Project: [{ value: '', disabled: true }, [Validators.required]],
-            ImpiHeaderDepartment: [{ value: '', disabled: true }, [Validators.required]],
-            ImpiHeaderDivison: [{ value: '', disabled: true }, [Validators.required]],
-            ImpiHeaderPanNo: [{ value: 'AAACF1282E', disabled: true }, [Validators.required]],
-            ImpiHeaderGstNo: [{ value: '07AAACF1282E1Z1', disabled: true }, [Validators.required]],
+            ImpiHeaderInvoiceType: ['Tax Invoice'],
+            ImpiHeaderProjectCode: [null, ],
+            Project: [{ value: '', disabled: true }, ],
+            ImpiHeaderDepartment: [{ value: '', disabled: true }, ],
+            ImpiHeaderDivison: [{ value: '', disabled: true }, ],
+            ImpiHeaderPanNo: [{ value: 'AAACF1282E', disabled: true }, ],
+            ImpiHeaderGstNo: [{ value: '07AAACF1282E1Z1', disabled: true }, ],
             PINO: [''], //api missing
-            ImpiHeaderCustomerName: [null, [Validators.required]],
+            ImpiHeaderCustomerName: [null,],
             ImpiHeaderCustomerCode: [''], //new filed
-            ImpiHeaderCustomerAddress: [null, [Validators.required, Validators.maxLength(100)]],
-            ImpiHeaderCustomerState: [null, [Validators.required]],
-            ImpiHeaderCustomerCity: [null, [Validators.required]],
-            ImpiHeaderCustomerPinCode: [null, [Validators.pattern(/^\d{6}$/)]],
-            ImpiHeaderCustomerGstNo: [null, [Validators.required, gstValidator()]],
-            ImpiHeaderCustomerContactPerson: ['', [Validators.required, alphanumericWithSpacesValidator()]],
-            ImpiHeaderCustomerEmailId: ['', [Validators.required, Validators.email, this.emailValidator()]],
-            ImpiHeaderCustomerPhoneNo: ['', [Validators.required, Validators.pattern(/^[6-9]\d{9}$/)]],
+            ImpiHeaderCustomerAddress: [null, ],
+            ImpiHeaderCustomerState: [null, ],
+            ImpiHeaderCustomerCity: [null, ],
+            ImpiHeaderCustomerPinCode: [null],
+            ImpiHeaderCustomerGstNo: [null],
+            ImpiHeaderCustomerContactPerson: [''],
+            ImpiHeaderCustomerEmailId: [''],
+            ImpiHeaderCustomerPhoneNo: ['', ],
             ImpiHeaderCreatedBy: [''],
             ImpiHeaderTotalInvoiceAmount: [''],//api new filed
             items: this.fb.array([]),
             ImpiHeaderPaymentTerms: [''],
             ImpiHeaderRemarks: [''],
             IsDraft: [false],
-            startDate: [{ value: '', disabled: true }, [Validators.required]],
-            endDate: [{ value: '', disabled: true }, [Validators.required]],
+            startDate: [{ value: '', disabled: true }, []],
+            endDate: [{ value: '', disabled: true }, []],
             TypeofAttachment: [''],
             MemoType: [''],
         });
@@ -86,11 +86,11 @@ export class CreditmemoComponent implements OnInit {
 
     private createExpenseForm(): void {
         this.publicVariable.expenseForm = this.fb.group({
-            impiGlNo: [null, Validators.required],
-            impiQuantity: ['', Validators.required],
-            impiGstgroupCode: [null, Validators.required],
+            impiGlNo: [null, ],
+            impiQuantity: ['', ],
+            impiGstgroupCode: [null, ],
             impiHsnsaccode: [null],
-            impiUnitPrice: ['', Validators.required],
+            impiUnitPrice: ['', ],
         })
     }
 
@@ -1227,10 +1227,7 @@ export class CreditmemoComponent implements OnInit {
     }
 
     markFormControlsAsTouched(): void {
-        ['ImpiHeaderInvoiceType', 'ImpiHeaderProjectCode', 'ImpiHeaderDepartment', 'ImpiHeaderDivison', 'ImpiHeaderPanNo', 'ImpiHeaderGstNo',
-            'ImpiHeaderCustomerName', 'ImpiHeaderCustomerAddress', 'ImpiHeaderCustomerState', 'ImpiHeaderCustomerCity', 'ImpiHeaderCustomerEmailId',
-            'ImpiHeaderCustomerGstNo', 'ImpiHeaderCustomerContactPerson', 'ImpiHeaderCustomerPhoneNo', 'items',
-            'startDate', 'endDate'
+        [
         ].forEach(controlName => {
             this.publicVariable.dataForm.controls[controlName].markAsTouched();
         });
