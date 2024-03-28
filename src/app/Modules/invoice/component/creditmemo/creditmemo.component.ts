@@ -330,7 +330,9 @@ export class CreditmemoComponent implements OnInit {
             // headerid: '',
             // ImpiHeaderInvoiceType: '',
             ImpiHeaderProjectCode: data.projectCode,
-            PINO: data.invoice_no
+            PINO: data.invoice_no,
+            ImpiHeaderCustomerGstNo:data.gsT_No,
+            ImpiHeaderCustomerAddress:data.sellToAddress
 
             // ImpiHeaderCustomerContactPerson: data.impiHeaderCustomerContactPerson,
             // ImpiHeaderCustomerEmailId: data.impiHeaderCustomerEmailId,
@@ -366,7 +368,7 @@ export class CreditmemoComponent implements OnInit {
         this.publicVariable.expenses = data.getTaxInvoiceInfoLines.map((item: any) => {
             return {
                 type: item.type,
-                no_: item.no_,
+                impiGlNo: item.no_,
                 locationCode: item.locationCode,
                 impiQuantity: item.quantity,
                 impiUnitPrice: item.unitPrice,
