@@ -46,6 +46,17 @@
 
                 <div class="col-md-4 col-sm-6">
                     <div class="form-group">
+                        <label for="creditMemoAmount">Credit Amount <sup class="text-danger">*</sup></label>
+                        <input type="text" placeholder="Credit Amount" formControlName="creditMemoAmount"
+                            class="form-control no-style" readonly>
+                        <div *ngIf="shouldShowError('creditMemoAmount','required')" class="text-danger">This field
+                            is required
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-sm-6">
+                    <div class="form-group">
                         <label for="projectCode">Project Code </label>
                         <!-- <ng-select [items]="publicVariable.projectList" #select bindLabel="code" bindValue="code"
                             placeholder="Select in Project Code" formControlName="ImpiHeaderProjectCode"

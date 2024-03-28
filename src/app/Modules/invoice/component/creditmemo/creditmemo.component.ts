@@ -60,7 +60,8 @@ export class CreditmemoComponent implements OnInit {
             ImpiHeaderDivison: [{ value: '', disabled: true }, ],
             ImpiHeaderPanNo: [{ value: 'AAACF1282E', disabled: true }, ],
             ImpiHeaderGstNo: [{ value: '07AAACF1282E1Z1', disabled: true }, ],
-            PINO: [''], //api missing
+            PINO: [''], 
+            creditMemoAmount:['',[Validators.required]],
             ImpiHeaderCustomerName: [null,],
             ImpiHeaderCustomerCode: [''], //new filed
             ImpiHeaderCustomerAddress: [null, ],
@@ -1079,7 +1080,7 @@ export class CreditmemoComponent implements OnInit {
                         formData.append('headerid', isUpdate ? newData.headerid : undefined);
                     }
                     formData.append('MemoType', 'Partial');
-                    formData.append('creditMemoAmount', '10.00');
+                    formData.append('creditMemoAmount', newData.creditMemoAmount);
 
                     formData.append('isupdate', String(isUpdate));
                     this.publicVariable.selectedProjet = this.publicVariable.projectList.find(project => project.code == newData.ImpiHeaderProjectCode);
@@ -1111,7 +1112,7 @@ export class CreditmemoComponent implements OnInit {
                     formData.append('LoginId', this.publicVariable.storedEmail);
                     // Check if ImpiHeaderInvoiceType is Tax Invoice, then include PINO
                     if (newData.ImpiHeaderInvoiceType === 'Tax Invoice') {
-                        formData.append('ImpiHeaderPiNo', newData.PINO);
+                        formData.append('ImpiHeaderPiNo', newData.invoice_no);
                     }
                     formData.append('ImpiHeaderTlApprover', this.publicVariable.selectedProjet.tlApprover);
                     formData.append('ImpiHeaderClusterApprover', this.publicVariable.selectedProjet.chApprover);
@@ -1228,7 +1229,7 @@ export class CreditmemoComponent implements OnInit {
 
     markFormControlsAsTouched(): void {
         [
-            'invoice_no','MemoType'
+            'invoice_no','MemoType','creditMemoAmount'
         ].forEach(controlName => {
             this.publicVariable.dataForm.controls[controlName].markAsTouched();
         });
