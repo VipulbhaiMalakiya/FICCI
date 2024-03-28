@@ -50,7 +50,7 @@ export class CreditmemoComponent implements OnInit {
     private initializeForm(): void {
         this.publicVariable.dataForm = this.fb.group({
             headerid: [''],
-            invoice_no:[null],
+            invoice_no: [null],
             ImpiHeaderInvoiceType: ['Proforma Invoice', Validators.required],
             ImpiHeaderProjectCode: [null, [Validators.required]],
             Project: [{ value: '', disabled: true }, [Validators.required]],
@@ -64,7 +64,7 @@ export class CreditmemoComponent implements OnInit {
             ImpiHeaderCustomerAddress: [null, [Validators.required, Validators.maxLength(100)]],
             ImpiHeaderCustomerState: [null, [Validators.required]],
             ImpiHeaderCustomerCity: [null, [Validators.required]],
-            ImpiHeaderCustomerPinCode: [null, [ Validators.pattern(/^\d{6}$/)]],
+            ImpiHeaderCustomerPinCode: [null, [Validators.pattern(/^\d{6}$/)]],
             ImpiHeaderCustomerGstNo: [null, [Validators.required, gstValidator()]],
             ImpiHeaderCustomerContactPerson: ['', [Validators.required, alphanumericWithSpacesValidator()]],
             ImpiHeaderCustomerEmailId: ['', [Validators.required, Validators.email, this.emailValidator()]],
@@ -256,7 +256,7 @@ export class CreditmemoComponent implements OnInit {
         return concatenatedString.includes(term.toLowerCase());
     }
 
-    onSelectInvoice(event:any){
+    onSelectInvoice(event: any) {
 
         //let data  = event.invoice_no;
 
@@ -266,18 +266,18 @@ export class CreditmemoComponent implements OnInit {
 
     }
 
-    loadTaxInvoiceInformation(invoice_no:any) {
+    loadTaxInvoiceInformation(invoice_no: any) {
         this.publicVariable.isProcess = true;
         try {
 
             const subscription = this.API.GetTaxInvoiceInformation("SI121683").subscribe({
 
-               // const subscription = this.API.GetTaxInvoiceInformation(invoice_no).subscribe({
+                // const subscription = this.API.GetTaxInvoiceInformation(invoice_no).subscribe({
                 next: (response: any) => {
                     this.TaxInvoicedata = response.data;
-                     this.filterTaxInvoiceByInvoiceNo("SI121683");
-                     this.publicVariable.isProcess = false;
-                     //this.filterTaxInvoiceByInvoiceNo(invoice_no);
+                    this.filterTaxInvoiceByInvoiceNo("SI121683");
+                    this.publicVariable.isProcess = false;
+                    //this.filterTaxInvoiceByInvoiceNo(invoice_no);
                     this.cd.detectChanges();
                 },
                 error: (error) => {
@@ -344,14 +344,28 @@ export class CreditmemoComponent implements OnInit {
             // ImpiHeaderTotalInvoiceAmount: data.impiHeaderTotalInvoiceAmount,
             // ImpiHeaderPaymentTerms: data.impiHeaderPaymentTerms,
             // ImpiHeaderRemarks: data.impiHeaderRemarks,
-            // IsDraft: data.isDraft,
 
-            // startDate: data.startDate,
-            // endDate: data.endDate,
+            startDate: data.postingDate,
+            endDate: '',
 
         });
 
-        // this.publicVariable.expenses = data.getTaxInvoiceInfoLines;
+        // Assuming data.getTaxInvoiceInfoLines contains the array of invoice line items
+        this.publicVariable.expenses = data.getTaxInvoiceInfoLines.map((item: any) => {
+            return {
+                type: item.type,
+                no_: item.no_,
+                locationCode: item.locationCode,
+                impiQuantity: item.quantity,
+                impiUnitPrice: item.unitPrice,
+                lineAmount: item.lineAmount,
+                gSTCredit: item.gSTCredit,
+                gSTGroupCode: item.gSTGroupCode,
+                gST_Group_Type: item.gST_Group_Type,
+                hSN_SAC_Code: item.hSN_SAC_Code,
+                // Add more properties as needed
+            };
+        });
     }
 
     patchFormData(data: any): void {
@@ -485,7 +499,7 @@ export class CreditmemoComponent implements OnInit {
             const subscription = this.CAPI.getCityList().subscribe({
                 next: (response: any) => {
                     this.publicVariable.cityList = response.data;
-                 this.loadInvoiceSummary();
+                    this.loadInvoiceSummary();
 
                 },
                 error: (error) => {
@@ -1199,7 +1213,7 @@ export class CreditmemoComponent implements OnInit {
 
     markFormControlsAsTouched(): void {
         ['ImpiHeaderInvoiceType', 'ImpiHeaderProjectCode', 'ImpiHeaderDepartment', 'ImpiHeaderDivison', 'ImpiHeaderPanNo', 'ImpiHeaderGstNo',
-            'ImpiHeaderCustomerName', 'ImpiHeaderCustomerAddress', 'ImpiHeaderCustomerState', 'ImpiHeaderCustomerCity','ImpiHeaderCustomerEmailId',
+            'ImpiHeaderCustomerName', 'ImpiHeaderCustomerAddress', 'ImpiHeaderCustomerState', 'ImpiHeaderCustomerCity', 'ImpiHeaderCustomerEmailId',
             'ImpiHeaderCustomerGstNo', 'ImpiHeaderCustomerContactPerson', 'ImpiHeaderCustomerPhoneNo', 'items',
             'startDate', 'endDate'
         ].forEach(controlName => {

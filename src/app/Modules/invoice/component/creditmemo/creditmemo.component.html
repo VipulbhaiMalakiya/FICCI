@@ -524,7 +524,7 @@
 
                         <tr *ngFor="let e of publicVariable.expenses; let i = index">
                             <td>{{i + 1}}</td>
-                            <td>{{ getNameById(e.impiGlNo) }}</td>
+                            <td>{{ getNameById(e.impiGlNo) || '' }}</td>
                             <td>{{e.impiQuantity}}</td>
                             <td>{{e.impiUnitPrice}}</td>
                             <td>{{e.impiUnitPrice * e.impiQuantity}}</td>
