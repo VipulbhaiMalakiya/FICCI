@@ -53,7 +53,7 @@ export class CreditmemoComponent implements OnInit {
         this.publicVariable.dataForm = this.fb.group({
             headerid: [''],
             invoice_no: [null],
-            ImpiHeaderInvoiceType: ['Proforma Invoice', Validators.required],
+            ImpiHeaderInvoiceType: ['Proforma Invoice'],
             ImpiHeaderProjectCode: [null, [Validators.required]],
             Project: [{ value: '', disabled: true }, [Validators.required]],
             ImpiHeaderDepartment: [{ value: '', disabled: true }, [Validators.required]],
@@ -332,9 +332,11 @@ export class CreditmemoComponent implements OnInit {
             // ImpiHeaderInvoiceType: '',
             ImpiHeaderProjectCode: data.projectCode,
             PINO: data.invoice_no,
-            ImpiHeaderCustomerGstNo:data.gsT_No,
-            ImpiHeaderCustomerAddress:data.sellToAddress
+            ImpiHeaderCustomerGstNo: data.gsT_No,
+            ImpiHeaderCustomerAddress: data.sellToAddress,
 
+            ImpiHeaderCustomerCity: data.sellToCity,
+            ImpiHeaderCustomerPinCode: data.sellToPostCode,
             // ImpiHeaderCustomerContactPerson: data.impiHeaderCustomerContactPerson,
             // ImpiHeaderCustomerEmailId: data.impiHeaderCustomerEmailId,
             // ImpiHeaderCustomerPhoneNo: data.impiHeaderCustomerPhoneNo,
@@ -349,21 +351,18 @@ export class CreditmemoComponent implements OnInit {
         this.onSelectProject();
 
         const customerNo = data.sellToCustomerNo;
-        this.setFormFieldsToNull();
         if (customerNo) {
             this.publicVariable.selectCustomer = this.publicVariable.GetCustomerList.find(customer => customer.custNo == customerNo);
             if (this.publicVariable.selectCustomer) {
                 this.publicVariable.dataForm.patchValue({
                     ImpiHeaderCustomerName: this.publicVariable.selectCustomer.custName,
                 });
-                this.getErpDetailCustNo(this.publicVariable.selectCustomer.custNo);
+                // this.getErpDetailCustNo(this.publicVariable.selectCustomer.custNo);
             } else {
 
-                this.setFormFieldsToNull(); // Call function to set form fields to null
             }
-        } else {
-            this.setFormFieldsToNull(); // Call function to set form fields to null
         }
+
 
         // Assuming data.getTaxInvoiceInfoLines contains the array of invoice line items
         this.publicVariable.expenses = data.getTaxInvoiceInfoLines.map((item: any) => {
