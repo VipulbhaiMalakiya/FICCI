@@ -375,7 +375,7 @@
 
         <div class="mastersform-sec mb-0">
             <form [formGroup]="publicVariable.expenseForm" (ngSubmit)="onAddLine()">
-                <div class="row">
+                <div class="row" *ngIf="isEdit">
                     <div class="col-md-4 col-sm-6">
                         <div class="form-group">
                             <label>Nature of Income<sup class="text-danger">*</sup></label>
@@ -448,29 +448,7 @@
                         </div>
                     </div>
 
-                    <!-- <div class="col-md-4 col-sm-6" *ngIf="publicVariable.expenses.length > 0">
-                        <div class="form-group">
-                            <label>(Total Base Amount)</label>
-                            <input type="text" class="form-control" [value]="calculateTotalBaseAmount()"
-                                placeholder="Total Base Amount" disabled="">
-                        </div>
-                    </div>
 
-                    <div class="col-md-4 col-sm-6" *ngIf="publicVariable.expenses.length > 0">
-                        <div class="form-group">
-                            <label>(Total GST Amount)</label>
-                            <input type="text" class="form-control" [value]="calculateTotalGSTAmount()"
-                                placeholder="Total GST Amount" disabled="">
-                        </div>
-                    </div>
-
-                    <div class="col-md-4 col-sm-6" *ngIf="publicVariable.expenses.length > 0">
-                        <div class="form-group">
-                            <label>(Net total)</label>
-                            <input type="text" class="form-control" [value]="calculateNetTotal()"
-                                placeholder="Net total" disabled="">
-                        </div>
-                    </div> -->
 
                     <div class="row">
                         <div class="col-md-4 col-sm-6">

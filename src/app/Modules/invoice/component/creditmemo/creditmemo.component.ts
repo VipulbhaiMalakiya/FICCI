@@ -32,6 +32,8 @@ export class CreditmemoComponent implements OnInit {
     InvoiceSummaryList: InvoiceSummaryModel[] = [];
     PostedTaxInvoiceCount: number = 0;
     isCalculate: boolean = false;
+    isEdit: boolean = false;
+
     constructor(private appService: AppService,
         private modalService: NgbModal,
         private router: Router,
@@ -930,6 +932,7 @@ export class CreditmemoComponent implements OnInit {
 
 
     editExpense(data: any, index: number) {
+        this.isEdit = true;
         this.publicVariable.expenseForm.patchValue({
             impiGstgroupCode: data.impiGstgroupCode,
             impiHsnsaccode: data.impiHsnsaccode,
