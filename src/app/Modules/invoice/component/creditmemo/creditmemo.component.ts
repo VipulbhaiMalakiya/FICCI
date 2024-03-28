@@ -61,6 +61,7 @@ export class CreditmemoComponent implements OnInit {
             ImpiHeaderPanNo: [{ value: 'AAACF1282E', disabled: true }, ],
             ImpiHeaderGstNo: [{ value: '07AAACF1282E1Z1', disabled: true }, ],
             PINO: [''], 
+            CustNo: [''], 
             creditMemoAmount:['',[Validators.required]],
             ImpiHeaderCustomerName: [null,],
             ImpiHeaderCustomerCode: [''], //new filed
@@ -335,7 +336,7 @@ export class CreditmemoComponent implements OnInit {
             PINO: data.invoice_no,
             ImpiHeaderCustomerGstNo: data.gsT_No,
             ImpiHeaderCustomerAddress: data.sellToAddress,
-
+            CustNo:data.sellToCustomerNo,
             ImpiHeaderCustomerCity: data.sellToCity,
             ImpiHeaderCustomerPinCode: data.sellToPostCode,
             // ImpiHeaderCustomerContactPerson: data.impiHeaderCustomerContactPerson,
@@ -400,6 +401,7 @@ export class CreditmemoComponent implements OnInit {
             creditMemoAmount:data.memoAmount,
             ImpiHeaderPanNo: data.impiHeaderPanNo,
             ImpiHeaderGstNo: data.impiHeaderGstNo,
+            CustNo:data.impiHeaderCustomerCode,
             PINO: data.headerPiNo, //api missing
             ImpiHeaderCustomerName: data.impiHeaderCustomerName,
             ImpiHeaderCustomerCode: data.impiHeaderCustomerCode,

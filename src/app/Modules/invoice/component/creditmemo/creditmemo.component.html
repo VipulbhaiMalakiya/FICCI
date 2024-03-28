@@ -198,6 +198,18 @@
                     </div>
                 </div>
 
+                <div class="col-md-4 col-sm-6">
+                    <div class="form-group">
+                        <label for="CustNo">Customer No </label>
+                        <div class="flex-field">
+                            <input type="text" id="CustNo" placeholder="Customer No"
+                            formControlName="CustNo" class="form-control no-style" readonly />
+                        </div>
+                        <div *ngIf="shouldShowError('CustNo','required')" class="text-danger">This field
+                            is required
+                        </div>
+                    </div>
+                </div>
                 <!-- <div class="col-md-8 col-sm-6">
                     <div class="form-group">
                         <label for="ImpiHeaderCustomerGstNo">GST Number All </label>
