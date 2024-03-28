@@ -43,6 +43,8 @@ export class ViewSalesApprovalComponent {
             this.headerId = +params['id'];
         });
         this.data = history.state.data;
+        console.log(this.data);
+        
         this.loadStateList();
         this.loadCOAMasterList();
         this.uploadedFiles = this.data.impiHeaderAttachment
