@@ -1110,6 +1110,53 @@ export class DashboardComponent {
         });
     }
 
+    
+    sendSalesEmail(dataItem: any) {
+        this.publicVariable.isProcess = true;
+        const modalRef = this.modalService.open(EmailComponent, { size: "xl" });
+        var componentInstance = modalRef.componentInstance as EmailComponent;
+        componentInstance.isEmail = dataItem;
+        modalRef.result.then((data: any) => {
+            if (data) {
+                const newData = data;
+                const formData = new FormData();
+                formData.append('MailTo', newData.emailTo);
+                formData.append('MailSubject', newData.subject);
+                formData.append('MailBody', newData.body);
+                formData.append('LoginId', this.publicVariable.storedEmail);
+                formData.append('MailCC', dataItem.impiHeaderCreatedBy);
+                formData.append('ResourceType', dataItem.impiHeaderInvoiceType);
+                formData.append('ResourceId', dataItem.headerId);
+
+                newData.attachment.forEach((file: any) => {
+                    formData.append('Attachments', file);
+                });
+
+                this.publicVariable.isProcess = true;
+                this.publicVariable.Subscription.add(
+                    this.IAPI.sendEmail(formData).subscribe({
+                        next: (res: any) => {
+                            if (res.status === true) {
+                                this.toastr.success(res.message, 'Success');
+                                // this.loadApproveInvoiceList();
+                            } else {
+                                this.toastr.error(res.message, 'Error');
+                            }
+                        },
+                        error: (error: any) => {
+                            this.toastr.error(error.error.message || 'An error occurred. Please try again later.', 'Error');
+                        },
+                        complete: () => {
+                            this.publicVariable.isProcess = false;
+                        }
+                    })
+                );
+            }
+        }).catch(() => {
+            this.publicVariable.isProcess = false;
+        });
+    }
+
 
     onSendEmail(dataItem: any) {
         this.sendEmail(dataItem);
@@ -1117,6 +1164,9 @@ export class DashboardComponent {
 
 
 
+    onsalesSendEmail(dataItem: any){
+        this.sendSalesEmail(dataItem);
+    }
 
 
     onediteEmail(dataItem: any) {
