@@ -325,8 +325,8 @@ export class CreditmemoComponent implements OnInit {
 
         this.publicVariable.dataForm.patchValue({
 
-            headerid: '',
-            ImpiHeaderInvoiceType: '',
+            // headerid: '',
+            // ImpiHeaderInvoiceType: '',
             ImpiHeaderProjectCode: data.projectCode,
             PINO: data.invoice_no
 
@@ -341,29 +341,7 @@ export class CreditmemoComponent implements OnInit {
 
 
         });
-
-        const selectedId = this.publicVariable.dataForm.get('ImpiHeaderProjectCode')?.value;
-        if (selectedId) {
-            this.publicVariable.selectedProjet = this.publicVariable.projectList.find(project => project.code == selectedId);
-            if (this.publicVariable.selectedProjet) {
-                this.publicVariable.dataForm.patchValue({
-                    ImpiHeaderDepartment: this.publicVariable.selectedProjet.departmentName,
-                    ImpiHeaderDivison: this.publicVariable.selectedProjet.divisionName,
-                    Project: this.publicVariable.selectedProjet.name,
-                    startDate: this.publicVariable.selectedProjet.startDate,
-                    endDate: this.publicVariable.selectedProjet.endDate,
-                });
-            }
-        } else {
-            this.publicVariable.dataForm.patchValue({
-                ImpiHeaderDepartment: null,
-                ImpiHeaderDivison: null,
-                Project: null,
-                startDate: null,
-                endDate: null
-            });
-        }
-
+        this.onSelectProject();
 
         const customerNo = data.sellToCustomerNo;
         this.setFormFieldsToNull();
