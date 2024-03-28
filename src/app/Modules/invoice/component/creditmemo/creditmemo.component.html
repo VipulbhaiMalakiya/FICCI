@@ -171,7 +171,7 @@
                     <div class="form-group">
                         <label for="CustomerName">Customer Name <sup class="text-danger">*</sup></label>
                         <div class="flex-field">
-                            <!-- <ng-select [items]="publicVariable.GetCustomerList" #select class="w-100"
+                            <ng-select [items]="publicVariable.GetCustomerList" #select class="w-100"
                                 bindLabel="custName" bindValue="custName" placeholder="Select customer"
                                 formControlName="ImpiHeaderCustomerName" (change)="onSelectCustomer()"
                                 [searchable]="true" [searchFn]="customerSearchFn" [virtualScroll]="true"
@@ -181,10 +181,8 @@
                                     <small *ngIf="item.panNo || item.gstregistrationNo">{{item.panNo}} -
                                         {{item.gstregistrationNo}}</small>
                                 </ng-template>
-                            </ng-select> -->
+                            </ng-select>
 
-                            <input type="text" placeholder="Customer Name" formControlName="ImpiHeaderCustomerName"
-                            class="form-control no-style">
                             <div class="add-btn"><a routerLink="/customer/new" target="_blank">+</a></div>
                         </div>
                         <div *ngIf="shouldShowError('ImpiHeaderCustomerName','required')" class="text-danger">This field
@@ -223,7 +221,7 @@
                     <div class="form-group">
                         <label for="ImpiHeaderCustomerGstNo">GST Number <sup class="text-danger">*</sup></label>
 
-                        <!-- <ng-select [items]="GetCustomerGSTList" #select class="w-100 " bindLabel="gstNumber"
+                        <ng-select [items]="GetCustomerGSTList" #select class="w-100 " bindLabel="gstNumber"
                             bindValue="gstNumber" placeholder="Select GST No" formControlName="ImpiHeaderCustomerGstNo"
                             (change)="onSelectGSTCustomer($event)" [searchable]="true" [searchFn]="customerGSTSearchFn"
                             [virtualScroll]="true" [bufferAmount]="10">
@@ -234,10 +232,8 @@
                                 <small>{{item.address | titlecase}} -{{item.address2 | titlecase}} -
                                     {{item.city | titlecase}}- {{item.pincode}}</small>
                             </ng-template>
-                        </ng-select> -->
+                        </ng-select>
 
-                        <input type="text" formControlName="ImpiHeaderCustomerGstNo" placeholder="GST Number"
-                        class="form-control no-style" readonly>
 
                         <!-- <div class="add-btn"><a routerLink="/customer/new" target="_blank">+</a></div> -->
 
