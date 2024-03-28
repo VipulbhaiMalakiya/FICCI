@@ -123,7 +123,7 @@ export class CreditmemoComponent implements OnInit {
         });
         if (this.data = history.state.data) {
             this.patchFormData(this.data);
-            console.log(this.data);
+            //console.log(this.data);
         }
         this.loadCOAMasterList();
         this.loadGetGSTGroupList();
@@ -319,7 +319,7 @@ export class CreditmemoComponent implements OnInit {
 
 
     invoicepatchFormData(data: any): void {
-        console.log(data);
+        // console.log(data);
 
         // let peramiter = {
         //     gst:'',
@@ -384,6 +384,9 @@ export class CreditmemoComponent implements OnInit {
     }
 
     patchFormData(data: any): void {
+
+        console.log(data);
+        
         this.publicVariable.dataForm.patchValue({
 
             headerid: (data && data.headerId) || (data && data.headerid),
@@ -391,7 +394,7 @@ export class CreditmemoComponent implements OnInit {
             ImpiHeaderProjectCode: data.impiHeaderProjectCode,
             ImpiHeaderDepartment: data.impiHeaderProjectDepartmentName,
             MemoType:data.memoType,
-            invoice_no :data.impiHeaderPiNo,
+            invoice_no :data.headerPiNo,
             ImpiHeaderDivison: data.impiHeaderProjectDivisionName,
             Project: data.impiHeaderProjectName,
             creditMemoAmount:data.memoAmount,
