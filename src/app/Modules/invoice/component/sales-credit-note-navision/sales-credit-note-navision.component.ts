@@ -6,6 +6,7 @@ import { ToastrService } from 'ngx-toastr';
 import { publicVariable, AppService, CustomersService, ConfirmationDialogModalComponent } from '../../Export/invoce';
 import { invoiceStatusModule } from '../../interface/invoice';
 import { InvoicesService } from '../../service/invoices.service';
+import { CreditSalesEmailComponent } from '../../send-email/credit-sales-email/credit-sales-email.component';
 
 @Component({
   selector: 'app-sales-credit-note-navision',
@@ -193,5 +194,81 @@ export class SalesCreditNoteNavisionComponent implements OnInit {
         this.publicVariable.page = 1;
         this.publicVariable.invoiceStatuslistData
 
+    }
+
+
+    sendEmail(dataItem: any) {
+        this.publicVariable.isProcess = true;
+
+        const modalRef = this.modalService.open(CreditSalesEmailComponent, { size: "xl" });
+        var componentInstance = modalRef.componentInstance as CreditSalesEmailComponent;
+        componentInstance.isEmail = dataItem;
+        modalRef.result.then((data: any) => {
+            if (data) {
+
+                const newData = data;
+                const formData = new FormData();
+                formData.append('MailTo', newData.emailTo);
+                formData.append('MailSubject', newData.subject);
+                formData.append('MailBody', newData.body);
+                formData.append('LoginId', this.publicVariable.storedEmail);
+                formData.append('MailCC', newData.MailCC);
+                formData.append('ResourceType', 'Invoice');
+                formData.append('ResourceId', '1');
+
+                newData.attachment.forEach((file: any) => {
+                    if (file instanceof File) {
+                        formData.append('Attachments', file);
+                    } else {
+
+                        const base64Data = file.attachment; // Your base64 encoded attachment data
+                        const decodedData = atob(base64Data); // Decode base64 data
+
+                        // Convert the decoded data to Uint8Array
+                        const bytes = new Uint8Array(decodedData.length);
+                        for (let i = 0; i < decodedData.length; i++) {
+                            bytes[i] = decodedData.charCodeAt(i);
+                        }
+
+                        // Create a Blob from the Uint8Array
+                        const blob = new Blob([bytes.buffer], { type: 'application/pdf' });
+
+                        // Create a File object with a unique name
+                         file = new File([blob], `${file.name}.${file.type}`, { type: 'application/pdf' });
+
+                        formData.append('Attachments', file);
+                    }
+                });
+
+
+
+                this.publicVariable.isProcess = true;
+
+                this.publicVariable.Subscription.add(
+                    this.API.sendEmail(formData).subscribe({
+                        next: (res: any) => {
+                            if (res.status === true) {
+                                this.toastr.success(res.message, 'Success');
+                            } else {
+                                this.toastr.error(res.message, 'Error');
+                            }
+                        },
+                        error: (error: any) => {
+                            this.toastr.error(error.error.message || 'An error occurred. Please try again later.', 'Error');
+                        },
+                        complete: () => {
+                            this.publicVariable.isProcess = false;
+                        }
+                    })
+                );
+            }
+        }).catch(() => {
+            this.publicVariable.isProcess = false;
+        });
+    }
+
+
+    onSendEmail(dataItem: any) {
+        this.sendEmail(dataItem);
     }
 }

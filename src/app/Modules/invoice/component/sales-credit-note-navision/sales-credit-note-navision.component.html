@@ -98,6 +98,8 @@
                                     ||d.headerStatus == 'REJECTED BY FINANCE APPROVER'
                                     )" href="javascript:void(0);" (click)="onEdit(d)"><img
                                             src="../assets/images/edit-icon.svg" alt="" /></a>
+                                            <a href="javascript:void(0);" (click)="onSendEmail(d)"><img
+                                                src="../assets/images/email-icon.svg" alt="" /></a>
                                     <!-- <a *ngIf="publicVariable.storedRole !== 'Admin' &&
                                     (d.isDraft ||
                                     d.headerStatus == 'REJECTED BY TL APPROVER'  ||
