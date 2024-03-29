@@ -136,14 +136,16 @@ export class ViewInvoiceStatusComponent {
         return item ? item.name : '';
     }
 
-    onSubmit() {
+    onSubmit(action:any) {
         if (this.publicVariable.dataForm.valid) {
             const newData = this.publicVariable.dataForm.value;
             const newConfig: any = {
                 headerId: this.data.headerId,
                 loginId: this.publicVariable.storedEmail,
                 remarks: newData.remarks,
+                IsTaxInvoice:action
             }
+
 
             this.publicVariable.isProcess = true;
             this.publicVariable.Subscription.add(

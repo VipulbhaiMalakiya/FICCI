@@ -352,7 +352,7 @@
     <form
         *ngIf="data.impiHeaderCreatedBy === this.publicVariable.storedEmail && data.headerStatus !== 'CANCEL BY EMPLOYEE' && data.headerStatus !== 'DRAFT'
         && data.headerStatus !== 'REJECTED BY ACCOUNTS APPROVER'  && data.headerStatus !== 'CANCELLATION REQUEST APPROVED BY FINANCE' && data.headerStatus !== 'MAIL SENT BY FINANCE TO CUSTOMER' && data.headerStatus !== 'CANCELLATION APPROVED BY FINANCE' && data.headerStatus !== 'CANCELLATION REJECTED BY TL' "
-        [formGroup]="publicVariable.dataForm" (ngSubmit)="onSubmit()">
+        [formGroup]="publicVariable.dataForm" >
         <div class="col-md-12 mt-3">
             <div class="form-group">
                 <label>Remarks</label>
@@ -364,9 +364,16 @@
 
         <div class="col-md-12 mt-4">
             <div class="form-group mb-0 mt-2">
-                <button type="submit" class="common-btn w-auto">Cancel</button>
+                <!-- <button type="submit" class="common-btn w-auto" (click)="onSubmit('Draft')">Cancel</button>
 
-                <button type="submit" class="common-btn w-auto">Tax Invoice </button>
+
+                <button type="submit" class="common-btn w-auto" (click)="onSubmit('Submit')">Tax Invoice </button> -->
+
+                <input type="checkbox" class="btn-check" formControlName="IsDraft" id="btn-check"
+                autocomplete="off">
+            <label class="common-btn w-auto me-2" for="btn-check" (click)="onSubmit(false)">Cancel
+                </label>
+            <button type="submit" class="btn btn-secondary w-auto mb-0 me-2" (click)="onSubmit(true)">Tax Invoice</button>
 
             </div>
         </div>
