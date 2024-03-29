@@ -155,7 +155,7 @@
                 </thead>
                 <tbody>
 
-                    <tr *ngFor="let e of TaxInvoiceinfo?.getTaxInvoiceInfoLines; let i = index">
+                    <tr *ngFor="let e of TaxInvoiceinfo?.getPerformaInvoiceInfoLine; let i = index">
                         <td>{{i + 1}}</td>
                         <!-- <td>{{e.documentNo}}</td> -->
                         <!-- <td>{{e.gSTCredit}}</td> -->
@@ -184,11 +184,25 @@
                     <tr>
                         <th>#</th>
                         <th>File Type</th>
-                        <th>File Name</th>
+                        <th>Invoice No.</th>
                         <th *ngIf="!data.isDraft">Action</th>
                     </tr>
                 </thead>
+
                 <tbody>
+                    <!-- <tr *ngFor="let file of InvoiceAttachment; let i = index"> -->
+                          <tr  *ngIf="InvNo!=null || InvNo!=undefined">
+                          <td>1</td>
+                          <td>.pdf</td>
+                          <td>{{InvNo}}</td>
+                          <td *ngIf="!data.isDraft">
+                              <a href="javascript:void(0)" (click)="downalodInvFile(InvAttachment,InvNo)"><img
+                                      src="../assets/images/download-icon.svg" alt="" class="me-2"></a>
+  
+                          </td>
+                      </tr>
+                  </tbody>
+                <!-- <tbody>
                     <tr *ngFor="let file of InvoiceAttachment; let i = index">
                         <td>{{ i + 1 }}</td>
                         <td>{{ file.fileExtension }}</td>
@@ -199,7 +213,7 @@
 
                         </td>
                     </tr>
-                </tbody>
+                </tbody> -->
             </table>
         </div>
     </div>

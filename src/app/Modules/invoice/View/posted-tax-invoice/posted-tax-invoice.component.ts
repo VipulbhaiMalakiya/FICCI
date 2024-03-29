@@ -52,14 +52,14 @@ export class PostedTaxInvoiceComponent {
     loadTaxInvoiceInformation() {
         try {
 
-            //const subscription = this.API.GetTaxInvoiceInformation("SI121683").subscribe({
+            // const subscription = this.API.GetTaxInvoiceInformation("SI121683").subscribe({
 
                 const subscription = this.API.GetTaxInvoiceInformation(this.data.invoice_no).subscribe({
                 next: (response: any) => {
                     this.TaxInvoicedata = response.data;
                     // this.filterTaxInvoiceByInvoiceNo("SI121683");
 
-                     this.filterTaxInvoiceByInvoiceNo(this.data.invoice_no);
+                    this.filterTaxInvoiceByInvoiceNo(this.data.invoice_no);
                     this.loadTaxInvoiceAttachment(this.data.no)
                     this.cd.detectChanges();
                 },
@@ -91,12 +91,19 @@ export class PostedTaxInvoiceComponent {
         this.TaxInvoiceinfo = TaxInvoicedataArray[0];
         this.cd.detectChanges();
     }
+    InvNo:any;
+    InvAttachment :any;
 
     loadTaxInvoiceAttachment(invoice: string) {
         try {
             const subscription = this.API.GetTaxInvoiceAttachment(invoice).subscribe({
                 next: (response: any) => {
                     this.InvoiceAttachment = response.data;
+                    this.InvNo =this.InvoiceAttachment.invoiceNo;                    
+                    this.InvAttachment =this.InvoiceAttachment.attachment;
+
+                    
+                    console.log(this.InvoiceAttachment);
                     this.handleLoadingError();
                 },
                 error: (error) => {
@@ -110,6 +117,13 @@ export class PostedTaxInvoiceComponent {
             console.error('Error loading project list:', error);
             this.handleLoadingError();
         }
+    }
+
+    downalodInvFile(base64String: any,InvNo :any ='Invoice') { 
+        debugger;     
+        const fileName = InvNo+'.pdf';
+        const fileType = `application/pdf`;
+        this.fileService.downloadFile(base64String, fileName, fileType);
     }
 
 

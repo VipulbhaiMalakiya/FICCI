@@ -38,9 +38,11 @@ export class PiInvoiceViewComponent {
     ngOnInit() {
         this.route.params.subscribe(params => {
             this.invoice_no = +params['id'];
+            alert(this.invoice_no);
         });
         this.data = history.state.data;
-        console.log(this.data);
+
+        console.log( this.data);
 
         this.loadTaxInvoiceInformation();
     }
@@ -51,12 +53,14 @@ export class PiInvoiceViewComponent {
 
             // const subscription = this.API.GetTaxInvoiceInformation("SI121683").subscribe({
 
-                const subscription = this.API.GetPITaxInvoiceInformation(this.data.invoice_no).subscribe({
+                const subscription = this.API.GetPITaxInvoiceInformation(this.data.no).subscribe({
                 next: (response: any) => {
+
+                    console.log(response);
                     this.TaxInvoicedata = response.data;
                     // this.filterTaxInvoiceByInvoiceNo("SI121683");
 
-                    this.filterTaxInvoiceByInvoiceNo(this.data.invoice_no);
+                    this.filterTaxInvoiceByInvoiceNo(this.data.no);
                     this.loadTaxInvoiceAttachment(this.data.no)
                     this.cd.detectChanges();
                 },
@@ -79,7 +83,7 @@ export class PiInvoiceViewComponent {
             return;
         }
 
-        const TaxInvoicedataArray = this.TaxInvoicedata.filter((invoice: any) => invoice.invoice_no === invoiceNo);
+        const TaxInvoicedataArray = this.TaxInvoicedata.filter((invoice: any) => invoice.no === invoiceNo);
         if (TaxInvoicedataArray.length === 0) {
             console.log("No invoices found for the provided invoice number.");
             return;

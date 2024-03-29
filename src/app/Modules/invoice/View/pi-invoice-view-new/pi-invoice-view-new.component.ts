@@ -53,8 +53,11 @@ export class PiInvoiceViewNewComponent {
                 const subscription = this.API.GetPITaxInvoiceInformation(this.data.no).subscribe({
                 next: (response: any) => {
                     this.TaxInvoicedata = response.data;
+
+                    console.log('response:',response.data);
                     // this.filterTaxInvoiceByInvoiceNo("SI121683");
 
+                    console.log(this.data.no);
                     this.filterTaxInvoiceByInvoiceNo(this.data.no);
                     this.loadTaxInvoiceAttachment(this.data.no)
                     this.cd.detectChanges();
@@ -78,7 +81,8 @@ export class PiInvoiceViewNewComponent {
             return;
         }
 
-        const TaxInvoicedataArray = this.TaxInvoicedata.filter((invoice: any) => invoice.invoice_no === invoiceNo);
+        const TaxInvoicedataArray = this.TaxInvoicedata.filter((invoice: any) => invoice.no === invoiceNo);
+        console.log('tax invoice', TaxInvoicedataArray);
         if (TaxInvoicedataArray.length === 0) {
             console.log("No invoices found for the provided invoice number.");
             return;
@@ -87,12 +91,25 @@ export class PiInvoiceViewNewComponent {
         this.TaxInvoiceinfo = TaxInvoicedataArray[0];
         this.cd.detectChanges();
     }
-
+    InvNo:any;
+    InvAttachment :any;
     loadTaxInvoiceAttachment(invoice: string) {
         try {
             const subscription = this.API.GetPITaxInvoiceAttachment(invoice).subscribe({
                 next: (response: any) => {
-                    this.InvoiceAttachment = response.data;
+
+                    if(response.data.length>0)
+                    {
+                    this.InvoiceAttachment = response.data[0];
+                    this.InvNo =this.InvoiceAttachment.invoiceNo;                    
+                    this.InvAttachment =this.InvoiceAttachment.attachment;
+
+
+                    console.log(this.InvoiceAttachment);
+
+                    //alert(this.InvoiceAttachment.invoiceNo);
+                    this.handleLoadingError();
+                    }
                     this.handleLoadingError();
                 },
                 error: (error) => {
@@ -115,6 +132,14 @@ export class PiInvoiceViewNewComponent {
         const fileType = `application/${fileUrl.fileType}`;
         this.fileService.downloadFile(base64String, fileName, fileType);
     }
+
+    downalodInvFile(base64String: any,InvNo :any ='Invoice') { 
+        debugger;     
+        const fileName = InvNo+'.pdf';
+        const fileType = `application/pdf`;
+        this.fileService.downloadFile(base64String, fileName, fileType);
+    }
+
     handleLoadingError() {
         this.publicVariable.isProcess = false; // Set status to false on error
     }
