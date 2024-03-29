@@ -19,6 +19,7 @@ import { ApprovalSalesInboxComponent } from './component/approval-sales-inbox/ap
 import { ViewSalesApprovalComponent } from './View/view-sales-approval/view-sales-approval.component';
 import { PiInvoiceViewNewComponent } from './View/pi-invoice-view-new/pi-invoice-view-new.component';
 import { SalesCreditNoteNavisionComponent } from './component/sales-credit-note-navision/sales-credit-note-navision.component';
+import { PostedSalesNoteNewComponent } from './View/posted-sales-note-new/posted-sales-note-new.component';
 const routes: Routes = [
     { path: '', redirectTo: 'status', pathMatch: 'full' },
     {
@@ -137,7 +138,16 @@ const routes: Routes = [
         component:SalesCreditNoteNavisionComponent,
         canActivate: [AuthGuard],
         data: { expectedRoles: ['Admin', 'Approver', 'Employee', 'Accounts'] }
-    }
+    },
+
+    {
+        path:'sales-navision/view/:id',
+        component:PostedSalesNoteNewComponent,
+        canActivate: [AuthGuard],
+        data: { expectedRoles: ['Admin', 'Approver', 'Employee', 'Accounts'] }
+    },
+
+
 
 
 

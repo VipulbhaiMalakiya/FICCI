@@ -34,6 +34,7 @@ import { PIEmailComponent } from './send-email/pi-email/pi-email.component';
 import { CreditSalesEmailComponent } from './send-email/credit-sales-email/credit-sales-email.component';
 import { SalesCreditNoteNavisionComponent } from './component/sales-credit-note-navision/sales-credit-note-navision.component';
 import { SalesSearchFilterPipe } from './Pipe/sales-credite-pipe';
+import { PostedSalesNoteNewComponent } from './View/posted-sales-note-new/posted-sales-note-new.component';
 
 
 @NgModule({
@@ -64,7 +65,8 @@ import { SalesSearchFilterPipe } from './Pipe/sales-credite-pipe';
         PIEmailComponent,
         CreditSalesEmailComponent,
         SalesCreditNoteNavisionComponent,
-        SalesSearchFilterPipe
+        SalesSearchFilterPipe,
+        PostedSalesNoteNewComponent
     ],
     imports: [
         CommonModule,

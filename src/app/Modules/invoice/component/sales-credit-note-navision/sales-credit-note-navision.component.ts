@@ -71,9 +71,9 @@ export class SalesCreditNoteNavisionComponent implements OnInit {
         return str.toLowerCase().split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
     }
 
-    onView(data: invoiceStatusModule): void {
-        if (data.headerId) {
-            this.router.navigate(['invoice/credit-memo-status/view', data.headerId], { state: { data: data } });
+    onView(data: any): void {
+        if (data.no) {
+            this.router.navigate(['invoice/sales-navision/view', data.no], { state: { data: data } });
         } else {
             console.error('ID is undefined or null');
         }
