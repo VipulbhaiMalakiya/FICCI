@@ -38,6 +38,7 @@
                     <thead>
                         <tr>
                             <th>#</th>
+                            <th>Customer Code</th>
                             <th>Name</th>
                             <th>Address</th>
                             <th>City</th>
@@ -46,6 +47,7 @@
                             <th>PAN No</th>
                             <th>Created On</th>
                             <th>Created By</th>
+                            <th>Rejected By Accounts</th>
                             <th>Status</th>
                             <th class="action-cl">Action</th>
                         </tr>
@@ -55,6 +57,7 @@
                         <tr
                         *ngFor="let d of  this.publicVariable.ApproveCustomerList | approvalsearchFilter: publicVariable.approvalsearchText| paginate: {itemsPerPage: publicVariable.tableSize,currentPage: publicVariable.page,totalItems: publicVariable.count};let i = index">
                         <td>{{i + 1}}</td>
+                        <td>{{d.customerCode || ''}}</td>
                         <td>{{d.customerName |titlecase }}</td>
                         <td>{{d.address}}</td>
                         <td>{{ d.cityList.cityName }}</td>
@@ -63,6 +66,7 @@
                         <td>{{d.pan}}</td>
                         <td>{{d.createdOn | date:'medium':'IST' }}</td>
                         <td>{{d.createdBy}}</td>
+                        <td>{{d.accountsRemarks || ''}}</td>
                         <td>{{d.customerStatus | titlecase}}</td>
                             <td><span class="table-btns">
                                     <a href="javascript:void(0);"  (click)="onEdit(d)" ><img src="../assets/images/view-icon.svg" alt=""></a>

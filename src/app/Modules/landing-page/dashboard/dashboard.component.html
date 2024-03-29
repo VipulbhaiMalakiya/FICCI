@@ -179,6 +179,7 @@
                                                 <tr>
                                                     <th>#</th>
                                                     <th>Customer Code</th>
+                                                    <th>Customer Code</th>
                                                     <th>Name</th>
                                                     <th>Address</th>
                                                     <th>City</th>
@@ -197,7 +198,7 @@
                                                 <tr
                                                     *ngFor="let d of  this.publicVariable.customerStatusList | searchFilter: publicVariable.searchText| paginate: {itemsPerPage: publicVariable.tableSize,currentPage: publicVariable.page,totalItems: publicVariable.count};let i = index">
                                                     <td>{{i + 1}}</td>
-                                                    <td>{{d.customerCode |titlecase }}</td>
+                                                    <td>{{d.customerCode || ''}}</td>
                                                     <td>{{d.customerName |titlecase }}</td>
                                                     <td>{{d.address}}</td>
                                                     <td>{{ d.cityList.cityName}}</td>
