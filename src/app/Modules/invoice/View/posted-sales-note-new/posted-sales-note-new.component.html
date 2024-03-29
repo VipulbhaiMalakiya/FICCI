@@ -1,1 +1,290 @@
-<p>posted-sales-note-new works!</p>
+<app-loading *ngIf="publicVariable.isProcess"></app-loading>
+
+
+
+<div class="inner-content">
+
+    <h3 class="content-title">Posted PI Invoice</h3>
+
+    <!-- <div class="pipage-radio">
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="ImpiHeaderInvoiceType" id="flexRadioDefault1" value="Proforma Invoice" checked />
+
+            <label class="form-check-label" for="flexRadioDefault1">
+                {{TaxInvoicedata.impiHeaderInvoiceType | titlecase}}
+            </label>
+        </div>
+
+    </div> -->
+    <div class="mastersform-sec mb-0">
+        <div class="row">
+
+
+            <div class="col-md-4 col-sm-6">
+                <div class="form-group">
+                    <label>Invoice No</label>
+                    <input type="text" [value]="TaxInvoiceinfo?.invoice_no || 'N/A'" class="form-control" disabled="" readonly="">
+                </div>
+            </div>
+
+            <div class="col-md-4 col-sm-6">
+                <div class="form-group">
+                    <label>Document No</label>
+                    <input type="text"  [value]="TaxInvoiceinfo?.no || 'N/A'" class="form-control" disabled="" readonly="">
+                </div>
+            </div>
+
+            <div class="col-md-4 col-sm-6">
+                <div class="form-group">
+                    <label>Project Code</label>
+                    <input type="text" [value]="TaxInvoiceinfo?.projectCode || 'N/A'" class="form-control" disabled="" readonly="">
+                </div>
+            </div>
+
+            <div class="col-md-4 col-sm-6">
+                <div class="form-group">
+                    <label>Department</label>
+                    <input type="text"  [value]="TaxInvoiceinfo?.departmentName || 'N/A'" class="form-control" disabled="" readonly="">
+                </div>
+            </div>
+
+            <div class="col-md-4 col-sm-6">
+                <div class="form-group">
+                    <label>Division</label>
+                    <input type="text" [value]="TaxInvoiceinfo?.divisionName || 'N/A'" class="form-control" disabled="" readonly="">
+                </div>
+            </div>
+
+            <div class="col-md-4 col-sm-6">
+                <div class="form-group">
+                    <label>PAN No</label>
+                    <input type="text"  [value]="TaxInvoiceinfo?.paN_NO || 'N/A'" class="form-control" disabled="" readonly="">
+                </div>
+            </div>
+
+            <div class="col-md-4 col-sm-6">
+                <div class="form-group">
+                    <label>GST No</label>
+                    <input type="text"  [value]="TaxInvoiceinfo?.gsT_No || 'N/A'" class="form-control" disabled="" readonly="">
+                </div>
+            </div>
+
+
+
+        </div>
+
+    </div>
+
+    <div class="pi-pagetitle">Customer Details</div>
+
+    <div class="mastersform-sec mb-0">
+        <div class="row">
+
+            <div class="col-md-4 col-sm-6">
+                <div class="form-group">
+                    <label>Customer No</label>
+                    <input type="text" [value]="TaxInvoiceinfo?.sellToCustomerNo || 'N/A'" class="form-control"
+                        disabled="" readonly="">
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6">
+                <div class="form-group">
+                    <label>Customer Name</label>
+                    <input type="text" [value]="TaxInvoiceinfo?.sellToCustomerName || 'N/A'" class="form-control"
+                        disabled="" readonly="">
+                </div>
+            </div>
+
+
+
+            <div class="col-md-4 col-sm-6">
+                <div class="form-group">
+                    <label>Address</label>
+                    <input type="text" [value]="TaxInvoiceinfo?.sellToAddress || 'N/A'" class="form-control" disabled
+                        readonly>
+
+                </div>
+            </div>
+
+            <div class="col-md-4 col-sm-6">
+                <div class="form-group">
+                    <label>CountryRegionCode
+                    </label>
+                    <input type="text"  [value]="TaxInvoiceinfo?.sellToCountryRegionCode || 'N/A'" class="form-control" disabled="" readonly="">
+                </div>
+            </div>
+
+            <div class="col-md-4 col-sm-6">
+                <div class="form-group">
+                    <label>City</label>
+                    <input type="text"  [value]="TaxInvoiceinfo?.sellToCity || 'N/A'" class="form-control" disabled="" readonly="">
+                </div>
+            </div>
+
+
+            <div class="col-md-4 col-sm-6">
+                <div class="form-group">
+                    <label>Post Code</label>
+                    <input type="text"  [value]="TaxInvoiceinfo?.sellToPostCode || 'N/A'" class="form-control" disabled="" readonly="">
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="dasboard-table pi-table">
+
+        <div class="table-responsive">
+            <table class="table table-bordered text-nowrap">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <!-- <th width="38%">Document No</th> -->
+                        <!-- <th>GST Credit</th> -->
+                        <th>Line No</th>
+                        <th>Type</th>
+                        <th>GL Accounts</th>
+                        <th>Price</th>
+                        <th>GST Group Code</th>
+                        <th>GST Group Type</th>
+                        <th>HSN SAC Code</th>
+                        <th>Location Code</th>
+                        <th>Total Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr *ngFor="let e of TaxInvoiceinfo?.getPerformaInvoiceInfoLine; let i = index">
+                        <td>{{i + 1}}</td>
+                        <!-- <td>{{e.documentNo}}</td> -->
+                        <!-- <td>{{e.gSTCredit}}</td> -->
+                        <td>{{e.lineNo}}</td>
+                        <td>{{e.type}}</td>
+                        <td>{{e.no_}}</td>
+                        <td>{{e.unitPrice}}</td>
+                        <td>{{e.gSTGroupCode}}</td>
+                        <td>{{e.gST_Group_Type}}</td>
+                        <td>{{e.hSN_SAC_Code}}</td>
+                        <td>{{e.locationCode}}</td>
+                        <td>{{e.lineAmount}}</td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+
+    </div>
+
+
+    <div class="dasboard-table pi-table mb-0">
+        <div class="table-responsive">
+            <table class="table table-bordered text-nowrap">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>File Type</th>
+                        <th>Invoice No.</th>
+                        <th *ngIf="!data.isDraft">Action</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <!-- <tr *ngFor="let file of InvoiceAttachment; let i = index"> -->
+                          <tr  *ngIf="InvNo!=null || InvNo!=undefined">
+                          <td>1</td>
+                          <td>.pdf</td>
+                          <td>{{InvNo}}</td>
+                          <td *ngIf="!data.isDraft">
+                              <a href="javascript:void(0)" (click)="downalodInvFile(InvAttachment,InvNo)"><img
+                                      src="../assets/images/download-icon.svg" alt="" class="me-2"></a>
+
+                          </td>
+                      </tr>
+                  </tbody>
+                <!-- <tbody>
+                    <tr *ngFor="let file of InvoiceAttachment; let i = index">
+                        <td>{{ i + 1 }}</td>
+                        <td>{{ file.fileExtension }}</td>
+                        <td>{{ file.fileName }}</td>
+                        <td *ngIf="!data.isDraft">
+                            <a href="javascript:void(0)" (click)="downalodFile(file)"><img
+                                    src="../assets/images/download-icon.svg" alt="" class="me-2"></a>
+
+                        </td>
+                    </tr>
+                </tbody> -->
+            </table>
+        </div>
+    </div>
+
+    <!-- <div class="mastersform-sec mb-3">
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Payment Terms</label>
+                    <textarea class="form-control h-100" cols="2" rows="2" disabled=""
+                        readonly=""> WIP</textarea>
+                </div>
+            </div>
+
+            <div class="col-md-6 ">
+                <div class="form-group">
+                    <label>Initial Remarks</label>
+                    <textarea class="form-control h-100" cols="2" rows="2" disabled=""
+                        readonly="">WIP</textarea> </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group" >
+                    <label>Tl Remarks </label>
+                    <textarea class="form-control h-100" cols="2" rows="2" disabled=""
+                        readonly="">WIP</textarea> </div>
+            </div>
+
+            <div class="col-md-6" >
+                <div class="form-group">
+                    <label>CH Remarks</label>
+                    <textarea class="form-control h-100" cols="2" rows="2" disabled=""
+                        readonly="">WIP</textarea>
+                </div>
+            </div>
+
+            <div class="col-md-6" >
+                <div class="form-group">
+                    <label>Finance Remarks</label>
+                    <textarea class="form-control h-100" cols="2" rows="2" disabled=""
+                        readonly="">WIP</textarea>
+                </div>
+            </div>
+
+            <div class="col-md-6" >
+                <div class="form-group">
+                    <label>Accounts Remarks</label>
+                    <textarea class="form-control h-100" cols="2" rows="2" disabled=""
+                        readonly="">WIP</textarea>
+                </div>
+            </div>
+        </div>
+
+    </div> -->
+<!--
+    <form [formGroup]="publicVariable.dataForm" (ngSubmit)="onSubmit()">
+        <div class="col-md-12 mt-3">
+            <div class="form-group">
+                <label>Remarks</label>
+                <textarea class="form-control h-50" cols="2" rows="2" formControlName="remarks"></textarea>
+                <div *ngIf="shouldShowError('remarks','required')" class="text-danger">This field is required
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-12 mt-4">
+            <div class="form-group mb-0 mt-2">
+                <button type="submit" class="common-btn w-auto">Submit</button>
+            </div>
+        </div>
+    </form> -->
+
+
+</div>
