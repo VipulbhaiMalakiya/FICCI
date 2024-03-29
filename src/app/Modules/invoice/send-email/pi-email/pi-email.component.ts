@@ -185,7 +185,7 @@ export class PIEmailComponent {
 
 
     downalodInvFile(base64String: any, InvNo: any = 'Invoice') {
-        debugger;
+
         const fileName = InvNo + '.pdf';
         const fileType = `application/pdf`;
         this.fileService.downloadFile(base64String, fileName, fileType);

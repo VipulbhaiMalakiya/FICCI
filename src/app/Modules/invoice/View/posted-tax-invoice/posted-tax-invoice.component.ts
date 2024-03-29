@@ -99,10 +99,10 @@ export class PostedTaxInvoiceComponent {
             const subscription = this.API.GetTaxInvoiceAttachment(invoice).subscribe({
                 next: (response: any) => {
                     this.InvoiceAttachment = response.data;
-                    this.InvNo =this.InvoiceAttachment.invoiceNo;                    
+                    this.InvNo =this.InvoiceAttachment.invoiceNo;
                     this.InvAttachment =this.InvoiceAttachment.attachment;
 
-                    
+
                     console.log(this.InvoiceAttachment);
                     this.handleLoadingError();
                 },
@@ -119,8 +119,8 @@ export class PostedTaxInvoiceComponent {
         }
     }
 
-    downalodInvFile(base64String: any,InvNo :any ='Invoice') { 
-        debugger;     
+    downalodInvFile(base64String: any,InvNo :any ='Invoice') {
+
         const fileName = InvNo+'.pdf';
         const fileType = `application/pdf`;
         this.fileService.downloadFile(base64String, fileName, fileType);
