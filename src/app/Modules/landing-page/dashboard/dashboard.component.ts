@@ -54,7 +54,7 @@ export class DashboardComponent {
     ) { }
 
     ngOnInit(): void {
-        // this.loadCustomerStatusCountList();
+        this.loadCustomerStatusCountList();
         this.publicVariable.storedEmail = localStorage.getItem('userEmail') ?? '';
         this.storedRole = localStorage.getItem('userRole') ?? '';
         const isFinanceValue = localStorage.getItem('IsFinance');

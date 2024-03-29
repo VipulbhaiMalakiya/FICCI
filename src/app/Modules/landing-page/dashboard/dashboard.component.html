@@ -6,23 +6,23 @@
             <li class="nav-item" role="presentation">
                 <button class="nav-link active" id="pills-profile-tab" data-bs-toggle="pill"
                     data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile"
-                    aria-selected="false" (click)="loadPurchaseInvoiceList('Tax Invoice')" *ngIf="!isAccount">Tax
+                    aria-selected="false" (click)="loadPurchaseInvoiceList('Tax Invoice')" >Tax
                     invoice</button>
             </li>
             <li class="nav-item" role="presentation">
                 <button class="nav-link " id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile"
                     type="button" role="tab" aria-controls="pills-profile" aria-selected="false"
-                    (click)="loadPurchaseInvoiceList('Proforma Invoice')" *ngIf="!isAccount">Performa Invoice</button>
+                    (click)="loadPurchaseInvoiceList('Proforma Invoice')" >Performa Invoice</button>
             </li>
 
             <li class="nav-item" role="presentation">
                 <button class="nav-link " id="pills-sales-tab" data-bs-toggle="pill" data-bs-target="#pills-sales-profile"
                     type="button" role="tab" aria-controls="pills-sales-profile" aria-selected="false"
-                    (click)="loadSalesCreditNote()" *ngIf="!isAccount">Sales credit note</button>
+                    (click)="loadSalesCreditNote()" >Sales credit note</button>
             </li>
 
             <li class="nav-item" role="presentation">
-                <button class="nav-link " id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home"
+                <button class="nav-link "  id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home"
                     type="button" role="tab" aria-controls="pills-home" aria-selected="true"
                     (click)="loadCustomerStatusCountList()">Customer</button>
             </li>
@@ -179,7 +179,6 @@
                                                 <tr>
                                                     <th>#</th>
                                                     <th>Customer Code</th>
-                                                    <th>Customer Code</th>
                                                     <th>Name</th>
                                                     <th>Address</th>
                                                     <th>City</th>
@@ -188,8 +187,8 @@
                                                     <th>PAN No</th>
                                                     <th>Created On</th>
                                                     <th>Created By</th>
-                                                    <th>Status</th>
                                                     <th>Remarks</th>
+                                                    <th>Status</th>
                                                     <th class="action-cl">Action</th>
                                                 </tr>
                                             </thead>
