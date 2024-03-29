@@ -34,6 +34,7 @@ export class InvoicesService {
     private InvoiceSummaryURL = `${environment.apiURL}NavERP/GetInvoiceSummary?User=`;
     private PIInvoiceSummaryURL = `${environment.apiURL}NavERP/GetPIInvoiceSummary?User=`;
     private PITaxInvoiceInformationURL = `${environment.apiURL}NavERP/GetPIInvoiceInformation?InvoiceNo=`;
+    private SalesCreditNoteInformationURL = `${environment.apiURL}NavERP/GetSalesCreditNoteInformation?InvoiceNo=`;
 
     private TaxInvoiceInformationURL = `${environment.apiURL}NavERP/GetTaxInvoiceInformation?InvoiceNo=`;
     private GetTaxInvoiceAttachmentURL = `${environment.apiURL}NavERP/GetTaxInvoiceAttachment?InvoiceNo=`;
@@ -51,7 +52,7 @@ export class InvoicesService {
         return this.http.get<any[]>(url);
     }
 
-    getGstRegistrationNo(data:any): Observable<any[]> {
+    getGstRegistrationNo(data: any): Observable<any[]> {
         const url = `${this.GstRegistrationNoURL}${data.gst ?? ''}&code=${data.code}`;
         return this.http.get<any[]>(url);
     }
@@ -70,22 +71,28 @@ export class InvoicesService {
         const userEmail = localStorage.getItem('userEmail');
         const url = `${this.GetTaxInvoiceAttachmentURL}${InvoiceNo}`;
         return this.http.get<any[]>(url);
-      }
+    }
 
-      GetPITaxInvoiceAttachment(InvoiceNo: string): Observable<any[]> {
+    GetPITaxInvoiceAttachment(InvoiceNo: string): Observable<any[]> {
         const userEmail = localStorage.getItem('userEmail');
         const url = `${this.GetPITaxInvoiceAttachmentURL}${InvoiceNo}`;
         return this.http.get<any[]>(url);
-      }
+    }
 
 
-    GetTaxInvoiceInformation(InvoiceNo:string): Observable<any[]> {
+    GetTaxInvoiceInformation(InvoiceNo: string): Observable<any[]> {
         const url = `${this.TaxInvoiceInformationURL}${InvoiceNo}`;
         return this.http.get<any[]>(url);
     }
 
-    GetPITaxInvoiceInformation(InvoiceNo:string): Observable<any[]> {
+    GetPITaxInvoiceInformation(InvoiceNo: string): Observable<any[]> {
         const url = `${this.PITaxInvoiceInformationURL}${InvoiceNo}`;
+        return this.http.get<any[]>(url);
+    }
+
+
+    GetSalesCreditNoteInformation(InvoiceNo: string): Observable<any[]> {
+        const url = `${this.SalesCreditNoteInformationURL}${InvoiceNo}`;
         return this.http.get<any[]>(url);
     }
 

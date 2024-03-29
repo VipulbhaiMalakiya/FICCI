@@ -7,9 +7,9 @@ import { FileService } from '../../service/FileService';
 import { InvoicesService } from '../../service/invoices.service';
 
 @Component({
-  selector: 'app-posted-sales-note-new',
-  templateUrl: './posted-sales-note-new.component.html',
-  styleUrls: ['./posted-sales-note-new.component.css']
+    selector: 'app-posted-sales-note-new',
+    templateUrl: './posted-sales-note-new.component.html',
+    styleUrls: ['./posted-sales-note-new.component.css']
 })
 export class PostedSalesNoteNewComponent {
 
@@ -45,7 +45,7 @@ export class PostedSalesNoteNewComponent {
         });
         this.data = history.state.data;
 
-        console.log(  this.data);
+        // console.log(this.data);
 
 
         this.loadTaxInvoiceInformation();
@@ -55,18 +55,17 @@ export class PostedSalesNoteNewComponent {
     loadTaxInvoiceInformation() {
         try {
 
-            // const subscription = this.API.GetTaxInvoiceInformation("SI121683").subscribe({
+            const subscription = this.API.GetTaxInvoiceInformation("SCM/11-12/00050").subscribe({
 
-                const subscription = this.API.GetPITaxInvoiceInformation(this.data.no).subscribe({
+                //    const subscription = this.API.GetSalesCreditNoteInformation(this.data.no).subscribe({
                 next: (response: any) => {
                     this.TaxInvoicedata = response.data;
+                    this.publicVariable.isProcess = false;
+                    // console.log('response:', response.data);
+                    this.filterTaxInvoiceByInvoiceNo("SI121683");
 
-                    console.log('response:',response.data);
-                    // this.filterTaxInvoiceByInvoiceNo("SI121683");
-
-                    console.log(this.data.no);
-                    this.filterTaxInvoiceByInvoiceNo(this.data.no);
-                    this.loadTaxInvoiceAttachment(this.data.no)
+                    // this.filterTaxInvoiceByInvoiceNo(this.data.no);
+                    //  this.loadTaxInvoiceAttachment(this.data.no)
                     this.cd.detectChanges();
                 },
                 error: (error) => {
@@ -98,24 +97,23 @@ export class PostedSalesNoteNewComponent {
         this.TaxInvoiceinfo = TaxInvoicedataArray[0];
         this.cd.detectChanges();
     }
-    InvNo:any;
-    InvAttachment :any;
+    InvNo: any;
+    InvAttachment: any;
     loadTaxInvoiceAttachment(invoice: string) {
         try {
             const subscription = this.API.GetPITaxInvoiceAttachment(invoice).subscribe({
                 next: (response: any) => {
 
-                    if(response.data.length>0)
-                    {
-                    this.InvoiceAttachment = response.data[0];
-                    this.InvNo =this.InvoiceAttachment.invoiceNo;
-                    this.InvAttachment =this.InvoiceAttachment.attachment;
+                    if (response.data.length > 0) {
+                        this.InvoiceAttachment = response.data[0];
+                        this.InvNo = this.InvoiceAttachment.invoiceNo;
+                        this.InvAttachment = this.InvoiceAttachment.attachment;
 
 
-                    console.log(this.InvoiceAttachment);
+                        console.log(this.InvoiceAttachment);
 
-                    //alert(this.InvoiceAttachment.invoiceNo);
-                    this.handleLoadingError();
+                        //alert(this.InvoiceAttachment.invoiceNo);
+                        this.handleLoadingError();
                     }
                     this.handleLoadingError();
                 },
@@ -140,9 +138,9 @@ export class PostedSalesNoteNewComponent {
         this.fileService.downloadFile(base64String, fileName, fileType);
     }
 
-    downalodInvFile(base64String: any,InvNo :any ='Invoice') {
+    downalodInvFile(base64String: any, InvNo: any = 'Invoice') {
 
-        const fileName = InvNo+'.pdf';
+        const fileName = InvNo + '.pdf';
         const fileType = `application/pdf`;
         this.fileService.downloadFile(base64String, fileName, fileType);
     }
