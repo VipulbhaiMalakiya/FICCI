@@ -948,9 +948,9 @@
                                                                 data-bs-target="#deleterecord-modal"><img
                                                                     src="../assets/images/delete-icon.svg" alt="" /></a>
 
-                                                            <a href="javascript:void(0);" (click)="onSendEmail(d)"
-                                                                *ngIf="d.headerStatus === 'APPROVED BY FINANCE' && this.storedRole === 'Approver' "><img
-                                                                    src="../assets/images/email-icon.svg" alt="" /></a>
+                                                                    <a href="javascript:void(0);" (click)="onsalesSendEmail(d)"
+                                                                    *ngIf="d.headerStatus === 'APPROVED BY TL' && this.storedRole === 'Approver' "><img
+                                                                        src="../assets/images/email-icon.svg" alt="" /></a>
                                                             <a href="javascript:void(0);" (click)="onediteEmail(d)"
                                                                 *ngIf="d.headerStatus === 'MAIL SENT BY FINANCE TO CUSTOMER' && this.storedRole === 'Approver' "><img
                                                                     src="../assets/images/email-edit-icon.svg"
