@@ -31,6 +31,7 @@ import { ApprovalSalesInboxComponent } from './component/approval-sales-inbox/ap
 import { ViewSalesApprovalComponent } from './View/view-sales-approval/view-sales-approval.component';
 import { PiInvoiceViewNewComponent } from './View/pi-invoice-view-new/pi-invoice-view-new.component';
 import { CreditSalesEmailComponent } from './send-email/credit-sales-email/credit-sales-email.component';
+import { PIEmailComponent } from './send-email/pi-email/pi-email.component';
 
 
 
@@ -59,7 +60,8 @@ import { CreditSalesEmailComponent } from './send-email/credit-sales-email/credi
         ApprovalSalesInboxComponent,
         ViewSalesApprovalComponent,
         PiInvoiceViewNewComponent,
-        CreditSalesEmailComponent
+        CreditSalesEmailComponent,
+        PIEmailComponent
     ],
     imports: [
         CommonModule,
