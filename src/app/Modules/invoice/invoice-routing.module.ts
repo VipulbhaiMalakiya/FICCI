@@ -18,6 +18,7 @@ import { CreditMemoViewComponent } from './View/credit-memo-view/credit-memo-vie
 import { ApprovalSalesInboxComponent } from './component/approval-sales-inbox/approval-sales-inbox.component';
 import { ViewSalesApprovalComponent } from './View/view-sales-approval/view-sales-approval.component';
 import { PiInvoiceViewNewComponent } from './View/pi-invoice-view-new/pi-invoice-view-new.component';
+import { SalesCreditNoteNavisionComponent } from './component/sales-credit-note-navision/sales-credit-note-navision.component';
 const routes: Routes = [
     { path: '', redirectTo: 'status', pathMatch: 'full' },
     {
@@ -131,8 +132,15 @@ const routes: Routes = [
         canActivate: [AuthGuard],
         data: { expectedRoles: ['Admin', 'Approver', 'Employee', 'Accounts'] }
     },
+    {
+        path:'sales-navision',
+        component:SalesCreditNoteNavisionComponent,
+        canActivate: [AuthGuard],
+        data: { expectedRoles: ['Admin', 'Approver', 'Employee', 'Accounts'] }
+    }
 
-    
+
+
 ];
 
 @NgModule({

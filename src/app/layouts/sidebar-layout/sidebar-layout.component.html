@@ -52,7 +52,7 @@
                                     <h3><a routerLink="dashboard" routerLinkActive="active"><img
                                                 src="../assets/images/dashboard-icon.png" alt=""> Dashboard</a></h3>
                                 </div>
-                              
+
 
                                 <div class="left-men" routerLinkActive="active" *ngIf="!isAccount">
                                     <h3><img src="../assets/images/invoice-icon.png" alt=""> Customer Invoice</h3>
@@ -74,6 +74,10 @@
 
                                         <a routerLink="/invoice/sales-approval" class="menu-list-title"
                                         routerLinkActive="active" *ngIf=" isApprover ">Sales Approval</a>
+
+                                        <a routerLink="/invoice/sales-navision" class="menu-list-title"
+                                        routerLinkActive="active" *ngIf=" isEmployee ">Posted Sales Invoice</a>
+
 
                                 </div>
 
