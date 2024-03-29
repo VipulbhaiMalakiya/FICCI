@@ -54,11 +54,11 @@ export class NewPurchaseInvoiceComponent implements OnInit {
             PINO: [''], //api missing
             ImpiHeaderCustomerName: [null, [Validators.required]],
             ImpiHeaderCustomerCode: [''], //new filed
-            ImpiHeaderCustomerAddress: [null, [Validators.required, Validators.maxLength(100)]],
+            ImpiHeaderCustomerAddress: [ null, [Validators.required, Validators.maxLength(100)]],
 
             ImpiHeaderCustomerState: [null, [Validators.required]],
-            ImpiHeaderCustomerCity: [null, [Validators.required]],
-            ImpiHeaderCustomerPinCode: [null, [ Validators.pattern(/^\d{6}$/)]],
+            ImpiHeaderCustomerCity: [ null, [Validators.required]],
+            ImpiHeaderCustomerPinCode: [ null,[Validators.pattern(/^\d{6}$/)]],
             ImpiHeaderCustomerGstNo: [null, [Validators.required, gstValidator()]],
             ImpiHeaderCustomerContactPerson: ['', [Validators.required, alphanumericWithSpacesValidator()]],
             ImpiHeaderCustomerEmailId: ['', [Validators.required, Validators.email, this.emailValidator()]],
@@ -117,7 +117,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
         }
         this.loadCOAMasterList();
         this.loadGetGSTGroupList();
-        // this.loadgetGstRegistrationNoAll();
+       // this.loadgetGstRegistrationNoAll();
     }
 
     loadCOAMasterList(): void {
@@ -164,21 +164,25 @@ export class NewPurchaseInvoiceComponent implements OnInit {
     onGSTGroupChange(gstCode: any) {
         try {
 
-
+            debugger;
             const subscription = this.API.GetHSNSACLIist(gstCode.code).subscribe({
                 next: (response: any) => {
+
+                  console.log(response.data);
                     this.publicVariable.HSNSACList = response.data;
-                    // alert(gstCode.code);
-                    // this.publicVariable.expenseForm.controls["impiHsnsaccode"].setValue('');
-                    if (gstCode.code == "SER-05") {
-                        this.publicVariable.expenseForm.controls["impiHsnsaccode"].setValue('998363');
+                   // alert(gstCode.code);
+                   // this.publicVariable.expenseForm.controls["impiHsnsaccode"].setValue('');
+                    if(gstCode.code =="SER-05")
+                    {
+                    this.publicVariable.expenseForm.controls["impiHsnsaccode"].setValue('998363');
                     }
 
-                    if (gstCode.code == "SER-18") {
-                        this.publicVariable.expenseForm.controls["impiHsnsaccode"].setValue('998596');
+                    if(gstCode.code =="SER-18")
+                    {
+                    this.publicVariable.expenseForm.controls["impiHsnsaccode"].setValue('998596');
                     }
-
-
+                  
+                    
 
                 },
                 error: (error) => {
@@ -379,7 +383,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
         }
     }
 
-    onSelectStateCustomer(): void {
+    onSelectStateCustomer():void{
 
         this.publicVariable.dataForm.patchValue({
             ImpiHeaderCustomerPinCode: null,
@@ -446,13 +450,24 @@ export class NewPurchaseInvoiceComponent implements OnInit {
 
     }
 
-    onSelectGSTCustomer(event: any): void {
+    onSelectGSTCustomer(event:any): void {
 
+        debugger;
+        console.log(event);
+       // const selectedId = this.publicVariable.dataForm.get('ImpiHeaderCustomerGstNo')?.value;
+       // console.log(selectedId);
+        //let selectDATA= this.GetCustomerGSTList.find(customer => customer.code == selectedId);
+        //debugger;
+        //console.log(selectDATA.gstNumber);
+       
+        //this.CustomerGSTNo =selectDATA.gstNumber;
+        //alert(selectDATA.code);
 
+        // this.GetCustomerGSTList
 
         let peramiter = {
-            gst: event.gstNumber,
-            code: event.code
+            gst : event.gstNumber,
+            code :event.code
         }
 
 
@@ -474,7 +489,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
                                 ImpiHeaderCustomerPhoneNo: this.publicVariable.selectCustomer.primaryContact,
                                 ImpiHeaderCustomerState: this.publicVariable.selectCustomer.stateCode,
                                 ImpiHeaderCustomerCity: this.publicVariable.selectCustomer.city,
-
+                                
                             });
                         }
                     } else {
@@ -876,7 +891,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
         }
     }
 
-
+   
 
     onSubmit(Action: string): void {
 
@@ -885,10 +900,10 @@ export class NewPurchaseInvoiceComponent implements OnInit {
             return
         }
 
-        let action = true;
-        if (Action == "Submit")
-            action = false;
-
+       let action =true;
+       if(Action =="Submit")
+        action =false;
+        debugger;
         if (this.publicVariable.expenses.length > 0) {
             if (action || this.uploadedFiles.length > 0) {
                 if (this.publicVariable.dataForm.valid && !this.gstExists && !this.panExists) {
@@ -917,7 +932,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
                     formData.append('ImpiHeaderCustomerCity', newData.ImpiHeaderCustomerCity);
                     formData.append('ImpiHeaderCustomerState', newData.ImpiHeaderCustomerState);
                     formData.append('ImpiHeaderCustomerPinCode', newData.ImpiHeaderCustomerPinCode);
-                    // formData.append('ImpiHeaderCustomerGstNo', this.CustomerGSTNo);
+                   // formData.append('ImpiHeaderCustomerGstNo', this.CustomerGSTNo);
                     formData.append('ImpiHeaderCustomerGstNo', newData.ImpiHeaderCustomerGstNo);
                     formData.append('ImpiHeaderCustomerContactPerson', newData.ImpiHeaderCustomerContactPerson);
                     formData.append('ImpiHeaderCustomerEmailId', newData.ImpiHeaderCustomerEmailId);
@@ -992,14 +1007,16 @@ export class NewPurchaseInvoiceComponent implements OnInit {
                         this.API.create(formData).subscribe({
                             next: (res: any) => {
                                 if (res.status === true) {
-                                    this.data = res.request;
+                                    this.data   =res.request;                                
 
-                                    if (Action == "Calculate") {
-                                        this.patchFormData(this.data);
+                                    if(Action =="Calculate")
+                                    {
+                                        this.patchFormData( this.data);
                                         this.toastr.success('Tax Calculated Successfully !!', 'Success');
                                         alert('Tax Calculated Successfully !!');
                                     }
-                                    else {
+                                    else
+                                    {
                                         this.toastr.success(res.message, 'Success');
                                         this.router.navigate(['invoice/status']);
                                         this.publicVariable.dataForm.reset();
@@ -1007,7 +1024,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
 
                                     this.toastr.success(res.message, 'Success');
 
-                                    //  this.toastr.success(res.message, 'Success');
+                                     //  this.toastr.success(res.message, 'Success');
                                     //this.patchFormData( this.data)
 
 
@@ -1047,7 +1064,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
 
     markFormControlsAsTouched(): void {
         ['ImpiHeaderInvoiceType', 'ImpiHeaderProjectCode', 'ImpiHeaderDepartment', 'ImpiHeaderDivison', 'ImpiHeaderPanNo', 'ImpiHeaderGstNo',
-            'ImpiHeaderCustomerName', 'ImpiHeaderCustomerAddress', 'ImpiHeaderCustomerState', 'ImpiHeaderCustomerCity','ImpiHeaderCustomerEmailId',
+            'ImpiHeaderCustomerName', 'ImpiHeaderCustomerAddress', 'ImpiHeaderCustomerState', 'ImpiHeaderCustomerCity', 'ImpiHeaderCustomerEmailId',
             'ImpiHeaderCustomerGstNo', 'ImpiHeaderCustomerContactPerson', 'ImpiHeaderCustomerPhoneNo', 'items',
             'startDate', 'endDate'
         ].forEach(controlName => {
@@ -1095,7 +1112,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
         return this.calculateTotalBaseAmount() + this.calculateTotalGSTAmount();
     }
 
-    onCalculateClick(Action: any): void {
+    onCalculateClick( Action:any): void {
         // this.calculateTotalBaseAmount();
         // this.calculateTotalGSTAmount();
         // this.calculateNetTotal();

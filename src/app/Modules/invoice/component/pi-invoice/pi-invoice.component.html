@@ -37,13 +37,15 @@
                         <tr>
                             <th>#</th>
                             <th>No</th>
-                            <th>Posting Date</th>
-                            <th>Invoice No</th>
+                            <!-- <th>Posting Date</th>
+                            <th>Invoice No</th> -->
                             <th>Customer No</th>
                             <th>Customer</th>
                             <th>Project Code</th>
                             <th>Department</th>
                             <th>Division </th>
+                            <th>Amount </th>
+                            <th>Status </th>
                             <th class="action-cl">Action</th>
                         </tr>
                     </thead>
@@ -53,13 +55,15 @@
                             *ngFor="let d of  this.InvoiceSummaryList | searchFilter2: publicVariable.searchText| paginate: {itemsPerPage: publicVariable.tableSize,currentPage: publicVariable.page,totalItems: publicVariable.count};let i = index">
                             <td>{{i + 1}}</td>
                             <td>{{d.no}}</td>
-                            <td>{{d.postingDate}}</td>
-                            <td>{{d.invoice_no}}</td>
+                            <!-- <td>{{d.postingDate}}</td>
+                            <td>{{d.invoice_no}}</td> -->
                             <td>{{d.sellToCustomerNo}}</td>
                             <td>{{d.sellToCustomerName}}</td>
                             <td>{{d.projectCode}}</td>
                             <td>{{d.departmentName}}</td>
                             <td>{{d.divisionName}}</td>
+                            <td>{{d.amount}}</td>
+                            <td>{{d.status}}</td>
                             <td><span class="table-btns">
                                     <a href="javascript:void(0);" (click)="InvoicedView(d)"><img
                                             src="../assets/images/view-icon.svg" alt=""></a>

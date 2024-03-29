@@ -7,9 +7,9 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { FileService } from '../../service/FileService';
 
 @Component({
-  selector: 'app-posted-email',
-  templateUrl: './posted-email.component.html',
-  styleUrls: ['./posted-email.component.css']
+    selector: 'app-posted-email',
+    templateUrl: './posted-email.component.html',
+    styleUrls: ['./posted-email.component.css']
 })
 export class PostedEmailComponent {
     publicVariable = new publicVariable();
@@ -17,10 +17,9 @@ export class PostedEmailComponent {
     uploadedFiles: any[] = [];
     FilePath: any;
     private _emailMaster: any | undefined;
-    InvoiceAttachment:any;
-
-
-
+    InvoiceAttachment: any;
+    InvNo: any;
+    InvAttachment: any;
 
     set isEmail(value: any) {
         this._emailMaster = value;
@@ -32,17 +31,23 @@ export class PostedEmailComponent {
             });
         }
 
-
         const subscription = this.API.GetTaxInvoiceAttachment(this._emailMaster.no).subscribe({
             next: (response: any) => {
                 this.InvoiceAttachment = response.data;
-                this.uploadedFiles = this.InvoiceAttachment
-                .map((file: any) => ({
-                    name: file.fileName,
-                    type: file.fileExtension,
-                    fileExtension:file.fileExtension,
-                    attachment:file.attachment
-                }));
+                console.log(this.InvoiceAttachment);
+
+                this.InvNo = this.InvoiceAttachment.invoiceNo;
+                this.InvAttachment = this.InvoiceAttachment.attachment;
+
+                console.log(response.data);
+
+                // this.uploadedFiles = this.InvoiceAttachment
+                //     .map((file: any) => ({
+                //         name: file.fileName,
+                //         type: file.fileExtension,
+                //         fileExtension: file.fileExtension,
+                //         attachment: file.attachment
+                //     }));
                 this.publicVariable.isProcess = false;
             },
             error: (error) => {
@@ -123,10 +128,11 @@ export class PostedEmailComponent {
 
     onFilesSelected(event: any) {
         const selectedFiles: FileList = event.target.files;
-        const allowedTypes = ['application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', // .xlsx
-            'application/vnd.ms-excel', // .xls
-            'application/msword', // .doc
-            'text/csv', // .csv
+        const allowedTypes = [
+            // 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', // .xlsx
+            // 'application/vnd.ms-excel', // .xls
+            // 'application/msword', // .doc
+            // 'text/csv', // .csv
             'application/pdf']; // .pdf
         const maxSize = 5 * 1024 * 1024; // 5MB in bytes
 
@@ -134,7 +140,7 @@ export class PostedEmailComponent {
             const file = selectedFiles[i];
 
             if (!allowedTypes.includes(file.type)) {
-                alert('Only .doc, .csv, .xlsx, and .pdf files are allowed.');
+                alert('Only .pdf files are allowed.');
                 // Clear the file input
                 event.target.value = null;
                 return;
@@ -147,9 +153,10 @@ export class PostedEmailComponent {
                 return;
             }
             this.uploadedFiles.push(file);
+            this.publicVariable.isProcess = false;
         }
-          // Clear the file input after successful file selection
-          event.target.value = null;
+        // Clear the file input after successful file selection
+        event.target.value = null;
     }
 
 
@@ -172,11 +179,23 @@ export class PostedEmailComponent {
     }
 
 
+
+
+    downalodInvFile(base64String: any, InvNo: any = 'Invoice') {
+        debugger;
+        const fileName = InvNo + '.pdf';
+        const fileType = `application/pdf`;
+        this.fileService.downloadFile(base64String, fileName, fileType);
+    }
+
     downalodFile(fileUrl: any) {
 
         const base64String = fileUrl.attachment;
+        //  const fileName = fileUrl.name;
+        //  const fileType = `application/${fileUrl.type}`;
+
         const fileName = fileUrl.name;
-        const fileType = `application/${fileUrl.type}`;
+        const fileType = `application/pdf`;
         this.fileService.downloadFile(base64String, fileName, fileType);
     }
 
@@ -209,7 +228,7 @@ export class PostedEmailComponent {
             const newData = this.publicVariable.mailForm.value;
             const newConfig: any = {
                 emailTo: newData.emailTo,
-                MailCC:newData.MailCC,
+                MailCC: newData.MailCC,
                 subject: newData.subject,
                 body: newData.body,
                 attachment: this.uploadedFiles,
@@ -224,7 +243,7 @@ export class PostedEmailComponent {
 
 
     markFormControlsAsTouchedemail(): void {
-        ['emailTo','MailCC', 'subject', 'body'].forEach(controlName => {
+        ['emailTo', 'MailCC', 'subject', 'body'].forEach(controlName => {
             this.publicVariable.mailForm.controls[controlName].markAsTouched();
         });
     }

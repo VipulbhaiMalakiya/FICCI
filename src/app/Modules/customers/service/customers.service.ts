@@ -19,8 +19,8 @@ export class CustomersService {
     private getCustomerStatusNewURL = `${environment.apiURL}Customer?email=`;
     private ApproveCustomerURL = `${environment.apiURL}ApproveCustomer?email=`;
     private ApproverURL = `${environment.apiURL}ApproveCustomer`;
-    private AccountURL = `${environment.apiURL}ApproveCustomer?email=`; //Finance Approver
-    // private AccountURL = `${environment.apiURL}Account?loginid=`; // Account Approver
+    //private AccountURL = `${environment.apiURL}ApproveCustomer?email=`; //Finance Approver
+    private AccountURL = `${environment.apiURL}Account?loginid=`; // Account Approver
     private countryListURL = `${environment.apiURL}DropDown/GetCountry`;
     private GetStateURl = `${environment.apiURL}DropDown/GetState`;
     private GetCityURl = `${environment.apiURL}DropDown/GetCity`;

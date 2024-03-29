@@ -18,7 +18,6 @@ import { CreditMemoViewComponent } from './View/credit-memo-view/credit-memo-vie
 import { ApprovalSalesInboxComponent } from './component/approval-sales-inbox/approval-sales-inbox.component';
 import { ViewSalesApprovalComponent } from './View/view-sales-approval/view-sales-approval.component';
 import { PiInvoiceViewNewComponent } from './View/pi-invoice-view-new/pi-invoice-view-new.component';
-
 const routes: Routes = [
     { path: '', redirectTo: 'status', pathMatch: 'full' },
     {
@@ -73,6 +72,12 @@ const routes: Routes = [
         data: { expectedRoles: ['Admin', 'Approver', 'Employee', 'Accounts'] }
     },
     {
+        path:'pi-invoice/view/:id',
+        component:PiInvoiceViewNewComponent,
+        canActivate: [AuthGuard],
+        data: { expectedRoles: ['Admin', 'Approver', 'Employee', 'Accounts'] }
+    },
+    {
         path:'tax-invoice',
         component:PostedTextInvoiceComponent,
         canActivate: [AuthGuard],
@@ -91,7 +96,7 @@ const routes: Routes = [
     },
     {
         path:'pi-invoice/view/:id',
-        component:PiInvoiceViewNewComponent,
+        component:PostedTaxInvoiceComponent,
         canActivate: [AuthGuard],
         data: { expectedRoles: ['Admin', 'Approver', 'Employee', 'Accounts'] }
     },
@@ -127,7 +132,7 @@ const routes: Routes = [
         data: { expectedRoles: ['Admin', 'Approver', 'Employee', 'Accounts'] }
     },
 
-
+    
 ];
 
 @NgModule({

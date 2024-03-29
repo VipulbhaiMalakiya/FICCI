@@ -61,14 +61,14 @@
             <div class="mb-3 row attach-col2">
                 <label for="formFile" class="col-sm-2 col-form-label">Attachment</label>
                 <div class="col-sm-9">
-                    <input class="form-control" type="file" id="formFile" formControlName="attachment" accept=".pdf,.xlsx,.csv" multiple
+                    <input class="form-control" type="file" id="formFile" formControlName="attachment" accept=".pdf" multiple
                     (change)="onFilesSelected($event)">
                 </div>
             </div>
 
-            <div class="dasboard-table pi-table mb-0" *ngIf="uploadedFiles && uploadedFiles.length > 0">
+            <div class="dasboard-table pi-table mb-0">
                 <div class="table-responsive">
-                    <table class="table table-bordered text-nowrap">
+                    <!-- <table class="table table-bordered text-nowrap">
                         <thead>
                           <tr>
                             <th>#</th>
@@ -87,7 +87,41 @@
                             </td>
                           </tr>
                         </tbody>
-                      </table>
+                      </table> -->
+
+                      <table class="table table-bordered text-nowrap">
+                        <thead>
+                            <tr>
+                                <th>#</th> 
+                                <th>File Type</th>
+                                <th>Invoice No.</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                          <!-- <tr *ngFor="let file of InvoiceAttachment; let i = index"> -->
+                                <tr *ngIf="InvNo!='' || InvNo!=undefined ">
+                                <td>1</td>
+                                <td>.pdf</td>
+                                <td>{{InvNo}}</td>
+                                <td>
+                                    <a href="javascript:void(0)" (click)="downalodInvFile(InvAttachment,InvNo)"><img
+                                            src="../assets/images/download-icon.svg" alt="" class="me-2"></a>
+        
+                                </td>
+                            </tr>
+                            <tr *ngFor="let file of uploadedFiles; let i = index">
+                                <td>{{ i + 2 }}</td>
+                                <td>.pdf</td>
+                                <td>{{ file.name }}</td>                                
+                                <td>
+                                  <a href="javascript:void(0)" (click)="downalodFile(file)"><img src="../assets/images/download-icon.svg" alt="" class="me-2"></a>
+                                  <a href="javascript:void(0)" (click)="deleteFile(i,file)"><img src="../assets/images/delete-icon.svg"
+                                      alt=""></a>
+                                </td>
+                              </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
 

@@ -8,6 +8,7 @@ import { publicVariable, AppService, CustomersService } from '../../Export/invoc
 import { PostedEmailComponent } from '../../send-email/posted-email/posted-email.component';
 import { InvoicesService } from '../../service/invoices.service';
 import { InvoiceSummaryModel } from '../../interface/invoice';
+import { PIEmailComponent } from '../../send-email/pi-email/pi-email.component';
 
 @Component({
     selector: 'app-pi-invoice',
@@ -141,8 +142,8 @@ export class PiInvoiceComponent {
     sendEmail(dataItem: any) {
         this.publicVariable.isProcess = true;
 
-        const modalRef = this.modalService.open(PostedEmailComponent, { size: "xl" });
-        var componentInstance = modalRef.componentInstance as PostedEmailComponent;
+        const modalRef = this.modalService.open(PIEmailComponent, { size: "xl" });
+        var componentInstance = modalRef.componentInstance as PIEmailComponent;
         componentInstance.isEmail = dataItem;
         modalRef.result.then((data: any) => {
             if (data) {

@@ -1,12 +1,12 @@
 export const environment = {
     production: false,
     //Development Local
-    apiURL: "https://localhost:7038/api/",
-    fileURL: "https://localhost:7038/",
+   apiURL: "https://localhost:44386/api/",
+   fileURL: "https://localhost:44386/",
 
-    //Development Server
-    // apiURL: "http://172.16.19.154:1220/api/",
-    // fileURL: "http://172.16.19.154:1220/",
+    // //Production Server
+   //  apiURL: "http://siportal.myassociates.org:9001/api/",
+    //fileURL: "http://siportal.myassociates.org:9001/",
 
   };
 

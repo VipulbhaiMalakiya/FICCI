@@ -54,14 +54,14 @@
                         <li class="nav-item">
                             <a class="nav-link tabbg-3" data-bs-toggle="pill" href="#home"
                                 (click)="loadCustomerStatusList('APPROVED BY ACCOUNTS APPROVER')">
-                                <small>Approved Accounts</small>
+                                <small>Approved By Accounts</small>
                                 <span>{{this.ApprovedAccounts }}</span>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link tabbg-4" data-bs-toggle="pill" href="#home"
                                 (click)="loadCustomerStatusList('REJECTED BY CH APPROVER')">
-                                <small>Rejected by Customer</small>
+                                <small>Rejected By Accounts</small>
                                 <span>{{this.RejectedbyAccounts }}</span>
                             </a>
                         </li>
@@ -178,6 +178,7 @@
                                             <thead>
                                                 <tr>
                                                     <th>#</th>
+                                                    <th>Customer Code</th>
                                                     <th>Name</th>
                                                     <th>Address</th>
                                                     <th>City</th>
@@ -187,6 +188,7 @@
                                                     <th>Created On</th>
                                                     <th>Created By</th>
                                                     <th>Status</th>
+                                                    <th>Remarks</th>
                                                     <th class="action-cl">Action</th>
                                                 </tr>
                                             </thead>
@@ -195,6 +197,7 @@
                                                 <tr
                                                     *ngFor="let d of  this.publicVariable.customerStatusList | searchFilter: publicVariable.searchText| paginate: {itemsPerPage: publicVariable.tableSize,currentPage: publicVariable.page,totalItems: publicVariable.count};let i = index">
                                                     <td>{{i + 1}}</td>
+                                                    <td>{{d.customerCode |titlecase }}</td>
                                                     <td>{{d.customerName |titlecase }}</td>
                                                     <td>{{d.address}}</td>
                                                     <td>{{ d.cityList.cityName}}</td>
@@ -204,6 +207,7 @@
                                                     <td>{{d.createdOn | date:'medium':'IST' }}</td>
                                                     <td>{{d.createdBy}}</td>
                                                     <td>{{d.customerStatus | titlecase}}</td>
+                                                    <td>{{d.accountsRemarks | titlecase}}</td>
                                                     <td><span class="table-btns">
                                                             <a href="javascript:void(0);" (click)="onView(d)"
                                                                 *ngIf="customerStatus !== 'FOR APPROVAL'">
@@ -563,6 +567,8 @@
                                                     <th>Project Code</th>
                                                     <th>Department</th>
                                                     <th>Division </th>
+                                                    <th>Amount</th>
+                                                    <th>Status </th>
                                                     <th class="action-cl">Action</th>
                                                 </tr>
                                             </thead>
@@ -579,6 +585,8 @@
                                                     <td>{{d.projectCode}}</td>
                                                     <td>{{d.departmentName}}</td>
                                                     <td>{{d.divisionName}}</td>
+                                                    <td>{{d.amount}}</td>
+                                                    <td>{{d.status}}</td>
                                                     <td><span class="table-btns">
                                                             <a href="javascript:void(0);" (click)="InvoicedView(d)"><img
                                                                     src="../assets/images/view-icon.svg" alt=""></a>
@@ -662,13 +670,15 @@
                                                 <tr>
                                                     <th>#</th>
                                                     <th>No</th>
-                                                    <th>Posting Date</th>
-                                                    <th>Invoice No</th>
+                                                    <!-- <th>Posting Date</th>
+                                                    <th>Invoice No</th> -->
                                                     <th>Customer No</th>
                                                     <th>Customer</th>
                                                     <th>Project Code</th>
                                                     <th>Department</th>
                                                     <th>Division </th>
+                                                    <th>Amount</th>
+                                                    <th>Status </th>
                                                     <th class="action-cl">Action</th>
                                                 </tr>
                                             </thead>
@@ -678,13 +688,15 @@
                                                     *ngFor="let d of  this.PIInvoiceSummaryList | searchFilter1: publicVariable.searchText| paginate: {itemsPerPage: publicVariable.tableSize,currentPage: publicVariable.page,totalItems: publicVariable.count};let i = index">
                                                     <td>{{i + 1}}</td>
                                                     <td>{{d.no}}</td>
-                                                    <td>{{d.postingDate}}</td>
-                                                    <td>{{d.invoice_no}}</td>
+                                                    <!-- <td>{{d.postingDate}}</td>
+                                                    <td>{{d.invoice_no}}</td> -->
                                                     <td>{{d.sellToCustomerNo}}</td>
                                                     <td>{{d.sellToCustomerName}}</td>
                                                     <td>{{d.projectCode}}</td>
                                                     <td>{{d.departmentName}}</td>
                                                     <td>{{d.divisionName}}</td>
+                                                    <td>{{d.amount}}</td>
+                                                    <td>{{d.status}}</td>
                                                     <td><span class="table-btns">
                                                             <a href="javascript:void(0);"
                                                                 (click)="PIInvoicedView(d)"><img
@@ -936,8 +948,8 @@
                                                                 data-bs-target="#deleterecord-modal"><img
                                                                     src="../assets/images/delete-icon.svg" alt="" /></a>
 
-                                                            <a href="javascript:void(0);" (click)="onsalesSendEmail(d)"
-                                                                *ngIf="d.headerStatus === 'APPROVED BY TL' && this.storedRole === 'Approver' "><img
+                                                            <a href="javascript:void(0);" (click)="onSendEmail(d)"
+                                                                *ngIf="d.headerStatus === 'APPROVED BY FINANCE' && this.storedRole === 'Approver' "><img
                                                                     src="../assets/images/email-icon.svg" alt="" /></a>
                                                             <a href="javascript:void(0);" (click)="onediteEmail(d)"
                                                                 *ngIf="d.headerStatus === 'MAIL SENT BY FINANCE TO CUSTOMER' && this.storedRole === 'Approver' "><img

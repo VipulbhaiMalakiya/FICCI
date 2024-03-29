@@ -2,7 +2,7 @@
 
 <div class="inner-content">
 
-    <h3 class="content-title">Posted Text Invoice</h3>
+    <h3 class="content-title">Posted Tax Invoice</h3>
 
     <div class="page-btns-col">
 
@@ -44,6 +44,8 @@
                             <th>Project Code</th>
                             <th>Department</th>
                             <th>Division </th>
+                            <th>Amount</th>
+                            <th>Status </th>
                             <th class="action-cl">Action</th>
                         </tr>
                     </thead>
@@ -60,6 +62,8 @@
                             <td>{{d.projectCode}}</td>
                             <td>{{d.departmentName}}</td>
                             <td>{{d.divisionName}}</td>
+                            <td>{{d.amount}}</td>
+                            <td>{{d.status}}</td>
                             <td><span class="table-btns">
                                     <a href="javascript:void(0);" (click)="InvoicedView(d)"><img
                                             src="../assets/images/view-icon.svg" alt=""></a>

@@ -13,14 +13,14 @@ import { ViewPiAccountsInboxComponent } from './View/view-pi-accounts-inbox/view
 import { NgSelectModule } from '@ng-select/ng-select';
 import { SharedModule } from '../shared/shared.module';
 import { NgxPaginationModule } from 'ngx-pagination';
-import { NumberToWordsPipe1 } from './pipe/numberToWords';
+import { NumberToWordsPipe1 } from './Pipe/numberToWords';
 import { AngularEditorModule } from '@kolkov/angular-editor';
 import { EmailComponent } from './send-email/email/email.component';
 import { UpdateEmailComponent } from './update-email/update-email.component';
 import { PostedTaxInvoiceComponent } from './View/posted-tax-invoice/posted-tax-invoice.component';
 import { PostedTextInvoiceComponent } from './component/posted-text-invoice/posted-text-invoice.component';
-import { SearchFilterPipe1 } from './pipe/searchFilter';
-import { SearchFilterPipe2 } from './pipe/searchpi';
+import { SearchFilterPipe1 } from './Pipe/searchFilter';
+import { SearchFilterPipe2 } from './Pipe/searchpi';
 import { PostedEmailComponent } from './send-email/posted-email/posted-email.component';
 import { CreditmemoComponent } from './component/creditmemo/creditmemo.component';
 import { PiInvoiceComponent } from './component/pi-invoice/pi-invoice.component';
@@ -30,9 +30,7 @@ import { CreditMemoViewComponent } from './View/credit-memo-view/credit-memo-vie
 import { ApprovalSalesInboxComponent } from './component/approval-sales-inbox/approval-sales-inbox.component';
 import { ViewSalesApprovalComponent } from './View/view-sales-approval/view-sales-approval.component';
 import { PiInvoiceViewNewComponent } from './View/pi-invoice-view-new/pi-invoice-view-new.component';
-import { CreditSalesEmailComponent } from './send-email/credit-sales-email/credit-sales-email.component';
 import { PIEmailComponent } from './send-email/pi-email/pi-email.component';
-
 
 
 @NgModule({
@@ -60,7 +58,6 @@ import { PIEmailComponent } from './send-email/pi-email/pi-email.component';
         ApprovalSalesInboxComponent,
         ViewSalesApprovalComponent,
         PiInvoiceViewNewComponent,
-        CreditSalesEmailComponent,
         PIEmailComponent
     ],
     imports: [
