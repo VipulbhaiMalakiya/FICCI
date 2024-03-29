@@ -43,6 +43,14 @@ export class InvoicesService {
     private GstRegistrationNoURL = `${environment.apiURL}DropDown/GstRegistrationNo?gstNo=`;
     private GstRegistrationNoAllURL = `${environment.apiURL}DropDown/GstRegistrationNoAll`;
 
+    private SalesCreditNoteSummaryURL = `${environment.apiURL}NavERP/GetSalesCreditNoteSummary?User=`;
+
+    GetSalesCreditNoteSummary(): Observable<any[]> {
+        // return this.http.get<any[]>(`${this.InvoiceSummaryURL}`);
+        const url = `${this.SalesCreditNoteSummaryURL}${localStorage.getItem('userEmail') ?? ''}`;
+        return this.http.get<any[]>(url);
+    }
+
     getGstRegistrationNo(data:any): Observable<any[]> {
         const url = `${this.GstRegistrationNoURL}${data.gst ?? ''}&code=${data.code}`;
         return this.http.get<any[]>(url);

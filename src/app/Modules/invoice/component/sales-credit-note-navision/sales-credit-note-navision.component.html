@@ -1,1 +1,126 @@
-<p>sales-credit-note-navision works!</p>
+<app-loading *ngIf="publicVariable.isProcess"></app-loading>
+
+<div class="inner-content">
+    <h3 class="content-title">Sales Credit Memo</h3>
+
+    <div class="page-btns-col" *ngIf="SalesCreditNoteSummaryData && SalesCreditNoteSummaryData.length > 0">
+        <div class="tblsort">
+            <label class="col-form-label">Show</label>
+            <select id="itemsPerPageSelect" class="form-select" [(ngModel)]="publicVariable.tableSize"
+                (change)="onTableSizeChange($event)">
+                <option *ngFor="let size of publicVariable.tableSizes" [value]="size">
+                    {{ size }}
+                </option>
+            </select>
+        </div>
+
+        <div class="dt-buttons">
+            <button class="gray-btns" type="button" (click)="onDownload()">
+                <img src="../assets/images/excel-icon.png" alt="" />
+            </button>
+        </div>
+
+        <!-- Example single danger button -->
+        <div class="topbr-btns">
+            <div class="btn-group">
+                <div class="table-search">
+                    <input type="text" class="form-control" [(ngModel)]="publicVariable.searchText" name="name"
+                        id="name" placeholder="Search here" />
+                </div>
+            </div>
+        </div>
+
+        <!-- <div class="common-box">
+            <a routerLink="/invoice/new" class="common-btn" *ngIf="this.publicVariable.storedRole !== 'Admin'">Add
+                New</a>
+        </div> -->
+    </div>
+
+    <div class="inner-middle-content">
+        <div class="dasboard-table">
+            <div class="table-responsive">
+                <table class="table text-nowrap">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>No</th>
+                            <th>postingDate</th>
+                            <th>Invoice no</th>
+                            <th>CustomerNo</th>
+                            <th>CustomerName</th>
+                            <th>createdBy</th>
+                            <th>Department</th>
+                            <th>Division</th>
+                            <th>GST No</th>
+                            <th>invoicePortalOrder</th>
+                            <th>invoicePortalSubmitted</th>
+
+                            <th>PAN No</th>
+
+                            <th class="action-cl">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr
+                            *ngFor="let d of  SalesCreditNoteSummaryData | searchFilter: publicVariable.searchText| paginate: {itemsPerPage: publicVariable.tableSize,currentPage: publicVariable.page,totalItems: publicVariable.count};let i = index">
+                            <td>{{i + 1}}</td>
+                            <td>{{d.no}}</td>
+                            <td>{{d.postingDate}}</td>
+                            <td>{{d.invoice_no}}</td>
+                            <td>{{d.sellToCustomerNo}}</td>
+                            <td>{{d.sellToCustomerName}}</td>
+                            <td>{{d.createdByUser}}</td>
+                            <td>{{d.departmentName}}</td>
+                            <td>{{d.divisionName}}</td>
+                            <td>{{d.gsT_No}}</td>
+                            <td>{{d.invoicePortalOrder}}</td>
+                            <td>{{d.invoicePortalSubmitted}}</td>
+
+                            <td>{{d.paN_NO}}</td>
+                            <td>
+                                <span class="table-btns">
+                                    <a href="javascript:void(0);" (click)="onView(d)"><img
+                                            src="../assets/images/view-icon.svg" alt="" /></a>
+                                    <a *ngIf="publicVariable.storedRole !== 'Admin' &&
+                                    (d.isDraft ||
+                                    d.headerStatus == 'REJECTED BY TL APPROVER'  ||
+                                    d.headerStatus == 'REJECTED BY CH APPROVER' ||
+                                    d.headerStatus == 'REJECTED BY ACCOUNTS APPROVER'
+                                    ||d.headerStatus == 'REJECTED BY FINANCE APPROVER'
+                                    )" href="javascript:void(0);" (click)="onEdit(d)"><img
+                                            src="../assets/images/edit-icon.svg" alt="" /></a>
+                                    <!-- <a *ngIf="publicVariable.storedRole !== 'Admin' &&
+                                    (d.isDraft ||
+                                    d.headerStatus == 'REJECTED BY TL APPROVER'  ||
+                                    d.headerStatus == 'REJECTED BY CH APPROVER' ||
+                                    d.headerStatus == 'REJECTED BY ACCOUNTS APPROVER'   || d.headerStatus == 'REJECTED BY FINANCE APPROVER'
+                                       )"
+                                        href="javascript:void(0)" (click)="onDelete(d.headerId)" data-bs-toggle="modal"
+                                        data-bs-target="#deleterecord-modal"><img src="../assets/images/delete-icon.svg"
+                                            alt="" /></a> -->
+                                </span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div *ngIf="!publicVariable.invoiceStatuslistData || publicVariable.invoiceStatuslistData.length === 0">
+                    <p>No data found.</p>
+                </div>
+                <div class="text-center"
+                    *ngIf="(publicVariable.invoiceStatuslistData | searchFilter: publicVariable.searchText).length === 0 && publicVariable.invoiceStatuslistData.length > 0">
+                    <span class="text-danger">No results found.</span>
+                </div>
+            </div>
+
+            <div class="clearfix">
+                <div class="hint-text">Showing <b>{{this.publicVariable.tableSize}}</b> out of <b>{{
+                        publicVariable.count }}</b>
+                    entries</div>
+                <pagination-controls previousLabel="Prev" class="pagination"
+                    *ngIf="publicVariable.invoiceStatuslistData && publicVariable.invoiceStatuslistData.length > 0"
+                    nextLabel="Next" (pageChange)="onTableDataChange($event)">
+                </pagination-controls>
+            </div>
+        </div>
+    </div>
+</div>
