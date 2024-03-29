@@ -30,30 +30,40 @@ export class SalesCreditNoteNavisionComponent implements OnInit {
 
     ngOnInit(): void {
         this.loadPurchaseInvoiceList();
-        this.loadStateList();
+        // this.loadStateList();
     }
     loadPurchaseInvoiceList(): void {
         try {
+            this.publicVariable.isProcess = true;
             const subscription = this.API.GetSalesCreditNoteSummary().subscribe({
                 next: (response: any) => {
                     if (response.data && Array.isArray(response.data)) {
+                        console.log(response.data[1]);
+
                         this.SalesCreditNoteSummaryData= response.data;
                         this.publicVariable.count = response.data.length;
+                        this.publicVariable.isProcess = false;
                     } else {
                         // Handle case where response data is null or not an array
                         this.SalesCreditNoteSummaryData= [];
                         this.publicVariable.count = 0;
+                        this.publicVariable.isProcess = false;
+
                         console.warn('Response data is null or not an array:', response.data);
                     }
                 },
                 error: (error) => {
                     console.error('Error loading project list:', error);
+                    this.publicVariable.isProcess = false;
+
                 }
             });
 
             this.publicVariable.Subscription.add(subscription);
         } catch (error) {
             console.error('Error loading project list:', error);
+            this.publicVariable.isProcess = false;
+
         }
     }
 
