@@ -55,16 +55,16 @@ export class PostedSalesNoteNewComponent {
     loadTaxInvoiceInformation() {
         try {
 
-            const subscription = this.API.GetTaxInvoiceInformation("SCM/11-12/00050").subscribe({
+            const subscription = this.API.GetSalesCreditNoteInformation(this.data.no).subscribe({
 
                 //    const subscription = this.API.GetSalesCreditNoteInformation(this.data.no).subscribe({
                 next: (response: any) => {
                     this.TaxInvoicedata = response.data;
                     this.publicVariable.isProcess = false;
                     // console.log('response:', response.data);
-                    this.filterTaxInvoiceByInvoiceNo("SI121683");
+                    //  this.filterTaxInvoiceByInvoiceNo("SI121683");
 
-                    // this.filterTaxInvoiceByInvoiceNo(this.data.no);
+                    this.filterTaxInvoiceByInvoiceNo(this.data.no);
                     //  this.loadTaxInvoiceAttachment(this.data.no)
                     this.cd.detectChanges();
                 },
