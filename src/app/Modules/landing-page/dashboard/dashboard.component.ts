@@ -43,6 +43,7 @@ export class DashboardComponent {
     storeIsFinance!: boolean;
     dashboardData: any;
     invoiceStatuslistData: invoiceStatusModule[] = [];
+    SalesCreditNoteSummaryData:any[] = []
 
 
     constructor(private appService: AppService,
@@ -60,6 +61,42 @@ export class DashboardComponent {
         const isFinanceValue = localStorage.getItem('IsFinance');
         this.loadPurchaseInvoiceList(this.invoiceType);
         this.storeIsFinance = isFinanceValue === 'true'; // Convert string to boolean
+    }
+
+
+    loadSalesCreditNoteSummary(): void {
+        try {
+            this.publicVariable.isProcess = true;
+            const subscription = this.IAPI.GetSalesCreditNoteSummary().subscribe({
+                next: (response: any) => {
+                    if (response.data && Array.isArray(response.data)) {
+                        console.log(response.data[1]);
+
+                        this.SalesCreditNoteSummaryData= response.data;
+                        this.publicVariable.count = response.data.length;
+                        this.publicVariable.isProcess = false;
+                    } else {
+                        // Handle case where response data is null or not an array
+                        this.SalesCreditNoteSummaryData= [];
+                        this.publicVariable.count = 0;
+                        this.publicVariable.isProcess = false;
+
+                        console.warn('Response data is null or not an array:', response.data);
+                    }
+                },
+                error: (error) => {
+                    console.error('Error loading project list:', error);
+                    this.publicVariable.isProcess = false;
+
+                }
+            });
+
+            this.publicVariable.Subscription.add(subscription);
+        } catch (error) {
+            console.error('Error loading project list:', error);
+            this.publicVariable.isProcess = false;
+
+        }
     }
 
     get isFinance() {
@@ -100,6 +137,7 @@ export class DashboardComponent {
                 this.countDataByStatus(this.dashboardData);
 
                 this.loadCustomerStatusList(this.customerStatus);
+                this.loadSalesCreditNoteSummary();
                 this.publicVariable.isProcess = false;
             },
             error: (error: any) => {
@@ -752,6 +790,87 @@ export class DashboardComponent {
     onView(data: customerStatusListModel): void {
         if (data.customerId) {
             this.router.navigate(['customer/status/view', data.customerId], { state: { data: data } });
+        } else {
+            console.error('ID is undefined or null');
+        }
+    }
+    onCreditSendEmail(dataItem: any) {
+        this.sendEmailCredit(dataItem);
+    }
+
+    sendEmailCredit(dataItem: any) {
+        this.publicVariable.isProcess = true;
+
+        const modalRef = this.modalService.open(CreditSalesEmailComponent, { size: "xl" });
+        var componentInstance = modalRef.componentInstance as CreditSalesEmailComponent;
+        componentInstance.isEmail = dataItem;
+        modalRef.result.then((data: any) => {
+            if (data) {
+
+                const newData = data;
+                const formData = new FormData();
+                formData.append('MailTo', newData.emailTo);
+                formData.append('MailSubject', newData.subject);
+                formData.append('MailBody', newData.body);
+                formData.append('LoginId', this.publicVariable.storedEmail);
+                formData.append('MailCC', newData.MailCC);
+                formData.append('ResourceType', 'Invoice');
+                formData.append('ResourceId', '1');
+
+                newData.attachment.forEach((file: any) => {
+                    if (file instanceof File) {
+                        formData.append('Attachments', file);
+                    } else {
+
+                        const base64Data = file.attachment; // Your base64 encoded attachment data
+                        const decodedData = atob(base64Data); // Decode base64 data
+
+                        // Convert the decoded data to Uint8Array
+                        const bytes = new Uint8Array(decodedData.length);
+                        for (let i = 0; i < decodedData.length; i++) {
+                            bytes[i] = decodedData.charCodeAt(i);
+                        }
+
+                        // Create a Blob from the Uint8Array
+                        const blob = new Blob([bytes.buffer], { type: 'application/pdf' });
+
+                        // Create a File object with a unique name
+                         file = new File([blob], `${file.name}.${file.type}`, { type: 'application/pdf' });
+
+                        formData.append('Attachments', file);
+                    }
+                });
+
+
+
+                this.publicVariable.isProcess = true;
+
+                this.publicVariable.Subscription.add(
+                    this.IAPI.sendEmail(formData).subscribe({
+                        next: (res: any) => {
+                            if (res.status === true) {
+                                this.toastr.success(res.message, 'Success');
+                            } else {
+                                this.toastr.error(res.message, 'Error');
+                            }
+                        },
+                        error: (error: any) => {
+                            this.toastr.error(error.error.message || 'An error occurred. Please try again later.', 'Error');
+                        },
+                        complete: () => {
+                            this.publicVariable.isProcess = false;
+                        }
+                    })
+                );
+            }
+        }).catch(() => {
+            this.publicVariable.isProcess = false;
+        });
+    }
+
+    onCreditNoteView(data: any): void {
+        if (data.no) {
+            this.router.navigate(['invoice/sales-navision/view', data.no], { state: { data: data } });
         } else {
             console.error('ID is undefined or null');
         }
