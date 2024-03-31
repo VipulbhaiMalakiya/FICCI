@@ -137,7 +137,7 @@ export class DashboardComponent {
                 this.countDataByStatus(this.dashboardData);
 
                 this.loadCustomerStatusList(this.customerStatus);
-                this.loadSalesCreditNoteSummary();
+
                 this.publicVariable.isProcess = false;
             },
             error: (error: any) => {
@@ -337,6 +337,7 @@ export class DashboardComponent {
     }
 
     loadSalesCreditNote(): void {
+        this.publicVariable.isProcess = true;
         try {
             // Observable for the first API call
             const purchaseInvoiceObservable = this.IAPI.getSalesCreditMemo().pipe(
@@ -383,7 +384,8 @@ export class DashboardComponent {
                     // Processing the merged data
                     this.countDataBySalesInvoies(this.dashboardData);
                     this.loadInoivceSalesStatusList(this.customerStatus);
-                    this.publicVariable.isProcess = false;
+                    this.loadSalesCreditNoteSummary();
+                   // this.publicVariable.isProcess = false;
                     // this.loadInvoiceSummary();
                     // this.PIloadInvoiceSummary();
                 },
