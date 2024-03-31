@@ -167,20 +167,20 @@
                     <div class="form-group">
                         <label for="ImpiHeaderCustomerGstNo">GST Number All <sup class="text-danger">*</sup></label>
 
-                        
+
                             <ng-select [items]="loadgetGstRegistrationNoAll" #select class="w-100"
                                 bindLabel="gstNumber" bindValue="gstNumber"
                                 placeholder="Select customer" formControlName="ImpiHeaderCustomerGstNo"
                                 (change)="onSelectGSTCustomer($event)" [searchable]="true" [searchFn]="customerGSTSearchFn"
                                 [virtualScroll]="true" [bufferAmount]="10">
-                           
+
                                 <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
                                     <div><span>{{item.code}}</span>-<span>{{item.gstNumber}}</span> - <span>{{item.customerName | titlecase}}</span></div>
                                     <small >{{item.address | titlecase}} -{{item.address2 | titlecase}} - {{item.city | titlecase}}- {{item.pincode}}</small>
                                 </ng-template>
                             </ng-select>
 
-                          
+
 
                         <div *ngIf="shouldShowError('ImpiHeaderCustomerGstNo','required')" class="text-danger">This
                             field
@@ -192,15 +192,15 @@
                 <div class="col-md-8 col-sm-6">
                     <div class="form-group">
                         <label for="ImpiHeaderCustomerGstNo">GST Number <sup class="text-danger">*</sup></label>
-                        
+
                             <ng-select [items]="GetCustomerGSTList" #select class="w-100"
                                 bindLabel="gstNumber" bindValue="gstNumber"
                                 placeholder="Select GST No" formControlName="ImpiHeaderCustomerGstNo"
                                 (change)="onSelectGSTCustomer($event)" [searchable]="true" [searchFn]="customerGSTSearchFn"
                                 [virtualScroll]="true" [bufferAmount]="10">
-                           
+
                                 <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
-                                    <div><span>{{item.code}}</span>-<span>{{item.gstNumber}}</span> - <span>{{item.customerName | titlecase}}</span></div>
+                                    <div><span>{{item.code}}</span>-<span>{{item.gstNumber}}</span> - <span>{{item.customerName | titlecase}} </span></div>
                                     <small >{{item.address | titlecase}} -{{item.address2 | titlecase}} - {{item.city | titlecase}}- {{item.pincode}}</small>
                                 </ng-template>
                             </ng-select>
