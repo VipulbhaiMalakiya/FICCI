@@ -199,6 +199,9 @@ export class ApprproverEmailComponent {
                             this.publicVariable.dataForm.reset();
                         } else {
                             this.toastr.error(res.message, 'Error');
+                            alert(res.message);
+                            this.publicVariable.dataForm.reset();
+
                         }
                     },
                     error: (error: any) => {
