@@ -120,6 +120,9 @@ export interface invoiceApproveModule {
     custId: number
     custNo: string
     custName: string
+
+  
+
     custName2: string
     custAddress: string
     custAddress2: string

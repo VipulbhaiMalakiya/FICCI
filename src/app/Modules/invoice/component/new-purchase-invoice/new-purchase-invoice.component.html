@@ -1,7 +1,7 @@
 <app-loading *ngIf="publicVariable.isProcess"></app-loading>
 
 <div class="inner-content">
-    <h3 class="content-title"> New Customer Invoice</h3>
+    <h3 class="content-title"> New Sales Invoice</h3>
 
     <form [formGroup]="publicVariable.dataForm">
         <input type="hidden" formControlName="headerid">
@@ -139,20 +139,25 @@
 
         <div class="mastersform-sec mb-0">
             <div class="row">
-                <div class="col-md-4 col-sm-6">
+                <div class="col-md-8 col-sm-6">
                     <div class="form-group">
                         <label for="CustomerName">Customer Name <sup class="text-danger">*</sup></label>
                         <div class="flex-field">
                             <ng-select [items]="publicVariable.GetCustomerList" #select class="w-100"
                                 bindLabel="custName" bindValue="custName" placeholder="Select customer"
-                                formControlName="ImpiHeaderCustomerName" (change)="onSelectCustomer()"
+                                formControlName="ImpiHeaderCustomerName"  (change)="onSelectGSTCustomer($event)"
                                 [searchable]="true" [searchFn]="customerSearchFn" [virtualScroll]="true"
                                 [bufferAmount]="10">
+
                                 <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
+                                    <div><span>{{item.code}}</span>-<span>{{item.gstNumber}}</span> - <span>{{item.customerName | titlecase}} </span></div>
+                                    <small >{{item.address | titlecase}} -{{item.address2 | titlecase}} - {{item.city | titlecase}}- {{item.panNo}}</small>
+                                </ng-template>
+                                <!-- <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
                                     <div><span>{{item.custNo}}</span> - <span>{{item.custName | titlecase}}</span></div>
                                     <small *ngIf="item.panNo || item.gstregistrationNo">{{item.panNo}} -
                                         {{item.gstregistrationNo}}</small>
-                                </ng-template>
+                                </ng-template> -->
                             </ng-select>
 
                             <div class="add-btn"><a routerLink="/customer/new" target="_blank">+</a></div>
@@ -189,11 +194,14 @@
                     </div>
                 </div> -->
 
-                <div class="col-md-8 col-sm-6">
+                <div class="col-md-4 col-sm-6">
                     <div class="form-group">
                         <label for="ImpiHeaderCustomerGstNo">GST Number <sup class="text-danger">*</sup></label>
 
-                            <ng-select [items]="GetCustomerGSTList" #select class="w-100"
+                        <input type="text" id="ImpiHeaderCustomerGstNo" placeholder="GST No"
+                        formControlName="ImpiHeaderCustomerGstNo" class="form-control no-style" readonly />
+
+                            <!-- <ng-select [items]="GetCustomerGSTList" #select class="w-100"
                                 bindLabel="gstNumber" bindValue="gstNumber"
                                 placeholder="Select GST No" formControlName="ImpiHeaderCustomerGstNo"
                                 (change)="onSelectGSTCustomer($event)" [searchable]="true" [searchFn]="customerGSTSearchFn"
@@ -203,7 +211,7 @@
                                     <div><span>{{item.code}}</span>-<span>{{item.gstNumber}}</span> - <span>{{item.customerName | titlecase}} </span></div>
                                     <small >{{item.address | titlecase}} -{{item.address2 | titlecase}} - {{item.city | titlecase}}- {{item.pincode}}</small>
                                 </ng-template>
-                            </ng-select>
+                            </ng-select> -->
 
                             <!-- <div class="add-btn"><a routerLink="/customer/new" target="_blank">+</a></div> -->
 
@@ -213,7 +221,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-8 col-sm-6">
+                <div class="col-md-4 col-sm-6">
                     <div class="form-group">
                         <label for="address">Address <sup class="text-danger">*</sup></label>
                         <input type="text" id="address" placeholder="Address"
@@ -233,6 +241,29 @@
 
                     </div>
                 </div>
+
+                
+                <div class="col-md-4 col-sm-6">
+                    <div class="form-group">
+                        <label for="address2">Address 2 <sup class="text-danger">*</sup></label>
+                        <input type="text" id="address2" placeholder="Address 2"
+                            formControlName="ImpiHeaderCustomerAddress2" class="form-control no-style" readonly />
+
+                            <div *ngIf="shouldShowError('ImpiHeaderCustomerAddress2', 'required')" class="text-danger">
+                                Address2 is required.
+                            </div>
+
+                            <!-- <div *ngIf="shouldShowError('ImpiHeaderCustomerAddress', 'forbiddenCharacters')" class="text-danger">
+                                Special characters are not allowed in the address
+                            </div> -->
+
+                            <div *ngIf="shouldShowError('ImpiHeaderCustomerAddress2', 'maxlength')" class="text-danger">
+                                Email must be less than 80 characters.
+                            </div>
+
+                    </div>
+                </div>
+
                 <div class="col-md-4 col-sm-6">
                     <div class="form-group">
                         <label for="state">State <sup class="text-danger">*</sup></label>
@@ -276,13 +307,17 @@
                 <div class="col-md-4 col-sm-6">
                     <div class="form-group">
                         <label for="pincode">Pincode <sup class="text-danger">*</sup></label>
+
+                        <input type="text" id="ImpiHeaderCustomerPinCode" placeholder="Pincode"
+                        formControlName="ImpiHeaderCustomerPinCode" class="form-control no-style" readonly/>
+<!-- 
                         <input type="text" formControlName="ImpiHeaderCustomerPinCode" placeholder="Pincode"
-                            (input)="onInputChange($event)" class="form-control" maxlength="15" />
+                            (input)="onInputChange($event)" class="form-control" maxlength="15" readonly /> -->
                         <!-- <div *ngIf="shouldShowError('ImpiHeaderCustomerPinCode','required')" class="text-danger"> Pin
                             Code is required.
                         </div> -->
-                        <div *ngIf="shouldShowError('ImpiHeaderCustomerPinCode','pattern')" class="text-danger"> Please
-                            enter a valid 6-digit Pin Code.</div>
+                        <!-- <div *ngIf="shouldShowError('ImpiHeaderCustomerPinCode','pattern')" class="text-danger"> Please
+                            enter a valid 6-digit Pin Code.</div> -->
                     </div>
                 </div>
 
@@ -449,7 +484,7 @@
                         <div class="form-group">
                             <label>Total Base Amount</label>
                             <input type="text" class="form-control"
-                                placeholder="Total Base Amount" [value] = "data?.baseAmount" disabled="">
+                                placeholder="Total Base Amount" [value] = "data?.impiHeaderTotalTDSAmount" disabled="">
                         </div>
                     </div>
 
@@ -457,7 +492,7 @@
                         <div class="form-group">
                             <label>Total GST Amount</label>
                             <input type="text" class="form-control"
-                                placeholder="Total GST Amount" disabled="" [value] = "data?.totalGSTAmount">
+                                placeholder="Total GST Amount" disabled="" [value] = "data?.impiHeaderTotalGSTAmount">
                         </div>
                     </div>
 

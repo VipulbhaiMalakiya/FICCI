@@ -1,7 +1,7 @@
 <app-loading *ngIf="publicVariable.isProcess"></app-loading>
 
 <div class="inner-content">
-    <h3 class="content-title"> Sales Credit Memo</h3>
+    <h3 class="content-title"> New Sales Credit Memo</h3>
 
     <form [formGroup]="publicVariable.dataForm">
         <input type="hidden" formControlName="headerid">
@@ -366,7 +366,7 @@
 
                 <div class="col-md-4 col-sm-6">
                     <div class="form-group">
-                        <label for="EmailID">Customer EmailId (To Send Invoice) </label>
+                        <label for="EmailID">Customer EmailId </label>
                         <input type="email" placeholder="Email ID" id="EmailID"
                             formControlName="ImpiHeaderCustomerEmailId" class="form-control"
                             [readonly]="true" class="form-control no-style "/>
@@ -630,7 +630,7 @@
             </div>
         </div>
         <div class="mastersform-sec mb-3">
-            <div class="col-md-9 mt-4">
+            <div class="col-md-9 mt-4" hidden>
                 <div class="form-group">
                     <label for="PaymentTerms">Payment Terms</label>
                     <textarea class="form-control h-100" cols="2" rows="3" id="PaymentTerms"
@@ -641,7 +641,7 @@
             <div class="col-md-9 mt-3">
                 <div class="form-group">
                     <label for="Remarks">Initial Remarks</label>
-                    <textarea class="form-control h-100" cols="2" rows="3" id="Remarks"
+                    <textarea class="form-control h-100" cols="2" rows="2" id="Remarks"
                         formControlName="ImpiHeaderRemarks"></textarea>
                 </div>
             </div>

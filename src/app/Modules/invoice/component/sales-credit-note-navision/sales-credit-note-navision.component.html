@@ -1,7 +1,7 @@
 <app-loading *ngIf="publicVariable.isProcess"></app-loading>
 
 <div class="inner-content">
-    <h3 class="content-title">Posted Sales Invoice</h3>
+    <h3 class="content-title">Posted Sales Credit Note</h3>
 
     <div class="page-btns-col" *ngIf="SalesCreditNoteSummaryData && SalesCreditNoteSummaryData.length > 0">
         <div class="tblsort">
@@ -44,23 +44,24 @@
                         <tr>
                             <th>#</th>
                             <th>No</th>
-                            <th>postingDate</th>
-                            <th>Invoice no</th>
-                            <th>CustomerNo</th>
-                            <th>CustomerName</th>
-                            <th>createdBy</th>
+                            <th>Posting Date</th>
+                            <th>Applies To DocNo</th>
+                            <th>Customer No</th>
+                            <th>Customer Name</th>
+                            <!-- <th>createdBy</th> -->
                             <th>Department</th>
                             <th>Division</th>
-                            <th>GST No</th>
+                            <!-- <th>GST No</th>
                             <th>invoicePortalOrder</th>
-                            <th>invoicePortalSubmitted</th>
+                            <th>invoicePortalSubmitted</th> -->
                             <th>Project Code</th>
-                            <th>PAN No</th>
+                            <!-- <th>PAN No</th>
                             <th>Address</th>
                             <th>City</th>
                             <th>Post Code</th>
                             <th>typeOfSupply</th>
-                            <th>yourReference</th>
+                            <th>yourReference</th> -->
+                            <th>Status</th>
                             <th class="action-cl">Action</th>
                         </tr>
                     </thead>
@@ -70,22 +71,24 @@
                             <td>{{i + 1}}</td>
                             <td>{{d.no}}</td>
                             <td>{{d.postingDate}}</td>
-                            <td>{{d.invoice_no}}</td>
+                            <td>{{d.appliesToDocNo}}</td>
                             <td>{{d.sellToCustomerNo}}</td>
                             <td>{{d.sellToCustomerName}}</td>
-                            <td>{{d.createdByUser}}</td>
-                            <td>{{d.departmentName}}</td>
-                            <td>{{d.divisionName}}</td>
-                            <td>{{d.gsT_No}}</td>
-                            <td>{{d.invoicePortalOrder}}</td>
-                            <td>{{d.invoicePortalSubmitted}}</td>
+                            <!-- <td>{{d.createdByUser}}</td> -->
+                            <td>{{d.deptCode}}</td>
+                            <td>{{d.divisionCode}}</td>
                             <td>{{d.projectCode}}</td>
+                            <td>{{d.Status}}</td>
+                            <!-- <td>{{d.gsT_No}}</td> -->
+                            <!-- <td>{{d.invoicePortalOrder}}</td>
+                            <td>{{d.invoicePortalSubmitted}}</td> -->
+                            <!-- <td>{{d.projectCode}}</td>
                             <td>{{d.paN_NO}}</td>
                             <td>{{d.sellToAddress}}</td>
                             <td>{{d.sellToCity}}</td>
                             <td>{{d.sellToPostCode}}</td>
                             <td>{{d.typeOfSupply}}</td>
-                            <th>{{d.yourReference}}</th>
+                            <th>{{d.yourReference}}</th> -->
                             <td>
                                 <span class="table-btns">
                                     <a href="javascript:void(0);" (click)="onView(d)"><img

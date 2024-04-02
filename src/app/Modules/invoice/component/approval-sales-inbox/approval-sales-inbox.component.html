@@ -2,7 +2,7 @@
 
 <div class="inner-content">
 
-  <h3 class="content-title">Customer Sales Approval Inbox</h3>
+  <h3 class="content-title">Sales Credit Note Approval Inbox</h3>
 
   <div class="page-btns-col" *ngIf="publicVariable.invoiceStatuslistData && publicVariable.invoiceStatuslistData.length > 0">
     <div class="tblsort">
@@ -53,7 +53,7 @@
                         <th>Amount</th>
                         <th>TL Approver</th>
                         <!-- <th>CL Approver</th> -->
-                        <th>Finance Approver</th>
+                        <!-- <th>Finance Approver</th> -->
                         <!-- <th>Accounts Approver </th> -->
                         <th>Created On</th>
                         <th>Created By</th>
@@ -75,7 +75,7 @@
                         <td>{{d.impiHeaderTotalInvoiceAmount | number:'1.2-2' }}</td>
                         <td>{{d.impiHeaderTlApprover | titlecase}}</td>
                         <!-- <td>{{d.impiHeaderClusterApprover | titlecase}}</td> -->
-                        <td>{{d.impiHeaderFinanceApprover | titlecase}}</td>
+                        <!-- <td>{{d.impiHeaderFinanceApprover | titlecase}}</td> -->
                         <!-- <td>{{d.accountApprover | titlecase}}</td> -->
                         <td>{{d.impiHeaderSubmittedDate | date:'medium':'IST'}}</td>
                         <td>{{d.impiHeaderCreatedBy | titlecase}}</td>

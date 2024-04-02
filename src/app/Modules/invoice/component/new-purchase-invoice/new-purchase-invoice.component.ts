@@ -54,12 +54,13 @@ export class NewPurchaseInvoiceComponent implements OnInit {
             PINO: [''], //api missing
             ImpiHeaderCustomerName: [null, [Validators.required]],
             ImpiHeaderCustomerCode: [''], //new filed
-            ImpiHeaderCustomerAddress: [ null, [Validators.required, Validators.maxLength(100)]],
+            ImpiHeaderCustomerAddress: [ null, [ Validators.maxLength(100)]],
+            ImpiHeaderCustomerAddress2: [ null, [Validators.maxLength(100)]],
 
-            ImpiHeaderCustomerState: [null, [Validators.required]],
-            ImpiHeaderCustomerCity: [ null, [Validators.required]],
+            ImpiHeaderCustomerState: [null],
+            ImpiHeaderCustomerCity: [ null],
             ImpiHeaderCustomerPinCode: [ null,[Validators.pattern(/^\d{6}$/)]],
-            ImpiHeaderCustomerGstNo: [null, [Validators.required, gstValidator()]],
+            ImpiHeaderCustomerGstNo: [null, [gstValidator()]],
             ImpiHeaderCustomerContactPerson: ['', [Validators.required, alphanumericWithSpacesValidator()]],
             ImpiHeaderCustomerEmailId: ['', [Validators.required, Validators.email, this.emailValidator()]],
             ImpiHeaderCustomerPhoneNo: ['', [Validators.required, Validators.pattern(/^[6-9]\d{9}$/)]],
@@ -201,7 +202,10 @@ export class NewPurchaseInvoiceComponent implements OnInit {
         return concatenatedString.includes(term.toLowerCase());
     }
     customerSearchFn(term: string, item: any) {
-        const concatenatedString = `${item.custNo} ${item.custName} ${item.custName2} ${item.panNo} ${item.gstregistrationNo}`.toLowerCase();
+        // const concatenatedString = `${item.custNo} ${item.custName} ${item.custName2} ${item.panNo} ${item.gstregistrationNo}`.toLowerCase();
+        // return concatenatedString.includes(term.toLowerCase());
+        const concatenatedString = ` ${item.gstNumber}${item.code}${item.customerName}
+        ${item.address}${item.address2}${item.city}${item.panNo}`.toLowerCase();
         return concatenatedString.includes(term.toLowerCase());
     }
 
@@ -229,6 +233,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
             ImpiHeaderCustomerName: data.impiHeaderCustomerName,
             ImpiHeaderCustomerCode: data.impiHeaderCustomerCode,
             ImpiHeaderCustomerAddress: data.impiHeaderCustomerAddress,
+            ImpiHeaderCustomerAddress2: data.ImpiHeaderCustomerAddress2,
             ImpiHeaderCustomerState: data.impiHeaderCustomerState,
             ImpiHeaderCustomerCity: data.impiHeaderCustomerCity,
             ImpiHeaderCustomerPinCode: data.impiHeaderCustomerPinCode,
@@ -304,6 +309,8 @@ export class NewPurchaseInvoiceComponent implements OnInit {
         ).subscribe({
             next: (response: any) => {
                 this.publicVariable.GetCustomerList = response.data;
+
+                console.log(response.data);
                 this.loadStateList();
             },
             error: (error: any) => {
@@ -366,6 +373,8 @@ export class NewPurchaseInvoiceComponent implements OnInit {
 
 
     onSelectCustomer(): void {
+
+        debugger;
         const selectedId = this.publicVariable.dataForm.get('ImpiHeaderCustomerName')?.value;
         this.setFormFieldsToNull();
         if (selectedId) {
@@ -454,6 +463,8 @@ export class NewPurchaseInvoiceComponent implements OnInit {
     onSelectGSTCustomer(event:any): void {
 
 
+       // this.onSelectCustomer();
+
         console.log(event);
        // const selectedId = this.publicVariable.dataForm.get('ImpiHeaderCustomerGstNo')?.value;
        // console.log(selectedId);
@@ -481,8 +492,11 @@ export class NewPurchaseInvoiceComponent implements OnInit {
                     if (this.GstRegistrationDetail) {
                         this.publicVariable.selectCustomer = this.GstRegistrationDetail.find(customer => customer.code == event.code);
                         if (this.publicVariable.selectCustomer) {
+
+                            console.log(this.publicVariable.selectCustomer);
                             this.publicVariable.dataForm.patchValue({
                                 ImpiHeaderCustomerAddress: this.publicVariable.selectCustomer.address,
+                                ImpiHeaderCustomerAddress2: this.publicVariable.selectCustomer.address2,
                                 ImpiHeaderCustomerPinCode: this.publicVariable.selectCustomer.pinCode,
                                 ImpiHeaderCustomerName: this.publicVariable.selectCustomer.custName,
                                 ImpiHeaderCustomerContactPerson: this.publicVariable.selectCustomer.contact,
@@ -490,6 +504,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
                                 ImpiHeaderCustomerPhoneNo: this.publicVariable.selectCustomer.primaryContact,
                                 ImpiHeaderCustomerState: this.publicVariable.selectCustomer.stateCode,
                                 ImpiHeaderCustomerCity: this.publicVariable.selectCustomer.city,
+                                ImpiHeaderCustomerGstNo: this.publicVariable.selectCustomer.gstNumber,
 
                             });
                         }
@@ -896,6 +911,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
 
     onSubmit(Action: string): void {
 
+        debugger;
         if (Action !== 'Calculate' && !this.isCalculate) {
             alert("Please Calculate the tax details");
             return
@@ -919,6 +935,10 @@ export class NewPurchaseInvoiceComponent implements OnInit {
                     formData.append('isupdate', String(isUpdate));
                     this.publicVariable.selectedProjet = this.publicVariable.projectList.find(project => project.code == newData.ImpiHeaderProjectCode);
                     this.publicVariable.selectCustomer = this.publicVariable.GetCustomerList.find(customer => customer.custName == newData.ImpiHeaderCustomerName);
+                   
+                   // alert(this.publicVariable.selectCustomer);
+                    //console.log(this.publicVariable.selectCustomer);
+                   
                     formData.append('ImpiHeaderInvoiceType', newData.ImpiHeaderInvoiceType);
                     formData.append('ImpiHeaderProjectCode', this.publicVariable.selectedProjet.code);
 
@@ -1009,12 +1029,12 @@ export class NewPurchaseInvoiceComponent implements OnInit {
                             next: (res: any) => {
                                 if (res.status === true) {
                                     this.data   =res.request;
-
                                     if(Action =="Calculate")
                                     {
                                         this.patchFormData( this.data);
                                         this.toastr.success('Tax Calculated Successfully !!', 'Success');
                                         alert('Tax Calculated Successfully !!');
+                                       // this.isCalculate =false;
                                     }
                                     else
                                     {

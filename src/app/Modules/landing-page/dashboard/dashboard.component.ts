@@ -31,20 +31,20 @@ export class DashboardComponent {
     PIPendingApproval: number = 0;
     PIApprovedAccounts: number = 0;
     PIRejectedbyAccounts: number = 0;
+    SalesCreditNoteSummaryData:any[] = []
     PIALL: number = 0;
     PIforapproval: number = 0;
     PostedTaxInvoiceCount: number = 0;
     PIPostedTaxInvoiceCount: number = 0;
     InvoiceSummaryList: InvoiceSummaryModel[] = [];
     PIInvoiceSummaryList: InvoiceSummaryModel[] = [];
+    TaxInvoicePaymentSummaryList: any[] = [];
     invoiceType: any = 'Tax Invoice';
     Cancelled: number = 0;
     Reversal: number = 0;
     storeIsFinance!: boolean;
     dashboardData: any;
     invoiceStatuslistData: invoiceStatusModule[] = [];
-    SalesCreditNoteSummaryData:any[] = []
-
 
     constructor(private appService: AppService,
         private modalService: NgbModal,
@@ -63,6 +63,9 @@ export class DashboardComponent {
         this.storeIsFinance = isFinanceValue === 'true'; // Convert string to boolean
     }
 
+    get isFinance() {
+        return this.storeIsFinance == true;
+    }
 
     loadSalesCreditNoteSummary(): void {
         try {
@@ -99,9 +102,8 @@ export class DashboardComponent {
         }
     }
 
-    get isFinance() {
-        return this.storeIsFinance == true;
-    }
+
+
     loadCustomerStatusCountList(): void {
         // Observable for the first API call
         const statusSubscription = this.API.getCustomerStatusNew().pipe(
@@ -137,7 +139,6 @@ export class DashboardComponent {
                 this.countDataByStatus(this.dashboardData);
 
                 this.loadCustomerStatusList(this.customerStatus);
-
                 this.publicVariable.isProcess = false;
             },
             error: (error: any) => {
@@ -337,7 +338,6 @@ export class DashboardComponent {
     }
 
     loadSalesCreditNote(): void {
-        this.publicVariable.isProcess = true;
         try {
             // Observable for the first API call
             const purchaseInvoiceObservable = this.IAPI.getSalesCreditMemo().pipe(
@@ -385,7 +385,7 @@ export class DashboardComponent {
                     this.countDataBySalesInvoies(this.dashboardData);
                     this.loadInoivceSalesStatusList(this.customerStatus);
                     this.loadSalesCreditNoteSummary();
-                   // this.publicVariable.isProcess = false;
+                    this.publicVariable.isProcess = false;
                     // this.loadInvoiceSummary();
                     // this.PIloadInvoiceSummary();
                 },
@@ -398,6 +398,90 @@ export class DashboardComponent {
         } catch (error) {
             console.error('Error loading invoice lists:', error);
             this.publicVariable.isProcess = false;
+        }
+    }
+
+
+
+    onCreditSendEmail(dataItem: any) {
+        this.sendEmailCredit(dataItem);
+    }
+
+    sendEmailCredit(dataItem: any) {
+        this.publicVariable.isProcess = true;
+
+        const modalRef = this.modalService.open(CreditSalesEmailComponent, { size: "xl" });
+        var componentInstance = modalRef.componentInstance as CreditSalesEmailComponent;
+        componentInstance.isEmail = dataItem;
+        modalRef.result.then((data: any) => {
+            if (data) {
+
+                const newData = data;
+                const formData = new FormData();
+                formData.append('MailTo', newData.emailTo);
+                formData.append('MailSubject', newData.subject);
+                formData.append('MailBody', newData.body);
+                formData.append('LoginId', this.publicVariable.storedEmail);
+                formData.append('MailCC', newData.MailCC);
+                formData.append('ResourceType', 'Invoice');
+                formData.append('ResourceId', '1');
+
+                newData.attachment.forEach((file: any) => {
+                    if (file instanceof File) {
+                        formData.append('Attachments', file);
+                    } else {
+
+                        const base64Data = file.attachment; // Your base64 encoded attachment data
+                        const decodedData = atob(base64Data); // Decode base64 data
+
+                        // Convert the decoded data to Uint8Array
+                        const bytes = new Uint8Array(decodedData.length);
+                        for (let i = 0; i < decodedData.length; i++) {
+                            bytes[i] = decodedData.charCodeAt(i);
+                        }
+
+                        // Create a Blob from the Uint8Array
+                        const blob = new Blob([bytes.buffer], { type: 'application/pdf' });
+
+                        // Create a File object with a unique name
+                         file = new File([blob], `${file.name}.${file.type}`, { type: 'application/pdf' });
+
+                        formData.append('Attachments', file);
+                    }
+                });
+
+
+
+                this.publicVariable.isProcess = true;
+
+                this.publicVariable.Subscription.add(
+                    this.IAPI.sendEmail(formData).subscribe({
+                        next: (res: any) => {
+                            if (res.status === true) {
+                                this.toastr.success(res.message, 'Success');
+                            } else {
+                                this.toastr.error(res.message, 'Error');
+                            }
+                        },
+                        error: (error: any) => {
+                            this.toastr.error(error.error.message || 'An error occurred. Please try again later.', 'Error');
+                        },
+                        complete: () => {
+                            this.publicVariable.isProcess = false;
+                        }
+                    })
+                );
+            }
+        }).catch(() => {
+            this.publicVariable.isProcess = false;
+        });
+    }
+
+    onCreditNoteView(data: any): void {
+        if (data.no) {
+            this.router.navigate(['invoice/sales-navision/view', data.no], { state: { data: data } });
+        } else {
+            console.error('ID is undefined or null');
         }
     }
 
@@ -792,87 +876,6 @@ export class DashboardComponent {
     onView(data: customerStatusListModel): void {
         if (data.customerId) {
             this.router.navigate(['customer/status/view', data.customerId], { state: { data: data } });
-        } else {
-            console.error('ID is undefined or null');
-        }
-    }
-    onCreditSendEmail(dataItem: any) {
-        this.sendEmailCredit(dataItem);
-    }
-
-    sendEmailCredit(dataItem: any) {
-        this.publicVariable.isProcess = true;
-
-        const modalRef = this.modalService.open(CreditSalesEmailComponent, { size: "xl" });
-        var componentInstance = modalRef.componentInstance as CreditSalesEmailComponent;
-        componentInstance.isEmail = dataItem;
-        modalRef.result.then((data: any) => {
-            if (data) {
-
-                const newData = data;
-                const formData = new FormData();
-                formData.append('MailTo', newData.emailTo);
-                formData.append('MailSubject', newData.subject);
-                formData.append('MailBody', newData.body);
-                formData.append('LoginId', this.publicVariable.storedEmail);
-                formData.append('MailCC', newData.MailCC);
-                formData.append('ResourceType', 'Invoice');
-                formData.append('ResourceId', '1');
-
-                newData.attachment.forEach((file: any) => {
-                    if (file instanceof File) {
-                        formData.append('Attachments', file);
-                    } else {
-
-                        const base64Data = file.attachment; // Your base64 encoded attachment data
-                        const decodedData = atob(base64Data); // Decode base64 data
-
-                        // Convert the decoded data to Uint8Array
-                        const bytes = new Uint8Array(decodedData.length);
-                        for (let i = 0; i < decodedData.length; i++) {
-                            bytes[i] = decodedData.charCodeAt(i);
-                        }
-
-                        // Create a Blob from the Uint8Array
-                        const blob = new Blob([bytes.buffer], { type: 'application/pdf' });
-
-                        // Create a File object with a unique name
-                         file = new File([blob], `${file.name}.${file.type}`, { type: 'application/pdf' });
-
-                        formData.append('Attachments', file);
-                    }
-                });
-
-
-
-                this.publicVariable.isProcess = true;
-
-                this.publicVariable.Subscription.add(
-                    this.IAPI.sendEmail(formData).subscribe({
-                        next: (res: any) => {
-                            if (res.status === true) {
-                                this.toastr.success(res.message, 'Success');
-                            } else {
-                                this.toastr.error(res.message, 'Error');
-                            }
-                        },
-                        error: (error: any) => {
-                            this.toastr.error(error.error.message || 'An error occurred. Please try again later.', 'Error');
-                        },
-                        complete: () => {
-                            this.publicVariable.isProcess = false;
-                        }
-                    })
-                );
-            }
-        }).catch(() => {
-            this.publicVariable.isProcess = false;
-        });
-    }
-
-    onCreditNoteView(data: any): void {
-        if (data.no) {
-            this.router.navigate(['invoice/sales-navision/view', data.no], { state: { data: data } });
         } else {
             console.error('ID is undefined or null');
         }
@@ -1496,4 +1499,45 @@ export class DashboardComponent {
             this.publicVariable.isProcess = false;
         });
     }
+
+    
+    loadTaxPaymentInvoiceSummary(data: any) {
+
+        console.log(data);
+        this.publicVariable.isProcess = true;
+        const subscription = this.IAPI.getTaxPaymentDetails(data.no).pipe(
+            timeout(120000), // Timeout set to 2 minutes (120000 milliseconds)
+            finalize(() => {
+                this.publicVariable.isProcess = false;
+            })
+        ).subscribe({
+            next: (response: any) => {
+                if (response.data && Array.isArray(response.data)) {                    
+
+                    this.TaxInvoicePaymentSummaryList = response.data;
+                    console.log(response);
+                    this.publicVariable.isProcess = false;
+                    //this.PostedTaxInvoiceCount = response.data.length;
+                } else {
+                    // Handle case where response data is null or not an array
+                    this.TaxInvoicePaymentSummaryList = [];
+                    this.publicVariable.isProcess = false;
+                 //   this.PostedTaxInvoiceCount = 0;
+                    console.warn('Response data is null or not an array:', response.data);
+                }
+                this.publicVariable.isProcess = false;
+            },
+            error: (error: any) => {
+                if (error.name === 'TimeoutError') {
+                    this.toastr.error('Operation timed out after 2 minutes', error.name);
+                } else {
+                    this.toastr.error('Error loading user list', error.name);
+                }
+                this.publicVariable.isProcess = false;
+            }
+        });
+
+        this.publicVariable.Subscription.add(subscription);
+    }
+
 }

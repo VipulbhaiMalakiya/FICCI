@@ -7,7 +7,7 @@
                 <button class="nav-link active" id="pills-profile-tab" data-bs-toggle="pill"
                     data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile"
                     aria-selected="false" (click)="loadPurchaseInvoiceList('Tax Invoice')" >Tax
-                    invoice</button>
+                    Invoice</button>
             </li>
             <li class="nav-item" role="presentation">
                 <button class="nav-link " id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile"
@@ -18,7 +18,7 @@
             <li class="nav-item" role="presentation">
                 <button class="nav-link " id="pills-sales-tab" data-bs-toggle="pill" data-bs-target="#pills-sales-profile"
                     type="button" role="tab" aria-controls="pills-sales-profile" aria-selected="false"
-                    (click)="loadSalesCreditNote()" >Sales credit note</button>
+                    (click)="loadSalesCreditNote()" >Sales Credit Note</button>
             </li>
 
             <li class="nav-item" role="presentation">
@@ -178,7 +178,7 @@
                                             <thead>
                                                 <tr>
                                                     <th>#</th>
-                                                    <th>Customer Code</th>
+                                                    <th *ngIf ="customerStatus=='APPROVED BY ACCOUNTS APPROVER'">Customer Code</th>
                                                     <th>Name</th>
                                                     <th>Address</th>
                                                     <th>City</th>
@@ -197,7 +197,7 @@
                                                 <tr
                                                     *ngFor="let d of  this.publicVariable.customerStatusList | searchFilter: publicVariable.searchText| paginate: {itemsPerPage: publicVariable.tableSize,currentPage: publicVariable.page,totalItems: publicVariable.count};let i = index">
                                                     <td>{{i + 1}}</td>
-                                                    <td>{{d.customerCode || ''}}</td>
+                                                    <td *ngIf ="customerStatus=='APPROVED BY ACCOUNTS APPROVER'">{{d.customerCode || ''}}</td>
                                                     <td>{{d.customerName |titlecase }}</td>
                                                     <td>{{d.address}}</td>
                                                     <td>{{ d.cityList.cityName}}</td>
@@ -343,7 +343,7 @@
                         <li class="nav-item" *ngIf="invoiceType === 'Proforma Invoice'" >
                             <a class="nav-link tabbg-5" data-bs-toggle="pill" href="#menu5"
                                 (click)="PIloadInvoiceSummary()">
-                                <small>PI Invoice </small>
+                                <small>Posted Proforma Invoice </small>
                                 <span>{{PIPostedTaxInvoiceCount}}</span>
                             </a>
                         </li>
@@ -413,12 +413,12 @@
                                                     <th>Project Name</th>
                                                     <th>Department</th>
                                                     <th>Division</th>
-                                                    <th>Vendor Name</th>
+                                                    <th>Customer Name</th>
                                                     <th>City</th>
                                                     <th>Amount</th>
                                                     <th>TL Approver</th>
                                                     <!-- <th>CL Approver</th> -->
-                                                    <th>Finance Approver</th>
+                                                    <!-- <th>Finance Approver</th> -->
                                                     <!-- <th>Accounts Approver </th> -->
                                                     <th>Created On</th>
                                                     <th>Created By</th>
@@ -440,7 +440,7 @@
                                                     <td>{{d.impiHeaderTotalInvoiceAmount | number:'1.2-2' }}</td>
                                                     <td>{{d.impiHeaderTlApprover | titlecase}}</td>
                                                     <!-- <td>{{d.impiHeaderClusterApprover | titlecase}}</td> -->
-                                                    <td>{{d.impiHeaderFinanceApprover | titlecase}}</td>
+                                                    <!-- <td>{{d.impiHeaderFinanceApprover | titlecase}}</td> -->
                                                     <!-- <td>{{d.accountApprover | titlecase}}</td> -->
                                                     <td>{{d.impiHeaderSubmittedDate | date:'medium':'IST'}}</td>
                                                     <td>{{d.impiHeaderCreatedBy | titlecase}}</td>
@@ -591,7 +591,7 @@
                                                             <a href="javascript:void(0);" (click)="InvoicedView(d)"><img
                                                                     src="../assets/images/view-icon.svg" alt=""></a>
 
-                                                            <a href="javascript:void(0);" data-bs-toggle="modal"
+                                                            <a href="javascript:void(0);" data-bs-toggle="modal" (click)="loadTaxPaymentInvoiceSummary(d)"
                                                                 data-bs-target="#workflow-modal"><img
                                                                     src="../assets/images/download-icone.svg"
                                                                     alt="" /></a>
@@ -804,6 +804,7 @@
                             </a>
                         </li>
 
+
                         <li class="nav-item">
                             <a class="nav-link tabbg-4" data-bs-toggle="pill" href="#CreditNote"
                                 (click)="loadSalesCreditNoteSummary()">
@@ -887,12 +888,12 @@
                                                     <th>Project Name</th>
                                                     <th>Department</th>
                                                     <th>Division</th>
-                                                    <th>Vendor Name</th>
+                                                    <th>Customer Name</th>
                                                     <th>City</th>
                                                     <th>Amount</th>
                                                     <th>TL Approver</th>
                                                     <!-- <th>CL Approver</th> -->
-                                                    <th>Finance Approver</th>
+                                                    <!-- <th>Finance Approver</th> -->
                                                     <!-- <th>Accounts Approver </th> -->
                                                     <th>Created On</th>
                                                     <th>Created By</th>
@@ -914,7 +915,7 @@
                                                     <td>{{d.impiHeaderTotalInvoiceAmount | number:'1.2-2' }}</td>
                                                     <td>{{d.impiHeaderTlApprover | titlecase}}</td>
                                                     <!-- <td>{{d.impiHeaderClusterApprover | titlecase}}</td> -->
-                                                    <td>{{d.impiHeaderFinanceApprover | titlecase}}</td>
+                                                    <!-- <td>{{d.impiHeaderFinanceApprover | titlecase}}</td> -->
                                                     <!-- <td>{{d.accountApprover | titlecase}}</td> -->
                                                     <td>{{d.impiHeaderSubmittedDate | date:'medium':'IST'}}</td>
                                                     <td>{{d.impiHeaderCreatedBy | titlecase}}</td>
@@ -995,6 +996,8 @@
 
 
                         </div>
+                        <!--tab-pane-->
+
 
                         <div id="CreditNote" class="tab-pane"><br>
                             <div class="page-btns-col" *ngIf="SalesCreditNoteSummaryData && SalesCreditNoteSummaryData.length > 0">
@@ -1136,7 +1139,6 @@
 
 
 
-
                     </div>
 
 
@@ -1159,11 +1161,11 @@
     <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <div class="modal-title text-center w-100 small-title">payment information</div>
+                <div class="modal-title text-center w-100 small-title">Payment Information</div>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body p-0">
-
+                <app-loading *ngIf="publicVariable.isProcess"></app-loading>
                 <div class="dashboard-data">
 
                     <div class="dasboard-table mb-0">
@@ -1173,24 +1175,32 @@
                             <table class="table">
                                 <thead>
                                     <tr>
-                                        <th>#</th>
+                                        <th>#</th>                                        
+                                        <th>Invoice No</th>
                                         <th>Payment No</th>
                                         <th>Payment Date</th>
-                                        <th>Amount</th>
-                                        <th>Type</th>
                                         <th>Bank Name</th>
+                                        <th>Bank A/C No.</th>
+                                        <th>UTR No.</th>
+                                        <th>TDS Amount</th>
+                                        <th>Payment Amount</th>                                     
+                                        
                                     </tr>
                                 </thead>
                                 <tbody>
 
-                                    <!-- <tr *ngFor="let i of this.data.workFlowHistory;let in = index">
+                                    <tr *ngFor="let i of TaxInvoicePaymentSummaryList;let in = index">
                                         <td>{{in + 1}}</td>
-                                        <td>{{i.imwdPendingAt | titlecase}}</td>
-                                        <td>{{i.imwdPendingEmailAt | titlecase}}</td>
-                                        <td>{{i.imwdInitiatedBy | titlecase}}</td>
-                                        <td>{{i.imwdRemarks | titlecase}}</td>
-                                        <td>{{i.imwdCreatedOn | date:'medium':'IST'}}</td>
-                                    </tr> -->
+                                        <td>{{i.taxInvoiceNo}}</td>
+                                        <td>{{i.receiptNo}}</td>
+                                        <td>{{i.paymentDate | date:'medium':'IST'}}</td>
+                                        <td>{{i.bankAccountName}}</td>
+                                        <td>{{i.bankAccountNo}}</td>
+                                        <td>{{i.utrNo}}</td>
+                                        <td>{{i.tdsAmount}}</td>
+                                        <td>{{i.paymentAmount}}</td>
+                                       
+                                    </tr>
                                 </tbody>
                             </table>
 

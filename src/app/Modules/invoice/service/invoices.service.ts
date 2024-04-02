@@ -46,9 +46,16 @@ export class InvoicesService {
 
     private SalesCreditNoteSummaryURL = `${environment.apiURL}NavERP/GetSalesCreditNoteSummary?User=`;
 
+    private PaymentDetailsURL = `${environment.apiURL}NavERP/GetTaxInvoicePaymentDetails?InvoiceNo=`;
     GetSalesCreditNoteSummary(): Observable<any[]> {
         // return this.http.get<any[]>(`${this.InvoiceSummaryURL}`);
         const url = `${this.SalesCreditNoteSummaryURL}${localStorage.getItem('userEmail') ?? ''}`;
+        return this.http.get<any[]>(url);
+    }
+
+    getTaxPaymentDetails(data: any): Observable<any[]> {
+      
+        const url = `${this.PaymentDetailsURL}${data ?? ''}`;
         return this.http.get<any[]>(url);
     }
 

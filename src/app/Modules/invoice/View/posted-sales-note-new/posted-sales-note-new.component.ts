@@ -45,7 +45,7 @@ export class PostedSalesNoteNewComponent {
         });
         this.data = history.state.data;
 
-        // console.log(this.data);
+        console.log(this.data);
 
 
         this.loadTaxInvoiceInformation();
@@ -62,9 +62,9 @@ export class PostedSalesNoteNewComponent {
                     this.TaxInvoicedata = response.data;
                     this.publicVariable.isProcess = false;
                     // console.log('response:', response.data);
-                    //  this.filterTaxInvoiceByInvoiceNo("SI121683");
-
                     this.filterTaxInvoiceByInvoiceNo(this.data.no);
+
+                    // this.filterTaxInvoiceByInvoiceNo(this.data.no);
                     //  this.loadTaxInvoiceAttachment(this.data.no)
                     this.cd.detectChanges();
                 },

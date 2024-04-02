@@ -68,7 +68,7 @@
                                     <a href="javascript:void(0);" (click)="InvoicedView(d)"><img
                                             src="../assets/images/view-icon.svg" alt=""></a>
 
-                                    <a href="javascript:void(0);" data-bs-toggle="modal"
+                                    <a href="javascript:void(0);" data-bs-toggle="modal" (click)="loadTaxPaymentInvoiceSummary(d)"
                                         data-bs-target="#workflow-modal"><img src="../assets/images/download-icone.svg"
                                             alt="" /></a>
 
@@ -116,11 +116,12 @@
     <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <div class="modal-title text-center w-100 small-title">payment information</div>
+                <div class="modal-title text-center w-100 small-title">Payment Information</div>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body p-0">
+            <div class="modal-body p-0" >
 
+                <app-loading *ngIf="publicVariable.isProcess"></app-loading>
                 <div class="dashboard-data">
 
                     <div class="dasboard-table mb-0">
@@ -130,24 +131,32 @@
                             <table class="table">
                                 <thead>
                                     <tr>
-                                        <th>#</th>
+                                        <th>#</th>                                        
+                                        <th>Invoice No</th>
                                         <th>Payment No</th>
                                         <th>Payment Date</th>
-                                        <th>Amount</th>
-                                        <th>Type</th>
                                         <th>Bank Name</th>
+                                        <th>Bank A/C No.</th>
+                                        <th>UTR No.</th>
+                                        <th>TDS Amount</th>
+                                        <th>Payment Amount</th>                                     
+                                        
                                     </tr>
                                 </thead>
                                 <tbody>
 
-                                    <!-- <tr *ngFor="let i of this.data.workFlowHistory;let in = index">
+                                    <tr *ngFor="let i of TaxInvoicePaymentSummaryList;let in = index">
                                         <td>{{in + 1}}</td>
-                                        <td>{{i.imwdPendingAt | titlecase}}</td>
-                                        <td>{{i.imwdPendingEmailAt | titlecase}}</td>
-                                        <td>{{i.imwdInitiatedBy | titlecase}}</td>
-                                        <td>{{i.imwdRemarks | titlecase}}</td>
-                                        <td>{{i.imwdCreatedOn | date:'medium':'IST'}}</td>
-                                    </tr> -->
+                                        <td>{{i.taxInvoiceNo}}</td>
+                                        <td>{{i.receiptNo}}</td>
+                                        <td>{{i.paymentDate | date:'medium':'IST'}}</td>
+                                        <td>{{i.bankAccountName}}</td>
+                                        <td>{{i.bankAccountNo}}</td>
+                                        <td>{{i.utrNo}}</td>
+                                        <td>{{i.tdsAmount}}</td>
+                                        <td>{{i.paymentAmount}}</td>
+                                       
+                                    </tr>
                                 </tbody>
                             </table>
 
