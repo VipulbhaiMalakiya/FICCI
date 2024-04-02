@@ -35,7 +35,6 @@ export class ValidationPopupComponent {
     }
 
     onCancel() {
-        this.publicVariable.dataForm.reset();
         this.activeModal.dismiss();
     }
 

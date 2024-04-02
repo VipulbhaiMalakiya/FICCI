@@ -27,10 +27,10 @@ export class NewPurchaseInvoiceComponent implements OnInit {
     GetCustomerGSTList: any[] = [];
     GetCustomerGSTListAll: any[] = [];
     GstRegistrationDetail: any[] = [];
-    GetDetails:any[] = [];
+    GetDetails: any[] = [];
     isCalculate: boolean = false;
-    projectCode?:any;
-    customerCode?:any;
+    projectCode?: any;
+    customerCode?: any;
     constructor(private appService: AppService,
         private modalService: NgbModal,
         private router: Router,
@@ -58,12 +58,12 @@ export class NewPurchaseInvoiceComponent implements OnInit {
             PINO: [''], //api missing
             ImpiHeaderCustomerName: [null, [Validators.required]],
             ImpiHeaderCustomerCode: [''], //new filed
-            ImpiHeaderCustomerAddress: [ null, [ Validators.maxLength(100)]],
-            ImpiHeaderCustomerAddress2: [ null, [Validators.maxLength(100)]],
+            ImpiHeaderCustomerAddress: [null, [Validators.maxLength(100)]],
+            ImpiHeaderCustomerAddress2: [null, [Validators.maxLength(100)]],
 
             ImpiHeaderCustomerState: [null],
-            ImpiHeaderCustomerCity: [ null],
-            ImpiHeaderCustomerPinCode: [ null,[Validators.pattern(/^\d{6}$/)]],
+            ImpiHeaderCustomerCity: [null],
+            ImpiHeaderCustomerPinCode: [null, [Validators.pattern(/^\d{6}$/)]],
             ImpiHeaderCustomerGstNo: [null, [gstValidator()]],
             ImpiHeaderCustomerContactPerson: ['', [Validators.required, alphanumericWithSpacesValidator()]],
             ImpiHeaderCustomerEmailId: ['', [Validators.required, Validators.email, this.emailValidator()]],
@@ -122,7 +122,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
         }
         this.loadCOAMasterList();
         this.loadGetGSTGroupList();
-       // this.loadgetGstRegistrationNoAll();
+        // this.loadgetGstRegistrationNoAll();
     }
 
     loadCOAMasterList(): void {
@@ -173,18 +173,16 @@ export class NewPurchaseInvoiceComponent implements OnInit {
             const subscription = this.API.GetHSNSACLIist(gstCode.code).subscribe({
                 next: (response: any) => {
 
-                  console.log(response.data);
+                    console.log(response.data);
                     this.publicVariable.HSNSACList = response.data;
-                   // alert(gstCode.code);
-                   // this.publicVariable.expenseForm.controls["impiHsnsaccode"].setValue('');
-                    if(gstCode.code =="SER-05")
-                    {
-                    this.publicVariable.expenseForm.controls["impiHsnsaccode"].setValue('998363');
+                    // alert(gstCode.code);
+                    // this.publicVariable.expenseForm.controls["impiHsnsaccode"].setValue('');
+                    if (gstCode.code == "SER-05") {
+                        this.publicVariable.expenseForm.controls["impiHsnsaccode"].setValue('998363');
                     }
 
-                    if(gstCode.code =="SER-18")
-                    {
-                    this.publicVariable.expenseForm.controls["impiHsnsaccode"].setValue('998596');
+                    if (gstCode.code == "SER-18") {
+                        this.publicVariable.expenseForm.controls["impiHsnsaccode"].setValue('998596');
                     }
 
 
@@ -397,7 +395,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
         }
     }
 
-    onSelectStateCustomer():void{
+    onSelectStateCustomer(): void {
 
         this.publicVariable.dataForm.patchValue({
             ImpiHeaderCustomerPinCode: null,
@@ -464,14 +462,14 @@ export class NewPurchaseInvoiceComponent implements OnInit {
 
     }
 
-    onSelectGSTCustomer(event:any): void {
+    onSelectGSTCustomer(event: any): void {
 
 
-       // this.onSelectCustomer();
+        // this.onSelectCustomer();
 
         // console.log(event);
-       // const selectedId = this.publicVariable.dataForm.get('ImpiHeaderCustomerGstNo')?.value;
-       // console.log(selectedId);
+        // const selectedId = this.publicVariable.dataForm.get('ImpiHeaderCustomerGstNo')?.value;
+        // console.log(selectedId);
         //let selectDATA= this.GetCustomerGSTList.find(customer => customer.code == selectedId);
         //
         //console.log(selectDATA.gstNumber);
@@ -482,8 +480,8 @@ export class NewPurchaseInvoiceComponent implements OnInit {
         // this.GetCustomerGSTList
 
         let peramiter = {
-            gst : event.gstNumber,
-            code :event.code
+            gst: event.gstNumber,
+            code: event.code
         }
 
         this.customerCode = event.code;
@@ -541,22 +539,28 @@ export class NewPurchaseInvoiceComponent implements OnInit {
 
     loadgetGetDetails(): void {
         try {
-            let data:any = {
-                projectCode : this.projectCode,
-               // customerCode : this.customerCode,
-               customerCode : 'C00002'
+            let data: any = {
+                projectCode: this.projectCode,
+                // customerCode : this.customerCode,
+                customerCode: 'C00002'
             }
 
             const subscription = this.API.getGetDetails(data).subscribe({
                 next: (response: any) => {
                     this.GetDetails = response.data;
-                   
-                    if(response.status === true){
+
+                    if (response.status === true) {
                         const modalRef = this.modalService.open(ValidationPopupComponent, { size: "xl" });
                         var componentInstance = modalRef.componentInstance as ValidationPopupComponent;
                         componentInstance.isEmail = this.GetDetails;
+
+                        // Subscribe to the modal's close event to reset form
+                        modalRef.closed.subscribe(() => {
+                            // Assuming you have a method named `resetForm()` to reset the form
+                            this.publicVariable.dataForm.reset();
+                        });
                     }
-                    
+
                 },
                 error: (error) => {
                     console.error('Error loading project list:', error);
@@ -960,9 +964,9 @@ export class NewPurchaseInvoiceComponent implements OnInit {
             return
         }
 
-       let action =true;
-       if(Action =="Submit")
-        action =false;
+        let action = true;
+        if (Action == "Submit")
+            action = false;
 
         if (this.publicVariable.expenses.length > 0) {
             if (action || this.uploadedFiles.length > 0) {
@@ -979,7 +983,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
                     this.publicVariable.selectedProjet = this.publicVariable.projectList.find(project => project.code == newData.ImpiHeaderProjectCode);
                     this.publicVariable.selectCustomer = this.publicVariable.GetCustomerList.find(customer => customer.custName == newData.ImpiHeaderCustomerName);
 
-                   // alert(this.publicVariable.selectCustomer);
+                    // alert(this.publicVariable.selectCustomer);
                     //console.log(this.publicVariable.selectCustomer);
 
                     formData.append('ImpiHeaderInvoiceType', newData.ImpiHeaderInvoiceType);
@@ -996,7 +1000,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
                     formData.append('ImpiHeaderCustomerCity', newData.ImpiHeaderCustomerCity);
                     formData.append('ImpiHeaderCustomerState', newData.ImpiHeaderCustomerState);
                     formData.append('ImpiHeaderCustomerPinCode', newData.ImpiHeaderCustomerPinCode);
-                   // formData.append('ImpiHeaderCustomerGstNo', this.CustomerGSTNo);
+                    // formData.append('ImpiHeaderCustomerGstNo', this.CustomerGSTNo);
                     formData.append('ImpiHeaderCustomerGstNo', newData.ImpiHeaderCustomerGstNo);
                     formData.append('ImpiHeaderCustomerContactPerson', newData.ImpiHeaderCustomerContactPerson);
                     formData.append('ImpiHeaderCustomerEmailId', newData.ImpiHeaderCustomerEmailId);
@@ -1071,16 +1075,14 @@ export class NewPurchaseInvoiceComponent implements OnInit {
                         this.API.create(formData).subscribe({
                             next: (res: any) => {
                                 if (res.status === true) {
-                                    this.data   =res.request;
-                                    if(Action =="Calculate")
-                                    {
-                                        this.patchFormData( this.data);
+                                    this.data = res.request;
+                                    if (Action == "Calculate") {
+                                        this.patchFormData(this.data);
                                         this.toastr.success('Tax Calculated Successfully !!', 'Success');
                                         alert('Tax Calculated Successfully !!');
-                                       // this.isCalculate =false;
+                                        // this.isCalculate =false;
                                     }
-                                    else
-                                    {
+                                    else {
                                         this.toastr.success(res.message, 'Success');
                                         this.router.navigate(['invoice/status']);
                                         this.publicVariable.dataForm.reset();
@@ -1088,7 +1090,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
 
                                     this.toastr.success(res.message, 'Success');
 
-                                     //  this.toastr.success(res.message, 'Success');
+                                    //  this.toastr.success(res.message, 'Success');
                                     //this.patchFormData( this.data)
 
 
@@ -1176,7 +1178,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
         return this.calculateTotalBaseAmount() + this.calculateTotalGSTAmount();
     }
 
-    onCalculateClick( Action:any): void {
+    onCalculateClick(Action: any): void {
         // this.calculateTotalBaseAmount();
         // this.calculateTotalGSTAmount();
         // this.calculateNetTotal();
