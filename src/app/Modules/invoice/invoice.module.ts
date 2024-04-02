@@ -36,7 +36,7 @@ import { SalesCreditNoteNavisionComponent } from './component/sales-credit-note-
 import { SalesSearchFilterPipe } from './Pipe/sales-credite-pipe';
 import { PostedSalesNoteNewComponent } from './View/posted-sales-note-new/posted-sales-note-new.component';
 import { SalesCreditEmailComponent } from './send-email/sales-credit-email/sales-credit-email.component';
-import { ValidationPopupComponent } from './view/validation-popup/validation-popup.component';
+import { ValidationPopupComponent } from './View/validation-popup/validation-popup.component';
 
 
 @NgModule({

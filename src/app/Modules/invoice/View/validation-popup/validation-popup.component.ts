@@ -5,6 +5,7 @@ import { NgbModal, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { CustomersService } from '../../Export/invoce';
 import { InvoicesService } from '../../service/invoices.service';
+import { publicVariable } from './../../../customers/Export/new-customer';
 
 @Component({
   selector: 'app-validation-popup',
@@ -14,10 +15,10 @@ import { InvoicesService } from '../../service/invoices.service';
 export class ValidationPopupComponent {
     private _emailMaster: any | undefined;
     data:any [] = [];
+    publicVariable = new publicVariable();
     set isEmail(value: any) {
         this._emailMaster = value;
         this.data = this._emailMaster;
-        console.log(this._emailMaster);
         
     }
 
@@ -34,6 +35,7 @@ export class ValidationPopupComponent {
     }
 
     onCancel() {
+        this.publicVariable.dataForm.reset();
         this.activeModal.dismiss();
     }
 

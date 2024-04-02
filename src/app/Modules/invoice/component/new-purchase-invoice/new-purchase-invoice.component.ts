@@ -3,7 +3,7 @@ import { ActivatedRoute, AppService, ConfirmationDialogModalComponent, Customers
 import { AbstractControl, FormArray, FormGroup, ValidatorFn } from '@angular/forms';
 import { finalize, timeout } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { ValidationPopupComponent } from '../../view/validation-popup/validation-popup.component';
+import { ValidationPopupComponent } from '../../View/validation-popup/validation-popup.component';
 
 
 @Component({
