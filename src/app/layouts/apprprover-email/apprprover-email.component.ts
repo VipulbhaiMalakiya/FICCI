@@ -54,8 +54,12 @@ export class ApprproverEmailComponent {
             }
             const subscription = this.API.GetApproverEmail(data).subscribe({
                 next: (response: any) => {
-                    this.data = response;
 
+                    console.log(response);
+                    
+
+                    this.data = response;
+              
                     this.uploadedFiles = this.data.impiHeaderAttachment;
 
                     if (this.data.impiHeaderAttachment) {
@@ -187,7 +191,8 @@ export class ApprproverEmailComponent {
                     next: (res: any) => {
                         if (res.status === true) {
                             this.toastr.success(res.message, 'Success');
-                            this.router.navigate(['invoice/status']);
+                            alert(res.message)
+                            //this.router.navigate(['invoice/status']);
                             this.publicVariable.dataForm.reset();
                         } else {
                             this.toastr.error(res.message, 'Error');
