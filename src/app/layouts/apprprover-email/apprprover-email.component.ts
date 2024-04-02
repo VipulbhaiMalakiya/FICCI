@@ -9,7 +9,7 @@ import { environment } from 'src/environments/environment';
 })
 export class ApprproverEmailComponent {
     headerId?: number;
-    data: any;
+    data: any = {};
     FilePath: any;
     publicVariable = new publicVariable();
     uploadedFiles: any[] = [];

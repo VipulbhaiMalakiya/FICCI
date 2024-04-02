@@ -121,8 +121,8 @@
                                     <div class="col-md-4 col-sm-6">
                                         <div class="form-group">
                                             <label>End Date</label>
-                                            <input type="text" value="{{data?.endDate}}" class="form-control" disabled=""
-                                                readonly="">
+                                            <input type="text" value="{{data?.endDate}}" class="form-control"
+                                                disabled="" readonly="">
                                         </div>
                                     </div>
                                     <div class="col-md-4 col-sm-6">
@@ -381,9 +381,9 @@
                                     </div>
                                 </div>
                             </div>
-
                             <form [formGroup]="publicVariable.dataForm"
-                                *ngIf="data?.headerStatus == 'PENDING WITH FINANCE APPROVER' || data?.headerStatus === 'PENDING WITH TL APPROVER' ||data?.headerStatus ===  'PENDING WITH CH APPROVER' || data?.headerStatus === 'PENDING WITH TL APPROVER' ||data?.headerStatus ===  'CANCEL BY EMPLOYEE' || data?.headerStatus === 'CANCELLATION APPROVED BY TL' ">
+                            *ngIf="data.headerStatus !== 'CANCELLATION APPROVED BY TL' && data.headerStatus !== 'APPROVED BY TL'"
+                            >
                                 <div class="col-md-12 mt-3">
                                     <div class="form-group">
                                         <label>Remarks</label>
