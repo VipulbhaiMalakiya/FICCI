@@ -11,9 +11,14 @@ import { ApprproverEmailComponent } from './layouts/apprprover-email/apprprover-
 const routes: Routes = [
     { path: 'login', component: LoginComponent },
     {
-        path:'approver/:email/:id',
-        component:ApprproverEmailComponent
+        // path:'approver/:email/:id',
+        // component:ApprproverEmailComponent,
+
+        
+        
     },
+    { path: 'approver/:encryptedEmail/:encryptedId', component: ApprproverEmailComponent },
+
     {
         path: '',
         component: SidebarLayoutComponent,
