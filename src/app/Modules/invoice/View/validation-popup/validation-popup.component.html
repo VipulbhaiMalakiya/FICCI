@@ -1,7 +1,7 @@
 <div class="common-modal green-modal">
     <div class="modal-header">
       <h1 class="modal-title fs-5">Mailer Information</h1>
-      <button type="button" class="btn-close" (click)="onCancel()" data-bs-dismiss="modal" aria-label="Close"></button>
+      <button type="button" class="btn-close" (click)="onContinue(true)" data-bs-dismiss="modal" aria-label="Close"></button>
     </div>
     <div class="modal-body mb-0">
       <form class="common-modal-form" >
@@ -39,8 +39,8 @@
             <div class="col-md-12">
                 <div class="form-group mb-0 mt-4">
                     <!-- <input type="checkbox" class="btn-check" id="btn-check" autocomplete="off"> -->
-                    <button type="button" (click)="onCancel()"  class="common-btn w-auto me-2">Cancel</button>
-                    <button type="button" (click)="onContinue()"  class="common-btn w-auto">Continue</button>
+                    <button type="button" (click)="onContinue(true)"  class="common-btn w-auto me-2">Cancel</button>
+                    <button type="button" (click)="onContinue(false)"  class="common-btn w-auto">Continue</button>
                 </div>
             </div>
 

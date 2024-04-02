@@ -34,11 +34,10 @@ export class ValidationPopupComponent {
     ) {
     }
 
-    onCancel() {
-        this.activeModal.dismiss();
-    }
 
-    onContinue(){
-        this.activeModal.dismiss();
+
+    onContinue(action:any){
+        //this.activeModal.dismiss();
+        this.activeModal.close(action);
     }
 }

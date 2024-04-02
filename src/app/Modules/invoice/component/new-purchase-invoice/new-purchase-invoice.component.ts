@@ -554,11 +554,14 @@ export class NewPurchaseInvoiceComponent implements OnInit {
                         var componentInstance = modalRef.componentInstance as ValidationPopupComponent;
                         componentInstance.isEmail = this.GetDetails;
 
-                        // Subscribe to the modal's close event to reset form
-                        modalRef.closed.subscribe(() => {
-                            // Assuming you have a method named `resetForm()` to reset the form
-                            this.publicVariable.dataForm.reset();
-                        });
+                        modalRef.result.then((data: any) => {
+         
+                            
+                            if(data == true){
+                                this.publicVariable.dataForm.reset();
+                            }
+                            
+                        })
                     }
 
                 },
