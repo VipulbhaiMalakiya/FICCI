@@ -23,7 +23,7 @@ export class AuthService {
                 if (response.data && response.data.token) {
                     const userRole = response.data.roleName;
                     const userEmail = response.data.email;
-                    const name =response.name;
+                    const name =response.data.name;
                     localStorage.setItem('userRole', userRole);
                     localStorage.setItem('userEmail', userEmail);
                     localStorage.setItem('userName', name);

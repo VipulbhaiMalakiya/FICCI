@@ -8,6 +8,7 @@ import { LoginComponent } from './layouts/login/login.component';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './interceptor/auth-interceptor.interceptor';
 import { SharedModule } from "./Modules/shared/shared.module";
+import { ApprproverEmailComponent } from './layouts/apprprover-email/apprprover-email.component';
 @NgModule({
     declarations: [
         AppComponent,
@@ -15,6 +16,7 @@ import { SharedModule } from "./Modules/shared/shared.module";
         NotFoundComponent,
         ForbiddenComponent,
         LoginComponent,
+        ApprproverEmailComponent,
     ],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }

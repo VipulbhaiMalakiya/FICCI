@@ -5,10 +5,15 @@ import { NotFoundComponent } from './layouts/not-found/not-found.component';
 import { ForbiddenComponent } from './layouts/forbidden/forbidden.component';
 import { LoginComponent } from './layouts/login/login.component';
 import { AuthGuard } from './guard/auth.guard';
+import { ApprproverEmailComponent } from './layouts/apprprover-email/apprprover-email.component';
 
 
 const routes: Routes = [
     { path: 'login', component: LoginComponent },
+    {
+        path:'approver/:email/:id',
+        component:ApprproverEmailComponent
+    },
     {
         path: '',
         component: SidebarLayoutComponent,
