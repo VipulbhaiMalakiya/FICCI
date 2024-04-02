@@ -26,7 +26,10 @@ export class NewPurchaseInvoiceComponent implements OnInit {
     GetCustomerGSTList: any[] = [];
     GetCustomerGSTListAll: any[] = [];
     GstRegistrationDetail: any[] = [];
+    GetDetails:any[] = [];
     isCalculate: boolean = false;
+    projectCode?:any;
+    customerCode?:any;
     constructor(private appService: AppService,
         private modalService: NgbModal,
         private router: Router,
@@ -465,7 +468,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
 
        // this.onSelectCustomer();
 
-        console.log(event);
+        // console.log(event);
        // const selectedId = this.publicVariable.dataForm.get('ImpiHeaderCustomerGstNo')?.value;
        // console.log(selectedId);
         //let selectDATA= this.GetCustomerGSTList.find(customer => customer.code == selectedId);
@@ -481,6 +484,11 @@ export class NewPurchaseInvoiceComponent implements OnInit {
             gst : event.gstNumber,
             code :event.code
         }
+
+        this.customerCode = event.code;
+
+
+        this.loadgetGetDetails()
 
 
         try {
@@ -528,6 +536,37 @@ export class NewPurchaseInvoiceComponent implements OnInit {
 
 
     }
+
+
+    loadgetGetDetails(): void {
+        try {
+            let data:any = {
+                projectCode : this.projectCode,
+               // customerCode : this.customerCode,
+               customerCode : 'C00002'
+            }
+
+            const subscription = this.API.getGetDetails(data).subscribe({
+                next: (response: any) => {
+                    this.GetDetails = response.data;
+                   
+                    if(response.status === true){
+                        
+                    }
+                    
+                },
+                error: (error) => {
+                    console.error('Error loading project list:', error);
+                }
+            });
+
+            this.publicVariable.Subscription.add(subscription);
+        } catch (error) {
+            console.error('Error loading project list:', error);
+        }
+    }
+
+
 
     // onSelectGSTCustomer(): void {
 
@@ -579,6 +618,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
     }
     onSelectProject() {
         const selectedId = this.publicVariable.dataForm.get('ImpiHeaderProjectCode')?.value;
+        this.projectCode = selectedId;
         if (selectedId) {
             this.publicVariable.selectedProjet = this.publicVariable.projectList.find(project => project.code == selectedId);
             if (this.publicVariable.selectedProjet) {
@@ -935,10 +975,10 @@ export class NewPurchaseInvoiceComponent implements OnInit {
                     formData.append('isupdate', String(isUpdate));
                     this.publicVariable.selectedProjet = this.publicVariable.projectList.find(project => project.code == newData.ImpiHeaderProjectCode);
                     this.publicVariable.selectCustomer = this.publicVariable.GetCustomerList.find(customer => customer.custName == newData.ImpiHeaderCustomerName);
-                   
+
                    // alert(this.publicVariable.selectCustomer);
                     //console.log(this.publicVariable.selectCustomer);
-                   
+
                     formData.append('ImpiHeaderInvoiceType', newData.ImpiHeaderInvoiceType);
                     formData.append('ImpiHeaderProjectCode', this.publicVariable.selectedProjet.code);
 
