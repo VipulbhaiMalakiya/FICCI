@@ -57,8 +57,11 @@ export class ApprproverEmailComponent {
 
                     console.log(response);
                     
-
-                    this.data = response;
+                    if(!response.status){
+                        alert('data not found')
+                        return
+                    }
+                    this.data = response.data;
               
                     this.uploadedFiles = this.data.impiHeaderAttachment;
 
