@@ -13,6 +13,7 @@ export class ApprproverEmailComponent {
     FilePath: any;
     publicVariable = new publicVariable();
     uploadedFiles: any[] = [];
+    loginId: any;
 
     constructor(private route: ActivatedRoute, private CAPI: CustomersService,
         private API: InvoicesService,
@@ -32,35 +33,61 @@ export class ApprproverEmailComponent {
     ngOnInit() {
         this.route.params.subscribe(params => {
             this.headerId = +params['id'];
+            this.loginId = params['email'];
         });
+
+
         this.loadCOAMasterList();
-        this.data = history.state.data;
+
+ 
         this.loadStateList();
-        this.uploadedFiles = this.data.impiHeaderAttachment;
+      
 
-        if (this.data.impiHeaderAttachment) {
-            this.uploadedFiles = this.data.impiHeaderAttachment.map((file: any) => ({
-                id: file.imadId,
-                recordNo: file.imadRecordNo,
-                screenName: file.imadScreenName,
-                name: file.imadFileName,
-                type: file.imadFileType,
-                fileSize: file.imadFileSize,
-                fileUrl: file.imadFileUrl,
-                active: file.imadActive,
-                createdBy: file.imadCreatedBy,
-                createdOn: file.imadCreatedOn,
-                modifiedBy: file.imadModifiedBy,
-                modifiedOn: file.imadModifiedOn,
-                doctype: file.doctype
+    }
 
-            }));
-        } else {
-            this.uploadedFiles = [];
+    loadInvicceDetailList() {
+        try {
+            const subscription = this.CAPI.getStateList().subscribe({
+                next: (response: any) => {
+                    this.data = response.data;
+
+                    this.uploadedFiles = this.data.impiHeaderAttachment;
+
+                    if (this.data.impiHeaderAttachment) {
+                        this.uploadedFiles = this.data.impiHeaderAttachment.map((file: any) => ({
+                            id: file.imadId,
+                            recordNo: file.imadRecordNo,
+                            screenName: file.imadScreenName,
+                            name: file.imadFileName,
+                            type: file.imadFileType,
+                            fileSize: file.imadFileSize,
+                            fileUrl: file.imadFileUrl,
+                            active: file.imadActive,
+                            createdBy: file.imadCreatedBy,
+                            createdOn: file.imadCreatedOn,
+                            modifiedBy: file.imadModifiedBy,
+                            modifiedOn: file.imadModifiedOn,
+                            doctype: file.doctype
+            
+                        }));
+                    } else {
+                        this.uploadedFiles = [];
+                        this.handleLoadingError()
+            
+                    }
+                    this.handleLoadingError()
+                },
+                error: (error) => {
+                    console.error('Error loading project list:', error);
+                    this.handleLoadingError()
+                },
+            });
+
+            this.publicVariable.Subscription.add(subscription);
+        } catch (error) {
+            console.error('Error loading project list:', error);
             this.handleLoadingError()
-
         }
-
     }
 
     loadStateList() {
@@ -141,11 +168,10 @@ export class ApprproverEmailComponent {
             const newData = this.publicVariable.dataForm.value;
             const newConfig: any = {
                 headerId: this.data.headerId,
-                loginId: this.publicVariable.storedEmail,
+                loginId: this.loginId,
                 remarks: newData.remarks,
                 IsTaxInvoice: action
             }
-
 
             this.publicVariable.isProcess = true;
             this.publicVariable.Subscription.add(
