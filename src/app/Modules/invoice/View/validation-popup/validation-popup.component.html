@@ -1,1 +1,50 @@
-<p>validation-popup works!</p>
+<div class="common-modal green-modal">
+    <div class="modal-header">
+      <h1 class="modal-title fs-5">Mailer Information</h1>
+      <button type="button" class="btn-close" (click)="onCancel()" data-bs-dismiss="modal" aria-label="Close"></button>
+    </div>
+    <div class="modal-body mb-0">
+      <form class="common-modal-form" >
+        <div class="mailer-piaccount">
+
+         
+
+            <div class="dasboard-table pi-table mb-0" >
+                <div class="table-responsive">
+                    <table class="table table-bordered text-nowrap">
+                        <thead>
+                          <tr>
+                            <th>#</th>
+                            <th>Amount</th>
+                            <th>Department</th>
+                            <th>createdBy</th>
+                            <th>createdOn</th>
+                            <th>status</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let file of data; let i = index">
+                            <td>{{ i + 1 }}</td>
+                            <td>{{file.amount}}</td>
+                            <td>{{file.department}}</td>
+                            <td>{{file.createdBy}}</td>
+                            <td>{{file.createdOn}}</td>
+                            <td>{{file.status}}</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="form-group mb-0 mt-4">
+                    <!-- <input type="checkbox" class="btn-check" id="btn-check" autocomplete="off"> -->
+                    <button type="button" (click)="onCancel()"  class="common-btn w-auto me-2">Cancel</button>
+                    <button type="button" (click)="onContinue()"  class="common-btn w-auto">Continue</button>
+                </div>
+            </div>
+
+        </div>
+      </form>
+    </div>
+  </div>
