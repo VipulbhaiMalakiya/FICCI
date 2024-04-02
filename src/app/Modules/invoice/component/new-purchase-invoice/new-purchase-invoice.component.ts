@@ -3,6 +3,7 @@ import { ActivatedRoute, AppService, ConfirmationDialogModalComponent, Customers
 import { AbstractControl, FormArray, FormGroup, ValidatorFn } from '@angular/forms';
 import { finalize, timeout } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { ValidationPopupComponent } from '../../view/validation-popup/validation-popup.component';
 
 
 @Component({
@@ -551,7 +552,9 @@ export class NewPurchaseInvoiceComponent implements OnInit {
                     this.GetDetails = response.data;
                    
                     if(response.status === true){
-                        
+                        const modalRef = this.modalService.open(ValidationPopupComponent, { size: "xl" });
+                        var componentInstance = modalRef.componentInstance as ValidationPopupComponent;
+                        componentInstance.isEmail = this.GetDetails;
                     }
                     
                 },
