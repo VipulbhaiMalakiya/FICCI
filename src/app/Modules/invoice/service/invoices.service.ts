@@ -49,7 +49,13 @@ export class InvoicesService {
     private PaymentDetailsURL = `${environment.apiURL}NavERP/GetTaxInvoicePaymentDetails?InvoiceNo=`;
 
     private GetDetailsURL = `${environment.apiURL}DropDown/GetDetails?projectCode=`;
+    private GetApproverEmailURL = `${environment.apiURL}ApproveInvoice/GetApproverEmail?email=`;
 
+    
+    GetApproverEmail(data: any): Observable<any[]> {
+        const url = `${this.GetApproverEmailURL}${data.email ?? ''}&id=${data.id    }`;
+        return this.http.get<any[]>(url);
+    }
 
     getGetDetails(data: any): Observable<any[]> {
         const url = `${this.GetDetailsURL}${data.projectCode ?? ''}&customerCode=${data.customerCode    }`;

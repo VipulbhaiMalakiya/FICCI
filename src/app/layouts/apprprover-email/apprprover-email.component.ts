@@ -35,21 +35,26 @@ export class ApprproverEmailComponent {
             this.headerId = +params['id'];
             this.loginId = params['email'];
         });
-
+        this.loadInviceDetailList();
 
         this.loadCOAMasterList();
 
  
         this.loadStateList();
       
+      
 
     }
 
-    loadInvicceDetailList() {
+    loadInviceDetailList() {
         try {
-            const subscription = this.CAPI.getStateList().subscribe({
+            let data :any = {
+                email:this.loginId,
+                id:this.headerId
+            }
+            const subscription = this.API.GetApproverEmail(data).subscribe({
                 next: (response: any) => {
-                    this.data = response.data;
+                    this.data = response;
 
                     this.uploadedFiles = this.data.impiHeaderAttachment;
 
@@ -167,15 +172,18 @@ export class ApprproverEmailComponent {
         if (this.publicVariable.dataForm.valid) {
             const newData = this.publicVariable.dataForm.value;
             const newConfig: any = {
-                headerId: this.data.headerId,
+         
+
+                headerId: this.headerId,
+                isApproved: action,
                 loginId: this.loginId,
+                statusId: this.data.headerStatusId,
                 remarks: newData.remarks,
-                IsTaxInvoice: action
             }
 
             this.publicVariable.isProcess = true;
             this.publicVariable.Subscription.add(
-                this.API.isCancelPI(newConfig).subscribe({
+                this.API.isApproverRemarks(newConfig).subscribe({
                     next: (res: any) => {
                         if (res.status === true) {
                             this.toastr.success(res.message, 'Success');
