@@ -8,7 +8,7 @@ import { environment } from 'src/environments/environment';
     styleUrls: ['./apprprover-email.component.css']
 })
 export class ApprproverEmailComponent {
-    headerId?: number;
+    headerId: any;
     data: any = {};
     FilePath: any;
     publicVariable = new publicVariable();
@@ -32,37 +32,59 @@ export class ApprproverEmailComponent {
 
     ngOnInit() {
         this.route.params.subscribe(params => {
-            this.headerId = +params['id'];
-            this.loginId = params['email'];
+            // this.headerId = params['id'];
+            // this.loginId = params['email'];
+
+
+            // Encrypting using Base64
+            // const encryptedHeaderId = btoa(this.headerId);
+            // const encryptedLoginId = btoa(this.loginId);
+
+            // console.log('Encrypted Header Id:', encryptedHeaderId);
+            // console.log('Encrypted Login Id:', encryptedLoginId);
+
+            // Decrypting using Base64
+            // const decryptedHeaderId = atob(encryptedHeaderId);
+            // const decryptedLoginId = atob(encryptedLoginId);
+
+            // console.log('Decrypted Header Id:', decryptedHeaderId);
+            // console.log('Decrypted Login Id:', decryptedLoginId);
+
+
+            this.headerId = atob(params['id']);
+            this.loginId = atob(params['email']);
+
+
+
         });
         this.loadInviceDetailList();
 
         this.loadCOAMasterList();
 
- 
+
         this.loadStateList();
-      
-      
+
+
 
     }
 
     loadInviceDetailList() {
         try {
-            let data :any = {
-                email:this.loginId,
-                id:this.headerId
+            let data: any = {
+                email: this.loginId,
+                id: this.headerId
             }
             const subscription = this.API.GetApproverEmail(data).subscribe({
                 next: (response: any) => {
 
                     console.log(response);
-                    
-                    if(!response.status){
+
+                    if (!response.status) {
                         alert('data not found')
                         return
                     }
                     this.data = response.data;
-              
+
                     this.uploadedFiles = this.data.impiHeaderAttachment;
 
                     if (this.data.impiHeaderAttachment) {
@@ -80,12 +102,12 @@ export class ApprproverEmailComponent {
                             modifiedBy: file.imadModifiedBy,
                             modifiedOn: file.imadModifiedOn,
                             doctype: file.doctype
-            
+
                         }));
                     } else {
                         this.uploadedFiles = [];
                         this.handleLoadingError()
-            
+
                     }
                     this.handleLoadingError()
                 },
@@ -179,7 +201,7 @@ export class ApprproverEmailComponent {
         if (this.publicVariable.dataForm.valid) {
             const newData = this.publicVariable.dataForm.value;
             const newConfig: any = {
-         
+
 
                 headerId: this.headerId,
                 isApproved: action,

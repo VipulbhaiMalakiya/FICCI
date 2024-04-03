@@ -311,8 +311,6 @@ export class NewPurchaseInvoiceComponent implements OnInit {
         ).subscribe({
             next: (response: any) => {
                 this.publicVariable.GetCustomerList = response.data;
-
-                console.log(response.data);
                 this.loadStateList();
             },
             error: (error: any) => {
@@ -555,12 +553,12 @@ export class NewPurchaseInvoiceComponent implements OnInit {
                         componentInstance.isEmail = this.GetDetails;
 
                         modalRef.result.then((data: any) => {
-         
-                            
+
+
                             if(data == true){
                                 this.publicVariable.dataForm.reset();
                             }
-                            
+
                         })
                     }
 
