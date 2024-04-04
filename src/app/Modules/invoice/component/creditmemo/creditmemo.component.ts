@@ -60,8 +60,8 @@ export class CreditmemoComponent implements OnInit {
             ImpiHeaderDivison: [{ value: '', disabled: true }, ],
             ImpiHeaderPanNo: [{ value: 'AAACF1282E', disabled: true }, ],
             ImpiHeaderGstNo: [{ value: '07AAACF1282E1Z1', disabled: true }, ],
-            PINO: [''], 
-            CustNo: [''], 
+            PINO: [''],
+            CustNo: [''],
             creditMemoAmount:['',[Validators.required]],
             ImpiHeaderCustomerName: [null,],
             ImpiHeaderCustomerCode: [''], //new filed
@@ -274,14 +274,14 @@ export class CreditmemoComponent implements OnInit {
         this.publicVariable.isProcess = true;
         try {
 
-            const subscription = this.API.GetTaxInvoiceInformation("SI121683").subscribe({
+           // const subscription = this.API.GetTaxInvoiceInformation("SI121683").subscribe({
 
-                // const subscription = this.API.GetTaxInvoiceInformation(invoice_no).subscribe({
+                 const subscription = this.API.GetTaxInvoiceInformation(invoice_no).subscribe({
                 next: (response: any) => {
                     this.TaxInvoicedata = response.data;
-                    this.filterTaxInvoiceByInvoiceNo("SI121683");
+                    //this.filterTaxInvoiceByInvoiceNo("SI121683");
                     this.publicVariable.isProcess = false;
-                    //this.filterTaxInvoiceByInvoiceNo(invoice_no);
+                    this.filterTaxInvoiceByInvoiceNo(invoice_no);
                     this.cd.detectChanges();
                 },
                 error: (error) => {
@@ -387,7 +387,7 @@ export class CreditmemoComponent implements OnInit {
     patchFormData(data: any): void {
 
         console.log(data);
-        
+
         this.publicVariable.dataForm.patchValue({
 
             headerid: (data && data.headerId) || (data && data.headerid),
@@ -1067,7 +1067,7 @@ export class CreditmemoComponent implements OnInit {
 
 
 
-        
+
         if (Action !== 'Calculate' && !this.isCalculate) {
             alert("Please Calculate the tax details");
             return
@@ -1144,7 +1144,7 @@ export class CreditmemoComponent implements OnInit {
                         formData.append(`lineItem_Requests[${i}].ImpiGstgroupType`, 'GOODS');
                         formData.append(`lineItem_Requests[${i}].ImpiLineNo`, String(lineNo));
                         formData.append(`lineItem_Requests[${i}].ImpiHsnsaccode`, item.impiHsnsaccode);
-                        formData.append(`lineItem_Requests[${i}].ImpiGlNo`, GL.no);
+                        formData.append(`lineItem_Requests[${i}].ImpiGlNo`, GL?.no);
                         formData.append(`lineItem_Requests[${i}].documentType`, 'Invoice');
                         formData.append(`lineItem_Requests[${i}].ImpiType`, 'G/L Account');
                         formData.append(`lineItem_Requests[${i}].ImpiDocumentNo`, '');
