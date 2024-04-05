@@ -76,8 +76,7 @@
                         <label>Country/Region Code <sup class="text-danger">*</sup></label>
                         <ng-select [items]="publicVariable.countryList" #select bindLabel="countryName"
                             bindValue="countryCode" placeholder="Select" formControlName="countryCode"
-                            [searchable]="true" [searchFn]="countrySearchFn"
-                            [virtualScroll]="true" [bufferAmount]="10">
+                            [searchable]="true" [searchFn]="countrySearchFn" [virtualScroll]="true" [bufferAmount]="10">
                             <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
                                 <small>{{item.countryCode}} - {{item.countryName}}</small>
                             </ng-template>
@@ -92,8 +91,7 @@
                         <label>State <sup class="text-danger">*</sup></label>
                         <ng-select [items]="publicVariable.stateList" #select bindLabel="stateName"
                             bindValue="stateCode" placeholder="Select " formControlName="stateCode" [searchable]="true"
-                            [searchFn]="stateSearchFn"
-                            [virtualScroll]="true" [bufferAmount]="10"
+                            [searchFn]="stateSearchFn" [virtualScroll]="true" [bufferAmount]="10"
                             (change)="onSelectStateCustomer($event)">
                             <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
                                 <small>{{item.stateCode}} - {{item.stateName}}</small>
@@ -109,8 +107,7 @@
                         <label>City <sup class="text-danger">*</sup></label>
                         <ng-select [items]="publicVariable.cityList" #select bindLabel="cityName" bindValue="cityCode"
                             placeholder="Select" formControlName="cityCode" [searchable]="true"
-                            [searchFn]="citySearchFn"
-                            [virtualScroll]="true" [bufferAmount]="10"
+                            [searchFn]="citySearchFn" [virtualScroll]="true" [bufferAmount]="10"
                             (change)="onCitySelectionChange()">
                             <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
                                 <small>{{item.cityCode}} - {{item.cityName}}</small>
@@ -125,8 +122,7 @@
                     <div class="form-group">
                         <label>Post Code <sup class="text-danger">*</sup></label>
                         <input type="text" formControlName="postCode" class="form-control" placeholder="Pincode"
-                            (input)="onInputChange($event)"
-                            maxlength="15">
+                            (input)="onInputChange($event)" maxlength="15">
                         <div *ngIf="shouldShowError('postCode', 'required')" class="text-danger">
                             Post Code is required.
                         </div>
@@ -141,7 +137,7 @@
                     <div class="form-group">
                         <label>E-Mail <sup class="text-danger">*</sup></label>
                         <input type="email" class="form-control" formControlName="email" placeholder="email"
-                        maxlength="80"/>
+                            maxlength="80" />
                         <!-- <div *ngIf="shouldShowError('email', 'required')" class="text-danger">
                             Email is required.
                         </div> -->
@@ -161,8 +157,7 @@
                     <div class="form-group">
                         <label>Primary Contact No. <sup class="text-danger">*</sup></label>
                         <input type="text" class="form-control" formControlName="PrimaryContactNo"
-                            placeholder="Primary Contact No" (input)="onInputChange($event)"
-                            maxlength="15" />
+                            placeholder="Primary Contact No" (input)="onInputChange($event)" maxlength="15" />
                         <div *ngIf="shouldShowError('PrimaryContactNo', 'required')" class="text-danger">
                             Primary Contact No is required.
                         </div>
@@ -191,8 +186,7 @@
 
                         <ng-select [items]="publicVariable.customerTypeList" bindLabel="gstTypeName"
                             bindValue="gstTypeId" placeholder="Select" formControlName="GSTCustomerType"
-                            (change)="ongstTypeChange($event)"
-                            maxlength="20">
+                            (change)="ongstTypeChange($event)" maxlength="20">
                         </ng-select>
                         <div *ngIf="shouldShowError('GSTCustomerType', 'required')" class="text-danger">
                             This field is required
@@ -204,8 +198,9 @@
                         <label>GST Registration No. <sup class="text-danger">*</sup></label>
                         <input type="text" class="form-control" placeholder="GST Registration No."
                             formControlName="GSTRegistrationNo" (blur)="validateGST()"
-                            [readonly]="publicVariable.dataForm.get('GSTCustomerType')?.value === '2'"
-                           />
+                            [readonly]="publicVariable.dataForm.get('GSTCustomerType')?.value === 2 || !publicVariable.dataForm.get('GSTCustomerType')?.value"
+                            [class.readonly]="publicVariable.dataForm.get('GSTCustomerType')?.value === 2 || !publicVariable.dataForm.get('GSTCustomerType')?.value"
+                            />
                         <div *ngIf="shouldShowError('GSTRegistrationNo', 'invalidGST')" class="text-danger">
                             Please enter a valid GST Registration Number. (05AAACF1282E1Z5)
                         </div>
@@ -214,15 +209,13 @@
                         </div>
                     </div>
                 </div>
-                 <!-- [attr.disabled]="publicVariable.dataForm.get('GSTCustomerType')?.value === '2' ? true : null" -->
+                <!-- [attr.disabled]="publicVariable.dataForm.get('GSTCustomerType')?.value === '2' ? true : null" -->
 
                 <div class="col-md-3 col-sm-6">
                     <div class="form-group">
                         <label>P.A.N. No. <sup class="text-danger">*</sup></label>
                         <input type="text" class="form-control" formControlName="PANNo" placeholder="P.A.N. No."
-                        (blur)="ValidatePAN()"
-
-                        maxlength="15"/>
+                            (blur)="ValidatePAN()" maxlength="15" />
                         <div *ngIf="shouldShowError('PANNo', 'invalidPAN')" class="text-danger">
                             Please enter a valid PAN Number.
                         </div>
@@ -235,7 +228,8 @@
                 <div class="col-md-9">
                     <div class="form-group">
                         <label>Remarks <sup class="text-danger">*</sup></label>
-                        <textarea class="form-control h-100" cols="3" rows="3"  formControlName="CustomerRemarks" ></textarea>
+                        <textarea class="form-control h-100" cols="3" rows="3"
+                            formControlName="CustomerRemarks"></textarea>
                         <div *ngIf="shouldShowError('CustomerRemarks', 'required')" class="text-danger">
                             this fields required.
                         </div>
