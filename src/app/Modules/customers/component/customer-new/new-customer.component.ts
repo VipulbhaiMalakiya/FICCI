@@ -343,7 +343,7 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
             gstRegistrationNoControl.updateValueAndValidity();
         }
     }
-    
+
 
     onCitySelectionChange() {
         const selectedId = this.publicVariable.dataForm.get('cityCode')?.value;
@@ -371,10 +371,10 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
 
     onSubmit(action: boolean): void {
 
-        if (this.publicVariable.dataForm.value.GSTCustomerType !== 2 && this.publicVariable.dataForm.value.GSTRegistrationNo == '') {
-            alert('GST number required!');
-            return
-        }
+        // if (this.publicVariable.dataForm.value.GSTCustomerType !== 2 && this.publicVariable.dataForm.value.GSTRegistrationNo == '') {
+        //     alert('GST number required!');
+        //     return
+        // }
         if (this.publicVariable.dataForm.valid) {
 
             const newData = this.publicVariable.dataForm.value;
@@ -399,7 +399,7 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
                 stateCode: newData.stateCode,
                 countryCode: newData.countryCode,
                 isDraft: action,
-                gstNumber: newData.GSTRegistrationNo.trim(),
+                gstNumber: newData.GSTRegistrationNo,
                 gstCustomerType: newData.GSTCustomerType,
                 pan: newData.PANNo.trim(),
                 loginId: this.publicVariable.storedEmail,

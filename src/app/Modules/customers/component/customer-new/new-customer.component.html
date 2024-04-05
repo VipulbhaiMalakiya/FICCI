@@ -201,7 +201,8 @@
                         <label>GST Registration No. <sup class="text-danger">*</sup></label>
                         <input type="text" class="form-control" placeholder="GST Registration No."
                             formControlName="GSTRegistrationNo" (blur)="validateGST()"
-                            [attr.disabled]="publicVariable.dataForm.get('GSTCustomerType')?.value === '2' ? true : null"/>
+                            [readonly]="publicVariable.dataForm.get('GSTCustomerType')?.value === '2'"
+                           />
                         <div *ngIf="shouldShowError('GSTRegistrationNo', 'invalidGST')" class="text-danger">
                             Please enter a valid GST Registration Number. (05AAACF1282E1Z5)
                         </div>
@@ -210,6 +211,7 @@
                         </div>
                     </div>
                 </div>
+                 <!-- [attr.disabled]="publicVariable.dataForm.get('GSTCustomerType')?.value === '2' ? true : null" -->
 
                 <div class="col-md-3 col-sm-6">
                     <div class="form-group">
