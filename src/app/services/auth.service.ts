@@ -15,6 +15,9 @@ export class AuthService {
     private userRole: string = '';
     private userEmail: string = '';
     private apiUrl = `${environment.apiURL}UserAuth`;
+    private navisionUrl = `${environment.apiURL}UserAuth`;
+
+
     constructor(private http: HttpClient, private toastr: ToastrService, private router: Router) { }
     login(email: string, password: string): Observable<any> {
         const body = { email: email, password: password };
@@ -42,6 +45,34 @@ export class AuthService {
             })
         );
     }
+
+    navisionlogin(email: string): Observable<any> {
+        const body = { email: email };
+        return this.http.post(`${this.navisionUrl}`, body).pipe(
+            map((response: any) => {
+                if (response && response.token) {
+                    const userRole = response.roleName;
+                    const userEmail = response.email;
+                    const name =response.name;
+                    localStorage.setItem('userRole', userRole);
+                    localStorage.setItem('userEmail', userEmail);
+                    localStorage.setItem('userName', name);
+                    localStorage.setItem('token', response.token);
+                    localStorage.setItem('department', response.department);
+                    localStorage.setItem('IsFinance',response.invoice_IsFinanceApprover)
+                    return { token: response.token, role: userRole };
+                } else {
+                    this.toastr.error('Invalid credentials', 'Error');
+                    return { error: 'Invalid credentials' };
+                }
+            }),
+            catchError(error => {
+                this.toastr.error('An error occurred during login', 'Error');
+                return of({ error: 'An error occurred during login' });
+            })
+        );
+    }
+
 
     logout(): void {
         this.loggedIn = false;

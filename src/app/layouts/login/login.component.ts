@@ -9,7 +9,7 @@ import { AuthService } from 'src/app/services/auth.service';
     templateUrl: './login.component.html',
     styleUrls: ['./login.component.css']
 })
-export class LoginComponent implements OnInit{
+export class LoginComponent implements OnInit {
     dataForm!: FormGroup;
     hidePassword: boolean = true;
     error!: string;
@@ -18,12 +18,35 @@ export class LoginComponent implements OnInit{
 
 
     constructor(private toastr: ToastrService,
-        private router: Router,private fb: FormBuilder, private authService: AuthService) {
+        private router: Router, private fb: FormBuilder, private authService: AuthService) {
         this.initializeForm();
     }
 
     ngOnInit(): void {
+        // Check if the email is stored in local storage
+        const storedEmail = localStorage.getItem('userEmail');
+        if (storedEmail) {
+            this.isProcess = true;
+            this.authService.navisionlogin(storedEmail).subscribe(
+                (response) => {
+                    if (response.error) {
+                        this.error = response.error;
+                        this.isProcess = false;
+                    } else {
+                        this.router.navigate(['/dashboard']); // Redirect to the dashboard
+                        this.toastr.success('Logged in successfully', 'Success');
+                        this.isProcess = false;
 
+                    }
+                },
+                (error) => {
+                    this.isProcess = false;
+                    this.toastr.error('Login failed', 'Error')
+                }
+            );
+
+
+        }
     }
 
     private initializeForm(): void {
@@ -35,7 +58,7 @@ export class LoginComponent implements OnInit{
 
     togglePasswordVisibility() {
         this.hidePassword = !this.hidePassword;
-      }
+    }
 
     onSubmit() {
         if (this.dataForm.valid) {
@@ -64,9 +87,9 @@ export class LoginComponent implements OnInit{
     }
 
     markFormControlsAsTouched(): void {
-        ['email','password'].forEach(controlName => {
-                this.dataForm.controls[controlName].markAsTouched();
-            });
+        ['email', 'password'].forEach(controlName => {
+            this.dataForm.controls[controlName].markAsTouched();
+        });
     }
 
     shouldShowError(controlName: string, errorName: string): boolean {
