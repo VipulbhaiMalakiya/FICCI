@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -9,7 +9,7 @@ import { AuthService } from 'src/app/services/auth.service';
     templateUrl: './login.component.html',
     styleUrls: ['./login.component.css']
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit{
     dataForm!: FormGroup;
     hidePassword: boolean = true;
     error!: string;
@@ -20,6 +20,10 @@ export class LoginComponent {
     constructor(private toastr: ToastrService,
         private router: Router,private fb: FormBuilder, private authService: AuthService) {
         this.initializeForm();
+    }
+
+    ngOnInit(): void {
+
     }
 
     private initializeForm(): void {
