@@ -178,6 +178,7 @@
                                             <thead>
                                                 <tr>
                                                     <th>#</th>
+                                                    <th>Record No </th>
                                                     <th *ngIf ="customerStatus=='APPROVED BY ACCOUNTS APPROVER'">Customer Code</th>
                                                     <th>Name</th>
                                                     <th>Address</th>
@@ -197,6 +198,7 @@
                                                 <tr
                                                     *ngFor="let d of  this.publicVariable.customerStatusList | searchFilter: publicVariable.searchText| paginate: {itemsPerPage: publicVariable.tableSize,currentPage: publicVariable.page,totalItems: publicVariable.count};let i = index">
                                                     <td>{{i + 1}}</td>
+                                                    <td>{{d.customerId}}</td>
                                                     <td *ngIf ="customerStatus=='APPROVED BY ACCOUNTS APPROVER'">{{d.customerCode || ''}}</td>
                                                     <td>{{d.customerName |titlecase }}</td>
                                                     <td>{{d.address}}</td>
@@ -1175,7 +1177,7 @@
                             <table class="table">
                                 <thead>
                                     <tr>
-                                        <th>#</th>                                        
+                                        <th>#</th>
                                         <th>Invoice No</th>
                                         <th>Payment No</th>
                                         <th>Payment Date</th>
@@ -1183,8 +1185,8 @@
                                         <th>Bank A/C No.</th>
                                         <th>UTR No.</th>
                                         <th>TDS Amount</th>
-                                        <th>Payment Amount</th>                                     
-                                        
+                                        <th>Payment Amount</th>
+
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -1199,7 +1201,7 @@
                                         <td>{{i.utrNo}}</td>
                                         <td>{{i.tdsAmount}}</td>
                                         <td>{{i.paymentAmount}}</td>
-                                       
+
                                     </tr>
                                 </tbody>
                             </table>
