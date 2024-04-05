@@ -833,6 +833,7 @@ export class DashboardComponent {
         this.publicVariable.page = event;
         this.publicVariable.customerStatusList
     }
+
     onTableSizeChange(event: any): void {
         this.publicVariable.tableSize = event.target.value;
         this.publicVariable.page = 1;
@@ -1500,7 +1501,7 @@ export class DashboardComponent {
         });
     }
 
-    
+
     loadTaxPaymentInvoiceSummary(data: any) {
 
         console.log(data);
@@ -1512,7 +1513,7 @@ export class DashboardComponent {
             })
         ).subscribe({
             next: (response: any) => {
-                if (response.data && Array.isArray(response.data)) {                    
+                if (response.data && Array.isArray(response.data)) {
 
                     this.TaxInvoicePaymentSummaryList = response.data;
                     console.log(response);
