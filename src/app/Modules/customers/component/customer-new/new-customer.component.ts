@@ -371,69 +371,72 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
 
     onSubmit(action: boolean): void {
 
-        // if (this.publicVariable.dataForm.value.GSTCustomerType !== 2 && this.publicVariable.dataForm.value.GSTRegistrationNo == '') {
-        //     alert('GST number required!');
-        //     return
-        // }
-        if (this.publicVariable.dataForm.valid) {
-
-            const newData = this.publicVariable.dataForm.value;
-            if (newData.GSTCustomerType !== 2 && newData.GSTRegistrationNo == '') {
-                alert('GST number required!');
-                return
-            }
-            const isUpdate = !!newData.customerId;
-            const newConfig: any = {
-                isupdate: isUpdate,
-                customerId: isUpdate ? newData.customerId : undefined,
-                customerCode: newData.customerNo,
-                customerName: newData.name.trim(),
-                customerLastName: newData.name2.trim(),
-                address: newData.address.trim(),
-                address2: newData.address2.trim(),
-                contact: newData.contact.trim(),
-                phone: newData.PrimaryContactNo.trim(),
-                pinCode: newData.postCode,
-                email: newData.email.trim(),
-                cityCode: newData.cityCode,
-                stateCode: newData.stateCode,
-                countryCode: newData.countryCode,
-                isDraft: action,
-                gstNumber: newData.GSTRegistrationNo,
-                gstCustomerType: newData.GSTCustomerType,
-                pan: newData.PANNo.trim(),
-                loginId: this.publicVariable.storedEmail,
-                roleName: this.publicVariable.storedRole,
-                CustomerRemarks: newData.CustomerRemarks.trim()
-            };
-            this.publicVariable.isProcess = true;
-            this.publicVariable.Subscription.add(
-                this.API.create(newConfig).subscribe({
-                    next: (res: any) => {
-                        if (res.status === true) {
-                            this.toastr.success(res.message, 'Success');
-                            this.router.navigate(['customer/status']);
-                            this.publicVariable.dataForm.reset();
-                        } else {
-                            this.toastr.error(res.message, 'Error');
-                        }
-                    },
-                    error: (error: any) => {
-                        this.toastr.error(
-                            error.error.message ||
-                            'An error occurred. Please try again later.',
-                            'Error'
-                        );
-                        this.publicVariable.isProcess = false;
-                    },
-                    complete: () => {
-                        this.publicVariable.isProcess = false;
-                    },
-                })
-            );
-        } else {
-            this.markFormControlsAsTouched();
+        if (this.publicVariable.dataForm.value.GSTCustomerType !== 2 && this.publicVariable.dataForm.value.GSTRegistrationNo == '') {
+            alert('GST number required!');
+            return
         }
+        else{
+            if (this.publicVariable.dataForm.valid) {
+
+                const newData = this.publicVariable.dataForm.value;
+                if (newData.GSTCustomerType !== 2 && newData.GSTRegistrationNo == '') {
+                    alert('GST number required!');
+                    return
+                }
+                const isUpdate = !!newData.customerId;
+                const newConfig: any = {
+                    isupdate: isUpdate,
+                    customerId: isUpdate ? newData.customerId : undefined,
+                    customerCode: newData.customerNo,
+                    customerName: newData.name.trim(),
+                    customerLastName: newData.name2.trim(),
+                    address: newData.address.trim(),
+                    address2: newData.address2.trim(),
+                    contact: newData.contact.trim(),
+                    phone: newData.PrimaryContactNo.trim(),
+                    pinCode: newData.postCode,
+                    email: newData.email.trim(),
+                    cityCode: newData.cityCode,
+                    stateCode: newData.stateCode,
+                    countryCode: newData.countryCode,
+                    isDraft: action,
+                    gstNumber: newData.GSTRegistrationNo,
+                    gstCustomerType: newData.GSTCustomerType,
+                    pan: newData.PANNo.trim(),
+                    loginId: this.publicVariable.storedEmail,
+                    roleName: this.publicVariable.storedRole,
+                    CustomerRemarks: newData.CustomerRemarks.trim()
+                };
+                this.publicVariable.isProcess = true;
+                this.publicVariable.Subscription.add(
+                    this.API.create(newConfig).subscribe({
+                        next: (res: any) => {
+                            if (res.status === true) {
+                                this.toastr.success(res.message, 'Success');
+                                this.router.navigate(['customer/status']);
+                                this.publicVariable.dataForm.reset();
+                            } else {
+                                this.toastr.error(res.message, 'Error');
+                            }
+                        },
+                        error: (error: any) => {
+                            this.toastr.error(
+                                error.error.message ||
+                                'An error occurred. Please try again later.',
+                                'Error'
+                            );
+                            this.publicVariable.isProcess = false;
+                        },
+                        complete: () => {
+                            this.publicVariable.isProcess = false;
+                        },
+                    })
+                );
+            } else {
+                this.markFormControlsAsTouched();
+            }
+        }
+
     }
 
     markFormControlsAsTouched(): void {

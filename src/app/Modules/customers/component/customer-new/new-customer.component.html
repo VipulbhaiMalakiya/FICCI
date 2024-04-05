@@ -226,7 +226,7 @@
                         <div *ngIf="shouldShowError('PANNo', 'invalidPAN')" class="text-danger">
                             Please enter a valid PAN Number.
                         </div>
-                        <div *ngIf="panExists" class="text-danger">
+                        <div *ngIf="panExists" class="text-warning">
                             Customers with the same PAN Number and different GST Number already exist.
                         </div>
                     </div>
