@@ -58,8 +58,11 @@
                 </div>
                 <div class="col-md-3 col-sm-6">
                     <div class="form-group">
-                        <label>Address 2 </label>
+                        <label>Address 2 <sup class="text-danger">*</sup></label>
                         <input type="text" class="form-control" placeholder="Address 2" formControlName="address2" />
+                        <div *ngIf="shouldShowError('address2', 'required')" class="text-danger">
+                            Address is required.
+                        </div>
                         <div *ngIf="shouldShowError('address2', 'maxlength')" class="text-danger">
                             address2 must be less than 100 characters.
                         </div>
