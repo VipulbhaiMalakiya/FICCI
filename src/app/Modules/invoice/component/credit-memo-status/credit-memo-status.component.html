@@ -85,6 +85,7 @@
                                     <a href="javascript:void(0);" (click)="onView(d)"><img
                                             src="../assets/images/view-icon.svg" alt="" /></a>
                                     <a *ngIf="publicVariable.storedRole !== 'Admin' &&
+                                    publicVariable.storedEmail == d.impiHeaderCreatedBy &&
                                     (d.isDraft ||
                                     d.headerStatus == 'REJECTED BY TL APPROVER'  ||
                                     d.headerStatus == 'REJECTED BY CH APPROVER' ||
