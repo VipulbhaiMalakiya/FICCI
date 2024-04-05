@@ -376,7 +376,7 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
             return
         }
         else{
-            if (this.publicVariable.dataForm.valid) {
+            if (this.publicVariable.dataForm.valid && !this.gstExists) {
 
                 const newData = this.publicVariable.dataForm.value;
                 if (newData.GSTCustomerType !== 2 && newData.GSTRegistrationNo == '') {
