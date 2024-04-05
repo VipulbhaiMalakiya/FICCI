@@ -144,7 +144,7 @@
                                     *ngIf="publicVariable.customerStatusList && publicVariable.customerStatusList.length > 0">
                                     <label class="col-form-label">Show</label>
                                     <select id="itemsPerPageSelect" class="form-select"
-                                        [(ngModel)]="publicVariable.tableSize" (change)="onTableSizeChange($event)">
+                                        [(ngModel)]="publicVariable.tableSize" (change)="onTableSizeChange($event,'Customer')">
                                         <option *ngFor="let size of publicVariable.tableSizes" [value]="size">{{ size }}
                                         </option>
                                     </select>
@@ -258,7 +258,7 @@
                                             entries
                                         </div>
                                         <pagination-controls previousLabel="Prev" class="pagination" nextLabel="Next"
-                                            (pageChange)="onTableDataChange($event)">
+                                            (pageChange)="onTableDataChange($event,'Customer')">
                                         </pagination-controls>
                                     </div>
 
@@ -541,7 +541,7 @@
                                 <div class="tblsort" *ngIf="InvoiceSummaryList && InvoiceSummaryList.length > 0">
                                     <label class="col-form-label">Show</label>
                                     <select id="itemsPerPageSelect" class="form-select"
-                                        [(ngModel)]="publicVariable.tableSize" (change)="onTableSizeChange($event)">
+                                        [(ngModel)]="publicVariable.tableSize" (change)="onTableSizeChange($event,'Posted Tax Invoice')">
                                         <option *ngFor="let size of publicVariable.tableSizes" [value]="size">{{ size }}
                                         </option>
                                     </select>
@@ -635,7 +635,7 @@
                                             entries
                                         </div>
                                         <pagination-controls previousLabel="Prev" class="pagination" nextLabel="Next"
-                                            (pageChange)="onTableDataChange($event)">
+                                            (pageChange)="onTableDataChange($event,'Posted Tax Invoice')">
                                         </pagination-controls>
                                     </div>
 

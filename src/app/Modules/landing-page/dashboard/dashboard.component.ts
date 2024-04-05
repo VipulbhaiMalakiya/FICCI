@@ -837,6 +837,14 @@ export class DashboardComponent {
             this.publicVariable.page = event;
             this.PIloadInvoiceSummary();
         }
+        else if(status =='Customer'){
+            this.publicVariable.page = event;
+            this.loadCustomerStatusList(this.customerStatus);
+        }
+        else if(status =='Posted Tax Invoice'){
+            this.publicVariable.page = event;
+            this.loadInvoiceSummary();
+        }
     }
 
 
@@ -851,6 +859,16 @@ export class DashboardComponent {
             this.publicVariable.tableSize = event.target.value;
             this.publicVariable.page = 1;
             this.PIInvoiceSummaryList;
+        }
+        else if(status == 'Customer'){
+            this.publicVariable.tableSize = event.target.value;
+            this.publicVariable.page = 1;
+            this.publicVariable.customerStatusList;
+        }
+        else if(status =='Posted Tax Invoice'){
+            this.publicVariable.tableSize = event.target.value;
+            this.publicVariable.page = 1;
+            this.InvoiceSummaryList;
         }
 
     }
