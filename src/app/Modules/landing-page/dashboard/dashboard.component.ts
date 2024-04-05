@@ -853,7 +853,7 @@ export class DashboardComponent {
 
         else if(status =='Sales Credit Note'){
             this.publicVariable.page = event;
-            this.loadSalesCreditNoteSummary();
+            this.SalesCreditNoteSummaryData;
         }
    
     }
