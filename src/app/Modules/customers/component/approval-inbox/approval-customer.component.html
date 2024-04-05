@@ -38,7 +38,6 @@
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th>Record No </th>
                             <th>Customer Code</th>
                             <th>Name</th>
                             <th>Address</th>
@@ -58,7 +57,6 @@
                         <tr
                         *ngFor="let d of  this.publicVariable.ApproveCustomerList | approvalsearchFilter: publicVariable.approvalsearchText| paginate: {itemsPerPage: publicVariable.tableSize,currentPage: publicVariable.page,totalItems: publicVariable.count};let i = index">
                         <td>{{i + 1}}</td>
-                        <td>{{d.customerId}}</td>
                         <td>{{d.customerCode || ''}}</td>
                         <td>{{d.customerName |titlecase }}</td>
                         <td>{{d.address}}</td>

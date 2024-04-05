@@ -189,13 +189,13 @@
                     </tr>
                 </thead>
                 <tbody>
-                  <!-- <tr *ngFor="let file of InvoiceAttachment; let i = index"> -->
-                        <tr>
-                        <td>1</td>
+                  <tr *ngFor="let file of InvoiceAttachment; let i = index">
+                     
+                        <td>{{i+1}}</td>
                         <td>.pdf</td>
-                        <td>{{InvNo}}</td>
+                        <td>{{file.invoiceNo}}</td>
                         <td *ngIf="!data.isDraft">
-                            <a href="javascript:void(0)" (click)="downalodInvFile(InvAttachment,InvNo)"><img
+                            <a href="javascript:void(0)" (click)="downalodInvFile(file.attachment,file.invoiceNo)"><img
                                     src="../assets/images/download-icon.svg" alt="" class="me-2"></a>
 
                         </td>

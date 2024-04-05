@@ -157,7 +157,7 @@
                     <div class="form-group">
                         <label>Primary Contact No. <sup class="text-danger">*</sup></label>
                         <input type="text" class="form-control" formControlName="PrimaryContactNo"
-                            placeholder="Primary Contact No" (input)="onInputChange($event)" maxlength="15" />
+                            placeholder="Primary Contact No" (input)="onInputChange($event)" maxlength="12" />
                         <div *ngIf="shouldShowError('PrimaryContactNo', 'required')" class="text-danger">
                             Primary Contact No is required.
                         </div>
@@ -197,7 +197,7 @@
                     <div class="form-group">
                         <label>GST Registration No. <sup class="text-danger">*</sup></label>
                         <input type="text" class="form-control" placeholder="GST Registration No."
-                            formControlName="GSTRegistrationNo" (blur)="validateGST()"
+                            formControlName="GSTRegistrationNo" (change)="validateGST()" maxlength="16"
                             [readonly]="publicVariable.dataForm.get('GSTCustomerType')?.value === 2 || !publicVariable.dataForm.get('GSTCustomerType')?.value"
                             [class.readonly]="publicVariable.dataForm.get('GSTCustomerType')?.value === 2 || !publicVariable.dataForm.get('GSTCustomerType')?.value"
                             />
@@ -215,7 +215,7 @@
                     <div class="form-group">
                         <label>P.A.N. No. <sup class="text-danger">*</sup></label>
                         <input type="text" class="form-control" formControlName="PANNo" placeholder="P.A.N. No."
-                            (blur)="ValidatePAN()" maxlength="15" />
+                            (change)="ValidatePAN()" maxlength="10" />
                         <div *ngIf="shouldShowError('PANNo', 'invalidPAN')" class="text-danger">
                             Please enter a valid PAN Number.
                         </div>

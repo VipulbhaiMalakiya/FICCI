@@ -2,7 +2,7 @@
 
 <div class="inner-content">
 
-  <h3 class="content-title">Customer Approval Inbox</h3>
+  <h3 class="content-title">Sales Invoice Approval Inbox</h3>
 
   <div class="page-btns-col" *ngIf="publicVariable.invoiceStatuslistData && publicVariable.invoiceStatuslistData.length > 0">
     <div class="tblsort">
@@ -43,6 +43,7 @@
                 <thead>
                     <tr>
                         <th>#</th>
+                        <th>Record No.</th>
                         <th>Invoice Type</th>
                         <th>Project Code</th>
                         <th>Project Name</th>
@@ -65,6 +66,7 @@
                     <tr
                         *ngFor="let d of  this.publicVariable.invoiceStatuslistData | searchFilter: publicVariable.searchText| paginate: {itemsPerPage: publicVariable.tableSize,currentPage: publicVariable.page,totalItems: publicVariable.count};let i = index">
                         <td>{{i + 1}}</td>
+                        <td>{{d.headerRecordID}}</td>
                         <td>{{d.impiHeaderInvoiceType | titlecase}}</td>
                         <td>{{d.impiHeaderProjectCode}}</td>
                         <td>{{d.impiHeaderProjectName | titlecase}}</td>

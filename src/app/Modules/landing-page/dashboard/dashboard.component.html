@@ -199,7 +199,7 @@
                                                 <tr
                                                     *ngFor="let d of  this.publicVariable.customerStatusList | searchFilter: publicVariable.searchText| paginate: {itemsPerPage: publicVariable.tableSize,currentPage: publicVariable.page,totalItems: publicVariable.count};let i = index">
                                                     <td>{{i + 1}}</td>
-                                                    <td>{{d.customerId}}</td>
+                                                    <td>{{d.recordID}}</td>
                                                     <td *ngIf="customerStatus=='APPROVED BY ACCOUNTS APPROVER'">
                                                         {{d.customerCode || ''}}</td>
                                                     <td>{{d.customerName |titlecase }}</td>
@@ -435,7 +435,7 @@
                                                 <tr
                                                     *ngFor="let d of  this.invoiceStatuslistData | invoiceFilter: publicVariable.searchText| paginate: {itemsPerPage: publicVariable.tableSize,currentPage: publicVariable.page,totalItems: publicVariable.count};let i = index">
                                                     <td>{{i + 1}}</td>
-                                                    <td>{{d.headerId}}</td>
+                                                    <td>{{d.headerRecordID}}</td>
                                                     <td>{{d.impiHeaderInvoiceType | titlecase}}</td>
                                                     <td>{{d.impiHeaderProjectCode}}</td>
                                                     <td>{{d.impiHeaderProjectName | titlecase}}</td>
@@ -470,6 +470,8 @@
 
 
                                                             <a *ngIf="publicVariable.storedRole !== 'Admin' && publicVariable.storedRole !== 'Approver' &&
+
+                                                            
                                                             publicVariable.storedEmail == d.impiHeaderCreatedBy &&
                                                                     (d.isDraft ||
                                                                     d.headerStatus == 'REJECTED BY TL APPROVER'  ||

@@ -60,6 +60,7 @@ export interface invoiceStatusModule {
     impiHeaderFinanceRemarks:string
     impiHeaderClusterApproverRemarks:string
     accountApproverRemarks:string
+    IsPostedTaxInvoice? :boolean;
 }
 
 export interface Attachment {
@@ -85,6 +86,7 @@ export interface LineItemRequest {
     impiLineDiscount: number
     impiLineUnitPrice: number
     impiLineAmount: number
+    impiDescription?:string
 }
 
 

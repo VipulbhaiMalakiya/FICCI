@@ -40,7 +40,7 @@
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th>Record No </th>
+                            <th>Record No.</th>
                             <th>Customer Code</th>
                             <th>Name</th>
                             <th>Address</th>
@@ -60,7 +60,8 @@
                         <tr
                             *ngFor="let d of  this.publicVariable.customerStatusList | searchFilter: publicVariable.searchText| paginate: {itemsPerPage: publicVariable.tableSize,currentPage: publicVariable.page,totalItems: publicVariable.count};let i = index">
                             <td>{{i + 1}}</td>
-                            <td>{{d.customerId}}</td>
+
+                            <td>{{d.recordID || ''}}</td>
                             <td>{{d.customerCode || ''}}</td>
                             <td>{{d.customerName |titlecase }}</td>
                             <td>{{d.address}}</td>
@@ -76,7 +77,6 @@
                                     <a href="javascript:void(0);" (click)="onView(d)"><img
                                             src="../assets/images/view-icon.svg" alt=""></a>
                                     <a *ngIf="publicVariable.storedRole !== 'Admin' &&
-                                            publicVariable.storedEmail == d.createdBy &&
                                             (d.isDraft ||
                                             d.customerStatus == 'REJECTED BY TL APPROVER'  ||
                                             d.customerStatus == 'REJECTED BY CH APPROVER' ||
@@ -84,8 +84,7 @@
                                         href="javascript:void(0);" (click)="onEdit(d)">
                                         <img src="../assets/images/edit-icon.svg" alt="">
                                     </a>
-                                    <a *ngIf="publicVariable.storedRole !== 'Admin' &&
-                                    publicVariable.storedEmail == d.createdBy &&(d.isDraft ||
+                                    <a *ngIf="publicVariable.storedRole !== 'Admin' && (d.isDraft ||
                                     d.customerStatus == 'REJECTED BY TL APPROVER' ||
                                     d.customerStatus == 'REJECTED BY CH APPROVER' ||
                                     d.customerStatus == 'REJECTED BY ACCOUNTS APPROVER')" href="javascript:void(0);"

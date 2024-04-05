@@ -115,8 +115,12 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
 
 
     validateGST() {
+
+
         try {
             const gst = this.publicVariable.dataForm.get('GSTRegistrationNo')?.value;
+            if(gst.length<15) {alert('Please enter Valid GST No.');
+             return;}
             const subscription = this.API.ValidateGST(gst).subscribe({
                 next: (response: any) => {
                     if (response.status) {
@@ -148,6 +152,10 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
     ValidatePAN() {
         try {
             const pan = this.publicVariable.dataForm.get('PANNo')?.value;
+
+            if(pan.length<10) {alert('Please enter Valid PAN No.');
+            return;}
+
             const subscription = this.API.ValidatePAN(pan).subscribe({
                 next: (response: any) => {
                     if (response.status) {
@@ -405,7 +413,8 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
                     pan: newData.PANNo.trim(),
                     loginId: this.publicVariable.storedEmail,
                     roleName: this.publicVariable.storedRole,
-                    CustomerRemarks: newData.CustomerRemarks.trim()
+                    CustomerRemarks: newData.CustomerRemarks.trim(),
+                    department:localStorage.getItem('department')
                 };
                 this.publicVariable.isProcess = true;
                 this.publicVariable.Subscription.add(

@@ -20,21 +20,20 @@ export class AuthService {
         const body = { email: email, password: password };
         return this.http.post(`${this.apiUrl}`, body).pipe(
             map((response: any) => {
-                if (response.data && response.data.token) {
-                    const userRole = response.data.roleName;
-                    const userEmail = response.data.email;
-                    const name =response.data.name;
+                if (response && response.token) {
+                    const userRole = response.roleName;
+                    const userEmail = response.email;
+                    const name =response.name;
                     localStorage.setItem('userRole', userRole);
                     localStorage.setItem('userEmail', userEmail);
                     localStorage.setItem('userName', name);
-                    localStorage.setItem('token', response.data.token);
-                    localStorage.setItem('department', response.data.department);
-                    localStorage.setItem('IsFinance',response.data.invoice_IsFinanceApprover)
-                    return { token: response.data.token, role: userRole };
+                    localStorage.setItem('token', response.token);
+                    localStorage.setItem('department', response.department);
+                    localStorage.setItem('IsFinance',response.invoice_IsFinanceApprover)
+                    return { token: response.token, role: userRole };
                 } else {
                     this.toastr.error('Invalid credentials', 'Error');
                     return { error: 'Invalid credentials' };
-
                 }
             }),
             catchError(error => {

@@ -132,7 +132,7 @@
                     </div>
                 </div>
 
-                <div class="col-md-4 col-sm-6">
+                <div class="col-md-4 col-sm-6" hidden>
                     <div class="form-group">
                         <label for="startDate">Starting Date </label>
                         <input type="text" id="startDate" placeholder="starting date" formControlName="startDate"
@@ -144,7 +144,7 @@
                     </div>
                 </div>
 
-                <div class="col-md-4 col-sm-6">
+                <div class="col-md-4 col-sm-6" hidden>
                     <div class="form-group">
                         <label for="endDate">End Date </label>
                         <input type="text" id="endDate" placeholder="end date" formControlName="endDate"
@@ -284,7 +284,7 @@
 
                     </div>
                 </div>
-                <div class="col-md-4 col-sm-6">
+                <div class="col-md-4 col-sm-6" hidden>
                     <div class="form-group">
                         <label for="state">State </label>
                         <!-- <ng-select [items]="publicVariable.stateList" #select bindLabel="stateName"
@@ -351,7 +351,7 @@
                     </div>
                 </div> -->
 
-                <div class="col-md-4 col-sm-6">
+                <div class="col-md-4 col-sm-6" hidden>
                     <div class="form-group">
                         <label for="ContactPerson">Contact Person </label>
                         <input type="text" placeholder="Contact Person" id="ContactPerson"
@@ -364,7 +364,7 @@
                     </div>
                 </div>
 
-                <div class="col-md-4 col-sm-6">
+                <div class="col-md-4 col-sm-6" hidden>
                     <div class="form-group">
                         <label for="EmailID">Customer EmailId </label>
                         <input type="email" placeholder="Email ID" id="EmailID"
@@ -382,7 +382,7 @@
                     </div>
                 </div>
 
-                <div class="col-md-4 col-sm-6">
+                <div class="col-md-4 col-sm-6" hidden>
                     <div class="form-group">
                         <label for="PhoneNo">Phone No. </label>
                         <input type="text" class="form-control" id="PhoneNo" (input)="onInputChange($event)"
@@ -422,7 +422,7 @@
                     <div class="col-md-4 col-sm-6">
                         <div class="form-group">
                             <label for="Quantity">Quantity </label>
-                            <input type="text" class="form-control no-style" readonly id="Quantity"
+                            <input type="text" class="form-control no-style" id="Quantity"
                                 placeholder="Quantity" formControlName="impiQuantity" (input)="onInputChange($event)" />
                             <div *ngIf="shouldShowExpenseError('impiQuantity','required')" class="text-danger">This
                                 field is

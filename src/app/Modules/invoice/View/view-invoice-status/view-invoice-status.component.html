@@ -10,7 +10,7 @@
             </div>
         </div>
     </div>
-    <h3 class="content-title">Customer Invoice Status</h3>
+    <h3 class="content-title">Sales Invoice Status</h3>
 
     <div class="pipage-radio">
         <div class="form-check">
@@ -187,7 +187,8 @@
             <div class="col-md-4 col-sm-6">
                 <div class="form-group">
                     <label>Total Base Amount</label>
-                    <input type="text" class="form-control" placeholder="Total Base Amount" [value]="data.baseAmount"
+                    <input type="text" class="form-control" placeholder="Total Base Amount"
+                     [value]="data.impiHeaderTotalTDSAmount"
                         disabled="">
                 </div>
             </div>
@@ -196,7 +197,7 @@
                 <div class="form-group">
                     <label>Total GST Amount</label>
                     <input type="text" class="form-control" placeholder="Total GST Amount" disabled=""
-                        [value]="data.totalGSTAmount">
+                        [value]="data.impiHeaderTotalGSTAmount">
                 </div>
             </div>
 
@@ -220,6 +221,7 @@
                     <tr>
                         <th>#</th>
                         <th width="38%">Nature of Expense</th>
+                        <th>Description</th>
                         <th>Quantity</th>
                         <th>Direct Unit Cost *(Exclusive GST)</th>
                         <th>Line Amount</th>
@@ -238,6 +240,7 @@
                     <tr *ngFor="let e of data.lineItem_Requests; let i = index">
                         <td>{{i + 1}}</td>
                         <td>{{ getNameById(e.impiGlNo) }}</td>
+                        <td>{{ e.impiLineDescription | titlecase }}</td>                        
                         <td>{{e.impiQuantity}}</td>
                         <td>{{e.impiUnitPrice}}</td>
                         <td>{{ e.impiUnitPrice * e.impiQuantity}}</td>
@@ -291,7 +294,7 @@
 
 
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-6" hidden>
                 <div class="form-group">
                     <label>Payment Terms</label>
                     <textarea class="form-control h-100" cols="2" rows="2" disabled=""
@@ -301,7 +304,7 @@
 
             <div class="col-md-6 ">
                 <div class="form-group">
-                    <label>Initial Remarks</label>
+                    <label>Remarks for FICCI Accounts Team</label>
                     <textarea class="form-control h-100" cols="2" rows="2" disabled=""
                         readonly="">{{data.impiHeaderRemarks}}</textarea> </div>
             </div>
@@ -369,9 +372,10 @@
 
                 <input type="checkbox" class="btn-check" formControlName="IsDraft" id="btn-check"
                 autocomplete="off">
-            <label class="common-btn w-auto me-2" for="btn-check" (click)="onSubmit(false)">Cancel
+            <label class="common-btn w-auto me-2" for="btn-check"  *ngIf ="!(data.IsPostedTaxInvoice)"
+            (click)="onSubmit(false)">Cancel Request
                 </label>
-            <button type="submit" class="btn btn-secondary w-auto mb-0 me-2" (click)="onSubmit(true)">Request Tax Invoice</button>
+            <button type="submit" *ngIf ="!(data.impiHeaderInvoiceType=='Tax Invoice')" class="btn btn-primary w-auto mb-0 me-2" (click)="onSubmit(true)">Request Tax Invoice</button>
 
             </div>
         </div>

@@ -57,9 +57,9 @@
                                 <div class="left-men" routerLinkActive="active" *ngIf="!isAccount">
                                     <h3><img src="../assets/images/invoice-icon.png" alt=""> Sales Invoice</h3>
                                     <a routerLink="/invoice/new" class="menu-list-title" routerLinkActive="active"
-                                        *ngIf="isEmployee">New Sales Invoice</a>
+                                        *ngIf="isEmployee || isApprover">New Sales Invoice</a>
                                     <a routerLink="/invoice/status" class="menu-list-title" routerLinkActive="active"
-                                        *ngIf="isAdmin || isEmployee">Sales Invoice Status</a>
+                                        *ngIf="isAdmin || isEmployee|| isApprover">Sales Invoice Status</a>
                                     <a routerLink="/invoice/approval" class="menu-list-title" routerLinkActive="active"
                                         *ngIf="isApprover">Sales Invoice Approval Inbox</a>
                                         <a routerLink="/invoice/tax-invoice" class="menu-list-title"

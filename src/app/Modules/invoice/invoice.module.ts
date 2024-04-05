@@ -38,7 +38,6 @@ import { PostedSalesNoteNewComponent } from './View/posted-sales-note-new/posted
 import { SalesCreditEmailComponent } from './send-email/sales-credit-email/sales-credit-email.component';
 import { ValidationPopupComponent } from './View/validation-popup/validation-popup.component';
 
-
 @NgModule({
     declarations: [
         InvoiceStatusComponent,

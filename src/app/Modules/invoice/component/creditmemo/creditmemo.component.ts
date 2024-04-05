@@ -265,7 +265,7 @@ export class CreditmemoComponent implements OnInit {
         //let data  = event.invoice_no;
 
         this.loadTaxInvoiceInformation(event.invoice_no)
-
+        
 
 
     }
@@ -379,6 +379,11 @@ export class CreditmemoComponent implements OnInit {
                 impiGstgroupCode: item.gSTGroupCode,
                 gST_Group_Type: item.gST_Group_Type,
                 impiHsnsaccode: item.hSN_SAC_Code,
+
+                impiTotalGstAmount: item.gstAmt,
+                impiNetTotal: item.cgstAmt,
+                impiGstBaseAmount: item.ssgst,
+
                 // Add more properties as needed
             };
         });
@@ -456,7 +461,7 @@ export class CreditmemoComponent implements OnInit {
 
     loadProjectList(): void {
         try {
-            const subscription = this.API.getProjects().subscribe({
+            const subscription = this.API.getProjectsCreditMemo().subscribe({
                 next: (response: any) => {
                     this.publicVariable.projectList = response.data;
                     this.loadCustomerStatusList();
@@ -732,9 +737,18 @@ export class CreditmemoComponent implements OnInit {
     }
     onSelectProject() {
         const selectedId = this.publicVariable.dataForm.get('ImpiHeaderProjectCode')?.value;
-        if (selectedId) {
+
+      
+        if (selectedId) 
+        {
+          
             this.publicVariable.selectedProjet = this.publicVariable.projectList.find(project => project.code == selectedId);
-            if (this.publicVariable.selectedProjet) {
+           
+           // alert(this.publicVariable.selectedProjet);
+
+            if (this.publicVariable.selectedProjet) 
+            {
+              
                 this.publicVariable.dataForm.patchValue({
                     ImpiHeaderDepartment: this.publicVariable.selectedProjet.departmentName,
                     ImpiHeaderDivison: this.publicVariable.selectedProjet.divisionName,
@@ -1068,10 +1082,10 @@ export class CreditmemoComponent implements OnInit {
 
 
 
-        if (Action !== 'Calculate' && !this.isCalculate) {
-            alert("Please Calculate the tax details");
-            return
-        }
+        // if (Action !== 'Calculate' && !this.isCalculate) {
+        //     alert("Please Calculate the tax details");
+        //     return
+        // }
 
         let action = true;
         if (Action == "Submit")

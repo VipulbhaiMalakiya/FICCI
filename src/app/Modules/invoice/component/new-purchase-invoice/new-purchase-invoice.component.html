@@ -446,6 +446,17 @@
                         </div>
                     </div>
 
+                    <div class="col-md-4 col-sm-8">
+                        <div class="form-group">
+                            <label>Description/Narration to Print on Invoice <sup class="text-danger">*</sup></label>
+                            <input type="text" class="form-control" placeholder="Description" maxlength="100"
+                                formControlName="impiDescription">
+                            <div *ngIf="shouldShowExpenseError('impiDescription','required')" class="text-danger">This
+                                field is
+                                required</div>
+                        </div>
+                    </div>
+
                     <div class="col-md-4 col-sm-6">
                         <div class="form-group">
                             <label>&nbsp;</label>
@@ -518,6 +529,7 @@
                         <tr>
                             <th>#</th>
                             <th width="38%">Nature of Income</th>
+                            <th>Description</th>
                             <th>Quantity</th>
                             <th>Direct Unit Cost *(Exclusive GST)</th>
                             <th>Line Amount</th>
@@ -534,6 +546,7 @@
                         <tr *ngFor="let e of publicVariable.expenses; let i = index">
                             <td>{{i + 1}}</td>
                             <td>{{ getNameById(e.impiGlNo) }}</td>
+                            <td>{{e.impiDescription}}</td>
                             <td>{{e.impiQuantity}}</td>
                             <td>{{e.impiUnitPrice}}</td>
                             <td>{{e.impiUnitPrice * e.impiQuantity}}</td>
@@ -628,18 +641,19 @@
             </div>
         </div>
         <div class="mastersform-sec mb-3">
-            <div class="col-md-9 mt-4">
+            <div class="col-md-9 mt-4" hidden>
                 <div class="form-group">
-                    <label for="PaymentTerms">Payment Terms</label>
-                    <textarea class="form-control h-100" cols="2" rows="3" id="PaymentTerms"
+                    <label for="PaymentTerms">Description/Narration to Print on Invoice</label>
+                    <textarea class="form-control h-100" cols="2" rows="3" id="PaymentTerms" maxlength="100"
                         formControlName="ImpiHeaderPaymentTerms"></textarea>
                 </div>
             </div>
 
             <div class="col-md-9 mt-3">
                 <div class="form-group">
-                    <label for="Remarks">Initial Remarks</label>
+                    <label for="Remarks">Remarks for FICCI Accounts Team</label>
                     <textarea class="form-control h-100" cols="2" rows="3" id="Remarks"
+                    maxlength="100"
                         formControlName="ImpiHeaderRemarks"></textarea>
                 </div>
             </div>

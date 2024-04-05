@@ -16,7 +16,8 @@ export class InvoicesService {
     private apiUrlMemo = `${environment.apiURL}SalesCreditMemo`;
     private getCustomerStatusNewURL = `${environment.apiURL}Customer?email=`;
 
-
+    private ProjectapiCreditMemo = `${environment.apiURL}DropDown/GetProjectCreditMemo?id=0`;
+    private Projectapi = `${environment.apiURL}DropDown/GetProject?department=`;
     private PurchaseInvoice_New = `${environment.apiURL}PurchaseInvoice_New?email=`;
     private ApproveInvoiceURL = `${environment.apiURL}ApproveInvoice?email=`;
     private ApproveSalesInvoiceURL = `${environment.apiURL}ApproveCredit?email=`;
@@ -47,15 +48,10 @@ export class InvoicesService {
     private SalesCreditNoteSummaryURL = `${environment.apiURL}NavERP/GetSalesCreditNoteSummary?User=`;
 
     private PaymentDetailsURL = `${environment.apiURL}NavERP/GetTaxInvoicePaymentDetails?InvoiceNo=`;
-
     private GetDetailsURL = `${environment.apiURL}DropDown/GetDetails?projectCode=`;
     private GetApproverEmailURL = `${environment.apiURL}ApproveInvoice/GetApproverEmail?email=`;
-    private Projectapi = `${environment.apiURL}DropDown/GetProject?department=`;
 
-    getProjects(): Observable<any[]> {
-        return this.http.get<any[]>(`${this.Projectapi}${localStorage.getItem('department')}&id=0`);
-    }
-
+    
     GetApproverEmail(data: any): Observable<any[]> {
         const url = `${this.GetApproverEmailURL}${data.email ?? ''}&id=${data.id    }`;
         return this.http.get<any[]>(url);
@@ -73,7 +69,7 @@ export class InvoicesService {
     }
 
     getTaxPaymentDetails(data: any): Observable<any[]> {
-
+      
         const url = `${this.PaymentDetailsURL}${data ?? ''}`;
         return this.http.get<any[]>(url);
     }
@@ -180,6 +176,18 @@ export class InvoicesService {
         return this.http.get<any[]>(url);
     }
 
+
+    getProjectsCreditMemo(): Observable<any[]> {
+        return this.http.get<any[]>(`${this.ProjectapiCreditMemo}`);
+    }
+
+    getProjects(): Observable<any[]> {
+        return this.http.get<any[]>(`${this.Projectapi}${localStorage.getItem('department')}&id=0`);
+    }
+
+    // getProjects(): Observable<any[]> {
+    //     return this.http.get<any[]>(`${this.Projectapi}`);
+    // }
 
     getPurchaseInvoice_New(): Observable<any[]> {
         const url = `${this.PurchaseInvoice_New}${localStorage.getItem('userEmail') ?? ''}&departmentName=${localStorage.getItem('department') ?? ''}`;

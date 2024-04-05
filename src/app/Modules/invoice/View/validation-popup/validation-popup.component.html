@@ -1,13 +1,11 @@
 <div class="common-modal green-modal">
     <div class="modal-header">
-      <h1 class="modal-title fs-5">Invoice Information</h1>
+      <h1 class="modal-title fs-5">Existing Sales Invoice for this Customer</h1>
       <button type="button" class="btn-close" (click)="onContinue(true)" data-bs-dismiss="modal" aria-label="Close"></button>
     </div>
     <div class="modal-body mb-0">
       <form class="common-modal-form" >
-        <div class="mailer-piaccount">
-
-         
+        <div class="mailer-piaccount">        
 
             <div class="dasboard-table pi-table mb-0" >
                 <div class="table-responsive">
@@ -15,20 +13,22 @@
                         <thead>
                           <tr>
                             <th>#</th>
-                            <th>Amount</th>
+                            <th>Invoice Type</th>                           
                             <th>Department</th>
-                            <th>createdBy</th>
-                            <th>createdOn</th>
-                            <th>status</th>
+                            <th>Created By</th>
+                            <th>Created On</th>
+                            <th>Invoice Amount</th>
+                            <th>Status</th>
                           </tr>
                         </thead>
                         <tbody>
                           <tr *ngFor="let file of data; let i = index">
                             <td>{{ i + 1 }}</td>
-                            <td>{{file.amount}}</td>
+                            <td>{{file.invoiceType}}</td>
                             <td>{{file.department}}</td>
                             <td>{{file.createdBy}}</td>
-                            <td>{{file.createdOn}}</td>
+                            <td>{{file.createdOn | date:'medium':'IST'}}</td>
+                            <td>{{file.amount}}</td>
                             <td>{{file.status}}</td>
                           </tr>
                         </tbody>

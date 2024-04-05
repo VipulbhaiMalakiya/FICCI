@@ -227,7 +227,7 @@
                                         <div class="form-group">
                                             <label>Total Base Amount</label>
                                             <input type="text" class="form-control" placeholder="Total Base Amount"
-                                                [value]="data?.baseAmount" disabled="">
+                                                [value]="data?.impiHeaderTotalTDSAmount" disabled="">
                                         </div>
                                     </div>
 
@@ -235,7 +235,7 @@
                                         <div class="form-group">
                                             <label>Total GST Amount</label>
                                             <input type="text" class="form-control" placeholder="Total GST Amount"
-                                                disabled="" [value]="data?.totalGSTAmount">
+                                                disabled="" [value]="data?.impiHeaderTotalGSTAmount">
                                         </div>
                                     </div>
 
@@ -260,6 +260,7 @@
                                             <tr>
                                                 <th>#</th>
                                                 <th width="38%">Nature of Expense</th>
+                                                <th>Description</th>
                                                 <th>Quantity</th>
                                                 <th>Direct Unit Cost *(Exclusive GST)</th>
 
@@ -279,6 +280,7 @@
                                             <tr *ngFor="let e of data?.lineItem_Requests; let i = index">
                                                 <td>{{i + 1}}</td>
                                                 <td>{{ getNameById(e.impiGlNo) }}</td>
+                                                <td>{{ e.impiDescription | titlecase }}</td>  
                                                 <td>{{e.impiQuantity}}</td>
                                                 <td>{{e.impiUnitPrice}}</td>
                                                 <td>{{e.impiUnitPrice * e.impiQuantity}}</td>
@@ -334,7 +336,7 @@
                             <div class="mastersform-sec mb-3">
 
                                 <div class="row">
-                                    <div class="col-md-6">
+                                    <div class="col-md-6" hidden>
                                         <div class="form-group">
                                             <label>Payment Terms</label>
                                             <textarea class="form-control h-100" cols="2" rows="2" disabled=""

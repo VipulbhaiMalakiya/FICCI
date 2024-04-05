@@ -98,9 +98,14 @@ export class PostedTaxInvoiceComponent {
         try {
             const subscription = this.API.GetTaxInvoiceAttachment(invoice).subscribe({
                 next: (response: any) => {
+
                     this.InvoiceAttachment = response.data;
-                    this.InvNo =this.InvoiceAttachment.invoiceNo;
-                    this.InvAttachment =this.InvoiceAttachment.attachment;
+
+                    if(this.InvoiceAttachment.length>0)
+                    {
+                    this.InvNo =this.InvoiceAttachment[0].invoiceNo;
+                    this.InvAttachment =this.InvoiceAttachment[0].attachment;
+                    }
 
 
                     console.log(this.InvoiceAttachment);
