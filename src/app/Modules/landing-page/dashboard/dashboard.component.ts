@@ -834,10 +834,46 @@ export class DashboardComponent {
         this.publicVariable.customerStatusList
     }
 
+    onTableSizeChangeposted(event: any) {
+        this.publicVariable.page = event;
+        this.PIInvoiceSummaryList
+    }
+
+    onTableDataChangepi(event: any) {
+        this.publicVariable.page = event;
+        this.invoiceStatuslistData
+    }
+
+    onTableSizeChangesumaary(event: any) {
+        this.publicVariable.page = event;
+        this.InvoiceSummaryList
+    }
+
     onTableSizeChange(event: any): void {
         this.publicVariable.tableSize = event.target.value;
         this.publicVariable.page = 1;
         this.publicVariable.customerStatusList
+
+    }
+
+    onTableSizeChangepi(event: any): void {
+        this.publicVariable.tableSize = event.target.value;
+        this.publicVariable.page = 1;
+        this.invoiceStatuslistData
+
+    }
+
+    onTableDataChangesi(event: any): void {
+        this.publicVariable.tableSize = event.target.value;
+        this.publicVariable.page = 1;
+        this.InvoiceSummaryList
+
+    }
+
+    onTableDataChangesa(event: any): void {
+        this.publicVariable.tableSize = event.target.value;
+        this.publicVariable.page = 1;
+        this.PIInvoiceSummaryList
 
     }
 

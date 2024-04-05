@@ -379,7 +379,7 @@
                                 <div class="tblsort" *ngIf="invoiceStatuslistData && invoiceStatuslistData.length > 0">
                                     <label class="col-form-label">Show</label>
                                     <select id="itemsPerPageSelect" class="form-select"
-                                        [(ngModel)]="publicVariable.tableSize" (change)="onTableSizeChange($event)">
+                                        [(ngModel)]="publicVariable.tableSize" (change)="onTableSizeChangepi($event)">
                                         <option *ngFor="let size of publicVariable.tableSizes" [value]="size">{{ size }}
                                         </option>
                                     </select>
@@ -518,7 +518,7 @@
                                             entries
                                         </div>
                                         <pagination-controls previousLabel="Prev" class="pagination" nextLabel="Next"
-                                            (pageChange)="onTableDataChange($event)">
+                                            (pageChange)="onTableDataChangepi($event)">
                                         </pagination-controls>
                                     </div>
 
@@ -539,7 +539,7 @@
                                 <div class="tblsort" *ngIf="InvoiceSummaryList && InvoiceSummaryList.length > 0">
                                     <label class="col-form-label">Show</label>
                                     <select id="itemsPerPageSelect" class="form-select"
-                                        [(ngModel)]="publicVariable.tableSize" (change)="onTableSizeChange($event)">
+                                        [(ngModel)]="publicVariable.tableSize" (change)="onTableSizeChangesumaary($event)">
                                         <option *ngFor="let size of publicVariable.tableSizes" [value]="size">{{ size }}
                                         </option>
                                     </select>
@@ -633,7 +633,7 @@
                                             entries
                                         </div>
                                         <pagination-controls previousLabel="Prev" class="pagination" nextLabel="Next"
-                                            (pageChange)="onTableDataChange($event)">
+                                            (pageChange)="onTableDataChangesi($event)">
                                         </pagination-controls>
                                     </div>
 
@@ -650,7 +650,7 @@
                                 <div class="tblsort" *ngIf="PIInvoiceSummaryList && PIInvoiceSummaryList.length > 0">
                                     <label class="col-form-label">Show</label>
                                     <select id="itemsPerPageSelect" class="form-select"
-                                        [(ngModel)]="publicVariable.tableSize" (change)="onTableSizeChange($event)">
+                                        [(ngModel)]="publicVariable.tableSize" (change)="onTableSizeChangeposted($event)">
                                         <option *ngFor="let size of publicVariable.tableSizes" [value]="size">{{ size }}
                                         </option>
                                     </select>
@@ -745,7 +745,7 @@
                                             entries
                                         </div>
                                         <pagination-controls previousLabel="Prev" class="pagination" nextLabel="Next"
-                                            (pageChange)="onTableDataChange($event)">
+                                            (pageChange)="onTableDataChangesa($event)">
                                         </pagination-controls>
                                     </div>
 
