@@ -13,19 +13,8 @@ export class NevErpComponent {
 
     redirectToHomePage() {
 
-
-        this.authService.login('vipul.malakiya@teamcomputers.com', 'team@123').subscribe(
-            (response) => {
-                if (response.error) {
-                } else {
-                    this.router.navigate(['/login']); // Redirect to the dashboard
-
-                }
-            },
-            (error) => {
-
-            }
-        );
+        localStorage.setItem('userEmail', 'vipul.malakiya@teamcomputers.com');
+        this.router.navigate(['/dashboard']); // Redirect to the dashboard
 
     }
 }
