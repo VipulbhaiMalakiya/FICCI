@@ -958,7 +958,7 @@
                                                                 )" href="javascript:void(0);"
                                                                 (click)="onEditPI(d)"><img
                                                                     src="../assets/images/edit-icon.svg" alt="" /></a>
-                                                            <!-- <a *ngIf="publicVariable.storedRole !== 'Admin' && publicVariable.storedRole !== 'Approver' &&
+                                                            <a *ngIf="publicVariable.storedRole !== 'Admin' && publicVariable.storedRole !== 'Approver' &&
                                                             publicVariable.storedEmail === d.impiHeaderCreatedBy &&
                                                                 (d.isDraft ||
                                                                 d.headerStatus == 'REJECTED BY TL APPROVER'  ||
@@ -967,7 +967,7 @@
                                                               )" href="javascript:void(0)"
                                                                 (click)="onDeletePI(d.headerId)" data-bs-toggle="modal"
                                                                 data-bs-target="#deleterecord-modal"><img
-                                                                    src="../assets/images/delete-icon.svg" alt="" /></a> -->
+                                                                    src="../assets/images/delete-icon.svg" alt="" /></a>
 
                                                             <a href="javascript:void(0);" (click)="onsalesSendEmail(d)"
                                                                 *ngIf="d.headerStatus === 'APPROVED BY TL' && this.storedRole === 'Approver' "><img
