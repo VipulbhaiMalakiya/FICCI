@@ -829,53 +829,32 @@ export class DashboardComponent {
 
 
 
-    onTableDataChange(event: any) {
-        this.publicVariable.page = event;
-        this.publicVariable.customerStatusList
+    onTableDataChange(event: any,status?:any) {
+        //this.publicVariable.customerStatusList;
+
+        
+        if(status == 'Posted Tax Invoice'){
+            this.publicVariable.page = event;
+            this.PIloadInvoiceSummary();
+        }
     }
 
-    onTableSizeChangeposted(event: any) {
-        this.publicVariable.page = event;
-        this.PIInvoiceSummaryList
-    }
 
-    onTableDataChangepi(event: any) {
-        this.publicVariable.page = event;
-        this.invoiceStatuslistData
-    }
+    onTableSizeChange(event: any,status?:any): void {
 
-    onTableSizeChangesumaary(event: any) {
-        this.publicVariable.page = event;
-        this.InvoiceSummaryList
-    }
 
-    onTableSizeChange(event: any): void {
-        this.publicVariable.tableSize = event.target.value;
-        this.publicVariable.page = 1;
-        this.publicVariable.customerStatusList
 
-    }
+      
+        //this.publicVariable.customerStatusList
 
-    onTableSizeChangepi(event: any): void {
-        this.publicVariable.tableSize = event.target.value;
-        this.publicVariable.page = 1;
-        this.invoiceStatuslistData
+        if(status == 'Posted Tax Invoice'){
+            this.publicVariable.tableSize = event.target.value;
+            this.publicVariable.page = 1;
+            this.PIInvoiceSummaryList;
+        }
 
     }
 
-    onTableDataChangesi(event: any): void {
-        this.publicVariable.tableSize = event.target.value;
-        this.publicVariable.page = 1;
-        this.InvoiceSummaryList
-
-    }
-
-    onTableDataChangesa(event: any): void {
-        this.publicVariable.tableSize = event.target.value;
-        this.publicVariable.page = 1;
-        this.PIInvoiceSummaryList
-
-    }
 
 
     onDelete(id: number) {
