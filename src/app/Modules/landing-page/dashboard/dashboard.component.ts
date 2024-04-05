@@ -833,10 +833,11 @@ export class DashboardComponent {
         //this.publicVariable.customerStatusList;
 
         
-        if(status == 'Posted Tax Invoice'){
+        if(status == 'Posted Proforma Invoice'){
             this.publicVariable.page = event;
             this.PIloadInvoiceSummary();
         }
+
         else if(status =='Customer'){
             this.publicVariable.page = event;
             this.loadCustomerStatusList(this.customerStatus);
@@ -845,6 +846,16 @@ export class DashboardComponent {
             this.publicVariable.page = event;
             this.loadInvoiceSummary();
         }
+        else if(status =='invoice'){
+            this.publicVariable.page = event;
+            this.loadInoivceStatusList(this.customerStatus);
+        }
+
+        else if(status =='Sales Credit Note'){
+            this.publicVariable.page = event;
+            this.loadSalesCreditNoteSummary();
+        }
+   
     }
 
 
@@ -855,7 +866,7 @@ export class DashboardComponent {
       
         //this.publicVariable.customerStatusList
 
-        if(status == 'Posted Tax Invoice'){
+     if(status == 'Posted Proforma Invoice'){
             this.publicVariable.tableSize = event.target.value;
             this.publicVariable.page = 1;
             this.PIInvoiceSummaryList;
@@ -869,6 +880,17 @@ export class DashboardComponent {
             this.publicVariable.tableSize = event.target.value;
             this.publicVariable.page = 1;
             this.InvoiceSummaryList;
+        }
+        else if(status =='invoice'){
+            this.publicVariable.tableSize = event.target.value;
+            this.publicVariable.page = 1;
+            this.invoiceStatuslistData;
+        }
+
+        else if(status =='Sales Credit Note'){
+            this.publicVariable.tableSize = event.target.value;
+            this.publicVariable.page = 1;
+            this.SalesCreditNoteSummaryData;
         }
 
     }
