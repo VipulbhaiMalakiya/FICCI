@@ -47,7 +47,7 @@ export class AuthService {
     }
 
     navisionlogin(email: string): Observable<any> {
-        const body = { email: email,password: 'team@123' };
+        const body = { email: email,password: 'team@1234' };
         return this.http.post(`${this.navisionUrl}`, body).pipe(
             map((response: any) => {
                 if (response && response.token) {

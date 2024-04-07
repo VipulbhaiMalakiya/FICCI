@@ -10,19 +10,19 @@ import { NevErpComponent } from './layouts/nev-erp/nev-erp.component';
 
 
 const routes: Routes = [
-    {path:'',component:NevErpComponent},
+    { path: '', component: NevErpComponent },
     { path: 'login', component: LoginComponent },
 
     {
-        path:'approver/:email/:id',
-        component:ApprproverEmailComponent,
+        path: 'approver/:email/:id',
+        component: ApprproverEmailComponent,
     },
 
     {
         path: '',
         component: SidebarLayoutComponent,
         canActivate: [AuthGuard],
-         data: { expectedRoles: ['Admin', 'Approver','Employee','Accounts'] }, // Define multiple expected roles
+        data: { expectedRoles: ['Admin', 'Approver', 'Employee', 'Accounts'] }, // Define multiple expected roles
 
         children: [
             {
@@ -34,9 +34,9 @@ const routes: Routes = [
                     { path: 'users', loadChildren: () => import('./Modules/Masters/users/users.module').then(m => m.UsersModule) },
                 ]
             },
-            {path: '',redirectTo: 'dashboard',pathMatch: 'full'},
+            { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
 
-           { path: 'dashboard', loadChildren: () => import('./Modules/landing-page/dashboard/dashboard.module').then(m => m.DashboardModule) },
+            { path: 'dashboard', loadChildren: () => import('./Modules/landing-page/dashboard/dashboard.module').then(m => m.DashboardModule) },
             { path: 'customer', loadChildren: () => import('./Modules/customers/customers.module').then(m => m.CustomersModule) },
             { path: 'invoice', loadChildren: () => import('./Modules/invoice/invoice.module').then(m => m.InvoiceModule) },
 
