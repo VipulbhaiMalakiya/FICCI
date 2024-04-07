@@ -42,12 +42,14 @@ export class LoginComponent implements OnInit {
                 (error) => {
                     this.isProcess = false;
                     this.toastr.error('Login failed', 'Error')
+                    this.router.navigate(['/unauthorized']); // Redirect to the dashboard
+
                 }
             );
 
 
         }else{
-            this.router.navigate(['/403']); // Redirect to the dashboard
+            this.router.navigate(['/unauthorized']); // Redirect to the dashboard
 
         }
     }

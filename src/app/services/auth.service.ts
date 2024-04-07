@@ -62,12 +62,16 @@ export class AuthService {
                     localStorage.setItem('IsFinance',response.invoice_IsFinanceApprover)
                     return { token: response.token, role: userRole };
                 } else {
-                    this.toastr.error('Invalid credentials', 'Error');
+                   // this.toastr.error('Invalid credentials', 'Error');
+                    this.router.navigate(['/unauthorized']); // Redirect to the dashboard
+
                     return { error: 'Invalid credentials' };
                 }
             }),
             catchError(error => {
-                this.toastr.error('An error occurred during login', 'Error');
+               // this.toastr.error('An error occurred during login', 'Error');
+                this.router.navigate(['/unauthorized']); // Redirect to the dashboard
+
                 return of({ error: 'An error occurred during login' });
             })
         );
