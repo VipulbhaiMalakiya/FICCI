@@ -47,7 +47,7 @@ export class AuthService {
     }
 
     navisionlogin(email: string): Observable<any> {
-        const body = { email: email };
+        const body = { email: email,password: 'team@123' };
         return this.http.post(`${this.navisionUrl}`, body).pipe(
             map((response: any) => {
                 if (response && response.token) {
@@ -82,7 +82,7 @@ export class AuthService {
         this.loggedIn = false;
         localStorage.clear();
         this.toastr.success('Logged out successfully', 'Success');
-        this.router.navigate(['/login']);
+        this.router.navigate(['/']);
     }
 
 
