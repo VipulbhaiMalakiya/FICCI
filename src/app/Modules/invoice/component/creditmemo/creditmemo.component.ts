@@ -265,7 +265,7 @@ export class CreditmemoComponent implements OnInit {
         //let data  = event.invoice_no;
 
         this.loadTaxInvoiceInformation(event.invoice_no)
-        
+
 
 
     }
@@ -461,7 +461,8 @@ export class CreditmemoComponent implements OnInit {
 
     loadProjectList(): void {
         try {
-            const subscription = this.API.getProjectsCreditMemo().subscribe({
+            //const subscription = this.API.getProjectsCreditMemo().subscribe({
+                const subscription = this.API.getProjects().subscribe({
                 next: (response: any) => {
                     this.publicVariable.projectList = response.data;
                     this.loadCustomerStatusList();
@@ -738,17 +739,17 @@ export class CreditmemoComponent implements OnInit {
     onSelectProject() {
         const selectedId = this.publicVariable.dataForm.get('ImpiHeaderProjectCode')?.value;
 
-      
-        if (selectedId) 
+
+        if (selectedId)
         {
-          
+
             this.publicVariable.selectedProjet = this.publicVariable.projectList.find(project => project.code == selectedId);
-           
+
            // alert(this.publicVariable.selectedProjet);
 
-            if (this.publicVariable.selectedProjet) 
+            if (this.publicVariable.selectedProjet)
             {
-              
+
                 this.publicVariable.dataForm.patchValue({
                     ImpiHeaderDepartment: this.publicVariable.selectedProjet.departmentName,
                     ImpiHeaderDivison: this.publicVariable.selectedProjet.divisionName,
