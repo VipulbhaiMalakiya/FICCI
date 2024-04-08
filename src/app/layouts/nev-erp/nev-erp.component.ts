@@ -49,10 +49,4 @@ export class NevErpComponent implements OnInit {
     }
 
 
-    redirectToHomePage() {
-
-        // localStorage.setItem('userEmail', 'vipul.malakiya@teamcomputers.com');
-        // this.router.navigate(['/dashboard']); // Redirect to the dashboard
-
-    }
 }

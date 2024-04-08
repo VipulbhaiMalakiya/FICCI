@@ -1,13 +1,32 @@
-<!-- <button (click)="redirectToHomePage()">Dashboard</button> -->
+<app-loading *ngIf="isProcess"></app-loading>
 
-<nav><h1>Sales Invoice Management System</h1></nav>
-<div class="container">
-  
-  <div class="tiles">
-    <a [routerLink]="" (click)="redirectToHomePage()" class="link"  
-    style="background-image: url(https://images.unsplash.com/photo-1462899006636-339e08d1844e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=max&w=500&q=60);">
-      <h2 class="link-title">Sales Invoice Process</h2>
-    </a>
-   
-  </div>
-  
+<header class="login-page">
+    <div class="container">
+        <div class="header-logo"><a href="#"><img src="../assets/images/logo.png" alt=""> </a></div>
+    </div>
+</header>
+
+<div class="login-wrapper main-content">
+
+    <div class="container">
+
+        <div class="innerlogin-sec">
+
+            <div class="login-vector"><img src="../assets/images/login-vector.jpg" alt=""></div>
+
+            <div class="home-search">
+                <h1>loading</h1>
+
+
+
+            </div>
+
+        </div>
+
+
+        <p class="login-copyright">Federation of Indian Chambers of Commerce & Industry © 2024 | All rights reserved.
+        </p>
+
+    </div>
+
+</div>
