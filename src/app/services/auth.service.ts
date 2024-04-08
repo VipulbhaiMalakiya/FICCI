@@ -26,13 +26,13 @@ export class AuthService {
                 if (response && response.token) {
                     const userRole = response.roleName;
                     const userEmail = response.email;
-                    const name =response.name;
+                    const name = response.name;
                     localStorage.setItem('userRole', userRole);
                     localStorage.setItem('userEmail', userEmail);
                     localStorage.setItem('userName', name);
                     localStorage.setItem('token', response.token);
                     localStorage.setItem('department', response.department);
-                    localStorage.setItem('IsFinance',response.invoice_IsFinanceApprover)
+                    localStorage.setItem('IsFinance', response.invoice_IsFinanceApprover)
                     return { token: response.token, role: userRole };
                 } else {
                     this.toastr.error('Invalid credentials', 'Error');
@@ -47,29 +47,31 @@ export class AuthService {
     }
 
     navisionlogin(email: string): Observable<any> {
-        const body = { email: email,password: 'team@1234' };
+        const body = { email: email, password: 'team@1234' };
         return this.http.post(`${this.navisionUrl}`, body).pipe(
             map((response: any) => {
                 if (response && response.token) {
                     const userRole = response.roleName;
                     const userEmail = response.email;
-                    const name =response.name;
+                    const name = response.name;
                     localStorage.setItem('userRole', userRole);
                     localStorage.setItem('userEmail', userEmail);
                     localStorage.setItem('userName', name);
                     localStorage.setItem('token', response.token);
                     localStorage.setItem('department', response.department);
-                    localStorage.setItem('IsFinance',response.invoice_IsFinanceApprover)
+                    localStorage.setItem('IsFinance', response.invoice_IsFinanceApprover)
                     return { token: response.token, role: userRole };
                 } else {
-                   this.toastr.error('Invalid credentials', 'Error');
-                    this.router.navigate(['/unauthorized']);
+                    this.toastr.error('Access Denied', 'Error');
+                    this.loggedIn = false;
+                    localStorage.clear();
+                    this.router.navigate(['/login']);
 
-                    return { error: 'Invalid credentials' };
+                    return { error: 'Access Denied' };
                 }
             }),
             catchError(error => {
-               // this.toastr.error('An error occurred during login', 'Error');
+                // this.toastr.error('An error occurred during login', 'Error');
                 this.router.navigate(['/unauthorized']); // Redirect to the dashboard
 
                 return of({ error: 'An error occurred during login' });
@@ -94,7 +96,7 @@ export class AuthService {
         const storedEmail = localStorage.getItem('userEmail');
 
         // Check if all necessary items are present
-        return storedRole !== null && storedToken !== null  && storedEmail !==null;
+        return storedRole !== null && storedToken !== null && storedEmail !== null;
     }
 
 }
