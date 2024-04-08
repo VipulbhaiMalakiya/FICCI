@@ -62,7 +62,7 @@ export class AuthService {
                     localStorage.setItem('department', response.department);
                     localStorage.setItem('IsFinance',response.invoice_IsFinanceApprover)
                     localStorage.setItem('navDepartment', response.navDepartment);
-                    
+
                     return { token: response.token, role: userRole };
                 } else {
                    // this.toastr.error('Invalid credentials', 'Error');
@@ -85,8 +85,11 @@ export class AuthService {
         this.loggedIn = false;
         localStorage.clear();
         this.toastr.success('Logged out successfully', 'Success');
-        this.router.navigate(['/']);
+        this.router.navigate(['/']).then(() => {
+            window.location.reload();
+        });
     }
+
 
 
 
