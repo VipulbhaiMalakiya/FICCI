@@ -62,8 +62,8 @@ export class AuthService {
                     localStorage.setItem('IsFinance',response.invoice_IsFinanceApprover)
                     return { token: response.token, role: userRole };
                 } else {
-                   // this.toastr.error('Invalid credentials', 'Error');
-                    this.router.navigate(['/unauthorized']); // Redirect to the dashboard
+                   this.toastr.error('Invalid credentials', 'Error');
+                    this.router.navigate(['/unauthorized']);
 
                     return { error: 'Invalid credentials' };
                 }
