@@ -67,6 +67,10 @@ export class CustomersService {
     }
     getCustomerStatus(): Observable<any[]> {
         return this.http.get<any[]>(`${this.getCustomerStatusURL}`);
+
+      
+
+        
     }
     create(data: addUpdateCustomer): Observable<addUpdateCustomer> {
         return this.http.post<addUpdateCustomer>(`${this.apiUrl}`, data);
@@ -77,7 +81,12 @@ export class CustomersService {
     }
 
     getCustomerStatusNew(): Observable<any[]> {
+
         const url = `${this.getCustomerStatusNewURL}${localStorage.getItem('userEmail') ?? ''}&departmentName=${localStorage.getItem('department') ?? ''}`;
+      
+       // const url = `${this.getCustomerStatusNewURL}${localStorage.getItem('userEmail') ?? ''}&departmentName=ABC`;
+
+      //  https://localhost:44386/api/Customer?email=test%40te&departmentName=ABC
         return this.http.get<any[]>(url);
     }
 

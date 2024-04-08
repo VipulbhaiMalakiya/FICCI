@@ -144,7 +144,7 @@
                                     *ngIf="publicVariable.customerStatusList && publicVariable.customerStatusList.length > 0">
                                     <label class="col-form-label">Show</label>
                                     <select id="itemsPerPageSelect" class="form-select"
-                                        [(ngModel)]="publicVariable.tableSize" (change)="onTableSizeChange($event,'Customer')">
+                                        [(ngModel)]="publicVariable.tableSize" (change)="onTableSizeChange($event)">
                                         <option *ngFor="let size of publicVariable.tableSizes" [value]="size">{{ size }}
                                         </option>
                                     </select>
@@ -258,7 +258,7 @@
                                             entries
                                         </div>
                                         <pagination-controls previousLabel="Prev" class="pagination" nextLabel="Next"
-                                            (pageChange)="onTableDataChange($event,'Customer')">
+                                            (pageChange)="onTableDataChange($event)">
                                         </pagination-controls>
                                     </div>
 
@@ -369,7 +369,7 @@
 
                 <div class="data-tabs-content">
 
-                    <!--PI Tab panes -->
+                    <!-- Tab panes -->
                     <div class="tab-content">
 
                         <div id="PIhome" class="tab-pane active"><br>
@@ -379,7 +379,7 @@
                                 <div class="tblsort" *ngIf="invoiceStatuslistData && invoiceStatuslistData.length > 0">
                                     <label class="col-form-label">Show</label>
                                     <select id="itemsPerPageSelect" class="form-select"
-                                        [(ngModel)]="publicVariable.tableSize" (change)="onTableSizeChange($event , 'invoice')">
+                                        [(ngModel)]="publicVariable.tableSize" (change)="onTableSizeChangepi($event)">
                                         <option *ngFor="let size of publicVariable.tableSizes" [value]="size">{{ size }}
                                         </option>
                                     </select>
@@ -413,6 +413,7 @@
                                                 <tr>
                                                     <th>#</th>
                                                     <th>Record No</th>
+                                                    <th *ngIf="customerStatus=='APPROVED BY ACCOUNTS APPROVER'">PI No</th>
                                                     <th>Invoice Type</th>
                                                     <th>Project Code</th>
                                                     <th>Project Name</th>
@@ -436,6 +437,7 @@
                                                     *ngFor="let d of  this.invoiceStatuslistData | invoiceFilter: publicVariable.searchText| paginate: {itemsPerPage: publicVariable.tableSize,currentPage: publicVariable.page,totalItems: publicVariable.count};let i = index">
                                                     <td>{{i + 1}}</td>
                                                     <td>{{d.headerRecordID}}</td>
+                                                    <td *ngIf="customerStatus=='APPROVED BY ACCOUNTS APPROVER'">{{d.headerPiNo}}</td>
                                                     <td>{{d.impiHeaderInvoiceType | titlecase}}</td>
                                                     <td>{{d.impiHeaderProjectCode}}</td>
                                                     <td>{{d.impiHeaderProjectName | titlecase}}</td>
@@ -471,7 +473,7 @@
 
                                                             <a *ngIf="publicVariable.storedRole !== 'Admin' && publicVariable.storedRole !== 'Approver' &&
 
-
+                                                            
                                                             publicVariable.storedEmail == d.impiHeaderCreatedBy &&
                                                                     (d.isDraft ||
                                                                     d.headerStatus == 'REJECTED BY TL APPROVER'  ||
@@ -520,7 +522,7 @@
                                             entries
                                         </div>
                                         <pagination-controls previousLabel="Prev" class="pagination" nextLabel="Next"
-                                            (pageChange)="onTableDataChange($event,'invoice')">
+                                            (pageChange)="onTableDataChangepi($event)">
                                         </pagination-controls>
                                     </div>
 
@@ -533,7 +535,7 @@
                         </div>
                         <!--tab-pane-->
 
-                        //Posted Tax Invoice 
+
                         <div id="menu4" class="tab-pane fade"><br>
 
                             <div class="page-btns-col">
@@ -541,7 +543,7 @@
                                 <div class="tblsort" *ngIf="InvoiceSummaryList && InvoiceSummaryList.length > 0">
                                     <label class="col-form-label">Show</label>
                                     <select id="itemsPerPageSelect" class="form-select"
-                                        [(ngModel)]="publicVariable.tableSize" (change)="onTableSizeChange($event,'Posted Tax Invoice')">
+                                        [(ngModel)]="publicVariable.tableSize" (change)="onTableSizeChangesumaary($event)">
                                         <option *ngFor="let size of publicVariable.tableSizes" [value]="size">{{ size }}
                                         </option>
                                     </select>
@@ -635,7 +637,7 @@
                                             entries
                                         </div>
                                         <pagination-controls previousLabel="Prev" class="pagination" nextLabel="Next"
-                                            (pageChange)="onTableDataChange($event,'Posted Tax Invoice')">
+                                            (pageChange)="onTableDataChangesi($event)">
                                         </pagination-controls>
                                     </div>
 
@@ -652,7 +654,7 @@
                                 <div class="tblsort" *ngIf="PIInvoiceSummaryList && PIInvoiceSummaryList.length > 0">
                                     <label class="col-form-label">Show</label>
                                     <select id="itemsPerPageSelect" class="form-select"
-                                        [(ngModel)]="publicVariable.tableSize" (change)="onTableSizeChange($event,'Posted Proforma Invoice')">
+                                        [(ngModel)]="publicVariable.tableSize" (change)="onTableSizeChangeposted($event)">
                                         <option *ngFor="let size of publicVariable.tableSizes" [value]="size">{{ size }}
                                         </option>
                                     </select>
@@ -696,7 +698,7 @@
                                             <tbody>
 
                                                 <tr
-                                                    *ngFor="let d of  this.PIInvoiceSummaryList | searchFilter1: publicVariable.searchText| paginate: {itemsPerPage: publicVariable.tableSize,currentPage: publicVariable.page,totalItems: PIPostedTaxInvoiceCount};let i = index">
+                                                    *ngFor="let d of  this.PIInvoiceSummaryList | searchFilter1: publicVariable.searchText| paginate: {itemsPerPage: publicVariable.tableSize,currentPage: publicVariable.page,totalItems: publicVariable.count};let i = index">
                                                     <td>{{i + 1}}</td>
                                                     <td>{{d.no}}</td>
                                                     <!-- <td>{{d.postingDate}}</td>
@@ -743,11 +745,11 @@
                                         *ngIf="PIInvoiceSummaryList && PIInvoiceSummaryList.length > 0">
                                         <div class="hint-text">Showing <b>{{this.publicVariable.tableSize}}</b> out of
                                             <b>{{
-                                                PIPostedTaxInvoiceCount }}</b>
+                                                publicVariable.count }}</b>
                                             entries
                                         </div>
                                         <pagination-controls previousLabel="Prev" class="pagination" nextLabel="Next"
-                                            (pageChange)="onTableDataChange($event,'Posted Proforma Invoice')">
+                                            (pageChange)="onTableDataChangesa($event)">
                                         </pagination-controls>
                                     </div>
 
@@ -851,7 +853,7 @@
 
                 <div class="data-tabs-content">
 
-                    <!-- Sales Credit Note Tab panes -->
+                    <!-- Tab panes -->
                     <div class="tab-content">
 
                         <div id="Saleshome" class="tab-pane active"><br>
@@ -861,7 +863,7 @@
                                 <div class="tblsort" *ngIf="invoiceStatuslistData && invoiceStatuslistData.length > 0">
                                     <label class="col-form-label">Show</label>
                                     <select id="itemsPerPageSelect" class="form-select"
-                                        [(ngModel)]="publicVariable.tableSize" (change)="onTableSizeChange($event,'Sales Credit Note')">
+                                        [(ngModel)]="publicVariable.tableSize" (change)="onTableSizeChange($event)">
                                         <option *ngFor="let size of publicVariable.tableSizes" [value]="size">{{ size }}
                                         </option>
                                     </select>
@@ -895,6 +897,7 @@
                                                 <tr>
                                                     <th>#</th>
                                                     <th>Record No</th>
+                                                    <th *ngIf="customerStatus=='APPROVED BY ACCOUNTS APPROVER'">Credit Memo No</th>
                                                     <th>Invoice Type</th>
                                                     <th>Project Code</th>
                                                     <th>Project Name</th>
@@ -917,7 +920,10 @@
                                                 <tr
                                                     *ngFor="let d of  this.invoiceStatuslistData | invoiceFilter: publicVariable.searchText| paginate: {itemsPerPage: publicVariable.tableSize,currentPage: publicVariable.page,totalItems: publicVariable.count};let i = index">
                                                     <td>{{i + 1}}</td>
-                                                    <td>{{d.headerId}}</td>
+                                                    <td>{{d.recordID}}</td>
+                                                    <td *ngIf="customerStatus=='APPROVED BY ACCOUNTS APPROVER'">{{d.creditMemoNavNo}}</td>
+
+                                                    
                                                     <td>{{d.impiHeaderInvoiceType | titlecase}}</td>
                                                     <td>{{d.impiHeaderProjectCode}}</td>
                                                     <td>{{d.impiHeaderProjectName | titlecase}}</td>
@@ -948,8 +954,6 @@
                                                                 *ngIf="customerStatus == 'FOR APPROVAL' &&  this.publicVariable.storedRole == 'Accounts'">
                                                                 <img src="../assets/images/view-icon.svg" alt="">
                                                             </a>
-
-
 
                                                             <a *ngIf="publicVariable.storedRole !== 'Admin' && publicVariable.storedRole !== 'Approver' &&
                                                                 publicVariable.storedEmail === d.impiHeaderCreatedBy &&
@@ -1000,7 +1004,7 @@
                                             entries
                                         </div>
                                         <pagination-controls previousLabel="Prev" class="pagination" nextLabel="Next"
-                                            (pageChange)="onTableDataChange($event,'Sales Credit Note')">
+                                            (pageChange)="onTableDataChange($event)">
                                         </pagination-controls>
                                     </div>
 
@@ -1053,83 +1057,99 @@
                             <div class="inner-middle-content">
                                 <div class="dasboard-table">
                                     <div class="table-responsive">
-                                        <table class="table text-nowrap">
-                                            <thead>
-                                                <tr>
-                                                    <th>#</th>
-                                                    <th>No</th>
-                                                    <th>postingDate</th>
-                                                    <th>Invoice no</th>
-                                                    <th>CustomerNo</th>
-                                                    <th>CustomerName</th>
-                                                    <th>createdBy</th>
-                                                    <th>Department</th>
-                                                    <th>Division</th>
-                                                    <th>GST No</th>
-                                                    <th>invoicePortalOrder</th>
-                                                    <th>invoicePortalSubmitted</th>
-                                                    <th>Project Code</th>
-                                                    <th>PAN No</th>
-                                                    <th>Address</th>
-                                                    <th>City</th>
-                                                    <th>Post Code</th>
-                                                    <th>typeOfSupply</th>
-                                                    <th>yourReference</th>
-                                                    <th class="action-cl">Action</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr
-                                                    *ngFor="let d of  SalesCreditNoteSummaryData | salessearchFilter: publicVariable.searchText| paginate: {itemsPerPage: publicVariable.tableSize,currentPage: publicVariable.page,totalItems: publicVariable.count};let i = index">
-                                                    <td>{{i + 1}}</td>
-                                                    <td>{{d.no}}</td>
-                                                    <td>{{d.postingDate}}</td>
-                                                    <td>{{d.invoice_no}}</td>
-                                                    <td>{{d.sellToCustomerNo}}</td>
-                                                    <td>{{d.sellToCustomerName}}</td>
-                                                    <td>{{d.createdByUser}}</td>
-                                                    <td>{{d.departmentName}}</td>
-                                                    <td>{{d.divisionName}}</td>
-                                                    <td>{{d.gsT_No}}</td>
-                                                    <td>{{d.invoicePortalOrder}}</td>
-                                                    <td>{{d.invoicePortalSubmitted}}</td>
-                                                    <td>{{d.projectCode}}</td>
-                                                    <td>{{d.paN_NO}}</td>
-                                                    <td>{{d.sellToAddress}}</td>
-                                                    <td>{{d.sellToCity}}</td>
-                                                    <td>{{d.sellToPostCode}}</td>
-                                                    <td>{{d.typeOfSupply}}</td>
-                                                    <th>{{d.yourReference}}</th>
-                                                    <td>
-                                                        <span class="table-btns">
-                                                            <a href="javascript:void(0);"
-                                                                (click)="onCreditNoteView(d)"><img
-                                                                    src="../assets/images/view-icon.svg" alt="" /></a>
-                                                            <a *ngIf="publicVariable.storedRole !== 'Admin' &&
-                                                            (d.isDraft ||
-                                                            d.headerStatus == 'REJECTED BY TL APPROVER'  ||
-                                                            d.headerStatus == 'REJECTED BY CH APPROVER' ||
-                                                            d.headerStatus == 'REJECTED BY ACCOUNTS APPROVER'
-                                                            ||d.headerStatus == 'REJECTED BY FINANCE APPROVER'
-                                                            )" href="javascript:void(0);" (click)="onEdit(d)"><img
-                                                                    src="../assets/images/edit-icon.svg" alt="" /></a>
-                                                            <a href="javascript:void(0);"
-                                                                (click)="onCreditSendEmail(d)"><img
-                                                                    src="../assets/images/email-icon.svg" alt="" /></a>
-                                                            <!-- <a *ngIf="publicVariable.storedRole !== 'Admin' &&
-                                                            (d.isDraft ||
-                                                            d.headerStatus == 'REJECTED BY TL APPROVER'  ||
-                                                            d.headerStatus == 'REJECTED BY CH APPROVER' ||
-                                                            d.headerStatus == 'REJECTED BY ACCOUNTS APPROVER'   || d.headerStatus == 'REJECTED BY FINANCE APPROVER'
-                                                               )"
-                                                                href="javascript:void(0)" (click)="onDelete(d.headerId)" data-bs-toggle="modal"
-                                                                data-bs-target="#deleterecord-modal"><img src="../assets/images/delete-icon.svg"
-                                                                    alt="" /></a> -->
-                                                        </span>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
+
+
+                                        <div class="table-responsive">
+                                            <table class="table text-nowrap">
+                                                <thead>
+                                                    <tr>
+                                                        <th>#</th>
+                                                        <th>No</th>
+                                                        <th>Posting Date</th>
+                                                        <th>Applies To DocNo</th>
+                                                        <th>Customer No</th>
+                                                        <th>Customer Name</th>
+                                                        <!-- <th>createdBy</th> -->
+                                                        <th>Department</th>
+                                                        <th>Division</th>
+                                                        <!-- <th>GST No</th>
+                                                        <th>invoicePortalOrder</th>
+                                                        <th>invoicePortalSubmitted</th> -->
+                                                        <th>Project Code</th>
+                                                        <th>Status</th>
+                                                        <!-- <th>PAN No</th>
+                                                        <th>Address</th>
+                                                        <th>City</th>
+                                                        <th>Post Code</th>
+                                                        <th>typeOfSupply</th>
+                                                        <th>yourReference</th> -->
+                                                        <!-- <th>Status</th> -->
+                                                        <th class="action-cl">Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr
+                                                        *ngFor="let d of  SalesCreditNoteSummaryData | salessearchFilter: publicVariable.searchText| paginate: {itemsPerPage: publicVariable.tableSize,currentPage: publicVariable.page,totalItems: publicVariable.count};let i = index">
+                                                        <td>{{i + 1}}</td>
+                                                        <td>{{d.no}}</td>
+                                                        <td>{{d.postingDate}}</td>
+                                                        <td>{{d.appliesToDocNo}}</td>
+                                                        <td>{{d.sellToCustomerNo}}</td>
+                                                        <td>{{d.sellToCustomerName}}</td>
+                                                        <!-- <td>{{d.createdByUser}}</td> -->
+                                                        <td>{{d.deptCode}}</td>
+                                                        <td>{{d.divisionCode}}</td>
+                                                        <td>{{d.projectCode}}</td>
+                                                        <td>{{d.status}}</td>
+                                                        <!-- <td>{{d.Status}}</td> -->
+                                                        <!-- <td>{{d.gsT_No}}</td> -->
+                                                        <!-- <td>{{d.invoicePortalOrder}}</td>
+                                                        <td>{{d.invoicePortalSubmitted}}</td> -->
+                                                        <!-- <td>{{d.projectCode}}</td>
+                                                        <td>{{d.paN_NO}}</td>
+                                                        <td>{{d.sellToAddress}}</td>
+                                                        <td>{{d.sellToCity}}</td>
+                                                        <td>{{d.sellToPostCode}}</td>
+                                                        <td>{{d.typeOfSupply}}</td>
+                                                        <th>{{d.yourReference}}</th> -->
+                                                        <td>
+                                                            <span class="table-btns">
+                                                                <a href="javascript:void(0);" (click)="onCreditNoteView(d)"><img
+                                                                        src="../assets/images/view-icon.svg" alt="" /></a>
+                                                                <!-- <a *ngIf="publicVariable.storedRole !== 'Admin' &&
+                                                                (d.isDraft ||
+                                                                d.headerStatus == 'REJECTED BY TL APPROVER'  ||
+                                                                d.headerStatus == 'REJECTED BY CH APPROVER' ||
+                                                                d.headerStatus == 'REJECTED BY ACCOUNTS APPROVER'
+                                                                ||d.headerStatus == 'REJECTED BY FINANCE APPROVER'
+                                                                )" href="javascript:void(0);" (click)="onEdit(d)"><img
+                                                                        src="../assets/images/edit-icon.svg" alt="" /></a>
+                                                                        <a href="javascript:void(0);" (click)="onSendEmail(d)"><img
+                                                                            src="../assets/images/email-icon.svg" alt="" /></a> -->
+                                                                <!-- <a *ngIf="publicVariable.storedRole !== 'Admin' &&
+                                                                (d.isDraft ||
+                                                                d.headerStatus == 'REJECTED BY TL APPROVER'  ||
+                                                                d.headerStatus == 'REJECTED BY CH APPROVER' ||
+                                                                d.headerStatus == 'REJECTED BY ACCOUNTS APPROVER'   || d.headerStatus == 'REJECTED BY FINANCE APPROVER'
+                                                                   )"
+                                                                    href="javascript:void(0)" (click)="onDelete(d.headerId)" data-bs-toggle="modal"
+                                                                    data-bs-target="#deleterecord-modal"><img src="../assets/images/delete-icon.svg"
+                                                                        alt="" /></a> -->
+                                                            </span>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                            <div *ngIf="!SalesCreditNoteSummaryData || SalesCreditNoteSummaryData.length === 0">
+                                                <p>No data found.</p>
+                                            </div>
+                                            <div class="text-center"
+                                                *ngIf="(SalesCreditNoteSummaryData | salessearchFilter: publicVariable.searchText).length === 0 && SalesCreditNoteSummaryData.length > 0">
+                                                <span class="text-danger">No results found.</span>
+                                            </div>
+                                        </div>
+
+                                       
                                         <div
                                             *ngIf="!SalesCreditNoteSummaryData || SalesCreditNoteSummaryData.length === 0">
                                             <p>No data found.</p>
@@ -1147,7 +1167,7 @@
                                             entries</div>
                                         <pagination-controls previousLabel="Prev" class="pagination"
                                             *ngIf="SalesCreditNoteSummaryData && SalesCreditNoteSummaryData.length > 0"
-                                            nextLabel="Next" (pageChange)="onTableDataChange($event,'Sales Credit Note')">
+                                            nextLabel="Next" (pageChange)="onTableDataChange($event)">
                                         </pagination-controls>
                                     </div>
                                 </div>

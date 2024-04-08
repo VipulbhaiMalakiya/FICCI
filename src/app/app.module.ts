@@ -19,6 +19,7 @@ import { NevErpComponent } from './layouts/nev-erp/nev-erp.component';
         LoginComponent,
         ApprproverEmailComponent,
         NevErpComponent,
+        
     ],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }

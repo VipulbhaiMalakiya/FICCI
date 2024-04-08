@@ -337,7 +337,7 @@
                 <div class="col-md-4 col-sm-6">
                     <div class="form-group">
                         <label for="ContactPerson">Contact Person <sup class="text-danger">*</sup></label>
-                        <input type="text" placeholder="Contact Person" id="ContactPerson"
+                        <input type="text" placeholder="Contact Person" id="ContactPerson" maxlength="100"
                             formControlName="ImpiHeaderCustomerContactPerson" class="form-control" />
                         <div *ngIf="shouldShowError('ImpiHeaderCustomerContactPerson', 'alphanumericWithSpaces')"
                             class="text-danger">
@@ -350,7 +350,7 @@
                 <div class="col-md-4 col-sm-6">
                     <div class="form-group">
                         <label for="EmailID">Customer EmailId (To Send Invoice) <sup class="text-danger">*</sup></label>
-                        <input type="email" placeholder="Email ID" id="EmailID"
+                        <input type="email" placeholder="Email ID" id="EmailID" maxlength="100"
                             formControlName="ImpiHeaderCustomerEmailId" class="form-control" />
                         <div *ngIf="shouldShowError('ImpiHeaderCustomerEmailId','required')" class="text-danger">Email
                             is required.
@@ -401,7 +401,7 @@
                     <div class="col-md-4 col-sm-6">
                         <div class="form-group">
                             <label for="Quantity">Quantity <sup class="text-danger">*</sup></label>
-                            <input type="text" class="form-control" id="Quantity" placeholder="Quantity"
+                            <input type="text" class="form-control" id="Quantity" placeholder="Quantity" maxlength="10"
                                 formControlName="impiQuantity" (input)="onInputChange($event)" />
                             <div *ngIf="shouldShowExpenseError('impiQuantity','required')" class="text-danger">This
                                 field is
@@ -438,7 +438,7 @@
                     <div class="col-md-4 col-sm-6">
                         <div class="form-group">
                             <label>Direct Unit Cost <sup class="text-danger">*</sup> (Exclusive GST)</label>
-                            <input type="text" class="form-control" placeholder="Direct Unit Cost"
+                            <input type="text" class="form-control" placeholder="Direct Unit Cost" maxlength="10"
                                 formControlName="impiUnitPrice" (input)="priceValidator($event)">
                             <div *ngIf="shouldShowExpenseError('impiUnitPrice','required')" class="text-danger">This
                                 field is

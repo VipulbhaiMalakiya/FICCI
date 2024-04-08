@@ -116,7 +116,7 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
 
     validateGST() {
 
-
+        
         try {
             const gst = this.publicVariable.dataForm.get('GSTRegistrationNo')?.value;
             if(gst.length<15) {alert('Please enter Valid GST No.');
@@ -414,7 +414,7 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
                     loginId: this.publicVariable.storedEmail,
                     roleName: this.publicVariable.storedRole,
                     CustomerRemarks: newData.CustomerRemarks.trim(),
-                    department:localStorage.getItem('department')
+                    Department: localStorage.getItem('department')
                 };
                 this.publicVariable.isProcess = true;
                 this.publicVariable.Subscription.add(
