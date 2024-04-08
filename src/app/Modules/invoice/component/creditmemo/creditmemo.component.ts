@@ -266,7 +266,7 @@ export class CreditmemoComponent implements OnInit {
         //let data  = event.invoice_no;
 
         this.loadTaxInvoiceInformation(event.invoice_no)
-        
+
 
 
     }
@@ -739,17 +739,17 @@ export class CreditmemoComponent implements OnInit {
     onSelectProject() {
         const selectedId = this.publicVariable.dataForm.get('ImpiHeaderProjectCode')?.value;
 
-      
-        if (selectedId) 
+
+        if (selectedId)
         {
-          
+
             this.publicVariable.selectedProjet = this.publicVariable.projectList.find(project => project.code == selectedId);
-           
+
            // alert(this.publicVariable.selectedProjet);
 
-            if (this.publicVariable.selectedProjet) 
+            if (this.publicVariable.selectedProjet)
             {
-              
+
                 this.publicVariable.dataForm.patchValue({
                     ImpiHeaderDepartment: this.publicVariable.selectedProjet.departmentName,
                     ImpiHeaderDivison: this.publicVariable.selectedProjet.divisionName,
