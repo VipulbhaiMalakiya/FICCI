@@ -173,10 +173,10 @@ export class DashboardComponent {
 
 
         const pendingData = data.filter((item: any) =>
-            item.createdBy === this.publicVariable.storedEmail 
-            
-            || item.department === localStorage.getItem('department') 
-            
+            item.createdBy === this.publicVariable.storedEmail
+
+            || item.department === localStorage.getItem('department')
+
             &&
             (item.customerStatus === 'PENDING WITH TL APPROVER' ||
                 item.customerStatus === 'PENDING WITH CH APPROVER' ||
@@ -217,14 +217,14 @@ export class DashboardComponent {
         switch (this.customerStatus) {
             case 'DRAFT':
                 filteredData = this.dashboardData.filter((item: any) =>
-                                    
+
                     item.department === localStorage.getItem('department') ||
                     // item.createdBy === this.publicVariable.storedEmail &&
                     item.customerStatus === 'DRAFT');
                 break;
             case 'PENDING WITH APPROVER':
                 filteredData = this.dashboardData.filter((item: any) =>
-                    item.createdBy === this.publicVariable.storedEmail ||                     
+                    item.createdBy === this.publicVariable.storedEmail ||
                     item.department === localStorage.getItem('department')
                     &&
                     (item.customerStatus === 'PENDING WITH TL APPROVER' ||
@@ -237,7 +237,7 @@ export class DashboardComponent {
                 item.department === localStorage.getItem('department') ||
                     // item.createdBy === this.publicVariable.storedEmail &&
                     item.customerStatus === this.customerStatus || item.customerStatus === 'APPROVED BY FINANCE');
-                
+
                     break;
             case 'REJECTED BY CH APPROVER':
                 filteredData = this.dashboardData.filter((item: any) =>
@@ -393,7 +393,7 @@ export class DashboardComponent {
 
 
                     this.headerStatus =this.customerStatus;
-                 
+
                     console.log(this.headerStatus);
 
                     // Processing the merged data
@@ -844,51 +844,69 @@ export class DashboardComponent {
 
 
 
-    onTableDataChange(event: any) {
-        this.publicVariable.page = event;
-        this.publicVariable.customerStatusList
-    }
+    onTableDataChange(event: any,status?:any) {
+        //this.publicVariable.customerStatusList;
 
-    onTableSizeChangeposted(event: any) {
-        this.publicVariable.page = event;
-        this.PIInvoiceSummaryList
-    }
 
-    onTableDataChangepi(event: any) {
-        this.publicVariable.page = event;
-        this.invoiceStatuslistData
-    }
+        if(status == 'Posted Proforma Invoice'){
+            this.publicVariable.page = event;
+            this.PIloadInvoiceSummary();
+        }
 
-    onTableSizeChangesumaary(event: any) {
-        this.publicVariable.page = event;
-        this.InvoiceSummaryList
-    }
+        else if(status =='Customer'){
+            this.publicVariable.page = event;
+            this.loadCustomerStatusList(this.customerStatus);
+        }
+        else if(status =='Posted Tax Invoice'){
+            this.publicVariable.page = event;
+            this.loadInvoiceSummary();
+        }
+        else if(status =='invoice'){
+            this.publicVariable.page = event;
+            this.loadInoivceStatusList(this.customerStatus);
+        }
 
-    onTableSizeChange(event: any): void {
-        this.publicVariable.tableSize = event.target.value;
-        this.publicVariable.page = 1;
-        this.publicVariable.customerStatusList
-
-    }
-
-    onTableSizeChangepi(event: any): void {
-        this.publicVariable.tableSize = event.target.value;
-        this.publicVariable.page = 1;
-        this.invoiceStatuslistData
+        else if(status =='Sales Credit Note'){
+            this.publicVariable.page = event;
+            this.SalesCreditNoteSummaryData;
+        }
 
     }
 
-    onTableDataChangesi(event: any): void {
-        this.publicVariable.tableSize = event.target.value;
-        this.publicVariable.page = 1;
-        this.InvoiceSummaryList
 
-    }
+    onTableSizeChange(event: any,status?:any): void {
 
-    onTableDataChangesa(event: any): void {
-        this.publicVariable.tableSize = event.target.value;
-        this.publicVariable.page = 1;
-        this.PIInvoiceSummaryList
+
+
+
+        //this.publicVariable.customerStatusList
+
+     if(status == 'Posted Proforma Invoice'){
+            this.publicVariable.tableSize = event.target.value;
+            this.publicVariable.page = 1;
+            this.PIInvoiceSummaryList;
+        }
+        else if(status == 'Customer'){
+            this.publicVariable.tableSize = event.target.value;
+            this.publicVariable.page = 1;
+            this.publicVariable.customerStatusList;
+        }
+        else if(status =='Posted Tax Invoice'){
+            this.publicVariable.tableSize = event.target.value;
+            this.publicVariable.page = 1;
+            this.InvoiceSummaryList;
+        }
+        else if(status =='invoice'){
+            this.publicVariable.tableSize = event.target.value;
+            this.publicVariable.page = 1;
+            this.invoiceStatuslistData;
+        }
+
+        else if(status =='Sales Credit Note'){
+            this.publicVariable.tableSize = event.target.value;
+            this.publicVariable.page = 1;
+            this.SalesCreditNoteSummaryData;
+        }
 
     }
 
