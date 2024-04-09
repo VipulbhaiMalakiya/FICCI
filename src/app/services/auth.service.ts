@@ -34,6 +34,8 @@ export class AuthService {
                     localStorage.setItem('department', response.department);
                     localStorage.setItem('IsFinance',response.invoice_IsFinanceApprover)
                     localStorage.setItem('navDepartment', response.navDepartment);
+                    localStorage.setItem('navDepartmentNew', response.navDepartment1);
+
                     return { token: response.token, role: userRole };
                 } else {
                     this.toastr.error('Invalid credentials', 'Error');
@@ -62,6 +64,7 @@ export class AuthService {
                     localStorage.setItem('department', response.department);
                     localStorage.setItem('IsFinance',response.invoice_IsFinanceApprover)
                     localStorage.setItem('navDepartment', response.navDepartment);
+                    localStorage.setItem('navDepartmentNew', response.navDepartment1);
 
                     return { token: response.token, role: userRole };
                 } else {
