@@ -31,7 +31,9 @@ export class NewPurchaseInvoiceComponent implements OnInit {
     projectCode?: any;
     customerCode?: any;
     GetDetails: any[] = [];
-
+    navDepartment:any;
+    navDepartmentArray:any;
+    selectedDept:any;
     constructor(private appService: AppService,
         private modalService: NgbModal,
         private router: Router,
@@ -49,6 +51,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
     private initializeForm(): void {
         this.publicVariable.dataForm = this.fb.group({
             headerid: [''],
+            ImpiHeaderdept:[null, [Validators.required]],
             ImpiHeaderInvoiceType: ['Proforma Invoice', Validators.required],
             ImpiHeaderProjectCode: [null, [Validators.required]],
             Project: [{ value: '', disabled: true }, [Validators.required]],
@@ -114,7 +117,6 @@ export class NewPurchaseInvoiceComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.loadProjectList();
         this.route.params.subscribe(params => {
             this.Id = +params['id'];
         });
@@ -124,8 +126,40 @@ export class NewPurchaseInvoiceComponent implements OnInit {
         }
         this.loadCOAMasterList();
         this.loadGetGSTGroupList();
+        this.loadCustomerStatusList();
+        this.navDepartment = localStorage.getItem('navDepartmentNew')
+        this.navDepartmentArray = this.navDepartment.split('|');
+
+
+        
+        
        // this.loadgetGstRegistrationNoAll();
     }
+
+    onSelectdept(event:any){
+        this.selectedDept = event;
+        console.log(this.selectedDept);
+        
+
+        try {
+            const subscription = this.API.getnavProjects( this.selectedDept).subscribe({
+                next: (response: any) => {
+                    this.publicVariable.projectList = response.data;
+                   
+
+                },
+                error: (error) => {
+                    console.error('Error loading project list:', error);
+                }
+            });
+
+            this.publicVariable.Subscription.add(subscription);
+        } catch (error) {
+            console.error('Error loading project list:', error);
+        }
+        
+    }
+
 
     loadCOAMasterList(): void {
         try {
@@ -287,24 +321,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
 
 
 
-    loadProjectList(): void {
-        try {
-            const subscription = this.API.getProjects().subscribe({
-                next: (response: any) => {
-                    this.publicVariable.projectList = response.data;
-                    this.loadCustomerStatusList();
 
-                },
-                error: (error) => {
-                    console.error('Error loading project list:', error);
-                }
-            });
-
-            this.publicVariable.Subscription.add(subscription);
-        } catch (error) {
-            console.error('Error loading project list:', error);
-        }
-    }
     loadCustomerStatusList(): void {
         const subscription = this.API.GetCustomerList().pipe(
             timeout(120000), // Timeout set to 2 minutes (120000 milliseconds)
@@ -399,7 +416,6 @@ export class NewPurchaseInvoiceComponent implements OnInit {
     }
 
     onSelectStateCustomer():void{
-
         this.publicVariable.dataForm.patchValue({
             ImpiHeaderCustomerPinCode: null,
             ImpiHeaderCustomerCity: null,
@@ -1131,7 +1147,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
     }
 
     markFormControlsAsTouched(): void {
-        ['ImpiHeaderInvoiceType', 'ImpiHeaderProjectCode', 'ImpiHeaderDepartment', 'ImpiHeaderDivison', 'ImpiHeaderPanNo', 'ImpiHeaderGstNo',
+        ['ImpiHeaderInvoiceType', 'ImpiHeaderProjectCode','ImpiHeaderdept', 'ImpiHeaderDepartment', 'ImpiHeaderDivison', 'ImpiHeaderPanNo', 'ImpiHeaderGstNo',
             'ImpiHeaderCustomerName', 'ImpiHeaderCustomerAddress', 'ImpiHeaderCustomerState', 'ImpiHeaderCustomerCity', 'ImpiHeaderCustomerEmailId',
             'ImpiHeaderCustomerGstNo', 'ImpiHeaderCustomerContactPerson', 'ImpiHeaderCustomerPhoneNo', 'items',
             'startDate', 'endDate'

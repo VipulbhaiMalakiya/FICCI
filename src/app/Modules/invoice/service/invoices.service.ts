@@ -189,6 +189,13 @@ export class InvoicesService {
         
     }
 
+    getnavProjects(data:any){
+        return this.http.get<any[]>(`${this.Projectapi}${data}&id=0`);
+
+    }
+
+
+
     // getProjects(): Observable<any[]> {
     //     return this.http.get<any[]>(`${this.Projectapi}`);
     // }
