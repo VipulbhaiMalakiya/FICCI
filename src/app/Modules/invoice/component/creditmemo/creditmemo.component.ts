@@ -33,6 +33,7 @@ export class CreditmemoComponent implements OnInit {
     PostedTaxInvoiceCount: number = 0;
     isCalculate: boolean = false;
     isEdit: boolean = false;
+    amount:any;
 
     constructor(private appService: AppService,
         private modalService: NgbModal,
@@ -328,6 +329,7 @@ export class CreditmemoComponent implements OnInit {
         //     code: ''
         // }
 
+        this.amount = data.amount;
 
         this.publicVariable.dataForm.patchValue({
 
@@ -784,16 +786,45 @@ export class CreditmemoComponent implements OnInit {
         (event.target as HTMLInputElement).value = numericValue;
 
     }
+    // priceValidator(event: Event) {
+    //     const inputValue = (event.target as HTMLInputElement).value;
+    //     let numericValue = inputValue.replace(/[^0-9.]/g, '');
+    //     const decimalParts = numericValue.split('.');
+    //     if (decimalParts.length > 1) {
+    //         const integerPart = decimalParts[0];
+    //         const decimalPart = decimalParts[1].slice(0, 2);
+    //         numericValue = integerPart + '.' + decimalPart;
+    //     }
+
+    //     (event.target as HTMLInputElement).value = numericValue;
+    // }
     priceValidator(event: Event) {
         const inputValue = (event.target as HTMLInputElement).value;
         let numericValue = inputValue.replace(/[^0-9.]/g, '');
         const decimalParts = numericValue.split('.');
+
         if (decimalParts.length > 1) {
             const integerPart = decimalParts[0];
             const decimalPart = decimalParts[1].slice(0, 2);
             numericValue = integerPart + '.' + decimalPart;
         }
 
+        const enteredAmount = parseFloat(numericValue);
+        const totalAmount = parseFloat(this.amount); // Assuming this.totalAmount holds the total amount
+
+        if (enteredAmount > totalAmount) {
+            // The entered amount exceeds the total amount
+            // You might want to display an error message or mark the field as invalid
+            // For example:
+            this.publicVariable.dataForm.controls['creditMemoAmount'].setErrors({ 'exceedsTotal': true });
+            // Replace 'formGroup' with the name of your form group.
+        } else {
+            // Clear any error if the entered amount is within the total amount
+            // For example:
+            this.publicVariable.dataForm.controls['creditMemoAmount'].setErrors(null);
+        }
+
+        // Update the input value with the sanitized numeric value
         (event.target as HTMLInputElement).value = numericValue;
     }
 

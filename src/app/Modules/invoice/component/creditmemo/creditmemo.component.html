@@ -52,6 +52,8 @@
                         <div *ngIf="shouldShowError('creditMemoAmount','required')" class="text-danger">This field
                             is required
                         </div>
+                        <div *ngIf="publicVariable.dataForm.get('creditMemoAmount')?.hasError('exceedsTotal')" class="text-danger">Entered amount exceeds total amount</div>
+
                     </div>
                 </div>
 
