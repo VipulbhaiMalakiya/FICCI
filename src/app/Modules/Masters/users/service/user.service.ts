@@ -15,9 +15,14 @@ export class UserService {
     private apiUrl = `${environment.apiURL}FICCI_User_Master/0`;
     private deleteapiUrl = `${environment.apiURL}FICCI_User_Master`;
     private postAPIURL = `${environment.apiURL}FICCI_User_Master`;
+    private GetDepartmentIURL = `${environment.apiURL}DropDown/GetDepartment`;
     private retry: any = retry(1); // Retry the request up to 2 times in case of failure
 
     constructor(private http: HttpClient) { }
+
+    public GetDepartment(): Observable<any[]> {
+        return this.http.get<any[]>(`${this.GetDepartmentIURL}`);
+    }
 
     public getRoles(): Observable<any[]> {
         return this.http.get<any[]>(`${this.RolesList}`);

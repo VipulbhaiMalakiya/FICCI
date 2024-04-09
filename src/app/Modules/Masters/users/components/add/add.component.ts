@@ -13,6 +13,7 @@ import { take } from 'rxjs';
 export class AddComponent implements OnInit {
     publicVariable = new publicVariable();
     userId!: number;
+    deparment:any;
     constructor(private fb: FormBuilder,
         private modalService: NgbModal,
         private toastr: ToastrService,
@@ -29,6 +30,7 @@ export class AddComponent implements OnInit {
             id: [''],
             empId: [null, Validators.required],
             roleId: [null, Validators.required],
+            departmentName:[null , Validators.required],
             username: [{ value: '', disabled: true }, , Validators.required],
             name: [{ value: '', disabled: true }, , Validators.required],
             email: [{ value: '', disabled: true }, , [Validators.required, Validators.email]],
@@ -40,7 +42,7 @@ export class AddComponent implements OnInit {
     ngOnInit(): void {
         this.getRoles();
         this.loadEmpoyeeList();
-        this.publicVariable.isProcess = false;
+        this.GetDepartment();
         this.route.paramMap.pipe(
             // take(1) // Take only the first emitted value
         ).subscribe(params => {
@@ -55,6 +57,11 @@ export class AddComponent implements OnInit {
 
     customSearchFn(term: string, item: any) {
         const concatenatedString = `${item.imeM_EmpId} ${item.imeM_Name}`.toLowerCase();
+        return concatenatedString.includes(term.toLowerCase());
+    }
+
+    customSearchFn1(term: string, item: any) {
+        const concatenatedString = `${item.departmentCode} ${item.departmentName}`.toLowerCase();
         return concatenatedString.includes(term.toLowerCase());
     }
 
@@ -83,6 +90,24 @@ export class AddComponent implements OnInit {
             },
             error: (error: any) => {
                 this.publicVariable.roles = DEFAULT_ROLE_LIST;
+            }
+        });
+    }
+
+    GetDepartment(): void {
+
+        this.API.GetDepartment().subscribe({
+            next: (data: any) => {
+                this.deparment = data.data;
+                this.publicVariable.isProcess = false; // Close loader
+                this.cd.detectChanges(); // Trigger change detection
+
+            },
+            error: (error: any) => {
+                this.publicVariable.isProcess = false; // Close loader
+                this.cd.detectChanges(); // Trigger change detection
+
+                // Handle error if necessary
             }
         });
     }
@@ -149,7 +174,10 @@ export class AddComponent implements OnInit {
             const isUpdate = !!newData.id;
             const selectedEmployee = this.publicVariable.employeeList.find(employee => employee.imeM_EmpId === newData.empId) || this.publicVariable.userData;
 
-            const newConfig: addUpdateEmployees = {
+            
+            let convertedData = newData.departmentName.map((element: any) => `${element.replace(/\\/g, '').replace(/"/g, '')}`).join(" | ");
+            
+            const newConfig: any = {
                 isUpdate: isUpdate,
                 imeM_ID: isUpdate ? newData.id : undefined,
                 imeM_EmpId: newData.empId || this.publicVariable.userData.imeM_EmpId,
@@ -157,7 +185,8 @@ export class AddComponent implements OnInit {
                 imeM_Name: selectedEmployee.imeM_Name,
                 imeM_Email: selectedEmployee.imeM_Email,
                 roleId: newData.roleId,
-                isActive: newData.isActive
+                isActive: newData.isActive,
+                departmentName:newData.departmentName,
             };
             const successMessage = isUpdate ? 'Data updated successfully.' : 'Data created successfully.';
             this.handleApiRequest(this.API.create(newConfig), successMessage, 'Error submitting data:');
@@ -223,7 +252,7 @@ export class AddComponent implements OnInit {
     }
 
     markFormControlsAsTouched(): void {
-        ['empId', 'username', 'name', 'email', 'roleId'].forEach(controlName => {
+        ['empId', 'username', 'name', 'email', 'roleId','departmentName'].forEach(controlName => {
             this.publicVariable.dataForm.controls[controlName].markAsTouched();
         });
     }
