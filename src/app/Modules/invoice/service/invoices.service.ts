@@ -190,7 +190,11 @@ export class InvoicesService {
     }
 
     getnavProjects(data:any){
-        return this.http.get<any[]>(`${this.Projectapi}${data}&id=0`);
+
+        const encodedDepartment = encodeURIComponent(data);
+       // console.log(encodedDepartment);
+        
+        return this.http.get<any[]>(`${this.Projectapi}${encodedDepartment}&id=0`);
 
     }
 
