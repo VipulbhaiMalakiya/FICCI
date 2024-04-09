@@ -31,7 +31,7 @@
                         <ng-select [items]="navDepartmentArray" bindLabel="navDepartmentArray"
                             bindValue="navDepartmentArray" placeholder="Select in department"
                             formControlName="ImpiHeaderdept" (change)="onSelectdept($event)" [searchable]="true"
-                            [searchFn]="customSearchFn" [virtualScroll]="true" [bufferAmount]="10">
+                          [virtualScroll]="true" [bufferAmount]="10">
 
                             <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
                                 <small>{{ item }}</small>
