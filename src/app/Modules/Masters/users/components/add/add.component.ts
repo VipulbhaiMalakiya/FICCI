@@ -13,7 +13,7 @@ import { take } from 'rxjs';
 export class AddComponent implements OnInit {
     publicVariable = new publicVariable();
     userId!: number;
-    deparment:any;
+    deparment: any;
     constructor(private fb: FormBuilder,
         private modalService: NgbModal,
         private toastr: ToastrService,
@@ -30,7 +30,7 @@ export class AddComponent implements OnInit {
             id: [''],
             empId: [null, Validators.required],
             roleId: [null, Validators.required],
-            departmentName:[null , Validators.required],
+            departmentName: [null, Validators.required],
             username: [{ value: '', disabled: true }, , Validators.required],
             name: [{ value: '', disabled: true }, , Validators.required],
             email: [{ value: '', disabled: true }, , [Validators.required, Validators.email]],
@@ -174,9 +174,9 @@ export class AddComponent implements OnInit {
             const isUpdate = !!newData.id;
             const selectedEmployee = this.publicVariable.employeeList.find(employee => employee.imeM_EmpId === newData.empId) || this.publicVariable.userData;
 
-            
+
             let convertedData = newData.departmentName.map((element: any) => `${element.replace(/\\/g, '').replace(/"/g, '')}`).join(" | ");
-            
+
             const newConfig: any = {
                 isUpdate: isUpdate,
                 imeM_ID: isUpdate ? newData.id : undefined,
@@ -186,7 +186,7 @@ export class AddComponent implements OnInit {
                 imeM_Email: selectedEmployee.imeM_Email,
                 roleId: newData.roleId,
                 isActive: newData.isActive,
-                departmentName:newData.departmentName,
+                departmentName: newData.departmentName,
             };
             const successMessage = isUpdate ? 'Data updated successfully.' : 'Data created successfully.';
             this.handleApiRequest(this.API.create(newConfig), successMessage, 'Error submitting data:');
@@ -230,7 +230,19 @@ export class AddComponent implements OnInit {
         }
     }
 
+
+
+     findRoleId(roleName: string): number | null {
+
+        
+        // Assuming you have an array of roles with id and name properties
+        const role = this.publicVariable.roles.find(role => role.roleName === roleName);
+        console.log(role ? role.role_id : null);
+        
+        return role ? role.role_id : null; // Return the role id if found, otherwise return null
+    }
     onEdit(data: any): void {
+
         this.publicVariable.isEdit = true;
         this.cd.detectChanges();
         this.publicVariable.dataForm.patchValue({
@@ -238,7 +250,7 @@ export class AddComponent implements OnInit {
             username: data.imeM_Username,
             name: data.imeM_Name,
             email: data.imeM_Email,
-            roleId: data.roleId || this.publicVariable.roleId,
+            roleId: this.findRoleId(data.roleName),
             isActive: data.isActive,
             id: data.imeM_ID
         });
@@ -252,7 +264,7 @@ export class AddComponent implements OnInit {
     }
 
     markFormControlsAsTouched(): void {
-        ['empId', 'username', 'name', 'email', 'roleId','departmentName'].forEach(controlName => {
+        ['empId', 'username', 'name', 'email', 'roleId', 'departmentName'].forEach(controlName => {
             this.publicVariable.dataForm.controls[controlName].markAsTouched();
         });
     }
