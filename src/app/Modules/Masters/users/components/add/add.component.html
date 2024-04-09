@@ -48,6 +48,15 @@
 
                 <div class="col-md-3 col-sm-6">
                     <div class="form-group">
+                        <label for="dept">Department</label>
+                        <input type="text" class="form-control" id="dept" formControlName="dept" readonly>
+                        <div *ngIf="shouldShowError('dept','required')" class="text-danger">This field is required
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3 col-sm-6">
+                    <div class="form-group">
                         <label>Role</label>
                         <ng-select [items]="publicVariable.roles" formControlName="roleId" [bindLabel]="'roleName'"
                             [bindValue]="'role_id'" placeholder="Select Role"></ng-select>

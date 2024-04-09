@@ -33,6 +33,7 @@ export class AddComponent implements OnInit {
             departmentName: [null, Validators.required],
             username: [{ value: '', disabled: true }, , Validators.required],
             name: [{ value: '', disabled: true }, , Validators.required],
+            dept:[{ value: '', disabled: true }, , Validators.required],
             email: [{ value: '', disabled: true }, , [Validators.required, Validators.email]],
             isActive: [true] // Assuming default value is true
         });
@@ -187,6 +188,7 @@ export class AddComponent implements OnInit {
                 roleId: newData.roleId,
                 isActive: newData.isActive,
                 departmentName: newData.departmentName,
+                
             };
             const successMessage = isUpdate ? 'Data updated successfully.' : 'Data created successfully.';
             this.handleApiRequest(this.API.create(newConfig), successMessage, 'Error submitting data:');
@@ -252,7 +254,8 @@ export class AddComponent implements OnInit {
             email: data.imeM_Email,
             roleId: this.findRoleId(data.roleName),
             isActive: data.isActive,
-            id: data.imeM_ID
+            id: data.imeM_ID,
+            dept:'',
         });
         this.publicVariable.dataForm.controls["empId"].disable();
     }
@@ -264,7 +267,7 @@ export class AddComponent implements OnInit {
     }
 
     markFormControlsAsTouched(): void {
-        ['empId', 'username', 'name', 'email', 'roleId', 'departmentName'].forEach(controlName => {
+        ['empId', 'username', 'name', 'email', 'roleId', 'departmentName','dept'].forEach(controlName => {
             this.publicVariable.dataForm.controls[controlName].markAsTouched();
         });
     }
