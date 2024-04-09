@@ -52,6 +52,7 @@ export class AddComponent implements OnInit {
 
     }
 
+
     customSearchFn(term: string, item: any) {
         const concatenatedString = `${item.imeM_EmpId} ${item.imeM_Name}`.toLowerCase();
         return concatenatedString.includes(term.toLowerCase());
