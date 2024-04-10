@@ -121,8 +121,8 @@ export class NewPurchaseInvoiceComponent implements OnInit {
     ngOnInit(): void {
 
         this.publicVariable.isProcess = false;
-        //this.loadProjectList();
-        this.loadCustomerStatusList();
+        this.loadProjectList();
+       // this.loadCustomerStatusList();
         this.navDepartment = localStorage.getItem('navDepartment')
         this.navDepartmentArray = this.navDepartment.split('|');
 
@@ -131,8 +131,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
         });
         if (this.data = history.state.data) {
             this.patchFormData(this.data);
-            this.loadProjectList();
-            this.loadCustomerStatusList();
+           // this.loadProjectList();
         }
         this.loadCOAMasterList();
         this.loadGetGSTGroupList();
