@@ -15,9 +15,6 @@ export class AuthService {
     private userRole: string = '';
     private userEmail: string = '';
     private apiUrl = `${environment.apiURL}UserAuth`;
-    private navisionUrl = `${environment.apiURL}UserAuth/LoginHRMS`;
-
-
     constructor(private http: HttpClient, private toastr: ToastrService, private router: Router) { }
     login(email: string, password: string): Observable<any> {
         const body = { email: email, password: password };
@@ -33,9 +30,6 @@ export class AuthService {
                     localStorage.setItem('token', response.token);
                     localStorage.setItem('department', response.department);
                     localStorage.setItem('IsFinance',response.invoice_IsFinanceApprover)
-                    localStorage.setItem('navDepartment', response.navDepartment);
-                    localStorage.setItem('navDepartmentNew', response.navDepartment1);
-
                     return { token: response.token, role: userRole };
                 } else {
                     this.toastr.error('Invalid credentials', 'Error');
@@ -49,50 +43,12 @@ export class AuthService {
         );
     }
 
-    navisionlogin(email: string): Observable<any> {
-        const body = { email: email};
-        return this.http.post(`${this.navisionUrl}`, body).pipe(
-            map((response: any) => {
-                if (response && response.token) {
-                    const userRole = response.roleName;
-                    const userEmail = response.email;
-                    const name =response.name;
-                    localStorage.setItem('userRole', userRole);
-                    localStorage.setItem('userEmail', userEmail);
-                    localStorage.setItem('userName', name);
-                    localStorage.setItem('token', response.token);
-                    localStorage.setItem('department', response.department);
-                    localStorage.setItem('IsFinance',response.invoice_IsFinanceApprover)
-                    localStorage.setItem('navDepartment', response.navDepartment);
-                    localStorage.setItem('navDepartmentNew', response.navDepartment1);
-
-                    return { token: response.token, role: userRole };
-                } else {
-                   // this.toastr.error('Invalid credentials', 'Error');
-                    this.router.navigate(['/unauthorized']); // Redirect to the dashboard
-
-                    return { error: 'Invalid credentials' };
-                }
-            }),
-            catchError(error => {
-               // this.toastr.error('An error occurred during login', 'Error');
-                this.router.navigate(['/unauthorized']); // Redirect to the dashboard
-
-                return of({ error: 'An error occurred during login' });
-            })
-        );
-    }
-
-
     logout(): void {
         this.loggedIn = false;
         localStorage.clear();
         this.toastr.success('Logged out successfully', 'Success');
-        this.router.navigate(['/']).then(() => {
-            window.location.reload();
-        });
+        this.router.navigate(['/login']);
     }
-
 
 
 

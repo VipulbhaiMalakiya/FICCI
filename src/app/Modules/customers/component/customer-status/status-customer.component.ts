@@ -38,13 +38,10 @@ export class StatusCustomerComponent implements OnInit {
                     this.publicVariable.count = response.data.length;
                     this.publicVariable.isProcess = false;
                 } else {
-
-                    this.publicVariable.customerStatusList = response.data;
-                    this.publicVariable.count = response.data.length;
                     // Filter the response data by email
-                    //const filteredData = response.data.filter((item: any) => item.createdBy === this.publicVariable.storedEmail);
-                    //this.publicVariable.customerStatusList = filteredData;
-                    //this.publicVariable.count = filteredData.length;
+                    const filteredData = response.data.filter((item: any) => item.createdBy === this.publicVariable.storedEmail);
+                    this.publicVariable.customerStatusList = filteredData;
+                    this.publicVariable.count = filteredData.length;
                     this.publicVariable.isProcess = false;
 
                 }

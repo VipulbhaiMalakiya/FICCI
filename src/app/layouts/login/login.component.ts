@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -9,7 +9,7 @@ import { AuthService } from 'src/app/services/auth.service';
     templateUrl: './login.component.html',
     styleUrls: ['./login.component.css']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent {
     dataForm!: FormGroup;
     hidePassword: boolean = true;
     error!: string;
@@ -18,12 +18,8 @@ export class LoginComponent implements OnInit {
 
 
     constructor(private toastr: ToastrService,
-        private router: Router, private fb: FormBuilder, private authService: AuthService) {
+        private router: Router,private fb: FormBuilder, private authService: AuthService) {
         this.initializeForm();
-    }
-
-    ngOnInit(): void {
-
     }
 
     private initializeForm(): void {
@@ -35,7 +31,7 @@ export class LoginComponent implements OnInit {
 
     togglePasswordVisibility() {
         this.hidePassword = !this.hidePassword;
-    }
+      }
 
     onSubmit() {
         if (this.dataForm.valid) {
@@ -64,9 +60,9 @@ export class LoginComponent implements OnInit {
     }
 
     markFormControlsAsTouched(): void {
-        ['email', 'password'].forEach(controlName => {
-            this.dataForm.controls[controlName].markAsTouched();
-        });
+        ['email','password'].forEach(controlName => {
+                this.dataForm.controls[controlName].markAsTouched();
+            });
     }
 
     shouldShowError(controlName: string, errorName: string): boolean {

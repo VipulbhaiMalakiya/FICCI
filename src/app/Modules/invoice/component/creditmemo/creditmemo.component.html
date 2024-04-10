@@ -21,8 +21,8 @@
                 <div class="col-md-4 col-sm-6">
                     <div class="form-group">
                         <label for="projectCode">Invoice No <sup class="text-danger">*</sup></label>
-                        <ng-select [items]="InvoiceSummaryList" #select bindLabel="no" bindValue="no"
-                            placeholder="Select Invoice No" formControlName="invoice_no"
+                        <ng-select [items]="InvoiceSummaryList" #select bindLabel="invoice_no" bindValue="invoice_no"
+                            placeholder="Select in Invoice No" formControlName="invoice_no"
                             (change)="onSelectInvoice($event)" [searchable]="true" [searchFn]="custominvoiceSearchFn"
                             [virtualScroll]="true" [bufferAmount]="10">
 
@@ -52,8 +52,6 @@
                         <div *ngIf="shouldShowError('creditMemoAmount','required')" class="text-danger">This field
                             is required
                         </div>
-                        <div *ngIf="publicVariable.dataForm.get('creditMemoAmount')?.hasError('exceedsTotal')" class="text-danger">Entered amount exceeds total amount</div>
-
                     </div>
                 </div>
 
@@ -529,7 +527,7 @@
                             <th>IGST Amount</th>
                             <th>CGST Amount</th>
                             <th>SGST Amount</th>
-                            <th hidden>Action</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -546,7 +544,7 @@
                             <td>{{e.impiNetTotal}}</td>
                             <td>{{e.impiGstBaseAmount}}</td>
 
-                            <td hidden><span class="table-btns">
+                            <td><span class="table-btns">
                                     <a href="javascript:void(0)" (click)="editExpense(e,i)"><img
                                             src="../assets/images/edit-icon.svg" alt=""></a>
                                     <a href="javascript:void(0)" (click)="deleteExpense(i)" data-bs-toggle="modal"
@@ -562,7 +560,7 @@
             </div>
 
         </div>
-        <div hidden class="text-end" *ngIf="publicVariable.expenses.length > 0"><a href="javascript:void(0)"
+        <div class="text-end" *ngIf="publicVariable.expenses.length > 0"><a href="javascript:void(0)"
                 (click)="onCalculateClick('Calculate')" class="common-btn w-auto">Calculate</a></div>
         <div class="note-para">
             <p>Upload Attachments (PO,E-Mail Confirmation,LOI,Other Documents)*<span class="text-danger">(Max File Size

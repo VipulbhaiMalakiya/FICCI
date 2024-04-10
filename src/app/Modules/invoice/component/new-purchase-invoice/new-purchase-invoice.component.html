@@ -27,26 +27,6 @@
             <div class="row">
                 <div class="col-md-4 col-sm-6">
                     <div class="form-group">
-                        <label for="projectCode">Department <sup class="text-danger">*</sup></label>
-                        <ng-select [items]="navDepartmentArray" bindLabel="navDepartmentArray"
-                            bindValue="navDepartmentArray" placeholder="Select in department"
-                            formControlName="ImpiHeaderdept" (change)="onSelectdept($event)" [searchable]="true"
-                          [virtualScroll]="true" [bufferAmount]="10">
-
-                            <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
-                                <small>{{ item }}</small>
-                            </ng-template>
-
-                        </ng-select>
-
-                        <div *ngIf="shouldShowError('ImpiHeaderdept','required')" class="text-danger">This field
-                            is required
-                        </div>
-
-                    </div>
-                </div>
-                <div class="col-md-4 col-sm-6">
-                    <div class="form-group">
                         <label for="projectCode">Project Code <sup class="text-danger">*</sup></label>
                         <ng-select [items]="publicVariable.projectList" #select bindLabel="code" bindValue="code"
                             placeholder="Select in Project Code" formControlName="ImpiHeaderProjectCode"
@@ -111,8 +91,8 @@
                 <div class="col-md-4 col-sm-6">
                     <div class="form-group">
                         <label>GST No <sup class="text-danger">*</sup></label>
-                        <input type="text" placeholder="GST No" class="form-control" formControlName="ImpiHeaderGstNo"
-                            maxlength="20" />
+                        <input type="text" placeholder="GST No" class="form-control"
+                            formControlName="ImpiHeaderGstNo" maxlength="20" />
 
                         <div *ngIf="shouldShowError('ImpiHeaderGstNo','invalidGST')" class="text-danger"> Please enter
                             a valid GST Registration Number. (05AAACF1282E1Z5)</div>
@@ -165,15 +145,13 @@
                         <div class="flex-field">
                             <ng-select [items]="publicVariable.GetCustomerList" #select class="w-100"
                                 bindLabel="custName" bindValue="custName" placeholder="Select customer"
-                                formControlName="ImpiHeaderCustomerName" (change)="onSelectGSTCustomer($event)"
+                                formControlName="ImpiHeaderCustomerName"  (change)="onSelectGSTCustomer($event)"
                                 [searchable]="true" [searchFn]="customerSearchFn" [virtualScroll]="true"
                                 [bufferAmount]="10">
 
                                 <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
-                                    <div><span>{{item.code}}</span>-<span>{{item.gstNumber}}</span> -
-                                        <span>{{item.customerName | titlecase}} </span></div>
-                                    <small>{{item.address | titlecase}} -{{item.address2 | titlecase}} -
-                                        {{item.city | titlecase}}- {{item.panNo}}</small>
+                                    <div><span>{{item.code}}</span>-<span>{{item.gstNumber}}</span> - <span>{{item.customerName | titlecase}} </span></div>
+                                    <small >{{item.address | titlecase}} -{{item.address2 | titlecase}} - {{item.city | titlecase}}- {{item.panNo}}</small>
                                 </ng-template>
                                 <!-- <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
                                     <div><span>{{item.custNo}}</span> - <span>{{item.custName | titlecase}}</span></div>
@@ -221,9 +199,9 @@
                         <label for="ImpiHeaderCustomerGstNo">GST Number <sup class="text-danger">*</sup></label>
 
                         <input type="text" id="ImpiHeaderCustomerGstNo" placeholder="GST No"
-                            formControlName="ImpiHeaderCustomerGstNo" class="form-control no-style" readonly />
+                        formControlName="ImpiHeaderCustomerGstNo" class="form-control no-style" readonly />
 
-                        <!-- <ng-select [items]="GetCustomerGSTList" #select class="w-100"
+                            <!-- <ng-select [items]="GetCustomerGSTList" #select class="w-100"
                                 bindLabel="gstNumber" bindValue="gstNumber"
                                 placeholder="Select GST No" formControlName="ImpiHeaderCustomerGstNo"
                                 (change)="onSelectGSTCustomer($event)" [searchable]="true" [searchFn]="customerGSTSearchFn"
@@ -235,7 +213,7 @@
                                 </ng-template>
                             </ng-select> -->
 
-                        <!-- <div class="add-btn"><a routerLink="/customer/new" target="_blank">+</a></div> -->
+                            <!-- <div class="add-btn"><a routerLink="/customer/new" target="_blank">+</a></div> -->
 
                         <div *ngIf="shouldShowError('ImpiHeaderCustomerGstNo','required')" class="text-danger">This
                             field
@@ -249,39 +227,39 @@
                         <input type="text" id="address" placeholder="Address"
                             formControlName="ImpiHeaderCustomerAddress" class="form-control no-style" readonly />
 
-                        <div *ngIf="shouldShowError('ImpiHeaderCustomerAddress', 'required')" class="text-danger">
-                            Address is required.
-                        </div>
+                            <div *ngIf="shouldShowError('ImpiHeaderCustomerAddress', 'required')" class="text-danger">
+                                Address is required.
+                            </div>
 
-                        <!-- <div *ngIf="shouldShowError('ImpiHeaderCustomerAddress', 'forbiddenCharacters')" class="text-danger">
+                            <!-- <div *ngIf="shouldShowError('ImpiHeaderCustomerAddress', 'forbiddenCharacters')" class="text-danger">
                                 Special characters are not allowed in the address
                             </div> -->
 
-                        <div *ngIf="shouldShowError('ImpiHeaderCustomerAddress', 'maxlength')" class="text-danger">
-                            Email must be less than 80 characters.
-                        </div>
+                            <div *ngIf="shouldShowError('ImpiHeaderCustomerAddress', 'maxlength')" class="text-danger">
+                                Email must be less than 80 characters.
+                            </div>
 
                     </div>
                 </div>
 
-
+                
                 <div class="col-md-4 col-sm-6">
                     <div class="form-group">
                         <label for="address2">Address 2 <sup class="text-danger">*</sup></label>
                         <input type="text" id="address2" placeholder="Address 2"
                             formControlName="ImpiHeaderCustomerAddress2" class="form-control no-style" readonly />
 
-                        <div *ngIf="shouldShowError('ImpiHeaderCustomerAddress2', 'required')" class="text-danger">
-                            Address2 is required.
-                        </div>
+                            <div *ngIf="shouldShowError('ImpiHeaderCustomerAddress2', 'required')" class="text-danger">
+                                Address2 is required.
+                            </div>
 
-                        <!-- <div *ngIf="shouldShowError('ImpiHeaderCustomerAddress', 'forbiddenCharacters')" class="text-danger">
+                            <!-- <div *ngIf="shouldShowError('ImpiHeaderCustomerAddress', 'forbiddenCharacters')" class="text-danger">
                                 Special characters are not allowed in the address
                             </div> -->
 
-                        <div *ngIf="shouldShowError('ImpiHeaderCustomerAddress2', 'maxlength')" class="text-danger">
-                            Email must be less than 80 characters.
-                        </div>
+                            <div *ngIf="shouldShowError('ImpiHeaderCustomerAddress2', 'maxlength')" class="text-danger">
+                                Email must be less than 80 characters.
+                            </div>
 
                     </div>
                 </div>
@@ -298,8 +276,8 @@
                             </ng-template>
                         </ng-select> -->
 
-                        <input type="text" id="state" placeholder="State" formControlName="ImpiHeaderCustomerState"
-                            class="form-control no-style" readonly />
+                        <input type="text" id="state" placeholder="State"
+                        formControlName="ImpiHeaderCustomerState" class="form-control no-style" readonly />
 
                         <div *ngIf="shouldShowError('ImpiHeaderCustomerState','required')" class="text-danger">This
                             field is required</div>
@@ -318,8 +296,8 @@
                             </ng-template>
                         </ng-select> -->
 
-                        <input type="text" id="city" placeholder="City" formControlName="ImpiHeaderCustomerCity"
-                            class="form-control no-style" readonly />
+                        <input type="text" id="city" placeholder="City"
+                        formControlName="ImpiHeaderCustomerCity" class="form-control no-style" readonly />
                         <div *ngIf="shouldShowError('ImpiHeaderCustomerCity','required')" class="text-danger">This field
                             is required
                         </div>
@@ -331,8 +309,8 @@
                         <label for="pincode">Pincode <sup class="text-danger">*</sup></label>
 
                         <input type="text" id="ImpiHeaderCustomerPinCode" placeholder="Pincode"
-                            formControlName="ImpiHeaderCustomerPinCode" class="form-control no-style" readonly />
-                        <!-- 
+                        formControlName="ImpiHeaderCustomerPinCode" class="form-control no-style" readonly/>
+<!-- 
                         <input type="text" formControlName="ImpiHeaderCustomerPinCode" placeholder="Pincode"
                             (input)="onInputChange($event)" class="form-control" maxlength="15" readonly /> -->
                         <!-- <div *ngIf="shouldShowError('ImpiHeaderCustomerPinCode','required')" class="text-danger"> Pin
@@ -359,7 +337,7 @@
                 <div class="col-md-4 col-sm-6">
                     <div class="form-group">
                         <label for="ContactPerson">Contact Person <sup class="text-danger">*</sup></label>
-                        <input type="text" placeholder="Contact Person" id="ContactPerson" maxlength="100"
+                        <input type="text" placeholder="Contact Person" id="ContactPerson"
                             formControlName="ImpiHeaderCustomerContactPerson" class="form-control" />
                         <div *ngIf="shouldShowError('ImpiHeaderCustomerContactPerson', 'alphanumericWithSpaces')"
                             class="text-danger">
@@ -372,13 +350,12 @@
                 <div class="col-md-4 col-sm-6">
                     <div class="form-group">
                         <label for="EmailID">Customer EmailId (To Send Invoice) <sup class="text-danger">*</sup></label>
-                        <input type="email" placeholder="Email ID" id="EmailID" maxlength="100"
+                        <input type="email" placeholder="Email ID" id="EmailID"
                             formControlName="ImpiHeaderCustomerEmailId" class="form-control" />
                         <div *ngIf="shouldShowError('ImpiHeaderCustomerEmailId','required')" class="text-danger">Email
                             is required.
                         </div>
-                        <div *ngIf="shouldShowError('ImpiHeaderCustomerEmailId', 'invalidEmailFormat')"
-                            class="text-danger">
+                        <div *ngIf="shouldShowError('ImpiHeaderCustomerEmailId', 'invalidEmailFormat')" class="text-danger">
                             Please
                             enter a valid email address.</div>
                         <div *ngIf="shouldShowError('ImpiHeaderCustomerEmailId','email')" class="text-danger"> Please
@@ -424,7 +401,7 @@
                     <div class="col-md-4 col-sm-6">
                         <div class="form-group">
                             <label for="Quantity">Quantity <sup class="text-danger">*</sup></label>
-                            <input type="text" class="form-control" id="Quantity" placeholder="Quantity" maxlength="10"
+                            <input type="text" class="form-control" id="Quantity" placeholder="Quantity"
                                 formControlName="impiQuantity" (input)="onInputChange($event)" />
                             <div *ngIf="shouldShowExpenseError('impiQuantity','required')" class="text-danger">This
                                 field is
@@ -461,7 +438,7 @@
                     <div class="col-md-4 col-sm-6">
                         <div class="form-group">
                             <label>Direct Unit Cost <sup class="text-danger">*</sup> (Exclusive GST)</label>
-                            <input type="text" class="form-control" placeholder="Direct Unit Cost" maxlength="10"
+                            <input type="text" class="form-control" placeholder="Direct Unit Cost"
                                 formControlName="impiUnitPrice" (input)="priceValidator($event)">
                             <div *ngIf="shouldShowExpenseError('impiUnitPrice','required')" class="text-danger">This
                                 field is
@@ -514,29 +491,29 @@
                     </div> -->
 
                     <div class="row">
-                        <div class="col-md-4 col-sm-6">
-                            <div class="form-group">
-                                <label>Total Base Amount</label>
-                                <input type="text" class="form-control" placeholder="Total Base Amount"
-                                    [value]="data?.impiHeaderTotalTDSAmount" disabled="">
-                            </div>
+                        <div class="col-md-4 col-sm-6" >
+                        <div class="form-group">
+                            <label>Total Base Amount</label>
+                            <input type="text" class="form-control"
+                                placeholder="Total Base Amount" [value] = "data?.impiHeaderTotalTDSAmount" disabled="">
                         </div>
+                    </div>
 
-                        <div class="col-md-4 col-sm-6">
-                            <div class="form-group">
-                                <label>Total GST Amount</label>
-                                <input type="text" class="form-control" placeholder="Total GST Amount" disabled=""
-                                    [value]="data?.impiHeaderTotalGSTAmount">
-                            </div>
+                    <div class="col-md-4 col-sm-6" >
+                        <div class="form-group">
+                            <label>Total GST Amount</label>
+                            <input type="text" class="form-control"
+                                placeholder="Total GST Amount" disabled="" [value] = "data?.impiHeaderTotalGSTAmount">
                         </div>
+                    </div>
 
-                        <div class="col-md-4 col-sm-6">
-                            <div class="form-group">
-                                <label>Net Total</label>
-                                <input type="text" class="form-control" placeholder="Net total" disabled=""
-                                    [value]="data?.impiHeaderTotalInvoiceAmount">
-                            </div>
+                    <div class="col-md-4 col-sm-6" >
+                        <div class="form-group">
+                            <label>Net Total</label>
+                            <input type="text" class="form-control"
+                                placeholder="Net total" disabled="" [value] = "data?.impiHeaderTotalInvoiceAmount">
                         </div>
+                    </div>
                     </div>
 
                 </div>
@@ -558,7 +535,7 @@
                             <th>Line Amount</th>
                             <th>GST Group Code</th>
                             <th>HSN/SAC Code</th>
-                            <th>IGST Amount</th>
+                             <th>IGST Amount</th>
                             <th>CGST Amount</th>
                             <th>SGST Amount</th>
                             <th>Action</th>
@@ -575,9 +552,9 @@
                             <td>{{e.impiUnitPrice * e.impiQuantity}}</td>
                             <td>{{e.impiGstgroupCode }}</td>
                             <td>{{e.impiHsnsaccode}}</td>
-                            <td>{{e.impiTotalGstAmount}}</td>
-                            <td>{{e.impiNetTotal}}</td>
-                            <td>{{e.impiGstBaseAmount}}</td>
+                              <td>{{e.impiTotalGstAmount}}</td>
+                              <td>{{e.impiNetTotal}}</td>
+                              <td>{{e.impiGstBaseAmount}}</td>
                             <!-- <td>{{ calculateGSTBaseAmount(e) }}</td>
                             <td>{{ calculateGSTAmount(e) }}</td> -->
                             <td><span class="table-btns">
@@ -599,8 +576,7 @@
         <div class="text-end" *ngIf="publicVariable.expenses.length > 0"><a href="javascript:void(0)"
                 (click)="onCalculateClick('Calculate')" class="common-btn w-auto">Calculate</a></div>
         <div class="note-para">
-            <p>Upload Attachments (PO,E-Mail Confirmation,LOI,Other Documents)*<span class="text-danger">(Max File Size
-                    5 MB
+            <p>Upload Attachments (PO,E-Mail Confirmation,LOI,Other Documents)*<span class="text-danger">(Max File Size 5 MB
                     only)</span></p>
         </div>
 
@@ -654,8 +630,7 @@
                             <td>{{ file.file?.name || file.name }}</td>
 
                             <td>
-                                <a *ngIf="data" href="javascript:void(0)"
-                                    (click)="downalodFile(file?.file || file)"><img
+                                <a *ngIf="data" href="javascript:void(0)" (click)="downalodFile(file?.file || file)"><img
                                         src="../assets/images/download-icon.svg" alt="" class="me-2"></a>
                                 <a href="javascript:void(0)" (click)="deleteFile(i,file)"><img
                                         src="../assets/images/delete-icon.svg" alt=""></a>
@@ -677,7 +652,8 @@
             <div class="col-md-9 mt-3">
                 <div class="form-group">
                     <label for="Remarks">Remarks for FICCI Accounts Team</label>
-                    <textarea class="form-control h-100" cols="2" rows="3" id="Remarks" maxlength="100"
+                    <textarea class="form-control h-100" cols="2" rows="3" id="Remarks"
+                    maxlength="100"
                         formControlName="ImpiHeaderRemarks"></textarea>
                 </div>
             </div>
@@ -686,8 +662,7 @@
                 <div class="form-group mb-0 mt-4">
                     <input type="checkbox" class="btn-check" formControlName="IsDraft" id="btn-check"
                         autocomplete="off">
-                    <label class="btn btn-secondary w-auto mb-0 me-2" for="btn-check" (click)="onSubmit('Draft')">Save
-                        as
+                    <label class="btn btn-secondary w-auto mb-0 me-2" for="btn-check" (click)="onSubmit('Draft')">Save as
                         Draft</label>
                     <button type="submit" class="common-btn w-auto" (click)="onSubmit('Submit')">Submit</button>
                 </div>

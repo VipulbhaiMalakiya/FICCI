@@ -43,8 +43,6 @@
                 <thead>
                     <tr>
                         <th>#</th>
-                        <th>Record No.</th>
-                        <th>Invoice No</th>
                         <th>Invoice Type</th>
                         <th>Project Code</th>
                         <th>Project Name</th>
@@ -67,8 +65,6 @@
                     <tr
                         *ngFor="let d of  this.publicVariable.invoiceStatuslistData | searchFilter: publicVariable.searchText| paginate: {itemsPerPage: publicVariable.tableSize,currentPage: publicVariable.page,totalItems: publicVariable.count};let i = index">
                         <td>{{i + 1}}</td>
-                        <td>{{d.recordID}}</td>
-                        <td>{{d.headerPiNo}}</td>
                         <td>{{d.impiHeaderInvoiceType | titlecase}}</td>
                         <td>{{d.impiHeaderProjectCode}}</td>
                         <td>{{d.impiHeaderProjectName | titlecase}}</td>
@@ -90,12 +86,12 @@
                                 <a href="javascript:void(0);" (click)="onView(d)"><img
                                         src="../assets/images/view-icon.svg" alt="" /></a>
 
-                                        <a hidden href="javascript:void(0);" (click)="onSendEmail(d)"
+                                        <a href="javascript:void(0);" (click)="onSendEmail(d)"
                                         *ngIf="d.headerStatus === 'APPROVED BY FINANCE' || 'APPROVED BY TL' "><img
                                             src="../assets/images/email-icon.svg" alt="" /></a>
-                                    <!-- <a href="javascript:void(0);" (click)="onediteEmail(d)"
+                                    <a href="javascript:void(0);" (click)="onediteEmail(d)"
                                         *ngIf="d.headerStatus === 'MAIL SENT BY FINANCE TO CUSTOMER' "><img
-                                            src="../assets/images/email-edit-icon.svg" alt="" /></a> -->
+                                            src="../assets/images/email-edit-icon.svg" alt="" /></a>
 
                             </span>
                         </td>

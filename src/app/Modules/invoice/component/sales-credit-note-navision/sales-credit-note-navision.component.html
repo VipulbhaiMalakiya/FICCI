@@ -61,7 +61,7 @@
                             <th>Post Code</th>
                             <th>typeOfSupply</th>
                             <th>yourReference</th> -->
-                            <!-- <th>Status</th> -->
+                            <th>Status</th>
                             <th class="action-cl">Action</th>
                         </tr>
                     </thead>
@@ -78,7 +78,7 @@
                             <td>{{d.deptCode}}</td>
                             <td>{{d.divisionCode}}</td>
                             <td>{{d.projectCode}}</td>
-                            <!-- <td>{{d.Status}}</td> -->
+                            <td>{{d.Status}}</td>
                             <!-- <td>{{d.gsT_No}}</td> -->
                             <!-- <td>{{d.invoicePortalOrder}}</td>
                             <td>{{d.invoicePortalSubmitted}}</td> -->
@@ -93,7 +93,7 @@
                                 <span class="table-btns">
                                     <a href="javascript:void(0);" (click)="onView(d)"><img
                                             src="../assets/images/view-icon.svg" alt="" /></a>
-                                    <!-- <a *ngIf="publicVariable.storedRole !== 'Admin' &&
+                                    <a *ngIf="publicVariable.storedRole !== 'Admin' &&
                                     (d.isDraft ||
                                     d.headerStatus == 'REJECTED BY TL APPROVER'  ||
                                     d.headerStatus == 'REJECTED BY CH APPROVER' ||
@@ -102,7 +102,7 @@
                                     )" href="javascript:void(0);" (click)="onEdit(d)"><img
                                             src="../assets/images/edit-icon.svg" alt="" /></a>
                                             <a href="javascript:void(0);" (click)="onSendEmail(d)"><img
-                                                src="../assets/images/email-icon.svg" alt="" /></a> -->
+                                                src="../assets/images/email-icon.svg" alt="" /></a>
                                     <!-- <a *ngIf="publicVariable.storedRole !== 'Admin' &&
                                     (d.isDraft ||
                                     d.headerStatus == 'REJECTED BY TL APPROVER'  ||

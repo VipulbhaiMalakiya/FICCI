@@ -20,7 +20,6 @@ export class DashboardComponent {
 
     publicVariable = new publicVariable();
     customerStatus: string = 'DRAFT';
-    headerStatus : string = 'DRAFT';
     isDRAFT: number = 0;
     PendingApproval: number = 0;
     ApprovedAccounts: number = 0;
@@ -164,20 +163,16 @@ export class DashboardComponent {
         };
 
         // Filter data for each customer status
-        const draftData = data.filter(item => item.customerStatus === 'DRAFT' && item.department === localStorage.getItem('department') );
+        const draftData = data.filter(item => item.customerStatus === 'DRAFT');
         counts['DRAFT'] = draftData.length;
 
         const foraprovalData = data.filter((item: any) =>
-            (item.customerStatus === 'PENDING WITH ACCOUNTS APPROVER' || item.customerStatus === 'PENDING WITH FINANCE APPROVER') && item.department === localStorage.getItem('department') );
+            (item.customerStatus === 'PENDING WITH ACCOUNTS APPROVER' || item.customerStatus === 'PENDING WITH FINANCE APPROVER'));
         counts['FOR APPROVAL'] = foraprovalData.length;
 
 
         const pendingData = data.filter((item: any) =>
-            item.createdBy === this.publicVariable.storedEmail
-
-            || item.department === localStorage.getItem('department')
-
-            &&
+            item.createdBy === this.publicVariable.storedEmail &&
             (item.customerStatus === 'PENDING WITH TL APPROVER' ||
                 item.customerStatus === 'PENDING WITH CH APPROVER' ||
                 item.customerStatus === 'PENDING WITH ACCOUNTS APPROVER' ||
@@ -185,14 +180,14 @@ export class DashboardComponent {
         counts['PENDING WITH TL APPROVER'] = pendingData.length;
 
 
-        const approvedData = data.filter(item => (item.customerStatus === 'APPROVED BY ACCOUNTS APPROVER'
-            || item.customerStatus === 'APPROVED BY FINANCE') && item.department === localStorage.getItem('department')) ;
+        const approvedData = data.filter(item => item.customerStatus === 'APPROVED BY ACCOUNTS APPROVER'
+            || item.customerStatus === 'APPROVED BY FINANCE');
         counts['APPROVED BY ACCOUNTS APPROVER'] = approvedData.length;
 
-        const rejectedData = data.filter(item => (item.customerStatus === 'REJECTED BY TL APPROVER'
+        const rejectedData = data.filter(item => item.customerStatus === 'REJECTED BY TL APPROVER'
             || item.customerStatus === 'REJECTED BY CH APPROVER'
             || item.customerStatus === 'REJECTED BY ACCOUNTS APPROVER'
-            || item.customerStatus === 'REJECTED BY FINANCE APPROVER') && item.department === localStorage.getItem('department'));
+            || item.customerStatus === 'REJECTED BY FINANCE APPROVER');
         counts['REJECTED BY CH APPROVER'] = rejectedData.length;
 
         // Calculate total count
@@ -217,16 +212,12 @@ export class DashboardComponent {
         switch (this.customerStatus) {
             case 'DRAFT':
                 filteredData = this.dashboardData.filter((item: any) =>
-
-                    item.department === localStorage.getItem('department') ||
                     // item.createdBy === this.publicVariable.storedEmail &&
                     item.customerStatus === 'DRAFT');
                 break;
             case 'PENDING WITH APPROVER':
                 filteredData = this.dashboardData.filter((item: any) =>
-                    item.createdBy === this.publicVariable.storedEmail ||
-                    item.department === localStorage.getItem('department')
-                    &&
+                    item.createdBy === this.publicVariable.storedEmail &&
                     (item.customerStatus === 'PENDING WITH TL APPROVER' ||
                         item.customerStatus === 'PENDING WITH CH APPROVER' ||
                         item.customerStatus === 'PENDING WITH ACCOUNTS APPROVER' ||
@@ -234,14 +225,11 @@ export class DashboardComponent {
                 break;
             case 'APPROVED BY ACCOUNTS APPROVER':
                 filteredData = this.dashboardData.filter((item: any) =>
-                item.department === localStorage.getItem('department') ||
                     // item.createdBy === this.publicVariable.storedEmail &&
                     item.customerStatus === this.customerStatus || item.customerStatus === 'APPROVED BY FINANCE');
-
-                    break;
+                break;
             case 'REJECTED BY CH APPROVER':
                 filteredData = this.dashboardData.filter((item: any) =>
-                item.department === localStorage.getItem('department') ||
                 // item.createdBy === this.publicVariable.storedEmail &&
                 (item.customerStatus === 'REJECTED BY TL APPROVER' ||
                     item.customerStatus === 'REJECTED BY CH APPROVER' ||
@@ -392,9 +380,6 @@ export class DashboardComponent {
                     }
 
 
-                    this.headerStatus =this.customerStatus;
-
-                    console.log(this.headerStatus);
 
                     // Processing the merged data
                     this.countDataBySalesInvoies(this.dashboardData);
@@ -844,69 +829,51 @@ export class DashboardComponent {
 
 
 
-    onTableDataChange(event: any,status?:any) {
-        //this.publicVariable.customerStatusList;
+    onTableDataChange(event: any) {
+        this.publicVariable.page = event;
+        this.publicVariable.customerStatusList
+    }
 
+    onTableSizeChangeposted(event: any) {
+        this.publicVariable.page = event;
+        this.PIInvoiceSummaryList
+    }
 
-        if(status == 'Posted Proforma Invoice'){
-            this.publicVariable.page = event;
-            this.PIloadInvoiceSummary();
-        }
+    onTableDataChangepi(event: any) {
+        this.publicVariable.page = event;
+        this.invoiceStatuslistData
+    }
 
-        else if(status =='Customer'){
-            this.publicVariable.page = event;
-            this.loadCustomerStatusList(this.customerStatus);
-        }
-        else if(status =='Posted Tax Invoice'){
-            this.publicVariable.page = event;
-            this.loadInvoiceSummary();
-        }
-        else if(status =='invoice'){
-            this.publicVariable.page = event;
-            this.loadInoivceStatusList(this.customerStatus);
-        }
+    onTableSizeChangesumaary(event: any) {
+        this.publicVariable.page = event;
+        this.InvoiceSummaryList
+    }
 
-        else if(status =='Sales Credit Note'){
-            this.publicVariable.page = event;
-            this.SalesCreditNoteSummaryData;
-        }
+    onTableSizeChange(event: any): void {
+        this.publicVariable.tableSize = event.target.value;
+        this.publicVariable.page = 1;
+        this.publicVariable.customerStatusList
 
     }
 
+    onTableSizeChangepi(event: any): void {
+        this.publicVariable.tableSize = event.target.value;
+        this.publicVariable.page = 1;
+        this.invoiceStatuslistData
 
-    onTableSizeChange(event: any,status?:any): void {
+    }
 
+    onTableDataChangesi(event: any): void {
+        this.publicVariable.tableSize = event.target.value;
+        this.publicVariable.page = 1;
+        this.InvoiceSummaryList
 
+    }
 
-
-        //this.publicVariable.customerStatusList
-
-     if(status == 'Posted Proforma Invoice'){
-            this.publicVariable.tableSize = event.target.value;
-            this.publicVariable.page = 1;
-            this.PIInvoiceSummaryList;
-        }
-        else if(status == 'Customer'){
-            this.publicVariable.tableSize = event.target.value;
-            this.publicVariable.page = 1;
-            this.publicVariable.customerStatusList;
-        }
-        else if(status =='Posted Tax Invoice'){
-            this.publicVariable.tableSize = event.target.value;
-            this.publicVariable.page = 1;
-            this.InvoiceSummaryList;
-        }
-        else if(status =='invoice'){
-            this.publicVariable.tableSize = event.target.value;
-            this.publicVariable.page = 1;
-            this.invoiceStatuslistData;
-        }
-
-        else if(status =='Sales Credit Note'){
-            this.publicVariable.tableSize = event.target.value;
-            this.publicVariable.page = 1;
-            this.SalesCreditNoteSummaryData;
-        }
+    onTableDataChangesa(event: any): void {
+        this.publicVariable.tableSize = event.target.value;
+        this.publicVariable.page = 1;
+        this.PIInvoiceSummaryList
 
     }
 
