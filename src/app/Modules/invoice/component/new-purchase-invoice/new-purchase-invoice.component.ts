@@ -131,7 +131,8 @@ export class NewPurchaseInvoiceComponent implements OnInit {
         });
         if (this.data = history.state.data) {
             this.patchFormData(this.data);
-            console.log(this.data);
+            this.loadProjectList();
+            this.loadCustomerStatusList();
         }
         this.loadCOAMasterList();
         this.loadGetGSTGroupList();
