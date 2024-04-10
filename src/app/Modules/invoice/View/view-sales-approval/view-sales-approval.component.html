@@ -10,7 +10,7 @@
             </div>
         </div>
     </div>
-    <h3 class="content-title">Customer Approval Inbox</h3>
+    <h3 class="content-title">Sales Credit Memo Approval Inbox</h3>
     <div class="pipage-radio">
         <div class="form-check">
             <input class="form-check-input" type="radio" name="ImpiHeaderInvoiceType" id="flexRadioDefault1"
@@ -88,13 +88,13 @@
                     <input type="text" value="{{data.impiHeaderGstNo}}" class="form-control" disabled="" readonly="">
                 </div>
             </div>
-            <div class="col-md-4 col-sm-6">
+            <div class="col-md-4 col-sm-6" hidden>
                 <div class="form-group">
                     <label>Starting Date</label>
                     <input type="text" value="{{data.startDate}}" class="form-control" disabled="" readonly="">
                 </div>
             </div>
-            <div class="col-md-4 col-sm-6">
+            <div class="col-md-4 col-sm-6" hidden>
                 <div class="form-group">
                     <label>End Date</label>
                     <input type="text" value="{{data.endDate}}" class="form-control" disabled="" readonly="">
@@ -153,7 +153,7 @@
                 </div>
             </div>
 
-            <div class="col-md-4 col-sm-6">
+            <div class="col-md-4 col-sm-6" hidden>
                 <div class="form-group">
                     <label>State</label>
                     <input type="text" value="{{getStateNameById(data.impiHeaderCustomerState)}}" class="form-control"
@@ -179,7 +179,7 @@
 
 
 
-            <div class="col-md-4 col-sm-6">
+            <div class="col-md-4 col-sm-6" hidden>
                 <div class="form-group">
                     <label>Contact Person</label>
                     <input type="text" value="{{data.impiHeaderCustomerContactPerson}}" class="form-control" disabled=""
@@ -187,7 +187,7 @@
                 </div>
             </div>
 
-            <div class="col-md-4 col-sm-6">
+            <div class="col-md-4 col-sm-6" hidden>
                 <div class="form-group">
                     <label>Customer EmailId (To Send Invoice)</label>
                     <input type="text" value="{{data.impiHeaderCustomerEmailId}}" class="form-control" disabled=""
@@ -195,7 +195,7 @@
                 </div>
             </div>
 
-            <div class="col-md-4 col-sm-6">
+            <div class="col-md-4 col-sm-6" hidden>
                 <div class="form-group">
                     <label>Phone No.</label>
                     <input type="text" value="{{data.impiHeaderCustomerPhoneNo}}" class="form-control" disabled=""
@@ -312,7 +312,7 @@
     <div class="mastersform-sec mb-3">
 
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-6" hidden>
                 <div class="form-group">
                     <label>Payment Terms</label>
                     <textarea class="form-control h-100" cols="2" rows="2" disabled=""

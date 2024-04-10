@@ -31,6 +31,10 @@ export class NewPurchaseInvoiceComponent implements OnInit {
     projectCode?: any;
     customerCode?: any;
     GetDetails: any[] = [];
+    navDepartment: any;
+    navDepartmentArray: any;
+    selectedDept: any;
+
 
     constructor(private appService: AppService,
         private modalService: NgbModal,
@@ -49,6 +53,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
     private initializeForm(): void {
         this.publicVariable.dataForm = this.fb.group({
             headerid: [''],
+            ImpiHeaderdept: [null, [Validators.required]],
             ImpiHeaderInvoiceType: ['Proforma Invoice', Validators.required],
             ImpiHeaderProjectCode: [null, [Validators.required]],
             Project: [{ value: '', disabled: true }, [Validators.required]],
@@ -114,7 +119,13 @@ export class NewPurchaseInvoiceComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.loadProjectList();
+
+        this.publicVariable.isProcess = false;
+        //this.loadProjectList();
+        this.loadCustomerStatusList();
+        this.navDepartment = localStorage.getItem('navDepartment')
+        this.navDepartmentArray = this.navDepartment.split('|');
+
         this.route.params.subscribe(params => {
             this.Id = +params['id'];
         });
@@ -127,6 +138,35 @@ export class NewPurchaseInvoiceComponent implements OnInit {
        // this.loadgetGstRegistrationNoAll();
     }
 
+    onSelectdept(event: any) {
+        this.selectedDept = event;
+
+        this.publicVariable.dataForm.patchValue({
+            ImpiHeaderDepartment: null,
+            ImpiHeaderProjectCode: null,
+            ImpiHeaderDivison: null,
+            Project: null,
+            startDate: null,
+            endDate: null
+        });
+        try {
+            const subscription = this.API.getnavProjects(this.selectedDept).subscribe({
+                next: (response: any) => {
+                    this.publicVariable.projectList = response.data;
+
+
+                },
+                error: (error) => {
+                    console.error('Error loading project list:', error);
+                }
+            });
+
+            this.publicVariable.Subscription.add(subscription);
+        } catch (error) {
+            console.error('Error loading project list:', error);
+        }
+
+    }
     loadCOAMasterList(): void {
         try {
             const subscription = this.API.GetCOAMasterList().subscribe({
@@ -229,7 +269,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
             ImpiHeaderInvoiceType: data.impiHeaderInvoiceType,
             ImpiHeaderProjectCode: data.impiHeaderProjectCode,
             ImpiHeaderDepartment: data.impiHeaderProjectDepartmentName,
-
+            ImpiHeaderdept:data.impiHeaderProjectDepartmentName,
             ImpiHeaderDivison: data.impiHeaderProjectDivisionName,
             Project: data.impiHeaderProjectName,
 
@@ -553,12 +593,12 @@ export class NewPurchaseInvoiceComponent implements OnInit {
                         const modalRef = this.modalService.open(ValidationPopupComponent, { size: "xl" });
                         var componentInstance = modalRef.componentInstance as ValidationPopupComponent;
                         componentInstance.isEmail = this.GetDetails;
-                        modalRef.result.then((data: any) => {        
-                            
+                        modalRef.result.then((data: any) => {
+
                             if(data == true){
                                 this.publicVariable.dataForm.reset();
                             }
-                            
+
                         })
                     }
 
@@ -983,10 +1023,10 @@ export class NewPurchaseInvoiceComponent implements OnInit {
                     formData.append('isupdate', String(isUpdate));
                     this.publicVariable.selectedProjet = this.publicVariable.projectList.find(project => project.code == newData.ImpiHeaderProjectCode);
                     this.publicVariable.selectCustomer = this.publicVariable.GetCustomerList.find(customer => customer.custName == newData.ImpiHeaderCustomerName);
-                   
+
                    // alert(this.publicVariable.selectCustomer);
                     //console.log(this.publicVariable.selectCustomer);
-                   
+
                     formData.append('ImpiHeaderInvoiceType', newData.ImpiHeaderInvoiceType);
                     formData.append('ImpiHeaderProjectCode', this.publicVariable.selectedProjet.code);
 
@@ -1134,7 +1174,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
         ['ImpiHeaderInvoiceType', 'ImpiHeaderProjectCode', 'ImpiHeaderDepartment', 'ImpiHeaderDivison', 'ImpiHeaderPanNo', 'ImpiHeaderGstNo',
             'ImpiHeaderCustomerName', 'ImpiHeaderCustomerAddress', 'ImpiHeaderCustomerState', 'ImpiHeaderCustomerCity', 'ImpiHeaderCustomerEmailId',
             'ImpiHeaderCustomerGstNo', 'ImpiHeaderCustomerContactPerson', 'ImpiHeaderCustomerPhoneNo', 'items',
-            'startDate', 'endDate'
+            'startDate', 'endDate','ImpiHeaderdept'
         ].forEach(controlName => {
             this.publicVariable.dataForm.controls[controlName].markAsTouched();
         });

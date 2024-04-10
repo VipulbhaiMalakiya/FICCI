@@ -4,7 +4,8 @@ export interface Employees {
     imeM_Name: string;
     imeM_Email: string;
     imeM_Username: string;
-    isActive: boolean
+    isActive: boolean;
+    department: string;
 }
 
 export interface addUpdateEmployees {
@@ -17,6 +18,8 @@ export interface addUpdateEmployees {
     roleId: string;
     isActive: boolean;
     roleName?: string;
+    departmentName:any;
+    Department:any
 }
 
 export interface UserMaster {

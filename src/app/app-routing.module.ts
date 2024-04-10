@@ -6,9 +6,12 @@ import { ForbiddenComponent } from './layouts/forbidden/forbidden.component';
 import { LoginComponent } from './layouts/login/login.component';
 import { AuthGuard } from './guard/auth.guard';
 import { ApprproverEmailComponent } from './layouts/apprprover-email/apprprover-email.component';
+import { NevErpComponent } from './layouts/nev-erp/nev-erp.component';
 
 
 const routes: Routes = [
+
+    { path: 'email/:email', component: NevErpComponent },
     { path: 'login', component: LoginComponent },
     
     {

@@ -13,6 +13,8 @@ import { take } from 'rxjs';
 export class AddComponent implements OnInit {
     publicVariable = new publicVariable();
     userId!: number;
+    deparment: any;
+
     constructor(private fb: FormBuilder,
         private modalService: NgbModal,
         private toastr: ToastrService,
@@ -32,24 +34,48 @@ export class AddComponent implements OnInit {
             username: [{ value: '', disabled: true }, , Validators.required],
             name: [{ value: '', disabled: true }, , Validators.required],
             email: [{ value: '', disabled: true }, , [Validators.required, Validators.email]],
-            isActive: [true] // Assuming default value is true
+            isActive: [true] ,// Assuming default value is true
+            departmentName: [null],          
+            dept: [{ value: '', disabled: true }],
         });
     }
 
 
     ngOnInit(): void {
-        this.getRoles();
+
         this.loadEmpoyeeList();
-        this.publicVariable.isProcess = false;
+       // this.getRoles();
+      
+        //this.GetDepartment();
+        //this.publicVariable.isProcess = false;
         this.route.paramMap.pipe(
             // take(1) // Take only the first emitted value
         ).subscribe(params => {
             if (params && params.get('id')) {
                 this.userId = +params.get('id')!;
-                this.fetchUserData(this.userId);
+                //this.fetchUserData(this.userId);
             }
         });
 
+    }
+
+    GetDepartment(): void {
+
+        this.API.GetDepartment().subscribe({
+            next: (data: any) => {
+                this.deparment = data.data;
+                this.publicVariable.isProcess = false; // Close loader
+                this.cd.detectChanges(); // Trigger change detection
+
+                this.fetchUserData(this.userId);
+            },
+            error: (error: any) => {
+                this.publicVariable.isProcess = false; // Close loader
+                this.cd.detectChanges(); // Trigger change detection
+
+                // Handle error if necessary
+            }
+        });
     }
 
     customSearchFn(term: string, item: any) {
@@ -79,7 +105,10 @@ export class AddComponent implements OnInit {
                 this.publicVariable.roles = data.data.map((role: { roleName: string }) => ({
                     ...role,
                 }));
+
+                this.GetDepartment();
             },
+
             error: (error: any) => {
                 this.publicVariable.roles = DEFAULT_ROLE_LIST;
             }
@@ -92,6 +121,7 @@ export class AddComponent implements OnInit {
                 next: (response: any) => {
                     this.publicVariable.employeeList = response.data;
                     this.publicVariable.isProcess = false;
+                    this.getRoles();
                 }
             })
         );
@@ -105,18 +135,24 @@ export class AddComponent implements OnInit {
                 this.publicVariable.dataForm.patchValue({
                     username: this.publicVariable.selectedEmployee.imeM_Username,
                     name: this.publicVariable.selectedEmployee.imeM_Name,
-                    email: this.publicVariable.selectedEmployee.imeM_Email
+                    email: this.publicVariable.selectedEmployee.imeM_Email,
+                    dept: this.publicVariable.selectedEmployee.department,
                 });
             }
         } else {
             this.publicVariable.dataForm.patchValue({
                 username: null,
                 name: null,
-                email: null
+                email: null,
+                dept:null
             });
         }
     }
 
+    customSearchFn1(term: string, item: any) {
+        const concatenatedString = `${item.departmentCode} ${item.departmentName}`.toLowerCase();
+        return concatenatedString.includes(term.toLowerCase());
+    }
     onDelete(id: number): void {
         const modalRef = this.modalService.open(ConfirmationDialogModalComponent, { size: "sm", centered: true, backdrop: "static" });
         const componentInstance = modalRef.componentInstance as ConfirmationDialogModalComponent;
@@ -156,8 +192,13 @@ export class AddComponent implements OnInit {
                 imeM_Name: selectedEmployee.imeM_Name,
                 imeM_Email: selectedEmployee.imeM_Email,
                 roleId: newData.roleId,
-                isActive: newData.isActive
+                isActive: newData.isActive,
+                departmentName: newData.departmentName,
+                Department: selectedEmployee.department,
             };
+
+           // console.log(newConfig);
+          
             const successMessage = isUpdate ? 'Data updated successfully.' : 'Data created successfully.';
             this.handleApiRequest(this.API.create(newConfig), successMessage, 'Error submitting data:');
         } else {
@@ -200,20 +241,82 @@ export class AddComponent implements OnInit {
         }
     }
 
+    findRoleId(roleName: string): number | null {
+
+        
+        // Assuming you have an array of roles with id and name properties
+        console.log(this.publicVariable.roles);
+        
+        const role = this.publicVariable.roles.find(role => role.roleName === roleName);
+        
+        return role ? role.role_id : null; // Return the role id if found, otherwise return null
+    }
+    
     onEdit(data: any): void {
+
+     
+        console.log(data);
         this.publicVariable.isEdit = true;
         this.cd.detectChanges();
+
+        
+
+      let empdata = this.publicVariable.employeeList.find(x=>x.imeM_EmpId =data.imeM_EmpId);
+
+      console.log(empdata);
+      
+
+      if(empdata!=undefined)
+      
+      {
+
+        this.publicVariable.dataForm.patchValue({
+            empId: data.imeM_EmpId,
+            username: empdata.imeM_Username,
+            name: empdata.imeM_Name,
+            email: empdata.imeM_Email,
+            roleId: this.findRoleId(data.roleName),
+            isActive: data.isActive,
+            id: data.imeM_ID,
+            dept: empdata.department,
+            departmentName: data.departmentName,
+        });
+
+    }
+
+    else
+    {
         this.publicVariable.dataForm.patchValue({
             empId: data.imeM_EmpId,
             username: data.imeM_Username,
             name: data.imeM_Name,
             email: data.imeM_Email,
-            roleId: data.roleId || this.publicVariable.roleId,
+            roleId: this.findRoleId(data.roleName),
             isActive: data.isActive,
-            id: data.imeM_ID
+            id: data.imeM_ID,
+            dept: data.department,
+            departmentName: data.departmentName,
         });
+
+
+    }
         this.publicVariable.dataForm.controls["empId"].disable();
     }
+
+    // onEdit(data: any): void {
+    //     this.publicVariable.isEdit = true;
+    //     this.cd.detectChanges();
+    //     this.publicVariable.dataForm.patchValue({
+    //         empId: data.imeM_EmpId,
+    //         username: data.imeM_Username,
+    //         name: data.imeM_Name,
+    //         email: data.imeM_Email,
+    //         roleId: data.roleId || this.publicVariable.roleId,
+    //         isActive: data.isActive,
+    //         id: data.imeM_ID
+    //     });
+    //     this.publicVariable.dataForm.controls["empId"].disable();
+    // }
 
     getRoleIdByRoleName(roleName: string): number | undefined {
 
@@ -221,8 +324,11 @@ export class AddComponent implements OnInit {
         return role ? role.role_id : undefined;
     }
 
+    
+
     markFormControlsAsTouched(): void {
-        ['empId', 'username', 'name', 'email', 'roleId'].forEach(controlName => {
+              
+                ['empId', 'username', 'name', 'email', 'roleId','departmentName','dept'].forEach(controlName => {
             this.publicVariable.dataForm.controls[controlName].markAsTouched();
         });
     }

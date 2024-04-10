@@ -413,7 +413,8 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
                     pan: newData.PANNo.trim(),
                     loginId: this.publicVariable.storedEmail,
                     roleName: this.publicVariable.storedRole,
-                    CustomerRemarks: newData.CustomerRemarks.trim()
+                    CustomerRemarks: newData.CustomerRemarks.trim(),
+                    Department: localStorage.getItem('department')
                 };
                 this.publicVariable.isProcess = true;
                 this.publicVariable.Subscription.add(

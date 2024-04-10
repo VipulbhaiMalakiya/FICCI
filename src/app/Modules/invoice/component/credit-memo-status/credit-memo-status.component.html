@@ -42,6 +42,7 @@
                     <thead>
                         <tr>
                             <th>#</th>
+                            <th>Record No.</th>
                             <th>Invoice Type</th>
                             <th>Project Code</th>
                             <th>Project Name</th>
@@ -64,6 +65,9 @@
                         <tr
                             *ngFor="let d of  this.publicVariable.invoiceStatuslistData | searchFilter: publicVariable.searchText| paginate: {itemsPerPage: publicVariable.tableSize,currentPage: publicVariable.page,totalItems: publicVariable.count};let i = index">
                             <td>{{i + 1}}</td>
+
+                            <td>{{d.recordID}}</td>
+                            
                             <td>{{d.impiHeaderInvoiceType | titlecase}}</td>
                             <td>{{d.impiHeaderProjectCode}}</td>
                             <td>{{d.impiHeaderProjectName | titlecase}}</td>

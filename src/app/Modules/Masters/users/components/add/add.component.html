@@ -47,6 +47,33 @@
                     </div>
                 </div>
 
+
+                <div class="col-md-3 col-sm-6">
+                    <div class="form-group">
+                        <label for="dept">Department</label>
+                        <input type="text" class="form-control" id="dept" formControlName="dept" readonly>
+                        <div *ngIf="shouldShowError('dept','required')" class="text-danger">This field is required
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="col-md-3 col-sm-6">
+                    <div class="form-group">
+                        <label> Navision Department</label>
+                        <ng-select [items]="deparment" bindLabel="departmentName" bindValue="departmentName"
+                            placeholder="Select Department" formControlName="departmentName"
+                            [searchFn]="customSearchFn1" [multiple]="true">
+                            <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
+                                <small>{{item.departmentCode}} - {{item.departmentName}}</small>
+                            </ng-template>
+                        </ng-select>
+
+
+                        <div *ngIf="shouldShowError('departmentName','required')" class="text-danger">This field is required
+                        </div>
+                    </div>
+                </div>
                 <div class="col-md-3 col-sm-6">
                     <div class="form-group">
                         <label>Role</label>
@@ -96,7 +123,9 @@
                             <th>Employee ID</th>
                             <th>Username</th>
                             <th>Name</th>
-                            <th>Email</th>
+                            <!-- <th>Email</th> -->
+                            <th>Department</th>
+                            <th>Nav Department</th>
                             <th>Role</th>
                             <th>Active</th>
                             <th class="action-cl">Action</th>
@@ -108,7 +137,9 @@
                             <td>{{ publicVariable.userData.imeM_EmpId }}</td>
                             <td>{{ publicVariable.userData.imeM_Username }}</td>
                             <td>{{ publicVariable.userData.imeM_Name }}</td>
-                            <td>{{ publicVariable.userData.imeM_Email }}</td>
+                            <!-- <td>{{ publicVariable.userData.imeM_Email }}</td> -->
+                            <td>{{ publicVariable.userData.department }}</td>
+                            <td>{{ publicVariable.userData.departmentName }}</td>
                             <td>{{ publicVariable.userData.roleName }}</td>
                             <td
                                 [ngClass]="{'text-success': publicVariable.userData.isActive, 'text-danger': !publicVariable.userData.isActive}">

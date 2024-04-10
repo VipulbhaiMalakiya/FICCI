@@ -43,8 +43,9 @@
                             <th>#</th>
                             <th>Employee ID</th>
                             <th>Name</th>
-                            <th>Email</th>
-                            <th>Username</th>
+                            <!-- <th>Email</th> -->
+                            <th>Department</th>
+                            <th>Nav Department</th>
                             <th>Role</th>
                             <th>Active</th>
                             <th class="action-cl">Action</th>
@@ -56,8 +57,9 @@
                             <td>{{i + 1}}</td>
                             <td>{{ user.imeM_EmpId }}</td>
                             <td>{{ user.imeM_Name | titlecase}}</td>
-                            <td>{{ user.imeM_Email |titlecase}}</td>
-                            <td>{{ user.imeM_Username |titlecase}}</td>
+                            <!-- <td>{{ user.imeM_Email |titlecase}}</td> -->
+                            <td>{{ user.department |titlecase}}</td>
+                            <td>{{ user.departmentName}}</td>
                             <td>{{ user.roleName | titlecase }}</td>
                             <td [ngClass]="{'text-success': user.isActive, 'text-danger': !user.isActive}">
                                 <span class="status">•</span> {{ user.isActive ? 'Yes' : 'No' }}

@@ -24,7 +24,8 @@ export class InvoicesService {
 
     private ApproverURL = `${environment.apiURL}ApproveInvoice`;
     private ApproverAccountURL = `${environment.apiURL}Account/GetInvoice?loginid=`;
-    private GetCustomerAPI = `${environment.apiURL}DropDown/GetCustomer`;
+   // private GetCustomerAPI = `${environment.apiURL}DropDown/GetCustomer`;
+    private GetCustomerAPI = `${environment.apiURL}NAVERP/GetCustomerInformation`;
     private GetCOAMasterAPI = `${environment.apiURL}DropDown/GetCOAMaster`;
     private GetGSTGroupAPI = `${environment.apiURL}DropDown/GetGSTGroup`;
     private GetHSNSACAPI = `${environment.apiURL}DropDown/GetHSNSAC?gstCode=`;
@@ -182,9 +183,29 @@ export class InvoicesService {
     }
 
     getProjects(): Observable<any[]> {
-        return this.http.get<any[]>(`${this.Projectapi}${localStorage.getItem('department')}&id=0`);
+      //  return this.http.get<any[]>(`${this.Projectapi}${localStorage.getItem('department')}&id=0`);
+
+        return this.http.get<any[]>(`${this.Projectapi}${localStorage.getItem('navDepartment')}&id=0`);
+        
     }
 
+    getnavProjects(data:any){
+
+        const encodedDepartment = encodeURIComponent(data);
+       // console.log(encodedDepartment);
+        
+        return this.http.get<any[]>(`${this.Projectapi}${encodedDepartment}&id=0`);
+
+    }
+
+    
+    getProjectsNav(): Observable<any[]> {
+        //  return this.http.get<any[]>(`${this.Projectapi}${localStorage.getItem('department')}&id=0`);
+  
+          return this.http.get<any[]>(`${this.Projectapi}${localStorage.getItem('navDepartment')}&id=0`);
+          
+      }
+      
     // getProjects(): Observable<any[]> {
     //     return this.http.get<any[]>(`${this.Projectapi}`);
     // }
