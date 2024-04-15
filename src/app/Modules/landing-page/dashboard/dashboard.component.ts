@@ -23,6 +23,14 @@ export class DashboardComponent {
     customerStatus: string = 'DRAFT';
     headerStatus: string = 'DRAFT';
 
+    ppitableSize: number = 10;
+    ppitableSizes: number[] = [10, 20, 50, 100];
+    ppipage: number = 1;
+
+    ptitableSize: number = 10;
+    ptitableSizes: number[] = [10, 20, 50, 100];
+    ptipage: number = 1;
+
     isDRAFT: number = 0;
     PendingApproval: number = 0;
     ApprovedAccounts: number = 0;
@@ -55,7 +63,7 @@ export class DashboardComponent {
         private toastr: ToastrService,
         private API: CustomersService,
         private IAPI: InvoicesService,
-        private cd : ChangeDetectorRef
+        private cd: ChangeDetectorRef
     ) { }
 
     ngOnInit(): void {
@@ -277,7 +285,7 @@ export class DashboardComponent {
         try {
             this.cd.detectChanges();
             this.invoiceType = invoiceType;
-    
+
             // Set default status to "DRAFT" if the invoice type changes
             if (invoiceType === 'Tax Invoice' || invoiceType === 'Proforma Invoice') {
                 this.headerStatus = 'DRAFT';
@@ -911,35 +919,40 @@ export class DashboardComponent {
 
 
 
-    
+
     // Implement similar methods for loading data for other statuses
-    
+
 
     onTableDataChange(event: any, status?: any) {
         //this.publicVariable.customerStatusList;
 
 
-        this.publicVariable.page = event;
+
         if (status == 'Posted Proforma Invoice') {
+            this.ppipage = event;
             this.PIInvoiceSummaryList;
             //this.PIloadInvoiceSummary();
         }
 
         else if (status == 'Customer') {
+            this.publicVariable.page = event;
             this.publicVariable.customerStatusList;
 
             //this.loadCustomerStatusList(this.customerStatus);
         }
         else if (status == 'Posted Tax Invoice') {
-           // this.loadInvoiceSummary();
-           this.InvoiceSummaryList;
+            // this.loadInvoiceSummary();
+            this.ptipage = event;
+            this.InvoiceSummaryList;
         }
         else if (status == 'invoice') {
+            this.publicVariable.page = event;
             this.invoiceStatuslistData;
-           // this.loadInoivceStatusList(this.customerStatus);
+            // this.loadInoivceStatusList(this.customerStatus);
         }
 
         else if (status == 'Sales Credit Note') {
+            this.publicVariable.page = event;
             this.SalesCreditNoteSummaryData;
         }
 
@@ -952,27 +965,33 @@ export class DashboardComponent {
 
 
         //this.publicVariable.customerStatusList
-        this.publicVariable.tableSize = event.target.value;
-        this.publicVariable.page = 1;
+        // this.publicVariable.tableSize = event.target.value;
+        // this.publicVariable.page = 1;
         if (status == 'Posted Proforma Invoice') {
-         
+
+            this.ppitableSize = event.target.value;
+            this.ppipage = 1;
             this.PIInvoiceSummaryList;
         }
         else if (status == 'Customer') {
-    
+            this.publicVariable.tableSize = event.target.value;
+            this.publicVariable.page = 1;
             this.publicVariable.customerStatusList;
         }
         else if (status == 'Posted Tax Invoice') {
-      
+            this.ptitableSize = event.target.value;
+            this.ptipage = 1;
             this.InvoiceSummaryList;
         }
         else if (status == 'invoice') {
-        
+            this.publicVariable.tableSize = event.target.value;
+            this.publicVariable.page = 1;
             this.invoiceStatuslistData;
         }
 
         else if (status == 'Sales Credit Note') {
- 
+            this.publicVariable.tableSize = event.target.value;
+            this.publicVariable.page = 1;
             this.SalesCreditNoteSummaryData;
         }
 
@@ -1313,7 +1332,7 @@ export class DashboardComponent {
                     this.PIPostedTaxInvoiceCount = response.data.length;
                     this.cd.detectChanges();
                     // console.log(this.PIPostedTaxInvoiceCount);
-                    
+
                 } else {
                     // Handle case where response data is null or not an array
                     this.PIInvoiceSummaryList = [];

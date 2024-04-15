@@ -536,9 +536,9 @@
                                 <div class="tblsort" *ngIf="InvoiceSummaryList && InvoiceSummaryList.length > 0">
                                     <label class="col-form-label">Show</label>
                                     <select id="itemsPerPageSelect" class="form-select"
-                                        [(ngModel)]="publicVariable.tableSize"
+                                        [(ngModel)]="ptitableSize"
                                         (change)="onTableSizeChange($event,'Posted Tax Invoice')">
-                                        <option *ngFor="let size of publicVariable.tableSizes" [value]="size">{{ size }}
+                                        <option *ngFor="let size of ptitableSizes" [value]="size">{{ size }}
                                         </option>
                                     </select>
                                 </div>
@@ -581,7 +581,7 @@
                                             <tbody>
 
                                                 <tr
-                                                    *ngFor="let d of  this.InvoiceSummaryList | searchFilter1: publicVariable.searchText| paginate: {itemsPerPage: publicVariable.tableSize,currentPage: publicVariable.page,totalItems: publicVariable.count};let i = index">
+                                                    *ngFor="let d of  this.InvoiceSummaryList | searchFilter1: publicVariable.searchText| paginate: {itemsPerPage: ptitableSize,currentPage: ptipage,totalItems: PostedTaxInvoiceCount};let i = index">
                                                     <td>{{i + 1}}</td>
                                                     <td>{{d.no}}</td>
                                                     <td>{{d.postingDate}}</td>
@@ -625,9 +625,9 @@
 
 
                                     <div class="clearfix" *ngIf="InvoiceSummaryList && InvoiceSummaryList.length > 0">
-                                        <div class="hint-text">Showing <b>{{this.publicVariable.tableSize}}</b> out of
+                                        <div class="hint-text">Showing <b>{{this.ptitableSize}}</b> out of
                                             <b>{{
-                                                publicVariable.count }}</b>
+                                                PostedTaxInvoiceCount }}</b>
                                             entries
                                         </div>
                                         <pagination-controls previousLabel="Prev" class="pagination" nextLabel="Next"
@@ -648,9 +648,9 @@
                                 <div class="tblsort" *ngIf="PIInvoiceSummaryList && PIInvoiceSummaryList.length > 0">
                                     <label class="col-form-label">Show</label>
                                     <select id="itemsPerPageSelect" class="form-select"
-                                        [(ngModel)]="publicVariable.tableSize"
+                                        [(ngModel)]="ppitableSizes"
                                         (change)="onTableSizeChange($event,'Posted Proforma Invoice')">
-                                        <option *ngFor="let size of publicVariable.tableSizes" [value]="size">{{ size }}
+                                        <option *ngFor="let size of ppitableSizes" [value]="size">{{ size }}
                                         </option>
                                     </select>
                                 </div>
@@ -693,7 +693,7 @@
                                             <tbody>
 
                                                 <tr
-                                                    *ngFor="let d of  this.PIInvoiceSummaryList | searchFilter1: publicVariable.searchText| paginate: {itemsPerPage: publicVariable.tableSize,currentPage: publicVariable.page,totalItems: PIPostedTaxInvoiceCount};let i = index">
+                                                    *ngFor="let d of  this.PIInvoiceSummaryList | searchFilter1: publicVariable.searchText| paginate: {itemsPerPage: ppitableSize,currentPage: ppipage,totalItems: PIPostedTaxInvoiceCount};let i = index">
                                                     <td>{{i + 1}}</td>
                                                     <td>{{d.no}}</td>
                                                     <!-- <td>{{d.postingDate}}</td>
@@ -738,7 +738,7 @@
 
                                     <div class="clearfix"
                                         *ngIf="PIInvoiceSummaryList && PIInvoiceSummaryList.length > 0">
-                                        <div class="hint-text">Showing <b>{{this.publicVariable.tableSize}}</b> out of
+                                        <div class="hint-text">Showing <b>{{this.ppitableSize}}</b> out of
                                             <b>{{
                                                 PIPostedTaxInvoiceCount }}</b>
                                             entries
