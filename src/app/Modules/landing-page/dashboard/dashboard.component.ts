@@ -283,6 +283,12 @@ export class DashboardComponent {
 
             // Set the invoice type
             this.invoiceType = invoiceType;
+            this.customerStatus = 'DRAFT'
+
+            console.log(this.customerStatus);
+
+            alert(this.customerStatus);
+            return;
 
 
 
