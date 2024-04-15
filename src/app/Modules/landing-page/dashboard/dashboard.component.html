@@ -283,7 +283,7 @@
 
 
                         <li class="nav-item" *ngIf="this.publicVariable.storedRole === 'Employee'">
-                            <a class="nav-link  tabbg-1" [class.active]="this.publicVariable.storedRole === 'Employee' && this.customerStatus == 'DRAFT' "
+                            <a class="nav-link  tabbg-1" [class.active]="customerStatus == 'DRAFT'"
                                 data-bs-toggle="pill" href="#PIhome" (click)="loadInoivceStatusList('DRAFT')">
                                 <small>Draft</small>
                                 <span>{{PIisDRAFT}}</span>
@@ -291,14 +291,14 @@
                         </li>
 
                         <li class="nav-item" *ngIf="this.publicVariable.storedRole === 'Approver'">
-                            <a class="nav-link tabbg-6" [class.active]="this.publicVariable.storedRole === 'Approver' "
+                            <a class="nav-link tabbg-6" [class.active]="customerStatus == 'FOR APPROVAL'"
                                 data-bs-toggle="pill" href="#PIhome" (click)="loadInoivceStatusList('FOR APPROVAL')">
                                 <small>For Approval</small>
                                 <span>{{this.PIforapproval}}</span>
                             </a>
                         </li>
                         <li class="nav-item" *ngIf="this.publicVariable.storedRole === 'Employee'">
-                            <a class="nav-link tabbg-2" data-bs-toggle="pill" href="#PIhome"
+                            <a class="nav-link tabbg-2 " [class.active]="customerStatus == 'PENDING WITH APPROVER'" data-bs-toggle="pill" href="#PIhome"
                                 (click)="loadInoivceStatusList('PENDING WITH APPROVER')">
                                 <small>Pending Approval</small>
                                 <span>{{PIPendingApproval}}</span>
@@ -306,7 +306,8 @@
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link  tabbg-3" data-bs-toggle="pill" href="#PIhome"
+                            <a class="nav-link  tabbg-3"
+                            [class.active]="customerStatus == 'APPROVED BY ACCOUNTS APPROVER'"  data-bs-toggle="pill" href="#PIhome"
                                 (click)="loadInoivceStatusList('APPROVED BY ACCOUNTS APPROVER')">
                                 <small>Approved </small>
                                 <span>{{PIApprovedAccounts}}</span>
@@ -314,7 +315,8 @@
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link tabbg-4" data-bs-toggle="pill" href="#PIhome"
+                            <a class="nav-link tabbg-4" 
+                            [class.active]="customerStatus == 'REJECTED BY CH APPROVER'"  data-bs-toggle="pill" href="#PIhome"
                                 (click)="loadInoivceStatusList('REJECTED BY CH APPROVER')">
                                 <small>Rejected </small>
                                 <span>{{PIRejectedbyAccounts}}</span>
@@ -322,7 +324,8 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link tabbg-4" data-bs-toggle="pill" href="#PIhome"
-                                (click)="loadInoivceStatusList('Cancelled')">
+                                (click)="loadInoivceStatusList('Cancelled')"
+                                [class.active]="customerStatus == 'Cancelled'" >
                                 <small>Cancelled </small>
                                 <span>{{Cancelled}}</span>
                             </a>
@@ -338,7 +341,9 @@
                         </li> -->
 
                         <li class="nav-item" *ngIf="invoiceType === 'Tax Invoice'">
-                            <a class="nav-link tabbg-5" data-bs-toggle="pill" href="#menu4"
+                            <a class="nav-link tabbg-5"
+                            
+                            data-bs-toggle="pill" href="#menu4"
                                 (click)="loadInvoiceSummary()">
                                 <small>Posted Tax Invoice </small>
                                 <span>{{PostedTaxInvoiceCount}}</span>
@@ -353,7 +358,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link tabbg-5" data-bs-toggle="pill" href="#PIhome"
+                            <a class="nav-link tabbg-5" [class.active]="customerStatus == 'ALL'" data-bs-toggle="pill" href="#PIhome"
                                 (click)="loadInoivceStatusList('ALL')">
                                 <small>All</small>
                                 <span>{{PIALL}}</span>
