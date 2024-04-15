@@ -22,7 +22,7 @@ export class DashboardComponent {
     publicVariable = new publicVariable();
     customerStatus: string = 'DRAFT';
     headerStatus: string = 'DRAFT';
-    
+
     isDRAFT: number = 0;
     PendingApproval: number = 0;
     ApprovedAccounts: number = 0;
@@ -329,7 +329,7 @@ export class DashboardComponent {
                     if (approveResponse.data && Array.isArray(approveResponse.data))
 
                         approveResponse.data.forEach((element: any) => {
-                            if (this.dashboardData.filter(x => x.headerRecordID== element.headerRecordID).length <= 0) {
+                            if (this.dashboardData.filter(x => x.headerRecordID == element.headerRecordID).length <= 0) {
 
                                 this.dashboardData.push(element);
                             }
@@ -369,30 +369,24 @@ export class DashboardComponent {
 
 
 
-                        if(this.storedRole  == 'Approver'){
-                            this.headerStatus = 'FOR APPROVAL';
-                        }
+                    if (this.storedRole == 'Approver') {
+                        this.headerStatus = 'FOR APPROVAL';
+                    }
 
 
                     // Processing the merged data
-                      this.countDataByInvoies(this.dashboardData, invoiceType);
-                     this.loadInoivceStatusList(this.customerStatus);
+                    this.countDataByInvoies(this.dashboardData, invoiceType);
+                    this.loadInoivceStatusList(this.customerStatus);
                     this.publicVariable.isProcess = false;
 
-                    if(this.invoiceType == 'Tax Invoice'){
+                    if (this.invoiceType == 'Tax Invoice') {
                         this.loadInvoiceSummary();
                     }
 
-                    if(this.invoiceType == 'Proforma Invoice'){
+                    if (this.invoiceType == 'Proforma Invoice') {
                         this.PIloadInvoiceSummary();
-                    }
-if(this.invoiceType == 'Tax Invoice'){
-                        this.loadInvoiceSummary();
                     }
 
-                    if(this.invoiceType == 'Proforma Invoice'){
-                        this.PIloadInvoiceSummary();
-                    }
                     //this.loadInvoiceSummary();
                     //this.PIloadInvoiceSummary();
                 },
@@ -595,7 +589,7 @@ if(this.invoiceType == 'Tax Invoice'){
             || item.headerStatus === 'PENDING WITH ACCOUNTS APPROVER'
             || item.headerStatus === 'PENDING WITH FINANCE APPROVER'
             || item.headerStatus === 'CANCEL BY EMPLOYEE'
-            
+
 
 
 
@@ -605,9 +599,9 @@ if(this.invoiceType == 'Tax Invoice'){
         const approvedData = data.filter(item => (item.headerStatus === 'APPROVED BY ACCOUNTS APPROVER'
             || item.headerStatus === 'MAIL SENT BY FINANCE TO CUSTOMER'
             || item.headerStatus === 'APPROVED BY TL'
-            || item.headerStatus === 'MAIL SENT BY ACCOUNT TO CUSTOMER' 
+            || item.headerStatus === 'MAIL SENT BY ACCOUNT TO CUSTOMER'
             || item.headerStatus === 'APPROVED BY FINANCE'
-            
+
         ));
         counts['PENDING WITH FINANCE APPROVER'] = approvedData.length;
 
@@ -688,7 +682,7 @@ if(this.invoiceType == 'Tax Invoice'){
             || item.headerStatus === 'PENDING WITH ACCOUNTS APPROVER'
             || item.headerStatus === 'PENDING WITH FINANCE APPROVER'
             || item.headerStatus === 'CANCEL BY EMPLOYEE'
-            
+
 
 
         ));
@@ -697,7 +691,7 @@ if(this.invoiceType == 'Tax Invoice'){
         const approvedData = data.filter(item => item.impiHeaderInvoiceType == invoiceType && (item.headerStatus === 'APPROVED BY ACCOUNTS APPROVER'
             || item.headerStatus === 'MAIL SENT BY FINANCE TO CUSTOMER'
             || item.headerStatus === 'APPROVED BY TL'
-            || item.headerStatus === 'MAIL SENT BY ACCOUNT TO CUSTOMER' 
+            || item.headerStatus === 'MAIL SENT BY ACCOUNT TO CUSTOMER'
             || item.headerStatus === 'APPROVED BY FINANCE'
         ));
         counts['PENDING WITH FINANCE APPROVER'] = approvedData.length;
@@ -803,8 +797,8 @@ if(this.invoiceType == 'Tax Invoice'){
                         item.headerStatus === 'PENDING WITH TL APPROVER' ||
                         item.headerStatus === 'PENDING WITH CH APPROVER' ||
                         item.headerStatus === 'PENDING WITH ACCOUNTS APPROVER' ||
-                        item.headerStatus === 'PENDING WITH FINANCE APPROVER' || 
-                        item.headerStatus === 'CANCEL BY EMPLOYEE' 
+                        item.headerStatus === 'PENDING WITH FINANCE APPROVER' ||
+                        item.headerStatus === 'CANCEL BY EMPLOYEE'
 
 
                     ));

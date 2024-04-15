@@ -608,8 +608,9 @@
 
                                                             <a href="javascript:void(0);" data-bs-toggle="modal"
                                                                 (click)="loadTaxPaymentInvoiceSummary(d)"
-                                                                data-bs-target="#workflow-modal"><img class="custom-rupee-icon" src="../assets/images/rupee-icon.png"
-                                                                alt="" /></a>
+                                                                data-bs-target="#workflow-modal"><img
+                                                                    class="custom-rupee-icon"
+                                                                    src="../assets/images/rupee-icon.png" alt="" /></a>
 
                                                             <!-- <a href="javascript:void(0);"
                                                                 (click)="onTextSendEmail(d)"><img
@@ -639,7 +640,7 @@
                                             entries
                                         </div>
                                         <pagination-controls previousLabel="Prev" class="pagination" nextLabel="Next"
-                                        (pageChange)="onTableDataChange($event,'Posted Tax Invoice')">
+                                            (pageChange)="onTableDataChange($event,'Posted Tax Invoice')">
                                         </pagination-controls>
                                     </div>
 
@@ -752,7 +753,7 @@
                                             entries
                                         </div>
                                         <pagination-controls previousLabel="Prev" class="pagination" nextLabel="Next"
-                                        (pageChange)="onTableDataChange($event,'Posted Proforma Invoice')">
+                                            (pageChange)="onTableDataChange($event,'Posted Proforma Invoice')">
                                         </pagination-controls>
                                     </div>
 
@@ -866,7 +867,8 @@
                                 <div class="tblsort" *ngIf="invoiceStatuslistData && invoiceStatuslistData.length > 0">
                                     <label class="col-form-label">Show</label>
                                     <select id="itemsPerPageSelect" class="form-select"
-                                        [(ngModel)]="publicVariable.tableSize"  (change)="onTableSizeChange($event,'Sales Credit Note')">
+                                        [(ngModel)]="publicVariable.tableSize"
+                                        (change)="onTableSizeChange($event,'Sales Credit Note')">
                                         <option *ngFor="let size of publicVariable.tableSizes" [value]="size">{{ size }}
                                         </option>
                                     </select>
@@ -1009,7 +1011,7 @@
                                             entries
                                         </div>
                                         <pagination-controls previousLabel="Prev" class="pagination" nextLabel="Next"
-                                        (pageChange)="onTableDataChange($event,'Sales Credit Note')">
+                                            (pageChange)="onTableDataChange($event,'Sales Credit Note')">
                                         </pagination-controls>
                                     </div>
 
@@ -1029,7 +1031,8 @@
                                 <div class="tblsort">
                                     <label class="col-form-label">Show</label>
                                     <select id="itemsPerPageSelect" class="form-select"
-                                        [(ngModel)]="publicVariable.tableSize" (change)="onTableSizeChange($event,'Sales Credit Note')">
+                                        [(ngModel)]="publicVariable.tableSize"
+                                        (change)="onTableSizeChange($event,'Sales Credit Note')">
                                         <option *ngFor="let size of publicVariable.tableSizes" [value]="size">
                                             {{ size }}
                                         </option>
@@ -1175,7 +1178,8 @@
                                             entries</div>
                                         <pagination-controls previousLabel="Prev" class="pagination"
                                             *ngIf="SalesCreditNoteSummaryData && SalesCreditNoteSummaryData.length > 0"
-                                            nextLabel="Next" (pageChange)="onTableDataChange($event,'Sales Credit Note')">
+                                            nextLabel="Next"
+                                            (pageChange)="onTableDataChange($event,'Sales Credit Note')">
                                         </pagination-controls>
                                     </div>
                                 </div>
