@@ -910,6 +910,11 @@ export class DashboardComponent {
 
 
 
+
+    
+    // Implement similar methods for loading data for other statuses
+    
+
     onTableDataChange(event: any, status?: any) {
         //this.publicVariable.customerStatusList;
 
@@ -1317,7 +1322,7 @@ export class DashboardComponent {
 
                     this.PIInvoiceSummaryList = response.data;
                     this.PIPostedTaxInvoiceCount = response.data.length;
-                    console.log(this.PIPostedTaxInvoiceCount);
+                    this.cd.detectChanges();
                     
                 } else {
                     // Handle case where response data is null or not an array
