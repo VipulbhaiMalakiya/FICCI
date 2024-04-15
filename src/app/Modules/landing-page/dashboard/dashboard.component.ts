@@ -48,6 +48,7 @@ export class DashboardComponent {
     storeIsFinance!: boolean;
     dashboardData: any[] = [];
     invoiceStatuslistData: invoiceStatusModule[] = [];
+    creditNoteCount: number = 0;
 
     constructor(private appService: AppService,
         private modalService: NgbModal,
@@ -76,10 +77,10 @@ export class DashboardComponent {
             const subscription = this.IAPI.GetSalesCreditNoteSummary().subscribe({
                 next: (response: any) => {
                     if (response.data && Array.isArray(response.data)) {
-                        console.log(response.data[1]);
 
                         this.SalesCreditNoteSummaryData = response.data;
                         this.publicVariable.count = response.data.length;
+                        this.creditNoteCount = response.data.length;
                         this.publicVariable.isProcess = false;
                     } else {
                         // Handle case where response data is null or not an array
@@ -283,6 +284,9 @@ export class DashboardComponent {
             // Set the invoice type
             this.invoiceType = invoiceType;
 
+
+
+
             // Observable for the first API call
             const purchaseInvoiceObservable = this.IAPI.getPurchaseInvoice_New().pipe(
                 catchError((error: any) => {
@@ -388,6 +392,8 @@ export class DashboardComponent {
 
                     if(this.invoiceType == 'Tax Invoice'){
                         this.loadInvoiceSummary();
+
+
                     }
 
                     if(this.invoiceType == 'Proforma Invoice'){
