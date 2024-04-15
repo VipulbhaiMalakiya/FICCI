@@ -338,7 +338,7 @@
                         </li>
                         <li class="nav-item" *ngIf="invoiceType === 'Proforma Invoice'">
                             <a class="nav-link tabbg-5" 
-                                
+                            [class.active]="invoiceType == 'Proforma Invoice' && headerStatus =='Posted Proforma Invoice' "
 
                              data-bs-toggle="pill" href="#menu5"
                                 (click)="PIloadInvoiceSummary()">
@@ -641,7 +641,7 @@
 
                         </div>
 
-                        <div id="menu5" class="tab-pane fade"><br>
+                        <div id="menu5" class="tab-pane fade" [class.active]="invoiceType == 'Proforma Invoice' && headerStatus =='Posted Proforma Invoice' "><br>
 
                             <div class="page-btns-col">
 
