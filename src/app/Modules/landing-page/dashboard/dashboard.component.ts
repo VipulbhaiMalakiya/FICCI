@@ -279,6 +279,7 @@ export class DashboardComponent {
             this.cd.detectChanges();
             // console.log(invoiceType);
             this.invoiceType = invoiceType;
+            
 
             // Observable for the first API call
             const purchaseInvoiceObservable = this.IAPI.getPurchaseInvoice_New().pipe(
