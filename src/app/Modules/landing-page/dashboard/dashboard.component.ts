@@ -1255,6 +1255,7 @@ if(this.invoiceType == 'Tax Invoice'){
 
     loadInvoiceSummary() {
         this.publicVariable.isProcess = true;
+        this.headerStatus = 'customerStatus';
         const subscription = this.IAPI.GetInvoiceSummary().pipe(
             timeout(120000), // Timeout set to 2 minutes (120000 milliseconds)
             finalize(() => {
@@ -1294,6 +1295,7 @@ if(this.invoiceType == 'Tax Invoice'){
 
     PIloadInvoiceSummary() {
         this.publicVariable.isProcess = true;
+        this.customerStatus = 'Posted Proforma Invoice';
         const subscription = this.IAPI.GetPIInvoiceSummary().pipe(
             timeout(120000), // Timeout set to 2 minutes (120000 milliseconds)
             finalize(() => {

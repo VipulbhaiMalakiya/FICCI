@@ -342,7 +342,7 @@
 
                         <li class="nav-item" *ngIf="invoiceType === 'Tax Invoice'">
                             <a class="nav-link tabbg-5"
-                            
+                            [class.active]="customerStatus == 'Posted Tax Invoice'"
                             data-bs-toggle="pill" href="#menu4"
                                 (click)="loadInvoiceSummary()">
                                 <small>Posted Tax Invoice </small>
@@ -351,7 +351,9 @@
                         </li>
 
                         <li class="nav-item" *ngIf="invoiceType === 'Proforma Invoice'">
-                            <a class="nav-link tabbg-5" data-bs-toggle="pill" href="#menu5"
+                            <a class="nav-link tabbg-5" 
+                            [class.active]="customerStatus == 'Posted Proforma Invoice'" 
+                            data-bs-toggle="pill" href="#menu5"
                                 (click)="PIloadInvoiceSummary()">
                                 <small>Posted Proforma Invoice </small>
                                 <span>{{PIPostedTaxInvoiceCount}}</span>
