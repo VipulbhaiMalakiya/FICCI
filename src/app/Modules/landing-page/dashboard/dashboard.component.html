@@ -648,7 +648,7 @@
                                 <div class="tblsort" *ngIf="PIInvoiceSummaryList && PIInvoiceSummaryList.length > 0">
                                     <label class="col-form-label">Show</label>
                                     <select id="itemsPerPageSelect" class="form-select"
-                                        [(ngModel)]="ppitableSizes"
+                                        [(ngModel)]="ptitableSize"
                                         (change)="onTableSizeChange($event,'Posted Proforma Invoice')">
                                         <option *ngFor="let size of ppitableSizes" [value]="size">{{ size }}
                                         </option>
