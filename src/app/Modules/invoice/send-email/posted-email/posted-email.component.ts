@@ -34,12 +34,11 @@ export class PostedEmailComponent {
         const subscription = this.API.GetTaxInvoiceAttachment(this._emailMaster.no).subscribe({
             next: (response: any) => {
                 this.InvoiceAttachment = response.data;
-                console.log(this.InvoiceAttachment);
 
-                this.InvNo = this.InvoiceAttachment.invoiceNo;
+                this.InvNo = this.InvoiceAttachment[0].invoiceNo;
+
                 this.InvAttachment = this.InvoiceAttachment.attachment;
 
-                console.log(response.data);
 
                 // this.uploadedFiles = this.InvoiceAttachment
                 //     .map((file: any) => ({
