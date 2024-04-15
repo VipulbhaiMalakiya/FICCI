@@ -693,7 +693,8 @@ export class DashboardComponent {
                 item.headerStatus === 'PENDING WITH CH APPROVER' ||
                 item.headerStatus === 'PENDING WITH ACCOUNTS APPROVER' ||
                 item.headerStatus === 'PENDING WITH FINANCE APPROVER'
-                || item.headerStatus === 'CANCEL BY EMPLOYEE'));
+                || item.headerStatus === 'CANCEL BY EMPLOYEE'
+                || item.headerStatus === 'REQUEST TAX INVOICE\n'));
         counts['PENDING WITH TL APPROVER'] = pendingData.length;
 
         const forapproval = data.filter(item => item.impiHeaderInvoiceType == invoiceType && (item.headerStatus === 'PENDING WITH TL APPROVER'
@@ -701,6 +702,7 @@ export class DashboardComponent {
             || item.headerStatus === 'PENDING WITH ACCOUNTS APPROVER'
             || item.headerStatus === 'PENDING WITH FINANCE APPROVER'
             || item.headerStatus === 'CANCEL BY EMPLOYEE'
+            
 
 
 
@@ -772,7 +774,9 @@ export class DashboardComponent {
                         item.headerStatus === 'PENDING WITH CH APPROVER' ||
                         item.headerStatus === 'PENDING WITH ACCOUNTS APPROVER' ||
                         item.headerStatus === 'PENDING WITH FINANCE APPROVER'
-                        || item.headerStatus === 'CANCEL BY EMPLOYEE'));
+                        || item.headerStatus === 'CANCEL BY EMPLOYEE'
+                        || item.headerStatus == 'REQUEST TAX INVOICE\n'
+                    ));
                 break;
             case 'APPROVED BY ACCOUNTS APPROVER':
                 filteredData = this.dashboardData.filter((item: any) =>
