@@ -655,12 +655,12 @@
                                     </select>
                                 </div>
 
-                                <div class="dt-buttons" *ngIf="InvoiceSummaryList.length > 0">
+                                <div class="dt-buttons" *ngIf="PIInvoiceSummaryList.length > 0">
                                     <button class="gray-btns" (click)="onDownloadInvoiceSummary()" type="button"><img
                                             src="../assets/images/excel-icon.png" alt=""></button>
                                 </div>
                                 <div class="topbr-btns">
-                                    <div class="btn-group" *ngIf="InvoiceSummaryList && InvoiceSummaryList.length > 0">
+                                    <div class="btn-group" *ngIf="PIInvoiceSummaryList && PIInvoiceSummaryList.length > 0">
                                         <div class="table-search"><input type="text" class="form-control"
                                                 [(ngModel)]="publicVariable.searchText" name="name" id="name"
                                                 placeholder="Search here"></div>
@@ -693,7 +693,7 @@
                                             <tbody>
 
                                                 <tr
-                                                    *ngFor="let d of  this.PIInvoiceSummaryList | searchFilter1: publicVariable.searchText| paginate: {itemsPerPage: publicVariable.tableSize,currentPage: publicVariable.page,totalItems: publicVariable.count};let i = index">
+                                                    *ngFor="let d of  this.PIInvoiceSummaryList | searchFilter1: publicVariable.searchText| paginate: {itemsPerPage: publicVariable.tableSize,currentPage: publicVariable.page,totalItems: PIPostedTaxInvoiceCount};let i = index">
                                                     <td>{{i + 1}}</td>
                                                     <td>{{d.no}}</td>
                                                     <!-- <td>{{d.postingDate}}</td>
@@ -740,7 +740,7 @@
                                         *ngIf="PIInvoiceSummaryList && PIInvoiceSummaryList.length > 0">
                                         <div class="hint-text">Showing <b>{{this.publicVariable.tableSize}}</b> out of
                                             <b>{{
-                                                publicVariable.count }}</b>
+                                                PIPostedTaxInvoiceCount }}</b>
                                             entries
                                         </div>
                                         <pagination-controls previousLabel="Prev" class="pagination" nextLabel="Next"

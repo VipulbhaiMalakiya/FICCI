@@ -916,6 +916,9 @@ export class DashboardComponent {
 
         if (status == 'Posted Proforma Invoice') {
             this.publicVariable.page = event;
+
+            console.log(this.publicVariable.page);
+            
             this.PIInvoiceSummaryList;
             //this.PIloadInvoiceSummary();
         }
@@ -1314,6 +1317,8 @@ export class DashboardComponent {
 
                     this.PIInvoiceSummaryList = response.data;
                     this.PIPostedTaxInvoiceCount = response.data.length;
+                    console.log(this.PIPostedTaxInvoiceCount);
+                    
                 } else {
                     // Handle case where response data is null or not an array
                     this.PIInvoiceSummaryList = [];
