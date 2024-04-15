@@ -37,7 +37,7 @@ export class PostedEmailComponent {
 
                 this.InvNo = this.InvoiceAttachment[0].invoiceNo;
 
-                this.InvAttachment = this.InvoiceAttachment.attachment;
+                this.InvAttachment = this.InvoiceAttachment[0].attachment;
 
 
                 // this.uploadedFiles = this.InvoiceAttachment
@@ -181,13 +181,13 @@ export class PostedEmailComponent {
 
 
     downalodInvFile(base64String: any, InvNo: any = 'Invoice') {
-
         const fileName = InvNo + '.pdf';
         const fileType = `application/pdf`;
         this.fileService.downloadFile(base64String, fileName, fileType);
     }
 
     downalodFile(fileUrl: any) {
+
 
         const base64String = fileUrl.attachment;
         //  const fileName = fileUrl.name;
