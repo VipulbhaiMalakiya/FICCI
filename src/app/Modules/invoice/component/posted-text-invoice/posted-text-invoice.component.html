@@ -69,7 +69,7 @@
                                             src="../assets/images/view-icon.svg" alt=""></a>
 
                                     <a href="javascript:void(0);" data-bs-toggle="modal" (click)="loadTaxPaymentInvoiceSummary(d)"
-                                        data-bs-target="#workflow-modal"><img src="../assets/images/download-icone.svg"
+                                        data-bs-target="#workflow-modal"><img class="custom-rupee-icon" src="../assets/images/rupee-icon.png"
                                             alt="" /></a>
 
                                     <a href="javascript:void(0);" (click)="onSendEmail(d)"><img
@@ -131,7 +131,7 @@
                             <table class="table">
                                 <thead>
                                     <tr>
-                                        <th>#</th>                                        
+                                        <th>#</th>
                                         <th>Invoice No</th>
                                         <th>Payment No</th>
                                         <th>Payment Date</th>
@@ -139,8 +139,8 @@
                                         <th>Bank A/C No.</th>
                                         <th>UTR No.</th>
                                         <th>TDS Amount</th>
-                                        <th>Payment Amount</th>                                     
-                                        
+                                        <th>Payment Amount</th>
+
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -155,7 +155,7 @@
                                         <td>{{i.utrNo}}</td>
                                         <td>{{i.tdsAmount}}</td>
                                         <td>{{i.paymentAmount}}</td>
-                                       
+
                                     </tr>
                                 </tbody>
                             </table>
