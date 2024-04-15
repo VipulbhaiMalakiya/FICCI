@@ -22,7 +22,7 @@ export class DashboardComponent {
     publicVariable = new publicVariable();
     customerStatus: string = 'DRAFT';
     headerStatus: string = 'DRAFT';
-
+    
     isDRAFT: number = 0;
     PendingApproval: number = 0;
     ApprovedAccounts: number = 0;
@@ -276,8 +276,6 @@ export class DashboardComponent {
         try {
             // console.log(invoiceType);
             this.invoiceType = invoiceType;
-
-            this.customerStatus = 'DRAFT';
 
             // Observable for the first API call
             const purchaseInvoiceObservable = this.IAPI.getPurchaseInvoice_New().pipe(
@@ -597,7 +595,7 @@ if(this.invoiceType == 'Tax Invoice'){
             || item.headerStatus === 'PENDING WITH ACCOUNTS APPROVER'
             || item.headerStatus === 'PENDING WITH FINANCE APPROVER'
             || item.headerStatus === 'CANCEL BY EMPLOYEE'
-
+            
 
 
 
@@ -607,9 +605,9 @@ if(this.invoiceType == 'Tax Invoice'){
         const approvedData = data.filter(item => (item.headerStatus === 'APPROVED BY ACCOUNTS APPROVER'
             || item.headerStatus === 'MAIL SENT BY FINANCE TO CUSTOMER'
             || item.headerStatus === 'APPROVED BY TL'
-            || item.headerStatus === 'MAIL SENT BY ACCOUNT TO CUSTOMER'
+            || item.headerStatus === 'MAIL SENT BY ACCOUNT TO CUSTOMER' 
             || item.headerStatus === 'APPROVED BY FINANCE'
-
+            
         ));
         counts['PENDING WITH FINANCE APPROVER'] = approvedData.length;
 
@@ -690,7 +688,7 @@ if(this.invoiceType == 'Tax Invoice'){
             || item.headerStatus === 'PENDING WITH ACCOUNTS APPROVER'
             || item.headerStatus === 'PENDING WITH FINANCE APPROVER'
             || item.headerStatus === 'CANCEL BY EMPLOYEE'
-
+            
 
 
         ));
@@ -699,7 +697,7 @@ if(this.invoiceType == 'Tax Invoice'){
         const approvedData = data.filter(item => item.impiHeaderInvoiceType == invoiceType && (item.headerStatus === 'APPROVED BY ACCOUNTS APPROVER'
             || item.headerStatus === 'MAIL SENT BY FINANCE TO CUSTOMER'
             || item.headerStatus === 'APPROVED BY TL'
-            || item.headerStatus === 'MAIL SENT BY ACCOUNT TO CUSTOMER'
+            || item.headerStatus === 'MAIL SENT BY ACCOUNT TO CUSTOMER' 
             || item.headerStatus === 'APPROVED BY FINANCE'
         ));
         counts['PENDING WITH FINANCE APPROVER'] = approvedData.length;
@@ -805,8 +803,8 @@ if(this.invoiceType == 'Tax Invoice'){
                         item.headerStatus === 'PENDING WITH TL APPROVER' ||
                         item.headerStatus === 'PENDING WITH CH APPROVER' ||
                         item.headerStatus === 'PENDING WITH ACCOUNTS APPROVER' ||
-                        item.headerStatus === 'PENDING WITH FINANCE APPROVER' ||
-                        item.headerStatus === 'CANCEL BY EMPLOYEE'
+                        item.headerStatus === 'PENDING WITH FINANCE APPROVER' || 
+                        item.headerStatus === 'CANCEL BY EMPLOYEE' 
 
 
                     ));
@@ -1255,7 +1253,6 @@ if(this.invoiceType == 'Tax Invoice'){
 
     loadInvoiceSummary() {
         this.publicVariable.isProcess = true;
-        this.headerStatus = 'customerStatus';
         const subscription = this.IAPI.GetInvoiceSummary().pipe(
             timeout(120000), // Timeout set to 2 minutes (120000 milliseconds)
             finalize(() => {
@@ -1295,7 +1292,6 @@ if(this.invoiceType == 'Tax Invoice'){
 
     PIloadInvoiceSummary() {
         this.publicVariable.isProcess = true;
-        this.customerStatus = 'Posted Proforma Invoice';
         const subscription = this.IAPI.GetPIInvoiceSummary().pipe(
             timeout(120000), // Timeout set to 2 minutes (120000 milliseconds)
             finalize(() => {
