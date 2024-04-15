@@ -39,7 +39,7 @@ export class PiInvoiceComponent {
 
     onTableDataChange(event: any) {
         this.publicVariable.page = event;
-        this.publicVariable.customerStatusList
+        this.publicVariable.customerStatusList;
     }
     onTableSizeChange(event: any): void {
         this.publicVariable.tableSize = event.target.value;

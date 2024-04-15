@@ -919,34 +919,27 @@ export class DashboardComponent {
         //this.publicVariable.customerStatusList;
 
 
+        this.publicVariable.page = event;
         if (status == 'Posted Proforma Invoice') {
-            this.publicVariable.page = event;
-
-            console.log(this.publicVariable.page);
-            
             this.PIInvoiceSummaryList;
             //this.PIloadInvoiceSummary();
         }
 
         else if (status == 'Customer') {
-            this.publicVariable.page = event;
             this.publicVariable.customerStatusList;
 
             //this.loadCustomerStatusList(this.customerStatus);
         }
         else if (status == 'Posted Tax Invoice') {
-            this.publicVariable.page = event;
            // this.loadInvoiceSummary();
            this.InvoiceSummaryList;
         }
         else if (status == 'invoice') {
-            this.publicVariable.page = event;
             this.invoiceStatuslistData;
            // this.loadInoivceStatusList(this.customerStatus);
         }
 
         else if (status == 'Sales Credit Note') {
-            this.publicVariable.page = event;
             this.SalesCreditNoteSummaryData;
         }
 
@@ -959,31 +952,27 @@ export class DashboardComponent {
 
 
         //this.publicVariable.customerStatusList
-
+        this.publicVariable.tableSize = event.target.value;
+        this.publicVariable.page = 1;
         if (status == 'Posted Proforma Invoice') {
-            this.publicVariable.tableSize = event.target.value;
-            this.publicVariable.page = 1;
+         
             this.PIInvoiceSummaryList;
         }
         else if (status == 'Customer') {
-            this.publicVariable.tableSize = event.target.value;
-            this.publicVariable.page = 1;
+    
             this.publicVariable.customerStatusList;
         }
         else if (status == 'Posted Tax Invoice') {
-            this.publicVariable.tableSize = event.target.value;
-            this.publicVariable.page = 1;
+      
             this.InvoiceSummaryList;
         }
         else if (status == 'invoice') {
-            this.publicVariable.tableSize = event.target.value;
-            this.publicVariable.page = 1;
+        
             this.invoiceStatuslistData;
         }
 
         else if (status == 'Sales Credit Note') {
-            this.publicVariable.tableSize = event.target.value;
-            this.publicVariable.page = 1;
+ 
             this.SalesCreditNoteSummaryData;
         }
 
@@ -1323,6 +1312,7 @@ export class DashboardComponent {
                     this.PIInvoiceSummaryList = response.data;
                     this.PIPostedTaxInvoiceCount = response.data.length;
                     this.cd.detectChanges();
+                    // console.log(this.PIPostedTaxInvoiceCount);
                     
                 } else {
                     // Handle case where response data is null or not an array
