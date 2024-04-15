@@ -1257,6 +1257,7 @@ export class DashboardComponent {
 
 
     loadInvoiceSummary() {
+
         this.publicVariable.isProcess = true;
         const subscription = this.IAPI.GetInvoiceSummary().pipe(
             timeout(120000), // Timeout set to 2 minutes (120000 milliseconds)
