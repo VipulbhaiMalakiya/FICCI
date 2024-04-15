@@ -916,20 +916,25 @@ export class DashboardComponent {
 
         if (status == 'Posted Proforma Invoice') {
             this.publicVariable.page = event;
-            this.PIloadInvoiceSummary();
+            this.PIInvoiceSummaryList;
+            //this.PIloadInvoiceSummary();
         }
 
         else if (status == 'Customer') {
             this.publicVariable.page = event;
-            this.loadCustomerStatusList(this.customerStatus);
+            this.publicVariable.customerStatusList;
+
+            //this.loadCustomerStatusList(this.customerStatus);
         }
         else if (status == 'Posted Tax Invoice') {
             this.publicVariable.page = event;
-            this.loadInvoiceSummary();
+           // this.loadInvoiceSummary();
+           this.InvoiceSummaryList;
         }
         else if (status == 'invoice') {
             this.publicVariable.page = event;
-            this.loadInoivceStatusList(this.customerStatus);
+            this.invoiceStatuslistData;
+           // this.loadInoivceStatusList(this.customerStatus);
         }
 
         else if (status == 'Sales Credit Note') {
