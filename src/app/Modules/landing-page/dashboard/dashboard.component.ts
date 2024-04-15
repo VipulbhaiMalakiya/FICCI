@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { AppService, ConfirmationDialogModalComponent, CustomersService, NgbModal, Router, ToastrService, customerStatusListModel, formatDate, publicVariable } from '../../customers/Export/new-customer';
 import { timeout, finalize, catchError, throwError } from 'rxjs';
 import { InvoicesService } from '../../invoice/service/invoices.service';
@@ -54,7 +54,8 @@ export class DashboardComponent {
         private router: Router,
         private toastr: ToastrService,
         private API: CustomersService,
-        private IAPI: InvoicesService
+        private IAPI: InvoicesService,
+        private cd : ChangeDetectorRef
     ) { }
 
     ngOnInit(): void {
@@ -274,6 +275,8 @@ export class DashboardComponent {
 
     loadPurchaseInvoiceList(invoiceType: any): void {
         try {
+
+            this.cd.detectChanges();
             // console.log(invoiceType);
             this.invoiceType = invoiceType;
 
@@ -447,7 +450,6 @@ export class DashboardComponent {
 
                     this.headerStatus = this.customerStatus;
 
-                    console.log(this.headerStatus);
 
                     // Processing the merged data
                     this.countDataBySalesInvoies(this.dashboardData);
