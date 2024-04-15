@@ -169,7 +169,7 @@
                             <ng-select [items]="publicVariable.GetCustomerList" #select class="w-100"
                                 bindLabel="custName" bindValue="custName"
                              
-                                placeholder="{{publicVariable.GetCustomerList.length>0 ?'Select Customer':'Loading...'}}"
+                                placeholder="{{publicVariable.GetCustomerList.length>0 ?'Select Customer':'Please wait...Data Loading...'}}"
                                 formControlName="ImpiHeaderCustomerName"  (change)="onSelectGSTCustomer($event)"
                                 [searchable]="true" [searchFn]="customerSearchFn" [virtualScroll]="true"
                                >

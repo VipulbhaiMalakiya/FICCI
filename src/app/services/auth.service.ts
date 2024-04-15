@@ -41,7 +41,11 @@ export class AuthService {
                 }
             }),
             catchError(error => {
-                this.toastr.error('An error occurred during login', 'Error');
+                //console.log(error);
+                 this.toastr.error(error.error.message,'Error');
+                // return of({ error: 'An error occurred during login' });
+                this.router.navigate(['/unauthorized']); // Redirect to the dashboard
+
                 return of({ error: 'An error occurred during login' });
             })
         );

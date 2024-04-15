@@ -115,6 +115,8 @@ export class PiInvoiceViewComponent {
 
 
     downalodFile(fileUrl: any) {
+        debugger;
+        alert(fileUrl);
         const base64String = fileUrl.attachment;
         const fileName = fileUrl.fileName;
         const fileType = `application/${fileUrl.fileType}`;

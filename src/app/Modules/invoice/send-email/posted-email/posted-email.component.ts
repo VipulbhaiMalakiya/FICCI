@@ -34,11 +34,12 @@ export class PostedEmailComponent {
         const subscription = this.API.GetTaxInvoiceAttachment(this._emailMaster.no).subscribe({
             next: (response: any) => {
                 this.InvoiceAttachment = response.data;
+                console.log(this.InvoiceAttachment);
 
-                this.InvNo = this.InvoiceAttachment[0].invoiceNo;
+                this.InvNo = this.InvoiceAttachment.invoiceNo;
+                this.InvAttachment = this.InvoiceAttachment.attachment;
 
-                this.InvAttachment = this.InvoiceAttachment[0].attachment;
-
+                console.log(response.data);
 
                 // this.uploadedFiles = this.InvoiceAttachment
                 //     .map((file: any) => ({
@@ -181,13 +182,13 @@ export class PostedEmailComponent {
 
 
     downalodInvFile(base64String: any, InvNo: any = 'Invoice') {
+
         const fileName = InvNo + '.pdf';
         const fileType = `application/pdf`;
         this.fileService.downloadFile(base64String, fileName, fileType);
     }
 
     downalodFile(fileUrl: any) {
-
 
         const base64String = fileUrl.attachment;
         //  const fileName = fileUrl.name;

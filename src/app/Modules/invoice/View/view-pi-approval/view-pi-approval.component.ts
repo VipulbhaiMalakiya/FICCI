@@ -43,9 +43,9 @@ export class ViewPiApprovalComponent {
         this.loadCOAMasterList();
         this.uploadedFiles = this.data.impiHeaderAttachment
         if (this.data.impiHeaderAttachment) {
-
+            
             this.uploadedFiles = this.data.impiHeaderAttachment.map((file: any) => ({
-
+                
                 id: file.imadId,
                 recordNo: file.imadRecordNo,
                 screenName: file.imadScreenName,
@@ -60,7 +60,7 @@ export class ViewPiApprovalComponent {
                 modifiedOn: file.imadModifiedOn,
                 doctype:file.doctype
             }));
-
+            
         } else {
             this.uploadedFiles = [];
             this.handleLoadingError()

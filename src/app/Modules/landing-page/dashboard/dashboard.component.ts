@@ -22,7 +22,7 @@ export class DashboardComponent {
     publicVariable = new publicVariable();
     customerStatus: string = 'DRAFT';
     headerStatus: string = 'DRAFT';
-
+    
     isDRAFT: number = 0;
     PendingApproval: number = 0;
     ApprovedAccounts: number = 0;
@@ -49,7 +49,6 @@ export class DashboardComponent {
     dashboardData: any[] = [];
     invoiceStatuslistData: invoiceStatusModule[] = [];
     creditNoteCount: number = 0;
-
     constructor(private appService: AppService,
         private modalService: NgbModal,
         private router: Router,
@@ -77,6 +76,7 @@ export class DashboardComponent {
             const subscription = this.IAPI.GetSalesCreditNoteSummary().subscribe({
                 next: (response: any) => {
                     if (response.data && Array.isArray(response.data)) {
+                        console.log(response.data[1]);
 
                         this.SalesCreditNoteSummaryData = response.data;
                         this.publicVariable.count = response.data.length;
@@ -274,24 +274,8 @@ export class DashboardComponent {
 
     loadPurchaseInvoiceList(invoiceType: any): void {
         try {
-
-            // Check if data for this invoice type is already loaded
-            // if (this.dashboardData && this.invoiceType === invoiceType) {
-            //     // Data is already loaded, no need to make API calls again
-            //     return;
-            // }
-
-            // Set the invoice type
+            // console.log(invoiceType);
             this.invoiceType = invoiceType;
-            this.customerStatus = 'DRAFT'
-
-            console.log(this.customerStatus);
-
-            alert(this.customerStatus);
-            return;
-
-
-
 
             // Observable for the first API call
             const purchaseInvoiceObservable = this.IAPI.getPurchaseInvoice_New().pipe(
@@ -341,10 +325,11 @@ export class DashboardComponent {
 
                     }
 
+                    debugger;
                     if (approveResponse.data && Array.isArray(approveResponse.data))
 
                         approveResponse.data.forEach((element: any) => {
-                            if (this.dashboardData.filter(x => x.headerRecordID.trim() == element.headerRecordID.trim()).length <= 0) {
+                            if (this.dashboardData.filter(x => x.headerRecordID== element.headerRecordID).length <= 0) {
 
                                 this.dashboardData.push(element);
                             }
@@ -353,7 +338,7 @@ export class DashboardComponent {
                     // debugger;
                     if (accountResponse.data && Array.isArray(accountResponse.data))
                         accountResponse.data.forEach((element: any) => {
-                            if (this.dashboardData.filter(x => x.headerRecordID.trim() == element.headerRecordID.trim()) == undefined) {
+                            if (this.dashboardData.filter(x => x.headerRecordID == element.headerRecordID) == undefined) {
                                 this.dashboardData.push(element);
                             }
                         });
@@ -384,28 +369,32 @@ export class DashboardComponent {
 
 
 
-                    if (this.storedRole == 'Approver') {
-                        this.headerStatus = 'FOR APPROVAL';
-                    }
-
-
+                        if(this.storedRole  == 'Approver'){
+                            this.headerStatus = 'FOR APPROVAL';
+                        }
 
 
                     // Processing the merged data
-                    this.countDataByInvoies(this.dashboardData, invoiceType);
-                    this.loadInoivceStatusList(this.customerStatus);
+                      this.countDataByInvoies(this.dashboardData, invoiceType);
+                     this.loadInoivceStatusList(this.customerStatus);
                     this.publicVariable.isProcess = false;
 
                     if(this.invoiceType == 'Tax Invoice'){
                         this.loadInvoiceSummary();
-
-
                     }
 
                     if(this.invoiceType == 'Proforma Invoice'){
                         this.PIloadInvoiceSummary();
                     }
+if(this.invoiceType == 'Tax Invoice'){
+                        this.loadInvoiceSummary();
+                    }
 
+                    if(this.invoiceType == 'Proforma Invoice'){
+                        this.PIloadInvoiceSummary();
+                    }
+                    //this.loadInvoiceSummary();
+                    //this.PIloadInvoiceSummary();
                 },
                 error: (error: any) => {
                     this.toastr.error('Error loading invoice lists', error.name);
@@ -606,7 +595,7 @@ export class DashboardComponent {
             || item.headerStatus === 'PENDING WITH ACCOUNTS APPROVER'
             || item.headerStatus === 'PENDING WITH FINANCE APPROVER'
             || item.headerStatus === 'CANCEL BY EMPLOYEE'
-
+            
 
 
 
@@ -616,9 +605,9 @@ export class DashboardComponent {
         const approvedData = data.filter(item => (item.headerStatus === 'APPROVED BY ACCOUNTS APPROVER'
             || item.headerStatus === 'MAIL SENT BY FINANCE TO CUSTOMER'
             || item.headerStatus === 'APPROVED BY TL'
-            || item.headerStatus === 'MAIL SENT BY ACCOUNT TO CUSTOMER'
+            || item.headerStatus === 'MAIL SENT BY ACCOUNT TO CUSTOMER' 
             || item.headerStatus === 'APPROVED BY FINANCE'
-
+            
         ));
         counts['PENDING WITH FINANCE APPROVER'] = approvedData.length;
 
@@ -699,7 +688,7 @@ export class DashboardComponent {
             || item.headerStatus === 'PENDING WITH ACCOUNTS APPROVER'
             || item.headerStatus === 'PENDING WITH FINANCE APPROVER'
             || item.headerStatus === 'CANCEL BY EMPLOYEE'
-
+            
 
 
         ));
@@ -708,7 +697,7 @@ export class DashboardComponent {
         const approvedData = data.filter(item => item.impiHeaderInvoiceType == invoiceType && (item.headerStatus === 'APPROVED BY ACCOUNTS APPROVER'
             || item.headerStatus === 'MAIL SENT BY FINANCE TO CUSTOMER'
             || item.headerStatus === 'APPROVED BY TL'
-            || item.headerStatus === 'MAIL SENT BY ACCOUNT TO CUSTOMER'
+            || item.headerStatus === 'MAIL SENT BY ACCOUNT TO CUSTOMER' 
             || item.headerStatus === 'APPROVED BY FINANCE'
         ));
         counts['PENDING WITH FINANCE APPROVER'] = approvedData.length;
@@ -814,8 +803,8 @@ export class DashboardComponent {
                         item.headerStatus === 'PENDING WITH TL APPROVER' ||
                         item.headerStatus === 'PENDING WITH CH APPROVER' ||
                         item.headerStatus === 'PENDING WITH ACCOUNTS APPROVER' ||
-                        item.headerStatus === 'PENDING WITH FINANCE APPROVER' ||
-                        item.headerStatus === 'CANCEL BY EMPLOYEE'
+                        item.headerStatus === 'PENDING WITH FINANCE APPROVER' || 
+                        item.headerStatus === 'CANCEL BY EMPLOYEE' 
 
 
                     ));
@@ -1263,7 +1252,6 @@ export class DashboardComponent {
 
 
     loadInvoiceSummary() {
-
         this.publicVariable.isProcess = true;
         const subscription = this.IAPI.GetInvoiceSummary().pipe(
             timeout(120000), // Timeout set to 2 minutes (120000 milliseconds)
