@@ -380,9 +380,7 @@ export class DashboardComponent {
 
 
 
-                    if (this.storedRole == 'Approver') {
-                        this.headerStatus = 'FOR APPROVAL';
-                    }
+                
 
 
                     // Processing the merged data
@@ -400,7 +398,13 @@ export class DashboardComponent {
 
                     // Set default status to "DRAFT" if the invoice type changes
                     if (invoiceType === 'Tax Invoice' || invoiceType === 'Proforma Invoice') {
-                        this.headerStatus = 'DRAFT';
+
+                        if (this.storedRole == 'Approver') {
+                            this.headerStatus = 'FOR APPROVAL';
+                        }else{
+                            this.headerStatus = 'DRAFT';
+
+                        }
                     }
 
                     //this.loadInvoiceSummary();
