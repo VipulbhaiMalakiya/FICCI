@@ -275,11 +275,13 @@ export class DashboardComponent {
 
     loadPurchaseInvoiceList(invoiceType: any): void {
         try {
-
             this.cd.detectChanges();
-            // console.log(invoiceType);
             this.invoiceType = invoiceType;
-            
+    
+            // Set default status to "DRAFT" if the invoice type changes
+            if (invoiceType === 'Tax Invoice' || invoiceType === 'Proforma Invoice') {
+                this.headerStatus = 'DRAFT';
+            }
 
             // Observable for the first API call
             const purchaseInvoiceObservable = this.IAPI.getPurchaseInvoice_New().pipe(
@@ -383,13 +385,13 @@ export class DashboardComponent {
                     this.loadInoivceStatusList(this.customerStatus);
                     this.publicVariable.isProcess = false;
 
-                    if (this.invoiceType == 'Tax Invoice') {
-                        this.loadInvoiceSummary();
-                    }
+                    // if (this.invoiceType == 'Tax Invoice') {
+                    //     this.loadInvoiceSummary();
+                    // }
 
-                    if (this.invoiceType == 'Proforma Invoice') {
-                        this.PIloadInvoiceSummary();
-                    }
+                    // if (this.invoiceType == 'Proforma Invoice') {
+                    //     this.PIloadInvoiceSummary();
+                    // }
 
                     //this.loadInvoiceSummary();
                     //this.PIloadInvoiceSummary();
@@ -1250,6 +1252,7 @@ export class DashboardComponent {
 
     loadInvoiceSummary() {
         this.publicVariable.isProcess = true;
+        this.headerStatus = 'Posted Tax Invoice'
         const subscription = this.IAPI.GetInvoiceSummary().pipe(
             timeout(120000), // Timeout set to 2 minutes (120000 milliseconds)
             finalize(() => {
@@ -1289,6 +1292,7 @@ export class DashboardComponent {
 
     PIloadInvoiceSummary() {
         this.publicVariable.isProcess = true;
+        this.headerStatus = 'Posted Proforma Invoice';
         const subscription = this.IAPI.GetPIInvoiceSummary().pipe(
             timeout(120000), // Timeout set to 2 minutes (120000 milliseconds)
             finalize(() => {
