@@ -143,7 +143,6 @@ export class ViewPiApprovalComponent {
     downalodFile(fileUrl: any) {
 
         this.FilePath = `${environment.fileURL}${fileUrl.fileUrl}`;
-        console.log(fileUrl.fileUrl);
         window.open(this.FilePath, '_blank');
 
     }
