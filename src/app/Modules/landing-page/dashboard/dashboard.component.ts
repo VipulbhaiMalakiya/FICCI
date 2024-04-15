@@ -379,12 +379,21 @@ export class DashboardComponent {
                     }
 
 
+
+
                     // Processing the merged data
                     this.countDataByInvoies(this.dashboardData, invoiceType);
                     this.loadInoivceStatusList(this.customerStatus);
                     this.publicVariable.isProcess = false;
-                    //this.loadInvoiceSummary();
-                    //this.PIloadInvoiceSummary();
+
+                    if(this.invoiceType == 'Tax Invoice'){
+                        this.loadInvoiceSummary();
+                    }
+
+                    if(this.invoiceType == 'Proforma Invoice'){
+                        this.PIloadInvoiceSummary();
+                    }
+
                 },
                 error: (error: any) => {
                     this.toastr.error('Error loading invoice lists', error.name);
