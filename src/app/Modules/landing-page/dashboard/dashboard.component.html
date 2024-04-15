@@ -729,6 +729,8 @@
                                         <div *ngIf="!PIInvoiceSummaryList || PIInvoiceSummaryList.length === 0">
                                             <div class="text-center my-3">No data found.</div>
                                         </div>
+
+                                    
                                         <div class="text-center"
                                             *ngIf="(PIInvoiceSummaryList | searchFilter1: publicVariable.searchText).length === 0 && PIInvoiceSummaryList.length > 0">
                                             <span class="text-danger">No results found.</span>

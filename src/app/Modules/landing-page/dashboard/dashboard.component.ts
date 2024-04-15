@@ -1327,10 +1327,14 @@ export class DashboardComponent {
                     // this.InvoiceSummaryList = response.data.filter((item: any) => item.createdByUser === this.publicVariable.storedEmail);
                     // this.PostedTaxInvoiceCount = this.InvoiceSummaryList.length;
 
-
+                    this.cd.detectChanges();
                     this.PIInvoiceSummaryList = response.data;
                     this.PIPostedTaxInvoiceCount = response.data.length;
-                    this.cd.detectChanges();
+                    console.log('totalItems',this.PIPostedTaxInvoiceCount);
+                    console.log('currentPage',this.ppipage);
+                    console.log('itemsPerPage',this.ppitableSize);
+                    
+                
                     // console.log(this.PIPostedTaxInvoiceCount);
 
                 } else {
