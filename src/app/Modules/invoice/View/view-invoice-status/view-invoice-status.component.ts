@@ -64,7 +64,7 @@ export class ViewInvoiceStatusComponent {
 
     }
 
-    
+
 
     loadStateList() {
         try {
@@ -112,6 +112,9 @@ export class ViewInvoiceStatusComponent {
 
     downalodFile(fileUrl: any) {
         this.FilePath = `${environment.fileURL}${fileUrl.fileUrl}`;
+        console.log(this.FilePath);
+        return
+
         window.open(this.FilePath, '_blank');
 
     }
