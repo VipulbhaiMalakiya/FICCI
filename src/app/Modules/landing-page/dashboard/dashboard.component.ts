@@ -275,10 +275,10 @@ export class DashboardComponent {
         try {
 
             // Check if data for this invoice type is already loaded
-            if (this.dashboardData && this.invoiceType === invoiceType) {
-                // Data is already loaded, no need to make API calls again
-                return;
-            }
+            // if (this.dashboardData && this.invoiceType === invoiceType) {
+            //     // Data is already loaded, no need to make API calls again
+            //     return;
+            // }
 
             // Set the invoice type
             this.invoiceType = invoiceType;
