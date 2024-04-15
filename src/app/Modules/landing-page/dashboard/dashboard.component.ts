@@ -286,10 +286,7 @@ export class DashboardComponent {
             this.cd.detectChanges();
             this.invoiceType = invoiceType;
 
-            // Set default status to "DRAFT" if the invoice type changes
-            if (invoiceType === 'Tax Invoice' || invoiceType === 'Proforma Invoice') {
-                this.headerStatus = 'DRAFT';
-            }
+
 
             // Observable for the first API call
             const purchaseInvoiceObservable = this.IAPI.getPurchaseInvoice_New().pipe(
@@ -393,13 +390,18 @@ export class DashboardComponent {
                     this.loadInoivceStatusList(this.customerStatus);
                     this.publicVariable.isProcess = false;
 
-                    // if (this.invoiceType == 'Tax Invoice') {
-                    //     this.loadInvoiceSummary();
-                    // }
+                    if (this.invoiceType == 'Tax Invoice') {
+                        this.loadInvoiceSummary();
+                    }
 
-                    // if (this.invoiceType == 'Proforma Invoice') {
-                    //     this.PIloadInvoiceSummary();
-                    // }
+                    if (this.invoiceType == 'Proforma Invoice') {
+                        this.PIloadInvoiceSummary();
+                    }
+
+                    // Set default status to "DRAFT" if the invoice type changes
+                    if (invoiceType === 'Tax Invoice' || invoiceType === 'Proforma Invoice') {
+                        this.headerStatus = 'DRAFT';
+                    }
 
                     //this.loadInvoiceSummary();
                     //this.PIloadInvoiceSummary();
@@ -1330,11 +1332,11 @@ export class DashboardComponent {
                     this.cd.detectChanges();
                     this.PIInvoiceSummaryList = response.data;
                     this.PIPostedTaxInvoiceCount = response.data.length;
-                    console.log('totalItems',this.PIPostedTaxInvoiceCount);
-                    console.log('currentPage',this.ppipage);
-                    console.log('itemsPerPage',this.ppitableSize);
-                    
-                
+                    console.log('totalItems', this.PIPostedTaxInvoiceCount);
+                    console.log('currentPage', this.ppipage);
+                    console.log('itemsPerPage', this.ppitableSize);
+
+
                     // console.log(this.PIPostedTaxInvoiceCount);
 
                 } else {

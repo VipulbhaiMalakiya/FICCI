@@ -745,7 +745,7 @@
                                                 PIPostedTaxInvoiceCount }}</b>
                                             entries
                                         </div>
-                                        <pagination-controls previousLabel="Prev" class="pagination" nextLabel="Next"
+                                        <pagination-controls *ngIf="PIInvoiceSummaryList && PIPostedTaxInvoiceCount > 0"  previousLabel="Prev" class="pagination" nextLabel="Next"
                                             (pageChange)="onTableDataChange($event,'Posted Proforma Invoice')">
                                         </pagination-controls>
                                     </div>
