@@ -1332,9 +1332,7 @@ export class DashboardComponent {
                     this.cd.detectChanges();
                     this.PIInvoiceSummaryList = response.data;
                     this.PIPostedTaxInvoiceCount = response.data.length;
-                    console.log('totalItems', this.PIPostedTaxInvoiceCount);
-                    console.log('currentPage', this.ppipage);
-                    console.log('itemsPerPage', this.ppitableSize);
+                
 
 
                     // console.log(this.PIPostedTaxInvoiceCount);

@@ -514,7 +514,7 @@
                                                 publicVariable.count }}</b>
                                             entries
                                         </div>
-                                        <pagination-controls previousLabel="Prev" class="pagination" nextLabel="Next"
+                                        <pagination-controls *ngIf="invoiceStatuslistData && publicVariable.count > 10"   previousLabel="Prev" class="pagination" nextLabel="Next"
                                             (pageChange)="onTableDataChange($event,'invoice')">
                                         </pagination-controls>
                                     </div>
