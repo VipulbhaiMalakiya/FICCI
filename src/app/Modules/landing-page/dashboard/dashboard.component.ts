@@ -170,7 +170,8 @@ export class DashboardComponent {
                 // this.loadCustomerStatusList(this.customerStatus);
 
                 this.countDataByStatus(this.dashboardData);
-                this.loadCustomerStatusList(this.customerStatus);
+
+                this.loadCustomerStatusList('DRAFT');
                 this.publicVariable.isProcess = false;
             },
             error: (error: any) => {
@@ -249,14 +250,14 @@ export class DashboardComponent {
             case 'DRAFT':
                 filteredData = this.dashboardData.filter((item: any) =>
 
-                    item.department === localStorage.getItem('department') ||
+                   // item.department === localStorage.getItem('department') ||
                     // item.createdBy === this.publicVariable.storedEmail &&
                     item.customerStatus === 'DRAFT');
                 break;
             case 'PENDING WITH APPROVER':
                 filteredData = this.dashboardData.filter((item: any) =>
-                    item.createdBy === this.publicVariable.storedEmail ||
-                    item.department === localStorage.getItem('department')
+                    item.createdBy === this.publicVariable.storedEmail
+                //|| item.department === localStorage.getItem('department')
                     &&
                     (item.customerStatus === 'PENDING WITH TL APPROVER' ||
                         item.customerStatus === 'PENDING WITH CH APPROVER' ||
@@ -265,14 +266,14 @@ export class DashboardComponent {
                 break;
             case 'APPROVED BY ACCOUNTS APPROVER':
                 filteredData = this.dashboardData.filter((item: any) =>
-                    item.department === localStorage.getItem('department') ||
+                    // item.department === localStorage.getItem('department') ||
                     // item.createdBy === this.publicVariable.storedEmail &&
                     item.customerStatus === this.customerStatus || item.customerStatus === 'APPROVED BY FINANCE');
 
                 break;
             case 'REJECTED BY CH APPROVER':
                 filteredData = this.dashboardData.filter((item: any) =>
-                    item.department === localStorage.getItem('department') ||
+                    // item.department === localStorage.getItem('department') ||
                     // item.createdBy === this.publicVariable.storedEmail &&
                     (item.customerStatus === 'REJECTED BY TL APPROVER' ||
                         item.customerStatus === 'REJECTED BY CH APPROVER' ||
