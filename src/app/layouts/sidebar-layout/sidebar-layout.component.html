@@ -67,15 +67,15 @@
                                         <a routerLink="/invoice/pi-invoice" class="menu-list-title"
                                         routerLinkActive="active" *ngIf=" isEmployee ">Proforma Invoice</a>
                                 </div>
-                                        
+
                                         <div class="left-men" routerLinkActive="active">
 
                                    <h3><img src="../assets/images/invoice-icon.png" alt=""> Sales Credit Note</h3>
                                     <a routerLink="/invoice/credit-memo" class="menu-list-title"
-                                        routerLinkActive="active" *ngIf="isAdmin || isEmployee "> New Sales Credit Note</a>
+                                        routerLinkActive="active" *ngIf=" isEmployee "> New Sales Credit Note</a>
                                         <a routerLink="/invoice/credit-memo-status" class="menu-list-title"
-                                        routerLinkActive="active" *ngIf=" isEmployee ">Sales Credit Note Status</a>
-                                   
+                                        routerLinkActive="active" *ngIf="isAdmin || isEmployee ">Sales Credit Note Status</a>
+
 
                                         <a routerLink="/invoice/sales-approval" class="menu-list-title"
                                         routerLinkActive="active" *ngIf=" isApprover ">Approval Inbox</a>
