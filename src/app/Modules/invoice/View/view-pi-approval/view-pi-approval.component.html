@@ -216,7 +216,7 @@
                         <th width="38%">Nature of Expense</th>
                         <th>Description</th>
                         <th>Quantity</th>
-                        <th>Direct Unit Cost *(Exclusive GST)</th>                       
+                        <th>Direct Unit Cost *(Exclusive GST)</th>
                         <th>Line Amount</th>
                         <th>GST Group Code</th>
                         <!-- <th>GST Base Amount</th>
@@ -233,7 +233,7 @@
                     <tr *ngFor="let e of data.lineItem_Requests; let i = index">
                         <td>{{i + 1}}</td>
                         <td>{{ getNameById(e.impiGlNo) }}</td>
-                        <td>{{ e.impiLineDescription | titlecase }}</td>  
+                        <td>{{ e.impiLineDescription | titlecase }}</td>
                         <td>{{e.impiQuantity}}</td>
                         <td>{{e.impiUnitPrice}}</td>
                         <td>{{e.impiUnitPrice * e.impiQuantity}}</td>
@@ -245,7 +245,7 @@
                         <td>{{e.impiNetTotal}}</td>
                         <td>{{e.impiGstBaseAmount}}</td>
 
-                       
+
 
                     </tr>
                 </tbody>
@@ -337,7 +337,7 @@
     </div>
 
     <form [formGroup]="publicVariable.dataForm"
-        *ngIf="data.headerStatus == 'PENDING WITH FINANCE APPROVER' || data.headerStatus === 'PENDING WITH TL APPROVER' ||data.headerStatus ===  'PENDING WITH CH APPROVER' || data.headerStatus === 'PENDING WITH TL APPROVER' ||data.headerStatus ===  'CANCEL BY EMPLOYEE' || data.headerStatus === 'CANCELLATION APPROVED BY TL' ">
+        *ngIf="data.headerStatus == 'PENDING WITH FINANCE APPROVER' || data.headerStatus === 'PENDING WITH TL APPROVER' ||data.headerStatus ===  'PENDING WITH CH APPROVER' || data.headerStatus === 'PENDING WITH TL APPROVER' ||data.headerStatus ===  'CANCEL BY EMPLOYEE' || data.headerStatus === 'CANCELLATION APPROVED BY TL'  || data.headerStatus === 'REQUEST TAX INVOICE\n' ">
         <div class="col-md-12 mt-3">
             <div class="form-group">
                 <label>Remarks</label>

@@ -380,7 +380,7 @@ export class DashboardComponent {
 
 
 
-                
+
 
 
                     // Processing the merged data
@@ -400,9 +400,9 @@ export class DashboardComponent {
                     if ((invoiceType === 'Tax Invoice' || invoiceType === 'Proforma Invoice') && this.storedRole == 'Approver') {
 
                         this.headerStatus = 'FOR APPROVAL';
-                     
+
                     }
-                    else{
+                    else {
                         this.headerStatus = 'DRAFT';
                     }
 
@@ -701,7 +701,7 @@ export class DashboardComponent {
             || item.headerStatus === 'PENDING WITH ACCOUNTS APPROVER'
             || item.headerStatus === 'PENDING WITH FINANCE APPROVER'
             || item.headerStatus === 'CANCEL BY EMPLOYEE'
-            
+
 
 
 
@@ -713,6 +713,7 @@ export class DashboardComponent {
             || item.headerStatus === 'APPROVED BY TL'
             || item.headerStatus === 'MAIL SENT BY ACCOUNT TO CUSTOMER'
             || item.headerStatus === 'APPROVED BY FINANCE'
+            || item.headerStatus == 'REQUEST TAX INVOICE\n'
         ));
         counts['PENDING WITH FINANCE APPROVER'] = approvedData.length;
 
@@ -821,8 +822,7 @@ export class DashboardComponent {
                         item.headerStatus === 'PENDING WITH ACCOUNTS APPROVER' ||
                         item.headerStatus === 'PENDING WITH FINANCE APPROVER' ||
                         item.headerStatus === 'CANCEL BY EMPLOYEE'
-
-
+                        || item.headerStatus == 'REQUEST TAX INVOICE\n'
                     ));
                 break;
             case 'ALL':
@@ -1339,7 +1339,7 @@ export class DashboardComponent {
                     this.cd.detectChanges();
                     this.PIInvoiceSummaryList = response.data;
                     this.PIPostedTaxInvoiceCount = response.data.length;
-                
+
 
 
                     // console.log(this.PIPostedTaxInvoiceCount);
