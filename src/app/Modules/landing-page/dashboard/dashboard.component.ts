@@ -219,11 +219,11 @@ export class DashboardComponent {
 
         const pendingData = data.filter((item: any) =>
             (item.createdBy === this.publicVariable.storedEmail ||
-            item.department === localStorage.getItem('department')) &&
+                item.department === localStorage.getItem('department')) &&
             (item.customerStatus === 'PENDING WITH TL APPROVER' ||
-            item.customerStatus === 'PENDING WITH CH APPROVER' ||
-            item.customerStatus === 'PENDING WITH ACCOUNTS APPROVER' ||
-            item.customerStatus === 'PENDING WITH FINANCE APPROVER'));
+                item.customerStatus === 'PENDING WITH CH APPROVER' ||
+                item.customerStatus === 'PENDING WITH ACCOUNTS APPROVER' ||
+                item.customerStatus === 'PENDING WITH FINANCE APPROVER'));
 
         counts['PENDING WITH TL APPROVER'] = pendingData.length;
 
@@ -271,25 +271,14 @@ export class DashboardComponent {
                     item.customerStatus === 'DRAFT');
                 break;
             case 'PENDING WITH APPROVER':
-                // filteredData = this.dashboardData.filter((item: any) =>
-                //     item.createdBy === this.publicVariable.storedEmail ||
-                //     item.department === localStorage.getItem('department')
-                //     &&
-                //     (item.customerStatus === 'PENDING WITH TL APPROVER' ||
-                //         item.customerStatus === 'PENDING WITH CH APPROVER' ||
-                //         item.customerStatus === 'PENDING WITH ACCOUNTS APPROVER' ||
-                //         item.customerStatus === 'PENDING WITH FINANCE APPROVER'));
 
-
-
-
-                        filteredData = this.dashboardData.filter((item: any) =>
-                            (item.createdBy === this.publicVariable.storedEmail ||
-                            item.department === localStorage.getItem('department')) &&
-                            (item.customerStatus === 'PENDING WITH TL APPROVER' ||
-                            item.customerStatus === 'PENDING WITH CH APPROVER' ||
-                            item.customerStatus === 'PENDING WITH ACCOUNTS APPROVER' ||
-                            item.customerStatus === 'PENDING WITH FINANCE APPROVER'));
+                filteredData = this.dashboardData.filter((item: any) =>
+                    (item.createdBy === this.publicVariable.storedEmail ||
+                        item.department === localStorage.getItem('department')) &&
+                    (item.customerStatus === 'PENDING WITH TL APPROVER' ||
+                        item.customerStatus === 'PENDING WITH CH APPROVER' ||
+                        item.customerStatus === 'PENDING WITH ACCOUNTS APPROVER' ||
+                        item.customerStatus === 'PENDING WITH FINANCE APPROVER'));
 
                 break;
 
