@@ -62,6 +62,7 @@ export class DashboardComponent {
     dashboardData: any[] = [];
     invoiceStatuslistData: invoiceStatusModule[] = [];
     creditNoteCount: number = 0;
+    PICount: number = 0;
     constructor(private appService: AppService,
         private modalService: NgbModal,
         private router: Router,
@@ -908,6 +909,7 @@ export class DashboardComponent {
 
         this.invoiceStatuslistData = filteredData;
         this.publicVariable.count = filteredData.length;
+        // this.PICount = filteredData.length;
 
     }
 
@@ -992,6 +994,7 @@ export class DashboardComponent {
 
 
         this.publicVariable.count = filteredData.length;
+        this.PICount = filteredData.length;
 
     }
 
