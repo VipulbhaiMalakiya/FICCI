@@ -1142,6 +1142,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
                                     // this.publicVariable.dataForm.reset();
                                 } else {
                                     this.toastr.error(res.message, 'Error');
+                                    alert(res.message);
                                     this.publicVariable.isProcess = false;
                                 }
                             },
