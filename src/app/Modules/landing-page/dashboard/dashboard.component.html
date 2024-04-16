@@ -211,8 +211,8 @@
                                                     <td>{{d.pan}}</td>
                                                     <td>{{d.createdOn | date:'medium':'IST' }}</td>
                                                     <td>{{d.createdBy}}</td>
-                                                    <td>{{d.customerStatus | titlecase}}</td>
                                                     <td>{{d.accountsRemarks | titlecase}}</td>
+                                                    <td>{{d.customerStatus | titlecase}}</td>
                                                     <td><span class="table-btns">
                                                             <a href="javascript:void(0);" (click)="onView(d)"
                                                                 *ngIf="customerStatus !== 'FOR APPROVAL'">
@@ -328,7 +328,7 @@
                             </a>
                         </li>
                         <li class="nav-item" *ngIf="invoiceType === 'Tax Invoice'">
-                            <a class="nav-link tabbg-5" 
+                            <a class="nav-link tabbg-5"
                             [class.active]="invoiceType == 'Tax Invoice' && headerStatus =='Posted Tax Invoice' "
                              data-bs-toggle="pill" href="#menu4"
                                 (click)="loadInvoiceSummary()">
@@ -337,7 +337,7 @@
                             </a>
                         </li>
                         <li class="nav-item" *ngIf="invoiceType === 'Proforma Invoice'">
-                            <a class="nav-link tabbg-5" 
+                            <a class="nav-link tabbg-5"
                             [class.active]="invoiceType == 'Proforma Invoice' && headerStatus =='Posted Proforma Invoice' "
 
                              data-bs-toggle="pill" href="#menu5"
@@ -730,7 +730,7 @@
                                             <div class="text-center my-3">No data found.</div>
                                         </div>
 
-                                    
+
                                         <div class="text-center"
                                             *ngIf="(PIInvoiceSummaryList | searchFilter1: publicVariable.searchText).length === 0 && PIInvoiceSummaryList.length > 0">
                                             <span class="text-danger">No results found.</span>

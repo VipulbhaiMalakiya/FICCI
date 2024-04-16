@@ -67,7 +67,7 @@ export class DashboardComponent {
     ) { }
 
     ngOnInit(): void {
-        this.loadCustomerStatusCountList();
+        // this.loadCustomerStatusCountList();
         this.publicVariable.storedEmail = localStorage.getItem('userEmail') ?? '';
         this.storedRole = localStorage.getItem('userRole') ?? '';
         const isFinanceValue = localStorage.getItem('IsFinance');
@@ -148,9 +148,28 @@ export class DashboardComponent {
             next: ([statusResponse, accountResponse]: [any, any]) => {
                 // console.log(accountResponse);
 
-                this.dashboardData = [...statusResponse.data, ...accountResponse.data];
-                this.countDataByStatus(this.dashboardData);
+                // this.dashboardData = [...statusResponse.data, ...accountResponse.data];
+                const combinedData = [...statusResponse.data, ...accountResponse.data];
 
+
+                // Create a map to store unique data by customerId
+                const uniqueDataMap = new Map();
+
+                // Iterate through combinedData to group data by customerId
+                combinedData.forEach(item => {
+                    if (!uniqueDataMap.has(item.customerId)) {
+                        uniqueDataMap.set(item.customerId, item);
+                    }
+                });
+
+                // Convert the map values back to an array
+                this.dashboardData = Array.from(uniqueDataMap.values());
+
+                // this.countDataByStatus(this.dashboardData);
+
+                // this.loadCustomerStatusList(this.customerStatus);
+
+                this.countDataByStatus(this.dashboardData);
                 this.loadCustomerStatusList(this.customerStatus);
                 this.publicVariable.isProcess = false;
             },
@@ -382,11 +401,11 @@ export class DashboardComponent {
 
 
 
-                
+
 
 
                     // Processing the merged data
-                  
+
                     this.publicVariable.isProcess = false;
 
                     if (this.invoiceType == 'Tax Invoice') {
@@ -398,24 +417,22 @@ export class DashboardComponent {
                     }
 
                     // Set default status to "DRAFT" if the invoice type changes
-                    if ((invoiceType === 'Tax Invoice' || invoiceType === 'Proforma Invoice') && this.storedRole == 'Approver') 
-                    {
+                    if ((invoiceType === 'Tax Invoice' || invoiceType === 'Proforma Invoice') && this.storedRole == 'Approver') {
 
                         this.headerStatus = 'FOR APPROVAL';
-                        this.invoiceType ='Tax Invoice';
-                        this.loadInoivceSalesStatusList('FOR APPROVAL')     
-                                    
+                        this.invoiceType = 'Tax Invoice';
+                        this.loadInoivceSalesStatusList('FOR APPROVAL')
+
                     }
-                    else
-                    {
+                    else {
                         this.headerStatus = 'DRAFT';
-                        this.invoiceType ='Tax Invoice';
+                        this.invoiceType = 'Tax Invoice';
                         this.loadInoivceSalesStatusList('DRAFT')
                     }
 
                     this.countDataByInvoies(this.dashboardData, invoiceType);
                     this.loadInoivceStatusList(this.customerStatus);
-                    
+
                     //this.loadInvoiceSummary();
                     //this.PIloadInvoiceSummary();
                 },
@@ -712,9 +729,9 @@ export class DashboardComponent {
             || item.headerStatus === 'PENDING WITH FINANCE APPROVER'
             || item.headerStatus === 'CANCEL BY EMPLOYEE'
             || item.headerStatus === 'REQUEST TAX INVOICE\n'
-            
 
-            
+
+
 
 
 
@@ -753,19 +770,17 @@ export class DashboardComponent {
 
         // Calculate total count
 
-        let allData =[];
+        let allData = [];
 
-        if(this.storedRole =="Approver")        
-        {
-         allData = data.filter(item =>
-           item.impiHeaderInvoiceType == invoiceType &&  item.headerStatus != 'DRAFT');
-        }
-        else
-        {
+        if (this.storedRole == "Approver") {
             allData = data.filter(item =>
-            item.impiHeaderInvoiceType == invoiceType);
-        }       
-            
+                item.impiHeaderInvoiceType == invoiceType && item.headerStatus != 'DRAFT');
+        }
+        else {
+            allData = data.filter(item =>
+                item.impiHeaderInvoiceType == invoiceType);
+        }
+
         counts['ALL'] = allData.length;
 
         // Update counts
@@ -807,7 +822,7 @@ export class DashboardComponent {
                         item.headerStatus === 'APPROVED BY ACCOUNTS APPROVER'
                         || item.headerStatus === 'MAIL SENT BY ACCOUNT TO CUSTOMER'
                         || item.headerStatus === 'APPROVED BY FINANCE'
-                        || item.headerStatus === 'APPROVED BY TL'                      
+                        || item.headerStatus === 'APPROVED BY TL'
                         || item.headerStatus === 'MAIL SENT BY FINANCE TO CUSTOMER'));
                 break;
             case 'REJECTED BY CH APPROVER':
@@ -852,16 +867,14 @@ export class DashboardComponent {
                 break;
             case 'ALL':
 
-            if(this.storedRole =="Approver")        
-            {
-                filteredData = this.dashboardData.filter((item: any) =>
-                    item.impiHeaderInvoiceType == this.invoiceType && item.headerStatus !='DRAFT');
-            }
-            else
-            {
-                filteredData = this.dashboardData.filter((item: any) =>
-                item.impiHeaderInvoiceType == this.invoiceType);
-            }
+                if (this.storedRole == "Approver") {
+                    filteredData = this.dashboardData.filter((item: any) =>
+                        item.impiHeaderInvoiceType == this.invoiceType && item.headerStatus != 'DRAFT');
+                }
+                else {
+                    filteredData = this.dashboardData.filter((item: any) =>
+                        item.impiHeaderInvoiceType == this.invoiceType);
+                }
                 break;
             default:
                 filteredData = this.dashboardData.filter((item: any) =>
@@ -1373,7 +1386,7 @@ export class DashboardComponent {
                     this.cd.detectChanges();
                     this.PIInvoiceSummaryList = response.data;
                     this.PIPostedTaxInvoiceCount = response.data.length;
-                
+
 
 
                     // console.log(this.PIPostedTaxInvoiceCount);
