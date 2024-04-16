@@ -452,7 +452,8 @@ export class DashboardComponent {
                     else {
                         this.headerStatus = 'DRAFT';
                         this.invoiceType = 'Tax Invoice';
-                        this.loadInoivceSalesStatusList('DRAFT')
+                        this.loadInoivceSalesStatusList('DRAFT');
+                        this.cd.detectChanges();
                     }
 
                     this.countDataByInvoies(this.dashboardData, invoiceType);

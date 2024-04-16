@@ -428,7 +428,7 @@
                                             </thead>
                                             <tbody>
                                                 <tr
-                                                    *ngFor="let d of  this.invoiceStatuslistData | invoiceFilter: publicVariable.searchText| paginate: {itemsPerPage: pitableSize,currentPage: pipage,totalItems: PICount};let i = index">
+                                                    *ngFor="let d of  this.invoiceStatuslistData | invoiceFilter: publicVariable.searchText| paginate: {itemsPerPage: pitableSize,currentPage: pipage,totalItems: invoiceStatuslistData.length};let i = index">
                                                     <td>{{i + 1}}</td>
                                                     <td>{{d.headerRecordID}}</td>
                                                     <td *ngIf="customerStatus=='APPROVED BY ACCOUNTS APPROVER'">
@@ -511,12 +511,14 @@
                                         *ngIf="invoiceStatuslistData && invoiceStatuslistData.length > 0">
                                         <div class="hint-text">Showing <b>{{this.pitableSize}}</b> out of
                                             <b>{{
-                                                PICount }}</b>
+                                                invoiceStatuslistData.length }}</b>
                                             entries
                                         </div>
-                                        <pagination-controls *ngIf="invoiceStatuslistData && PICount > 10"   previousLabel="Prev" class="pagination" nextLabel="Next"
-                                            (pageChange)="onTableDataChange($event,'invoice')">
-                                        </pagination-controls>
+                                        <pagination-controls *ngIf="invoiceStatuslistData && invoiceStatuslistData.length > 10"
+                                            previousLabel="Prev" nextLabel="Next"
+                                            class="pagination"
+                                            (pageChange)="onTableDataChange($event, 'invoice')">
+                       </pagination-controls>
                                     </div>
 
 
