@@ -11,3 +11,10 @@
     background-color: var(--bs-secondary-bg);
     opacity: 1;
 }
+/* Add any additional styling as needed */
+.common-btn[disabled] {
+    /* Add styles to visually indicate the disabled state */
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
