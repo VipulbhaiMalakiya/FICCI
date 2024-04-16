@@ -141,7 +141,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
     onSelectdept(event: any) {
         this.selectedDept = event;
 
-
+        
         this.publicVariable.dataForm.patchValue({
             ImpiHeaderDepartment: null,
             ImpiHeaderProjectCode: null,
@@ -595,12 +595,12 @@ export class NewPurchaseInvoiceComponent implements OnInit {
                         const modalRef = this.modalService.open(ValidationPopupComponent, { size: "xl" });
                         var componentInstance = modalRef.componentInstance as ValidationPopupComponent;
                         componentInstance.isEmail = this.GetDetails;
-                        modalRef.result.then((data: any) => {
-
+                        modalRef.result.then((data: any) => {        
+                            
                             if(data == true){
                                 this.publicVariable.dataForm.reset();
                             }
-
+                            
                         })
                     }
 
@@ -1025,10 +1025,10 @@ export class NewPurchaseInvoiceComponent implements OnInit {
                     formData.append('isupdate', String(isUpdate));
                     this.publicVariable.selectedProjet = this.publicVariable.projectList.find(project => project.code == newData.ImpiHeaderProjectCode);
                     this.publicVariable.selectCustomer = this.publicVariable.GetCustomerList.find(customer => customer.custName == newData.ImpiHeaderCustomerName);
-
+                   
                    // alert(this.publicVariable.selectCustomer);
                     //console.log(this.publicVariable.selectCustomer);
-
+                   
                     formData.append('ImpiHeaderInvoiceType', newData.ImpiHeaderInvoiceType);
                     formData.append('ImpiHeaderProjectCode', this.publicVariable.selectedProjet.code);
 
@@ -1142,7 +1142,6 @@ export class NewPurchaseInvoiceComponent implements OnInit {
                                     // this.publicVariable.dataForm.reset();
                                 } else {
                                     this.toastr.error(res.message, 'Error');
-                                    alert(res.message);
                                     this.publicVariable.isProcess = false;
                                 }
                             },
@@ -1228,7 +1227,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
         // this.calculateTotalBaseAmount();
         // this.calculateTotalGSTAmount();
         // this.calculateNetTotal();
-        this.publicVariable.isProcess = true;
+        this.publicVariable.isProcess =true;
         this.onSubmit(Action);
         this.isCalculate = true;
     }

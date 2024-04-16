@@ -334,13 +334,15 @@ export class DashboardComponent {
                     if (purchaseResponse.data && Array.isArray(purchaseResponse.data)) {
                         this.dashboardData = purchaseResponse.data;
 
+
+
                     }
 
                     debugger;
                     if (approveResponse.data && Array.isArray(approveResponse.data))
 
                         approveResponse.data.forEach((element: any) => {
-                            if (this.dashboardData.filter(x => x.headerRecordID == element.headerRecordID).length <= 0) {
+                            if (this.dashboardData.filter(x => x.headerId == element.headerId).length <= 0) {
 
                                 this.dashboardData.push(element);
                             }
@@ -380,12 +382,11 @@ export class DashboardComponent {
 
 
 
-
+                
 
 
                     // Processing the merged data
-                    this.countDataByInvoies(this.dashboardData, invoiceType);
-                    this.loadInoivceStatusList(this.customerStatus);
+                  
                     this.publicVariable.isProcess = false;
 
                     if (this.invoiceType == 'Tax Invoice') {
@@ -397,15 +398,24 @@ export class DashboardComponent {
                     }
 
                     // Set default status to "DRAFT" if the invoice type changes
-                    if ((invoiceType === 'Tax Invoice' || invoiceType === 'Proforma Invoice') && this.storedRole == 'Approver') {
+                    if ((invoiceType === 'Tax Invoice' || invoiceType === 'Proforma Invoice') && this.storedRole == 'Approver') 
+                    {
 
                         this.headerStatus = 'FOR APPROVAL';
-
+                        this.invoiceType ='Tax Invoice';
+                        this.loadInoivceSalesStatusList('FOR APPROVAL')     
+                                    
                     }
-                    else {
+                    else
+                    {
                         this.headerStatus = 'DRAFT';
+                        this.invoiceType ='Tax Invoice';
+                        this.loadInoivceSalesStatusList('DRAFT')
                     }
 
+                    this.countDataByInvoies(this.dashboardData, invoiceType);
+                    this.loadInoivceStatusList(this.customerStatus);
+                    
                     //this.loadInvoiceSummary();
                     //this.PIloadInvoiceSummary();
                 },
@@ -462,8 +472,6 @@ export class DashboardComponent {
                     } else {
                         console.warn('Approve response data is null or not iterable');
                     }
-
-
 
 
                     this.headerStatus = this.customerStatus;
@@ -703,7 +711,10 @@ export class DashboardComponent {
             || item.headerStatus === 'PENDING WITH ACCOUNTS APPROVER'
             || item.headerStatus === 'PENDING WITH FINANCE APPROVER'
             || item.headerStatus === 'CANCEL BY EMPLOYEE'
+            || item.headerStatus === 'REQUEST TAX INVOICE\n'
+            
 
+            
 
 
 
@@ -715,7 +726,6 @@ export class DashboardComponent {
             || item.headerStatus === 'APPROVED BY TL'
             || item.headerStatus === 'MAIL SENT BY ACCOUNT TO CUSTOMER'
             || item.headerStatus === 'APPROVED BY FINANCE'
-            || item.headerStatus == 'REQUEST TAX INVOICE\n'
         ));
         counts['PENDING WITH FINANCE APPROVER'] = approvedData.length;
 
@@ -743,8 +753,19 @@ export class DashboardComponent {
 
         // Calculate total count
 
-        const allData = data.filter(item =>
+        let allData =[];
+
+        if(this.storedRole =="Approver")        
+        {
+         allData = data.filter(item =>
+           item.impiHeaderInvoiceType == invoiceType &&  item.headerStatus != 'DRAFT');
+        }
+        else
+        {
+            allData = data.filter(item =>
             item.impiHeaderInvoiceType == invoiceType);
+        }       
+            
         counts['ALL'] = allData.length;
 
         // Update counts
@@ -786,7 +807,7 @@ export class DashboardComponent {
                         item.headerStatus === 'APPROVED BY ACCOUNTS APPROVER'
                         || item.headerStatus === 'MAIL SENT BY ACCOUNT TO CUSTOMER'
                         || item.headerStatus === 'APPROVED BY FINANCE'
-                        || item.headerStatus === 'APPROVED BY TL'
+                        || item.headerStatus === 'APPROVED BY TL'                      
                         || item.headerStatus === 'MAIL SENT BY FINANCE TO CUSTOMER'));
                 break;
             case 'REJECTED BY CH APPROVER':
@@ -825,11 +846,22 @@ export class DashboardComponent {
                         item.headerStatus === 'PENDING WITH FINANCE APPROVER' ||
                         item.headerStatus === 'CANCEL BY EMPLOYEE'
                         || item.headerStatus == 'REQUEST TAX INVOICE\n'
+
+
                     ));
                 break;
             case 'ALL':
+
+            if(this.storedRole =="Approver")        
+            {
                 filteredData = this.dashboardData.filter((item: any) =>
-                    item.impiHeaderInvoiceType == this.invoiceType);
+                    item.impiHeaderInvoiceType == this.invoiceType && item.headerStatus !='DRAFT');
+            }
+            else
+            {
+                filteredData = this.dashboardData.filter((item: any) =>
+                item.impiHeaderInvoiceType == this.invoiceType);
+            }
                 break;
             default:
                 filteredData = this.dashboardData.filter((item: any) =>
@@ -1341,7 +1373,7 @@ export class DashboardComponent {
                     this.cd.detectChanges();
                     this.PIInvoiceSummaryList = response.data;
                     this.PIPostedTaxInvoiceCount = response.data.length;
-
+                
 
 
                     // console.log(this.PIPostedTaxInvoiceCount);

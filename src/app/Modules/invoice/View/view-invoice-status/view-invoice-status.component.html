@@ -372,10 +372,11 @@
 
                 <input type="checkbox" class="btn-check" formControlName="IsDraft" id="btn-check"
                 autocomplete="off">
-            <label class="common-btn w-auto me-2" for="btn-check"  *ngIf ="!(data.IsPostedTaxInvoice)"
+            <label class="common-btn w-auto me-2" for="btn-check"  *ngIf ="!(data.IsPostedTaxInvoice) && data.impiHeaderCreatedBy == this.publicVariable.storedEmail && data.headerStatus!='DRAFT'"
             (click)="onSubmit(false)">Cancel Request
                 </label>
-            <button type="submit" *ngIf ="!(data.impiHeaderInvoiceType=='Tax Invoice')" class="btn btn-primary w-auto mb-0 me-2" (click)="onSubmit(true)">Request Tax Invoice</button>
+            <button type="submit" *ngIf ="!(data.impiHeaderInvoiceType=='Tax Invoice') && data.impiHeaderCreatedBy == this.publicVariable.storedEmail && data.headerStatus =='APPROVED BY TL'" 
+            class="btn btn-primary w-auto mb-0 me-2" (click)="onSubmit(true)">Request Tax Invoice</button>
 
             </div>
         </div>
