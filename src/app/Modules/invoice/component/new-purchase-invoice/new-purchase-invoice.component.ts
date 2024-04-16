@@ -1148,6 +1148,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
                             },
                             error: (error: any) => {
                                 this.publicVariable.isProcess = false;
+                                alert(error.error.message || 'An error occurred. Please try again later.');
                                 this.toastr.error(error.error.message || 'An error occurred. Please try again later.', 'Error');
                             },
                             complete: () => {
