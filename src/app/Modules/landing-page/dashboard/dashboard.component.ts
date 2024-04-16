@@ -265,9 +265,8 @@ export class DashboardComponent {
         switch (this.customerStatus) {
             case 'DRAFT':
                 filteredData = this.dashboardData.filter((item: any) =>
-
-                    // item.department === localStorage.getItem('department') ||
-                    item.createdBy === this.publicVariable.storedEmail &&
+                    (item.department === localStorage.getItem('department') ||
+                    item.createdBy === this.publicVariable.storedEmail) &&
                     item.customerStatus === 'DRAFT');
                 break;
             case 'PENDING WITH APPROVER':
