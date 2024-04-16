@@ -31,6 +31,11 @@ export class DashboardComponent {
     ptitableSizes: number[] = [10, 20, 50, 100];
     ptipage: number = 1;
 
+
+    pitableSize: number = 10;
+    pitableSizes: number[] = [10, 20, 50, 100];
+    pipage: number = 1;
+
     isDRAFT: number = 0;
     PendingApproval: number = 0;
     ApprovedAccounts: number = 0;
@@ -1021,7 +1026,7 @@ export class DashboardComponent {
             this.InvoiceSummaryList;
         }
         else if (status == 'invoice') {
-            this.publicVariable.page = event;
+            this.pipage = event;
             this.invoiceStatuslistData;
             // this.loadInoivceStatusList(this.customerStatus);
         }
@@ -1059,8 +1064,8 @@ export class DashboardComponent {
             this.InvoiceSummaryList;
         }
         else if (status == 'invoice') {
-            this.publicVariable.tableSize = event.target.value;
-            this.publicVariable.page = 1;
+            this.pitableSize = event.target.value;
+            this.pipage = 1;
             this.invoiceStatuslistData;
         }
 
