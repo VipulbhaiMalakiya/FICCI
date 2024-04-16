@@ -464,6 +464,8 @@ export class DashboardComponent {
                     }
 
 
+
+
                     this.headerStatus = this.customerStatus;
 
 
