@@ -197,33 +197,41 @@ export class DashboardComponent {
 
         // Filter data for each customer status
         const draftData = data.filter(item => item.customerStatus === 'DRAFT'
-            //&&item.department === localStorage.getItem('department')
+            && item.department === localStorage.getItem('department')
         );
         counts['DRAFT'] = draftData.length;
 
         const foraprovalData = data.filter((item: any) =>
             (item.customerStatus === 'PENDING WITH ACCOUNTS APPROVER' || item.customerStatus === 'PENDING WITH FINANCE APPROVER')
-            //&& item.department === localStorage.getItem('department')
+            && item.department === localStorage.getItem('department')
         );
         counts['FOR APPROVAL'] = foraprovalData.length;
 
 
+        // const pendingData = data.filter((item: any) =>
+        //     item.createdBy === this.publicVariable.storedEmail
+        //     || item.department === localStorage.getItem('department') &&
+        //     (item.customerStatus === 'PENDING WITH TL APPROVER' ||
+        //         item.customerStatus === 'PENDING WITH CH APPROVER' ||
+        //         item.customerStatus === 'PENDING WITH ACCOUNTS APPROVER' ||
+        //         item.customerStatus === 'PENDING WITH FINANCE APPROVER'));
+        // counts['PENDING WITH TL APPROVER'] = pendingData.length;
+
         const pendingData = data.filter((item: any) =>
-            item.createdBy === this.publicVariable.storedEmail
-
-            //|| item.department === localStorage.getItem('department')
-
-            &&
+            (item.createdBy === this.publicVariable.storedEmail ||
+            item.department === localStorage.getItem('department')) &&
             (item.customerStatus === 'PENDING WITH TL APPROVER' ||
-                item.customerStatus === 'PENDING WITH CH APPROVER' ||
-                item.customerStatus === 'PENDING WITH ACCOUNTS APPROVER' ||
-                item.customerStatus === 'PENDING WITH FINANCE APPROVER'));
+            item.customerStatus === 'PENDING WITH CH APPROVER' ||
+            item.customerStatus === 'PENDING WITH ACCOUNTS APPROVER' ||
+            item.customerStatus === 'PENDING WITH FINANCE APPROVER'));
+
         counts['PENDING WITH TL APPROVER'] = pendingData.length;
 
 
         const approvedData = data.filter(item => (item.customerStatus === 'APPROVED BY ACCOUNTS APPROVER'
             || item.customerStatus === 'APPROVED BY FINANCE')
-           // && item.department === localStorage.getItem('department')
+
+            // && item.department === localStorage.getItem('department')
         );
         counts['APPROVED BY ACCOUNTS APPROVER'] = approvedData.length;
 
@@ -259,35 +267,49 @@ export class DashboardComponent {
                 filteredData = this.dashboardData.filter((item: any) =>
 
                     // item.department === localStorage.getItem('department') ||
-                    // item.createdBy === this.publicVariable.storedEmail &&
+                    item.createdBy === this.publicVariable.storedEmail &&
                     item.customerStatus === 'DRAFT');
                 break;
             case 'PENDING WITH APPROVER':
-                filteredData = this.dashboardData.filter((item: any) =>
-                    item.createdBy === this.publicVariable.storedEmail
-                    //|| item.department === localStorage.getItem('department')
-                    &&
-                    (item.customerStatus === 'PENDING WITH TL APPROVER' ||
-                        item.customerStatus === 'PENDING WITH CH APPROVER' ||
-                        item.customerStatus === 'PENDING WITH ACCOUNTS APPROVER' ||
-                        item.customerStatus === 'PENDING WITH FINANCE APPROVER'));
+                // filteredData = this.dashboardData.filter((item: any) =>
+                //     item.createdBy === this.publicVariable.storedEmail ||
+                //     item.department === localStorage.getItem('department')
+                //     &&
+                //     (item.customerStatus === 'PENDING WITH TL APPROVER' ||
+                //         item.customerStatus === 'PENDING WITH CH APPROVER' ||
+                //         item.customerStatus === 'PENDING WITH ACCOUNTS APPROVER' ||
+                //         item.customerStatus === 'PENDING WITH FINANCE APPROVER'));
+
+
+
+
+                        filteredData = this.dashboardData.filter((item: any) =>
+                            (item.createdBy === this.publicVariable.storedEmail ||
+                            item.department === localStorage.getItem('department')) &&
+                            (item.customerStatus === 'PENDING WITH TL APPROVER' ||
+                            item.customerStatus === 'PENDING WITH CH APPROVER' ||
+                            item.customerStatus === 'PENDING WITH ACCOUNTS APPROVER' ||
+                            item.customerStatus === 'PENDING WITH FINANCE APPROVER'));
+
                 break;
+
+
             case 'APPROVED BY ACCOUNTS APPROVER':
                 filteredData = this.dashboardData.filter((item: any) =>
                     // item.department === localStorage.getItem('department') ||
-                    // item.createdBy === this.publicVariable.storedEmail &&
+                    item.createdBy === this.publicVariable.storedEmail &&
                     item.customerStatus === this.customerStatus || item.customerStatus === 'APPROVED BY FINANCE');
 
                 break;
             case 'REJECTED BY CH APPROVER':
                 filteredData = this.dashboardData.filter((item: any) =>
-                // item.department === localStorage.getItem('department') ||
-                // item.createdBy === this.publicVariable.storedEmail &&
-                (item.customerStatus === 'REJECTED BY TL APPROVER' ||
-                    item.customerStatus === 'REJECTED BY CH APPROVER' ||
-                    item.customerStatus === 'REJECTED BY ACCOUNTS APPROVER' ||
-                    item.customerStatus === 'REJECTED BY FINANCE APPROVER'
-                    || item.customerStatus === 'REJECTED BY FINANCE APPROVER'));
+                    // item.department === localStorage.getItem('department') ||
+                    item.createdBy === this.publicVariable.storedEmail &&
+                    (item.customerStatus === 'REJECTED BY TL APPROVER' ||
+                        item.customerStatus === 'REJECTED BY CH APPROVER' ||
+                        item.customerStatus === 'REJECTED BY ACCOUNTS APPROVER' ||
+                        item.customerStatus === 'REJECTED BY FINANCE APPROVER'
+                        || item.customerStatus === 'REJECTED BY FINANCE APPROVER'));
                 break;
             case 'FOR APPROVAL':
                 filteredData = this.dashboardData.filter((item: any) => (item.customerStatus === 'PENDING WITH ACCOUNTS APPROVER' || item.customerStatus === 'PENDING WITH FINANCE APPROVER'));
