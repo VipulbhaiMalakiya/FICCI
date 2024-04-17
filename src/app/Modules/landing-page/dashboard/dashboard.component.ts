@@ -551,7 +551,7 @@ export class DashboardComponent {
         ));
         counts['FOR APPROVAL'] = forapproval.length;
 
-        if(this.publicVariable.storedRole == 'Approver'){
+        if(this.publicVariable.storedRole == 'Approver' || this.publicVariable.storedRole == 'Admin'){
             const approvedData = data.filter(item => (item.impiHeaderInvoiceType == invoiceType)   && (item.headerStatus === 'APPROVED BY ACCOUNTS APPROVER'
             || item.headerStatus === 'MAIL SENT BY FINANCE TO CUSTOMER'
             || item.headerStatus === 'APPROVED BY TL'
@@ -603,7 +603,7 @@ export class DashboardComponent {
         }
         else if (this.storedRole == "Admin") {
             allData = data.filter(item =>
-                (item.impiHeaderInvoiceType == invoiceType) && (item.headerStatus == 'REJECTED BY TL APPROVER' || item.headerStatus == 'APPROVED BY TL' || item.headerStatus == 'CANCELLATION APPROVED BY TL' || item.headerStatus == 'CANCELLATION REJECTED BY TL'));
+                (item.impiHeaderInvoiceType == invoiceType && item.headerStatus != 'DRAFT'  && item.headerStatus != 'PENDING WITH TL APPROVER') );
         }
         else {
             allData = data.filter(item =>
@@ -647,7 +647,7 @@ export class DashboardComponent {
 
 
             case 'APPROVED BY ACCOUNTS APPROVER':
-                if(this.publicVariable.storedRole == 'Approver'){
+                if(this.publicVariable.storedRole == 'Approver' || this.publicVariable.storedRole == 'Admin'){
                     filteredData = this.dashboardData.filter((item: any) =>
                         (item.impiHeaderInvoiceType == this.invoiceType ) && (
                             item.headerStatus === 'APPROVED BY ACCOUNTS APPROVER'
@@ -719,7 +719,7 @@ export class DashboardComponent {
                 }
                 else if (this.storedRole == "Admin") {
                     filteredData = this.dashboardData.filter(item =>
-                        (item.impiHeaderInvoiceType == this.invoiceType) && (item.headerStatus == 'REJECTED BY TL APPROVER' || item.headerStatus == 'APPROVED BY TL' || item.headerStatus == 'CANCELLATION APPROVED BY TL' || item.headerStatus == 'CANCELLATION REJECTED BY TL'));
+                        (item.impiHeaderInvoiceType == this.invoiceType && item.headerStatus != 'DRAFT' && item.headerStatus != 'PENDING WITH TL APPROVER') );
                 }
 
                 else {
