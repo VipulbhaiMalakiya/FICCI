@@ -14,7 +14,7 @@ import { AngularEditorConfig } from '@kolkov/angular-editor';
     styleUrls: ['./view-pi-accounts-inbox.component.css']
 })
 export class ViewPiAccountsInboxComponent implements OnInit, OnDestroy {
-    headerId?: number;
+    headerId?: any;
     data: any;
     FilePath: any;
     isApprove: boolean = false;
@@ -42,7 +42,10 @@ export class ViewPiAccountsInboxComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         this.route.params.subscribe(params => {
-            this.headerId = +params['id'];
+           // this.headerId = +params['id'];
+
+           let decrypted = params['id']
+           this.headerId = atob(decrypted);
         });
 
         this.data = history.state.data;

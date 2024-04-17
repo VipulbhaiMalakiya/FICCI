@@ -13,7 +13,7 @@ import { InvoicesService } from '../../service/invoices.service';
   styleUrls: ['./view-sales-approval.component.css']
 })
 export class ViewSalesApprovalComponent {
-    headerId?: number;
+    headerId?: any;
     data: any;
     FilePath: any;
     publicVariable = new publicVariable();
@@ -40,7 +40,10 @@ export class ViewSalesApprovalComponent {
 
     ngOnInit() {
         this.route.params.subscribe(params => {
-            this.headerId = +params['id'];
+           // this.headerId = +params['id'];
+
+           let decrypted = params['id']
+           this.headerId = atob(decrypted);
         });
         this.data = history.state.data;
         console.log(this.data);

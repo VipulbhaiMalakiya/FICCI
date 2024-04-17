@@ -9,7 +9,7 @@ import { FileService } from '../../service/FileService';
 })
 export class PiInvoiceViewNewComponent {
 
-    invoice_no?: number;
+    invoice_no?: any;
     data: any;
     TaxInvoicedata?: any;
     TaxInvoiceinfo: any = {};
@@ -37,7 +37,10 @@ export class PiInvoiceViewNewComponent {
 
     ngOnInit() {
         this.route.params.subscribe(params => {
-            this.invoice_no = +params['id'];
+            // this.invoice_no = +params['id'];
+
+            let decrypted = params['id']
+            this.invoice_no = atob(decrypted);
         });
         this.data = history.state.data;
 

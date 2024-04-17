@@ -8,7 +8,7 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./credit-memo-view.component.css']
 })
 export class CreditMemoViewComponent {
-    headerId?: number;
+    headerId?: any;
     data: any;
     FilePath: any;
     publicVariable = new publicVariable();
@@ -31,7 +31,10 @@ export class CreditMemoViewComponent {
 
     ngOnInit() {
         this.route.params.subscribe(params => {
-            this.headerId = +params['id'];
+            //this.headerId = +params['id'];
+
+            let decrypted = params['id']
+            this.headerId = atob(decrypted);
         });
         this.loadCOAMasterList();
         this.data = history.state.data;
