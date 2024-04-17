@@ -329,6 +329,7 @@ export class DashboardComponent {
         try {
             this.cd.detectChanges();
             this.invoiceType = invoiceType;
+            this.dashboardData = [];
 
 
 
@@ -624,100 +625,8 @@ export class DashboardComponent {
             console.error('ID is undefined or null');
         }
     }
-
-    countDataBySalesInvoies(data: any[]): void {
-
-        const counts: any = {
-            'DRAFT': 0,
-            'PENDING WITH TL APPROVER': 0,
-            'PENDING WITH CH APPROVER': 0,
-            'PENDING WITH ACCOUNTS APPROVER': 0,
-            'APPROVED BY ACCOUNTS APPROVER': 0,
-            'REJECTED BY TL APPROVER': 0,
-            'REJECTED BY CH APPROVER': 0,
-            'REJECTED BY ACCOUNTS APPROVER': 0,
-            'FOR APPROVAL': 0,
-            'Cancelled': 0,
-            'Reversal': 0,
-            'ALL': 0
-        };
-
-        // Filter data for each customer status
-        const draftData = data.filter(item => item.headerStatus === 'DRAFT');
-        counts['DRAFT'] = draftData.length;
-        const pendingData = data.filter(item =>
-            item.impiHeaderCreatedBy === this.publicVariable.storedEmail &&
-
-
-            (item.headerStatus === 'PENDING WITH TL APPROVER' ||
-                item.headerStatus === 'PENDING WITH CH APPROVER' ||
-                item.headerStatus === 'PENDING WITH ACCOUNTS APPROVER' ||
-                item.headerStatus === 'PENDING WITH FINANCE APPROVER'
-                || item.headerStatus === 'CANCEL BY EMPLOYEE'));
-        counts['PENDING WITH TL APPROVER'] = pendingData.length;
-
-        const forapproval = data.filter(item => (item.headerStatus === 'PENDING WITH TL APPROVER'
-            || item.headerStatus === 'PENDING WITH CH APPROVER'
-            || item.headerStatus === 'PENDING WITH ACCOUNTS APPROVER'
-            || item.headerStatus === 'PENDING WITH FINANCE APPROVER'
-            || item.headerStatus === 'CANCEL BY EMPLOYEE'
-
-
-
-
-        ));
-        counts['FOR APPROVAL'] = forapproval.length;
-
-        const approvedData = data.filter(item => (item.headerStatus === 'APPROVED BY ACCOUNTS APPROVER'
-            || item.headerStatus === 'MAIL SENT BY FINANCE TO CUSTOMER'
-            || item.headerStatus === 'APPROVED BY TL'
-            || item.headerStatus === 'MAIL SENT BY ACCOUNT TO CUSTOMER'
-            || item.headerStatus === 'APPROVED BY FINANCE'
-
-        ));
-        counts['PENDING WITH FINANCE APPROVER'] = approvedData.length;
-
-        const rejectedData = data.filter(item => (item.headerStatus === 'REJECTED BY TL APPROVER'
-            || item.headerStatus === 'REJECTED BY CH APPROVER'
-            || item.headerStatus === 'REJECTED BY ACCOUNTS APPROVER'
-            || item.headerStatus === 'REJECTED BY FINANCE APPROVER'
-            || item.headerStatus === 'CANCELLATION REJECTED BY TL'
-
-            || item.headerStatus === 'CANCELLATION REJECTED BY FINANCE'
-
-        ));
-        counts['REJECTED BY CH APPROVER'] = rejectedData.length;
-
-        const cancelData = data.filter(item =>
-            item.headerStatus === 'CANCELLATION APPROVED BY FINANCE' || item.headerStatus == 'CANCELLATION APPROVED BY TL');
-        counts['Cancelled'] = cancelData.length;
-
-        const ReversalData = data.filter(item =>
-            item.headerStatus === '');
-        counts['Reversal'] = ReversalData.length
-
-        // Cancelled
-
-
-        // Calculate total count
-
-        const allData = data;
-        counts['ALL'] = allData.length;
-
-        // Update counts
-        this.PIisDRAFT = counts['DRAFT'];
-        this.PIforapproval = counts['FOR APPROVAL'];
-        this.PIPendingApproval = counts['PENDING WITH TL APPROVER'];
-        this.PIApprovedAccounts = counts['PENDING WITH FINANCE APPROVER'];
-        this.PIRejectedbyAccounts = counts['REJECTED BY CH APPROVER'];
-        this.PIALL = counts['ALL'];
-        this.Cancelled = counts['Cancelled'];
-        this.Reversal = counts['Reversal'];
-        this.publicVariable.count = counts['ALL']; // Total count
-    }
-
     countDataByInvoies(data: any[], invoiceType: any): void {
-        debugger;
+
 
         const counts: any = {
             'DRAFT': 0,
@@ -821,7 +730,6 @@ export class DashboardComponent {
         this.Reversal = counts['Reversal'];
         this.publicVariable.count = counts['ALL']; // Total count
     }
-
     loadInoivceStatusList(status: string): void {
         this.customerStatus = status;
         let filteredData;
@@ -915,6 +823,97 @@ export class DashboardComponent {
 
     }
 
+    countDataBySalesInvoies(data: any[]): void {
+
+        const counts: any = {
+            'DRAFT': 0,
+            'PENDING WITH TL APPROVER': 0,
+            'PENDING WITH CH APPROVER': 0,
+            'PENDING WITH ACCOUNTS APPROVER': 0,
+            'APPROVED BY ACCOUNTS APPROVER': 0,
+            'REJECTED BY TL APPROVER': 0,
+            'REJECTED BY CH APPROVER': 0,
+            'REJECTED BY ACCOUNTS APPROVER': 0,
+            'FOR APPROVAL': 0,
+            'Cancelled': 0,
+            'Reversal': 0,
+            'ALL': 0
+        };
+
+        // Filter data for each customer status
+        const draftData = data.filter(item => item.headerStatus === 'DRAFT');
+        counts['DRAFT'] = draftData.length;
+        const pendingData = data.filter(item =>
+            item.impiHeaderCreatedBy === this.publicVariable.storedEmail &&
+
+
+            (item.headerStatus === 'PENDING WITH TL APPROVER' ||
+                item.headerStatus === 'PENDING WITH CH APPROVER' ||
+                item.headerStatus === 'PENDING WITH ACCOUNTS APPROVER' ||
+                item.headerStatus === 'PENDING WITH FINANCE APPROVER'
+                || item.headerStatus === 'CANCEL BY EMPLOYEE'));
+        counts['PENDING WITH TL APPROVER'] = pendingData.length;
+
+        const forapproval = data.filter(item => (item.headerStatus === 'PENDING WITH TL APPROVER'
+            || item.headerStatus === 'PENDING WITH CH APPROVER'
+            || item.headerStatus === 'PENDING WITH ACCOUNTS APPROVER'
+            || item.headerStatus === 'PENDING WITH FINANCE APPROVER'
+            || item.headerStatus === 'CANCEL BY EMPLOYEE'
+
+
+
+
+        ));
+        counts['FOR APPROVAL'] = forapproval.length;
+
+        const approvedData = data.filter(item => (item.headerStatus === 'APPROVED BY ACCOUNTS APPROVER'
+            || item.headerStatus === 'MAIL SENT BY FINANCE TO CUSTOMER'
+            || item.headerStatus === 'APPROVED BY TL'
+            || item.headerStatus === 'MAIL SENT BY ACCOUNT TO CUSTOMER'
+            || item.headerStatus === 'APPROVED BY FINANCE'
+
+        ));
+        counts['PENDING WITH FINANCE APPROVER'] = approvedData.length;
+
+        const rejectedData = data.filter(item => (item.headerStatus === 'REJECTED BY TL APPROVER'
+            || item.headerStatus === 'REJECTED BY CH APPROVER'
+            || item.headerStatus === 'REJECTED BY ACCOUNTS APPROVER'
+            || item.headerStatus === 'REJECTED BY FINANCE APPROVER'
+            || item.headerStatus === 'CANCELLATION REJECTED BY TL'
+
+            || item.headerStatus === 'CANCELLATION REJECTED BY FINANCE'
+
+        ));
+        counts['REJECTED BY CH APPROVER'] = rejectedData.length;
+
+        const cancelData = data.filter(item =>
+            item.headerStatus === 'CANCELLATION APPROVED BY FINANCE' || item.headerStatus == 'CANCELLATION APPROVED BY TL');
+        counts['Cancelled'] = cancelData.length;
+
+        const ReversalData = data.filter(item =>
+            item.headerStatus === '');
+        counts['Reversal'] = ReversalData.length
+
+        // Cancelled
+
+
+        // Calculate total count
+
+        const allData = data;
+        counts['ALL'] = allData.length;
+
+        // Update counts
+        this.PIisDRAFT = counts['DRAFT'];
+        this.PIforapproval = counts['FOR APPROVAL'];
+        this.PIPendingApproval = counts['PENDING WITH TL APPROVER'];
+        this.PIApprovedAccounts = counts['PENDING WITH FINANCE APPROVER'];
+        this.PIRejectedbyAccounts = counts['REJECTED BY CH APPROVER'];
+        this.PIALL = counts['ALL'];
+        this.Cancelled = counts['Cancelled'];
+        this.Reversal = counts['Reversal'];
+        this.publicVariable.count = counts['ALL']; // Total count
+    }
+
     loadInoivceSalesStatusList(status: string): void {
         this.customerStatus = status;
         let filteredData;
@@ -996,7 +995,7 @@ export class DashboardComponent {
 
 
         this.publicVariable.count = filteredData.length;
-        this.PICount = filteredData.length;
+        //this.PICount = filteredData.length;
 
     }
 
