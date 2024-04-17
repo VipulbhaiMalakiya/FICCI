@@ -20,7 +20,7 @@ export class NevErpComponent implements OnInit {
         
         this.email = this.route.snapshot.paramMap.get('email')
         this.isProcess = true;
-    
+        
         const storedEmail = this.email;
         if (storedEmail) {
             this.isProcess = true;
