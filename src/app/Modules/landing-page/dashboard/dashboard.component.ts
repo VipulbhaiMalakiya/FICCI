@@ -531,7 +531,8 @@ export class DashboardComponent {
         const draftData = data.filter(item => item.headerStatus === 'DRAFT' && item.impiHeaderInvoiceType == invoiceType);
         counts['DRAFT'] = draftData.length;
         const pendingData = data.filter(item =>
-            (item.impiHeaderCreatedBy === this.publicVariable.storedEmail &&
+            (
+                //item.impiHeaderCreatedBy === this.publicVariable.storedEmail &&
             item.impiHeaderInvoiceType == invoiceType) &&
             (item.headerStatus === 'PENDING WITH TL APPROVER' ||
                 item.headerStatus === 'PENDING WITH CH APPROVER' ||
@@ -539,6 +540,7 @@ export class DashboardComponent {
                 item.headerStatus === 'PENDING WITH FINANCE APPROVER'
                 || item.headerStatus === 'CANCEL BY EMPLOYEE'
                 || item.headerStatus === 'REQUEST TAX INVOICE\n'));
+
         counts['PENDING WITH TL APPROVER'] = pendingData.length;
 
         const forapproval = data.filter(item => item.impiHeaderInvoiceType == invoiceType &&
@@ -634,7 +636,7 @@ export class DashboardComponent {
                 break;
             case 'PENDING WITH APPROVER':
                 filteredData = this.dashboardData.filter((item: any) =>
-                    item.impiHeaderCreatedBy === this.publicVariable.storedEmail &&
+                    // item.impiHeaderCreatedBy === this.publicVariable.storedEmail &&
                     item.impiHeaderInvoiceType == this.invoiceType &&
                     (item.headerStatus === 'PENDING WITH TL APPROVER' ||
                         item.headerStatus === 'PENDING WITH CH APPROVER' ||
