@@ -123,7 +123,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
 
         this.publicVariable.isProcess = false;
         this.loadProjectList();
-        this.loadCustomerStatusList();
+      //  this.loadCustomerStatusList();
         this.navDepartment = localStorage.getItem('navDepartment')
         this.navDepartmentArray = this.navDepartment.split('|');
 
