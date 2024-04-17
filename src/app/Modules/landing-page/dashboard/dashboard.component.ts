@@ -1218,10 +1218,14 @@ export class DashboardComponent {
     onViewPI(data: invoiceStatusModule): void {
         if (data.headerId) {
             if (this.storedRole == 'Employee') {
-                this.router.navigate(['invoice/status/view', data.headerId], { state: { data: data } });
+                const encryptedHeaderId = btoa(data.headerId.toString());
+
+                this.router.navigate(['invoice/status/view', encryptedHeaderId], { state: { data: data } });
             }
             else {
-                this.router.navigate(['invoice/approval/view', data.headerId], { state: { data: data } });
+                const encryptedHeaderId = btoa(data.headerId.toString());
+
+                this.router.navigate(['invoice/approval/view', encryptedHeaderId], { state: { data: data } });
             }
         } else {
             console.error('ID is undefined or null');

@@ -8,7 +8,7 @@ import { environment } from 'src/environments/environment';
     styleUrls: ['./view-invoice-status.component.css']
 })
 export class ViewInvoiceStatusComponent {
-    headerId?: number;
+    headerId?: any;
     data: any;
     FilePath: any;
     publicVariable = new publicVariable();
@@ -32,11 +32,11 @@ export class ViewInvoiceStatusComponent {
 
     ngOnInit() {
         this.route.params.subscribe(params => {
-            this.headerId = +params['id'];
+            let decrypted = params['id']
+            this.headerId = atob(decrypted);
         });
         this.loadCOAMasterList();
         this.data = history.state.data;
-        console.log(this.data);
         this.loadStateList();
         this.uploadedFiles = this.data.impiHeaderAttachment;
 
@@ -65,7 +65,7 @@ export class ViewInvoiceStatusComponent {
 
     }
 
-    
+
 
     loadStateList() {
         try {
@@ -113,8 +113,8 @@ export class ViewInvoiceStatusComponent {
 
     downalodFile(fileUrl: any) {
 
-      
-        this.FilePath = `${environment.fileURL}${fileUrl.fileUrl}`;     
+
+        this.FilePath = `${environment.fileURL}${fileUrl.fileUrl}`;
         window.open(this.FilePath, '_blank');
 
     }

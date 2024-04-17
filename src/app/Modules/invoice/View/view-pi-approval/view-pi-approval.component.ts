@@ -9,7 +9,7 @@ import { CustomersService, FormBuilder, InvoicesService, NgbModal, ToastrService
     styleUrls: ['./view-pi-approval.component.css']
 })
 export class ViewPiApprovalComponent {
-    headerId?: number;
+    headerId?: any;
     data: any;
     FilePath: any;
     publicVariable = new publicVariable();
@@ -36,7 +36,8 @@ export class ViewPiApprovalComponent {
 
     ngOnInit() {
         this.route.params.subscribe(params => {
-            this.headerId = +params['id'];
+            let decrypted = params['id']
+            this.headerId = atob(decrypted);
         });
         this.data = history.state.data;
         this.loadStateList();
