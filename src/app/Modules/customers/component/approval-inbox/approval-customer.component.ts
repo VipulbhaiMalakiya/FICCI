@@ -28,7 +28,9 @@ export class ApprovalCustomerComponent implements OnInit {
 
     onEdit(data: ApproveCustomerList): void {
         if (data.customerId) {
-            this.router.navigate(['customer/approval/remarks/', data.customerId], { state: { data: data } });
+            const encryptedHeaderId = btoa(data.customerId.toString());
+
+            this.router.navigate(['customer/approval/remarks/', encryptedHeaderId], { state: { data: data } });
         } else {
             console.error('ID is undefined or null');
         }

@@ -101,7 +101,9 @@ export class StatusCustomerComponent implements OnInit {
 
     onEdit(data: customerStatusListModel): void {
         if (data.customerId) {
-            this.router.navigate(['customer/status/edit', data.customerId], { state: { data: data } });
+            const encryptedHeaderId = btoa(data.customerId.toString());
+
+            this.router.navigate(['customer/status/edit', encryptedHeaderId], { state: { data: data } });
         } else {
             console.error('ID is undefined or null');
         }
@@ -109,7 +111,9 @@ export class StatusCustomerComponent implements OnInit {
 
     onView(data: customerStatusListModel): void {
         if (data.customerId) {
-            this.router.navigate(['customer/status/view', data.customerId], { state: { data: data } });
+            const encryptedHeaderId = btoa(data.customerId.toString());
+
+            this.router.navigate(['customer/status/view', encryptedHeaderId], { state: { data: data } });
         } else {
             console.error('ID is undefined or null');
         }

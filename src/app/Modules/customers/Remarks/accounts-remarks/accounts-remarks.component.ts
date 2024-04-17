@@ -7,7 +7,7 @@ import { ActivatedRoute, CustomersService, FormBuilder, NgbModal, Router, Toastr
   styleUrls: ['./accounts-remarks.component.css']
 })
 export class AccountsRemarksComponent {
-    customerId?: number;
+    customerId?: any;
     data: any;
     publicVariable = new publicVariable();
 
@@ -31,7 +31,10 @@ export class AccountsRemarksComponent {
 
     ngOnInit() {
         this.route.params.subscribe(params => {
-            this.customerId = +params['id'];
+            //this.customerId = +params['id'];
+
+            let decrypted = params['id']
+            this.customerId = atob(decrypted);
         });
         this.data = history.state.data;
         this.publicVariable.isProcess = false;

@@ -8,7 +8,7 @@ import { CustomersService, FormBuilder, NgbModal, ToastrService, Validators, pub
     styleUrls: ['./approval-remarks.component.css']
 })
 export class ApprovalRemarksComponent {
-    customerId?: number;
+    customerId?: any;
     data: any;
     publicVariable = new publicVariable();
 
@@ -32,7 +32,10 @@ export class ApprovalRemarksComponent {
 
     ngOnInit() {
         this.route.params.subscribe(params => {
-            this.customerId = +params['id'];
+           // this.customerId = +params['id'];
+
+           let decrypted = params['id']
+           this.customerId = atob(decrypted);
         });
         this.data = history.state.data;
         this.publicVariable.isProcess = false;

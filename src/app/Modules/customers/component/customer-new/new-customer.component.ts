@@ -20,7 +20,7 @@ import { AbstractControl, ValidatorFn } from '@angular/forms';
 })
 export class NewCustomerComponent implements OnInit, OnDestroy {
     publicVariable = new publicVariable();
-    customerId?: number;
+    customerId?: any;
     data: any;
     gstExists: boolean = false;
     panExists: boolean = false;
@@ -96,7 +96,10 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
         this.publicVariable.storedEmail = localStorage.getItem('userEmail') ?? '';
 
         this.route.params.subscribe((params) => {
-            this.customerId = +params['id'];
+            //this.customerId = +params['id'];
+
+            let decrypted = params['id']
+            this.customerId = atob(decrypted);
         });
 
         if ((this.data = history.state.data)) {

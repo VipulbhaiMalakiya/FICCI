@@ -7,7 +7,7 @@ import { ActivatedRoute, CustomersService, publicVariable } from '../../Export/n
     styleUrls: ['./customer-status.component.css']
 })
 export class CustomerStatusComponent implements OnInit {
-    customerId?: number;
+    customerId?: any;
     data: any;
     publicVariable = new publicVariable();
 
@@ -16,7 +16,10 @@ export class CustomerStatusComponent implements OnInit {
 
     ngOnInit() {
         this.route.params.subscribe(params => {
-            this.customerId = +params['id'];
+            //this.customerId = +params['id'];
+
+            let decrypted = params['id']
+            this.customerId = atob(decrypted);
         });
         this.data = history.state.data;
     }
