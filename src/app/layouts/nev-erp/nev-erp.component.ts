@@ -17,10 +17,13 @@ export class NevErpComponent implements OnInit {
     ngOnInit(): void {
         // Check if the email is stored in local storage
 
-        
-        this.email = this.route.snapshot.paramMap.get('email')
+        this.route.queryParams.subscribe(params => {
+            console.log(params['id']);
+            this.email = params['id'];
+        });
+       // this.email = this.route.snapshot.paramMap.get('email')
         this.isProcess = true;
-        
+        return
         const storedEmail = this.email;
         if (storedEmail) {
             this.isProcess = true;
