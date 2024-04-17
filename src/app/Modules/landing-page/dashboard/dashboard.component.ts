@@ -1223,6 +1223,16 @@ export class DashboardComponent {
         }
     }
 
+    onEditSI(data: invoiceStatusModule): void {
+        if (data.headerId) {
+            const encryptedHeaderId = btoa(data.headerId.toString());
+
+            this.router.navigate(['invoice/credit-memo-status/edit', encryptedHeaderId], { state: { data: data } });
+        } else {
+            console.error('ID is undefined or null');
+        }
+    }
+
     onViewPI(data: invoiceStatusModule): void {
         if (data.headerId) {
             if (this.storedRole == 'Employee') {
