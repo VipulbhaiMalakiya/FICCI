@@ -561,7 +561,7 @@ export class DashboardComponent {
         counts['PENDING WITH FINANCE APPROVER'] = approvedData.length;
         }
         else{
-            const approvedData = data.filter(item => item.impiHeaderInvoiceType == invoiceType && item.impiHeaderCreatedBy == this.publicVariable.storedEmail  && (item.headerStatus === 'APPROVED BY ACCOUNTS APPROVER'
+            const approvedData = data.filter(item => item.impiHeaderInvoiceType == invoiceType  && (item.headerStatus === 'APPROVED BY ACCOUNTS APPROVER'
             || item.headerStatus === 'MAIL SENT BY FINANCE TO CUSTOMER'
             || item.headerStatus === 'APPROVED BY TL'
             || item.headerStatus === 'MAIL SENT BY ACCOUNT TO CUSTOMER'
@@ -607,7 +607,7 @@ export class DashboardComponent {
         }
         else {
             allData = data.filter(item =>
-                item.impiHeaderInvoiceType == invoiceType && item.impiHeaderCreatedBy === this.publicVariable.storedEmail );
+                item.impiHeaderInvoiceType == invoiceType  );
         }
 
         counts['ALL'] = allData.length;
@@ -658,7 +658,7 @@ export class DashboardComponent {
                 }
                 else{
                     filteredData = this.dashboardData.filter((item: any) =>
-                        (item.impiHeaderInvoiceType == this.invoiceType &&   item.impiHeaderCreatedBy == this.publicVariable.storedEmail) && (
+                        (item.impiHeaderInvoiceType == this.invoiceType ) && (
                             item.headerStatus === 'APPROVED BY ACCOUNTS APPROVER'
                             || item.headerStatus === 'MAIL SENT BY ACCOUNT TO CUSTOMER'
                             || item.headerStatus === 'APPROVED BY FINANCE'
@@ -724,7 +724,7 @@ export class DashboardComponent {
 
                 else {
                     filteredData = this.dashboardData.filter((item: any) =>
-                        item.impiHeaderInvoiceType == this.invoiceType && item.impiHeaderCreatedBy === this.publicVariable.storedEmail);
+                        item.impiHeaderInvoiceType == this.invoiceType );
                 }
                 break;
             default:
