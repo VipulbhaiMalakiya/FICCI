@@ -442,21 +442,21 @@ export class DashboardComponent {
                     }
 
                     // Set default status to "DRAFT" if the invoice type changes
-                    if ((invoiceType === 'Tax Invoice' || invoiceType === 'Proforma Invoice') && this.storedRole == 'Approver') {
-
+                    if ((invoiceType === 'Tax Invoice' || invoiceType === 'Proforma Invoice') && this.storedRole === 'Approver') {
                         this.headerStatus = 'FOR APPROVAL';
                         this.invoiceType = 'Tax Invoice';
-                        this.loadInoivceSalesStatusList('FOR APPROVAL')
-
-                    }
-
-
-                    else {
+                        this.loadInoivceStatusList('FOR APPROVAL');
+                    } else if ((invoiceType === 'Tax Invoice' || invoiceType === 'Proforma Invoice') && this.storedRole === 'Admin') {
+                        this.headerStatus = 'APPROVED BY ACCOUNTS APPROVER';
+                        this.invoiceType = 'Tax Invoice';
+                        this.loadInoivceStatusList('APPROVED BY ACCOUNTS APPROVER');
+                    } else {
                         this.headerStatus = 'DRAFT';
                         this.invoiceType = 'Tax Invoice';
-                        this.loadInoivceSalesStatusList('DRAFT');
+                        this.loadInoivceStatusList('DRAFT');
                         this.cd.detectChanges();
                     }
+
 
                     this.countDataByInvoies(this.dashboardData, invoiceType);
                     this.loadInoivceStatusList(this.customerStatus);
