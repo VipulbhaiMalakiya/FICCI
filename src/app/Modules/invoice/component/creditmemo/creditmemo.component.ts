@@ -122,12 +122,25 @@ export class CreditmemoComponent implements OnInit {
         this.loadProjectList();
         this.loadInvoiceSummary();
 
-        this.route.params.subscribe(params => {
+        // this.route.params.subscribe(params => {
 
-            // this.Id = +params['id'];
-            let decrypted = params['id']
-            this.Id = atob(decrypted);
+        //     // this.Id = +params['id'];
+        //     let decrypted = params['id']
+        //     this.Id = atob(decrypted);
+        // });
+
+        this.route.params.subscribe(params => {
+            // Check if 'id' parameter exists
+            if (params && params['id']) {
+                let decrypted = params['id'];
+                this.Id = atob(decrypted);
+                console.log("Decrypted ID:", this.Id); // Log the decrypted ID
+            } else {
+                console.error("ID parameter does not exist.");
+            }
         });
+
+
         if (this.data = history.state.data) {
             this.patchFormData(this.data);
             //console.log(this.data);
@@ -155,7 +168,6 @@ export class CreditmemoComponent implements OnInit {
 
 
                     this.InvoiceSummaryList = response.data;
-                    console.log(this.InvoiceSummaryList);
                     this.PostedTaxInvoiceCount = response.data.length;
                 } else {
                     // Handle case where response data is null or not an array
