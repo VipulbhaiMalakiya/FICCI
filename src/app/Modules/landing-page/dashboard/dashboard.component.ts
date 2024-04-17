@@ -272,7 +272,7 @@ export class DashboardComponent {
             case 'DRAFT':
                 filteredData = this.dashboardData.filter((item: any) =>
                     (item.department === localStorage.getItem('department') ||
-                    item.createdBy === this.publicVariable.storedEmail) &&
+                        item.createdBy === this.publicVariable.storedEmail) &&
                     item.customerStatus === 'DRAFT');
                 break;
             case 'PENDING WITH APPROVER':
@@ -383,7 +383,7 @@ export class DashboardComponent {
 
                     }
 
-                    debugger;
+                    //debugger;
                     if (approveResponse.data && Array.isArray(approveResponse.data))
 
                         approveResponse.data.forEach((element: any) => {
@@ -393,7 +393,7 @@ export class DashboardComponent {
                             }
                         });
 
-                    // debugger;
+                    // //debugger;
                     if (accountResponse.data && Array.isArray(accountResponse.data))
                         accountResponse.data.forEach((element: any) => {
                             if (this.dashboardData.filter(x => x.headerRecordID == element.headerRecordID) == undefined) {
@@ -401,7 +401,7 @@ export class DashboardComponent {
                             }
                         });
                     //  this.invoiceStatuslistData =this.dashboardData;
-                    // debugger;
+                    // //debugger;
                     // console.log(this.dashboardData);
                     // this.invoiceStatuslistData = this.dashboardData.filter(x => (x.headerStatus === 'PENDING WITH TL APPROVER' ||
                     // x.headerStatus === 'PENDING WITH CH APPROVER' ||
@@ -479,6 +479,7 @@ export class DashboardComponent {
 
     loadSalesCreditNote(): void {
         try {
+            this.invoiceStatuslistData = [];
             // Observable for the first API call
             const purchaseInvoiceObservable = this.IAPI.getSalesCreditMemo().pipe(
                 catchError((error: any) => {
@@ -522,13 +523,17 @@ export class DashboardComponent {
                     this.headerStatus = this.customerStatus;
 
 
-                    // Processing the merged data
-                    this.countDataBySalesInvoies(this.dashboardData);
-                    this.loadInoivceSalesStatusList(this.customerStatus);
                     this.loadSalesCreditNoteSummary();
                     this.publicVariable.isProcess = false;
-                    // this.loadInvoiceSummary();
-                    // this.PIloadInvoiceSummary();
+
+                    if (this.dashboardData.length > 0) {
+                        // Processing the merged data
+                        this.countDataBySalesInvoies(this.dashboardData);
+                        this.loadInoivceSalesStatusList(this.customerStatus);
+                    } else {
+
+                    }
+
                 },
                 error: (error: any) => {
                     this.toastr.error('Error loading invoice lists', error.name);
