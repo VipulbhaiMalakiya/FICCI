@@ -805,7 +805,7 @@ export class DashboardComponent {
     //CreditNote
     loadSalesCreditNote(): void {
         try {
-            this.invoiceStatuslistData = [];
+            //this.invoiceStatuslistData = [];
             // Observable for the first API call
             const purchaseInvoiceObservable = this.IAPI.getSalesCreditMemo().pipe(
                 catchError((error: any) => {
@@ -854,8 +854,8 @@ export class DashboardComponent {
 
                     if (this.dashboardData.length > 0) {
                         // Processing the merged data
-                        // this.countDataBySalesInvoies(this.CreditNotedashboardData);
-                        // this.loadInoivceSalesStatusList(this.customerStatus);
+                        this.countDataBySalesInvoies(this.CreditNotedashboardData);
+                        this.loadInoivceSalesStatusList(this.customerStatus);
                     } else {
 
                     }
