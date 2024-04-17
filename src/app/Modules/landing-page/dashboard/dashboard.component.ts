@@ -176,11 +176,11 @@ export class DashboardComponent {
 
                 this.countDataByStatus(this.dashboardData);
 
-                if(this.storedRole  == 'Admin'){
+                if (this.storedRole == 'Admin') {
                     this.loadCustomerStatusList('PENDING WITH APPROVER');
 
                 }
-                else{
+                else {
                     this.loadCustomerStatusList('DRAFT');
                 }
                 this.publicVariable.isProcess = false;
@@ -207,14 +207,12 @@ export class DashboardComponent {
         };
 
         // Filter data for each customer status
-        const draftData = data.filter(item => item.customerStatus === 'DRAFT'
-            && item.department === localStorage.getItem('department')
-        );
+        const draftData = data.filter(item => (item.customerStatus === 'DRAFT') && (item.department === localStorage.getItem('department')));
         counts['DRAFT'] = draftData.length;
 
         const foraprovalData = data.filter((item: any) =>
             (item.customerStatus === 'PENDING WITH ACCOUNTS APPROVER' || item.customerStatus === 'PENDING WITH FINANCE APPROVER')
-            && item.department === localStorage.getItem('department')
+            && (item.department === localStorage.getItem('department'))
         );
         counts['FOR APPROVAL'] = foraprovalData.length;
 
@@ -304,9 +302,9 @@ export class DashboardComponent {
                 if (this.storedRole == 'Admin') {
                     filteredData = this.dashboardData.filter((item: any) =>
                         item.customerStatus === 'PENDING WITH TL APPROVER' ||
-                            item.customerStatus === 'PENDING WITH CH APPROVER' ||
-                            item.customerStatus === 'PENDING WITH ACCOUNTS APPROVER' ||
-                            item.customerStatus === 'PENDING WITH FINANCE APPROVER');
+                        item.customerStatus === 'PENDING WITH CH APPROVER' ||
+                        item.customerStatus === 'PENDING WITH ACCOUNTS APPROVER' ||
+                        item.customerStatus === 'PENDING WITH FINANCE APPROVER');
                 } else {
                     filteredData = this.dashboardData.filter((item: any) =>
                         (item.createdBy === this.publicVariable.storedEmail ||
@@ -468,7 +466,7 @@ export class DashboardComponent {
                     this.publicVariable.isProcess = false;
 
                     if (this.invoiceType == 'Tax Invoice') {
-                       // this.loadInvoiceSummary();
+                        // this.loadInvoiceSummary();
                     }
 
                     if (this.invoiceType == 'Proforma Invoice') {
