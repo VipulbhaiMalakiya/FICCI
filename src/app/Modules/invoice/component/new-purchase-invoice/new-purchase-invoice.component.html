@@ -480,6 +480,11 @@
                             <div *ngIf="shouldShowExpenseError('impiDescription','required')" class="text-danger">This
                                 field is
                                 required</div>
+
+                                <div *ngIf="shouldShowExpenseError('impiDescription', 'alphanumericWithSpaces')"
+                                class="text-danger">
+                                Please enter a valid alphanumeric value.
+                            </div>
                         </div>
                     </div>
 

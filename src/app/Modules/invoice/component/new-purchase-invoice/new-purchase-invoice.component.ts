@@ -94,7 +94,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
             impiGstgroupCode: [null, Validators.required],
             impiHsnsaccode: [null],
             impiUnitPrice: ['', Validators.required],
-            impiDescription: ['', Validators.required],
+            impiDescription: ['', [Validators.required,alphanumericWithSpacesValidator()]],
         })
     }
 
@@ -1002,7 +1002,14 @@ export class NewPurchaseInvoiceComponent implements OnInit {
 
     onSubmit(Action: string): void {
 
-        debugger;
+        // debugger;
+
+        if(this.publicVariable.expenses.length === 0){
+            this.toastr.error('Please add expenses before submitting.', 'Error');
+            window.alert('Please add expenses before submitting.');
+            return
+        }
+
         if (Action !== 'Calculate' && !this.isCalculate) {
             alert("Please Calculate the tax details");
             return
