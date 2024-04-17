@@ -128,10 +128,22 @@ export class NewPurchaseInvoiceComponent implements OnInit {
         this.navDepartment = localStorage.getItem('navDepartment')
         this.navDepartmentArray = this.navDepartment.split('|');
 
+        // this.route.params.subscribe(params => {
+        //     let decrypted = params['id']
+        //     this.Id = atob(decrypted);
+        // });
+
         this.route.params.subscribe(params => {
-            let decrypted = params['id']
-            this.Id = atob(decrypted);
+            // Check if 'id' parameter exists
+            if (params && params['id']) {
+                let decrypted = params['id'];
+                this.Id = atob(decrypted);
+                console.log("Decrypted ID:", this.Id); // Log the decrypted ID
+            } else {
+                console.error("ID parameter does not exist.");
+            }
         });
+
         if (this.data = history.state.data) {
             this.patchFormData(this.data);
             console.log(this.data);

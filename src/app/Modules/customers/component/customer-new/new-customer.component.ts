@@ -95,11 +95,23 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
         this.loadCountryList();
         this.publicVariable.storedEmail = localStorage.getItem('userEmail') ?? '';
 
-        this.route.params.subscribe((params) => {
-            //this.customerId = +params['id'];
+        // this.route.params.subscribe((params) => {
+        //     //this.customerId = +params['id'];
 
-            let decrypted = params['id']
-            this.customerId = atob(decrypted);
+        //     let decrypted = params['id']
+        //     this.customerId = atob(decrypted);
+        // });
+
+
+        this.route.params.subscribe(params => {
+            // Check if 'id' parameter exists
+            if (params && params['id']) {
+                let decrypted = params['id'];
+                this.customerId = atob(decrypted);
+                console.log("Decrypted ID:", this.customerId); // Log the decrypted ID
+            } else {
+                console.error("ID parameter does not exist.");
+            }
         });
 
         if ((this.data = history.state.data)) {
@@ -119,7 +131,7 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
 
     validateGST() {
 
-        
+
         try {
             const gst = this.publicVariable.dataForm.get('GSTRegistrationNo')?.value;
             if(gst.length<15) {alert('Please enter Valid GST No.');
