@@ -1159,7 +1159,9 @@ export class DashboardComponent {
 
     onEdit(data: customerStatusListModel): void {
         if (data.customerId) {
-            this.router.navigate(['customer/status/edit', data.customerId], { state: { data: data } });
+            const encryptedHeaderId = btoa(data.customerId.toString());
+
+            this.router.navigate(['customer/status/edit', encryptedHeaderId], { state: { data: data } });
         } else {
             console.error('ID is undefined or null');
         }
@@ -1167,7 +1169,9 @@ export class DashboardComponent {
 
     onView(data: customerStatusListModel): void {
         if (data.customerId) {
-            this.router.navigate(['customer/status/view', data.customerId], { state: { data: data } });
+            const encryptedHeaderId = btoa(data.customerId.toString());
+
+            this.router.navigate(['customer/status/view', encryptedHeaderId], { state: { data: data } });
         } else {
             console.error('ID is undefined or null');
         }
@@ -1175,7 +1179,9 @@ export class DashboardComponent {
 
     onApproval(data: customerStatusListModel) {
         if (data.customerId) {
-            this.router.navigate(['customer/accounts/remarks/', data.customerId], { state: { data: data } });
+            const encryptedHeaderId = btoa(data.customerId.toString());
+
+            this.router.navigate(['customer/accounts/remarks/', encryptedHeaderId], { state: { data: data } });
         } else {
             console.error('ID is undefined or null');
         }
@@ -1209,7 +1215,9 @@ export class DashboardComponent {
 
     onEditPI(data: invoiceStatusModule): void {
         if (data.headerId) {
-            this.router.navigate(['invoice/status/edit', data.headerId], { state: { data: data } });
+            const encryptedHeaderId = btoa(data.headerId.toString());
+
+            this.router.navigate(['invoice/status/edit', encryptedHeaderId], { state: { data: data } });
         } else {
             console.error('ID is undefined or null');
         }
@@ -1235,10 +1243,13 @@ export class DashboardComponent {
     onViewSales(data: invoiceStatusModule) {
         if (data.headerId) {
             if (this.storedRole == 'Employee') {
-                this.router.navigate(['invoice/credit-memo-status/view', data.headerId], { state: { data: data } });
+                const encryptedHeaderId = btoa(data.headerId.toString());
+
+                this.router.navigate(['invoice/credit-memo-status/view', encryptedHeaderId], { state: { data: data } });
             }
             else {
-                this.router.navigate(['invoice/sales-approval/view', data.headerId], { state: { data: data } });
+                const encryptedHeaderId = btoa(data.headerId.toString());
+                this.router.navigate(['invoice/sales-approval/view', encryptedHeaderId], { state: { data: data } });
             }
         } else {
             console.error('ID is undefined or null');
@@ -1246,7 +1257,9 @@ export class DashboardComponent {
     }
     onApprovalPI(data: invoiceStatusModule): void {
         if (data.headerId) {
-            this.router.navigate(['invoice/approval/view', data.headerId], { state: { data: data } });
+            const encryptedHeaderId = btoa(data.headerId.toString());
+
+            this.router.navigate(['invoice/approval/view', encryptedHeaderId], { state: { data: data } });
         } else {
             console.error('ID is undefined or null');
         }
@@ -1255,7 +1268,9 @@ export class DashboardComponent {
 
     onViewAccountPI(data: invoiceStatusModule): void {
         if (data.headerId) {
-            this.router.navigate(['invoice/accounts/view', data.headerId], { state: { data: data } });
+            const encryptedHeaderId = btoa(data.headerId.toString());
+
+            this.router.navigate(['invoice/accounts/view', encryptedHeaderId], { state: { data: data } });
         } else {
             console.error('ID is undefined or null');
         }
@@ -1263,7 +1278,9 @@ export class DashboardComponent {
 
     InvoicedView(data: any): void {
         if (data.invoice_no) {
-            this.router.navigate(['invoice/tax-invoice/view', data.invoice_no], { state: { data: data } });
+            const encryptedHeaderId = btoa(data.invoice_no.toString());
+
+            this.router.navigate(['invoice/tax-invoice/view', encryptedHeaderId], { state: { data: data } });
         } else {
             console.error('ID is undefined or null');
         }
@@ -1271,7 +1288,9 @@ export class DashboardComponent {
 
     PIInvoicedView(data: any): void {
         if (data.no) {
-            this.router.navigate(['invoice/pi-invoice/view', data.no], { state: { data: data } });
+            const encryptedHeaderId = btoa(data.no.toString());
+
+            this.router.navigate(['invoice/pi-invoice/view', encryptedHeaderId], { state: { data: data } });
         } else {
             console.error('ID is undefined or null');
         }
