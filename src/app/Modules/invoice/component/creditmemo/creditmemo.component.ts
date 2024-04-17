@@ -121,10 +121,10 @@ export class CreditmemoComponent implements OnInit {
     ngOnInit(): void {
         this.loadProjectList();
         this.loadInvoiceSummary();
-        this.route.params.subscribe(params => {
-            
-            // this.Id = +params['id'];
 
+        this.route.params.subscribe(params => {
+
+            // this.Id = +params['id'];
             let decrypted = params['id']
             this.Id = atob(decrypted);
         });
@@ -190,18 +190,19 @@ export class CreditmemoComponent implements OnInit {
             numericValue = integerPart + '.' + decimalPart;
         }
 
+
+
+
         const enteredAmount = parseFloat(numericValue);
+
+
         const totalAmount = parseFloat(this.amount); // Assuming this.totalAmount holds the total amount
 
         if (enteredAmount > totalAmount) {
-            // The entered amount exceeds the total amount
-            // You might want to display an error message or mark the field as invalid
-            // For example:
+
             this.publicVariable.dataForm.controls['creditMemoAmount'].setErrors({ 'exceedsTotal': true });
-            // Replace 'formGroup' with the name of your form group.
         } else {
-            // Clear any error if the entered amount is within the total amount
-            // For example:
+
             this.publicVariable.dataForm.controls['creditMemoAmount'].setErrors(null);
         }
 
@@ -304,7 +305,7 @@ export class CreditmemoComponent implements OnInit {
         //let data  = event.invoice_no;
 
         this.loadTaxInvoiceInformation(event.invoice_no)
-        
+
 
 
     }
@@ -359,13 +360,9 @@ export class CreditmemoComponent implements OnInit {
 
 
     invoicepatchFormData(data: any): void {
-        // console.log(data);
 
-        // let peramiter = {
-        //     gst:'',
-        //     code: ''
-        // }
 
+        this.amount = data.amount;
 
         this.publicVariable.dataForm.patchValue({
 
@@ -379,7 +376,7 @@ export class CreditmemoComponent implements OnInit {
             ImpiHeaderCustomerCity: data.sellToCity,
             ImpiHeaderCustomerPinCode: data.sellToPostCode,
             ImpiHeaderCustomerName:data.sellToCustomerName,
-           
+
 
             // ImpiHeaderCustomerContactPerson: data.impiHeaderCustomerContactPerson,
             // ImpiHeaderCustomerEmailId: data.impiHeaderCustomerEmailId,
@@ -782,17 +779,17 @@ export class CreditmemoComponent implements OnInit {
     onSelectProject() {
         const selectedId = this.publicVariable.dataForm.get('ImpiHeaderProjectCode')?.value;
 
-      
-        if (selectedId) 
+
+        if (selectedId)
         {
-          
+
             this.publicVariable.selectedProjet = this.publicVariable.projectList.find(project => project.code == selectedId);
-           
+
            // alert(this.publicVariable.selectedProjet);
 
-            if (this.publicVariable.selectedProjet) 
+            if (this.publicVariable.selectedProjet)
             {
-              
+
                 this.publicVariable.dataForm.patchValue({
                     ImpiHeaderDepartment: this.publicVariable.selectedProjet.departmentName,
                     ImpiHeaderDivison: this.publicVariable.selectedProjet.divisionName,
@@ -827,7 +824,7 @@ export class CreditmemoComponent implements OnInit {
         (event.target as HTMLInputElement).value = numericValue;
 
     }
-   
+
 
     get itemsFormArray(): FormArray {
         return this.publicVariable.dataForm.get('items') as FormArray;
@@ -1114,7 +1111,7 @@ export class CreditmemoComponent implements OnInit {
 
 
      console.log(this.publicVariable.dataForm.value);
-    
+
         // if (Action !== 'Calculate' && !this.isCalculate) {
         //     alert("Please Calculate the tax details");
         //     return
