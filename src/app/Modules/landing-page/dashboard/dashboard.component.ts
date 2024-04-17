@@ -472,7 +472,7 @@ export class DashboardComponent {
                     }
 
                     if (this.invoiceType == 'Proforma Invoice') {
-                        this.PIloadInvoiceSummary();
+                        //this.PIloadInvoiceSummary();
                     }
 
                     // Set default status to "DRAFT" if the invoice type changes
