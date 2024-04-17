@@ -115,7 +115,9 @@ export class UsersComponent implements OnInit, OnDestroy {
 
     onEdit(user: any): void {
         if (user.imeM_ID) {
-            this.router.navigate(['masters/users/edit', user.imeM_ID], { state: { data: user } });
+            const encryptedHeaderId = btoa(user.imeM_ID.toString());
+
+            this.router.navigate(['masters/users/edit', encryptedHeaderId], { state: { data: user } });
         } else {
             console.error('User ID is undefined or null');
         }

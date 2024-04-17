@@ -12,7 +12,7 @@ import { take } from 'rxjs';
 })
 export class AddComponent implements OnInit {
     publicVariable = new publicVariable();
-    userId!: number;
+    userId?: any;
     deparment: any;
 
     constructor(private fb: FormBuilder,
@@ -52,8 +52,11 @@ export class AddComponent implements OnInit {
             // take(1) // Take only the first emitted value
         ).subscribe(params => {
             if (params && params.get('id')) {
-                this.userId = +params.get('id')!;
+                this.userId = atob(params.get('id')!);
                 //this.fetchUserData(this.userId);
+
+                // let decrypted = params.get('id');
+                // this.userId = atob(decrypted);
             }
         });
 
