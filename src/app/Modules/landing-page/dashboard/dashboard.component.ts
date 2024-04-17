@@ -176,7 +176,13 @@ export class DashboardComponent {
 
                 this.countDataByStatus(this.dashboardData);
 
-                this.loadCustomerStatusList('DRAFT');
+                if(this.storedRole  == 'Admin'){
+                    this.loadCustomerStatusList('PENDING WITH APPROVER');
+
+                }
+                else{
+                    this.loadCustomerStatusList('DRAFT');
+                }
                 this.publicVariable.isProcess = false;
             },
             error: (error: any) => {
@@ -212,23 +218,24 @@ export class DashboardComponent {
         );
         counts['FOR APPROVAL'] = foraprovalData.length;
 
+        let pendingData: any[] = [];
 
-        // const pendingData = data.filter((item: any) =>
-        //     item.createdBy === this.publicVariable.storedEmail
-        //     || item.department === localStorage.getItem('department') &&
-        //     (item.customerStatus === 'PENDING WITH TL APPROVER' ||
-        //         item.customerStatus === 'PENDING WITH CH APPROVER' ||
-        //         item.customerStatus === 'PENDING WITH ACCOUNTS APPROVER' ||
-        //         item.customerStatus === 'PENDING WITH FINANCE APPROVER'));
-        // counts['PENDING WITH TL APPROVER'] = pendingData.length;
+        if (this.storedRole == 'Admin') {
+            pendingData = data.filter((item: any) =>
 
-        const pendingData = data.filter((item: any) =>
-            (item.createdBy === this.publicVariable.storedEmail ||
-                item.department === localStorage.getItem('department')) &&
-            (item.customerStatus === 'PENDING WITH TL APPROVER' ||
+                item.customerStatus === 'PENDING WITH TL APPROVER' ||
                 item.customerStatus === 'PENDING WITH CH APPROVER' ||
                 item.customerStatus === 'PENDING WITH ACCOUNTS APPROVER' ||
-                item.customerStatus === 'PENDING WITH FINANCE APPROVER'));
+                item.customerStatus === 'PENDING WITH FINANCE APPROVER');
+        } else {
+            pendingData = data.filter((item: any) =>
+                (item.createdBy === this.publicVariable.storedEmail ||
+                    item.department === localStorage.getItem('department')) &&
+                (item.customerStatus === 'PENDING WITH TL APPROVER' ||
+                    item.customerStatus === 'PENDING WITH CH APPROVER' ||
+                    item.customerStatus === 'PENDING WITH ACCOUNTS APPROVER' ||
+                    item.customerStatus === 'PENDING WITH FINANCE APPROVER'));
+        }
 
         counts['PENDING WITH TL APPROVER'] = pendingData.length;
 
@@ -248,9 +255,26 @@ export class DashboardComponent {
         );
         counts['REJECTED BY CH APPROVER'] = rejectedData.length;
 
+
+
+
         // Calculate total count
-        const allData = data;
+
+        let allData = [];
+
+        if (this.storedRole == "Admin") {
+            allData = data.filter(item =>
+                item.customerStatus != 'DRAFT');
+        }
+        else {
+            allData = data;
+        }
+
         counts['ALL'] = allData.length;
+
+        // Calculate total count
+        // const allData = data;
+        // counts['ALL'] = allData.length;
 
         // Update counts
         this.isDRAFT = counts['DRAFT'];
@@ -276,13 +300,23 @@ export class DashboardComponent {
                 break;
             case 'PENDING WITH APPROVER':
 
-                filteredData = this.dashboardData.filter((item: any) =>
-                    (item.createdBy === this.publicVariable.storedEmail ||
-                        item.department === localStorage.getItem('department')) &&
-                    (item.customerStatus === 'PENDING WITH TL APPROVER' ||
-                        item.customerStatus === 'PENDING WITH CH APPROVER' ||
-                        item.customerStatus === 'PENDING WITH ACCOUNTS APPROVER' ||
-                        item.customerStatus === 'PENDING WITH FINANCE APPROVER'));
+
+                if (this.storedRole == 'Admin') {
+                    filteredData = this.dashboardData.filter((item: any) =>
+                        item.customerStatus === 'PENDING WITH TL APPROVER' ||
+                            item.customerStatus === 'PENDING WITH CH APPROVER' ||
+                            item.customerStatus === 'PENDING WITH ACCOUNTS APPROVER' ||
+                            item.customerStatus === 'PENDING WITH FINANCE APPROVER');
+                } else {
+                    filteredData = this.dashboardData.filter((item: any) =>
+                        (item.createdBy === this.publicVariable.storedEmail ||
+                            item.department === localStorage.getItem('department')) &&
+                        (item.customerStatus === 'PENDING WITH TL APPROVER' ||
+                            item.customerStatus === 'PENDING WITH CH APPROVER' ||
+                            item.customerStatus === 'PENDING WITH ACCOUNTS APPROVER' ||
+                            item.customerStatus === 'PENDING WITH FINANCE APPROVER'));
+                }
+
 
                 break;
 
@@ -562,7 +596,7 @@ export class DashboardComponent {
             allData = data.filter(item =>
                 item.impiHeaderInvoiceType == invoiceType && item.headerStatus != 'DRAFT');
         }
-        else if(this.storedRole == "Admin"){
+        else if (this.storedRole == "Admin") {
             allData = data.filter(item =>
                 (item.impiHeaderInvoiceType == invoiceType) && (item.headerStatus == 'REJECTED BY TL APPROVER' || item.headerStatus == 'APPROVED BY TL' || item.headerStatus == 'CANCELLATION APPROVED BY TL' || item.headerStatus == 'CANCELLATION REJECTED BY TL'));
         }
@@ -662,7 +696,7 @@ export class DashboardComponent {
                     filteredData = this.dashboardData.filter((item: any) =>
                         item.impiHeaderInvoiceType == this.invoiceType && item.headerStatus != 'DRAFT');
                 }
-                else if(this.storedRole == "Admin"){
+                else if (this.storedRole == "Admin") {
                     filteredData = this.dashboardData.filter(item =>
                         (item.impiHeaderInvoiceType == this.invoiceType) && (item.headerStatus == 'REJECTED BY TL APPROVER' || item.headerStatus == 'APPROVED BY TL' || item.headerStatus == 'CANCELLATION APPROVED BY TL' || item.headerStatus == 'CANCELLATION REJECTED BY TL'));
                 }
