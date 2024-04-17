@@ -449,6 +449,8 @@ export class DashboardComponent {
                         this.loadInoivceSalesStatusList('FOR APPROVAL')
 
                     }
+
+
                     else {
                         this.headerStatus = 'DRAFT';
                         this.invoiceType = 'Tax Invoice';
