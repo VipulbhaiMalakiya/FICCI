@@ -430,7 +430,8 @@ export class CreditmemoComponent implements OnInit {
 
     patchFormData(data: any): void {
 
-        console.log(data);
+
+        this.amount = data.impiHeaderTotalInvoiceAmount;
 
         this.publicVariable.dataForm.patchValue({
 
