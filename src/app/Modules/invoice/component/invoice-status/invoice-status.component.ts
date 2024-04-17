@@ -92,7 +92,9 @@ export class InvoiceStatusComponent implements OnInit {
 
     onEdit(data: invoiceStatusModule): void {
         if (data.headerId) {
-            this.router.navigate(['invoice/status/edit', data.headerId], { state: { data: data } });
+            const encryptedHeaderId = btoa(data.headerId.toString());
+
+            this.router.navigate(['invoice/status/edit', encryptedHeaderId], { state: { data: data } });
         } else {
             console.error('ID is undefined or null');
         }

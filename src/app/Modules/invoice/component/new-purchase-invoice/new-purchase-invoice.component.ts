@@ -14,7 +14,7 @@ import { ValidationPopupComponent } from '../../View/validation-popup/validation
 export class NewPurchaseInvoiceComponent implements OnInit {
 
     publicVariable = new publicVariable();
-    Id?: number;
+    Id?: any;
     data: any;
     public isEditing: boolean = false;
     uploadedFiles: any[] = [];
@@ -128,7 +128,8 @@ export class NewPurchaseInvoiceComponent implements OnInit {
         this.navDepartmentArray = this.navDepartment.split('|');
 
         this.route.params.subscribe(params => {
-            this.Id = +params['id'];
+            let decrypted = params['id']
+            this.Id = atob(decrypted);
         });
         if (this.data = history.state.data) {
             this.patchFormData(this.data);
