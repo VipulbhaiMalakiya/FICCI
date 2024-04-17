@@ -74,7 +74,9 @@ export class SalesCreditNoteNavisionComponent implements OnInit {
 
     onView(data: any): void {
         if (data.no) {
-            this.router.navigate(['invoice/sales-navision/view', data.no], { state: { data: data } });
+            const encryptedHeaderId = btoa(data.no.toString());
+
+            this.router.navigate(['invoice/sales-navision/view', encryptedHeaderId], { state: { data: data } });
         } else {
             console.error('ID is undefined or null');
         }
@@ -107,10 +109,11 @@ export class SalesCreditNoteNavisionComponent implements OnInit {
     }
 
     onEdit(data: invoiceStatusModule): void {
-        console.log(data);
 
         if (data.headerId) {
-            this.router.navigate(['invoice/credit-memo-status/edit', data.headerId], { state: { data: data } });
+            const encryptedHeaderId = btoa(data.headerId.toString());
+
+            this.router.navigate(['invoice/credit-memo-status/edit', encryptedHeaderId], { state: { data: data } });
         } else {
             console.error('ID is undefined or null');
         }

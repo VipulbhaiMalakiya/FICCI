@@ -65,7 +65,9 @@ export class CreditMemoStatusComponent implements OnInit {
 
     onView(data: invoiceStatusModule): void {
         if (data.headerId) {
-            this.router.navigate(['invoice/credit-memo-status/view', data.headerId], { state: { data: data } });
+            const encryptedHeaderId = btoa(data.headerId.toString());
+
+            this.router.navigate(['invoice/credit-memo-status/view', encryptedHeaderId], { state: { data: data } });
         } else {
             console.error('ID is undefined or null');
         }
@@ -98,10 +100,11 @@ export class CreditMemoStatusComponent implements OnInit {
     }
 
     onEdit(data: invoiceStatusModule): void {
-        console.log(data);
 
         if (data.headerId) {
-            this.router.navigate(['invoice/credit-memo-status/edit', data.headerId], { state: { data: data } });
+            const encryptedHeaderId = btoa(data.headerId.toString());
+
+            this.router.navigate(['invoice/credit-memo-status/edit', encryptedHeaderId], { state: { data: data } });
         } else {
             console.error('ID is undefined or null');
         }

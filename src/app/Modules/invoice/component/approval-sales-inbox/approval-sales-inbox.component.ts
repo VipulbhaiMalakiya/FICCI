@@ -71,7 +71,9 @@ export class ApprovalSalesInboxComponent implements OnInit {
 
     onView(data: invoiceStatusModule): void {
         if (data.headerId) {
-            this.router.navigate(['invoice/sales-approval/view', data.headerId], { state: { data: data } });
+            const encryptedHeaderId = btoa(data.headerId.toString());
+
+            this.router.navigate(['invoice/sales-approval/view', encryptedHeaderId], { state: { data: data } });
         } else {
             console.error('ID is undefined or null');
         }

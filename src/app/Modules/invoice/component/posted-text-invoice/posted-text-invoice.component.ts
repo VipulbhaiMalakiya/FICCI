@@ -126,7 +126,9 @@ export class PostedTextInvoiceComponent {
 
     InvoicedView(data: any): void {
         if (data.invoice_no) {
-            this.router.navigate(['invoice/tax-invoice/view', data.invoice_no], { state: { data: data } });
+            const encryptedHeaderId = btoa(data.invoice_no.toString());
+
+            this.router.navigate(['invoice/tax-invoice/view', encryptedHeaderId], { state: { data: data } });
         } else {
             console.error('ID is undefined or null');
         }

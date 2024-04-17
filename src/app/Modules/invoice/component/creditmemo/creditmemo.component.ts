@@ -14,7 +14,7 @@ import { ValidatorFn, AbstractControl, FormArray } from '@angular/forms';
 export class CreditmemoComponent implements OnInit {
 
     publicVariable = new publicVariable();
-    Id?: number;
+    Id?: any;
     data: any;
     public isEditing: boolean = false;
     uploadedFiles: any[] = [];
@@ -122,7 +122,11 @@ export class CreditmemoComponent implements OnInit {
         this.loadProjectList();
         this.loadInvoiceSummary();
         this.route.params.subscribe(params => {
-            this.Id = +params['id'];
+            
+            // this.Id = +params['id'];
+
+            let decrypted = params['id']
+            this.Id = atob(decrypted);
         });
         if (this.data = history.state.data) {
             this.patchFormData(this.data);

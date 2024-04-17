@@ -65,7 +65,9 @@ export class AccountsInboxComponent implements OnInit {
 
     onView(data: invoiceStatusModule): void {
         if (data.headerId) {
-            this.router.navigate(['invoice/accounts/view', data.headerId], { state: { data: data } });
+            const encryptedHeaderId = btoa(data.headerId.toString());
+
+            this.router.navigate(['invoice/accounts/view', encryptedHeaderId], { state: { data: data } });
         } else {
             console.error('ID is undefined or null');
         }

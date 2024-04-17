@@ -90,7 +90,9 @@ export class PiInvoiceComponent {
 
     InvoicedView(data: any): void {
         if (data.no) {
-            this.router.navigate(['invoice/pi-invoice/view', data.no], { state: { data: data } });
+            const encryptedHeaderId = btoa(data.no.toString());
+
+            this.router.navigate(['invoice/pi-invoice/view', encryptedHeaderId], { state: { data: data } });
         } else {
             console.error('ID is undefined or null');
         }
