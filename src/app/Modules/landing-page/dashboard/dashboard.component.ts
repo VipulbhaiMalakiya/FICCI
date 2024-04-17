@@ -724,12 +724,12 @@ export class DashboardComponent {
 
                 else {
                     filteredData = this.dashboardData.filter((item: any) =>
-                        item.impiHeaderInvoiceType == this.invoiceType);
+                        item.impiHeaderInvoiceType == this.invoiceType && item.impiHeaderCreatedBy === this.publicVariable.storedEmail);
                 }
                 break;
             default:
                 filteredData = this.dashboardData.filter((item: any) =>
-                    item.impiHeaderInvoiceType == this.invoiceType);
+                    item.impiHeaderInvoiceType == this.invoiceType );
                 break;
         }
 
