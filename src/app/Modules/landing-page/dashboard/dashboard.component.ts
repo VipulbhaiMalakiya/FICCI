@@ -510,7 +510,6 @@ export class DashboardComponent {
                     // Concatenate approveResponse.data with dashboardData if it's iterable
                     if (approveResponse.data && Array.isArray(approveResponse.data)) {
                         this.dashboardData = [...this.dashboardData, ...approveResponse.data];
-                        console.log(this.dashboardData);
 
                     } else {
                         console.warn('Approve response data is null or not iterable');
