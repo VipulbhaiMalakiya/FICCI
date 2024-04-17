@@ -531,8 +531,8 @@ export class DashboardComponent {
         const draftData = data.filter(item => item.headerStatus === 'DRAFT' && item.impiHeaderInvoiceType == invoiceType);
         counts['DRAFT'] = draftData.length;
         const pendingData = data.filter(item =>
-            item.impiHeaderCreatedBy === this.publicVariable.storedEmail &&
-            item.impiHeaderInvoiceType == invoiceType &&
+            (item.impiHeaderCreatedBy === this.publicVariable.storedEmail &&
+            item.impiHeaderInvoiceType == invoiceType) &&
             (item.headerStatus === 'PENDING WITH TL APPROVER' ||
                 item.headerStatus === 'PENDING WITH CH APPROVER' ||
                 item.headerStatus === 'PENDING WITH ACCOUNTS APPROVER' ||
@@ -541,18 +541,13 @@ export class DashboardComponent {
                 || item.headerStatus === 'REQUEST TAX INVOICE\n'));
         counts['PENDING WITH TL APPROVER'] = pendingData.length;
 
-        const forapproval = data.filter(item => item.impiHeaderInvoiceType == invoiceType && (item.headerStatus === 'PENDING WITH TL APPROVER'
+        const forapproval = data.filter(item => item.impiHeaderInvoiceType == invoiceType && 
+            (item.headerStatus === 'PENDING WITH TL APPROVER'
             || item.headerStatus === 'PENDING WITH CH APPROVER'
             || item.headerStatus === 'PENDING WITH ACCOUNTS APPROVER'
             || item.headerStatus === 'PENDING WITH FINANCE APPROVER'
             || item.headerStatus === 'CANCEL BY EMPLOYEE'
             || item.headerStatus === 'REQUEST TAX INVOICE\n'
-
-
-
-
-
-
         ));
         counts['FOR APPROVAL'] = forapproval.length;
 
@@ -600,7 +595,7 @@ export class DashboardComponent {
         }
         else {
             allData = data.filter(item =>
-                item.impiHeaderInvoiceType == invoiceType);
+                item.impiHeaderInvoiceType == invoiceType && item.impiHeaderCreatedBy === this.publicVariable.storedEmail );
         }
 
         counts['ALL'] = allData.length;
