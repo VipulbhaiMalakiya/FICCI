@@ -468,7 +468,7 @@ export class DashboardComponent {
                     this.publicVariable.isProcess = false;
 
                     if (this.invoiceType == 'Tax Invoice') {
-                        this.loadInvoiceSummary();
+                       // this.loadInvoiceSummary();
                     }
 
                     if (this.invoiceType == 'Proforma Invoice') {
