@@ -541,7 +541,7 @@ export class DashboardComponent {
                 || item.headerStatus === 'REQUEST TAX INVOICE\n'));
         counts['PENDING WITH TL APPROVER'] = pendingData.length;
 
-        const forapproval = data.filter(item => item.impiHeaderInvoiceType == invoiceType && 
+        const forapproval = data.filter(item => item.impiHeaderInvoiceType == invoiceType &&
             (item.headerStatus === 'PENDING WITH TL APPROVER'
             || item.headerStatus === 'PENDING WITH CH APPROVER'
             || item.headerStatus === 'PENDING WITH ACCOUNTS APPROVER'
@@ -551,13 +551,25 @@ export class DashboardComponent {
         ));
         counts['FOR APPROVAL'] = forapproval.length;
 
-        const approvedData = data.filter(item => item.impiHeaderInvoiceType == invoiceType && (item.headerStatus === 'APPROVED BY ACCOUNTS APPROVER'
+        if(this.publicVariable.storedRole == 'Approver'){
+            const approvedData = data.filter(item => (item.impiHeaderInvoiceType == invoiceType)   && (item.headerStatus === 'APPROVED BY ACCOUNTS APPROVER'
             || item.headerStatus === 'MAIL SENT BY FINANCE TO CUSTOMER'
             || item.headerStatus === 'APPROVED BY TL'
             || item.headerStatus === 'MAIL SENT BY ACCOUNT TO CUSTOMER'
             || item.headerStatus === 'APPROVED BY FINANCE'
         ));
         counts['PENDING WITH FINANCE APPROVER'] = approvedData.length;
+        }
+        else{
+            const approvedData = data.filter(item => item.impiHeaderInvoiceType == invoiceType && item.impiHeaderCreatedBy == this.publicVariable.storedEmail  && (item.headerStatus === 'APPROVED BY ACCOUNTS APPROVER'
+            || item.headerStatus === 'MAIL SENT BY FINANCE TO CUSTOMER'
+            || item.headerStatus === 'APPROVED BY TL'
+            || item.headerStatus === 'MAIL SENT BY ACCOUNT TO CUSTOMER'
+            || item.headerStatus === 'APPROVED BY FINANCE'
+        ));
+        counts['PENDING WITH FINANCE APPROVER'] = approvedData.length;
+        }
+
 
         const rejectedData = data.filter(item => item.impiHeaderInvoiceType == invoiceType && (item.headerStatus === 'REJECTED BY TL APPROVER'
             || item.headerStatus === 'REJECTED BY CH APPROVER'
@@ -632,15 +644,31 @@ export class DashboardComponent {
                         || item.headerStatus == 'REQUEST TAX INVOICE\n'
                     ));
                 break;
+
+
             case 'APPROVED BY ACCOUNTS APPROVER':
-                filteredData = this.dashboardData.filter((item: any) =>
-                    item.impiHeaderInvoiceType == this.invoiceType && (
-                        item.headerStatus === 'APPROVED BY ACCOUNTS APPROVER'
-                        || item.headerStatus === 'MAIL SENT BY ACCOUNT TO CUSTOMER'
-                        || item.headerStatus === 'APPROVED BY FINANCE'
-                        || item.headerStatus === 'APPROVED BY TL'
-                        || item.headerStatus === 'MAIL SENT BY FINANCE TO CUSTOMER'));
+                if(this.publicVariable.storedRole == 'Approver'){
+                    filteredData = this.dashboardData.filter((item: any) =>
+                        (item.impiHeaderInvoiceType == this.invoiceType ) && (
+                            item.headerStatus === 'APPROVED BY ACCOUNTS APPROVER'
+                            || item.headerStatus === 'MAIL SENT BY ACCOUNT TO CUSTOMER'
+                            || item.headerStatus === 'APPROVED BY FINANCE'
+                            || item.headerStatus === 'APPROVED BY TL'
+                            || item.headerStatus === 'MAIL SENT BY FINANCE TO CUSTOMER'));
+                }
+                else{
+                    filteredData = this.dashboardData.filter((item: any) =>
+                        (item.impiHeaderInvoiceType == this.invoiceType &&   item.impiHeaderCreatedBy == this.publicVariable.storedEmail) && (
+                            item.headerStatus === 'APPROVED BY ACCOUNTS APPROVER'
+                            || item.headerStatus === 'MAIL SENT BY ACCOUNT TO CUSTOMER'
+                            || item.headerStatus === 'APPROVED BY FINANCE'
+                            || item.headerStatus === 'APPROVED BY TL'
+                            || item.headerStatus === 'MAIL SENT BY FINANCE TO CUSTOMER'));
+                }
+
                 break;
+
+
             case 'REJECTED BY CH APPROVER':
                 filteredData = this.dashboardData.filter((item: any) =>
                     // item.createdBy === this.publicVariable.storedEmail &&
