@@ -11,7 +11,7 @@ import { NevErpComponent } from './layouts/nev-erp/nev-erp.component';
 
 const routes: Routes = [
 
-    { path: 'UserName', component: NevErpComponent },
+    { path: 'email/:email', component: NevErpComponent },
     { path: 'login', component: LoginComponent },
     
     {

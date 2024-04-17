@@ -824,6 +824,31 @@ header.login-page{ position:absolute; top: 0; width:100%; z-index: 9; }
 .note-para{ margin-top: 20px; margin-bottom: 20px; }
 .note-para p{ font-size:13px; font-weight: 500; color: #111; margin-bottom: 0px; }
 
+/*-----------loading page-----------*/
+
+.loadingpage-sec {
+    padding:10px 41px;
+    background:rgb(255 255 255 / 70%);
+    height: 100vh;
+    position: fixed;
+	overflow: hidden;
+	width: 100%;
+	z-index: 99;
+}
+
+.loading-text {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.loading-text h1{ text-transform: uppercase; font-weight: 700; font-size:34px; color: #001d52; } 
+.loading-icon{ margin-top: 20px; font-size: 20px; color:#E05717; }
+.spinner-border{ margin-right:8px; vertical-align: middle; }
+
+
+
 
 
 
