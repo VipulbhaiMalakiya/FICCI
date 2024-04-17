@@ -475,91 +475,6 @@ export class DashboardComponent {
             this.publicVariable.isProcess = false;
         }
     }
-
-
-
-
-    onCreditSendEmail(dataItem: any) {
-        this.sendEmailCredit(dataItem);
-    }
-
-    sendEmailCredit(dataItem: any) {
-        this.publicVariable.isProcess = true;
-
-        const modalRef = this.modalService.open(CreditSalesEmailComponent, { size: "xl" });
-        var componentInstance = modalRef.componentInstance as CreditSalesEmailComponent;
-        componentInstance.isEmail = dataItem;
-        modalRef.result.then((data: any) => {
-            if (data) {
-
-                const newData = data;
-                const formData = new FormData();
-                formData.append('MailTo', newData.emailTo);
-                formData.append('MailSubject', newData.subject);
-                formData.append('MailBody', newData.body);
-                formData.append('LoginId', this.publicVariable.storedEmail);
-                formData.append('MailCC', newData.MailCC);
-                formData.append('ResourceType', 'Invoice');
-                formData.append('ResourceId', '1');
-
-                newData.attachment.forEach((file: any) => {
-                    if (file instanceof File) {
-                        formData.append('Attachments', file);
-                    } else {
-
-                        const base64Data = file.attachment; // Your base64 encoded attachment data
-                        const decodedData = atob(base64Data); // Decode base64 data
-
-                        // Convert the decoded data to Uint8Array
-                        const bytes = new Uint8Array(decodedData.length);
-                        for (let i = 0; i < decodedData.length; i++) {
-                            bytes[i] = decodedData.charCodeAt(i);
-                        }
-
-                        // Create a Blob from the Uint8Array
-                        const blob = new Blob([bytes.buffer], { type: 'application/pdf' });
-
-                        // Create a File object with a unique name
-                        file = new File([blob], `${file.name}.${file.type}`, { type: 'application/pdf' });
-
-                        formData.append('Attachments', file);
-                    }
-                });
-
-
-
-                this.publicVariable.isProcess = true;
-
-                this.publicVariable.Subscription.add(
-                    this.IAPI.sendEmail(formData).subscribe({
-                        next: (res: any) => {
-                            if (res.status === true) {
-                                this.toastr.success(res.message, 'Success');
-                            } else {
-                                this.toastr.error(res.message, 'Error');
-                            }
-                        },
-                        error: (error: any) => {
-                            this.toastr.error(error.error.message || 'An error occurred. Please try again later.', 'Error');
-                        },
-                        complete: () => {
-                            this.publicVariable.isProcess = false;
-                        }
-                    })
-                );
-            }
-        }).catch(() => {
-            this.publicVariable.isProcess = false;
-        });
-    }
-
-    onCreditNoteView(data: any): void {
-        if (data.no) {
-            this.router.navigate(['invoice/sales-navision/view', data.no], { state: { data: data } });
-        } else {
-            console.error('ID is undefined or null');
-        }
-    }
     countDataByInvoies(data: any[], invoiceType: any): void {
 
 
@@ -646,6 +561,10 @@ export class DashboardComponent {
         if (this.storedRole == "Approver") {
             allData = data.filter(item =>
                 item.impiHeaderInvoiceType == invoiceType && item.headerStatus != 'DRAFT');
+        }
+        else if(this.storedRole == "Admin"){
+            allData = data.filter(item =>
+                (item.impiHeaderInvoiceType == invoiceType) && (item.headerStatus == 'REJECTED BY TL APPROVER' || item.headerStatus == 'APPROVED BY TL' || item.headerStatus == 'CANCELLATION APPROVED BY TL' || item.headerStatus == 'CANCELLATION REJECTED BY TL'));
         }
         else {
             allData = data.filter(item =>
@@ -737,10 +656,17 @@ export class DashboardComponent {
                 break;
             case 'ALL':
 
+
+
                 if (this.storedRole == "Approver") {
                     filteredData = this.dashboardData.filter((item: any) =>
                         item.impiHeaderInvoiceType == this.invoiceType && item.headerStatus != 'DRAFT');
                 }
+                else if(this.storedRole == "Admin"){
+                    filteredData = this.dashboardData.filter(item =>
+                        (item.impiHeaderInvoiceType == this.invoiceType) && (item.headerStatus == 'REJECTED BY TL APPROVER' || item.headerStatus == 'APPROVED BY TL' || item.headerStatus == 'CANCELLATION APPROVED BY TL' || item.headerStatus == 'CANCELLATION REJECTED BY TL'));
+                }
+
                 else {
                     filteredData = this.dashboardData.filter((item: any) =>
                         item.impiHeaderInvoiceType == this.invoiceType);
@@ -757,6 +683,92 @@ export class DashboardComponent {
         // this.PICount = filteredData.length;
 
     }
+
+
+
+
+    onCreditSendEmail(dataItem: any) {
+        this.sendEmailCredit(dataItem);
+    }
+
+    sendEmailCredit(dataItem: any) {
+        this.publicVariable.isProcess = true;
+
+        const modalRef = this.modalService.open(CreditSalesEmailComponent, { size: "xl" });
+        var componentInstance = modalRef.componentInstance as CreditSalesEmailComponent;
+        componentInstance.isEmail = dataItem;
+        modalRef.result.then((data: any) => {
+            if (data) {
+
+                const newData = data;
+                const formData = new FormData();
+                formData.append('MailTo', newData.emailTo);
+                formData.append('MailSubject', newData.subject);
+                formData.append('MailBody', newData.body);
+                formData.append('LoginId', this.publicVariable.storedEmail);
+                formData.append('MailCC', newData.MailCC);
+                formData.append('ResourceType', 'Invoice');
+                formData.append('ResourceId', '1');
+
+                newData.attachment.forEach((file: any) => {
+                    if (file instanceof File) {
+                        formData.append('Attachments', file);
+                    } else {
+
+                        const base64Data = file.attachment; // Your base64 encoded attachment data
+                        const decodedData = atob(base64Data); // Decode base64 data
+
+                        // Convert the decoded data to Uint8Array
+                        const bytes = new Uint8Array(decodedData.length);
+                        for (let i = 0; i < decodedData.length; i++) {
+                            bytes[i] = decodedData.charCodeAt(i);
+                        }
+
+                        // Create a Blob from the Uint8Array
+                        const blob = new Blob([bytes.buffer], { type: 'application/pdf' });
+
+                        // Create a File object with a unique name
+                        file = new File([blob], `${file.name}.${file.type}`, { type: 'application/pdf' });
+
+                        formData.append('Attachments', file);
+                    }
+                });
+
+
+
+                this.publicVariable.isProcess = true;
+
+                this.publicVariable.Subscription.add(
+                    this.IAPI.sendEmail(formData).subscribe({
+                        next: (res: any) => {
+                            if (res.status === true) {
+                                this.toastr.success(res.message, 'Success');
+                            } else {
+                                this.toastr.error(res.message, 'Error');
+                            }
+                        },
+                        error: (error: any) => {
+                            this.toastr.error(error.error.message || 'An error occurred. Please try again later.', 'Error');
+                        },
+                        complete: () => {
+                            this.publicVariable.isProcess = false;
+                        }
+                    })
+                );
+            }
+        }).catch(() => {
+            this.publicVariable.isProcess = false;
+        });
+    }
+
+    onCreditNoteView(data: any): void {
+        if (data.no) {
+            this.router.navigate(['invoice/sales-navision/view', data.no], { state: { data: data } });
+        } else {
+            console.error('ID is undefined or null');
+        }
+    }
+
 
     //CreditNote
     loadSalesCreditNote(): void {
