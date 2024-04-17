@@ -4,6 +4,7 @@ import { AbstractControl, FormArray, FormGroup, ValidatorFn } from '@angular/for
 import { finalize, timeout } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { ValidationPopupComponent } from '../../View/validation-popup/validation-popup.component';
+import { noSpecialCharactersValidator } from '../../Pipe/noSpecialCharactersValidator';
 
 
 @Component({
@@ -94,7 +95,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
             impiGstgroupCode: [null, Validators.required],
             impiHsnsaccode: [null],
             impiUnitPrice: ['', Validators.required],
-            impiDescription: ['', [Validators.required,alphanumericWithSpacesValidator()]],
+            impiDescription: ['', [Validators.required,noSpecialCharactersValidator()]],
         })
     }
 
