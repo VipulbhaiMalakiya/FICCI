@@ -24,36 +24,14 @@ export class LoginComponent implements OnInit {
 
     ngOnInit(): void {
         // Check if the email is stored in local storage
-
-        // const storedEmail = localStorage.getItem('userEmail');
-        // if (storedEmail) {
-        //     this.isProcess = true;
-        //     this.authService.navisionlogin(storedEmail).subscribe(
-        //         (response) => {
-        //             if (response.error) {
-        //                 this.error = response.error;
-        //                 this.isProcess = false;
-        //             } else {
-        //                 this.router.navigate(['/dashboard']); // Redirect to the dashboard
-        //                 this.toastr.success('Logged in successfully', 'Success');
-        //                 this.isProcess = false;
-
-        //             }
-        //         },
-        //         (error) => {
-        //             this.isProcess = false;
-        //             this.toastr.error('Login failed', 'Error')
-        //             this.router.navigate(['/unauthorized']); // Redirect to the dashboard
-
-        //         }
-        //     );
-
-
-        // }else{
-        //    // this.router.navigate(['/unauthorized']); // Redirect to the dashboard
-
-        // }
+        const storedEmail = localStorage.getItem('userEmail');
+        if (storedEmail) {
+            this.router.navigate(['/dashboard']); // Redirect to the dashboard
+        } else {
+            this.router.navigate(['/login']); // Redirect to the login page
+        }
     }
+
 
     private initializeForm(): void {
         this.dataForm = this.fb.group({
