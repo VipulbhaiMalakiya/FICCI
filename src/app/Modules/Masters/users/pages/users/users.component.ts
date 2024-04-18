@@ -113,6 +113,10 @@ export class UsersComponent implements OnInit, OnDestroy {
 
     }
 
+    calculateIndex(page: number, index: number): number {
+        return (page - 1) * this.publicVariable.tableSize + index + 1;
+    }
+
     onEdit(user: any): void {
         if (user.imeM_ID) {
             const encryptedHeaderId = btoa(user.imeM_ID.toString());

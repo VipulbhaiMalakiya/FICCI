@@ -54,7 +54,7 @@
                     <tbody>
                         <tr
                             *ngFor="let user of  this.publicVariable.userlist | searchFilter: publicVariable.searchText| paginate: {itemsPerPage: publicVariable.tableSize,currentPage: publicVariable.page,totalItems: publicVariable.count};let i = index">
-                            <td>{{i + 1}}</td>
+                            <td>{{ calculateIndex(publicVariable.page, i)}}</td>
                             <td>{{ user.imeM_EmpId }}</td>
                             <td>{{ user.imeM_Name | titlecase}}</td>
                             <!-- <td>{{ user.imeM_Email |titlecase}}</td> -->
