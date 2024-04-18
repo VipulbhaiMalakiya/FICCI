@@ -270,6 +270,10 @@ export class SalesCreditNoteNavisionComponent implements OnInit {
         });
     }
 
+    calculateIndex(page: number, index: number): number {
+        return (page - 1) * this.publicVariable.tableSize + index + 1;
+    }
+
 
     onSendEmail(dataItem: any) {
         this.sendEmail(dataItem);
