@@ -91,6 +91,9 @@ export class InvoiceStatusComponent implements OnInit {
 
     }
 
+    calculateIndex(page: number, index: number): number {
+        return (page - 1) * this.publicVariable.tableSize + index + 1;
+    }
     onEdit(data: invoiceStatusModule): void {
         if (data.headerId) {
             const encryptedHeaderId = btoa(data.headerId.toString());
