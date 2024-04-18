@@ -99,6 +99,10 @@ export class StatusCustomerComponent implements OnInit {
 
     }
 
+    calculateIndex(page: number, index: number): number {
+        return (page - 1) * this.publicVariable.tableSize + index + 1;
+    }
+
     onEdit(data: customerStatusListModel): void {
         if (data.customerId) {
             const encryptedHeaderId = btoa(data.customerId.toString());
