@@ -65,7 +65,7 @@
                 <tbody>
                     <tr
                         *ngFor="let d of  this.publicVariable.invoiceStatuslistData | searchFilter: publicVariable.searchText| paginate: {itemsPerPage: publicVariable.tableSize,currentPage: publicVariable.page,totalItems: publicVariable.count};let i = index">
-                        <td>{{i + 1}}</td>
+                        <td>{{calculateIndex(publicVariable.page, i)}}</td>
                         <td>{{d.headerRecordID}}</td>
                         <td>{{d.impiHeaderInvoiceType | titlecase}}</td>
                         <td>{{d.impiHeaderProjectCode}}</td>

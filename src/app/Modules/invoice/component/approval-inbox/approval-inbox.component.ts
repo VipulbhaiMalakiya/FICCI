@@ -29,7 +29,9 @@ export class ApprovalInboxComponent implements OnInit {
         this.loadApproveInvoiceList();
     }
 
-
+    calculateIndex(page: number, index: number): number {
+        return (page - 1) * this.publicVariable.tableSize + index + 1;
+    }
     loadApproveInvoiceList(): void {
         const subscription = this.API.getApproveInvoice().pipe(
             timeout(120000), // Timeout set to 2 minutes (120000 milliseconds)

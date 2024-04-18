@@ -69,6 +69,10 @@ export class ApprovalSalesInboxComponent implements OnInit {
         this.publicVariable.Subscription.add(subscription);
     }
 
+    calculateIndex(page: number, index: number): number {
+        return (page - 1) * this.publicVariable.tableSize + index + 1;
+    }
+
     onView(data: invoiceStatusModule): void {
         if (data.headerId) {
             const encryptedHeaderId = btoa(data.headerId.toString());
