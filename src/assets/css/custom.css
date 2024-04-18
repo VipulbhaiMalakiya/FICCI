@@ -1,3 +1,10 @@
+/*
+* Prefixed by https://autoprefixer.github.io
+* PostCSS: v8.4.14,
+* Autoprefixer: v10.4.7
+* Browsers: last 4 version
+*/
+
 @font-face {
     font-family: 'Poppins';
     src: url('../fonts/Poppins-Medium.woff2') format('woff2'),
@@ -81,6 +88,8 @@ img {
 
 a {
   text-decoration: none !important;
+  -webkit-transition: all 0.2s ease-in;
+  -o-transition: all 0.2s ease-in;
   transition: all 0.2s ease-in;
   color: #000; }
 
@@ -193,25 +202,32 @@ a:hover { color:#482B8F; }
 }
 
 :focus {
-  box-shadow: none !important;
+  -webkit-box-shadow: none !important;
+          box-shadow: none !important;
   outline: none !important; }
 
 
 /*------------------end common-css-------------------*/
 
-.dashboard-page{ background-image: linear-gradient(to right, #F2FFF7, #FFF8E9, #FDF7F4); height:100vh;  }
+.dashboard-page{ background-image: -webkit-gradient(linear, left top, right top, from(#F2FFF7), color-stop(#FFF8E9), to(#FDF7F4)); background-image: -o-linear-gradient(left, #F2FFF7, #FFF8E9, #FDF7F4); background-image: linear-gradient(to right, #F2FFF7, #FFF8E9, #FDF7F4); height:100vh;  }
 
 .dashboard-header{ position: relative; padding:10px 0; }
 .dashboard-header .header-logo{ display: inline-block; }
 .header-logo img{ max-height:56px; }
 
-.mainlogo-menu{ display: flex; align-items: center; }
+.mainlogo-menu{ display: -webkit-box; display: -ms-flexbox; display: flex; -webkit-box-align: center; -ms-flex-align: center; align-items: center; }
 .header-bars{ border-left:1px solid #ccc; margin-left:15px; padding-left:12px; font-size:26px; cursor:pointer; }
 
 .top-noti-user {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    align-items: center;
-	justify-content: flex-end;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+	-webkit-box-pack: end;
+	    -ms-flex-pack: end;
+	        justify-content: flex-end;
 }
 
 .top-user-profile {
@@ -219,9 +235,14 @@ a:hover { color:#482B8F; }
     vertical-align: middle;
 }
 .top-user-profile a {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    flex-wrap: wrap;
-    align-items: center;
+    -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
 }
 
 .top-user-profile a img{ max-height:40px; border-radius: 10px; }
@@ -262,7 +283,8 @@ a:hover { color:#482B8F; }
 .landing-col1 {
     background: #fff;
     height: 100%;
-	box-shadow:0px 10px 30px rgb(0 0 0 / 5%);
+	-webkit-box-shadow:0px 10px 30px rgb(0 0 0 / 5%);
+	        box-shadow:0px 10px 30px rgb(0 0 0 / 5%);
 	border-radius:10px;
 	overflow: hidden;
 	margin-left: 5px;
@@ -275,7 +297,7 @@ a:hover { color:#482B8F; }
 .yellow-bar{ background:#F6A000; }
 .orange-bar{ background:#F26100; }
 
-.landing-col-head{ display: flex; justify-content: space-between; align-items:center; padding:10px 20px; color:#fff; font-weight:500; font-size:20px;    }
+.landing-col-head{ display: -webkit-box; display: -ms-flexbox; display: flex; -webkit-box-pack: justify; -ms-flex-pack: justify; justify-content: space-between; -webkit-box-align:center; -ms-flex-align:center; align-items:center; padding:10px 20px; color:#fff; font-weight:500; font-size:20px;    }
 .landing-col-head span img{ max-height:30px; }
 
 .landing-col1 ul { list-style:none; padding:0px 20px; margin:0px;    }
@@ -299,7 +321,7 @@ a:hover { color:#482B8F; }
 
 /*-------------inner page--------------*/
 
-.outer-bg { background:linear-gradient(#5f666d, #95989b); min-height: 100vh; }
+.outer-bg { background:-webkit-gradient(linear, left top, left bottom, from(#5f666d), to(#95989b)); background:-o-linear-gradient(#5f666d, #95989b); background:linear-gradient(#5f666d, #95989b); min-height: 100vh; }
 
 .main-logo img { max-height: 56px; }
 
@@ -320,12 +342,14 @@ header.main-header {
 .main-wrapper { padding: 20px 0; }
 
 .custom-3wdt{ -ms-flex: 0 0 19%;
-    flex: 0 0 19%;
+    -webkit-box-flex: 0;
+         flex: 0 0 19%;
     max-width: 19%;
 }
 
 .custom-9wdt{ -ms-flex: 0 0 81%;
-    flex: 0 0 81%;
+    -webkit-box-flex: 0;
+         flex: 0 0 81%;
     max-width: 81%;
 }
 
@@ -390,12 +414,18 @@ header.main-header {
 .mastersform-sec { margin: 20px 0px 40px; }
 
 .page-btns-col {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    justify-content: space-between;
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
     margin-bottom: 20px;
 }
 
 .dt-buttons {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
     margin-left: auto;
     margin-right: 10px;
@@ -490,9 +520,13 @@ header.main-header {
 
 .tblsort {
     width: 12%;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
 	font-size: 14px;
-	align-items: center;
+	-webkit-box-align: center;
+	    -ms-flex-align: center;
+	        align-items: center;
 }
 
 .tblsort .col-form-label{ margin-right:10px; font-size: 14px; }
@@ -552,7 +586,7 @@ header.main-header {
 /*-----end delete modal-----*/
 
 .loading-cols{ background:rgb(0 0 0 / 10%); position: fixed; top:0; left:0; width:100%; height:100%;    }
-.loading-cols .d-flex.justify-content-center{ height: 100%; align-items: center; }
+.loading-cols .d-flex.justify-content-center{ height: 100%; -webkit-box-align: center; -ms-flex-align: center; align-items: center; }
 
 .page-btns-col .common-btn{ font-size: 12px; padding: 9px 16px; }
 
@@ -562,6 +596,8 @@ header.main-header {
 .table-btns { width: 100px; display: block; }
 
 .pipage-radio {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
     border-bottom: 1px solid #ccc;
     padding-bottom: 10px;
@@ -581,7 +617,7 @@ header.main-header {
 	margin-top: 10px;
 }
 
-.flex-field { display: flex; align-items: center; }
+.flex-field { display: -webkit-box; display: -ms-flexbox; display: flex; -webkit-box-align: center; -ms-flex-align: center; align-items: center; }
 
 .add-btn{ margin-left: 10px; }
 
@@ -653,11 +689,11 @@ textarea.form-control{ padding-top: 10px; padding-bottom: 10px; }
 
 .gif2 img{ max-height:65vh; }
 
-.gif-content{ max-width:40%; flex:0 0 40%; }
+.gif-content{ max-width:40%; -webkit-box-flex:0; -ms-flex:0 0 40%; flex:0 0 40%; }
 
 /*------------new dashboard-----------*/
 
-.data-tabs .nav.nav-pills li.nav-item { flex-grow: 1; }
+.data-tabs .nav.nav-pills li.nav-item { -webkit-box-flex: 1; -ms-flex-positive: 1; flex-grow: 1; }
 
 .data-tabs .nav-link{ background:url(../images/tabbg-1.png) no-repeat; color:#fff; background-size: 100% 100% !important; margin:0px 2px; }
 
@@ -713,7 +749,7 @@ textarea.form-control{ padding-top: 10px; padding-bottom: 10px; }
 
 /*-------------login screen-----------*/
 
-.login-wrapper{ background-image: linear-gradient(to right, #F2FFF7, #FFF8E9, #FDF7F4); min-height:100vh; }
+.login-wrapper{ background-image: -webkit-gradient(linear, left top, right top, from(#F2FFF7), color-stop(#FFF8E9), to(#FDF7F4)); background-image: -o-linear-gradient(left, #F2FFF7, #FFF8E9, #FDF7F4); background-image: linear-gradient(to right, #F2FFF7, #FFF8E9, #FDF7F4); min-height:100vh; }
 
 header.login-page{ position:absolute; top: 0; width:100%; z-index: 9; }
 .header-logo { padding:5px 0px; display: inline-block; }
@@ -736,6 +772,8 @@ header.login-page{ position:absolute; top: 0; width:100%; z-index: 9; }
 }
 
 .innerlogin-sec {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
     padding-top:100px;
 }
@@ -746,7 +784,8 @@ header.login-page{ position:absolute; top: 0; width:100%; z-index: 9; }
     background: #fff;
     padding: 20px 30px;
     border-radius: 0px 10px 10px 0px;
-    box-shadow: 0px 10px 30px rgb(0 0 0 / 8%);
+    -webkit-box-shadow: 0px 10px 30px rgb(0 0 0 / 8%);
+            box-shadow: 0px 10px 30px rgb(0 0 0 / 8%);
 }
 .home-search h1 {
     color: #010101;
@@ -840,13 +879,14 @@ header.login-page{ position:absolute; top: 0; width:100%; z-index: 9; }
     position: absolute;
     left: 50%;
     top: 50%;
-    transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
 }
 
-.loading-text h1{ text-transform: uppercase; font-weight: 700; font-size:34px; color: #001d52; } 
+.loading-text h1{ text-transform: uppercase; font-weight: 700; font-size:34px; color: #001d52; }
 .loading-icon{ margin-top: 20px; font-size: 20px; color:#E05717; }
 .spinner-border{ margin-right:8px; vertical-align: middle; }
-
 
 
 
