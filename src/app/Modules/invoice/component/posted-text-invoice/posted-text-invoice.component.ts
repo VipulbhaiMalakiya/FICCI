@@ -55,7 +55,7 @@ export class PostedTextInvoiceComponent {
             })
         ).subscribe({
             next: (response: any) => {
-                if (response.data && Array.isArray(response.data)) {                    
+                if (response.data && Array.isArray(response.data)) {
 
                     this.TaxInvoicePaymentSummaryList = response.data;
                     console.log(response);
@@ -245,6 +245,10 @@ export class PostedTextInvoiceComponent {
         }).catch(() => {
             this.publicVariable.isProcess = false;
         });
+    }
+
+    calculateIndex(page: number, index: number): number {
+        return (page - 1) * this.publicVariable.tableSize + index + 1;
     }
 
 
