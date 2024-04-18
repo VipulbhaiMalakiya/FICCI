@@ -95,7 +95,7 @@
             <div class="clearfix" *ngIf="InvoiceSummaryList && InvoiceSummaryList.length > 0">
                 <div class="hint-text">Showing <b>{{this.publicVariable.tableSize}}</b> out of
                     <b>{{
-                        publicVariable.count }}</b>
+                        InvoiceSummaryList.length }}</b>
                     entries
                 </div>
                 <pagination-controls previousLabel="Prev" class="pagination" nextLabel="Next"
@@ -131,7 +131,7 @@
                             <table class="table">
                                 <thead>
                                     <tr>
-                                        <th>#</th>                                        
+                                        <th>#</th>
                                         <th>Invoice No</th>
                                         <th>Payment No</th>
                                         <th>Payment Date</th>
@@ -139,8 +139,8 @@
                                         <th>Bank A/C No.</th>
                                         <th>UTR No.</th>
                                         <th>TDS Amount</th>
-                                        <th>Payment Amount</th>                                     
-                                        
+                                        <th>Payment Amount</th>
+
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -155,7 +155,7 @@
                                         <td>{{i.utrNo}}</td>
                                         <td>{{i.tdsAmount}}</td>
                                         <td>{{i.paymentAmount}}</td>
-                                       
+
                                     </tr>
                                 </tbody>
                             </table>
