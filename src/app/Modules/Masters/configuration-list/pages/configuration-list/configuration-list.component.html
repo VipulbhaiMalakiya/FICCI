@@ -113,7 +113,7 @@
                         <tbody>
                             <tr
                                 *ngFor="let item of publicVariable.data | searchFilter: publicVariable.searchText | paginate: {itemsPerPage: publicVariable.tableSize, currentPage: publicVariable.page, totalItems: publicVariable.count}; let i = index; trackBy: utilityService.trackById">
-                                <td>{{i+1}}</td>
+                                <td>{{calculateIndex(publicVariable.page, i)}}</td>
                                 <td>{{ item.c_Code }}</td>
                                 <td>{{ item.c_Value | titlecase }}</td>
                                 <td>{{ item.category_Name | titlecase }}</td>

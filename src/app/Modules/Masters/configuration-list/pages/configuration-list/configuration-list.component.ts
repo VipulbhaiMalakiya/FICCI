@@ -47,6 +47,10 @@ export class ConfigurationListComponent implements OnInit, OnDestroy {
         this.loadConfiguration();
     }
 
+    calculateIndex(page: number, index: number): number {
+        return (page - 1) * this.publicVariable.tableSize + index + 1;
+    }
+
     loadCategoryList(): void {
         try {
             this.publicVariable.configurationSubscription.add(
