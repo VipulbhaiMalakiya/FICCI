@@ -98,6 +98,9 @@ export class PiInvoiceComponent {
         }
     }
 
+    calculateIndex(page: number, index: number): number {
+        return (page - 1) * this.publicVariable.tableSize + index + 1;
+    }
 
     onDownloadInvoiceSummary() {
         const exportData = this.InvoiceSummaryList.map((x) => ({
