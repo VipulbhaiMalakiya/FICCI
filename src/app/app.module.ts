@@ -10,6 +10,7 @@ import { AuthInterceptor } from './interceptor/auth-interceptor.interceptor';
 import { SharedModule } from "./Modules/shared/shared.module";
 import { ApprproverEmailComponent } from './layouts/apprprover-email/apprprover-email.component';
 import { NevErpComponent } from './layouts/nev-erp/nev-erp.component';
+import { SalesMemoApproverEmailComponent } from './layouts/sales-memo-approver-email/sales-memo-approver-email.component';
 @NgModule({
     declarations: [
         AppComponent,
@@ -19,6 +20,7 @@ import { NevErpComponent } from './layouts/nev-erp/nev-erp.component';
         LoginComponent,
         ApprproverEmailComponent,
         NevErpComponent,
+        SalesMemoApproverEmailComponent,
         
     ],
     providers: [

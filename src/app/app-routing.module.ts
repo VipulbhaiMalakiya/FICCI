@@ -7,6 +7,7 @@ import { LoginComponent } from './layouts/login/login.component';
 import { AuthGuard } from './guard/auth.guard';
 import { ApprproverEmailComponent } from './layouts/apprprover-email/apprprover-email.component';
 import { NevErpComponent } from './layouts/nev-erp/nev-erp.component';
+import { SalesMemoApproverEmailComponent } from './layouts/sales-memo-approver-email/sales-memo-approver-email.component';
 
 
 const routes: Routes = [
@@ -14,12 +15,17 @@ const routes: Routes = [
     { path: 'UserName', component: NevErpComponent },
 
     { path: 'login', component: LoginComponent },
-    
+
     {
         path:'approver/:email/:id',
         component:ApprproverEmailComponent,
     },
-    
+
+    {
+        path:'sales-approval/:email/:id',
+        component:SalesMemoApproverEmailComponent,
+    },
+
     {
         path: '',
         component: SidebarLayoutComponent,
