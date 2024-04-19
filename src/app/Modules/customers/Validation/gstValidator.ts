@@ -10,6 +10,8 @@ export function gstValidator(gstStateCode: string): ValidatorFn {
             return { 'invalidGST': true };
         }
 
+
+
         return null;
     };
 }

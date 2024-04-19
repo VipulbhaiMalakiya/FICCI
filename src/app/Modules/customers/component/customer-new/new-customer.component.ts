@@ -355,6 +355,7 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
 
     private setGstValidator() {
         const gstRegistrationNoControl = this.publicVariable.dataForm?.get('GSTRegistrationNo');
+
         if (gstRegistrationNoControl) {
             const gstCustomerTypeControl = this.publicVariable.dataForm?.get('GSTCustomerType');
             if (gstCustomerTypeControl?.value == 2) {
@@ -362,6 +363,8 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
                 gstRegistrationNoControl.setValue(''); // Clear the value
             } else {
                 gstRegistrationNoControl.setValidators([Validators.required, gstValidator(this.gstStateCode)]);
+
+
             }
             gstRegistrationNoControl.updateValueAndValidity();
         }

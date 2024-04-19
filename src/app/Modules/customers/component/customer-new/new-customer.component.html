@@ -141,9 +141,9 @@
                         <!-- <div *ngIf="shouldShowError('email', 'required')" class="text-danger">
                             Email is required.
                         </div> -->
-                        <div *ngIf="shouldShowError('email', 'email')" class="text-danger">
+                        <!-- <div *ngIf="shouldShowError('email', 'email')" class="text-danger">
                             Please enter a valid email address.
-                        </div>
+                        </div> -->
 
                         <div *ngIf="shouldShowError('email', 'invalidEmailFormat')" class="text-danger">
                             Please enter a valid email address.</div>
@@ -195,24 +195,6 @@
                 </div>
                 <div class="col-md-3 col-sm-6">
                     <div class="form-group">
-                        <label>GST Registration No. <sup class="text-danger">*</sup></label>
-                        <input type="text" class="form-control" placeholder="GST Registration No."
-                            formControlName="GSTRegistrationNo" (change)="validateGST()" maxlength="16"
-                            [readonly]="publicVariable.dataForm.get('GSTCustomerType')?.value === 2 || !publicVariable.dataForm.get('GSTCustomerType')?.value"
-                            [class.readonly]="publicVariable.dataForm.get('GSTCustomerType')?.value === 2 || !publicVariable.dataForm.get('GSTCustomerType')?.value"
-                            />
-                        <div *ngIf="shouldShowError('GSTRegistrationNo', 'invalidGST')" class="text-danger">
-                            Please enter a valid GST Registration Number. (05AAACF1282E1Z5)
-                        </div>
-                        <div *ngIf="gstExists" class="text-danger">
-                            GST number already exists.
-                        </div>
-                    </div>
-                </div>
-                <!-- [attr.disabled]="publicVariable.dataForm.get('GSTCustomerType')?.value === '2' ? true : null" -->
-
-                <div class="col-md-3 col-sm-6">
-                    <div class="form-group">
                         <label>P.A.N. No. <sup class="text-danger">*</sup></label>
                         <input type="text" class="form-control" formControlName="PANNo" placeholder="P.A.N. No."
                             (change)="ValidatePAN()" maxlength="10" />
@@ -224,6 +206,23 @@
                         </div>
                     </div>
                 </div>
+                <div class="col-md-3 col-sm-6">
+                    <div class="form-group">
+                        <label>GST Registration No. <sup class="text-danger">*</sup></label>
+                        <input type="text" class="form-control" placeholder="GST Registration No."
+                            formControlName="GSTRegistrationNo" (change)="validateGST()" maxlength="16"
+                            [readonly]="publicVariable.dataForm.get('GSTCustomerType')?.value === 2 || !publicVariable.dataForm.get('GSTCustomerType')?.value"
+                            [class.readonly]="publicVariable.dataForm.get('GSTCustomerType')?.value === 2 || !publicVariable.dataForm.get('GSTCustomerType')?.value"
+                            />
+                        <div *ngIf="shouldShowError('GSTRegistrationNo', 'invalidGST')" class="text-danger">
+                            Please enter a valid GST Registration Number. (05AAACF1282E1Z5)
+                        </div>
+                        <div *ngIf="gstExists" class="text-danger"> GST number already exists. </div>
+                    </div>
+                </div>
+                <!-- [attr.disabled]="publicVariable.dataForm.get('GSTCustomerType')?.value === '2' ? true : null" -->
+
+
 
                 <div class="col-md-9">
                     <div class="form-group">
