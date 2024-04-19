@@ -68,9 +68,13 @@
                                     <a href="javascript:void(0);" (click)="InvoicedView(d)"><img
                                             src="../assets/images/view-icon.svg" alt=""></a>
 
-                                            <a href="javascript:void(0);" data-bs-toggle="modal"
-                                            data-bs-target="#workflow-modal"><img class="custom-rupee-icon" src="../assets/images/rupee-icon.png"
-                                            alt="" /></a>
+                                    <a href="javascript:void(0);" data-bs-toggle="modal"
+                                        data-bs-target="#workflow-modal"><img class="custom-rupee-icon"
+                                            src="../assets/images/rupee-icon.png" alt="" /></a>
+
+                                    <a href="javascript:void(0);"
+                                        (click)="downalodFile(d.no)"><img
+                                            src="../assets/images/download-icon.svg" alt="" /></a>
 
                                     <!-- <a href="javascript:void(0);" (click)="onSendEmail(d)"><img
                                             src="../assets/images/email-icon.svg" alt="" /></a> -->
@@ -119,7 +123,7 @@
                 <div class="modal-title text-center w-100 small-title">Payment Information</div>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body p-0" >
+            <div class="modal-body p-0">
 
                 <app-loading *ngIf="publicVariable.isProcess"></app-loading>
                 <div class="dashboard-data">

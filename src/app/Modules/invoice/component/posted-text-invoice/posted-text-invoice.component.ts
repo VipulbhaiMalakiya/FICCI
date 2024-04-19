@@ -3,6 +3,8 @@ import { AppService, CustomersService, InvoicesService, NgbModal, Router, Toastr
 import { InvoiceSummaryModel } from '../../interface/invoice';
 import { timeout, finalize } from 'rxjs';
 import { PostedEmailComponent } from '../../send-email/posted-email/posted-email.component';
+import { Attachment } from './../../interface/invoice';
+import { FileService } from '../../service/FileService';
 
 @Component({
     selector: 'app-posted-text-invoice',
@@ -15,19 +17,51 @@ export class PostedTextInvoiceComponent {
     storedRole: string = '';
     PostedTaxInvoiceCount: number = 0;
     TaxInvoicePaymentSummaryList: any[] = [];
+    InvoiceAttachment: any;
 
     constructor(private appService: AppService,
         private modalService: NgbModal,
         private router: Router,
         private toastr: ToastrService,
         private API: CustomersService,
-        private IAPI: InvoicesService
+        private IAPI: InvoicesService,
+        private fileService: FileService
     ) { }
 
     ngOnInit(): void {
         this.publicVariable.storedEmail = localStorage.getItem('userEmail') ?? '';
         this.storedRole = localStorage.getItem('userRole') ?? '';
         this.loadInvoiceSummary();
+
+    }
+
+
+
+    downalodFile(fileUrl: any) {
+        this.publicVariable.isProcess  = true;
+        
+        try {
+            const subscription = this.IAPI.GetTaxInvoiceAttachment(fileUrl).subscribe({
+                next: (response: any) => {
+
+                    this.InvoiceAttachment = response.data[0];
+                    const fileName = this.InvoiceAttachment.invoiceNo+'.pdf';
+                    const fileType = `application/pdf`;
+                    this.fileService.downloadFile(this.InvoiceAttachment.attachment, fileName, fileType);
+                    this.publicVariable.isProcess  = false;
+                },
+                error: (error) => {
+                    console.error('Error loading project list:', error);
+                    // this.handleLoadingError();
+                },
+            });
+
+            this.publicVariable.Subscription.add(subscription);
+        } catch (error) {
+            console.error('Error loading project list:', error);
+            // this.handleLoadingError();
+        }
+
 
     }
 
