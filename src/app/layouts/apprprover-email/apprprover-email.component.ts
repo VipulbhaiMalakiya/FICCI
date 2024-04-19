@@ -87,7 +87,7 @@ export class ApprproverEmailComponent {
     actionPerformed(data: any) {
         this.publicVariable.isProcess = true;
         this.publicVariable.Subscription.add(
-            this.API.isApproverRemarks(data).subscribe({
+            this.API.isApproverRemarksNew(data).subscribe({
                 next: (res: any) => {
                     if (res.status === true) {
                         const modalRef = this.modalService.open(ConformationModelComponent, { size: "md", centered: true, backdrop: "static" });
@@ -108,6 +108,7 @@ export class ApprproverEmailComponent {
                     } else {
                         this.toastr.error(res.message, 'Error');
                         alert(res.message);
+                        this.router.navigate(['/']);
                         this.publicVariable.isProcess = false;
                         this.publicVariable.dataForm.reset();
 
