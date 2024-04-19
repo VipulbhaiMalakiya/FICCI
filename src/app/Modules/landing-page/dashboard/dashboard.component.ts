@@ -1952,4 +1952,32 @@ export class DashboardComponent {
 
     }
 
+    ProformaInvoicedownalodFile(fileUrl: any) {
+        this.publicVariable.isProcess  = true;
+        
+        try {
+            const subscription = this.IAPI.GetPITaxInvoiceAttachment(fileUrl).subscribe({
+                next: (response: any) => {
+
+                    this.InvoiceAttachment = response.data[0];
+                    const fileName = this.InvoiceAttachment.invoiceNo+'.pdf';
+                    const fileType = `application/pdf`;
+                    this.fileService.downloadFile(this.InvoiceAttachment.attachment, fileName, fileType);
+                    this.publicVariable.isProcess  = false;
+                },
+                error: (error) => {
+                    console.error('Error loading project list:', error);    
+                    // this.handleLoadingError();
+                },
+            });
+
+            this.publicVariable.Subscription.add(subscription);
+        } catch (error) {
+            console.error('Error loading project list:', error);
+            // this.handleLoadingError();
+        }
+
+
+    }
+
 }
