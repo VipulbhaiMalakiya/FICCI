@@ -32,11 +32,9 @@
                 <div class="col-md-3 col-sm-6">
                     <div class="form-group">
                         <label>Name 2 </label>
-                        <input type="text" class="form-control" placeholder="Name 2" formControlName="name2" />
-                        <div *ngIf="shouldShowError('name2', 'maxlength')" class="text-danger">
-                            Name2 must be less than 100 characters.
-                        </div>
-                        <div *ngIf="shouldShowError('name2', 'alphanumericWithSpaces')" class="text-danger">
+                        <input type="text" class="form-control" placeholder="Name 2" formControlName="name2"  maxlength="100"/>
+
+                        <div *ngIf="shouldShowError('name2', 'pattern')" class="text-danger">
                             Name2 must be alphanumeric.
                         </div>
                     </div>

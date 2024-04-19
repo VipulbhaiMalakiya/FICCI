@@ -48,7 +48,10 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
             customerId: [''],
             customerNo: ['', [Validators.maxLength(20)]],
             name: ['', [Validators.required, alphanumericWithSpacesValidator(), Validators.maxLength(100)]],
-            name2: ['', [Validators.required, alphanumericWithSpacesValidator(), Validators.maxLength(100)]],
+            name2: [null, [
+                Validators.maxLength(100),
+                Validators.pattern('^[a-zA-Z0-9 ]*$') // Allow alphanumeric characters and spaces
+              ]],
             address: ['', [Validators.required, this.addressValidator(), Validators.maxLength(100)]],
             address2: ['', [this.addressValidator(), Validators.maxLength(100)]],
             countryCode: [null, [Validators.required]],
