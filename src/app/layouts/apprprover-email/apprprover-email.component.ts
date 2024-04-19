@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute, CustomersService, FormBuilder, InvoicesService, Router, ToastrService, Validators, publicVariable } from 'src/app/Modules/invoice/Export/invoce';
+import { ActivatedRoute, CustomersService, FormBuilder, InvoicesService, NgbModal, Router, ToastrService, Validators, publicVariable } from 'src/app/Modules/invoice/Export/invoce';
+import { ConformationModelComponent } from 'src/app/Modules/shared/conformation-model/conformation-model.component';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -23,6 +24,7 @@ export class ApprproverEmailComponent {
         private toastr: ToastrService,
         private router: Router,
         private fb: FormBuilder,
+        private modalService: NgbModal,
     ) {
         this.initializeForm();
     }
@@ -90,8 +92,20 @@ export class ApprproverEmailComponent {
             this.API.isApproverRemarks(data).subscribe({
                 next: (res: any) => {
                     if (res.status === true) {
-                        this.toastr.success(res.message, 'Success');
-                        alert(res.message)
+                        const modalRef = this.modalService.open(ConformationModelComponent, { size: "md", centered: true, backdrop: "static" });
+                        var componentInstance = modalRef.componentInstance as ConformationModelComponent;
+                        componentInstance.message = res.message;
+
+                        modalRef.result.then((canDelete: boolean) => {
+                            if (canDelete) {
+                                  //this.router.navigate(['/']);
+                                  //window?.top?.close();
+                                window.close();
+                
+                            }
+                        }).catch(() => { });
+                        // this.toastr.success(res.message, 'Success');
+                        // alert(res.message)
                         //this.router.navigate(['invoice/status']);
                         this.publicVariable.dataForm.reset();
                         this.publicVariable.isProcess = false;
