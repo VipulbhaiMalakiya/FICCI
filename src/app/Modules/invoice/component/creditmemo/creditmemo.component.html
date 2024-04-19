@@ -36,7 +36,8 @@
                 <div class="col-md-4 col-sm-6">
                     <div class="form-group">
                         <label for="MemoType">Memo Type <sup class="text-danger">*</sup></label>
-                        <select id="MemoType" id="MemoType" formControlName="MemoType" class="form-select">
+                        <select id="MemoType" id="MemoType" formControlName="MemoType" class="form-select"
+                        (change)="toggleReadOnly()">
                             <option value="">Select Memo type</option>
                             <option value="partial">Partial</option>
                             <option value="full">Full</option>
@@ -49,21 +50,16 @@
                     <div class="form-group">
                         <label for="creditMemoAmount">Credit Amount <sup class="text-danger">*</sup></label>
                         <input type="text" placeholder="Credit Amount" formControlName="creditMemoAmount"
-                            class="form-control" (input)="priceValidator($event)">
+                            class="form-control" (input)="priceValidator($event)"
+                            
+                            [readonly]="isReadOnly">
                         <div *ngIf="shouldShowError('creditMemoAmount','required')" class="text-danger">This field
                             is required
                         </div>
                         <div *ngIf="publicVariable.dataForm.get('creditMemoAmount')?.hasError('exceedsTotal')" class="text-danger">Entered amount exceeds total amount</div>
 
                     </div>
-                    <!-- <div class="form-group">
-                        <label for="creditMemoAmount">Credit Amount <sup class="text-danger">*</sup></label>
-                        <input type="text" placeholder="Credit Amount" formControlName="creditMemoAmount"
-                            class="form-control" (input)="priceValidator($event)">
-                        <div *ngIf="shouldShowError('creditMemoAmount','required')" class="text-danger">This field
-                            is required
-                        </div>
-                    </div> -->
+           
                 </div>
 
                 <div class="col-md-4 col-sm-6">

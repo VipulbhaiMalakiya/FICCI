@@ -34,6 +34,7 @@ export class CreditmemoComponent implements OnInit {
     isCalculate: boolean = false;
     isEdit: boolean = false;
     amount:any;
+    isReadOnly: boolean = false;
 
     constructor(private appService: AppService,
         private modalService: NgbModal,
@@ -148,6 +149,30 @@ export class CreditmemoComponent implements OnInit {
          this.loadCOAMasterList();
       //  this.loadGetGSTGroupList();
         // this.loadgetGstRegistrationNoAll();
+    }
+
+    toggleReadOnly() {
+        const selectedMemoType = this.publicVariable.dataForm.get('MemoType')?.value;
+        this.isReadOnly = selectedMemoType === 'full';
+
+        if (this.isReadOnly) {
+
+            this.publicVariable.dataForm.patchValue({
+
+           
+                creditMemoAmount: this.amount,
+            });
+            
+            console.log(this.amount);
+            
+        }
+        else{
+            this.publicVariable.dataForm.patchValue({
+
+           
+                creditMemoAmount: null,
+            });
+        }
     }
 
     loadInvoiceSummary() {
@@ -1249,7 +1274,8 @@ export class CreditmemoComponent implements OnInit {
                                     }
                                     else {
                                         this.toastr.success(res.message, 'Success');
-                                        this.router.navigate(['invoice/credit-memo-status']);
+                                      //  this.router.navigate(['invoice/credit-memo-status']);
+                                      this.router.navigate(['dashboard']);
                                         this.publicVariable.dataForm.reset();
                                     }
 

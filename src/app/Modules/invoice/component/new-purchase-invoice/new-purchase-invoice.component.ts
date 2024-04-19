@@ -1151,7 +1151,8 @@ export class NewPurchaseInvoiceComponent implements OnInit {
                                     else
                                     {
                                         this.toastr.success(res.message, 'Success');
-                                        this.router.navigate(['invoice/status']);
+                                       // this.router.navigate(['invoice/status']);
+                                       this.router.navigate(['dashboard']);
                                         this.publicVariable.dataForm.reset();
                                     }
 
