@@ -64,6 +64,7 @@ export class DashboardComponent {
     invoiceStatuslistData: invoiceStatusModule[] = [];
     creditNoteCount: number = 0;
     PICount: number = 0;
+
     constructor(private appService: AppService,
         private modalService: NgbModal,
         private router: Router,
@@ -81,6 +82,11 @@ export class DashboardComponent {
         this.loadPurchaseInvoiceList(this.invoiceType);
         this.storeIsFinance = isFinanceValue === 'true'; // Convert string to boolean
     }
+
+    ngOnDestroy(): void {
+        // Unsubscribe from all subscriptions to prevent memory leaks
+        this.publicVariable.Subscription.unsubscribe();
+      }
 
     get isFinance() {
         return this.storeIsFinance == true;
@@ -1517,6 +1523,7 @@ export class DashboardComponent {
     }
 
     PIloadInvoiceSummary() {
+        this.cd.detectChanges();
         this.publicVariable.isProcess = true;
         this.headerStatus = 'Posted Proforma Invoice';
         const subscription = this.IAPI.GetPIInvoiceSummary().pipe(
