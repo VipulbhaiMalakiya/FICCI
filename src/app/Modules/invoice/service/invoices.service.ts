@@ -52,7 +52,12 @@ export class InvoicesService {
     private GetDetailsURL = `${environment.apiURL}DropDown/GetDetails?projectCode=`;
     private GetApproverEmailURL = `${environment.apiURL}ApproveInvoice/GetApproverEmail?email=`;
 
-    
+    private CreditMemoApproverEmail = `${environment.apiURL}ApproveInvoice/GetApproverEmail?email=`;
+    GetCreditMemoApproverEmail(data: any): Observable<any[]> {
+        const url = `${this.CreditMemoApproverEmail}${data.email ?? ''}&id=${data.id    }`;
+        return this.http.get<any[]>(url);
+    }
+
     GetApproverEmail(data: any): Observable<any[]> {
         const url = `${this.GetApproverEmailURL}${data.email ?? ''}&id=${data.id    }`;
         return this.http.get<any[]>(url);
@@ -70,7 +75,7 @@ export class InvoicesService {
     }
 
     getTaxPaymentDetails(data: any): Observable<any[]> {
-      
+
         const url = `${this.PaymentDetailsURL}${data ?? ''}`;
         return this.http.get<any[]>(url);
     }
@@ -186,26 +191,26 @@ export class InvoicesService {
       //  return this.http.get<any[]>(`${this.Projectapi}${localStorage.getItem('department')}&id=0`);
 
         return this.http.get<any[]>(`${this.Projectapi}${localStorage.getItem('navDepartment')}&id=0`);
-        
+
     }
 
     getnavProjects(data:any){
 
         const encodedDepartment = encodeURIComponent(data);
        // console.log(encodedDepartment);
-        
+
         return this.http.get<any[]>(`${this.Projectapi}${encodedDepartment}&id=0`);
 
     }
 
-    
+
     getProjectsNav(): Observable<any[]> {
         //  return this.http.get<any[]>(`${this.Projectapi}${localStorage.getItem('department')}&id=0`);
-  
+
           return this.http.get<any[]>(`${this.Projectapi}${localStorage.getItem('navDepartment')}&id=0`);
-          
+
       }
-      
+
     // getProjects(): Observable<any[]> {
     //     return this.http.get<any[]>(`${this.Projectapi}`);
     // }

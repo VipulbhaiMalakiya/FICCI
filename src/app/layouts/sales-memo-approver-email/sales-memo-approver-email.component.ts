@@ -35,49 +35,79 @@ export class SalesMemoApproverEmailComponent {
     }
 
     ngOnInit() {
-        // this.route.params.subscribe(params => {
-        //    // this.headerId = +params['id'];
 
-        //    let decrypted = params['id']
-        //    this.headerId = atob(decrypted);
-        // });
 
         this.route.params.subscribe(params => {
-            //this.headerId = +params['id'];
-           // this.loginId = params['email'];
             this.headerId = atob(params['id']);
             this.loginId = atob(params['email']);
         });
-        this.data = history.state.data;
-
+        // this.data = history.state.data;
+        this.loadInviceDetailList();
         this.loadStateList();
         this.loadCOAMasterList();
-        this.uploadedFiles = this.data.impiHeaderAttachment
-        if (this.data.impiHeaderAttachment) {
 
-            this.uploadedFiles = this.data.impiHeaderAttachment.map((file: any) => ({
 
-                id: file.imadId,
-                recordNo: file.imadRecordNo,
-                screenName: file.imadScreenName,
-                name: file.imadFileName,
-                type: file.imadFileType,
-                fileSize: file.imadFileSize,
-                fileUrl: file.imadFileUrl,
-                active: file.imadActive,
-                createdBy: file.imadCreatedBy,
-                createdOn: file.imadCreatedOn,
-                modifiedBy: file.imadModifiedBy,
-                modifiedOn: file.imadModifiedOn,
-                doctype:file.doctype
-            }));
+    }
 
-        } else {
-            this.uploadedFiles = [];
+    loadInviceDetailList() {
+        try {
+            let data :any = {
+                email:this.loginId,
+                id:this.headerId
+            }
+            const subscription = this.API.GetCreditMemoApproverEmail(data).subscribe({
+                next: (response: any) => {
+
+                    console.log(response);
+
+                    if(!response.status){
+                        alert('data not found')
+                        return
+                    }
+                    this.data = response.data;
+
+                    this.uploadedFiles = this.data.impiHeaderAttachment;
+
+                    if (this.data.impiHeaderAttachment) {
+
+                        this.uploadedFiles = this.data.impiHeaderAttachment.map((file: any) => ({
+
+                            id: file.imadId,
+                            recordNo: file.imadRecordNo,
+                            screenName: file.imadScreenName,
+                            name: file.imadFileName,
+                            type: file.imadFileType,
+                            fileSize: file.imadFileSize,
+                            fileUrl: file.imadFileUrl,
+                            active: file.imadActive,
+                            createdBy: file.imadCreatedBy,
+                            createdOn: file.imadCreatedOn,
+                            modifiedBy: file.imadModifiedBy,
+                            modifiedOn: file.imadModifiedOn,
+                            doctype:file.doctype
+                        }));
+
+                    } else {
+                        this.uploadedFiles = [];
+                        this.handleLoadingError()
+
+                    }
+                    this.handleLoadingError()
+                },
+                error: (error) => {
+                    console.error('Error loading project list:', error);
+                    this.handleLoadingError()
+                },
+            });
+
+            this.publicVariable.Subscription.add(subscription);
+        } catch (error) {
+            console.error('Error loading project list:', error);
             this.handleLoadingError()
-
         }
     }
+
+
 
     loadCOAMasterList(): void {
         try {
