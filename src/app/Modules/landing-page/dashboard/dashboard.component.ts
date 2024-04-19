@@ -90,6 +90,13 @@ export class DashboardComponent {
         return (page - 1) * this.ppitableSize + index + 1;
     }
 
+    invoiceStatuscalculateIndex(page: number, index: number): number {
+        return (page - 1) * this.publicVariable.tableSize + index + 1;
+    }
+
+    PostTextInvoicecalculateIndex(page: number, index: number): number {
+        return (page - 1) * this.ptitableSize + index + 1;
+    }
 
     loadSalesCreditNoteSummary(): void {
         try {
@@ -538,7 +545,7 @@ export class DashboardComponent {
         const pendingData = data.filter(item =>
             (
                 //item.impiHeaderCreatedBy === this.publicVariable.storedEmail &&
-            item.impiHeaderInvoiceType == invoiceType) &&
+                item.impiHeaderInvoiceType == invoiceType) &&
             (item.headerStatus === 'PENDING WITH TL APPROVER' ||
                 item.headerStatus === 'PENDING WITH CH APPROVER' ||
                 item.headerStatus === 'PENDING WITH ACCOUNTS APPROVER' ||
@@ -550,31 +557,31 @@ export class DashboardComponent {
 
         const forapproval = data.filter(item => item.impiHeaderInvoiceType == invoiceType &&
             (item.headerStatus === 'PENDING WITH TL APPROVER'
-            || item.headerStatus === 'PENDING WITH CH APPROVER'
-            || item.headerStatus === 'PENDING WITH ACCOUNTS APPROVER'
-            || item.headerStatus === 'PENDING WITH FINANCE APPROVER'
-            || item.headerStatus === 'CANCEL BY EMPLOYEE'
-            || item.headerStatus === 'REQUEST TAX INVOICE\n'
-        ));
+                || item.headerStatus === 'PENDING WITH CH APPROVER'
+                || item.headerStatus === 'PENDING WITH ACCOUNTS APPROVER'
+                || item.headerStatus === 'PENDING WITH FINANCE APPROVER'
+                || item.headerStatus === 'CANCEL BY EMPLOYEE'
+                || item.headerStatus === 'REQUEST TAX INVOICE\n'
+            ));
         counts['FOR APPROVAL'] = forapproval.length;
 
-        if(this.publicVariable.storedRole == 'Approver' || this.publicVariable.storedRole == 'Admin'){
-            const approvedData = data.filter(item => (item.impiHeaderInvoiceType == invoiceType)   && (item.headerStatus === 'APPROVED BY ACCOUNTS APPROVER'
-            || item.headerStatus === 'MAIL SENT BY FINANCE TO CUSTOMER'
-            || item.headerStatus === 'APPROVED BY TL'
-            || item.headerStatus === 'MAIL SENT BY ACCOUNT TO CUSTOMER'
-            || item.headerStatus === 'APPROVED BY FINANCE'
-        ));
-        counts['PENDING WITH FINANCE APPROVER'] = approvedData.length;
+        if (this.publicVariable.storedRole == 'Approver' || this.publicVariable.storedRole == 'Admin') {
+            const approvedData = data.filter(item => (item.impiHeaderInvoiceType == invoiceType) && (item.headerStatus === 'APPROVED BY ACCOUNTS APPROVER'
+                || item.headerStatus === 'MAIL SENT BY FINANCE TO CUSTOMER'
+                || item.headerStatus === 'APPROVED BY TL'
+                || item.headerStatus === 'MAIL SENT BY ACCOUNT TO CUSTOMER'
+                || item.headerStatus === 'APPROVED BY FINANCE'
+            ));
+            counts['PENDING WITH FINANCE APPROVER'] = approvedData.length;
         }
-        else{
-            const approvedData = data.filter(item => item.impiHeaderInvoiceType == invoiceType  && (item.headerStatus === 'APPROVED BY ACCOUNTS APPROVER'
-            || item.headerStatus === 'MAIL SENT BY FINANCE TO CUSTOMER'
-            || item.headerStatus === 'APPROVED BY TL'
-            || item.headerStatus === 'MAIL SENT BY ACCOUNT TO CUSTOMER'
-            || item.headerStatus === 'APPROVED BY FINANCE'
-        ));
-        counts['PENDING WITH FINANCE APPROVER'] = approvedData.length;
+        else {
+            const approvedData = data.filter(item => item.impiHeaderInvoiceType == invoiceType && (item.headerStatus === 'APPROVED BY ACCOUNTS APPROVER'
+                || item.headerStatus === 'MAIL SENT BY FINANCE TO CUSTOMER'
+                || item.headerStatus === 'APPROVED BY TL'
+                || item.headerStatus === 'MAIL SENT BY ACCOUNT TO CUSTOMER'
+                || item.headerStatus === 'APPROVED BY FINANCE'
+            ));
+            counts['PENDING WITH FINANCE APPROVER'] = approvedData.length;
         }
 
 
@@ -610,11 +617,11 @@ export class DashboardComponent {
         }
         else if (this.storedRole == "Admin") {
             allData = data.filter(item =>
-                (item.impiHeaderInvoiceType == invoiceType && item.headerStatus != 'DRAFT'  && item.headerStatus != 'PENDING WITH TL APPROVER') );
+                (item.impiHeaderInvoiceType == invoiceType && item.headerStatus != 'DRAFT' && item.headerStatus != 'PENDING WITH TL APPROVER'));
         }
         else {
             allData = data.filter(item =>
-                item.impiHeaderInvoiceType == invoiceType  );
+                item.impiHeaderInvoiceType == invoiceType);
         }
 
         counts['ALL'] = allData.length;
@@ -654,18 +661,18 @@ export class DashboardComponent {
 
 
             case 'APPROVED BY ACCOUNTS APPROVER':
-                if(this.publicVariable.storedRole == 'Approver' || this.publicVariable.storedRole == 'Admin'){
+                if (this.publicVariable.storedRole == 'Approver' || this.publicVariable.storedRole == 'Admin') {
                     filteredData = this.dashboardData.filter((item: any) =>
-                        (item.impiHeaderInvoiceType == this.invoiceType ) && (
+                        (item.impiHeaderInvoiceType == this.invoiceType) && (
                             item.headerStatus === 'APPROVED BY ACCOUNTS APPROVER'
                             || item.headerStatus === 'MAIL SENT BY ACCOUNT TO CUSTOMER'
                             || item.headerStatus === 'APPROVED BY FINANCE'
                             || item.headerStatus === 'APPROVED BY TL'
                             || item.headerStatus === 'MAIL SENT BY FINANCE TO CUSTOMER'));
                 }
-                else{
+                else {
                     filteredData = this.dashboardData.filter((item: any) =>
-                        (item.impiHeaderInvoiceType == this.invoiceType ) && (
+                        (item.impiHeaderInvoiceType == this.invoiceType) && (
                             item.headerStatus === 'APPROVED BY ACCOUNTS APPROVER'
                             || item.headerStatus === 'MAIL SENT BY ACCOUNT TO CUSTOMER'
                             || item.headerStatus === 'APPROVED BY FINANCE'
@@ -726,17 +733,17 @@ export class DashboardComponent {
                 }
                 else if (this.storedRole == "Admin") {
                     filteredData = this.dashboardData.filter(item =>
-                        (item.impiHeaderInvoiceType == this.invoiceType && item.headerStatus != 'DRAFT' && item.headerStatus != 'PENDING WITH TL APPROVER') );
+                        (item.impiHeaderInvoiceType == this.invoiceType && item.headerStatus != 'DRAFT' && item.headerStatus != 'PENDING WITH TL APPROVER'));
                 }
 
                 else {
                     filteredData = this.dashboardData.filter((item: any) =>
-                        item.impiHeaderInvoiceType == this.invoiceType );
+                        item.impiHeaderInvoiceType == this.invoiceType);
                 }
                 break;
             default:
                 filteredData = this.dashboardData.filter((item: any) =>
-                    item.impiHeaderInvoiceType == this.invoiceType );
+                    item.impiHeaderInvoiceType == this.invoiceType);
                 break;
         }
 

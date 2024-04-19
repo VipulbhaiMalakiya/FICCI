@@ -583,8 +583,8 @@
                                             <tbody>
 
                                                 <tr
-                                                    *ngFor="let d of  this.InvoiceSummaryList | searchFilter1: publicVariable.searchText| paginate: {itemsPerPage: ptitableSize,currentPage: ptipage,totalItems: PostedTaxInvoiceCount};let i = index">
-                                                    <td>{{i + 1}}</td>
+                                                    *ngFor="let d of  this.InvoiceSummaryList | searchFilter1: publicVariable.searchText| paginate: {itemsPerPage: ptitableSize,currentPage: ptipage,totalItems: InvoiceSummaryList.length};let i = index">
+                                                    <td>{{PostTextInvoicecalculateIndex(ptipage, i)}}</td>
                                                     <td>{{d.no}}</td>
                                                     <td>{{d.postingDate}}</td>
                                                     <td>{{d.invoice_no}}</td>
@@ -1093,7 +1093,7 @@
                                                 <tbody>
                                                     <tr
                                                         *ngFor="let d of  SalesCreditNoteSummaryData | salessearchFilter: publicVariable.searchText| paginate: {itemsPerPage: publicVariable.tableSize,currentPage: publicVariable.page,totalItems: publicVariable.count};let i = index">
-                                                        <td>{{i + 1}}</td>
+                                                        <td>{{invoiceStatuscalculateIndex(publicVariable.page, i)}}</td>
                                                         <td>{{d.no}}</td>
                                                         <td>{{d.postingDate}}</td>
                                                         <td>{{d.appliesToDocNo}}</td>
