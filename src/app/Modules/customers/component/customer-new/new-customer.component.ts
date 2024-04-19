@@ -51,7 +51,7 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
             name2: [null, [
                 Validators.maxLength(100),
                 Validators.pattern('^[a-zA-Z0-9 ]*$') // Allow alphanumeric characters and spaces
-              ]],
+            ]],
             address: ['', [Validators.required, this.addressValidator(), Validators.maxLength(100)]],
             address2: ['', [this.addressValidator(), Validators.maxLength(100)]],
             countryCode: [null, [Validators.required]],
@@ -132,47 +132,16 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
 
 
 
-    validateGST() {
 
-
-        try {
-            const gst = this.publicVariable.dataForm.get('GSTRegistrationNo')?.value;
-            if(gst.length<15) {alert('Please enter Valid GST No.');
-             return;}
-            const subscription = this.API.ValidateGST(gst).subscribe({
-                next: (response: any) => {
-                    if (response.status) {
-                        // GST number does not exist
-                        console.log('GST number does not exist');
-                        this.gstExists = false;
-                        // You can update the UI to indicate that the GST number is valid
-                    } else {
-                        // GST number already exists
-                        alert('GST number already exists');
-                        this.gstExists = true;
-                        return
-                        // You can update the UI to indicate that the GST number already exists
-                    }
-                },
-                error: (error) => {
-                    console.error('Error loading data:', error);
-                    this.handleLoadingError();
-                },
-            });
-
-            this.publicVariable.Subscription.add(subscription);
-        } catch (error) {
-            console.error('Error loading data list:', error);
-            this.handleLoadingError();
-        }
-    }
 
     ValidatePAN() {
         try {
             const pan = this.publicVariable.dataForm.get('PANNo')?.value;
 
-            if(pan.length<10) {alert('Please enter Valid PAN No.');
-            return;}
+            if (pan.length < 10) {
+                alert('Please enter Valid PAN No.');
+                return;
+            }
 
             const subscription = this.API.ValidatePAN(pan).subscribe({
                 next: (response: any) => {
@@ -335,7 +304,7 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
         return concatenatedString.includes(term.toLowerCase());
     }
 
-    ongstTypeChange(event:any) {
+    ongstTypeChange(event: any) {
         // Clear the GST registration number when the dropdown selection changes
         this.publicVariable.dataForm?.get('GSTRegistrationNo')?.setValue('');
         this.setGstValidator();
@@ -392,7 +361,7 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
         // Get the value of the post code field
         const selectedId = this.publicVariable.dataForm.get('postCode')?.value;
 
-        if(selectedId.length <= 5) return;
+        if (selectedId.length <= 5) return;
         console.log(selectedId);
 
         // Check if the post code field has been cleared
@@ -433,18 +402,20 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
 
     onSubmit(action: boolean): void {
 
-        if (this.publicVariable.dataForm.value.GSTCustomerType !== 2 && this.publicVariable.dataForm.value.GSTRegistrationNo == '') {
-            alert('GST number required!');
-            return
-        }
+       if( !this.checkGst() ) return;
+
+        // if (this.publicVariable.dataForm.value.GSTCustomerType !== 2 && this.publicVariable.dataForm.value.GSTRegistrationNo == '') {
+        //     alert('GST number required!');
+        //     return
+        // }
 
 
 
 
-        else{
+        else {
 
 
-            if (this.publicVariable.dataForm.valid ) {
+            if (this.publicVariable.dataForm.valid) {
 
                 const newData = this.publicVariable.dataForm.value;
                 if (newData.GSTCustomerType !== 2 && newData.GSTRegistrationNo == '') {
@@ -508,6 +479,118 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
 
     }
 
+    validateGST() {
+
+
+        try {
+            const gst = this.publicVariable.dataForm.get('GSTRegistrationNo')?.value;
+            // if (gst.length < 15) {
+            //     alert('Please enter Valid GST No.');
+            //     return;
+            // }
+
+            if( !this.checkGst() ) return;
+            const subscription = this.API.ValidateGST(gst).subscribe({
+                next: (response: any) => {
+                    if (response.status) {
+                        // GST number does not exist
+                        console.log('GST number does not exist');
+                        this.gstExists = false;
+                        // You can update the UI to indicate that the GST number is valid
+                    } else {
+                        // GST number already exists
+                        alert('GST number already exists');
+                        this.gstExists = true;
+                        return
+                        // You can update the UI to indicate that the GST number already exists
+                    }
+                },
+                error: (error) => {
+                    console.error('Error loading data:', error);
+                    this.handleLoadingError();
+                },
+            });
+
+            this.publicVariable.Subscription.add(subscription);
+        } catch (error) {
+            console.error('Error loading data list:', error);
+            this.handleLoadingError();
+        }
+    }
+
+    checkGst() {
+
+        let PANNo =  this.publicVariable.dataForm.get('PANNo')?.value.toUpperCase();
+        let GSTNo =  this.publicVariable.dataForm.get('GSTRegistrationNo')?.value.toUpperCase();
+
+        if (PANNo == "") {
+            this.toastr.warning('Please Enter PAN Number');
+            this.panExists = false;
+            this.gstExists = false;
+            return false;
+        }
+        else if (PANNo != "") {
+            var regex = /[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
+            if (!regex.test(PANNo)) {
+                this.toastr.warning("Invalid pan no");
+                this.panExists = false;
+                this.gstExists = false;
+                return false;
+            }
+        }
+
+
+        if (this.publicVariable.dataForm.get('GSTCustomerType')?.value != 2) {
+            if (GSTNo == "") {
+                this.toastr.warning('Please Enter GST Number');
+                this.gstExists = false;
+                this.gstExists = false;
+                return false;
+            }
+            if (GSTNo.length != 15) {
+                this.toastr.warning('GST Number must be 15 Characters.');
+                this.gstExists = false;
+                this.gstExists = false;
+                return false;
+            }
+            else if (!GSTNo.includes(PANNo)) {
+                this.toastr.warning("Invalid GST Number.");
+                this.gstExists = false;
+                this.gstExists = false;
+                return false;
+            }
+            else if (GSTNo.length == 15) {
+                let stateCode = GSTNo.substring(0, 2);
+                let b = GSTNo.substring(2, 12);
+                let GSTLast = GSTNo.substring(12);
+                var regexNum = /[0-9]{2}$/;
+                var regexGSTLast = /[0-9A-Z]{3}$/;
+
+                if (b != PANNo) {
+                    this.toastr.warning("Invalid GST Number.");
+                    this.gstExists = false;
+                    this.gstExists = false;
+                    return false;
+                }
+                else if (!regexNum.test(stateCode)) {
+                    this.toastr.warning("Invalid State Code in GST No.");
+                    this.gstExists = false;
+                    this.gstExists = false;
+                    return false;
+                }
+                else if (!regexGSTLast.test(GSTLast)) {
+                    this.toastr.warning("Last 3 Chars are invalid in GST No.");
+                    this.gstExists = false;
+                    this.gstExists = false;
+                    return false;
+                }
+            }
+        }
+
+        return true;
+
+    }
+
     markFormControlsAsTouched(): void {
         [
             'name',
@@ -516,7 +599,7 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
             'stateCode',
             'cityCode',
             'postCode',
-            'GSTCustomerType',
+            // 'GSTCustomerType',
             'email',
             'PrimaryContactNo',
             'contact',

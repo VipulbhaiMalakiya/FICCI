@@ -38,7 +38,7 @@ import { InvoiceApprovalComponent } from './layouts/invoice-approval/invoice-app
         BrowserAnimationsModule,
         ToastrModule.forRoot({
             progressBar: true,
-            positionClass: 'toast-top-right',
+            positionClass: 'toast-center-center',
             closeButton: true,
             timeOut: 3000,
             progressAnimation: 'increasing',
