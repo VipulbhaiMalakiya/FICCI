@@ -4,29 +4,29 @@
             <div class="row align-items-center">
 
                 <div class="col-lg-8 col-sm-6">
-                    <div class="main-logo"><a routerLink="dashboard"><img src="../assets/images/logo.png" alt=""></a>
+                    <div class="main-logo"><a routerLink="/"><img src="../assets/images/logo.png" alt=""></a>
                     </div>
                 </div>
 
                 <!-- <div class="col-lg-4 col-sm-6">
-    
+
                     <div class="top-noti-user">
-    
+
                         <div class="top-user-profile">
                             <a href="javascript:void(0);" class="dropdown-toggle" data-bs-toggle="dropdown"
                                 aria-haspopup="true" aria-expanded="false"><img src="../assets/images/profile.jpg"
                                     alt="">
                                 <p>{{ storeUsername }} <small>{{ storedRole }}</small></p>
                             </a>
-    
+
                             <ul class="dropdown-menu">
                                 <li><a href="javascript:void(0);" (click)="logout()">Logout</a></li>
                             </ul>
-    
+
                         </div>
-    
+
                     </div>
-    
+
                 </div> -->
 
             </div>
@@ -280,7 +280,7 @@
                                             <tr *ngFor="let e of data?.lineItem_Requests; let i = index">
                                                 <td>{{i + 1}}</td>
                                                 <td>{{ getNameById(e.impiGlNo) }}</td>
-                                                <td>{{ e.impiDescription | titlecase }}</td>  
+                                                <td>{{ e.impiDescription | titlecase }}</td>
                                                 <td>{{e.impiQuantity}}</td>
                                                 <td>{{e.impiUnitPrice}}</td>
                                                 <td>{{e.impiUnitPrice * e.impiQuantity}}</td>
