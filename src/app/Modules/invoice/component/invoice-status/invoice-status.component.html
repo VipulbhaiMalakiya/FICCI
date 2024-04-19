@@ -15,7 +15,7 @@
 
         <div class="dt-buttons">
             <button class="gray-btns" type="button" (click)="onDownload()">
-                <img src="../assets/images/excel-icon.png" alt="" />
+                <img src="../assets/images/excel-icon.png" alt="" title="Download Excel" />
             </button>
         </div>
 
@@ -87,30 +87,29 @@
                             <td>
                                 <span class="table-btns">
                                     <a href="javascript:void(0);" (click)="onView(d)"><img
-                                            src="../assets/images/view-icon.svg" alt="" /></a>
+                                            src="../assets/images/view-icon.svg" alt="" title="View" /></a>
 
 
-                                            <a *ngIf="publicVariable.storedRole !== 'Admin' && publicVariable.storedEmail == d.impiHeaderCreatedBy
+                                    <a *ngIf="publicVariable.storedRole !== 'Admin' && publicVariable.storedEmail == d.impiHeaderCreatedBy
                                             &&
                                     (d.isDraft ||
                                     d.headerStatus == 'REJECTED BY TL APPROVER'  ||
                                     d.headerStatus == 'REJECTED BY CH APPROVER' ||
                                     d.headerStatus == 'REJECTED BY ACCOUNTS APPROVER'
                                     ||d.headerStatus == 'REJECTED BY FINANCE APPROVER'
-                                    )"
-                                        href="javascript:void(0);" (click)="onEdit(d)"><img
-                                            src="../assets/images/edit-icon.svg" alt="" /></a>
+                                    )" href="javascript:void(0);" (click)="onEdit(d)"><img
+                                            src="../assets/images/edit-icon.svg" alt=""
+                                            [title]="publicVariable.storedRole !== 'Admin' ? 'Edit' : ''" /></a>
 
-                                            <a *ngIf="publicVariable.storedRole !== 'Admin' && publicVariable.storedEmail == d.impiHeaderCreatedBy
+                                    <a *ngIf="publicVariable.storedRole !== 'Admin' && publicVariable.storedEmail == d.impiHeaderCreatedBy
                                     &&
                                     (d.isDraft ||
                                     d.headerStatus == 'REJECTED BY TL APPROVER'  ||
                                     d.headerStatus == 'REJECTED BY CH APPROVER' ||
                                     d.headerStatus == 'REJECTED BY ACCOUNTS APPROVER'   || d.headerStatus == 'REJECTED BY FINANCE APPROVER'
-                                       )"
-                                        href="javascript:void(0)" (click)="onDelete(d.headerId)" data-bs-toggle="modal"
-                                        data-bs-target="#deleterecord-modal"><img src="../assets/images/delete-icon.svg"
-                                            alt="" /></a>
+                                       )" href="javascript:void(0)" (click)="onDelete(d.headerId)"
+                                        data-bs-toggle="modal" data-bs-target="#deleterecord-modal"><img
+                                            src="../assets/images/delete-icon.svg" alt=""  title="Delete Record"  /></a>
                                 </span>
                             </td>
                         </tr>
