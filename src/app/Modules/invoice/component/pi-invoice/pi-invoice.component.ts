@@ -9,6 +9,7 @@ import { PostedEmailComponent } from '../../send-email/posted-email/posted-email
 import { InvoicesService } from '../../service/invoices.service';
 import { InvoiceSummaryModel } from '../../interface/invoice';
 import { PIEmailComponent } from '../../send-email/pi-email/pi-email.component';
+import { FileService } from '../../service/FileService';
 
 @Component({
     selector: 'app-pi-invoice',
@@ -21,19 +22,49 @@ export class PiInvoiceComponent {
     InvoiceSummaryList: InvoiceSummaryModel[] = [];
     storedRole: string = '';
     PostedTaxInvoiceCount: number = 0;
+    InvoiceAttachment: any;
 
     constructor(private appService: AppService,
         private modalService: NgbModal,
         private router: Router,
         private toastr: ToastrService,
         private API: CustomersService,
-        private IAPI: InvoicesService
+        private IAPI: InvoicesService,
+        private fileService: FileService
     ) { }
 
     ngOnInit(): void {
         this.publicVariable.storedEmail = localStorage.getItem('userEmail') ?? '';
         this.storedRole = localStorage.getItem('userRole') ?? '';
         this.loadInvoiceSummary();
+    }
+
+    downalodFile(fileUrl: any) {
+        this.publicVariable.isProcess  = true;
+        
+        try {
+            const subscription = this.IAPI.GetPITaxInvoiceAttachment(fileUrl).subscribe({
+                next: (response: any) => {
+
+                    this.InvoiceAttachment = response.data[0];
+                    const fileName = this.InvoiceAttachment.invoiceNo+'.pdf';
+                    const fileType = `application/pdf`;
+                    this.fileService.downloadFile(this.InvoiceAttachment.attachment, fileName, fileType);
+                    this.publicVariable.isProcess  = false;
+                },
+                error: (error) => {
+                    console.error('Error loading project list:', error);    
+                    // this.handleLoadingError();
+                },
+            });
+
+            this.publicVariable.Subscription.add(subscription);
+        } catch (error) {
+            console.error('Error loading project list:', error);
+            // this.handleLoadingError();
+        }
+
+
     }
 
 
