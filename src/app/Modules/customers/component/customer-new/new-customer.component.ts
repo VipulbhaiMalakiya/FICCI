@@ -388,31 +388,33 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
         }
     }
 
-    onpostCodeSelectionChange(){
-        this.publicVariable.dataForm.patchValue({
-            cityCode: null
-        })
-        this.cd.detectChanges();
+    onpostCodeSelectionChange(event: any) {
+        // Get the value of the post code field
         const selectedId = this.publicVariable.dataForm.get('postCode')?.value;
+
+        // Check if the post code field has been cleared
+        if (!selectedId) {
+            // If the post code field is cleared, clear the city code as well
+            this.publicVariable.dataForm.patchValue({
+                cityCode: null
+            });
+            return; // Exit the function early since there's no need to proceed further
+        }
+
         // Find the city object in cityList where cityCode matches selectedId
-        const selectedCity:any = this.publicVariable.cityList.find(city => city.cityCode === selectedId);
-
-
+        const selectedCity: any = this.publicVariable.cityList.find(city => city.cityCode === selectedId);
 
         if (selectedCity) {
             this.publicVariable.dataForm.patchValue({
                 cityCode: selectedCity.cityCode
-            })
+            });
         } else {
             this.publicVariable.dataForm.patchValue({
                 cityCode: null
-            })
+            });
         }
-
-
-
-
     }
+
 
 
 

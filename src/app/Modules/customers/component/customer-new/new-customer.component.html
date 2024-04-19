@@ -122,7 +122,7 @@
                         <input type="text" formControlName="postCode" class="form-control" placeholder="Pincode"
                             (input)="onInputChange($event)" maxlength="15"
 
-                            (click)="onpostCodeSelectionChange()">
+                            (click)="onpostCodeSelectionChange($event)">
                         <div *ngIf="shouldShowError('postCode', 'required')" class="text-danger">
                             Post Code is required.
                         </div>
