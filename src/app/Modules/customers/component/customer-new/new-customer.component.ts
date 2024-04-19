@@ -401,6 +401,8 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
             alert('GST number required!');
             return
         }
+
+
         else{
             if (this.publicVariable.dataForm.valid && !this.gstExists) {
 
