@@ -15,7 +15,7 @@
         <div class="dt-buttons"
             *ngIf="publicVariable.customerStatusList && publicVariable.customerStatusList.length > 0">
             <button class="gray-btns" (click)="onDownload()" type="button"><img src="../assets/images/excel-icon.png"
-                    alt=""></button>
+                    alt="" title="Download Excel"></button>
         </div>
 
         <div class="topbr-btns">
@@ -75,20 +75,22 @@
                             <td>{{d.customerStatus | titlecase}}</td>
                             <td><span class="table-btns">
                                     <a href="javascript:void(0);" (click)="onView(d)"><img
-                                            src="../assets/images/view-icon.svg" alt=""></a>
+                                            src="../assets/images/view-icon.svg" alt=""
+                                            title="View Details"></a>
                                     <a *ngIf="publicVariable.storedRole !== 'Admin' &&
                                             (d.isDraft ||
                                             d.customerStatus == 'REJECTED BY TL APPROVER'  ||
                                             d.customerStatus == 'REJECTED BY CH APPROVER' ||
                                             d.customerStatus == 'REJECTED BY ACCOUNTS APPROVER')"
                                         href="javascript:void(0);" (click)="onEdit(d)">
-                                        <img src="../assets/images/edit-icon.svg" alt="">
+                                        <img src="../assets/images/edit-icon.svg" alt=""
+                                        [title]="publicVariable.storedRole !== 'Admin' ? 'Edit Details' : ''">
                                     </a>
                                     <a *ngIf="publicVariable.storedRole !== 'Admin' && (d.isDraft ||
                                     d.customerStatus == 'REJECTED BY TL APPROVER' ||
                                     d.customerStatus == 'REJECTED BY CH APPROVER' ||
                                     d.customerStatus == 'REJECTED BY ACCOUNTS APPROVER')" href="javascript:void(0);"
-                                        (click)="onDelete(d.customerId)">
+                                        (click)="onDelete(d.customerId)"  title="Delete Customer">
                                         <img src="../assets/images/delete-icon.svg" alt="">
                                     </a>
 
