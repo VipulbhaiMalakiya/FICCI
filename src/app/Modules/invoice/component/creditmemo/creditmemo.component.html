@@ -52,7 +52,9 @@
                         <input type="text" placeholder="Credit Amount" formControlName="creditMemoAmount"
                             class="form-control" (input)="priceValidator($event)"
                             
-                            [readonly]="isReadOnly">
+                            [readonly]="isReadOnly"
+                            [class.readonly]="isReadOnly"
+                            >
                         <div *ngIf="shouldShowError('creditMemoAmount','required')" class="text-danger">This field
                             is required
                         </div>

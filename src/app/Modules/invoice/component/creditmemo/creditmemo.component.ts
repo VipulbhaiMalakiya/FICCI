@@ -34,7 +34,7 @@ export class CreditmemoComponent implements OnInit {
     isCalculate: boolean = false;
     isEdit: boolean = false;
     amount:any;
-    isReadOnly: boolean = false;
+    isReadOnly: boolean = true;
 
     constructor(private appService: AppService,
         private modalService: NgbModal,
