@@ -51,7 +51,7 @@ export class PostedTextInvoiceComponent {
                     this.publicVariable.isProcess  = false;
                 },
                 error: (error) => {
-                    console.error('Error loading project list:', error);
+                    console.error('Error loading project list:', error);    
                     // this.handleLoadingError();
                 },
             });
