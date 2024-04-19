@@ -153,6 +153,8 @@ export class NewPurchaseInvoiceComponent implements OnInit {
        // this.loadgetGstRegistrationNoAll();
     }
 
+  
+
     onSelectdept(event: any) {
         this.selectedDept = event;
 
@@ -1017,7 +1019,6 @@ export class NewPurchaseInvoiceComponent implements OnInit {
 
     onSubmit(Action: string): void {
 
-        // debugger;
 
         if(this.publicVariable.expenses.length === 0){
             this.toastr.error('Please add expenses before submitting.', 'Error');
@@ -1025,10 +1026,22 @@ export class NewPurchaseInvoiceComponent implements OnInit {
             return
         }
 
+        if(Action === 'Calculate'){
+           if(!this.publicVariable.dataForm.valid){
+                this.publicVariable.isProcess = false;
+                this.markFormControlsAsTouched();
+                return;
+           }
+          
+        }
+
         if (Action !== 'Calculate' && !this.isCalculate) {
             alert("Please Calculate the tax details");
             return
         }
+
+
+       
 
        let action =true;
        if(Action =="Submit")

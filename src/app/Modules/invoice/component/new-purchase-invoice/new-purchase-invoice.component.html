@@ -381,10 +381,10 @@
                         <div *ngIf="shouldShowError('ImpiHeaderCustomerEmailId','required')" class="text-danger">Email
                             is required.
                         </div>
-                        <div *ngIf="shouldShowError('ImpiHeaderCustomerEmailId', 'invalidEmailFormat')"
+                        <!-- <div *ngIf="shouldShowError('ImpiHeaderCustomerEmailId', 'invalidEmailFormat')"
                             class="text-danger">
                             Please
-                            enter a valid email address.</div>
+                            enter a valid email address.</div> -->
                         <div *ngIf="shouldShowError('ImpiHeaderCustomerEmailId','email')" class="text-danger"> Please
                             enter a valid email address.</div>
                     </div>
@@ -477,7 +477,7 @@
                         <div class="form-group">
                             <label>Description/Narration to Print on Invoice <sup class="text-danger">*</sup></label>
                             <input type="text" class="form-control" placeholder="Description" maxlength="100"
-                                formControlName="impiDescription">
+                                formControlName="impiDescription"   oninput="this.value = this.value.replace(/[^a-zA-z0-9]/g, '');">
                             <div *ngIf="shouldShowExpenseError('impiDescription','required')" class="text-danger">This
                                 field is
                                 required</div>
@@ -609,7 +609,7 @@
                 (click)="onCalculateClick('Calculate')" class="common-btn w-auto">Calculate</a>
         </div>
 
-        <div class="text-end" *ngIf="!isButtonShow">
+        <div class="text-end" *ngIf="publicVariable.expenses.length > 0 && !isButtonShow">
             <button class="common-btn w-auto" disabled>Loading...</button>
         </div>
 
