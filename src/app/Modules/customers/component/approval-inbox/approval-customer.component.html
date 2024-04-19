@@ -16,7 +16,7 @@
 
         <div class="dt-buttons" *ngIf="publicVariable.ApproveCustomerList && publicVariable.ApproveCustomerList.length > 0">
             <button class="gray-btns" type="button" (click)="onDownload()"><img src="../assets/images/excel-icon.png"
-                    alt=""></button>
+                    alt="" title="Download Excel"></button>
         </div>
         <div class="topbr-btns" >
             <div class="btn-group" *ngIf="publicVariable.ApproveCustomerList && publicVariable.ApproveCustomerList.length > 0">
@@ -68,8 +68,9 @@
                         <td>{{d.createdBy}}</td>
                         <td>{{d.accountsRemarks || ''}}</td>
                         <td>{{d.customerStatus | titlecase}}</td>
-                            <td><span class="table-btns">
-                                    <a href="javascript:void(0);"  (click)="onEdit(d)" ><img src="../assets/images/view-icon.svg" alt=""></a>
+                            <td>
+                                <span class="table-btns">
+                                    <a href="javascript:void(0);" title="Edit"  (click)="onEdit(d)" ><img src="../assets/images/view-icon.svg" alt=""></a>
                                 </span>
                             </td>
                         </tr>
