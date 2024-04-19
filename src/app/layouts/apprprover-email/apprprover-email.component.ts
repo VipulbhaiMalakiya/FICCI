@@ -98,10 +98,7 @@ export class ApprproverEmailComponent {
 
                         modalRef.result.then((canDelete: boolean) => {
                             if (canDelete) {
-                                  //this.router.navigate(['/']);
-                                  //window?.top?.close();
-                                window.close();
-                
+                                this.router.navigate(['/']);
                             }
                         }).catch(() => { });
                         // this.toastr.success(res.message, 'Success');
