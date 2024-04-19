@@ -11,6 +11,7 @@ import { SharedModule } from "./Modules/shared/shared.module";
 import { ApprproverEmailComponent } from './layouts/apprprover-email/apprprover-email.component';
 import { NevErpComponent } from './layouts/nev-erp/nev-erp.component';
 import { SalesMemoApproverEmailComponent } from './layouts/sales-memo-approver-email/sales-memo-approver-email.component';
+import { InvoiceApprovalComponent } from './layouts/invoice-approval/invoice-approval.component';
 @NgModule({
     declarations: [
         AppComponent,
@@ -21,6 +22,7 @@ import { SalesMemoApproverEmailComponent } from './layouts/sales-memo-approver-e
         ApprproverEmailComponent,
         NevErpComponent,
         SalesMemoApproverEmailComponent,
+        InvoiceApprovalComponent,
         
     ],
     providers: [
