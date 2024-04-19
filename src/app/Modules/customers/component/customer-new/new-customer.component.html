@@ -121,7 +121,7 @@
                     <div class="form-group">
                         <label>Post Code <sup class="text-danger">*</sup></label>
                         <input type="text" formControlName="postCode" class="form-control" placeholder="Pincode"
-                            (input)="onInputChange($event)" maxlength="15" (click)="onpostCodeSelectionChange($event)">
+                            (input)="onInputChange($event)" maxlength="15" (keyup)="onpostCodeSelectionChange($event)">
                         <div *ngIf="shouldShowError('postCode', 'required')" class="text-danger">
                             Post Code is required.
                         </div>
@@ -212,9 +212,9 @@
                             formControlName="GSTRegistrationNo" (change)="validateGST()" maxlength="16"
                             [readonly]="publicVariable.dataForm.get('GSTCustomerType')?.value === 2 || !publicVariable.dataForm.get('GSTCustomerType')?.value"
                             [class.readonly]="publicVariable.dataForm.get('GSTCustomerType')?.value === 2 || !publicVariable.dataForm.get('GSTCustomerType')?.value" />
-                        <!-- <div *ngIf="shouldShowError('GSTRegistrationNo', 'invalidGST')" class="text-danger">
+                        <div *ngIf="shouldShowError('GSTRegistrationNo', 'invalidGST')" class="text-danger">
                             Please enter a valid GST Registration Number. (05AAACF1282E1Z5)
-                        </div> -->
+                        </div>
                         <div *ngIf="gstExists" class="text-warning"> Customers with the same PAN Number and different GST
                             Number already exist.
                         </div>

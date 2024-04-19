@@ -392,6 +392,9 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
         // Get the value of the post code field
         const selectedId = this.publicVariable.dataForm.get('postCode')?.value;
 
+        if(selectedId.length <= 5) return;
+        console.log(selectedId);
+
         // Check if the post code field has been cleared
         if (!selectedId) {
             // If the post code field is cleared, clear the city code as well
@@ -439,6 +442,8 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
 
 
         else{
+
+
             if (this.publicVariable.dataForm.valid ) {
 
                 const newData = this.publicVariable.dataForm.value;
