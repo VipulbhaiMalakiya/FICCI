@@ -81,8 +81,6 @@ export class ApprproverEmailComponent {
             this.router.navigate(['/unauthorized']);
         }
 
-
-
         // console.log(newConfig);
     }
 
