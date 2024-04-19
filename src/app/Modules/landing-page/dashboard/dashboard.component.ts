@@ -10,6 +10,7 @@ import { PostedEmailComponent } from '../../invoice/send-email/posted-email/post
 import { PIEmailComponent } from '../../invoice/send-email/pi-email/pi-email.component';
 import { CreditSalesEmailComponent } from '../../invoice/send-email/credit-sales-email/credit-sales-email.component';
 import { forEach } from 'lodash';
+import { FileService } from '../../invoice/service/FileService';
 
 
 @Component({
@@ -22,6 +23,7 @@ export class DashboardComponent {
     publicVariable = new publicVariable();
     customerStatus: string = 'DRAFT';
     headerStatus: string = 'DRAFT';
+    InvoiceAttachment: any;
 
     ppitableSize: number = 10;
     ppitableSizes: number[] = [10, 20, 50, 100];
@@ -71,7 +73,8 @@ export class DashboardComponent {
         private toastr: ToastrService,
         private API: CustomersService,
         private IAPI: InvoicesService,
-        private cd: ChangeDetectorRef
+        private cd: ChangeDetectorRef,
+        private fileService: FileService
     ) { }
 
     ngOnInit(): void {
@@ -1917,6 +1920,36 @@ export class DashboardComponent {
         });
 
         this.publicVariable.Subscription.add(subscription);
+    }
+
+
+    
+    downalodpostedTexFile(fileUrl: any) {
+        this.publicVariable.isProcess  = true;
+        
+        try {
+            const subscription = this.IAPI.GetTaxInvoiceAttachment(fileUrl).subscribe({
+                next: (response: any) => {
+
+                    this.InvoiceAttachment = response.data[0];
+                    const fileName = this.InvoiceAttachment.invoiceNo+'.pdf';
+                    const fileType = `application/pdf`;
+                    this.fileService.downloadFile(this.InvoiceAttachment.attachment, fileName, fileType);
+                    this.publicVariable.isProcess  = false;
+                },
+                error: (error) => {
+                    console.error('Error loading project list:', error);    
+                    // this.handleLoadingError();
+                },
+            });
+
+            this.publicVariable.Subscription.add(subscription);
+        } catch (error) {
+            console.error('Error loading project list:', error);
+            // this.handleLoadingError();
+        }
+
+
     }
 
 }

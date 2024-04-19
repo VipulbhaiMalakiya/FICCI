@@ -38,14 +38,15 @@
                 <div class="data-tabs" *ngIf="this.publicVariable.storedRole !== 'Accounts'">
                     <ul class="nav nav-pills" role="tablist">
                         <li class="nav-item" *ngIf="storedRole !== 'Admin'">
-                            <a class="nav-link tabbg-1" [class.active]="this.publicVariable.storedRole !== 'Admin'" data-bs-toggle="pill" href="#home"
-                                (click)="loadCustomerStatusList('DRAFT')">
+                            <a class="nav-link tabbg-1" [class.active]="this.publicVariable.storedRole !== 'Admin'"
+                                data-bs-toggle="pill" href="#home" (click)="loadCustomerStatusList('DRAFT')">
                                 <small>Draft</small>
                                 <span>{{this.isDRAFT }}</span>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link tabbg-2" [class.active]="this.publicVariable.storedRole == 'Admin'" data-bs-toggle="pill" href="#home"
+                            <a class="nav-link tabbg-2" [class.active]="this.publicVariable.storedRole == 'Admin'"
+                                data-bs-toggle="pill" href="#home"
                                 (click)="loadCustomerStatusList('PENDING WITH APPROVER')">
                                 <small>Pending Approval</small>
                                 <span>{{this.PendingApproval }}</span>
@@ -283,8 +284,10 @@
 
 
                         <li class="nav-item" *ngIf="this.publicVariable.storedRole === 'Employee'">
-                            <a class="nav-link  tabbg-1" [class.active]="this.publicVariable.storedRole === 'Employee' && headerStatus !=='Posted Tax Invoice' && headerStatus !=='Posted Proforma Invoice'"
-                                data-bs-toggle="pill" href="#PIhome"  (click)="loadInoivceStatusList('DRAFT'); headerStatus = 'DRAFT'">
+                            <a class="nav-link  tabbg-1"
+                                [class.active]="this.publicVariable.storedRole === 'Employee' && headerStatus !=='Posted Tax Invoice' && headerStatus !=='Posted Proforma Invoice'"
+                                data-bs-toggle="pill" href="#PIhome"
+                                (click)="loadInoivceStatusList('DRAFT'); headerStatus = 'DRAFT'">
                                 <small>Draft</small>
                                 <span>{{PIisDRAFT}}</span>
                             </a>
@@ -306,7 +309,8 @@
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link  tabbg-3" [class.active]="this.publicVariable.storedRole === 'Admin'" data-bs-toggle="pill" href="#PIhome"
+                            <a class="nav-link  tabbg-3" [class.active]="this.publicVariable.storedRole === 'Admin'"
+                                data-bs-toggle="pill" href="#PIhome"
                                 (click)="loadInoivceStatusList('APPROVED BY ACCOUNTS APPROVER')">
                                 <small>Approved </small>
                                 <span>{{PIApprovedAccounts}}</span>
@@ -329,19 +333,16 @@
                         </li>
                         <li class="nav-item" *ngIf="invoiceType === 'Tax Invoice'">
                             <a class="nav-link tabbg-5"
-                            [class.active]="invoiceType == 'Tax Invoice' && headerStatus =='Posted Tax Invoice' "
-                             data-bs-toggle="pill" href="#menu4"
-                                (click)="loadInvoiceSummary()">
+                                [class.active]="invoiceType == 'Tax Invoice' && headerStatus =='Posted Tax Invoice' "
+                                data-bs-toggle="pill" href="#menu4" (click)="loadInvoiceSummary()">
                                 <small>Posted Tax Invoice </small>
                                 <span>{{PostedTaxInvoiceCount}}</span>
                             </a>
                         </li>
                         <li class="nav-item" *ngIf="invoiceType === 'Proforma Invoice'">
                             <a class="nav-link tabbg-5"
-                            [class.active]="invoiceType == 'Proforma Invoice' && headerStatus =='Posted Proforma Invoice' "
-
-                             data-bs-toggle="pill" href="#menu5"
-                                (click)="PIloadInvoiceSummary()">
+                                [class.active]="invoiceType == 'Proforma Invoice' && headerStatus =='Posted Proforma Invoice' "
+                                data-bs-toggle="pill" href="#menu5" (click)="PIloadInvoiceSummary()">
                                 <small>Posted Proforma Invoice </small>
                                 <span>{{PIPostedTaxInvoiceCount}}</span>
                             </a>
@@ -364,14 +365,15 @@
                     <!-- Tab panes -->
                     <div class="tab-content">
 
-                        <div id="PIhome" class="tab-pane" [class.active]="(this.publicVariable.storedRole === 'Employee' || this.publicVariable.storedRole === 'Approver' || this.publicVariable.storedRole === 'Admin')  && headerStatus !=='Posted Tax Invoice' && headerStatus !=='Posted Proforma Invoice'"><br>
+                        <div id="PIhome" class="tab-pane"
+                            [class.active]="(this.publicVariable.storedRole === 'Employee' || this.publicVariable.storedRole === 'Approver' || this.publicVariable.storedRole === 'Admin')  && headerStatus !=='Posted Tax Invoice' && headerStatus !=='Posted Proforma Invoice'">
+                            <br>
 
                             <div class="page-btns-col">
 
                                 <div class="tblsort" *ngIf="invoiceStatuslistData && invoiceStatuslistData.length > 0">
                                     <label class="col-form-label">Show</label>
-                                    <select id="itemsPerPageSelect" class="form-select"
-                                        [(ngModel)]="pitableSize"
+                                    <select id="itemsPerPageSelect" class="form-select" [(ngModel)]="pitableSize"
                                         (change)="onTableSizeChange($event , 'invoice')">
                                         <option *ngFor="let size of pitableSizes" [value]="size">{{ size }}
                                         </option>
@@ -514,11 +516,11 @@
                                                 invoiceStatuslistData.length }}</b>
                                             entries
                                         </div>
-                                        <pagination-controls *ngIf="invoiceStatuslistData && invoiceStatuslistData.length > 10"
-                                            previousLabel="Prev" nextLabel="Next"
-                                            class="pagination"
+                                        <pagination-controls
+                                            *ngIf="invoiceStatuslistData && invoiceStatuslistData.length > 10"
+                                            previousLabel="Prev" nextLabel="Next" class="pagination"
                                             (pageChange)="onTableDataChange($event, 'invoice')">
-                       </pagination-controls>
+                                        </pagination-controls>
                                     </div>
 
 
@@ -531,14 +533,14 @@
                         <!--tab-pane-->
 
 
-                        <div id="menu4" class="tab-pane fade" [class.active]="invoiceType == 'Tax Invoice' && headerStatus =='Posted Tax Invoice' "><br>
+                        <div id="menu4" class="tab-pane fade"
+                            [class.active]="invoiceType == 'Tax Invoice' && headerStatus =='Posted Tax Invoice' "><br>
 
                             <div class="page-btns-col">
 
                                 <div class="tblsort" *ngIf="InvoiceSummaryList && InvoiceSummaryList.length > 0">
                                     <label class="col-form-label">Show</label>
-                                    <select id="itemsPerPageSelect" class="form-select"
-                                        [(ngModel)]="ptitableSize"
+                                    <select id="itemsPerPageSelect" class="form-select" [(ngModel)]="ptitableSize"
                                         (change)="onTableSizeChange($event,'Posted Tax Invoice')">
                                         <option *ngFor="let size of ptitableSizes" [value]="size">{{ size }}
                                         </option>
@@ -605,6 +607,10 @@
                                                                     class="custom-rupee-icon"
                                                                     src="../assets/images/rupee-icon.png" alt="" /></a>
 
+                                                                    <a href="javascript:void(0);"
+                                                                    (click)="downalodpostedTexFile(d.no)"><img
+                                                                        src="../assets/images/download-icon.svg" alt="" /></a>
+
                                                             <!-- <a href="javascript:void(0);"
                                                                 (click)="onTextSendEmail(d)"><img
                                                                     src="../assets/images/email-icon.svg" alt="" /></a> -->
@@ -643,14 +649,15 @@
 
                         </div>
 
-                        <div id="menu5" class="tab-pane fade" [class.active]="invoiceType == 'Proforma Invoice' && headerStatus =='Posted Proforma Invoice' "><br>
+                        <div id="menu5" class="tab-pane fade"
+                            [class.active]="invoiceType == 'Proforma Invoice' && headerStatus =='Posted Proforma Invoice' ">
+                            <br>
 
                             <div class="page-btns-col">
 
                                 <div class="tblsort" *ngIf="PIInvoiceSummaryList && PIInvoiceSummaryList.length > 0">
                                     <label class="col-form-label">Show</label>
-                                    <select id="itemsPerPageSelect" class="form-select"
-                                        [(ngModel)]="ptitableSize"
+                                    <select id="itemsPerPageSelect" class="form-select" [(ngModel)]="ptitableSize"
                                         (change)="onTableSizeChange($event,'Posted Proforma Invoice')">
                                         <option *ngFor="let size of ppitableSizes" [value]="size">{{ size }}
                                         </option>
@@ -662,7 +669,8 @@
                                             src="../assets/images/excel-icon.png" alt=""></button>
                                 </div>
                                 <div class="topbr-btns">
-                                    <div class="btn-group" *ngIf="PIInvoiceSummaryList && PIInvoiceSummaryList.length > 0">
+                                    <div class="btn-group"
+                                        *ngIf="PIInvoiceSummaryList && PIInvoiceSummaryList.length > 0">
                                         <div class="table-search"><input type="text" class="form-control"
                                                 [(ngModel)]="publicVariable.searchText" name="name" id="name"
                                                 placeholder="Search here"></div>
@@ -711,7 +719,7 @@
                                                             <a href="javascript:void(0);"
                                                                 (click)="PIInvoicedView(d)"><img
                                                                     src="../assets/images/view-icon.svg" alt=""></a>
-<!--
+                                                            <!--
                                                             <a href="javascript:void(0);" data-bs-toggle="modal"
                                                                 data-bs-target="#workflow-modal"><img
                                                                     src="../assets/images/download-icone.svg"
@@ -747,7 +755,9 @@
                                                 PIInvoiceSummaryList.length }}</b>
                                             entries
                                         </div>
-                                        <pagination-controls *ngIf="PIInvoiceSummaryList && PIInvoiceSummaryList.length > 0"  previousLabel="Prev" class="pagination" nextLabel="Next"
+                                        <pagination-controls
+                                            *ngIf="PIInvoiceSummaryList && PIInvoiceSummaryList.length > 0"
+                                            previousLabel="Prev" class="pagination" nextLabel="Next"
                                             (pageChange)="onTableDataChange($event,'Posted Proforma Invoice')">
                                         </pagination-controls>
                                     </div>
