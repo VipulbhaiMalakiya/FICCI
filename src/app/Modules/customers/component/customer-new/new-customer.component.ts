@@ -388,6 +388,34 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
         }
     }
 
+    onpostCodeSelectionChange(){
+        this.publicVariable.dataForm.patchValue({
+            cityCode: null
+        })
+        this.cd.detectChanges();
+        const selectedId = this.publicVariable.dataForm.get('postCode')?.value;
+        // Find the city object in cityList where cityCode matches selectedId
+        const selectedCity:any = this.publicVariable.cityList.find(city => city.cityCode === selectedId);
+
+
+
+        if (selectedCity) {
+            this.publicVariable.dataForm.patchValue({
+                cityCode: selectedCity.cityCode
+            })
+        } else {
+            this.publicVariable.dataForm.patchValue({
+                cityCode: null
+            })
+        }
+
+
+
+
+    }
+
+
+
     postCodeSearchFn(term: string, item: any) {
         const concatenatedString = `${item.postCode} ${item.city}`.toLowerCase();
         return concatenatedString.includes(term.toLowerCase());
