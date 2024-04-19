@@ -1,3 +1,4 @@
+<app-loading *ngIf="publicVariable.isProcess"></app-loading>
 <div class="outer-bg">
     <header class="main-header">
         <div class="container-fluid">
@@ -35,7 +36,7 @@
         </div>
     </header>
 
-    <div class="main-wrapper">
+    <div class="main-wrapper" *ngIf="action == 'v'"> 
         <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-12">
@@ -385,7 +386,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <form [formGroup]="publicVariable.dataForm"
+                            <!-- <form [formGroup]="publicVariable.dataForm"
                             *ngIf="data.headerStatus !== 'CANCELLATION APPROVED BY TL' && data.headerStatus !== 'APPROVED BY TL'"
                             >
                                 <div class="col-md-12 mt-3">
@@ -405,7 +406,7 @@
                                             (click)="onSubmit(true)">Approve</button>
                                     </div>
                                 </div>
-                            </form>
+                            </form> -->
 
 
                         </div>

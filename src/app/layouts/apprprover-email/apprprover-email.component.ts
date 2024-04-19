@@ -14,6 +14,9 @@ export class ApprproverEmailComponent {
     publicVariable = new publicVariable();
     uploadedFiles: any[] = [];
     loginId: any;
+    action?: string = '';
+    newConfig: {} = {};
+
 
     constructor(private route: ActivatedRoute, private CAPI: CustomersService,
         private API: InvoicesService,
@@ -33,38 +36,104 @@ export class ApprproverEmailComponent {
     ngOnInit() {
         this.route.params.subscribe(params => {
             //this.headerId = +params['id'];
-           // this.loginId = params['email'];
+            // this.loginId = params['email'];
             this.headerId = atob(params['id']);
             this.loginId = atob(params['email']);
+            this.action = params['action'];
         });
-        this.loadInviceDetailList();
 
-        this.loadCOAMasterList();
 
- 
-        this.loadStateList();
-      
-      
 
+        // console.log('this.headerId ',this.headerId );
+        // console.log('this.loginId ',this.loginId );
+        // console.log('this.action ',this.action );
+
+
+        if (this.action == 'a') {
+            this.newConfig = {
+                headerId: this.headerId,
+                isApproved: true,
+                loginId: this.loginId,
+                statusId: 20,
+                remarks: 'On Approve By TL',
+            }
+            this.actionPerformed(this.newConfig);
+        }
+        else if (this.action == 'r') {
+            this.newConfig = {
+                headerId: this.headerId,
+                isApproved: false,
+                loginId: this.loginId,
+                statusId: 7,
+                remarks: 'On Reject By TL',
+            }
+            this.actionPerformed(this.newConfig);
+        }
+        else if (this.action == 'v') {
+            this.publicVariable.isProcess = false;
+            this.loadInviceDetailList();
+            this.loadCOAMasterList();
+            this.loadStateList();
+        } else {
+            this.publicVariable.isProcess = false;
+            this.router.navigate(['/unauthorized']);
+        }
+
+
+
+        // console.log(newConfig);
+    }
+
+    actionPerformed(data: any) {
+        this.publicVariable.isProcess = true;
+        this.publicVariable.Subscription.add(
+            this.API.isApproverRemarks(data).subscribe({
+                next: (res: any) => {
+                    if (res.status === true) {
+                        this.toastr.success(res.message, 'Success');
+                        alert(res.message)
+                        //this.router.navigate(['invoice/status']);
+                        this.publicVariable.dataForm.reset();
+                        this.publicVariable.isProcess = false;
+
+                    } else {
+                        this.toastr.error(res.message, 'Error');
+                        alert(res.message);
+                        this.publicVariable.isProcess = false;
+                        this.publicVariable.dataForm.reset();
+
+                    }
+                },
+                error: (error: any) => {
+                    this.publicVariable.isProcess = false;
+                    this.publicVariable.isProcess = false;
+                    this.toastr.error(error.error.message || 'An error occurred. Please try again later.', 'Error');
+                },
+                complete: () => {
+
+                    this.publicVariable.isProcess = false;
+                    this.publicVariable.isProcess = false;
+                }
+            })
+        );
     }
 
     loadInviceDetailList() {
         try {
-            let data :any = {
-                email:this.loginId,
-                id:this.headerId
+            let data: any = {
+                email: this.loginId,
+                id: this.headerId
             }
             const subscription = this.API.GetApproverEmail(data).subscribe({
                 next: (response: any) => {
 
-                    console.log(response);
-                    
-                    if(!response.status){
+
+                    if (!response.status) {
                         alert('data not found')
                         return
                     }
                     this.data = response.data;
-              
+
                     this.uploadedFiles = this.data.impiHeaderAttachment;
 
                     if (this.data.impiHeaderAttachment) {
@@ -82,12 +151,12 @@ export class ApprproverEmailComponent {
                             modifiedBy: file.imadModifiedBy,
                             modifiedOn: file.imadModifiedOn,
                             doctype: file.doctype
-            
+
                         }));
                     } else {
                         this.uploadedFiles = [];
                         this.handleLoadingError()
-            
+
                     }
                     this.handleLoadingError()
                 },
@@ -181,7 +250,7 @@ export class ApprproverEmailComponent {
         if (this.publicVariable.dataForm.valid) {
             const newData = this.publicVariable.dataForm.value;
             const newConfig: any = {
-         
+
 
                 headerId: this.headerId,
                 isApproved: action,
@@ -200,7 +269,7 @@ export class ApprproverEmailComponent {
                             //this.router.navigate(['invoice/status']);
                             this.publicVariable.dataForm.reset();
                             window.location.reload();
-                          
+
                         } else {
                             this.toastr.error(res.message, 'Error');
                             alert(res.message);
