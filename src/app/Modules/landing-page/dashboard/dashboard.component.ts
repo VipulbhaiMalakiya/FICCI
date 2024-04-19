@@ -86,6 +86,11 @@ export class DashboardComponent {
         return this.storeIsFinance == true;
     }
 
+    calculateIndex(page: number, index: number): number {
+        return (page - 1) * this.ppitableSize + index + 1;
+    }
+
+
     loadSalesCreditNoteSummary(): void {
         try {
             this.publicVariable.isProcess = true;

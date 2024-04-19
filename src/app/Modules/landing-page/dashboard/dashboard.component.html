@@ -695,8 +695,8 @@
                                             <tbody>
 
                                                 <tr
-                                                    *ngFor="let d of  this.PIInvoiceSummaryList | searchFilter1: publicVariable.searchText| paginate: {itemsPerPage: ppitableSize,currentPage: ppipage,totalItems: PIPostedTaxInvoiceCount};let i = index">
-                                                    <td>{{i + 1}}</td>
+                                                    *ngFor="let d of  this.PIInvoiceSummaryList | searchFilter1: publicVariable.searchText| paginate: {itemsPerPage: ppitableSize,currentPage: ppipage,totalItems: PIInvoiceSummaryList.length};let i = index">
+                                                    <td>{{ calculateIndex(ppipage, i)}}</td>
                                                     <td>{{d.no}}</td>
                                                     <!-- <td>{{d.postingDate}}</td>
                                                     <td>{{d.invoice_no}}</td> -->
@@ -744,10 +744,10 @@
                                         *ngIf="PIInvoiceSummaryList && PIInvoiceSummaryList.length > 0">
                                         <div class="hint-text">Showing <b>{{this.ppitableSize}}</b> out of
                                             <b>{{
-                                                PIPostedTaxInvoiceCount }}</b>
+                                                PIInvoiceSummaryList.length }}</b>
                                             entries
                                         </div>
-                                        <pagination-controls *ngIf="PIInvoiceSummaryList && PIPostedTaxInvoiceCount > 0"  previousLabel="Prev" class="pagination" nextLabel="Next"
+                                        <pagination-controls *ngIf="PIInvoiceSummaryList && PIInvoiceSummaryList.length > 0"  previousLabel="Prev" class="pagination" nextLabel="Next"
                                             (pageChange)="onTableDataChange($event,'Posted Proforma Invoice')">
                                         </pagination-controls>
                                     </div>
