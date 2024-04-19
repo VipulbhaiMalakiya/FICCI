@@ -403,6 +403,8 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
         }
 
 
+
+
         else{
             if (this.publicVariable.dataForm.valid && !this.gstExists) {
 

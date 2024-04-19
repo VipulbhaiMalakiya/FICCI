@@ -869,6 +869,8 @@ export class NewPurchaseInvoiceComponent implements OnInit {
 
     onAddLine() {
         if (this.publicVariable.expenseForm.valid) {
+            // console.log(this.publicVariable.expenseForm.value;
+
             if (this.isEditing) {
                 // Updating an existing record
                 this.publicVariable.expenses[this.publicVariable.editingIndex] = this.publicVariable.expenseForm.value;
