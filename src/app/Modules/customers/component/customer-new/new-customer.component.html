@@ -32,7 +32,8 @@
                 <div class="col-md-3 col-sm-6">
                     <div class="form-group">
                         <label>Name 2 </label>
-                        <input type="text" class="form-control" placeholder="Name 2" formControlName="name2"  maxlength="100"/>
+                        <input type="text" class="form-control" placeholder="Name 2" formControlName="name2"
+                            maxlength="100" />
 
                         <div *ngIf="shouldShowError('name2', 'pattern')" class="text-danger">
                             Name2 must be alphanumeric.
@@ -120,9 +121,7 @@
                     <div class="form-group">
                         <label>Post Code <sup class="text-danger">*</sup></label>
                         <input type="text" formControlName="postCode" class="form-control" placeholder="Pincode"
-                            (input)="onInputChange($event)" maxlength="15"
-
-                            (click)="onpostCodeSelectionChange($event)">
+                            (input)="onInputChange($event)" maxlength="15" (click)="onpostCodeSelectionChange($event)">
                         <div *ngIf="shouldShowError('postCode', 'required')" class="text-danger">
                             Post Code is required.
                         </div>
@@ -212,12 +211,13 @@
                         <input type="text" class="form-control" placeholder="GST Registration No."
                             formControlName="GSTRegistrationNo" (change)="validateGST()" maxlength="16"
                             [readonly]="publicVariable.dataForm.get('GSTCustomerType')?.value === 2 || !publicVariable.dataForm.get('GSTCustomerType')?.value"
-                            [class.readonly]="publicVariable.dataForm.get('GSTCustomerType')?.value === 2 || !publicVariable.dataForm.get('GSTCustomerType')?.value"
-                            />
-                        <div *ngIf="shouldShowError('GSTRegistrationNo', 'invalidGST')" class="text-danger">
+                            [class.readonly]="publicVariable.dataForm.get('GSTCustomerType')?.value === 2 || !publicVariable.dataForm.get('GSTCustomerType')?.value" />
+                        <!-- <div *ngIf="shouldShowError('GSTRegistrationNo', 'invalidGST')" class="text-danger">
                             Please enter a valid GST Registration Number. (05AAACF1282E1Z5)
+                        </div> -->
+                        <div *ngIf="gstExists" class="text-warning"> Customers with the same PAN Number and different GST
+                            Number already exist.
                         </div>
-                        <div *ngIf="gstExists" class="text-danger"> GST number already exists. </div>
                     </div>
                 </div>
                 <!-- [attr.disabled]="publicVariable.dataForm.get('GSTCustomerType')?.value === '2' ? true : null" -->
