@@ -8,9 +8,9 @@ import { publicVariable, CustomersService } from '../../Export/invoce';
 import { InvoicesService } from '../../service/invoices.service';
 
 @Component({
-  selector: 'app-view-sales-approval',
-  templateUrl: './view-sales-approval.component.html',
-  styleUrls: ['./view-sales-approval.component.css']
+    selector: 'app-view-sales-approval',
+    templateUrl: './view-sales-approval.component.html',
+    styleUrls: ['./view-sales-approval.component.css']
 })
 export class ViewSalesApprovalComponent {
     headerId?: any;
@@ -40,21 +40,21 @@ export class ViewSalesApprovalComponent {
 
     ngOnInit() {
         this.route.params.subscribe(params => {
-           // this.headerId = +params['id'];
+            // this.headerId = +params['id'];
 
-           let decrypted = params['id']
-           this.headerId = atob(decrypted);
+            let decrypted = params['id']
+            this.headerId = atob(decrypted);
         });
         this.data = history.state.data;
         console.log(this.data);
-        
+
         this.loadStateList();
         this.loadCOAMasterList();
         this.uploadedFiles = this.data.impiHeaderAttachment
         if (this.data.impiHeaderAttachment) {
-            
+
             this.uploadedFiles = this.data.impiHeaderAttachment.map((file: any) => ({
-                
+
                 id: file.imadId,
                 recordNo: file.imadRecordNo,
                 screenName: file.imadScreenName,
@@ -67,9 +67,9 @@ export class ViewSalesApprovalComponent {
                 createdOn: file.imadCreatedOn,
                 modifiedBy: file.imadModifiedBy,
                 modifiedOn: file.imadModifiedOn,
-                doctype:file.doctype
+                doctype: file.doctype
             }));
-            
+
         } else {
             this.uploadedFiles = [];
             this.handleLoadingError()
@@ -96,7 +96,7 @@ export class ViewSalesApprovalComponent {
     getNameById(impiGlNo: any): string {
         const item = this.publicVariable.COAMasterList.find((item: any) => item.no === impiGlNo);
         return item ? item.name : '';
-      }
+    }
 
 
     loadStateList() {
@@ -179,7 +179,8 @@ export class ViewSalesApprovalComponent {
                     next: (res: any) => {
                         if (res.status === true) {
                             this.toastr.success(res.message, 'Success');
-                            this.router.navigate(['invoice/sales-approval']);
+                            // this.router.navigate(['invoice/sales-approval']);
+                            this.router.navigate(['dashboard']);
                             this.publicVariable.dataForm.reset();
                         } else {
                             this.toastr.error(res.message, 'Error');

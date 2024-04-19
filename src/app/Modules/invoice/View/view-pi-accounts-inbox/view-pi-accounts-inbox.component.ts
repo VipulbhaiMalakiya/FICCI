@@ -184,7 +184,8 @@ export class ViewPiAccountsInboxComponent implements OnInit, OnDestroy {
                     next: (res: any) => {
                         if (res.status === true) {
                             this.toastr.success(res.message, 'Success');
-                            this.router.navigate(['invoice/accounts']);
+                            // this.router.navigate(['invoice/accounts']);
+                            this.router.navigate(['dashboard']);
                             this.publicVariable.dataForm.reset();
 
                         } else {
