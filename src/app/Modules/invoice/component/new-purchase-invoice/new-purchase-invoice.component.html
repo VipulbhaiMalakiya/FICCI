@@ -477,7 +477,7 @@
                         <div class="form-group">
                             <label>Description/Narration to Print on Invoice <sup class="text-danger">*</sup></label>
                             <input type="text" class="form-control" placeholder="Description" maxlength="100"
-                                formControlName="impiDescription"   oninput="this.value = this.value.replace(/[^a-zA-z0-9]/g, '');">
+                                formControlName="impiDescription"   >
                             <div *ngIf="shouldShowExpenseError('impiDescription','required')" class="text-danger">This
                                 field is
                                 required</div>
