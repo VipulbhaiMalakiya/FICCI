@@ -45,15 +45,6 @@ export class ApprproverEmailComponent {
         });
 
 
-        console.log(this.headerId);
-        console.log(this.loginId);
-        console.log(this.action);
-
-
-
-
-
-
         // console.log('this.headerId ',this.headerId );
         // console.log('this.loginId ',this.loginId );
         // console.log('this.action ',this.action );
@@ -104,7 +95,10 @@ export class ApprproverEmailComponent {
 
                         modalRef.result.then((canDelete: boolean) => {
                             if (canDelete) {
-                                this.router.navigate(['/']);
+                                // this.router.navigate(['/']);
+
+                                // Closing the current tab
+                                window.close();
                             }
                         }).catch(() => { });
                         // this.toastr.success(res.message, 'Success');
