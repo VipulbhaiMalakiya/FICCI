@@ -45,6 +45,14 @@ export class ApprproverEmailComponent {
         });
 
 
+        console.log(this.headerId);
+        console.log(this.loginId);
+        console.log(this.action);
+
+
+
+
+
 
         // console.log('this.headerId ',this.headerId );
         // console.log('this.loginId ',this.loginId );
