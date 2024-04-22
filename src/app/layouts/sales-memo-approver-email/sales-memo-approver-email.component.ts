@@ -50,7 +50,6 @@ export class SalesMemoApproverEmailComponent {
         // this.loadStateList();
         // this.loadCOAMasterList();
 
-
         if (this.action == 'a') {
             this.newConfig = {
                 creditId: this.headerId,
@@ -72,7 +71,7 @@ export class SalesMemoApproverEmailComponent {
             this.actionPerformed(this.newConfig);
         }
         else if (this.action == 'v') {
-            this.publicVariable.isProcess = false;
+           // this.publicVariable.isProcess = false;
             this.loadInviceDetailList();
             this.loadCOAMasterList();
             this.loadStateList();
@@ -96,9 +95,6 @@ export class SalesMemoApproverEmailComponent {
                         modalRef.result.then((canDelete: boolean) => {
                             if (canDelete) {
                                 this.router.navigate(['/']);
-
-
-
                             }
                         }).catch(() => { });
 
@@ -134,6 +130,7 @@ export class SalesMemoApproverEmailComponent {
                 email: this.loginId,
                 id: this.headerId
             }
+
             // const subscription = this.API.GetCreditMemoApproverEmail(data).subscribe({
             this.publicVariable.isProcess = true;
             const subscription = this.API.getApproveSalesInvoice().subscribe({
@@ -145,7 +142,13 @@ export class SalesMemoApproverEmailComponent {
                         alert('data not found')
                         return
                     }
+
+                    console.log(response);
+
                     let filteredData = response.data.find((item: any) => item.headerId == this.headerId);
+
+                    console.log(filteredData);
+
                     this.data = filteredData;
                     this.publicVariable.isProcess = false;
                     this.uploadedFiles = this.data.impiHeaderAttachment;
