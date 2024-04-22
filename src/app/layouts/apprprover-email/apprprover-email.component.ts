@@ -105,12 +105,10 @@ export class ApprproverEmailComponent {
                         //this.router.navigate(['invoice/status']);
                         this.publicVariable.dataForm.reset();
                         this.publicVariable.isProcess = false;
-                        this.closeTab();
 
                     } else {
                         this.toastr.error(res.message, 'Error');
                         alert(res.message);
-                        this.closeTab();
                         this.publicVariable.isProcess = false;
                         this.publicVariable.dataForm.reset();
 
@@ -118,7 +116,7 @@ export class ApprproverEmailComponent {
                 },
                 error: (error: any) => {
                     this.publicVariable.isProcess = false;
-                    this.closeTab();
+
                     this.toastr.error(error.error.message || 'An error occurred. Please try again later.', 'Error');
                 },
                 complete: () => {
@@ -130,14 +128,7 @@ export class ApprproverEmailComponent {
     }
 
     closeTab(){
-        var win = window.open("about:blank", "_self");
-        // Close the new blank page immediately
-        if (win) {
-            win.close();
-        } else {
-            // Fallback option if window.open fails
-            window.close();
-        }
+        window.open("about:blank", "_self")?.close();
     }
 
     loadInviceDetailList() {
