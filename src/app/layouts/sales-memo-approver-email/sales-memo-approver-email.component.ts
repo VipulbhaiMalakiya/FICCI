@@ -94,23 +94,25 @@ export class SalesMemoApproverEmailComponent {
 
                         modalRef.result.then((canDelete: boolean) => {
                             if (canDelete) {
-                                this.router.navigate(['/']);
+                                this.closeTab();
                             }
                         }).catch(() => { });
 
                         this.publicVariable.dataForm.reset();
                         this.publicVariable.isProcess = false;
+                        this.closeTab();
 
                     } else {
                         this.toastr.error(res.message, 'Error');
                         alert(res.message);
-                        this.router.navigate(['/']);
+                        this.closeTab();
                         this.publicVariable.isProcess = false;
                         this.publicVariable.dataForm.reset();
 
                     }
                 },
                 error: (error: any) => {
+                    this.closeTab();
                     this.publicVariable.isProcess = false;
                     this.toastr.error(error.error.message || 'An error occurred. Please try again later.', 'Error');
                 },
@@ -120,6 +122,18 @@ export class SalesMemoApproverEmailComponent {
                 }
             })
         );
+    }
+
+
+    closeTab(){
+        var win = window.open("about:blank", "_self");
+        // Close the new blank page immediately
+        if (win) {
+            win.close();
+        } else {
+            // Fallback option if window.open fails
+            window.close();
+        }
     }
 
 
