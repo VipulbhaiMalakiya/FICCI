@@ -95,8 +95,10 @@ export class SalesMemoApproverEmailComponent {
 
                         modalRef.result.then((canDelete: boolean) => {
                             if (canDelete) {
-                                //  this.router.navigate(['/']);
-                                window.close()
+                                this.router.navigate(['/']);
+
+
+
                             }
                         }).catch(() => { });
 
