@@ -142,20 +142,10 @@ export class SalesMemoApproverEmailComponent {
                         alert('data not found')
                         return
                     }
-
-
-
-
                     let filteredData = response.data.find((item: any) => item.headerId == this.headerId);
-
-
-
-
                     this.data = filteredData;
                     this.publicVariable.isProcess = false;
-
                     this.uploadedFiles = this.data.impiHeaderAttachment;
-
                     if (this.data.impiHeaderAttachment) {
 
                         this.uploadedFiles = this.data.impiHeaderAttachment.map((file: any) => ({
