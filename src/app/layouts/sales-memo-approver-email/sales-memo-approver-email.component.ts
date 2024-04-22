@@ -46,9 +46,9 @@ export class SalesMemoApproverEmailComponent {
             this.action = params['action'];
         });
         // this.data = history.state.data;
-        this.loadInviceDetailList();
-        this.loadStateList();
-        this.loadCOAMasterList();
+        // this.loadInviceDetailList();
+        // this.loadStateList();
+        // this.loadCOAMasterList();
 
 
         if (this.action == 'a') {
@@ -95,8 +95,7 @@ export class SalesMemoApproverEmailComponent {
                         modalRef.result.then((canDelete: boolean) => {
                             if (canDelete) {
                                 this.router.navigate(['/']);
-                                // window.close();
-                                //window.location.href = 'about:blank';
+                                window?.top?.close();
                             }
                         }).catch(() => { });
 
@@ -114,12 +113,10 @@ export class SalesMemoApproverEmailComponent {
                 },
                 error: (error: any) => {
                     this.publicVariable.isProcess = false;
-                    this.publicVariable.isProcess = false;
                     this.toastr.error(error.error.message || 'An error occurred. Please try again later.', 'Error');
                 },
                 complete: () => {
 
-                    this.publicVariable.isProcess = false;
                     this.publicVariable.isProcess = false;
                 }
             })
