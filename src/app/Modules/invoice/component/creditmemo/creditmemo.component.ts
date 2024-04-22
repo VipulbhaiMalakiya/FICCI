@@ -35,6 +35,7 @@ export class CreditmemoComponent implements OnInit {
     isEdit: boolean = false;
     amount:any;
     isReadOnly: boolean = true;
+    CreditAmount:any[] = [];
 
     constructor(private appService: AppService,
         private modalService: NgbModal,
@@ -349,7 +350,25 @@ export class CreditmemoComponent implements OnInit {
 
 
     checkCreditAmount(data:any){
-        console.log(data);
+        this.publicVariable.isProcess = true;
+        try {
+                 const subscription = this.API.GetTotalCreditAmount(data).subscribe({
+                next: (response: any) => {
+                    this.CreditAmount = response.data;
+                    this.publicVariable.isProcess = false;
+                    this.cd.detectChanges();
+                },
+                error: (error) => {
+                    console.error('Error loading project list:', error);
+                    this.handleLoadingError();
+                },
+            });
+
+            this.publicVariable.Subscription.add(subscription);
+        } catch (error) {
+            console.error('Error loading project list:', error);
+            this.handleLoadingError();
+        }
 
     }
 

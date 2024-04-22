@@ -57,6 +57,12 @@ export class InvoicesService {
 
     private ApproverURLNew = `${environment.apiURL}ApproveInvoice/MailInvoiceApproval`;
 
+    private TotalCreditAmountURL = `${environment.apiURL}DropDown/TotalCreditAmount?invoiceNo=`;
+
+    GetTotalCreditAmount(data: string): Observable<any[]> {
+        const url = `${this.TotalCreditAmountURL}${data}`;
+        return this.http.get<any[]>(url);
+    }
 
     getApproveSalesInvoiceNew(data:any): Observable<any[]> {
         const url = `${this.ApproveSalesInvoiceURL}${data.email}`;
