@@ -53,9 +53,9 @@ export class InvoicesService {
     private GetApproverEmailURL = `${environment.apiURL}ApproveInvoice/GetApproverEmail?email=`;
 
     private CreditMemoApproverEmail = `${environment.apiURL}ApproveInvoice/GetApproverEmail?email=`;
-    
-    
-    private ApproverURLNew = `${environment.apiURL}MailInvoiceApproval`;
+
+
+    private ApproverURLNew = `${environment.apiURL}ApproveInvoice/MailInvoiceApproval`;
     isApproverRemarksNew(data: any): Observable<any[]> {
         return this.http.post<any[]>(`${this.ApproverURLNew}`, data);
     }
@@ -254,7 +254,7 @@ export class InvoicesService {
 
 
 
-  
+
     isSalesApproverRemarks(data: any): Observable<any[]> {
         return this.http.post<any[]>(`${this.apiApproveCreditUrl}`, data);
     }
