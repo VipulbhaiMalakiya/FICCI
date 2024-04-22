@@ -94,8 +94,8 @@ export class SalesMemoApproverEmailComponent {
 
                         modalRef.result.then((canDelete: boolean) => {
                             if (canDelete) {
-                                this.router.navigate(['/']);
-                                window?.top?.close();
+                                //  this.router.navigate(['/']);
+                                window.self.close();
                             }
                         }).catch(() => { });
 
@@ -123,6 +123,8 @@ export class SalesMemoApproverEmailComponent {
         );
     }
 
+
+
     loadInviceDetailList() {
         try {
             let data: any = {
@@ -130,7 +132,7 @@ export class SalesMemoApproverEmailComponent {
                 id: this.headerId
             }
             // const subscription = this.API.GetCreditMemoApproverEmail(data).subscribe({
-
+            this.publicVariable.isProcess = true;
             const subscription = this.API.getApproveSalesInvoice().subscribe({
                 next: (response: any) => {
 
@@ -143,13 +145,14 @@ export class SalesMemoApproverEmailComponent {
 
 
 
+
                     let filteredData = response.data.find((item: any) => item.headerId == this.headerId);
 
 
 
-                    // this.data = response.data;
-                    this.data = filteredData;
 
+                    this.data = filteredData;
+                    this.publicVariable.isProcess = false;
 
                     this.uploadedFiles = this.data.impiHeaderAttachment;
 
