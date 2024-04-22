@@ -88,6 +88,7 @@ export class SalesMemoApproverEmailComponent {
             this.API.isSalesApproverRemarks(data).subscribe({
                 next: (res: any) => {
                     if (res.status === true) {
+
                         const modalRef = this.modalService.open(ConformationModelComponent, { size: "md", centered: true, backdrop: "static" });
                         var componentInstance = modalRef.componentInstance as ConformationModelComponent;
                         componentInstance.message = res.message;
@@ -95,7 +96,7 @@ export class SalesMemoApproverEmailComponent {
                         modalRef.result.then((canDelete: boolean) => {
                             if (canDelete) {
                                 //  this.router.navigate(['/']);
-                                window.self.close();
+                                window.close()
                             }
                         }).catch(() => { });
 

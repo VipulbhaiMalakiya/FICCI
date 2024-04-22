@@ -2,8 +2,8 @@
 	<div class="main-logo"><a routerLink="/"><img src="../assets/images/logo.png" alt=""></a></div>
 
 	<div class="loading-text text-center">
-	  <!-- <h1>Welcome to <br> Invoice Management System</h1> -->
-		<div class="loading-icon">
+	  <h1 *ngIf="!this.publicVariable.isProcess">Welcome to <br> Invoice Management System</h1>
+		<div class="loading-icon" *ngIf="this.publicVariable.isProcess">
 			<span class="spinner-border spinner-border-md" role="status" aria-hidden="true"></span> Please wait...
 		</div>
 	</div>
