@@ -159,17 +159,17 @@ export class CreditmemoComponent implements OnInit {
 
             this.publicVariable.dataForm.patchValue({
 
-           
+
                 creditMemoAmount: this.amount,
             });
-            
+
             console.log(this.amount);
-            
+
         }
         else{
             this.publicVariable.dataForm.patchValue({
 
-           
+
                 creditMemoAmount: null,
             });
         }
@@ -343,7 +343,13 @@ export class CreditmemoComponent implements OnInit {
 
         this.loadTaxInvoiceInformation(event.invoice_no)
 
+        this.checkCreditAmount(event.invoice_no)
 
+    }
+
+
+    checkCreditAmount(data:any){
+        console.log(data);
 
     }
 
