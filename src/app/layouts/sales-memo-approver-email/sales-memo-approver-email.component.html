@@ -1,4 +1,15 @@
-<div class="outer-bg">
+<div class="loadingpage-sec" *ngIf="action == 'a'">
+	<div class="main-logo"><a routerLink="/"><img src="../assets/images/logo.png" alt=""></a></div>
+
+	<div class="loading-text text-center">
+	  <!-- <h1>Welcome to <br> Invoice Management System</h1> -->
+		<div class="loading-icon">
+			<span class="spinner-border spinner-border-md" role="status" aria-hidden="true"></span> Please wait...
+		</div>
+	</div>
+
+</div>
+<div class="outer-bg" *ngIf="action == 'v'">
     <header class="main-header">
         <div class="container-fluid">
             <div class="row align-items-center">
@@ -413,7 +424,7 @@
 
                             </div>
 
-                            <form [formGroup]="publicVariable.dataForm"
+                            <!-- <form [formGroup]="publicVariable.dataForm"
                                 *ngIf="data.headerStatus == 'PENDING WITH FINANCE APPROVER' || data.headerStatus === 'PENDING WITH TL APPROVER' ||data.headerStatus ===  'PENDING WITH CH APPROVER' || data.headerStatus === 'PENDING WITH TL APPROVER' ||data.headerStatus ===  'CANCEL BY EMPLOYEE' ||data.headerStatus == 'CANCELLATION APPROVED BY TL'|| data.headerStatus === 'CANCELLATION APPROVED BY TL'  ">
                                 <div class="col-md-12 mt-3">
                                     <div class="form-group">
@@ -432,7 +443,7 @@
                                             (click)="onSubmit(true)">Approve</button>
                                     </div>
                                 </div>
-                            </form>
+                            </form> -->
 
 
                         </div>

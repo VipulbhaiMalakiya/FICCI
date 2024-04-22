@@ -1,5 +1,6 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { ActivatedRoute, CustomersService, FormBuilder, InvoicesService, NgbModal, Router, ToastrService, publicVariable } from 'src/app/Modules/invoice/Export/invoce';
+import { ConformationModelComponent } from 'src/app/Modules/shared/conformation-model/conformation-model.component';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -11,9 +12,11 @@ export class SalesMemoApproverEmailComponent {
     headerId?: any;
     loginId?: any;
     data?: any = {};
+    action?: string = '';
     FilePath: any;
     publicVariable = new publicVariable();
     uploadedFiles: any[] = [];
+    newConfig: {} = {};
 
 
     constructor(private fb: FormBuilder,
@@ -40,6 +43,7 @@ export class SalesMemoApproverEmailComponent {
         this.route.params.subscribe(params => {
             this.headerId = atob(params['id']);
             this.loginId = atob(params['email']);
+            this.action = params['action'];
         });
         // this.data = history.state.data;
         this.loadInviceDetailList();
@@ -47,6 +51,79 @@ export class SalesMemoApproverEmailComponent {
         this.loadCOAMasterList();
 
 
+        if (this.action == 'a') {
+            this.newConfig = {
+                creditId: this.headerId,
+                isApproved: true,
+                loginId: this.loginId,
+                statusId: 20,
+                remarks: 'On Approve By TL',
+            }
+            this.actionPerformed(this.newConfig);
+        }
+        else if (this.action == 'r') {
+            this.newConfig = {
+                creditId: this.headerId,
+                isApproved: false,
+                loginId: this.loginId,
+                statusId: 7,
+                remarks: 'On Reject By TL',
+            }
+            this.actionPerformed(this.newConfig);
+        }
+        else if (this.action == 'v') {
+            this.publicVariable.isProcess = false;
+            this.loadInviceDetailList();
+            this.loadCOAMasterList();
+            this.loadStateList();
+        } else {
+            this.publicVariable.isProcess = false;
+            this.router.navigate(['/unauthorized']);
+        }
+    }
+
+    actionPerformed(data: any) {
+        this.publicVariable.isProcess = true;
+        this.publicVariable.Subscription.add(
+            this.API.isSalesApproverRemarks(data).subscribe({
+                next: (res: any) => {
+                    if (res.status === true) {
+                        const modalRef = this.modalService.open(ConformationModelComponent, { size: "md", centered: true, backdrop: "static" });
+                        var componentInstance = modalRef.componentInstance as ConformationModelComponent;
+                        componentInstance.message = res.message;
+
+                        modalRef.result.then((canDelete: boolean) => {
+                            if (canDelete) {
+                                this.router.navigate(['/']);
+                            }
+                        }).catch(() => { });
+                        // this.toastr.success(res.message, 'Success');
+                        // alert(res.message)
+                        //this.router.navigate(['invoice/status']);
+                        this.publicVariable.dataForm.reset();
+                        this.publicVariable.isProcess = false;
+
+                    } else {
+                        this.toastr.error(res.message, 'Error');
+                        alert(res.message);
+                        this.router.navigate(['/']);
+                        this.publicVariable.isProcess = false;
+                        this.publicVariable.dataForm.reset();
+
+                    }
+                },
+                error: (error: any) => {
+                    this.publicVariable.isProcess = false;
+                    this.publicVariable.isProcess = false;
+                    this.toastr.error(error.error.message || 'An error occurred. Please try again later.', 'Error');
+                },
+                complete: () => {
+
+                    this.publicVariable.isProcess = false;
+                    this.publicVariable.isProcess = false;
+                }
+            })
+        );
     }
 
     loadInviceDetailList() {
