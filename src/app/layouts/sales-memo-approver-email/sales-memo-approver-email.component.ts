@@ -71,7 +71,7 @@ export class SalesMemoApproverEmailComponent {
             this.actionPerformed(this.newConfig);
         }
         else if (this.action == 'v') {
-           // this.publicVariable.isProcess = false;
+            // this.publicVariable.isProcess = false;
             this.loadInviceDetailList();
             this.loadCOAMasterList();
             this.loadStateList();
@@ -132,22 +132,17 @@ export class SalesMemoApproverEmailComponent {
             }
 
             // const subscription = this.API.GetCreditMemoApproverEmail(data).subscribe({
-            this.publicVariable.isProcess = true;
-            const subscription = this.API.getApproveSalesInvoice().subscribe({
+            const subscription = this.API.getApproveSalesInvoiceNew(data).subscribe({
                 next: (response: any) => {
 
-                    // console.log(response);
+                    console.log(response);
 
                     if (!response.status) {
                         alert('data not found')
                         return
                     }
 
-                    console.log(response);
-
                     let filteredData = response.data.find((item: any) => item.headerId == this.headerId);
-
-                    console.log(filteredData);
 
                     this.data = filteredData;
                     this.publicVariable.isProcess = false;

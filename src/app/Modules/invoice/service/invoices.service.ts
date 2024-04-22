@@ -56,6 +56,13 @@ export class InvoicesService {
 
 
     private ApproverURLNew = `${environment.apiURL}ApproveInvoice/MailInvoiceApproval`;
+
+
+    getApproveSalesInvoiceNew(data:any): Observable<any[]> {
+        const url = `${this.ApproveSalesInvoiceURL}${data.email}`;
+        return this.http.get<any[]>(url);
+    }
+
     isApproverRemarksNew(data: any): Observable<any[]> {
         return this.http.post<any[]>(`${this.ApproverURLNew}`, data);
     }
