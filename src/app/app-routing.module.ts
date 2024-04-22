@@ -27,7 +27,7 @@ const routes: Routes = [
     },
 
     {
-        path:'sales-approval/:email/:id',
+        path:'sales-approval/:email/:id/:action',
         component:SalesMemoApproverEmailComponent,
     },
 

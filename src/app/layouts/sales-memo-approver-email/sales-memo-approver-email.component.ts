@@ -3,14 +3,14 @@ import { ActivatedRoute, CustomersService, FormBuilder, InvoicesService, NgbModa
 import { environment } from 'src/environments/environment';
 
 @Component({
-  selector: 'app-sales-memo-approver-email',
-  templateUrl: './sales-memo-approver-email.component.html',
-  styleUrls: ['./sales-memo-approver-email.component.css']
+    selector: 'app-sales-memo-approver-email',
+    templateUrl: './sales-memo-approver-email.component.html',
+    styleUrls: ['./sales-memo-approver-email.component.css']
 })
 export class SalesMemoApproverEmailComponent {
     headerId?: any;
-    loginId?:any;
-    data: any;
+    loginId?: any;
+    data?: any = {};
     FilePath: any;
     publicVariable = new publicVariable();
     uploadedFiles: any[] = [];
@@ -51,20 +51,31 @@ export class SalesMemoApproverEmailComponent {
 
     loadInviceDetailList() {
         try {
-            let data :any = {
-                email:this.loginId,
-                id:this.headerId
+            let data: any = {
+                email: this.loginId,
+                id: this.headerId
             }
-            const subscription = this.API.GetCreditMemoApproverEmail(data).subscribe({
+            // const subscription = this.API.GetCreditMemoApproverEmail(data).subscribe({
+
+            const subscription = this.API.getApproveSalesInvoice().subscribe({
                 next: (response: any) => {
 
-                    console.log(response);
+                    // console.log(response);
 
-                    if(!response.status){
+                    if (!response.status) {
                         alert('data not found')
                         return
                     }
-                    this.data = response.data;
+
+
+
+                    let filteredData = response.data.find((item: any) => item.headerId == this.headerId);
+
+
+
+                    // this.data = response.data;
+                    this.data = filteredData;
+
 
                     this.uploadedFiles = this.data.impiHeaderAttachment;
 
@@ -84,7 +95,7 @@ export class SalesMemoApproverEmailComponent {
                             createdOn: file.imadCreatedOn,
                             modifiedBy: file.imadModifiedBy,
                             modifiedOn: file.imadModifiedOn,
-                            doctype:file.doctype
+                            doctype: file.doctype
                         }));
 
                     } else {
@@ -128,7 +139,7 @@ export class SalesMemoApproverEmailComponent {
     getNameById(impiGlNo: any): string {
         const item = this.publicVariable.COAMasterList.find((item: any) => item.no === impiGlNo);
         return item ? item.name : '';
-      }
+    }
 
 
     loadStateList() {
