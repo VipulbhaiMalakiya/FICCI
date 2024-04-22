@@ -22,7 +22,7 @@
                     <div class="form-group">
                         <label for="projectCode">Invoice No <sup class="text-danger">*</sup></label>
                         <ng-select [items]="InvoiceSummaryList" #select bindLabel="no" bindValue="no"
-                            placeholder="Select Invoice No" formControlName="invoice_no"
+                        placeholder="{{InvoiceSummaryList.length>0 ?'Select Invoice':'Please wait...Data Loading...'}}" formControlName="invoice_no"
                             (change)="onSelectInvoice($event)" [searchable]="true" [searchFn]="custominvoiceSearchFn"
                             [virtualScroll]="true" [bufferAmount]="10">
 
@@ -51,7 +51,7 @@
                         <label for="creditMemoAmount">Credit Amount <sup class="text-danger">*</sup></label>
                         <input type="text" placeholder="Credit Amount" formControlName="creditMemoAmount"
                             class="form-control" (input)="priceValidator($event)"
-                            
+
                             [readonly]="isReadOnly"
                             [class.readonly]="isReadOnly"
                             >
@@ -61,7 +61,7 @@
                         <div *ngIf="publicVariable.dataForm.get('creditMemoAmount')?.hasError('exceedsTotal')" class="text-danger">Entered amount exceeds total amount</div>
 
                     </div>
-           
+
                 </div>
 
                 <div class="col-md-4 col-sm-6">
