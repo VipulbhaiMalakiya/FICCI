@@ -33,9 +33,9 @@ export class CreditmemoComponent implements OnInit {
     PostedTaxInvoiceCount: number = 0;
     isCalculate: boolean = false;
     isEdit: boolean = false;
-    amount:any;
+    amount: any;
     isReadOnly: boolean = true;
-    CreditAmount:any[] = [];
+    CreditAmount: any = {};
 
     constructor(private appService: AppService,
         private modalService: NgbModal,
@@ -57,25 +57,25 @@ export class CreditmemoComponent implements OnInit {
             headerid: [''],
             invoice_no: [null],
             ImpiHeaderInvoiceType: ['Tax Invoice'],
-            ImpiHeaderProjectCode: [null, ],
-            Project: [{ value: '', disabled: true }, ],
-            ImpiHeaderDepartment: [{ value: '', disabled: true }, ],
-            ImpiHeaderDivison: [{ value: '', disabled: true }, ],
-            ImpiHeaderPanNo: [{ value: 'AAACF1282E', disabled: true }, ],
-            ImpiHeaderGstNo: [{ value: '07AAACF1282E1Z1', disabled: true }, ],
+            ImpiHeaderProjectCode: [null,],
+            Project: [{ value: '', disabled: true },],
+            ImpiHeaderDepartment: [{ value: '', disabled: true },],
+            ImpiHeaderDivison: [{ value: '', disabled: true },],
+            ImpiHeaderPanNo: [{ value: 'AAACF1282E', disabled: true },],
+            ImpiHeaderGstNo: [{ value: '07AAACF1282E1Z1', disabled: true },],
             PINO: [''],
             CustNo: [''],
-            creditMemoAmount:['',[Validators.required]],
+            creditMemoAmount: ['', [Validators.required]],
             ImpiHeaderCustomerName: [null,],
             ImpiHeaderCustomerCode: [''], //new filed
-            ImpiHeaderCustomerAddress: [null, ],
-            ImpiHeaderCustomerState: [null, ],
-            ImpiHeaderCustomerCity: [null, ],
+            ImpiHeaderCustomerAddress: [null,],
+            ImpiHeaderCustomerState: [null,],
+            ImpiHeaderCustomerCity: [null,],
             ImpiHeaderCustomerPinCode: [null],
             ImpiHeaderCustomerGstNo: [null],
             ImpiHeaderCustomerContactPerson: [''],
             ImpiHeaderCustomerEmailId: [''],
-            ImpiHeaderCustomerPhoneNo: ['', ],
+            ImpiHeaderCustomerPhoneNo: ['',],
             ImpiHeaderCreatedBy: [''],
             ImpiHeaderTotalInvoiceAmount: [''],//api new filed
             items: this.fb.array([]),
@@ -91,11 +91,11 @@ export class CreditmemoComponent implements OnInit {
 
     private createExpenseForm(): void {
         this.publicVariable.expenseForm = this.fb.group({
-            impiGlNo: [null, ],
-            impiQuantity: ['', ],
-            impiGstgroupCode: [null, ],
+            impiGlNo: [null,],
+            impiQuantity: ['',],
+            impiGstgroupCode: [null,],
             impiHsnsaccode: [null],
-            impiUnitPrice: ['', ],
+            impiUnitPrice: ['',],
         })
     }
 
@@ -147,8 +147,8 @@ export class CreditmemoComponent implements OnInit {
             this.patchFormData(this.data);
             //console.log(this.data);
         }
-         this.loadCOAMasterList();
-      //  this.loadGetGSTGroupList();
+        this.loadCOAMasterList();
+        //  this.loadGetGSTGroupList();
         // this.loadgetGstRegistrationNoAll();
     }
 
@@ -167,7 +167,7 @@ export class CreditmemoComponent implements OnInit {
             console.log(this.amount);
 
         }
-        else{
+        else {
             this.publicVariable.dataForm.patchValue({
 
 
@@ -193,7 +193,10 @@ export class CreditmemoComponent implements OnInit {
                     // this.PostedTaxInvoiceCount = this.InvoiceSummaryList.length;
 
 
+
                     this.InvoiceSummaryList = response.data;
+                    console.log(this.InvoiceSummaryList);
+
                     this.PostedTaxInvoiceCount = response.data.length;
                 } else {
                     // Handle case where response data is null or not an array
@@ -217,36 +220,7 @@ export class CreditmemoComponent implements OnInit {
     }
 
 
-    priceValidator(event: Event) {
-        const inputValue = (event.target as HTMLInputElement).value;
-        let numericValue = inputValue.replace(/[^0-9.]/g, '');
-        const decimalParts = numericValue.split('.');
 
-        if (decimalParts.length > 1) {
-            const integerPart = decimalParts[0];
-            const decimalPart = decimalParts[1].slice(0, 2);
-            numericValue = integerPart + '.' + decimalPart;
-        }
-
-
-
-
-        const enteredAmount = parseFloat(numericValue);
-
-
-        const totalAmount = parseFloat(this.amount); // Assuming this.totalAmount holds the total amount
-
-        if (enteredAmount > totalAmount) {
-
-            this.publicVariable.dataForm.controls['creditMemoAmount'].setErrors({ 'exceedsTotal': true });
-        } else {
-
-            this.publicVariable.dataForm.controls['creditMemoAmount'].setErrors(null);
-        }
-
-        // Update the input value with the sanitized numeric value
-        (event.target as HTMLInputElement).value = numericValue;
-    }
 
 
     loadCOAMasterList(): void {
@@ -349,12 +323,14 @@ export class CreditmemoComponent implements OnInit {
     }
 
 
-    checkCreditAmount(data:any){
+    checkCreditAmount(data: any) {
         this.publicVariable.isProcess = true;
         try {
-                 const subscription = this.API.GetTotalCreditAmount(data).subscribe({
+            const subscription = this.API.GetTotalCreditAmount(data).subscribe({
                 next: (response: any) => {
-                    this.CreditAmount = response.data;
+                    this.CreditAmount = response.data.totalCreditAmount;
+                    console.log(this.CreditAmount);
+
                     this.publicVariable.isProcess = false;
                     this.cd.detectChanges();
                 },
@@ -371,14 +347,53 @@ export class CreditmemoComponent implements OnInit {
         }
 
     }
+    priceValidator(event: Event) {
+        const inputValue = (event.target as HTMLInputElement).value;
+        let numericValue = inputValue.replace(/[^0-9.]/g, '');
+        const decimalParts = numericValue.split('.');
 
+        if (decimalParts.length > 1) {
+            const integerPart = decimalParts[0];
+            const decimalPart = decimalParts[1].slice(0, 2);
+            numericValue = integerPart + '.' + decimalPart;
+        }
+
+
+
+
+        const enteredAmount = parseFloat(numericValue);
+
+
+        const totalAmount = parseFloat(this.amount); // Assuming this.totalAmount holds the total amount
+
+        // const CreditAmount = parseFloat(this.CreditAmount);
+
+        // if (CreditAmount > totalAmount) {
+
+        //     this.publicVariable.dataForm.controls['creditMemoAmount'].setErrors({ 'exceedsTotal': true });
+        // } else {
+
+        //     this.publicVariable.dataForm.controls['creditMemoAmount'].setErrors(null);
+        // }
+
+        if (enteredAmount > totalAmount) {
+
+            this.publicVariable.dataForm.controls['creditMemoAmount'].setErrors({ 'exceedsTotal': true });
+        } else {
+
+            this.publicVariable.dataForm.controls['creditMemoAmount'].setErrors(null);
+        }
+
+        // Update the input value with the sanitized numeric value
+        (event.target as HTMLInputElement).value = numericValue;
+    }
     loadTaxInvoiceInformation(invoice_no: any) {
         this.publicVariable.isProcess = true;
         try {
 
-           // const subscription = this.API.GetTaxInvoiceInformation("SI121683").subscribe({
+            // const subscription = this.API.GetTaxInvoiceInformation("SI121683").subscribe({
 
-                 const subscription = this.API.GetTaxInvoiceInformation(invoice_no).subscribe({
+            const subscription = this.API.GetTaxInvoiceInformation(invoice_no).subscribe({
                 next: (response: any) => {
                     this.TaxInvoicedata = response.data;
                     //this.filterTaxInvoiceByInvoiceNo("SI121683");
@@ -434,10 +449,10 @@ export class CreditmemoComponent implements OnInit {
             PINO: data.invoice_no,
             ImpiHeaderCustomerGstNo: data.gsT_No,
             ImpiHeaderCustomerAddress: data.sellToAddress,
-            CustNo:data.sellToCustomerNo,
+            CustNo: data.sellToCustomerNo,
             ImpiHeaderCustomerCity: data.sellToCity,
             ImpiHeaderCustomerPinCode: data.sellToPostCode,
-            ImpiHeaderCustomerName:data.sellToCustomerName,
+            ImpiHeaderCustomerName: data.sellToCustomerName,
 
 
             // ImpiHeaderCustomerContactPerson: data.impiHeaderCustomerContactPerson,
@@ -501,14 +516,14 @@ export class CreditmemoComponent implements OnInit {
             ImpiHeaderInvoiceType: data.impiHeaderInvoiceType,
             ImpiHeaderProjectCode: data.impiHeaderProjectCode,
             ImpiHeaderDepartment: data.impiHeaderProjectDepartmentName,
-            MemoType:data.memoType,
-            invoice_no :data.headerPiNo,
+            MemoType: data.memoType,
+            invoice_no: data.headerPiNo,
             ImpiHeaderDivison: data.impiHeaderProjectDivisionName,
             Project: data.impiHeaderProjectName,
-            creditMemoAmount:data.memoAmount,
+            creditMemoAmount: data.memoAmount,
             ImpiHeaderPanNo: data.impiHeaderPanNo,
             ImpiHeaderGstNo: data.impiHeaderGstNo,
-            CustNo:data.impiHeaderCustomerCode,
+            CustNo: data.impiHeaderCustomerCode,
             PINO: data.headerPiNo, //api missing
             ImpiHeaderCustomerName: data.impiHeaderCustomerName,
             ImpiHeaderCustomerCode: data.impiHeaderCustomerCode,
@@ -566,9 +581,9 @@ export class CreditmemoComponent implements OnInit {
             const subscription = this.API.getProjectsCreditMemo().subscribe({
                 next: (response: any) => {
                     this.publicVariable.projectList = response.data;
-                   // this.loadCustomerStatusList();
+                    // this.loadCustomerStatusList();
 
-                   this.publicVariable.isProcess =false;
+                    this.publicVariable.isProcess = false;
 
                 },
                 error: (error) => {
@@ -629,7 +644,7 @@ export class CreditmemoComponent implements OnInit {
             const subscription = this.CAPI.getCityList().subscribe({
                 next: (response: any) => {
                     this.publicVariable.cityList = response.data;
-                  //  this.loadInvoiceSummary();
+                    //  this.loadInvoiceSummary();
 
                 },
                 error: (error) => {
@@ -843,15 +858,13 @@ export class CreditmemoComponent implements OnInit {
         const selectedId = this.publicVariable.dataForm.get('ImpiHeaderProjectCode')?.value;
 
 
-        if (selectedId)
-        {
+        if (selectedId) {
 
             this.publicVariable.selectedProjet = this.publicVariable.projectList.find(project => project.code == selectedId);
 
-           // alert(this.publicVariable.selectedProjet);
+            // alert(this.publicVariable.selectedProjet);
 
-            if (this.publicVariable.selectedProjet)
-            {
+            if (this.publicVariable.selectedProjet) {
 
                 this.publicVariable.dataForm.patchValue({
                     ImpiHeaderDepartment: this.publicVariable.selectedProjet.departmentName,
@@ -1173,7 +1186,7 @@ export class CreditmemoComponent implements OnInit {
     onSubmit(Action: string): void {
 
 
-     console.log(this.publicVariable.dataForm.value);
+        console.log(this.publicVariable.dataForm.value);
 
         // if (Action !== 'Calculate' && !this.isCalculate) {
         //     alert("Please Calculate the tax details");
@@ -1195,12 +1208,12 @@ export class CreditmemoComponent implements OnInit {
                     if (isUpdate) {
                         formData.append('headerid', isUpdate ? newData.headerid : undefined);
                     }
-                    formData.append('MemoType',newData.MemoType);
+                    formData.append('MemoType', newData.MemoType);
                     formData.append('memoAmount', newData.creditMemoAmount);
 
                     formData.append('isupdate', String(isUpdate));
                     this.publicVariable.selectedProjet = this.publicVariable.projectList.find(project => project.code == newData.ImpiHeaderProjectCode);
-                   // this.publicVariable.selectCustomer = this.publicVariable.GetCustomerList.find(customer => customer.custName == newData.ImpiHeaderCustomerName);
+                    // this.publicVariable.selectCustomer = this.publicVariable.GetCustomerList.find(customer => customer.custName == newData.ImpiHeaderCustomerName);
                     formData.append('ImpiHeaderInvoiceType', newData.ImpiHeaderInvoiceType);
                     formData.append('ImpiHeaderProjectCode', this.publicVariable.selectedProjet.code);
 
@@ -1299,8 +1312,8 @@ export class CreditmemoComponent implements OnInit {
                                     }
                                     else {
                                         this.toastr.success(res.message, 'Success');
-                                      //  this.router.navigate(['invoice/credit-memo-status']);
-                                      this.router.navigate(['dashboard']);
+                                        //  this.router.navigate(['invoice/credit-memo-status']);
+                                        this.router.navigate(['dashboard']);
                                         this.publicVariable.dataForm.reset();
                                     }
 
@@ -1346,7 +1359,7 @@ export class CreditmemoComponent implements OnInit {
 
     markFormControlsAsTouched(): void {
         [
-            'invoice_no','MemoType','creditMemoAmount'
+            'invoice_no', 'MemoType', 'creditMemoAmount'
         ].forEach(controlName => {
             this.publicVariable.dataForm.controls[controlName].markAsTouched();
         });
