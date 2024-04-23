@@ -71,7 +71,7 @@ export class SalesMemoApproverEmailComponent {
             this.actionPerformed(this.newConfig);
         }
         else if (this.action == 'v') {
-           // this.publicVariable.isProcess = false;
+            // this.publicVariable.isProcess = false;
             this.loadInviceDetailList();
             this.loadCOAMasterList();
             this.loadStateList();
@@ -94,7 +94,14 @@ export class SalesMemoApproverEmailComponent {
 
                         modalRef.result.then((canDelete: boolean) => {
                             if (canDelete) {
-                                this.router.navigate(['/']);
+                                // this.router.navigate(['/']);
+                                window.open("about:blank", "_self")?.close();
+
+                                // window.top.opener=null;
+                                // window.close();
+
+                                // window.open('', '_parent', '');
+                                // window.close();
                             }
                         }).catch(() => { });
 
