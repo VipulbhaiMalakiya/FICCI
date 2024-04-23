@@ -89,7 +89,7 @@ export class DashboardComponent {
     ngOnDestroy(): void {
         // Unsubscribe from all subscriptions to prevent memory leaks
         this.publicVariable.Subscription.unsubscribe();
-      }
+    }
 
     get isFinance() {
         return this.storeIsFinance == true;
@@ -898,13 +898,8 @@ export class DashboardComponent {
                     this.loadSalesCreditNoteSummary();
                     this.publicVariable.isProcess = false;
 
-                    if (this.dashboardData.length > 0) {
-                        // Processing the merged data
-                        this.countDataBySalesInvoies(this.CreditNotedashboardData);
-                        this.loadInoivceSalesStatusList(this.customerStatus);
-                    } else {
-
-                    }
+                    this.countDataBySalesInvoies(this.CreditNotedashboardData);
+                    this.loadInoivceSalesStatusList(this.customerStatus);
 
                 },
                 error: (error: any) => {
@@ -951,14 +946,11 @@ export class DashboardComponent {
                 || item.headerStatus === 'CANCEL BY EMPLOYEE'));
         counts['PENDING WITH TL APPROVER'] = pendingData.length;
 
-        const forapproval = data.filter(item => (item.headerStatus === 'PENDING WITH TL APPROVER'
-            || item.headerStatus === 'PENDING WITH CH APPROVER'
-            || item.headerStatus === 'PENDING WITH ACCOUNTS APPROVER'
-            || item.headerStatus === 'PENDING WITH FINANCE APPROVER'
+        const forapproval = data.filter(item => (item.headerStatus == 'PENDING WITH TL APPROVER'
+            || item.headerStatus == 'PENDING WITH CH APPROVER'
+            || item.headerStatus == 'PENDING WITH ACCOUNTS APPROVER'
+            || item.headerStatus == 'PENDING WITH FINANCE APPROVER'
             || item.headerStatus === 'CANCEL BY EMPLOYEE'
-
-
-
 
         ));
         counts['FOR APPROVAL'] = forapproval.length;
@@ -1923,22 +1915,22 @@ export class DashboardComponent {
     }
 
 
-    
+
     downalodpostedTexFile(fileUrl: any) {
-        this.publicVariable.isProcess  = true;
-        
+        this.publicVariable.isProcess = true;
+
         try {
             const subscription = this.IAPI.GetTaxInvoiceAttachment(fileUrl).subscribe({
                 next: (response: any) => {
 
                     this.InvoiceAttachment = response.data[0];
-                    const fileName = this.InvoiceAttachment.invoiceNo+'.pdf';
+                    const fileName = this.InvoiceAttachment.invoiceNo + '.pdf';
                     const fileType = `application/pdf`;
                     this.fileService.downloadFile(this.InvoiceAttachment.attachment, fileName, fileType);
-                    this.publicVariable.isProcess  = false;
+                    this.publicVariable.isProcess = false;
                 },
                 error: (error) => {
-                    console.error('Error loading project list:', error);    
+                    console.error('Error loading project list:', error);
                     // this.handleLoadingError();
                 },
             });
@@ -1953,20 +1945,20 @@ export class DashboardComponent {
     }
 
     ProformaInvoicedownalodFile(fileUrl: any) {
-        this.publicVariable.isProcess  = true;
-        
+        this.publicVariable.isProcess = true;
+
         try {
             const subscription = this.IAPI.GetPITaxInvoiceAttachment(fileUrl).subscribe({
                 next: (response: any) => {
 
                     this.InvoiceAttachment = response.data[0];
-                    const fileName = this.InvoiceAttachment.invoiceNo+'.pdf';
+                    const fileName = this.InvoiceAttachment.invoiceNo + '.pdf';
                     const fileType = `application/pdf`;
                     this.fileService.downloadFile(this.InvoiceAttachment.attachment, fileName, fileType);
-                    this.publicVariable.isProcess  = false;
+                    this.publicVariable.isProcess = false;
                 },
                 error: (error) => {
-                    console.error('Error loading project list:', error);    
+                    console.error('Error loading project list:', error);
                     // this.handleLoadingError();
                 },
             });
