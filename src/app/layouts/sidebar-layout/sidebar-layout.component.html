@@ -61,25 +61,26 @@
                                         *ngIf="isAdmin || isEmployee|| isApprover">Sales Invoice Status</a>
                                     <a routerLink="/invoice/approval" class="menu-list-title" routerLinkActive="active"
                                         *ngIf="isApprover">Sales Invoice Approval Inbox</a>
-                                        <a routerLink="/invoice/tax-invoice" class="menu-list-title"
+                                    <a routerLink="/invoice/tax-invoice" class="menu-list-title"
                                         routerLinkActive="active" *ngIf=" isEmployee ">Posted Tax Invoice</a>
-                                        <a routerLink="/invoice/pi-invoice" class="menu-list-title"
+                                    <a routerLink="/invoice/pi-invoice" class="menu-list-title"
                                         routerLinkActive="active" *ngIf=" isEmployee ">Proforma Invoice</a>
                                 </div>
 
-                                        <div class="left-men" routerLinkActive="active">
+                                <div class="left-men" routerLinkActive="active">
 
-                                   <h3><img src="../assets/images/invoice-icon.png" alt=""> Sales Credit Note</h3>
+                                    <h3><img src="../assets/images/invoice-icon.png" alt=""> Sales Credit Note</h3>
                                     <a routerLink="/invoice/credit-memo" class="menu-list-title"
                                         routerLinkActive="active" *ngIf=" isEmployee "> Create Sales Credit Note</a>
-                                        <a routerLink="/invoice/credit-memo-status" class="menu-list-title"
-                                        routerLinkActive="active" *ngIf="isAdmin || isEmployee ">Sales Credit Note Status</a>
+                                    <a routerLink="/invoice/credit-memo-status" class="menu-list-title"
+                                        routerLinkActive="active" *ngIf="isAdmin || isEmployee ">Sales Credit Note
+                                        Status</a>
 
 
-                                        <a routerLink="/invoice/sales-approval" class="menu-list-title"
+                                    <a routerLink="/invoice/sales-approval" class="menu-list-title"
                                         routerLinkActive="active" *ngIf=" isApprover ">Approval Inbox</a>
 
-                                        <a routerLink="/invoice/sales-navision" class="menu-list-title"
+                                    <a routerLink="/invoice/sales-navision" class="menu-list-title"
                                         routerLinkActive="active" *ngIf=" isEmployee ">Posted Sales Credit Note</a>
 
 
@@ -109,6 +110,17 @@
                                 </div>
 
 
+                                <div class="left-men">
+                                    <h3><img src="../assets/images/master-icon.png" alt=""> Manual</h3>
+                                    <a [routerLink]="'/assets/Manual/Employee user Manual_FICCI.pdf'" target="_blank"
+                                        class="menu-list-title">Employee Manual</a>
+
+                                    <a *ngIf="isAdmin || isApprover" [routerLink]="'/assets/Manual/Approver User Manual.pdf'"
+                                        class="menu-list-title" >Approver Manual</a>
+
+                                    <a *ngIf="isAdmin" [routerLink]="'/assets/Manual/Admin User Manual.pdf'"
+                                        class="menu-list-title" >Admin Manual</a>
+                                </div>
                             </div>
 
                         </div>
