@@ -895,7 +895,7 @@ export class DashboardComponent {
                     this.headerStatus = this.customerStatus;
 
 
-                    this.loadSalesCreditNoteSummary();
+                 //   this.loadSalesCreditNoteSummary();
                     this.publicVariable.isProcess = false;
 
                     this.countDataBySalesInvoies(this.CreditNotedashboardData);
