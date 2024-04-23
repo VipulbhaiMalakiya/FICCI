@@ -54,8 +54,8 @@ export class InvoicesService {
 
     private CreditMemoApproverEmail = `${environment.apiURL}ApproveInvoice/GetApproverEmail?email=`;
 
-
-    private ApproverURLNew = `${environment.apiURL}ApproveInvoice/MailInvoiceApproval`;
+    private ApproverURLNew = `${environment.apiURL}ApproveInvoice/MailInvoiceApproval`;   
+    private SalesApproverMailURL = `${environment.apiURL}ApproveCredit/MailSalesApproval`;   
 
     private TotalCreditAmountURL = `${environment.apiURL}DropDown/TotalCreditAmount?invoiceNo=`;
 
@@ -64,8 +64,9 @@ export class InvoicesService {
         return this.http.get<any[]>(url);
     }
 
-    getApproveSalesInvoiceNew(data:any): Observable<any[]> {
-        const url = `${this.ApproveSalesInvoiceURL}${data.email}`;
+
+    GetCreditMemoApproverEmail(data: any): Observable<any[]> {
+        const url = `${this.CreditMemoApproverEmail}${data.email ?? ''}&id=${data.id    }`;
         return this.http.get<any[]>(url);
     }
 
@@ -73,14 +74,18 @@ export class InvoicesService {
         return this.http.post<any[]>(`${this.ApproverURLNew}`, data);
     }
 
-    isApproverRemarks(data: any): Observable<any[]> {
-        return this.http.post<any[]>(`${this.ApproverURL}`, data);
+
+    CreditNoteMailApproval(data: any): Observable<any[]> {
+        return this.http.post<any[]>(`${this.SalesApproverMailURL}`, data);
     }
 
-    GetCreditMemoApproverEmail(data: any): Observable<any[]> {
-        const url = `${this.CreditMemoApproverEmail}${data.email ?? ''}&id=${data.id    }`;
+
+    getApproveSalesInvoiceNew(data:any): Observable<any[]> {
+        const url = `${this.ApproveSalesInvoiceURL}${data.email}`;
         return this.http.get<any[]>(url);
     }
+
+   
 
     GetApproverEmail(data: any): Observable<any[]> {
         const url = `${this.GetApproverEmailURL}${data.email ?? ''}&id=${data.id    }`;
@@ -267,7 +272,9 @@ export class InvoicesService {
 
 
 
-
+    isApproverRemarks(data: any): Observable<any[]> {
+        return this.http.post<any[]>(`${this.ApproverURL}`, data);
+    }
     isSalesApproverRemarks(data: any): Observable<any[]> {
         return this.http.post<any[]>(`${this.apiApproveCreditUrl}`, data);
     }

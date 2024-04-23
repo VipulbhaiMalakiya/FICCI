@@ -45,6 +45,7 @@ export class ApprproverEmailComponent {
         });
 
 
+
         // console.log('this.headerId ',this.headerId );
         // console.log('this.loginId ',this.loginId );
         // console.log('this.action ',this.action );
@@ -95,10 +96,8 @@ export class ApprproverEmailComponent {
 
                         modalRef.result.then((canDelete: boolean) => {
                             if (canDelete) {
-                                this.closeTab();
+                                this.router.navigate(['/']);
                             }
-
-
                         }).catch(() => { });
                         // this.toastr.success(res.message, 'Success');
                         // alert(res.message)
@@ -109,6 +108,7 @@ export class ApprproverEmailComponent {
                     } else {
                         this.toastr.error(res.message, 'Error');
                         alert(res.message);
+                        this.router.navigate(['/']);
                         this.publicVariable.isProcess = false;
                         this.publicVariable.dataForm.reset();
 
@@ -116,19 +116,16 @@ export class ApprproverEmailComponent {
                 },
                 error: (error: any) => {
                     this.publicVariable.isProcess = false;
-
+                    this.publicVariable.isProcess = false;
                     this.toastr.error(error.error.message || 'An error occurred. Please try again later.', 'Error');
                 },
                 complete: () => {
 
                     this.publicVariable.isProcess = false;
+                    this.publicVariable.isProcess = false;
                 }
             })
         );
-    }
-
-    closeTab(){
-        window.open("about:blank", "_self")?.close();
     }
 
     loadInviceDetailList() {

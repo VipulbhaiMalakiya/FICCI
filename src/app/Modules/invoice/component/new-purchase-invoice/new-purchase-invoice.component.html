@@ -476,8 +476,8 @@
                     <div class="col-md-4 col-sm-8">
                         <div class="form-group">
                             <label>Description/Narration to Print on Invoice <sup class="text-danger">*</sup></label>
-                            <input type="text" class="form-control" placeholder="Description" maxlength="100"
-                                formControlName="impiDescription"   >
+                            <input type="text" class="form-control" placeholder="Description" maxlength="100" id="impiDescription"
+                                formControlName="impiDescription" >
                             <div *ngIf="shouldShowExpenseError('impiDescription','required')" class="text-danger">This
                                 field is
                                 required</div>

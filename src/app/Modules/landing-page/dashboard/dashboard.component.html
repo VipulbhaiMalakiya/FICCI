@@ -152,7 +152,7 @@
                                     </select>
                                 </div>
 
-                                <div class="dt-buttons" title="Download Excel"
+                                <div class="dt-buttons"
                                     *ngIf="publicVariable.customerStatusList && publicVariable.customerStatusList.length > 0">
                                     <button class="gray-btns" (click)="onDownload()" type="button"><img
                                             src="../assets/images/excel-icon.png" alt=""></button>
@@ -216,12 +216,10 @@
                                                     <td>{{d.customerStatus | titlecase}}</td>
                                                     <td><span class="table-btns">
                                                             <a href="javascript:void(0);" (click)="onView(d)"
-                                                            title="View Details"
                                                                 *ngIf="customerStatus !== 'FOR APPROVAL'">
                                                                 <img src="../assets/images/view-icon.svg" alt="">
                                                             </a>
                                                             <a href="javascript:void(0);" (click)="onApproval(d)"
-                                                            title="View Details"
                                                                 *ngIf="customerStatus == 'FOR APPROVAL'">
                                                                 <img src="../assets/images/view-icon.svg" alt="">
                                                             </a>
@@ -230,8 +228,7 @@
                                                                 d.customerStatus == 'REJECTED BY CH APPROVER' ||
                                                                 d.customerStatus == 'REJECTED BY ACCOUNTS APPROVER')"
                                                                 href="javascript:void(0);" (click)="onEdit(d)">
-                                                                <img src="../assets/images/edit-icon.svg" alt=""
-                                                                title="Edit Details">
+                                                                <img src="../assets/images/edit-icon.svg" alt="">
                                                             </a>
                                                             <a *ngIf="publicVariable.storedRole !== 'Admin' && d.createdBy === this.publicVariable.storedEmail && (d.isDraft ||
                                                                 d.customerStatus == 'REJECTED BY TL APPROVER' ||
@@ -239,7 +236,7 @@
                                                                 d.customerStatus == 'REJECTED BY ACCOUNTS APPROVER')"
                                                                 href="javascript:void(0);"
                                                                 (click)="onDelete(d.customerId)"><img
-                                                                    src="../assets/images/delete-icon.svg" alt="" title="Delete Customer"></a>
+                                                                    src="../assets/images/delete-icon.svg" alt=""></a>
                                                         </span>
                                                     </td>
                                                 </tr>
@@ -384,7 +381,7 @@
                                 </div>
 
                                 <div class="dt-buttons" *ngIf="invoiceStatuslistData.length > 0">
-                                    <button class="gray-btns" (click)="onDownloadPI()" type="button" title="Download Excel"><img
+                                    <button class="gray-btns" (click)="onDownloadPI()" type="button"><img
                                             src="../assets/images/excel-icon.png" alt=""></button>
                                 </div>
                                 <div class="topbr-btns">
@@ -458,15 +455,15 @@
                                                         <span class="table-btns">
                                                             <a href="javascript:void(0);" (click)="onViewPI(d)"
                                                                 *ngIf="customerStatus !== 'FOR APPROVAL'">
-                                                                <img src="../assets/images/view-icon.svg" alt="" title="View Details">
+                                                                <img src="../assets/images/view-icon.svg" alt="">
                                                             </a>
                                                             <a href="javascript:void(0);" (click)="onApprovalPI(d)"
                                                                 *ngIf="customerStatus == 'FOR APPROVAL' &&  this.publicVariable.storedRole == 'Approver'">
-                                                                <img src="../assets/images/view-icon.svg" alt="" title="View Details">
+                                                                <img src="../assets/images/view-icon.svg" alt="">
                                                             </a>
                                                             <a href="javascript:void(0);" (click)="onViewAccountPI(d)"
                                                                 *ngIf="customerStatus == 'FOR APPROVAL' &&  this.publicVariable.storedRole == 'Accounts'">
-                                                                <img src="../assets/images/view-icon.svg" alt="" title="View Details">
+                                                                <img src="../assets/images/view-icon.svg" alt="">
                                                             </a>
 
                                                             <a *ngIf="publicVariable.storedRole !== 'Admin' && publicVariable.storedRole !== 'Approver' &&
@@ -478,7 +475,7 @@
                                                                     d.headerStatus == 'REJECTED BY CH APPROVER' ||
                                                                     d.headerStatus == 'REJECTED BY ACCOUNTS APPROVER' ||  d.headerStatus == 'REJECTED BY FINANCE APPROVER'
                                                                     )" href="javascript:void(0);"
-                                                                (click)="onEditPI(d)" title="Edit Details"><img
+                                                                (click)="onEditPI(d)"><img
                                                                     src="../assets/images/edit-icon.svg" alt="" /></a>
                                                             <a *ngIf="publicVariable.storedRole !== 'Admin' && publicVariable.storedRole !== 'Approver' &&
                                                                         publicVariable.storedEmail == d.impiHeaderCreatedBy &&
@@ -487,18 +484,17 @@
                                                                     d.headerStatus == 'REJECTED BY CH APPROVER' ||
                                                                     d.headerStatus == 'REJECTED BY ACCOUNTS APPROVER'  ||d.headerStatus == 'REJECTED BY FINANCE APPROVER'
                                                                   )" href="javascript:void(0)"
-                                                                (click)="onDeletePI(d.headerId)" title="Edit Details" data-bs-toggle="modal"
+                                                                (click)="onDeletePI(d.headerId)" data-bs-toggle="modal"
                                                                 data-bs-target="#deleterecord-modal"><img
                                                                     src="../assets/images/delete-icon.svg" alt="" /></a>
 
                                                             <a href="javascript:void(0);" (click)="onSendEmail(d)"
-
                                                                 *ngIf="d.headerStatus === 'APPROVED BY FINANCE' && this.storedRole === 'Approver' "><img
-                                                                    src="../assets/images/email-icon.svg" alt=""  title="Send Email" /></a>
+                                                                    src="../assets/images/email-icon.svg" alt="" /></a>
                                                             <a href="javascript:void(0);" (click)="onediteEmail(d)"
                                                                 *ngIf="d.headerStatus === 'MAIL SENT BY FINANCE TO CUSTOMER' && this.storedRole === 'Approver' "><img
                                                                     src="../assets/images/email-edit-icon.svg"
-                                                                    alt="" title="Edit Email" /></a>
+                                                                    alt="" /></a>
                                                         </span>
                                                     </td>
                                                 </tr>
@@ -553,7 +549,7 @@
 
                                 <div class="dt-buttons" *ngIf="InvoiceSummaryList.length > 0">
                                     <button class="gray-btns" (click)="onDownloadInvoiceSummary()" type="button"><img
-                                            src="../assets/images/excel-icon.png" alt="" title="Download Excel"></button>
+                                            src="../assets/images/excel-icon.png" alt=""></button>
                                 </div>
                                 <div class="topbr-btns">
                                     <div class="btn-group" *ngIf="InvoiceSummaryList && InvoiceSummaryList.length > 0">
@@ -603,18 +599,18 @@
                                                     <!-- <td>{{d.status}}</td> -->
                                                     <td><span class="table-btns">
                                                             <a href="javascript:void(0);" (click)="InvoicedView(d)"><img
-                                                                    src="../assets/images/view-icon.svg" alt="" title="View Details"></a>
+                                                                    src="../assets/images/view-icon.svg" alt=""></a>
 
                                                             <a href="javascript:void(0);" data-bs-toggle="modal"
                                                                 (click)="loadTaxPaymentInvoiceSummary(d)"
                                                                 data-bs-target="#workflow-modal"><img
                                                                     class="custom-rupee-icon"
-                                                                    src="../assets/images/rupee-icon.png" alt=""  title="Load Tax Payment Invoice Summary" /></a>
+                                                                    src="../assets/images/rupee-icon.png" alt="" /></a>
 
                                                             <a href="javascript:void(0);"
                                                                 (click)="downalodpostedTexFile(d.no)"><img
                                                                     src="../assets/images/download-icon.svg"
-                                                                    alt="" title="Download Posted Text File" /></a>
+                                                                    alt="" /></a>
 
                                                             <!-- <a href="javascript:void(0);"
                                                                 (click)="onTextSendEmail(d)"><img
@@ -670,7 +666,7 @@
                                 </div>
 
                                 <div class="dt-buttons" *ngIf="PIInvoiceSummaryList.length > 0">
-                                    <button class="gray-btns" title="Download Invoice Summary" (click)="onDownloadInvoiceSummary()" type="button"><img
+                                    <button class="gray-btns" (click)="onDownloadInvoiceSummary()" type="button"><img
                                             src="../assets/images/excel-icon.png" alt=""></button>
                                 </div>
                                 <div class="topbr-btns">
@@ -723,12 +719,12 @@
                                                     <td><span class="table-btns">
                                                             <a href="javascript:void(0);"
                                                                 (click)="PIInvoicedView(d)"><img
-                                                                    src="../assets/images/view-icon.svg" alt="" title="View Details"></a>
+                                                                    src="../assets/images/view-icon.svg" alt=""></a>
 
                                                             <a href="javascript:void(0);"
                                                                 (click)="ProformaInvoicedownalodFile(d.no)"><img
                                                                     src="../assets/images/download-icon.svg"
-                                                                    alt=""   title="Download Proforma Invoice File" /></a>
+                                                                    alt="" /></a>
                                                             <!--
                                                             <a href="javascript:void(0);" data-bs-toggle="modal"
                                                                 data-bs-target="#workflow-modal"><img
@@ -889,7 +885,7 @@
                                     </select>
                                 </div>
 
-                                <div class="dt-buttons" *ngIf="invoiceStatuslistData.length > 0" title="Download Excel">
+                                <div class="dt-buttons" *ngIf="invoiceStatuslistData.length > 0">
                                     <button class="gray-btns" (click)="onDownloadPI()" type="button"><img
                                             src="../assets/images/excel-icon.png" alt=""></button>
                                 </div>
@@ -966,15 +962,15 @@
                                                         <span class="table-btns">
                                                             <a href="javascript:void(0);" (click)="onViewSales(d)"
                                                                 *ngIf="customerStatus !== 'FOR APPROVAL'">
-                                                                <img src="../assets/images/view-icon.svg" alt=""  title="View Sales">
+                                                                <img src="../assets/images/view-icon.svg" alt="">
                                                             </a>
                                                             <a href="javascript:void(0);" (click)="onViewSales(d)"
                                                                 *ngIf="customerStatus == 'FOR APPROVAL' &&  this.publicVariable.storedRole == 'Approver'">
-                                                                <img src="../assets/images/view-icon.svg" alt=""  title="View Sales">
+                                                                <img src="../assets/images/view-icon.svg" alt="">
                                                             </a>
                                                             <a href="javascript:void(0);" (click)="onViewAccountPI(d)"
                                                                 *ngIf="customerStatus == 'FOR APPROVAL' &&  this.publicVariable.storedRole == 'Accounts'">
-                                                                <img src="../assets/images/view-icon.svg" alt=""  title="View Sales">
+                                                                <img src="../assets/images/view-icon.svg" alt="">
                                                             </a>
 
                                                             <a *ngIf="publicVariable.storedRole !== 'Admin' && publicVariable.storedRole !== 'Approver' &&
@@ -985,7 +981,7 @@
                                                                 d.headerStatus == 'REJECTED BY ACCOUNTS APPROVER' ||  d.headerStatus == 'REJECTED BY FINANCE APPROVER'
                                                                 )" href="javascript:void(0);"
                                                                 (click)="onEditSI(d)"><img
-                                                                    src="../assets/images/edit-icon.svg" alt="" title="Edit Sales Invoice"/></a>
+                                                                    src="../assets/images/edit-icon.svg" alt="" /></a>
                                                             <a *ngIf="publicVariable.storedRole !== 'Admin' && publicVariable.storedRole !== 'Approver' &&
                                                             publicVariable.storedEmail === d.impiHeaderCreatedBy &&
                                                                 (d.isDraft ||
@@ -994,7 +990,7 @@
                                                                 d.headerStatus == 'REJECTED BY ACCOUNTS APPROVER'  ||d.headerStatus == 'REJECTED BY FINANCE APPROVER'
                                                               )" href="javascript:void(0)"
                                                                 (click)="onDeletePI(d.headerId)" data-bs-toggle="modal"
-                                                                data-bs-target="#deleterecord-modal" title="Delete Sales Invoice"><img
+                                                                data-bs-target="#deleterecord-modal"><img
                                                                     src="../assets/images/delete-icon.svg" alt="" /></a>
 
                                                             <!-- <a href="javascript:void(0);" (click)="onsalesSendEmail(d)"
@@ -1140,7 +1136,7 @@
                                                                 <a href="javascript:void(0);"
                                                                     (click)="onCreditNoteView(d)"><img
                                                                         src="../assets/images/view-icon.svg"
-                                                                        alt=""  title="View Credit Note" /></a>
+                                                                        alt="" /></a>
                                                                 <!-- <a *ngIf="publicVariable.storedRole !== 'Admin' &&
                                                                 (d.isDraft ||
                                                                 d.headerStatus == 'REJECTED BY TL APPROVER'  ||

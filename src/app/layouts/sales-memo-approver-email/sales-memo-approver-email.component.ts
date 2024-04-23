@@ -71,7 +71,7 @@ export class SalesMemoApproverEmailComponent {
             this.actionPerformed(this.newConfig);
         }
         else if (this.action == 'v') {
-            // this.publicVariable.isProcess = false;
+           // this.publicVariable.isProcess = false;
             this.loadInviceDetailList();
             this.loadCOAMasterList();
             this.loadStateList();
@@ -84,7 +84,7 @@ export class SalesMemoApproverEmailComponent {
     actionPerformed(data: any) {
         this.publicVariable.isProcess = true;
         this.publicVariable.Subscription.add(
-            this.API.isSalesApproverRemarks(data).subscribe({
+            this.API.CreditNoteMailApproval(data).subscribe({
                 next: (res: any) => {
                     if (res.status === true) {
 
@@ -94,17 +94,17 @@ export class SalesMemoApproverEmailComponent {
 
                         modalRef.result.then((canDelete: boolean) => {
                             if (canDelete) {
-                                this.closeTab();
+                                this.router.navigate(['/']);
                             }
                         }).catch(() => { });
 
                         this.publicVariable.dataForm.reset();
                         this.publicVariable.isProcess = false;
 
-
                     } else {
                         this.toastr.error(res.message, 'Error');
                         alert(res.message);
+                        this.router.navigate(['/']);
                         this.publicVariable.isProcess = false;
                         this.publicVariable.dataForm.reset();
 
@@ -120,12 +120,6 @@ export class SalesMemoApproverEmailComponent {
                 }
             })
         );
-    }
-
-
-    closeTab(){
-        window.open("about:blank", "_self")?.close();
-
     }
 
 
@@ -191,7 +185,6 @@ export class SalesMemoApproverEmailComponent {
             this.handleLoadingError()
         }
     }
-
 
 
     loadCOAMasterList(): void {

@@ -51,17 +51,17 @@
                         <label for="creditMemoAmount">Credit Amount <sup class="text-danger">*</sup></label>
                         <input type="text" placeholder="Credit Amount" formControlName="creditMemoAmount"
                             class="form-control" (input)="priceValidator($event)"
-
+                            
                             [readonly]="isReadOnly"
                             [class.readonly]="isReadOnly"
                             >
                         <div *ngIf="shouldShowError('creditMemoAmount','required')" class="text-danger">This field
                             is required
                         </div>
-                        <div *ngIf="publicVariable.dataForm.get('creditMemoAmount')?.hasError('exceedsTotal')" class="text-danger">Entered amount exceeds total amount</div>
+                        <div *ngIf="publicVariable.dataForm.get('creditMemoAmount')?.hasError('exceedsTotal')" class="text-danger">Entered amount exceeds total invoice amount</div>
 
                     </div>
-
+           
                 </div>
 
                 <div class="col-md-4 col-sm-6">

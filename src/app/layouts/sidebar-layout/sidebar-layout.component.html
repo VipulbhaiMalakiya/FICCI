@@ -16,8 +16,6 @@
                         <div class="top-user-profile">
                             <a href="javascript:void(0);" class="dropdown-toggle" data-bs-toggle="dropdown"
                                 aria-haspopup="true" aria-expanded="false">
-                                <!-- <img src="../assets/images/profile.jpg"
-                                    alt=""> -->
                                 <p>{{ storeUsername }} <small>{{ storedRole }}</small></p>
                             </a>
 
@@ -90,7 +88,7 @@
                                 <div class="left-men" routerLinkActive="active">
                                     <h3><img src="../assets/images/customer-icon.png" alt=""> Customer</h3>
                                     <a routerLink="/customer/new" class="menu-list-title" routerLinkActive="active"
-                                        *ngIf="!isAdmin && !isAccount">New Customer</a>
+                                        *ngIf="!isAdmin && !isAccount">Create Customer</a>
                                     <a routerLink="/customer/status" class="menu-list-title" routerLinkActive="active"
                                         *ngIf="!isAccount">Customer Status</a>
                                     <!-- <a routerLink="/customer/approval" class="menu-list-title"

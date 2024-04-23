@@ -18,7 +18,7 @@ const routes: Routes = [
     { path: 'login', component: LoginComponent },
 
     {
-        path:'approver/:email/:id/:action',
+        path:'approver/:email/:id/:action', 
         component:ApprproverEmailComponent,
     },
     {
