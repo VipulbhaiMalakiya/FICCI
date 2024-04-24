@@ -589,7 +589,7 @@
                                             <tbody>
 
                                                 <tr
-                                                    *ngFor="let d of  this.InvoiceSummaryList | searchFilter1: publicVariable.searchText| paginate: {id: 'pagination2',itemsPerPage: ptitableSize,currentPage: ptipage,totalItems: InvoiceSummaryList.length};let i = index">
+                                                    *ngFor="let d of  this.InvoiceSummaryList | searchFilterNew: publicVariable.searchText| paginate: {id: 'pagination2',itemsPerPage: ptitableSize,currentPage: ptipage,totalItems: InvoiceSummaryList.length};let i = index">
                                                     <td>{{PostTextInvoicecalculateIndex(ptipage, i)}}</td>
                                                     <td>{{d.no}}</td>
                                                     <td>{{d.postingDate}}</td>
@@ -631,7 +631,7 @@
                                             <div class="text-center my-3">No data found.</div>
                                         </div>
                                         <div class="text-center"
-                                            *ngIf="(InvoiceSummaryList | searchFilter1: publicVariable.searchText).length === 0 && InvoiceSummaryList.length > 0">
+                                            *ngIf="(InvoiceSummaryList | searchFilterNew: publicVariable.searchText).length === 0 && InvoiceSummaryList.length > 0">
                                             <span class="text-danger">No results found.</span>
                                         </div>
                                     </div>

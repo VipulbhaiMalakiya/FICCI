@@ -13,6 +13,7 @@ import { SearchFilterPipe1 } from '../pipe/searchpi';
 import { invoiceFilterPipe } from '../pipe/InvoiceSummary';
 import { postedFilter } from '../pipe/posted';
 import { SalesSearchFilterPipe } from '../pipe/sales-credite-pipe';
+import { searchFilterNew } from '../pipe/searchpinew';
 
 
 
@@ -25,7 +26,8 @@ import { SalesSearchFilterPipe } from '../pipe/sales-credite-pipe';
         SearchFilterPipe1,
         invoiceFilterPipe,
         SalesSearchFilterPipe,
-        postedFilter
+        postedFilter,
+        searchFilterNew
     ],
     imports: [
         CommonModule,
