@@ -11,6 +11,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { SharedModule } from '../../shared/shared.module';
 import { SearchFilterPipe1 } from '../pipe/searchpi';
 import { invoiceFilterPipe } from '../pipe/InvoiceSummary';
+import { postedFilter } from '../pipe/posted';
 import { SalesSearchFilterPipe } from '../pipe/sales-credite-pipe';
 
 
@@ -23,7 +24,8 @@ import { SalesSearchFilterPipe } from '../pipe/sales-credite-pipe';
         ApprovalSearchFilterPipe,
         SearchFilterPipe1,
         invoiceFilterPipe,
-        SalesSearchFilterPipe
+        SalesSearchFilterPipe,
+        postedFilter
     ],
     imports: [
         CommonModule,

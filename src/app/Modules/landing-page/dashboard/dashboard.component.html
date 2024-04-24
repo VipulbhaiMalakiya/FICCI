@@ -943,7 +943,7 @@
                                             </thead>
                                             <tbody>
                                                 <tr
-                                                    *ngFor="let d of  this.invoiceStatuslistData | invoiceFilter: publicVariable.searchText| paginate: {id: 'pagination4',itemsPerPage: publicVariable.tableSize,currentPage: publicVariable.page,totalItems: publicVariable.count};let i = index">
+                                                    *ngFor="let d of  this.invoiceStatuslistData | salessearchFilter: publicVariable.searchText| paginate: {id: 'pagination4',itemsPerPage: publicVariable.tableSize,currentPage: publicVariable.page,totalItems: publicVariable.count};let i = index">
                                                     <td>{{i + 1}}</td>
                                                     <td>{{d.recordID}}</td>
                                                     <td *ngIf="customerStatus=='APPROVED BY ACCOUNTS APPROVER'">
@@ -1017,7 +1017,7 @@
                                             <div class="text-center my-3">No data found.</div>
                                         </div>
                                         <div class="text-center"
-                                            *ngIf="(invoiceStatuslistData | invoiceFilter: publicVariable.searchText).length === 0 && invoiceStatuslistData.length > 0">
+                                            *ngIf="(invoiceStatuslistData | salessearchFilter: publicVariable.searchText).length === 0 && invoiceStatuslistData.length > 0">
                                             <span class="text-danger">No results found.</span>
                                         </div>
                                     </div>
