@@ -240,7 +240,7 @@
                     <tr *ngFor="let e of data.lineItem_Requests; let i = index">
                         <td>{{i + 1}}</td>
                         <td>{{ getNameById(e.impiGlNo) }}</td>
-                        <td>{{ e.impiLineDescription | titlecase }}</td>                        
+                        <td>{{ e.impiLineDescription | titlecase }}</td>
                         <td>{{e.impiQuantity}}</td>
                         <td>{{e.impiUnitPrice}}</td>
                         <td>{{ e.impiUnitPrice * e.impiQuantity}}</td>
@@ -352,8 +352,8 @@
     </div>
 
     <form
-      
-        [formGroup]="publicVariable.dataForm" >
+
+        [formGroup]="publicVariable.dataForm" *ngIf="data.headerStatus != 'CANCELLATION APPROVED BY TL'">
         <div class="col-md-12 mt-3">
             <div class="form-group">
                 <label>Remarks <sup class="text-danger">*</sup></label>
@@ -375,7 +375,7 @@
             <label class="common-btn w-auto me-2" for="btn-check"  *ngIf ="!(data.IsPostedTaxInvoice) && data.impiHeaderCreatedBy == this.publicVariable.storedEmail && data.headerStatus!='DRAFT'"
             (click)="onSubmit(false)">Cancel Request
                 </label>
-            <button type="submit" *ngIf ="!(data.impiHeaderInvoiceType=='Tax Invoice') && data.impiHeaderCreatedBy == this.publicVariable.storedEmail && data.headerStatus =='APPROVED BY TL'" 
+            <button type="submit" *ngIf ="!(data.impiHeaderInvoiceType=='Tax Invoice') && data.impiHeaderCreatedBy == this.publicVariable.storedEmail && data.headerStatus =='APPROVED BY TL'"
             class="btn btn-primary w-auto mb-0 me-2" (click)="onSubmit(true)">Request Tax Invoice</button>
 
             </div>
