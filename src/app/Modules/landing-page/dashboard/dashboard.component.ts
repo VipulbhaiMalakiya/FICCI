@@ -38,6 +38,12 @@ export class DashboardComponent {
     pitableSizes: number[] = [10, 20, 50, 100];
     pipage: number = 1;
 
+    p: number = 1;
+
+    // pitableSize: number = 10;
+    // pitableSizes: number[] = [10, 20, 50, 100];
+    // pipage: number = 1;
+
     isDRAFT: number = 0;
     PendingApproval: number = 0;
     ApprovedAccounts: number = 0;
@@ -66,6 +72,8 @@ export class DashboardComponent {
     invoiceStatuslistData: invoiceStatusModule[] = [];
     creditNoteCount: number = 0;
     PICount: number = 0;
+
+
 
     constructor(private appService: AppService,
         private modalService: NgbModal,
@@ -382,8 +390,6 @@ export class DashboardComponent {
             this.cd.detectChanges();
             this.invoiceType = invoiceType;
             this.dashboardData = [];
-
-
 
             // Observable for the first API call
             const purchaseInvoiceObservable = this.IAPI.getPurchaseInvoice_New().pipe(
