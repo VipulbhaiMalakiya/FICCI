@@ -19,6 +19,8 @@ export class SearchFilterPipe implements PipeTransform {
              || item.pan.toLowerCase().includes(searchText)
              || item.createdOn.toLowerCase().includes(searchText)
              || item.createdBy.toLowerCase().includes(searchText)
+             || item.customerCode.toLowerCase().includes(searchText)
+             || item.recordID.toLowerCase().includes(searchText)
              || item.customerStatus.toLowerCase().includes(searchText)
              ;
         });
