@@ -69,6 +69,32 @@ export class ApprproverEmailComponent {
                 statusId: 7,
                 remarks: 'On Reject By TL',
             }
+            
+            this.actionPerformed(this.newConfig);
+        }
+
+        else if (this.action == 'ta') {
+            this.newConfig = {
+                headerId: this.headerId,
+                isApproved: false,
+                isCancel :true,
+                loginId: this.loginId,
+                statusId: 20,
+                remarks: 'On Reject By TL',
+            }
+            
+            this.actionPerformed(this.newConfig);
+        }
+        else if (this.action == 'tr') {
+            this.newConfig = {
+                headerId: this.headerId,
+                isApproved: false,
+                isCancel :false,
+                loginId: this.loginId,
+                statusId: 7,
+                remarks: 'On Reject By TL',
+            }
+            
             this.actionPerformed(this.newConfig);
         }
 
