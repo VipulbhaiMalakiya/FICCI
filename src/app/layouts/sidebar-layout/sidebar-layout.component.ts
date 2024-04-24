@@ -50,4 +50,14 @@ export class SidebarLayoutComponent {
     return this.storeIsFinance == true;
   }
 
+  openFile(filePath: string): void {
+    const link = document.createElement('a');
+    link.href = filePath;
+    link.target = '_blank';
+    link.download = filePath.substring(filePath.lastIndexOf('/') + 1);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  }
+
 }

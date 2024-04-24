@@ -112,14 +112,17 @@
 
                                 <div class="left-men">
                                     <h3><img src="../assets/images/manual-icon.png" alt=""> Manual</h3>
-                                    <a [routerLink]="'/assets/Manual/Employee user Manual_FICCI.pdf'" target="_blank"
-                                        class="menu-list-title">Employee Manual</a>
+                                    <a [routerLink]="'/assets/Manual/Employee user Manual_FICCI.pdf'"  target="_blank"
+                                        class="menu-list-title"
+                                        (click)="openFile('/assets/Manual/Employee%20user%20Manual_FICCI.pdf')">Employee Manual</a>
 
                                     <a *ngIf="isAdmin || isApprover" [routerLink]="'/assets/Manual/Approver User Manual.pdf'"
-                                    target="_blank" class="menu-list-title" >Approver Manual</a>
+                                    target="_blank" class="menu-list-title"
+                                    (click)="openFile('/assets/Manual/Approver User Manual.pdf')">Approver Manual</a>
 
                                     <a *ngIf="isAdmin" [routerLink]="'/assets/Manual/Admin Manual.pdf'"
-                                    target="_blank"  class="menu-list-title" >Admin Manual</a>
+                                    target="_blank"  class="menu-list-title"
+                                    (click)="openFile('/assets/Manual/Admin Manual.pdf')">Admin Manual</a>
                                 </div>
                             </div>
 
