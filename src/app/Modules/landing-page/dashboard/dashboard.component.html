@@ -433,7 +433,7 @@
                                             <tbody>
                                                 <tr
                                                     *ngFor="let d of  this.invoiceStatuslistData | invoiceFilter: publicVariable.searchText| paginate: {id: 'pagination1',itemsPerPage: pitableSize,currentPage: pipage,totalItems: invoiceStatuslistData.length};let i = index">
-                                                    <td>{{i + 1}}</td>
+                                                <td>{{InvoicecalculateIndex(pipage, i)}}</td>
                                                     <td>{{d.headerRecordID}}</td>
                                                     <td *ngIf="customerStatus=='APPROVED BY ACCOUNTS APPROVER'">
                                                         {{d.headerPiNo}}</td>

@@ -115,6 +115,10 @@ export class DashboardComponent {
         return (page - 1) * this.ptitableSize + index + 1;
     }
 
+    InvoicecalculateIndex(page: number, index: number): number {
+        return (page - 1) * this.pitableSize + index + 1;
+    }
+
     loadSalesCreditNoteSummary(): void {
         try {
             this.publicVariable.isProcess = true;
