@@ -487,11 +487,11 @@ export class DashboardComponent {
                     this.publicVariable.isProcess = false;
 
                     if (this.invoiceType == 'Tax Invoice') {
-                        //this.loadInvoiceSummary();
+                        this.loadInvoiceSummary();
                     }
 
-                   else if (this.invoiceType == 'Proforma Invoice') {
-                       // this.PIloadInvoiceSummary();
+                    else if (this.invoiceType == 'Proforma Invoice') {
+                        this.PIloadInvoiceSummary();
                     }
 
                     // Set default status to "DRAFT" if the invoice type changes
@@ -901,7 +901,7 @@ export class DashboardComponent {
                     this.countDataBySalesInvoies(this.CreditNotedashboardData);
                     this.loadInoivceSalesStatusList(this.customerStatus);
 
-                       //   this.loadSalesCreditNoteSummary();
+                    this.loadSalesCreditNoteSummary();
 
                 },
                 error: (error: any) => {
