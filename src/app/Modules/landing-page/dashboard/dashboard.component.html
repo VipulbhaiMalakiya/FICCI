@@ -710,7 +710,7 @@
                                             <tbody>
 
                                                 <tr
-                                                    *ngFor="let d of  this.PIInvoiceSummaryList | searchFilter1: publicVariable.searchText| paginate: {id: 'pagination3',itemsPerPage: ppitableSize,currentPage: ppipage,totalItems: PIInvoiceSummaryList.length};let i = index">
+                                                    *ngFor="let d of  this.PIInvoiceSummaryList | postedFilternew: publicVariable.searchText| paginate: {id: 'pagination3',itemsPerPage: ppitableSize,currentPage: ppipage,totalItems: PIInvoiceSummaryList.length};let i = index">
                                                     <td>{{ calculateIndex(ppipage, i)}}</td>
                                                     <td>{{d.no}}</td>
                                                     <!-- <td>{{d.postingDate}}</td>
@@ -754,7 +754,7 @@
 
 
                                         <div class="text-center"
-                                            *ngIf="(PIInvoiceSummaryList | searchFilter1: publicVariable.searchText).length === 0 && PIInvoiceSummaryList.length > 0">
+                                            *ngIf="(PIInvoiceSummaryList | postedFilternew: publicVariable.searchText).length === 0 && PIInvoiceSummaryList.length > 0">
                                             <span class="text-danger">No results found.</span>
                                         </div>
                                     </div>
