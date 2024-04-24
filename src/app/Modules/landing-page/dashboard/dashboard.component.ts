@@ -1106,12 +1106,14 @@ export class DashboardComponent {
         if (status == 'Posted Proforma Invoice') {
             this.ppipage = event;
             this.PIInvoiceSummaryList;
+            this.cd.detectChanges();
             //this.PIloadInvoiceSummary();
         }
 
         else if (status == 'Customer') {
             this.publicVariable.page = event;
             this.publicVariable.customerStatusList;
+            this.cd.detectChanges();
 
             //this.loadCustomerStatusList(this.customerStatus);
         }
@@ -1119,16 +1121,19 @@ export class DashboardComponent {
             // this.loadInvoiceSummary();
             this.ptipage = event;
             this.InvoiceSummaryList;
+            this.cd.detectChanges();
         }
         else if (status == 'invoice') {
             this.pipage = event;
             this.invoiceStatuslistData;
+            this.cd.detectChanges();
             // this.loadInoivceStatusList(this.customerStatus);
         }
 
         else if (status == 'Sales Credit Note') {
             this.publicVariable.page = event;
             this.SalesCreditNoteSummaryData;
+            this.cd.detectChanges();
         }
 
     }
