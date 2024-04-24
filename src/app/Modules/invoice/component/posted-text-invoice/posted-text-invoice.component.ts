@@ -36,6 +36,7 @@ export class PostedTextInvoiceComponent {
     }
 
 
+    
 
     downalodFile(fileUrl: any) {
         this.publicVariable.isProcess  = true;
@@ -82,7 +83,7 @@ export class PostedTextInvoiceComponent {
 
         console.log(data);
         this.publicVariable.isProcess = true;
-        const subscription = this.IAPI.getTaxPaymentDetails(data.no).pipe(
+        const subscription = this.IAPI.getTaxPaymentDetails(data.invoice_no).pipe(
             timeout(120000), // Timeout set to 2 minutes (120000 milliseconds)
             finalize(() => {
                 this.publicVariable.isProcess = false;
