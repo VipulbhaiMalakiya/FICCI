@@ -29,6 +29,7 @@ export class SalesSearchFilterPipe implements PipeTransform {
                 || (item.sellToCity && item.sellToCity.toLowerCase().includes(searchText))
                 || (item.sellToPostCode && item.sellToPostCode.toLowerCase().includes(searchText))
                 || (item.typeOfSupply && item.typeOfSupply.toLowerCase().includes(searchText))
+                || (item.typeOfSupply && item.typeOfSupply.toLowerCase().includes(searchText))
                 || (item.yourReference && item.yourReference.toLowerCase().includes(searchText));
 
         });

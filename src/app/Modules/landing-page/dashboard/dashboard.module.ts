@@ -15,6 +15,7 @@ import { postedFilter } from '../pipe/posted';
 import { SalesSearchFilterPipe } from '../pipe/sales-credite-pipe';
 import { searchFilterNew } from '../pipe/searchpinew';
 import { postedFilternew } from '../pipe/postedNew';
+import { salesnew } from '../pipe/sals-new';
 
 
 
@@ -29,7 +30,8 @@ import { postedFilternew } from '../pipe/postedNew';
         SalesSearchFilterPipe,
         postedFilter,
         searchFilterNew,
-        postedFilternew
+        postedFilternew,
+        salesnew
     ],
     imports: [
         CommonModule,
