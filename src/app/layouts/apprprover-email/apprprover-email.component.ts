@@ -71,6 +71,7 @@ export class ApprproverEmailComponent {
             }
             this.actionPerformed(this.newConfig);
         }
+
         else if (this.action == 'v') {
             this.publicVariable.isProcess = false;
             this.loadInviceDetailList();
