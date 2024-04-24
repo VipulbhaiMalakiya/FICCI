@@ -26,6 +26,7 @@ export class SearchFilterPipe2 implements PipeTransform {
                 || (item.accountApprover && item.accountApprover.toLowerCase().includes(searchText))
                 || (item.impiHeaderSubmittedDate && item.impiHeaderSubmittedDate.toLowerCase().includes(searchText))
                 || (item.impiHeaderCreatedBy && item.impiHeaderCreatedBy.toLowerCase().includes(searchText))
+                || (item.no && item.no.toLowerCase().includes(searchText))
                 || (item.headerStatus && item.headerStatus.toLowerCase().includes(searchText));
         });
     }
