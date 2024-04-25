@@ -24,7 +24,7 @@ export class LoginComponent implements OnInit {
 
     ngOnInit(): void {
         // Check if the email is stored in local storage
-        const storedEmail = localStorage.getItem('userEmail');
+        const storedEmail = sessionStorage.getItem('userEmail');
         if (storedEmail) {
             this.router.navigate(['/dashboard']); // Redirect to the dashboard
         } else {

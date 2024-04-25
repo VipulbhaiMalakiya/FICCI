@@ -23,7 +23,7 @@ export class ApprovalCustomerComponent implements OnInit {
 
     ngOnInit(): void {
         this.loadCustomerStatusList();
-        this.publicVariable.storedEmail = localStorage.getItem('userEmail') ?? '';
+        this.publicVariable.storedEmail = sessionStorage.getItem('userEmail') ?? '';
     }
 
     onEdit(data: ApproveCustomerList): void {

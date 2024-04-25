@@ -15,10 +15,10 @@ export class SidebarLayoutComponent {
   constructor(private authService: AuthService) { }
 
   ngOnInit(): void {
-    this.storedRole = localStorage.getItem('userRole') ?? '';
-    this.storedEmail = localStorage.getItem('userEmail') ?? '';
-    this.storeUsername =  localStorage.getItem('userName') ?? '';
-    const isFinanceValue = localStorage.getItem('IsFinance');
+    this.storedRole = sessionStorage.getItem('userRole') ?? '';
+    this.storedEmail = sessionStorage.getItem('userEmail') ?? '';
+    this.storeUsername =  sessionStorage.getItem('userName') ?? '';
+    const isFinanceValue = sessionStorage.getItem('IsFinance');
     this.storeIsFinance = isFinanceValue === 'true'; // Convert string to boolean
 
     $(".left-mobile-menu").click(function () {

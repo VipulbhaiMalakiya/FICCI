@@ -96,7 +96,7 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
 
     ngOnInit(): void {
         this.loadCountryList();
-        this.publicVariable.storedEmail = localStorage.getItem('userEmail') ?? '';
+        this.publicVariable.storedEmail = sessionStorage.getItem('userEmail') ?? '';
 
         // this.route.params.subscribe((params) => {
         //     //this.customerId = +params['id'];
@@ -445,7 +445,7 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
                     loginId: this.publicVariable.storedEmail,
                     roleName: this.publicVariable.storedRole,
                     CustomerRemarks: newData.CustomerRemarks.trim(),
-                    Department: localStorage.getItem('department')
+                    Department: sessionStorage.getItem('department')
                 };
                 this.publicVariable.isProcess = true;
                 this.publicVariable.Subscription.add(

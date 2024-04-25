@@ -14,7 +14,7 @@ export class CustomerService {
 
 
     getCustomerStatusNew(): Observable<any[]> {
-        const url = `${this.getCustomerStatusNewURL}${localStorage.getItem('userEmail') ?? ''}`;
+        const url = `${this.getCustomerStatusNewURL}${sessionStorage.getItem('userEmail') ?? ''}`;
         return this.http.get<any[]>(url);
     }
 }

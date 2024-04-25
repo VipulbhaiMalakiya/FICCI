@@ -22,7 +22,7 @@ export class StatusCustomerComponent implements OnInit {
 
     ngOnInit(): void {
         this.loadCustomerStatusList();
-        this.publicVariable.storedEmail = localStorage.getItem('userEmail') ?? '';
+        this.publicVariable.storedEmail = sessionStorage.getItem('userEmail') ?? '';
     }
 
     loadCustomerStatusList(): void {

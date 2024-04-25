@@ -87,9 +87,9 @@ export class DashboardComponent {
 
     ngOnInit(): void {
         // this.loadCustomerStatusCountList();
-        this.publicVariable.storedEmail = localStorage.getItem('userEmail') ?? '';
-        this.storedRole = localStorage.getItem('userRole') ?? '';
-        const isFinanceValue = localStorage.getItem('IsFinance');
+        this.publicVariable.storedEmail = sessionStorage.getItem('userEmail') ?? '';
+        this.storedRole = sessionStorage.getItem('userRole') ?? '';
+        const isFinanceValue = sessionStorage.getItem('IsFinance');
         this.loadPurchaseInvoiceList(this.invoiceType);
         this.storeIsFinance = isFinanceValue === 'true'; // Convert string to boolean
     }
@@ -240,12 +240,12 @@ export class DashboardComponent {
         };
 
         // Filter data for each customer status
-        const draftData = data.filter(item => (item.customerStatus === 'DRAFT') && (item.department === localStorage.getItem('department')));
+        const draftData = data.filter(item => (item.customerStatus === 'DRAFT') && (item.department === sessionStorage.getItem('department')));
         counts['DRAFT'] = draftData.length;
 
         const foraprovalData = data.filter((item: any) =>
             (item.customerStatus === 'PENDING WITH ACCOUNTS APPROVER' || item.customerStatus === 'PENDING WITH FINANCE APPROVER')
-            && (item.department === localStorage.getItem('department'))
+            && (item.department === sessionStorage.getItem('department'))
         );
         counts['FOR APPROVAL'] = foraprovalData.length;
 
@@ -261,7 +261,7 @@ export class DashboardComponent {
         } else {
             pendingData = data.filter((item: any) =>
                 (item.createdBy === this.publicVariable.storedEmail ||
-                    item.department === localStorage.getItem('department')) &&
+                    item.department === sessionStorage.getItem('department')) &&
                 (item.customerStatus === 'PENDING WITH TL APPROVER' ||
                     item.customerStatus === 'PENDING WITH CH APPROVER' ||
                     item.customerStatus === 'PENDING WITH ACCOUNTS APPROVER' ||
@@ -274,7 +274,7 @@ export class DashboardComponent {
         const approvedData = data.filter(item => (item.customerStatus === 'APPROVED BY ACCOUNTS APPROVER'
             || item.customerStatus === 'APPROVED BY FINANCE')
 
-            // && item.department === localStorage.getItem('department')
+            // && item.department === sessionStorage.getItem('department')
         );
         counts['APPROVED BY ACCOUNTS APPROVER'] = approvedData.length;
 
@@ -282,7 +282,7 @@ export class DashboardComponent {
             || item.customerStatus === 'REJECTED BY CH APPROVER'
             || item.customerStatus === 'REJECTED BY ACCOUNTS APPROVER'
             || item.customerStatus === 'REJECTED BY FINANCE APPROVER')
-            //&& item.department === localStorage.getItem('department')
+            //&& item.department === sessionStorage.getItem('department')
         );
         counts['REJECTED BY CH APPROVER'] = rejectedData.length;
 
@@ -325,7 +325,7 @@ export class DashboardComponent {
         switch (this.customerStatus) {
             case 'DRAFT':
                 filteredData = this.dashboardData.filter((item: any) =>
-                    (item.department === localStorage.getItem('department') ||
+                    (item.department === sessionStorage.getItem('department') ||
                         item.createdBy === this.publicVariable.storedEmail) &&
                     item.customerStatus === 'DRAFT');
                 break;
@@ -341,7 +341,7 @@ export class DashboardComponent {
                 } else {
                     filteredData = this.dashboardData.filter((item: any) =>
                         (item.createdBy === this.publicVariable.storedEmail ||
-                            item.department === localStorage.getItem('department')) &&
+                            item.department === sessionStorage.getItem('department')) &&
                         (item.customerStatus === 'PENDING WITH TL APPROVER' ||
                             item.customerStatus === 'PENDING WITH CH APPROVER' ||
                             item.customerStatus === 'PENDING WITH ACCOUNTS APPROVER' ||
@@ -354,14 +354,14 @@ export class DashboardComponent {
 
             case 'APPROVED BY ACCOUNTS APPROVER':
                 filteredData = this.dashboardData.filter((item: any) =>
-                    // item.department === localStorage.getItem('department') ||
+                    // item.department === sessionStorage.getItem('department') ||
                     item.createdBy === this.publicVariable.storedEmail &&
                     item.customerStatus === this.customerStatus || item.customerStatus === 'APPROVED BY FINANCE');
 
                 break;
             case 'REJECTED BY CH APPROVER':
                 filteredData = this.dashboardData.filter((item: any) =>
-                    // item.department === localStorage.getItem('department') ||
+                    // item.department === sessionStorage.getItem('department') ||
                     item.createdBy === this.publicVariable.storedEmail &&
                     (item.customerStatus === 'REJECTED BY TL APPROVER' ||
                         item.customerStatus === 'REJECTED BY CH APPROVER' ||

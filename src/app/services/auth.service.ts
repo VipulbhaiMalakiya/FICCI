@@ -27,13 +27,13 @@ export class AuthService {
                     const userRole = response.roleName;
                     const userEmail = response.email;
                     const name =response.name;
-                    localStorage.setItem('userRole', userRole);
-                    localStorage.setItem('userEmail', userEmail);
-                    localStorage.setItem('userName', name);
-                    localStorage.setItem('token', response.token);
-                    localStorage.setItem('department', response.department);
-                    localStorage.setItem('IsFinance',response.invoice_IsFinanceApprover)
-                    localStorage.setItem('navDepartment', response.navDepartment);
+                    sessionStorage.setItem('userRole', userRole);
+                    sessionStorage.setItem('userEmail', userEmail);
+                    sessionStorage.setItem('userName', name);
+                    sessionStorage.setItem('token', response.token);
+                    sessionStorage.setItem('department', response.department);
+                    sessionStorage.setItem('IsFinance',response.invoice_IsFinanceApprover)
+                    sessionStorage.setItem('navDepartment', response.navDepartment);
                     return { token: response.token, role: userRole };
                 } else {
                     this.toastr.error('Invalid credentials', 'Error');
@@ -59,15 +59,15 @@ export class AuthService {
                     const userRole = response.roleName;
                     const userEmail = response.email;
                     const name =response.name;
-                    localStorage.setItem('userRole', userRole);
-                    localStorage.setItem('userEmail', userEmail);
-                    localStorage.setItem('userName', name);
-                    localStorage.setItem('token', response.token);
-                    localStorage.setItem('department', response.department);
-                    localStorage.setItem('IsFinance',response.invoice_IsFinanceApprover)
-                    localStorage.setItem('navDepartment', response.navDepartment);
-                   // localStorage.setItem('navDepartmentNew', response.navDepartment1);
-                    
+                    sessionStorage.setItem('userRole', userRole);
+                    sessionStorage.setItem('userEmail', userEmail);
+                    sessionStorage.setItem('userName', name);
+                    sessionStorage.setItem('token', response.token);
+                    sessionStorage.setItem('department', response.department);
+                    sessionStorage.setItem('IsFinance',response.invoice_IsFinanceApprover)
+                    sessionStorage.setItem('navDepartment', response.navDepartment);
+                   // sessionStorage.setItem('navDepartmentNew', response.navDepartment1);
+
                     return { token: response.token, role: userRole };
                 } else {
                    // this.toastr.error('Invalid credentials', 'Error');
@@ -88,14 +88,14 @@ export class AuthService {
 
     // logout(): void {
     //     this.loggedIn = false;
-    //     localStorage.clear();
+    //     sessionStorage.clear();
     //     this.toastr.success('Logged out successfully', 'Success');
     //     this.router.navigate(['/']);
     // }
 
     logout(): void {
         this.loggedIn = false;
-        localStorage.clear();
+        sessionStorage.clear();
         this.toastr.success('Logged out successfully', 'Success');
         this.router.navigate(['/']).then(() => {
             window.location.reload();
@@ -106,9 +106,9 @@ export class AuthService {
 
     isLoggedIn(): boolean {
         // Check if user is logged in based on the presence of necessary items in local storage
-        const storedRole = localStorage.getItem('userRole');
-        const storedToken = localStorage.getItem('token');
-        const storedEmail = localStorage.getItem('userEmail');
+        const storedRole = sessionStorage.getItem('userRole');
+        const storedToken = sessionStorage.getItem('token');
+        const storedEmail = sessionStorage.getItem('userEmail');
 
         // Check if all necessary items are present
         return storedRole !== null && storedToken !== null  && storedEmail !==null;

@@ -15,9 +15,9 @@ export class ForbiddenComponent {
 
 
     ngOnInit(): void {
-        this.storedRole = localStorage.getItem('userRole') ?? '';
-        this.storedEmail = localStorage.getItem('userEmail') ?? '';
-        this.storeUsername = localStorage.getItem('userName') ?? '';
+        this.storedRole = sessionStorage.getItem('userRole') ?? '';
+        this.storedEmail = sessionStorage.getItem('userEmail') ?? '';
+        this.storeUsername = sessionStorage.getItem('userName') ?? '';
     }
 
     logout(): void {

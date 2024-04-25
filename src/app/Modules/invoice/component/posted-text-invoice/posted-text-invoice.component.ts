@@ -29,18 +29,18 @@ export class PostedTextInvoiceComponent {
     ) { }
 
     ngOnInit(): void {
-        this.publicVariable.storedEmail = localStorage.getItem('userEmail') ?? '';
-        this.storedRole = localStorage.getItem('userRole') ?? '';
+        this.publicVariable.storedEmail = sessionStorage.getItem('userEmail') ?? '';
+        this.storedRole = sessionStorage.getItem('userRole') ?? '';
         this.loadInvoiceSummary();
 
     }
 
 
-    
+
 
     downalodFile(fileUrl: any) {
         this.publicVariable.isProcess  = true;
-        
+
         try {
             const subscription = this.IAPI.GetTaxInvoiceAttachment(fileUrl).subscribe({
                 next: (response: any) => {
@@ -52,7 +52,7 @@ export class PostedTextInvoiceComponent {
                     this.publicVariable.isProcess  = false;
                 },
                 error: (error) => {
-                    console.error('Error loading project list:', error);    
+                    console.error('Error loading project list:', error);
                     // this.handleLoadingError();
                 },
             });

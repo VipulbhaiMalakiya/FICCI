@@ -68,9 +68,9 @@ export class CustomersService {
     getCustomerStatus(): Observable<any[]> {
         return this.http.get<any[]>(`${this.getCustomerStatusURL}`);
 
-      
 
-        
+
+
     }
     create(data: addUpdateCustomer): Observable<addUpdateCustomer> {
         return this.http.post<addUpdateCustomer>(`${this.apiUrl}`, data);
@@ -82,16 +82,16 @@ export class CustomersService {
 
     getCustomerStatusNew(): Observable<any[]> {
 
-        const url = `${this.getCustomerStatusNewURL}${localStorage.getItem('userEmail') ?? ''}&departmentName=${localStorage.getItem('department') ?? ''}`;
-      
-       // const url = `${this.getCustomerStatusNewURL}${localStorage.getItem('userEmail') ?? ''}&departmentName=ABC`;
+        const url = `${this.getCustomerStatusNewURL}${sessionStorage.getItem('userEmail') ?? ''}&departmentName=${sessionStorage.getItem('department') ?? ''}`;
+
+       // const url = `${this.getCustomerStatusNewURL}${sessionStorage.getItem('userEmail') ?? ''}&departmentName=ABC`;
 
       //  https://localhost:44386/api/Customer?email=test%40te&departmentName=ABC
         return this.http.get<any[]>(url);
     }
 
     ApproveCustomer(): Observable<any[]> {
-        const url = `${this.ApproveCustomerURL}${localStorage.getItem('userEmail') ?? ''}`;
+        const url = `${this.ApproveCustomerURL}${sessionStorage.getItem('userEmail') ?? ''}`;
         return this.http.get<any[]>(url);
     }
 
@@ -101,12 +101,12 @@ export class CustomersService {
     }
 
     AccountsCustomer(): Observable<any[]> {
-        const url = `${this.ApproveCustomerURL}${localStorage.getItem('userEmail') ?? ''}`;
+        const url = `${this.ApproveCustomerURL}${sessionStorage.getItem('userEmail') ?? ''}`;
         return this.http.get<any[]>(url);
     }
 
     getCustomerStatuaccount(): Observable<any[]> {
-        const url = `${this.AccountURL}${localStorage.getItem('userEmail') ?? ''}`;
+        const url = `${this.AccountURL}${sessionStorage.getItem('userEmail') ?? ''}`;
         return this.http.get<any[]>(url);
     }
 }

@@ -37,8 +37,8 @@ export class publicVariable {
     postCodeList: PostCodeList[] = [];
     customerTypeList: GstCustomerTypeList[] = [];
     customerStatusList: customerStatusListModel[] = [];
-    storedEmail:string =  localStorage.getItem('userEmail') ?? '';
-    storedRole: string = localStorage.getItem('userRole') ?? '';;
+    storedEmail:string =  sessionStorage.getItem('userEmail') ?? '';
+    storedRole: string = sessionStorage.getItem('userRole') ?? '';;
 
 
 }

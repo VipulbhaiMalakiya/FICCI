@@ -54,8 +54,8 @@ export class InvoicesService {
 
     private CreditMemoApproverEmail = `${environment.apiURL}ApproveInvoice/GetApproverEmail?email=`;
 
-    private ApproverURLNew = `${environment.apiURL}ApproveInvoice/MailInvoiceApproval`;   
-    private SalesApproverMailURL = `${environment.apiURL}ApproveCredit/MailSalesApproval`;   
+    private ApproverURLNew = `${environment.apiURL}ApproveInvoice/MailInvoiceApproval`;
+    private SalesApproverMailURL = `${environment.apiURL}ApproveCredit/MailSalesApproval`;
 
     private TotalCreditAmountURL = `${environment.apiURL}DropDown/TotalCreditAmount?invoiceNo=`;
 
@@ -85,7 +85,7 @@ export class InvoicesService {
         return this.http.get<any[]>(url);
     }
 
-   
+
 
     GetApproverEmail(data: any): Observable<any[]> {
         const url = `${this.GetApproverEmailURL}${data.email ?? ''}&id=${data.id    }`;
@@ -99,7 +99,7 @@ export class InvoicesService {
 
     GetSalesCreditNoteSummary(): Observable<any[]> {
         // return this.http.get<any[]>(`${this.InvoiceSummaryURL}`);
-        const url = `${this.SalesCreditNoteSummaryURL}${localStorage.getItem('userEmail') ?? ''}`;
+        const url = `${this.SalesCreditNoteSummaryURL}${sessionStorage.getItem('userEmail') ?? ''}`;
         return this.http.get<any[]>(url);
     }
 
@@ -125,13 +125,13 @@ export class InvoicesService {
     }
 
     GetTaxInvoiceAttachment(InvoiceNo: string): Observable<any[]> {
-        const userEmail = localStorage.getItem('userEmail');
+        const userEmail = sessionStorage.getItem('userEmail');
         const url = `${this.GetTaxInvoiceAttachmentURL}${InvoiceNo}`;
         return this.http.get<any[]>(url);
     }
 
     GetPITaxInvoiceAttachment(InvoiceNo: string): Observable<any[]> {
-        const userEmail = localStorage.getItem('userEmail');
+        const userEmail = sessionStorage.getItem('userEmail');
         const url = `${this.GetPITaxInvoiceAttachmentURL}${InvoiceNo}`;
         return this.http.get<any[]>(url);
     }
@@ -155,12 +155,12 @@ export class InvoicesService {
 
     GetInvoiceSummary(): Observable<any[]> {
         // return this.http.get<any[]>(`${this.InvoiceSummaryURL}`);
-        const url = `${this.InvoiceSummaryURL}${localStorage.getItem('userEmail') ?? ''}`;
+        const url = `${this.InvoiceSummaryURL}${sessionStorage.getItem('userEmail') ?? ''}`;
         return this.http.get<any[]>(url);
     }
     GetPIInvoiceSummary(): Observable<any[]> {
         // return this.http.get<any[]>(`${this.InvoiceSummaryURL}`);
-        const url = `${this.PIInvoiceSummaryURL}${localStorage.getItem('userEmail') ?? ''}`;
+        const url = `${this.PIInvoiceSummaryURL}${sessionStorage.getItem('userEmail') ?? ''}`;
         return this.http.get<any[]>(url);
     }
     IsLatestEmail(id: any): Observable<any[]> {
@@ -181,12 +181,12 @@ export class InvoicesService {
     }
 
     getApproveInvoice(): Observable<any[]> {
-        const url = `${this.ApproveInvoiceURL}${localStorage.getItem('userEmail') ?? ''}`;
+        const url = `${this.ApproveInvoiceURL}${sessionStorage.getItem('userEmail') ?? ''}`;
         return this.http.get<any[]>(url);
     }
 
     getApproveSalesInvoice(): Observable<any[]> {
-        const url = `${this.ApproveSalesInvoiceURL}${localStorage.getItem('userEmail') ?? ''}`;
+        const url = `${this.ApproveSalesInvoiceURL}${sessionStorage.getItem('userEmail') ?? ''}`;
         return this.http.get<any[]>(url);
     }
 
@@ -207,7 +207,7 @@ export class InvoicesService {
     }
     getApproveAccountInvoice(): Observable<any[]> {
 
-        const url = `${this.ApproverAccountURL}${localStorage.getItem('userEmail') ?? ''}`;
+        const url = `${this.ApproverAccountURL}${sessionStorage.getItem('userEmail') ?? ''}`;
         return this.http.get<any[]>(url);
     }
 
@@ -217,9 +217,9 @@ export class InvoicesService {
     }
 
     getProjects(): Observable<any[]> {
-      //  return this.http.get<any[]>(`${this.Projectapi}${localStorage.getItem('department')}&id=0`);
+      //  return this.http.get<any[]>(`${this.Projectapi}${sessionStorage.getItem('department')}&id=0`);
 
-        return this.http.get<any[]>(`${this.Projectapi}${localStorage.getItem('navDepartment')}&id=0`);
+        return this.http.get<any[]>(`${this.Projectapi}${sessionStorage.getItem('navDepartment')}&id=0`);
 
     }
 
@@ -234,9 +234,9 @@ export class InvoicesService {
 
 
     getProjectsNav(): Observable<any[]> {
-        //  return this.http.get<any[]>(`${this.Projectapi}${localStorage.getItem('department')}&id=0`);
+        //  return this.http.get<any[]>(`${this.Projectapi}${sessionStorage.getItem('department')}&id=0`);
 
-          return this.http.get<any[]>(`${this.Projectapi}${localStorage.getItem('navDepartment')}&id=0`);
+          return this.http.get<any[]>(`${this.Projectapi}${sessionStorage.getItem('navDepartment')}&id=0`);
 
       }
 
@@ -245,12 +245,12 @@ export class InvoicesService {
     // }
 
     getPurchaseInvoice_New(): Observable<any[]> {
-        const url = `${this.PurchaseInvoice_New}${localStorage.getItem('userEmail') ?? ''}&departmentName=${localStorage.getItem('navDepartment') ?? ''}`;
+        const url = `${this.PurchaseInvoice_New}${sessionStorage.getItem('userEmail') ?? ''}&departmentName=${sessionStorage.getItem('navDepartment') ?? ''}`;
         return this.http.get<any[]>(url);
     }
 
     getSalesCreditMemo(): Observable<any[]> {
-        const url = `${this.apiSalesCreditMemoUrl}${localStorage.getItem('userEmail') ?? ''}`;
+        const url = `${this.apiSalesCreditMemoUrl}${sessionStorage.getItem('userEmail') ?? ''}`;
         return this.http.get<any[]>(url);
     }
 
@@ -266,7 +266,7 @@ export class InvoicesService {
         return this.http.delete<any>(`${this.apiUrl}/${id}`);
     }
     getCustomerStatusNew(): Observable<any[]> {
-        const url = `${this.getCustomerStatusNewURL}${localStorage.getItem('userEmail') ?? ''}`;
+        const url = `${this.getCustomerStatusNewURL}${sessionStorage.getItem('userEmail') ?? ''}`;
         return this.http.get<any[]>(url);
     }
 

@@ -125,7 +125,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
         this.publicVariable.isProcess = false;
         this.loadProjectList();
       this.loadCustomerStatusList();
-        this.navDepartment = localStorage.getItem('navDepartment')
+        this.navDepartment = sessionStorage.getItem('navDepartment')
         this.navDepartmentArray = this.navDepartment.split('|');
 
         // this.route.params.subscribe(params => {
@@ -153,7 +153,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
        // this.loadgetGstRegistrationNoAll();
     }
 
-  
+
 
     onSelectdept(event: any) {
         this.selectedDept = event;
@@ -1021,7 +1021,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
 
 
         debugger;
-        if(this.publicVariable.dataForm.value.ImpiHeaderCustomerContactPerson == null ||            
+        if(this.publicVariable.dataForm.value.ImpiHeaderCustomerContactPerson == null ||
             this.publicVariable.dataForm.value.ImpiHeaderCustomerContactPerson == undefined||
             this.publicVariable.dataForm.value.ImpiHeaderCustomerContactPerson == ''
             )
@@ -1029,7 +1029,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
             alert('Enter the Customer contact person');
             }
 
-           else if(this.publicVariable.dataForm.value.ImpiHeaderCustomerEmailId == null ||            
+           else if(this.publicVariable.dataForm.value.ImpiHeaderCustomerEmailId == null ||
                 this.publicVariable.dataForm.value.ImpiHeaderCustomerEmailId == undefined||
                 this.publicVariable.dataForm.value.ImpiHeaderCustomerEmailId == ''
                 )
@@ -1037,7 +1037,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
                 alert('Enter the Customer Email Id');
                 }
 
-               else if(this.publicVariable.dataForm.value.ImpiHeaderCustomerPhoneNo == null ||            
+               else if(this.publicVariable.dataForm.value.ImpiHeaderCustomerPhoneNo == null ||
                     this.publicVariable.dataForm.value.ImpiHeaderCustomerPhoneNo == undefined||
                     this.publicVariable.dataForm.value.ImpiHeaderCustomerPhoneNo == ''
                     )
@@ -1055,7 +1055,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
 
                  return;
             }
-           
+
          }
         // debugger;
 
@@ -1068,7 +1068,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
         if (Action !== 'Calculate' && !this.isCalculate) {
             alert("Please Calculate the tax details");
             return
-        }       
+        }
 
        let action =true;
        if(Action =="Submit")

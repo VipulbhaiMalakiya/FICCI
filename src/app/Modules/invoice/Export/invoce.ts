@@ -50,7 +50,7 @@ export class publicVariable {
     GSTGroupList: GSTGroupModel[] = [];
     HSNSACList : HSNSACModel[] = [];
     cityList: CityList[] = [];
-    storedEmail:string =  localStorage.getItem('userEmail') ?? '';
-    storedRole: string = localStorage.getItem('userRole') ?? '';;
+    storedEmail:string =  sessionStorage.getItem('userEmail') ?? '';
+    storedRole: string = sessionStorage.getItem('userRole') ?? '';;
 
 }
