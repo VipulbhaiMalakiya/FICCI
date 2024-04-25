@@ -158,10 +158,11 @@ export class SalesCreditNoteNavisionComponent implements OnInit {
             "Department": x?.deptCode || '',
             "Division": x?.divisionCode || '',
             "Project Code": x?.projectCode || '',
+            'Status':x?.status
 
         }));
 
-        const headers = ['No','Posting Date','Applies To DocNo','Customer No','Customer Name','Department','Division','Project Code'];
+        const headers = ['No','Posting Date','Applies To DocNo','Customer No','Customer Name','Department','Division','Project Code','Status'];
         this.appService.exportAsExcelFile(exportData, 'Posted Sales Credit Note', headers);
     }
 

@@ -1446,7 +1446,23 @@ export class DashboardComponent {
     handleLoadingError() {
         this.publicVariable.isProcess = false; // Set status to false on error
     }
+    onDownloadSCN(){
+        const exportData = this.SalesCreditNoteSummaryData.map((x) => ({
+            "No": x?.no || '',
+            "Posting Date": x?.postingDate || '',
+            "Applies To DocNo": x?.appliesToDocNo || '',
+            "Customer No": x?.sellToCustomerNo || '',
+            "Customer Name": x?.sellToCustomerName || '',
+            "Department": x?.deptCode || '',
+            "Division": x?.divisionCode || '',
+            "Project Code": x?.projectCode || '',
+            'Status':x?.status
 
+        }));
+
+        const headers = ['No','Posting Date','Applies To DocNo','Customer No','Customer Name','Department','Division','Project Code','Status'];
+        this.appService.exportAsExcelFile(exportData, 'Posted Sales Credit Note', headers);
+    }
     onDownloadPI() {
         const exportData = this.invoiceStatuslistData.map((x) => ({
             "Record No": x?.headerRecordID || '',
