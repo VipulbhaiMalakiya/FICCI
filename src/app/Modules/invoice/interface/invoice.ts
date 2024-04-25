@@ -123,7 +123,7 @@ export interface invoiceApproveModule {
     custNo: string
     custName: string
 
-  
+
 
     custName2: string
     custAddress: string
@@ -186,4 +186,5 @@ export interface invoiceApproveModule {
     cancelRemark:any
     getTaxInvoiceInfoLines:any
     status:any
+    amount:any
   }

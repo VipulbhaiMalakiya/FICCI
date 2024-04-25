@@ -1395,6 +1395,24 @@ export class DashboardComponent {
         this.appService.exportAsExcelFile(exportData, 'Customer Status', headers);
     }
 
+    onPIDownloadInvoiceSummary(){
+        const exportData = this.PIInvoiceSummaryList.map((x) => ({
+            "No": x?.no || '',
+            "Customer No": x?.sellToCustomerNo || '',
+            "Customer" :x?.sellToCustomerName || '',
+            "Project Code":x?.projectCode || '',
+            "Department":x?.departmentName || '',
+            "Division":x?.divisionName || '',
+            "Amount":x?.amount || '',
+            'status':x?.status || '',
+
+        }));
+
+        const headers = ['No','Customer No','Customer','Project Code','Department','Division','Amount','status'
+        ];
+        this.appService.exportAsExcelFile(exportData, 'Proforma Invoice', headers); 
+    }
+
     onDownloadInvoiceSummary() {
         const exportData = this.InvoiceSummaryList.map((x) => ({
             "No": x?.no || '',
