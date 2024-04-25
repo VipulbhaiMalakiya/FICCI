@@ -148,47 +148,22 @@ export class SalesCreditNoteNavisionComponent implements OnInit {
         this.publicVariable.isProcess = false; // Set status to false on error
     }
 
-    // onDownload() {
-    //     const exportData = this.SalesCreditNoteSummaryData.map((x) => ({
-    //         "No ": x?.no || '',
-    //         "postingDate": x?.postingDate || '',
-    //         "invoice_no": x?.postingDate || '',
-    //         "CustomerNo": x?.sellToCustomerNo || '',
-    //         "CustomerName": x?.sellToCustomerName || '',
-    //         "CustomerName2": x?.sellToCustomerName2 || '',
-    //         "projectCode": x?.projectCode || '',
-    //         "dimensionSetID": x?.dimensionSetID || '',
-    //         "departmentName": x?.departmentName || '',
-    //         "departmentCode": x?.departmentCode || '',
-    //         "divisionCode": x?.divisionCode || '',
-    //         "divisionName": x?.divisionName || '',
-    //         "approverTL": x?.approverTL || '',
-    //         "approverCH": x?.approverCH || '',
-    //         "approverSupport": x?.approverSupport || '',
-    //         "financeApprover": x?.financeApprover || '',
-    //         "invoicePortalOrder": x?.invoicePortalOrder || '',
-    //         "invoicePortalSubmitted": x?.invoicePortalSubmitted || '',
-    //         "createdByUser": x?.createdByUser || '',
-    //         "ToCity": x?.sellToCity || '',
-    //         "Address": x?.sellToAddress || '',
-    //         "Address2": x?.sellToAddress2 || '',
-    //         "PostCode": x?.sellToPostCode || '',
-    //         "gsT_No": x?.gsT_No || '',
-    //         "paN_NO": x?.paN_NO || '',
-    //         "cancelled": x?.cancelled || '',
-    //         "cancelRemark": x?.cancelRemark || '',
-    //         "status": x?.status || '',
-    //         "getTaxInvoiceInfoLines": x?.getTaxInvoiceInfoLines || '',
-    //     }));
+    onDownload() {
+        const exportData = this.SalesCreditNoteSummaryData.map((x) => ({
+            "No": x?.no || '',
+            "Posting Date": x?.postingDate || '',
+            "Applies To DocNo": x?.appliesToDocNo || '',
+            "Customer No": x?.sellToCustomerNo || '',
+            "Customer Name": x?.sellToCustomerName || '',
+            "Department": x?.deptCode || '',
+            "Division": x?.divisionCode || '',
+            "Project Code": x?.projectCode || '',
 
-    //     const headers = ['No', 'postingDate', 'invoice_no', 'CustomerNo', 'CustomerName', 'projectCode',
-    //         'dimensionSetID', 'departmentName', 'departmentCode', 'divisionCode', 'divisionName', 'approverTL',
-    //         'approverCH', 'approverSupport', 'financeApprover', 'invoicePortalOrder', 'invoicePortalSubmitted',
-    //         'createdByUser', 'City', 'Address', 'Address2', 'PostCode', 'gsT_No', 'paN_NO', 'cancelled', 'cancelRemark',
-    //         'status', 'getTaxInvoiceInfoLines'
-    //     ];
-    //     this.appService.exportAsExcelFile(exportData, 'Invoiced', headers);
-    // }
+        }));
+
+        const headers = ['No','Posting Date','Applies To DocNo','Customer No','Customer Name','Department','Division','Project Code'];
+        this.appService.exportAsExcelFile(exportData, 'Posted Sales Credit Note', headers);
+    }
 
     onTableDataChange(event: any) {
         this.publicVariable.page = event;
