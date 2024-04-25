@@ -28,6 +28,10 @@ export class SearchFilterPipe2 implements PipeTransform {
                 || (item.impiHeaderCreatedBy && item.impiHeaderCreatedBy.toLowerCase().includes(searchText))
                 || (item.no && item.no.toLowerCase().includes(searchText))
                 || (item.invoice_no && item.invoice_no.toLowerCase().includes(searchText))
+                || (item.sellToCustomerNo && item.sellToCustomerNo.toLowerCase().includes(searchText))
+                || (item.sellToCustomerName && item.sellToCustomerName.toLowerCase().includes(searchText))
+                || (item.projectCode && item.projectCode.toLowerCase().includes(searchText))
+
                 || (item.recordID && item.recordID.toLowerCase().includes(searchText))
 
                 || (item.headerStatus && item.headerStatus.toLowerCase().includes(searchText));
