@@ -29,8 +29,8 @@ export class PostedTextInvoiceComponent {
     ) { }
 
     ngOnInit(): void {
-        this.publicVariable.storedEmail = sessionStorage.getItem('userEmail') ?? '';
-        this.storedRole = sessionStorage.getItem('userRole') ?? '';
+        this.publicVariable.storedEmail = localStorage.getItem('userEmail') ?? '';
+        this.storedRole = localStorage.getItem('userRole') ?? '';
         this.loadInvoiceSummary();
 
     }
@@ -172,9 +172,9 @@ export class PostedTextInvoiceComponent {
 
     onDownloadInvoiceSummary() {
         const exportData = this.InvoiceSummaryList.map((x) => ({
-            "No ": x?.no || '',
+            "No": x?.no || '',
             "postingDate": x?.postingDate || '',
-            "invoice_no": x?.postingDate || '',
+            "invoice_no": x?.invoice_no || '',
             "CustomerNo": x?.sellToCustomerNo || '',
             "CustomerName": x?.sellToCustomerName || '',
             "CustomerName2": x?.sellToCustomerName2 || '',
