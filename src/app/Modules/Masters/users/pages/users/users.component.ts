@@ -76,12 +76,14 @@ export class UsersComponent implements OnInit, OnDestroy {
             "Employee ID	": x?.imeM_EmpId || '',
             Name: x?.imeM_Name ? this.toTitleCase(x.imeM_Name) : '',
             Username: x?.imeM_Username ? this.toTitleCase(x.imeM_Username) : '',
+            Department:x?.department ? this.toTitleCase(x.department) : '',
+            "Nav Department":x?.departmentName || '',
             Email: x?.imeM_Email ? this.toTitleCase(x.imeM_Email) : '',
             Active: x && x.isActive ? 'Yes' : 'No',
             Role: x?.roleName ? this.toTitleCase(x.roleName) : ''
         }));
 
-        const headers = ['Employee ID	', 'Name', 'Email', 'Username', 'Role', 'Active'];
+        const headers = ['Employee ID	', 'Name', 'Email', 'Username', 'Department','Nav Department','Role', 'Active'];
         this.appService.exportAsExcelFile(
             exportData,
             'Users',

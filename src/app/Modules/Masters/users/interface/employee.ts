@@ -30,4 +30,6 @@ export interface UserMaster {
     imeM_Username: string;
     isActive: string;
     roleName: string;
+    department?:any;
+    departmentName?:any;
 }
