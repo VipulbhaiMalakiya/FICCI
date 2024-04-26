@@ -71,7 +71,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
 
             ImpiHeaderCustomerState: [null],
             ImpiHeaderCustomerCity: [ null],
-            ImpiHeaderCustomerPinCode: [ null,[Validators.pattern(/^\d{6}$/)]],
+            ImpiHeaderCustomerPinCode: [ null],
             ImpiHeaderCustomerGstNo: [null, [gstValidator()]],
             ImpiHeaderCustomerContactPerson: ['', [Validators.required, alphanumericWithSpacesValidator()]],
             ImpiHeaderCustomerEmailId: ['', [Validators.required, Validators.email, this.emailValidator()]],
