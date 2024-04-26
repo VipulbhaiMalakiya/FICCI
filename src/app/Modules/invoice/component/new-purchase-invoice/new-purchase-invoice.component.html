@@ -185,6 +185,8 @@
                                 </ng-template> -->
                             </ng-select>
 
+
+
                             <div class="add-btn"><a routerLink="/customer/new" target="_blank"
                                 title="Add New Customer">+</a></div>
                         </div>
@@ -253,8 +255,12 @@
                         <input type="text" id="address" placeholder="Address"
                             formControlName="ImpiHeaderCustomerAddress" class="form-control no-style" readonly />
 
-                        <div *ngIf="shouldShowError('ImpiHeaderCustomerAddress', 'required')" class="text-danger">
+                        <!-- <div *ngIf="shouldShowError('ImpiHeaderCustomerAddress', 'required')" class="text-danger">
                             Address is required.
+                        </div> -->
+
+                        <div *ngIf="shouldShowError('ImpiHeaderCustomerAddress','required')" class="text-danger">This field
+                            is required
                         </div>
 
                         <!-- <div *ngIf="shouldShowError('ImpiHeaderCustomerAddress', 'forbiddenCharacters')" class="text-danger">
@@ -339,9 +345,9 @@
                         <!--
                         <input type="text" formControlName="ImpiHeaderCustomerPinCode" placeholder="Pincode"
                             (input)="onInputChange($event)" class="form-control" maxlength="15" readonly /> -->
-                        <!-- <div *ngIf="shouldShowError('ImpiHeaderCustomerPinCode','required')" class="text-danger"> Pin
+                        <div *ngIf="shouldShowError('ImpiHeaderCustomerPinCode','required')" class="text-danger"> Pin
                             Code is required.
-                        </div> -->
+                        </div>
                         <!-- <div *ngIf="shouldShowError('ImpiHeaderCustomerPinCode','pattern')" class="text-danger"> Please
                             enter a valid 6-digit Pin Code.</div> -->
                     </div>

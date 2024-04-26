@@ -66,12 +66,13 @@ export class NewPurchaseInvoiceComponent implements OnInit {
             PINO: [''], //api missing
             ImpiHeaderCustomerName: [null, [Validators.required]],
             ImpiHeaderCustomerCode: [''], //new filed
-            ImpiHeaderCustomerAddress: [ null, [ Validators.maxLength(100)]],
-            ImpiHeaderCustomerAddress2: [ null, [Validators.maxLength(100)]],
+            ImpiHeaderCustomerAddress: [ '', [ Validators.maxLength(100)]],
+            ImpiHeaderCustomerAddress2: [ '', [Validators.maxLength(100)]],
 
-            ImpiHeaderCustomerState: [null],
-            ImpiHeaderCustomerCity: [ null],
-            ImpiHeaderCustomerPinCode: [ null],
+            ImpiHeaderCustomerState: [null,[Validators.required]],
+            ImpiHeaderCustomerCity: [ null,[Validators.required]],
+            ImpiHeaderCustomerPinCode: [ null,[Validators.required]],
+
             ImpiHeaderCustomerGstNo: [null, [gstValidator()]],
             ImpiHeaderCustomerContactPerson: ['', [Validators.required, alphanumericWithSpacesValidator()]],
             ImpiHeaderCustomerEmailId: ['', [Validators.required, Validators.email, this.emailValidator()]],
@@ -1241,7 +1242,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
         ['ImpiHeaderInvoiceType', 'ImpiHeaderProjectCode', 'ImpiHeaderDepartment', 'ImpiHeaderDivison', 'ImpiHeaderPanNo', 'ImpiHeaderGstNo',
             'ImpiHeaderCustomerName', 'ImpiHeaderCustomerAddress', 'ImpiHeaderCustomerState', 'ImpiHeaderCustomerCity', 'ImpiHeaderCustomerEmailId',
             'ImpiHeaderCustomerGstNo', 'ImpiHeaderCustomerContactPerson', 'ImpiHeaderCustomerPhoneNo', 'items',
-            'startDate', 'endDate','ImpiHeaderdept'
+            'startDate', 'endDate','ImpiHeaderdept','ImpiHeaderCustomerAddress2','ImpiHeaderCustomerPinCode',
         ].forEach(controlName => {
             this.publicVariable.dataForm.controls[controlName].markAsTouched();
         });
