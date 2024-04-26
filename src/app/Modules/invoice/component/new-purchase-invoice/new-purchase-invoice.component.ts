@@ -66,14 +66,14 @@ export class NewPurchaseInvoiceComponent implements OnInit {
             PINO: [''], //api missing
             ImpiHeaderCustomerName: [null, [Validators.required]],
             ImpiHeaderCustomerCode: [''], //new filed
-            ImpiHeaderCustomerAddress: [ '', [ Validators.maxLength(100)]],
-            ImpiHeaderCustomerAddress2: [ '', [Validators.maxLength(100)]],
+            ImpiHeaderCustomerAddress: [ '', [Validators.required, Validators.maxLength(100)]],
+            ImpiHeaderCustomerAddress2: [ '', [Validators.required,Validators.maxLength(100)]],
 
-            ImpiHeaderCustomerState: [null,[Validators.required]],
-            ImpiHeaderCustomerCity: [ null,[Validators.required]],
-            ImpiHeaderCustomerPinCode: [ null,[Validators.required]],
+            ImpiHeaderCustomerState: ['',[Validators.required]],
+            ImpiHeaderCustomerCity: [ '',[Validators.required]],
+            ImpiHeaderCustomerPinCode: [ '',[Validators.required]],
 
-            ImpiHeaderCustomerGstNo: [null, [gstValidator()]],
+            ImpiHeaderCustomerGstNo: ['', [gstValidator()]],
             ImpiHeaderCustomerContactPerson: ['', [Validators.required, alphanumericWithSpacesValidator()]],
             ImpiHeaderCustomerEmailId: ['', [Validators.required, Validators.email, this.emailValidator()]],
             ImpiHeaderCustomerPhoneNo: ['', [Validators.required, Validators.pattern(/^[6-9]\d{9}$/)]],
