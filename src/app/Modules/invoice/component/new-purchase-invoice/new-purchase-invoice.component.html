@@ -114,8 +114,8 @@
                 <div class="col-md-4 col-sm-6">
                     <div class="form-group">
                         <label>FICCI GST NO <sup class="text-danger">*</sup></label>
-                        <input type="text" placeholder="FICCI GST NO" class="form-control" formControlName="ImpiHeaderGstNo"
-                            maxlength="20" />
+                        <input type="text" placeholder="FICCI GST NO" class="form-control"
+                            formControlName="ImpiHeaderGstNo" maxlength="20" />
 
                         <div *ngIf="shouldShowError('ImpiHeaderGstNo','invalidGST')" class="text-danger"> Please enter
                             a valid GST Registration Number. (05AAACF1282E1Z5)</div>
@@ -188,7 +188,7 @@
 
 
                             <div class="add-btn"><a routerLink="/customer/new" target="_blank"
-                                title="Add New Customer">+</a></div>
+                                    title="Add New Customer">+</a></div>
                         </div>
                         <div *ngIf="shouldShowError('ImpiHeaderCustomerName','required')" class="text-danger">This field
                             is required
@@ -259,7 +259,8 @@
                             Address is required.
                         </div> -->
 
-                        <div *ngIf="shouldShowError('ImpiHeaderCustomerAddress','required')" class="text-danger">This field
+                        <div *ngIf="shouldShowError('ImpiHeaderCustomerAddress','required')" class="text-danger">This
+                            field
                             is required
                         </div>
 
@@ -381,7 +382,8 @@
 
                 <div class="col-md-4 col-sm-6">
                     <div class="form-group">
-                        <label for="EmailID">Customer Email Id (To Send Invoice) <sup class="text-danger">*</sup></label>
+                        <label for="EmailID">Customer Email Id (To Send Invoice) <sup
+                                class="text-danger">*</sup></label>
                         <input type="email" placeholder="Email ID" id="EmailID" maxlength="100"
                             formControlName="ImpiHeaderCustomerEmailId" class="form-control" />
                         <div *ngIf="shouldShowError('ImpiHeaderCustomerEmailId','required')" class="text-danger">Email
@@ -399,8 +401,8 @@
                 <div class="col-md-4 col-sm-6">
                     <div class="form-group">
                         <label for="PhoneNo">Phone No. <sup class="text-danger">*</sup></label>
-                        <input type="number" class="form-control" id="PhoneNo"
-                            placeholder="Phone No" formControlName="ImpiHeaderCustomerPhoneNo" maxlength="15" min="0" />
+                        <input type="number" class="form-control" id="PhoneNo" placeholder="Phone No"
+                            formControlName="ImpiHeaderCustomerPhoneNo" maxlength="15" min="0" />
                         <div *ngIf="shouldShowError('ImpiHeaderCustomerPhoneNo','required')" class="text-danger">Phone
                             number is required.</div>
                         <div *ngIf="shouldShowError('ImpiHeaderCustomerPhoneNo','pattern')" class="text-danger">Invalid
@@ -482,13 +484,13 @@
                     <div class="col-md-4 col-sm-8">
                         <div class="form-group">
                             <label>Description/Narration to Print on Invoice <sup class="text-danger">*</sup></label>
-                            <input type="text" class="form-control" placeholder="Description" maxlength="100" id="impiDescription"
-                                formControlName="impiDescription" >
+                            <input type="text" class="form-control" placeholder="Description" maxlength="100"
+                                id="impiDescription" formControlName="impiDescription">
                             <div *ngIf="shouldShowExpenseError('impiDescription','required')" class="text-danger">This
                                 field is
                                 required</div>
 
-                                <div *ngIf="shouldShowExpenseError('impiDescription', 'specialCharactersNotAllowed')"
+                            <div *ngIf="shouldShowExpenseError('impiDescription', 'specialCharactersNotAllowed')"
                                 class="text-danger">
                                 Please enter a valid alphanumeric value.
                             </div>
