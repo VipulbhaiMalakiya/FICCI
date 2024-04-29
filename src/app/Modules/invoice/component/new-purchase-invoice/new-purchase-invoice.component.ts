@@ -127,7 +127,11 @@ export class NewPurchaseInvoiceComponent implements OnInit {
         this.loadProjectList();
         this.loadCustomerStatusList();
         this.navDepartment = sessionStorage.getItem('navDepartment')
-        this.navDepartmentArray = this.navDepartment.split('|');
+        // this.navDepartmentArray = this.navDepartment.split('|');
+
+            //this.navDepartmentArray = this.navDepartment.split('/');
+
+            this.navDepartmentArray = this.navDepartment.split(/[;,\/]/);
 
         // this.route.params.subscribe(params => {
         //     let decrypted = params['id']
