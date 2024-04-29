@@ -616,7 +616,8 @@ export class DashboardComponent {
         counts['REJECTED BY CH APPROVER'] = rejectedData.length;
 
         const cancelData = data.filter(item =>
-            item.headerStatus === 'CANCELLATION APPROVED BY FINANCE' || item.headerStatus == 'CANCELLATION APPROVED BY TL' && item.impiHeaderInvoiceType == invoiceType);
+            item.impiHeaderInvoiceType == invoiceType &&(
+            item.headerStatus == 'CANCELLATION APPROVED BY FINANCE	' || item.headerStatus == 'CANCELLATION APPROVED BY TL' && item.impiHeaderInvoiceType == invoiceType));
         counts['Cancelled'] = cancelData.length;
 
         const ReversalData = data.filter(item =>
@@ -720,8 +721,7 @@ export class DashboardComponent {
                     // item.createdBy === this.publicVariable.storedEmail &&
                     item.impiHeaderInvoiceType == this.invoiceType &&
                     (
-                        item.headerStatus === 'CANCELLATION APPROVED BY FINANCE'
-                        || item.headerStatus == 'CANCELLATION APPROVED BY TL'));
+                        item.headerStatus == 'CANCELLATION APPROVED BY FINANCE'|| item.headerStatus == 'CANCELLATION APPROVED BY TL'));
                 break;
             case 'Reversal':
                 filteredData = this.dashboardData.filter((item: any) =>
@@ -1410,7 +1410,7 @@ export class DashboardComponent {
 
         const headers = ['No','Customer No','Customer','Project Code','Department','Division','Amount','status'
         ];
-        this.appService.exportAsExcelFile(exportData, 'Proforma Invoice', headers); 
+        this.appService.exportAsExcelFile(exportData, 'Proforma Invoice', headers);
     }
 
     onDownloadInvoiceSummary() {
@@ -1425,15 +1425,15 @@ export class DashboardComponent {
             "Department": x?.departmentName || '',
             "Division": x?.divisionName || '',
             "Amount": x?.amount || '',
-       
-     
+
+
         }));
 
         const headers = ['No','Posting Date','Invoice No','Customer No','Customer','Project Code','Department','Division','Amount'
         ];
         this.appService.exportAsExcelFile(exportData, 'Posted Tax Invoice', headers);
 
-  
+
     }
 
     getStateNameById(stateId: string) {
