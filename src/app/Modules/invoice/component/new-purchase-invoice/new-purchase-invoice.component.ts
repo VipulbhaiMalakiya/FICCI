@@ -124,7 +124,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
     ngOnInit(): void {
 
         this.publicVariable.isProcess = false;
-        this.loadProjectList();
+        //this.loadProjectList();
         this.loadCustomerStatusList();
         this.navDepartment = sessionStorage.getItem('navDepartment')
         // this.navDepartmentArray = this.navDepartment.split('|');
