@@ -36,7 +36,8 @@ export class NewPurchaseInvoiceComponent implements OnInit {
     navDepartmentArray: any;
     selectedDept: any;
     isButtonShow: boolean = false;
-
+    selectCustomerNo?:any;
+    selectCustomerCode?:any;
 
     constructor(private appService: AppService,
         private modalService: NgbModal,
@@ -139,15 +140,14 @@ export class NewPurchaseInvoiceComponent implements OnInit {
             if (params && params['id']) {
                 let decrypted = params['id'];
                 this.Id = atob(decrypted);
-                console.log("Decrypted ID:", this.Id); // Log the decrypted ID
+                //console.log("Decrypted ID:", this.Id); // Log the decrypted ID
             } else {
-                console.error("ID parameter does not exist.");
+               // console.error("ID parameter does not exist.");
             }
         });
 
         if (this.data = history.state.data) {
             this.patchFormData(this.data);
-            console.log(this.data);
         }
         this.loadCOAMasterList();
         this.loadGetGSTGroupList();
@@ -278,73 +278,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
         return concatenatedString.includes(term.toLowerCase());
     }
 
-    patchFormData(data: any): void {
 
-        console.log('edit date',data);
-        this.publicVariable.dataForm.patchValue({
-
-
-          
-            headerid: (data && data.headerId) || (data && data.headerid),
-            ImpiHeaderInvoiceType: data.impiHeaderInvoiceType,
-            ImpiHeaderdept: data.impiHeaderProjectDepartmentName,
-            ImpiHeaderProjectCode: data.impiHeaderProjectCode,
-            ImpiHeaderDepartment: data.impiHeaderProjectDepartmentName,
-
-            ImpiHeaderDivison: data.impiHeaderProjectDivisionName,
-            Project: data.impiHeaderProjectName,
-
-            ImpiHeaderPanNo: data.impiHeaderPanNo,
-            ImpiHeaderGstNo: data.impiHeaderGstNo,
-            PINO: [''], //api missing
-            ImpiHeaderCustomerName: data.impiHeaderCustomerName,
-            ImpiHeaderCustomerCode: data.impiHeaderCustomerCode,
-            ImpiHeaderCustomerAddress: data.impiHeaderCustomerAddress,
-            ImpiHeaderCustomerAddress2: data.impiHeaderCustomerAddress2,
-            ImpiHeaderCustomerState: data.impiHeaderCustomerState,
-            ImpiHeaderCustomerCity: data.impiHeaderCustomerCity,
-            ImpiHeaderCustomerPinCode: data.impiHeaderCustomerPinCode,
-            ImpiHeaderCustomerGstNo: data.impiHeaderCustomerGstNo,
-            ImpiHeaderCustomerContactPerson: data.impiHeaderCustomerContactPerson,
-            ImpiHeaderCustomerEmailId: data.impiHeaderCustomerEmailId,
-            ImpiHeaderCustomerPhoneNo: data.impiHeaderCustomerPhoneNo,
-            ImpiHeaderCreatedBy: data.impiHeaderCreatedBy,
-            ImpiHeaderTotalInvoiceAmount: data.impiHeaderTotalInvoiceAmount,
-            ImpiHeaderPaymentTerms: data.impiHeaderPaymentTerms,
-            ImpiHeaderRemarks: data.impiHeaderRemarks,
-            IsDraft: data.isDraft,
-            startDate: data.startDate,
-            endDate: data.endDate,
-
-        });
-
-        this.publicVariable.expenses = data.lineItem_Requests;
-        this.uploadedFiles = data.impiHeaderAttachment;
-
-        if (data.impiHeaderAttachment !== null && data.impiHeaderAttachment !== undefined) {
-
-            this.uploadedFiles = data.impiHeaderAttachment.map((file: any) => ({
-                id: file.imadId,
-                recordNo: file.imadRecordNo,
-                screenName: file.imadScreenName,
-                name: file.imadFileName,
-                type: file.imadFileType,
-                fileSize: file.imadFileSize,
-                fileUrl: file.imadFileUrl,
-                active: file.imadActive,
-                createdBy: file.imadCreatedBy,
-                createdOn: file.imadCreatedOn,
-                modifiedBy: file.imadModifiedBy,
-                modifiedOn: file.imadModifiedOn,
-                doctype: file.doctype
-            }));
-        } else {
-            // Handle the case when data.impiHeaderAttachment is null or undefined
-            // For example, you might want to set uploadedFiles to an empty array or handle it differently based on your application logic.
-            this.uploadedFiles = [];
-        }
-
-    }
 
 
 
@@ -522,111 +456,10 @@ export class NewPurchaseInvoiceComponent implements OnInit {
     }
 
 
-   
+
     CustomerCode :string='';
 
-    onSelectGSTCustomer(event: any): void {
 
-        // this.onSelectCustomer();
-        // console.log(event);
-
-        // if(this.CustomerCode =='')
-        // {
-        //    this.CustomerCode =event.code;
-        // }      
- 
-
-        // const selectedId = this.publicVariable.dataForm.get('ImpiHeaderCustomerName')?.value;
-
-        // console.log(selectedId);
-
-
-        // this.publicVariable.selectCustomer = this.GstRegistrationDetail.find(customer => customer.code == event.code);
-          
-
-        this.publicVariable.dataForm.patchValue({
-
-                          
-            ImpiHeaderCustomerAddress: event.address,           
-            ImpiHeaderCustomerAddress2: event.address2,
-            ImpiHeaderCustomerPinCode: event.pincode,
-            ImpiHeaderCustomerName: event.custName,
-            ImpiHeaderCustomerContactPerson: event.contact,
-            ImpiHeaderCustomerEmailId: event.email,
-            ImpiHeaderCustomerPhoneNo: event.primaryContact,
-            ImpiHeaderCustomerState: event.statecode,
-            ImpiHeaderCustomerCity: event.city,
-            ImpiHeaderCustomerGstNo: event.gstNumber,
-        });
-
-
-   
-        // const selectedId = this.publicVariable.dataForm.get('ImpiHeaderCustomerGstNo')?.value;
-        // console.log(selectedId);
-        //let selectDATA= this.GetCustomerGSTList.find(customer => customer.code == selectedId);
-        //
-        //console.log(selectDATA.gstNumber);
-
-        //this.CustomerGSTNo =selectDATA.gstNumber;
-        //alert(selectDATA.code);
-
-        // this.GetCustomerGSTList
-
-        let peramiter = {
-            gst: event.gstNumber,
-            code: event.code
-        }
-
-        this.customerCode = event.code;
-        this.loadgetGetDetails()
-
-        // try {
-
-        //     const subscription = this.API.getGstRegistrationNo(peramiter).subscribe({
-        //         next: (response: any) => {
-        //             this.GstRegistrationDetail = response.data;
-
-        //             if (this.GstRegistrationDetail) {
-        //                 this.publicVariable.selectCustomer = this.GstRegistrationDetail.find(customer => customer.code == event.code);
-        //                 if (this.publicVariable.selectCustomer) {
-
-        //                     console.log(this.publicVariable.selectCustomer);
-        //                     this.publicVariable.dataForm.patchValue({
-        //                         ImpiHeaderCustomerAddress: this.publicVariable.selectCustomer.address,
-        //                         ImpiHeaderCustomerAddress2: this.publicVariable.selectCustomer.address2,
-        //                         ImpiHeaderCustomerPinCode: this.publicVariable.selectCustomer.pinCode,
-        //                         ImpiHeaderCustomerName: this.publicVariable.selectCustomer.custName,
-        //                         ImpiHeaderCustomerContactPerson: this.publicVariable.selectCustomer.contact,
-        //                         ImpiHeaderCustomerEmailId: this.publicVariable.selectCustomer.email,
-        //                         ImpiHeaderCustomerPhoneNo: this.publicVariable.selectCustomer.primaryContact,
-        //                         ImpiHeaderCustomerState: this.publicVariable.selectCustomer.stateCode,
-        //                         ImpiHeaderCustomerCity: this.publicVariable.selectCustomer.city,
-        //                         ImpiHeaderCustomerGstNo: this.publicVariable.selectCustomer.gstNumber,
-
-        //                     });
-        //                 }
-        //             } 
-                    
-        //             else {
-        //                 this.setFormFieldsToNull();
-        //             }
-        //         },
-        //         error: (error) => {
-        //             console.error('Error loading project list:', error);
-        //             this.handleLoadingError()
-        //             this.setFormFieldsToNull();
-        //         },
-        //     });
-
-        //     this.publicVariable.Subscription.add(subscription);
-        // } catch (error) {
-        //     console.error('Error loading project list:', error);
-        //     this.handleLoadingError()
-        //     this.setFormFieldsToNull();
-        // }
-
-
-    }
 
 
     loadgetGetDetails(): void {
@@ -1049,6 +882,181 @@ export class NewPurchaseInvoiceComponent implements OnInit {
         }
     }
 
+    onSelectGSTCustomer(event: any): void {
+
+        // this.onSelectCustomer();
+        // console.log(event);
+
+        // if(this.CustomerCode =='')
+        // {
+        //    this.CustomerCode =event.code;
+        // }
+
+
+        // const selectedId = this.publicVariable.dataForm.get('ImpiHeaderCustomerName')?.value;
+
+        // console.log(selectedId);
+
+
+        // this.publicVariable.selectCustomer = this.GstRegistrationDetail.find(customer => customer.code == event.code);
+
+
+        this.selectCustomerNo = event.custNo;
+        this.selectCustomerCode = event.code;
+        this.publicVariable.dataForm.patchValue({
+
+
+            ImpiHeaderCustomerAddress: event.address,
+            ImpiHeaderCustomerAddress2: event.address2,
+            ImpiHeaderCustomerPinCode: event.pincode,
+            ImpiHeaderCustomerName: event.custName,
+            ImpiHeaderCustomerContactPerson: event.contact,
+            ImpiHeaderCustomerEmailId: event.email,
+            ImpiHeaderCustomerPhoneNo: event.primaryContact,
+            ImpiHeaderCustomerState: event.statecode,
+            ImpiHeaderCustomerCity: event.city,
+            ImpiHeaderCustomerGstNo: event.gstNumber,
+        });
+
+
+
+        // const selectedId = this.publicVariable.dataForm.get('ImpiHeaderCustomerGstNo')?.value;
+        // console.log(selectedId);
+        //let selectDATA= this.GetCustomerGSTList.find(customer => customer.code == selectedId);
+        //
+        //console.log(selectDATA.gstNumber);
+
+        //this.CustomerGSTNo =selectDATA.gstNumber;
+        //alert(selectDATA.code);
+
+        // this.GetCustomerGSTList
+
+        let peramiter = {
+            gst: event.gstNumber,
+            code: event.code
+        }
+
+        this.customerCode = event.code;
+        this.loadgetGetDetails()
+
+        // try {
+
+        //     const subscription = this.API.getGstRegistrationNo(peramiter).subscribe({
+        //         next: (response: any) => {
+        //             this.GstRegistrationDetail = response.data;
+
+        //             if (this.GstRegistrationDetail) {
+        //                 this.publicVariable.selectCustomer = this.GstRegistrationDetail.find(customer => customer.code == event.code);
+        //                 if (this.publicVariable.selectCustomer) {
+
+        //                     console.log(this.publicVariable.selectCustomer);
+        //                     this.publicVariable.dataForm.patchValue({
+        //                         ImpiHeaderCustomerAddress: this.publicVariable.selectCustomer.address,
+        //                         ImpiHeaderCustomerAddress2: this.publicVariable.selectCustomer.address2,
+        //                         ImpiHeaderCustomerPinCode: this.publicVariable.selectCustomer.pinCode,
+        //                         ImpiHeaderCustomerName: this.publicVariable.selectCustomer.custName,
+        //                         ImpiHeaderCustomerContactPerson: this.publicVariable.selectCustomer.contact,
+        //                         ImpiHeaderCustomerEmailId: this.publicVariable.selectCustomer.email,
+        //                         ImpiHeaderCustomerPhoneNo: this.publicVariable.selectCustomer.primaryContact,
+        //                         ImpiHeaderCustomerState: this.publicVariable.selectCustomer.stateCode,
+        //                         ImpiHeaderCustomerCity: this.publicVariable.selectCustomer.city,
+        //                         ImpiHeaderCustomerGstNo: this.publicVariable.selectCustomer.gstNumber,
+
+        //                     });
+        //                 }
+        //             }
+
+        //             else {
+        //                 this.setFormFieldsToNull();
+        //             }
+        //         },
+        //         error: (error) => {
+        //             console.error('Error loading project list:', error);
+        //             this.handleLoadingError()
+        //             this.setFormFieldsToNull();
+        //         },
+        //     });
+
+        //     this.publicVariable.Subscription.add(subscription);
+        // } catch (error) {
+        //     console.error('Error loading project list:', error);
+        //     this.handleLoadingError()
+        //     this.setFormFieldsToNull();
+        // }
+
+
+    }
+
+    patchFormData(data: any): void {
+
+        console.log('edit date',data);
+        this.selectCustomerNo = '';
+        this.selectCustomerCode =data.impiHeaderCustomerCode;
+
+        this.publicVariable.dataForm.patchValue({
+
+
+
+            headerid: (data && data.headerId) || (data && data.headerid),
+            ImpiHeaderInvoiceType: data.impiHeaderInvoiceType,
+            ImpiHeaderdept: data.impiHeaderProjectDepartmentName,
+            ImpiHeaderProjectCode: data.impiHeaderProjectCode,
+            ImpiHeaderDepartment: data.impiHeaderProjectDepartmentName,
+
+            ImpiHeaderDivison: data.impiHeaderProjectDivisionName,
+            Project: data.impiHeaderProjectName,
+
+            ImpiHeaderPanNo: data.impiHeaderPanNo,
+            ImpiHeaderGstNo: data.impiHeaderGstNo,
+            PINO: [''], //api missing
+            ImpiHeaderCustomerName: data.impiHeaderCustomerName,
+            ImpiHeaderCustomerCode: data.impiHeaderCustomerCode,
+            ImpiHeaderCustomerAddress: data.impiHeaderCustomerAddress,
+            ImpiHeaderCustomerAddress2: data.impiHeaderCustomerAddress2,
+            ImpiHeaderCustomerState: data.impiHeaderCustomerState,
+            ImpiHeaderCustomerCity: data.impiHeaderCustomerCity,
+            ImpiHeaderCustomerPinCode: data.impiHeaderCustomerPinCode,
+            ImpiHeaderCustomerGstNo: data.impiHeaderCustomerGstNo,
+            ImpiHeaderCustomerContactPerson: data.impiHeaderCustomerContactPerson,
+            ImpiHeaderCustomerEmailId: data.impiHeaderCustomerEmailId,
+            ImpiHeaderCustomerPhoneNo: data.impiHeaderCustomerPhoneNo,
+            ImpiHeaderCreatedBy: data.impiHeaderCreatedBy,
+            ImpiHeaderTotalInvoiceAmount: data.impiHeaderTotalInvoiceAmount,
+            ImpiHeaderPaymentTerms: data.impiHeaderPaymentTerms,
+            ImpiHeaderRemarks: data.impiHeaderRemarks,
+            IsDraft: data.isDraft,
+            startDate: data.startDate,
+            endDate: data.endDate,
+
+        });
+
+        this.publicVariable.expenses = data.lineItem_Requests;
+        this.uploadedFiles = data.impiHeaderAttachment;
+
+        if (data.impiHeaderAttachment !== null && data.impiHeaderAttachment !== undefined) {
+
+            this.uploadedFiles = data.impiHeaderAttachment.map((file: any) => ({
+                id: file.imadId,
+                recordNo: file.imadRecordNo,
+                screenName: file.imadScreenName,
+                name: file.imadFileName,
+                type: file.imadFileType,
+                fileSize: file.imadFileSize,
+                fileUrl: file.imadFileUrl,
+                active: file.imadActive,
+                createdBy: file.imadCreatedBy,
+                createdOn: file.imadCreatedOn,
+                modifiedBy: file.imadModifiedBy,
+                modifiedOn: file.imadModifiedOn,
+                doctype: file.doctype
+            }));
+        } else {
+            // Handle the case when data.impiHeaderAttachment is null or undefined
+            // For example, you might want to set uploadedFiles to an empty array or handle it differently based on your application logic.
+            this.uploadedFiles = [];
+        }
+
+    }
 
 
     onSubmit(Action: string): void {
@@ -1148,7 +1156,12 @@ export class NewPurchaseInvoiceComponent implements OnInit {
                     }
                     formData.append('isupdate', String(isUpdate));
                     this.publicVariable.selectedProjet = this.publicVariable.projectList.find(project => project.code == newData.ImpiHeaderProjectCode);
-                    this.publicVariable.selectCustomer = this.publicVariable.GetCustomerList.find(customer => customer.custName == newData.ImpiHeaderCustomerName);
+                    // this.publicVariable.selectCustomer = this.publicVariable.GetCustomerList.find(customer => customer.custName == newData.ImpiHeaderCustomerName);
+
+                    formData.append('impiHeaderCustomerCode',  this.selectCustomerCode);
+                    formData.append('impiHeaderCustomerNo',  this.selectCustomerNo);
+
+
 
                     // alert(this.publicVariable.selectCustomer);
                     //console.log(this.publicVariable.selectCustomer);
@@ -1162,7 +1175,6 @@ export class NewPurchaseInvoiceComponent implements OnInit {
                     formData.append('ImpiHeaderPanNo', 'AAACF1282E');
                     formData.append('ImpiHeaderGstNo', '07AAACF1282E1Z1');
                     formData.append('ImpiHeaderCustomerName', newData.ImpiHeaderCustomerName);
-                    formData.append('impiHeaderCustomerCode', this.publicVariable.selectCustomer.custNo);
                     formData.append('ImpiHeaderCustomerAddress', newData.ImpiHeaderCustomerAddress);
                     formData.append('ImpiHeaderCustomerAddress2', newData.ImpiHeaderCustomerAddress2);
                     formData.append('ImpiHeaderCustomerCity', newData.ImpiHeaderCustomerCity);
