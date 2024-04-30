@@ -96,7 +96,6 @@
                                     d.headerStatus == 'REJECTED BY TL APPROVER'  ||
                                     d.headerStatus == 'REJECTED BY CH APPROVER' ||
                                     d.headerStatus == 'REJECTED BY ACCOUNTS APPROVER'
-                                    ||d.headerStatus == 'REJECTED BY FINANCE APPROVER'
                                     )" href="javascript:void(0);" (click)="onEdit(d)"><img
                                             src="../assets/images/edit-icon.svg" alt=""
                                             [title]="publicVariable.storedRole !== 'Admin' ? 'Edit' : ''" /></a>
@@ -106,7 +105,7 @@
                                     (d.isDraft ||
                                     d.headerStatus == 'REJECTED BY TL APPROVER'  ||
                                     d.headerStatus == 'REJECTED BY CH APPROVER' ||
-                                    d.headerStatus == 'REJECTED BY ACCOUNTS APPROVER'   || d.headerStatus == 'REJECTED BY FINANCE APPROVER'
+                                    d.headerStatus == 'REJECTED BY ACCOUNTS APPROVER'
                                        )" href="javascript:void(0)" (click)="onDelete(d.headerId)"
                                         data-bs-toggle="modal" data-bs-target="#deleterecord-modal"><img
                                             src="../assets/images/delete-icon.svg" alt=""  title="Delete Record"  /></a>
