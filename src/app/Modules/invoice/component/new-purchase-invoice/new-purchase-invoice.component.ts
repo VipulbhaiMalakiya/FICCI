@@ -74,7 +74,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
             ImpiHeaderCustomerCity: ['', [Validators.required]],
             ImpiHeaderCustomerPinCode: ['', [Validators.required]],
 
-            ImpiHeaderCustomerGstNo: ['', [gstValidator()]],
+            ImpiHeaderCustomerGstNo: [''],
             ImpiHeaderCustomerContactPerson: ['', [Validators.required, alphanumericWithSpacesValidator()]],
             ImpiHeaderCustomerEmailId: ['', [Validators.required, Validators.email, this.emailValidator()]],
             ImpiHeaderCustomerPhoneNo: ['', [Validators.required, Validators.pattern(/^[6-9]\d{9}$/)]],
@@ -990,8 +990,10 @@ export class NewPurchaseInvoiceComponent implements OnInit {
     patchFormData(data: any): void {
 
         console.log('edit date',data);
-        this.selectCustomerNo = '';
-        this.selectCustomerCode =data.impiHeaderCustomerCode;
+
+
+        this.selectCustomerNo = data.ImpiCustomerShiptocode;
+        this.selectCustomerCode = data.impiHeaderCustomerCode;
 
         this.publicVariable.dataForm.patchValue({
 
@@ -1159,7 +1161,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
                     // this.publicVariable.selectCustomer = this.publicVariable.GetCustomerList.find(customer => customer.custName == newData.ImpiHeaderCustomerName);
 
                     formData.append('impiHeaderCustomerCode',  this.selectCustomerCode);
-                    formData.append('impiHeaderCustomerNo',  this.selectCustomerNo);
+                    formData.append('ImpiCustomerShiptocode',  this.selectCustomerNo);
 
 
 
@@ -1312,7 +1314,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
     markFormControlsAsTouched(): void {
         ['ImpiHeaderInvoiceType', 'ImpiHeaderProjectCode', 'ImpiHeaderDepartment', 'ImpiHeaderDivison', 'ImpiHeaderPanNo', 'ImpiHeaderGstNo',
             'ImpiHeaderCustomerName', 'ImpiHeaderCustomerAddress', 'ImpiHeaderCustomerState', 'ImpiHeaderCustomerCity', 'ImpiHeaderCustomerEmailId',
-            'ImpiHeaderCustomerGstNo', 'ImpiHeaderCustomerContactPerson', 'ImpiHeaderCustomerPhoneNo', 'items',
+             'ImpiHeaderCustomerContactPerson', 'ImpiHeaderCustomerPhoneNo', 'items',
             'startDate', 'endDate', 'ImpiHeaderdept', 'ImpiHeaderCustomerAddress2', 'ImpiHeaderCustomerPinCode',
         ].forEach(controlName => {
             this.publicVariable.dataForm.controls[controlName].markAsTouched();
