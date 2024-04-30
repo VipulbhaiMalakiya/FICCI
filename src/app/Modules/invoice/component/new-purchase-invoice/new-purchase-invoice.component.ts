@@ -124,14 +124,10 @@ export class NewPurchaseInvoiceComponent implements OnInit {
     ngOnInit(): void {
 
         this.publicVariable.isProcess = false;
-        //this.loadProjectList();
+        this.loadProjectList();
         this.loadCustomerStatusList();
         this.navDepartment = sessionStorage.getItem('navDepartment')
-        // this.navDepartmentArray = this.navDepartment.split('|');
-
-            //this.navDepartmentArray = this.navDepartment.split('/');
-
-            this.navDepartmentArray = this.navDepartment.split(/[;,\/]/);
+        this.navDepartmentArray = this.navDepartment.split('|');
 
         // this.route.params.subscribe(params => {
         //     let decrypted = params['id']
@@ -284,8 +280,11 @@ export class NewPurchaseInvoiceComponent implements OnInit {
 
     patchFormData(data: any): void {
 
+        console.log('edit date',data);
         this.publicVariable.dataForm.patchValue({
 
+
+          
             headerid: (data && data.headerId) || (data && data.headerid),
             ImpiHeaderInvoiceType: data.impiHeaderInvoiceType,
             ImpiHeaderdept: data.impiHeaderProjectDepartmentName,
@@ -301,7 +300,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
             ImpiHeaderCustomerName: data.impiHeaderCustomerName,
             ImpiHeaderCustomerCode: data.impiHeaderCustomerCode,
             ImpiHeaderCustomerAddress: data.impiHeaderCustomerAddress,
-            ImpiHeaderCustomerAddress2: data.ImpiHeaderCustomerAddress2,
+            ImpiHeaderCustomerAddress2: data.impiHeaderCustomerAddress2,
             ImpiHeaderCustomerState: data.impiHeaderCustomerState,
             ImpiHeaderCustomerCity: data.impiHeaderCustomerCity,
             ImpiHeaderCustomerPinCode: data.impiHeaderCustomerPinCode,
@@ -511,6 +510,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
     private setFormFieldsToNull() {
         this.publicVariable.dataForm.patchValue({
             ImpiHeaderCustomerAddress: null,
+            ImpiHeaderCustomerAddress2: null,
             ImpiHeaderCustomerPinCode: null,
             ImpiHeaderCustomerGstNo: null,
             ImpiHeaderCustomerContactPerson: null,
@@ -522,16 +522,45 @@ export class NewPurchaseInvoiceComponent implements OnInit {
     }
 
 
-    getGstRegistrationNo(data: any) {
-
-    }
+   
+    CustomerCode :string='';
 
     onSelectGSTCustomer(event: any): void {
 
-
         // this.onSelectCustomer();
+        // console.log(event);
 
-        console.log(event);
+        // if(this.CustomerCode =='')
+        // {
+        //    this.CustomerCode =event.code;
+        // }      
+ 
+
+        // const selectedId = this.publicVariable.dataForm.get('ImpiHeaderCustomerName')?.value;
+
+        // console.log(selectedId);
+
+
+        // this.publicVariable.selectCustomer = this.GstRegistrationDetail.find(customer => customer.code == event.code);
+          
+
+        this.publicVariable.dataForm.patchValue({
+
+                          
+            ImpiHeaderCustomerAddress: event.address,           
+            ImpiHeaderCustomerAddress2: event.address2,
+            ImpiHeaderCustomerPinCode: event.pincode,
+            ImpiHeaderCustomerName: event.custName,
+            ImpiHeaderCustomerContactPerson: event.contact,
+            ImpiHeaderCustomerEmailId: event.email,
+            ImpiHeaderCustomerPhoneNo: event.primaryContact,
+            ImpiHeaderCustomerState: event.statecode,
+            ImpiHeaderCustomerCity: event.city,
+            ImpiHeaderCustomerGstNo: event.gstNumber,
+        });
+
+
+   
         // const selectedId = this.publicVariable.dataForm.get('ImpiHeaderCustomerGstNo')?.value;
         // console.log(selectedId);
         //let selectDATA= this.GetCustomerGSTList.find(customer => customer.code == selectedId);
@@ -551,48 +580,50 @@ export class NewPurchaseInvoiceComponent implements OnInit {
         this.customerCode = event.code;
         this.loadgetGetDetails()
 
-        try {
+        // try {
 
-            const subscription = this.API.getGstRegistrationNo(peramiter).subscribe({
-                next: (response: any) => {
-                    this.GstRegistrationDetail = response.data;
+        //     const subscription = this.API.getGstRegistrationNo(peramiter).subscribe({
+        //         next: (response: any) => {
+        //             this.GstRegistrationDetail = response.data;
 
-                    if (this.GstRegistrationDetail) {
-                        this.publicVariable.selectCustomer = this.GstRegistrationDetail.find(customer => customer.code == event.code);
-                        if (this.publicVariable.selectCustomer) {
+        //             if (this.GstRegistrationDetail) {
+        //                 this.publicVariable.selectCustomer = this.GstRegistrationDetail.find(customer => customer.code == event.code);
+        //                 if (this.publicVariable.selectCustomer) {
 
-                            console.log(this.publicVariable.selectCustomer);
-                            this.publicVariable.dataForm.patchValue({
-                                ImpiHeaderCustomerAddress: this.publicVariable.selectCustomer.address,
-                                ImpiHeaderCustomerAddress2: this.publicVariable.selectCustomer.address2,
-                                ImpiHeaderCustomerPinCode: this.publicVariable.selectCustomer.pinCode,
-                                ImpiHeaderCustomerName: this.publicVariable.selectCustomer.custName,
-                                ImpiHeaderCustomerContactPerson: this.publicVariable.selectCustomer.contact,
-                                ImpiHeaderCustomerEmailId: this.publicVariable.selectCustomer.email,
-                                ImpiHeaderCustomerPhoneNo: this.publicVariable.selectCustomer.primaryContact,
-                                ImpiHeaderCustomerState: this.publicVariable.selectCustomer.stateCode,
-                                ImpiHeaderCustomerCity: this.publicVariable.selectCustomer.city,
-                                ImpiHeaderCustomerGstNo: this.publicVariable.selectCustomer.gstNumber,
+        //                     console.log(this.publicVariable.selectCustomer);
+        //                     this.publicVariable.dataForm.patchValue({
+        //                         ImpiHeaderCustomerAddress: this.publicVariable.selectCustomer.address,
+        //                         ImpiHeaderCustomerAddress2: this.publicVariable.selectCustomer.address2,
+        //                         ImpiHeaderCustomerPinCode: this.publicVariable.selectCustomer.pinCode,
+        //                         ImpiHeaderCustomerName: this.publicVariable.selectCustomer.custName,
+        //                         ImpiHeaderCustomerContactPerson: this.publicVariable.selectCustomer.contact,
+        //                         ImpiHeaderCustomerEmailId: this.publicVariable.selectCustomer.email,
+        //                         ImpiHeaderCustomerPhoneNo: this.publicVariable.selectCustomer.primaryContact,
+        //                         ImpiHeaderCustomerState: this.publicVariable.selectCustomer.stateCode,
+        //                         ImpiHeaderCustomerCity: this.publicVariable.selectCustomer.city,
+        //                         ImpiHeaderCustomerGstNo: this.publicVariable.selectCustomer.gstNumber,
 
-                            });
-                        }
-                    } else {
-                        this.setFormFieldsToNull();
-                    }
-                },
-                error: (error) => {
-                    console.error('Error loading project list:', error);
-                    this.handleLoadingError()
-                    this.setFormFieldsToNull();
-                },
-            });
+        //                     });
+        //                 }
+        //             } 
+                    
+        //             else {
+        //                 this.setFormFieldsToNull();
+        //             }
+        //         },
+        //         error: (error) => {
+        //             console.error('Error loading project list:', error);
+        //             this.handleLoadingError()
+        //             this.setFormFieldsToNull();
+        //         },
+        //     });
 
-            this.publicVariable.Subscription.add(subscription);
-        } catch (error) {
-            console.error('Error loading project list:', error);
-            this.handleLoadingError()
-            this.setFormFieldsToNull();
-        }
+        //     this.publicVariable.Subscription.add(subscription);
+        // } catch (error) {
+        //     console.error('Error loading project list:', error);
+        //     this.handleLoadingError()
+        //     this.setFormFieldsToNull();
+        // }
 
 
     }
@@ -1133,6 +1164,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
                     formData.append('ImpiHeaderCustomerName', newData.ImpiHeaderCustomerName);
                     formData.append('impiHeaderCustomerCode', this.publicVariable.selectCustomer.custNo);
                     formData.append('ImpiHeaderCustomerAddress', newData.ImpiHeaderCustomerAddress);
+                    formData.append('ImpiHeaderCustomerAddress2', newData.ImpiHeaderCustomerAddress2);
                     formData.append('ImpiHeaderCustomerCity', newData.ImpiHeaderCustomerCity);
                     formData.append('ImpiHeaderCustomerState', newData.ImpiHeaderCustomerState);
                     formData.append('ImpiHeaderCustomerPinCode', newData.ImpiHeaderCustomerPinCode);

@@ -722,7 +722,8 @@ export class DashboardComponent {
                     // item.createdBy === this.publicVariable.storedEmail &&
                     item.impiHeaderInvoiceType == this.invoiceType &&
                     (
-                        item.headerStatus == 'CANCELLATION APPROVED BY FINANCE' || item.headerStatus == 'CANCELLATION APPROVED BY TL'));
+                        item.headerStatus === 'CANCELLATION APPROVED BY FINANCE'
+                        || item.headerStatus == 'CANCELLATION APPROVED BY TL'));
                 break;
             case 'Reversal':
                 filteredData = this.dashboardData.filter((item: any) =>
@@ -1396,20 +1397,20 @@ export class DashboardComponent {
         this.appService.exportAsExcelFile(exportData, 'Customer Status', headers);
     }
 
-    onPIDownloadInvoiceSummary() {
+    onPIDownloadInvoiceSummary(){
         const exportData = this.PIInvoiceSummaryList.map((x) => ({
             "No": x?.no || '',
             "Customer No": x?.sellToCustomerNo || '',
-            "Customer": x?.sellToCustomerName || '',
-            "Project Code": x?.projectCode || '',
-            "Department": x?.departmentName || '',
-            "Division": x?.divisionName || '',
-            "Amount": x?.amount || '',
-            'status': x?.status || '',
+            "Customer" :x?.sellToCustomerName || '',
+            "Project Code":x?.projectCode || '',
+            "Department":x?.departmentName || '',
+            "Division":x?.divisionName || '',
+            "Amount":x?.amount || '',
+            'status':x?.status || '',
 
         }));
 
-        const headers = ['No', 'Customer No', 'Customer', 'Project Code', 'Department', 'Division', 'Amount', 'status'
+        const headers = ['No','Customer No','Customer','Project Code','Department','Division','Amount','status'
         ];
         this.appService.exportAsExcelFile(exportData, 'Proforma Invoice', headers);
     }
@@ -1430,7 +1431,7 @@ export class DashboardComponent {
 
         }));
 
-        const headers = ['No', 'Posting Date', 'Invoice No', 'Customer No', 'Customer', 'Project Code', 'Department', 'Division', 'Amount'
+        const headers = ['No','Posting Date','Invoice No','Customer No','Customer','Project Code','Department','Division','Amount'
         ];
         this.appService.exportAsExcelFile(exportData, 'Posted Tax Invoice', headers);
 
@@ -1447,7 +1448,7 @@ export class DashboardComponent {
     handleLoadingError() {
         this.publicVariable.isProcess = false; // Set status to false on error
     }
-    onDownloadSCN() {
+    onDownloadSCN(){
         const exportData = this.SalesCreditNoteSummaryData.map((x) => ({
             "No": x?.no || '',
             "Posting Date": x?.postingDate || '',
@@ -1457,11 +1458,11 @@ export class DashboardComponent {
             "Department": x?.deptCode || '',
             "Division": x?.divisionCode || '',
             "Project Code": x?.projectCode || '',
-            'Status': x?.status
+            'Status':x?.status
 
         }));
 
-        const headers = ['No', 'Posting Date', 'Applies To DocNo', 'Customer No', 'Customer Name', 'Department', 'Division', 'Project Code', 'Status'];
+        const headers = ['No','Posting Date','Applies To DocNo','Customer No','Customer Name','Department','Division','Project Code','Status'];
         this.appService.exportAsExcelFile(exportData, 'Posted Sales Credit Note', headers);
     }
     onDownloadPI() {
