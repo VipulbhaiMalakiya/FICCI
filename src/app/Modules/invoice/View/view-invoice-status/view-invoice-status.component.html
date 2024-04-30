@@ -353,7 +353,7 @@
 
     <form
 
-        [formGroup]="publicVariable.dataForm" *ngIf="data.headerStatus !== 'CANCELLATION APPROVED BY TL' && data.headerStatus !== 'REJECTED BY TL APPROVER'">
+        [formGroup]="publicVariable.dataForm" *ngIf="data.headerStatus !== 'CANCELLATION APPROVED BY TL' && data.headerStatus !== 'REJECTED BY TL APPROVER' && data.headerStatus !== 'CANCELLATION APPROVED BY FINANCE'">
         <div class="col-md-12 mt-3">
             <div class="form-group">
                 <label>Remarks <sup class="text-danger">*</sup></label>
