@@ -36,8 +36,8 @@ export class NewPurchaseInvoiceComponent implements OnInit {
     navDepartmentArray: any;
     selectedDept: any;
     isButtonShow: boolean = false;
-    selectCustomerNo?:any;
-    selectCustomerCode?:any;
+    selectCustomerNo?: any;
+    selectCustomerCode?: any;
 
     constructor(private appService: AppService,
         private modalService: NgbModal,
@@ -142,7 +142,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
                 this.Id = atob(decrypted);
                 //console.log("Decrypted ID:", this.Id); // Log the decrypted ID
             } else {
-               // console.error("ID parameter does not exist.");
+                // console.error("ID parameter does not exist.");
             }
         });
 
@@ -457,7 +457,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
 
 
 
-    CustomerCode :string='';
+    CustomerCode: string = '';
 
 
 
@@ -989,11 +989,15 @@ export class NewPurchaseInvoiceComponent implements OnInit {
 
     patchFormData(data: any): void {
 
-        console.log('edit date',data);
+        console.log('edit date', data);
 
 
-        this.selectCustomerNo = data.ImpiCustomerShiptocode;
-        this.selectCustomerCode = data.impiHeaderCustomerCode;
+        this.selectCustomerNo = data.impiHeaderCustomerCode;
+        this.selectCustomerCode = data.impiCustomerShiptocode;
+
+
+        // formData.append('impiHeaderCustomerCode', this.selectCustomerNo );
+        // formData.append('ImpiCustomerShiptocode',  this.selectCustomerCode);
 
         this.publicVariable.dataForm.patchValue({
 
@@ -1160,10 +1164,12 @@ export class NewPurchaseInvoiceComponent implements OnInit {
                     this.publicVariable.selectedProjet = this.publicVariable.projectList.find(project => project.code == newData.ImpiHeaderProjectCode);
                     // this.publicVariable.selectCustomer = this.publicVariable.GetCustomerList.find(customer => customer.custName == newData.ImpiHeaderCustomerName);
 
-                    formData.append('impiHeaderCustomerCode',  this.selectCustomerCode);
-                    formData.append('ImpiCustomerShiptocode',  this.selectCustomerNo);
+                    // formData.append('impiHeaderCustomerCode',  this.selectCustomerCode);
+                    // formData.append('ImpiCustomerShiptocode',  this.selectCustomerNo);
 
 
+                    formData.append('impiHeaderCustomerCode', this.selectCustomerNo );
+                    formData.append('ImpiCustomerShiptocode',  this.selectCustomerCode);
 
                     // alert(this.publicVariable.selectCustomer);
                     //console.log(this.publicVariable.selectCustomer);
@@ -1314,7 +1320,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
     markFormControlsAsTouched(): void {
         ['ImpiHeaderInvoiceType', 'ImpiHeaderProjectCode', 'ImpiHeaderDepartment', 'ImpiHeaderDivison', 'ImpiHeaderPanNo', 'ImpiHeaderGstNo',
             'ImpiHeaderCustomerName', 'ImpiHeaderCustomerAddress', 'ImpiHeaderCustomerState', 'ImpiHeaderCustomerCity', 'ImpiHeaderCustomerEmailId',
-             'ImpiHeaderCustomerContactPerson', 'ImpiHeaderCustomerPhoneNo', 'items',
+            'ImpiHeaderCustomerContactPerson', 'ImpiHeaderCustomerPhoneNo', 'items',
             'startDate', 'endDate', 'ImpiHeaderdept', 'ImpiHeaderCustomerAddress2', 'ImpiHeaderCustomerPinCode',
         ].forEach(controlName => {
             this.publicVariable.dataForm.controls[controlName].markAsTouched();
