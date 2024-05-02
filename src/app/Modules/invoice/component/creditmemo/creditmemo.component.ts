@@ -66,6 +66,8 @@ export class CreditmemoComponent implements OnInit {
             PINO: [''],
             CustNo: [''],
             creditMemoAmount:['',[Validators.required]],
+            ImpiHeaderRemarks: ['',[Validators.required]],
+            CreditMemoCancelRemarks:['',[Validators.required]],
             ImpiHeaderCustomerName: [null,],
             ImpiHeaderCustomerCode: [''], //new filed
             ImpiHeaderCustomerAddress: [null, ],
@@ -80,7 +82,7 @@ export class CreditmemoComponent implements OnInit {
             ImpiHeaderTotalInvoiceAmount: [''],//api new filed
             items: this.fb.array([]),
             ImpiHeaderPaymentTerms: [''],
-            ImpiHeaderRemarks: [''],
+
             IsDraft: [false],
             startDate: [{ value: '', disabled: true }, []],
             endDate: [{ value: '', disabled: true }, []],
@@ -160,17 +162,17 @@ export class CreditmemoComponent implements OnInit {
 
             this.publicVariable.dataForm.patchValue({
 
-           
+
                 creditMemoAmount: this.amount,
             });
-            
+
             console.log(this.amount);
-            
+
         }
         else{
             this.publicVariable.dataForm.patchValue({
 
-           
+
                 creditMemoAmount: null,
             });
         }
@@ -240,7 +242,7 @@ export class CreditmemoComponent implements OnInit {
         const CreditAmount = parseFloat(this.CreditAmount);
 
         if (CreditAmount >= totalAmount) {
-           
+
             const totalAmount = parseFloat(this.amount); // Assuming this.totalAmount holds the total amount
 
             const CreditAmount = parseFloat(this.CreditAmount);
@@ -254,11 +256,11 @@ export class CreditmemoComponent implements OnInit {
 
                 this.publicVariable.dataForm.controls['creditMemoAmount'].setErrors({ 'exceedsTotal': true });
                 return;
-           
+
             }
 
            // this.publicVariable.dataForm.controls['creditMemoAmount'].setErrors({ 'exceedsTotal': true });
-        } 
+        }
         else {
 
             this.publicVariable.dataForm.controls['creditMemoAmount'].setErrors(null);
@@ -375,8 +377,8 @@ export class CreditmemoComponent implements OnInit {
 
         this.loadTaxInvoiceInformation(event.invoice_no);
 
-      
-        
+
+
         this.checkCreditAmount(event.no);
 
     }
@@ -405,7 +407,7 @@ export class CreditmemoComponent implements OnInit {
 
                         this.publicVariable.dataForm.controls['creditMemoAmount'].setErrors({ 'exceedsTotal': true });
                         return;
-                   
+
                     } else {
 
                         this.publicVariable.dataForm.controls['creditMemoAmount'].setErrors(null);
@@ -417,7 +419,7 @@ export class CreditmemoComponent implements OnInit {
                     {
                         this.CreditAmount  =0;
                     }
-                   
+
                     console.log(this.CreditAmount);
 
                     this.publicVariable.isProcess = false;
@@ -446,7 +448,7 @@ export class CreditmemoComponent implements OnInit {
                  const subscription = this.API.GetTaxInvoiceInformation(invoice_no).subscribe({
                 next: (response: any) => {
                     this.TaxInvoicedata = response.data;
-                    
+
                     //this.filterTaxInvoiceByInvoiceNo("SI121683");
                     this.publicVariable.isProcess = false;
                     this.filterTaxInvoiceByInvoiceNo(invoice_no);
@@ -564,6 +566,7 @@ export class CreditmemoComponent implements OnInit {
         this.publicVariable.dataForm.patchValue({
 
             headerid: (data && data.headerId) || (data && data.headerid),
+            CreditMemoCancelRemarks:data.CreditMemoCancelRemarks,
             ImpiHeaderInvoiceType: data.impiHeaderInvoiceType,
             ImpiHeaderProjectCode: data.impiHeaderProjectCode,
             ImpiHeaderDepartment: data.impiHeaderProjectDepartmentName,
@@ -1243,7 +1246,7 @@ export class CreditmemoComponent implements OnInit {
         const CreditAmount = parseFloat(this.CreditAmount);
 
         if (CreditAmount >= totalAmount) {
-           
+
             const totalAmount = parseFloat(this.amount); // Assuming this.totalAmount holds the total amount
 
             const CreditAmount = parseFloat(this.CreditAmount);
@@ -1257,11 +1260,11 @@ export class CreditmemoComponent implements OnInit {
 
                 this.publicVariable.dataForm.controls['creditMemoAmount'].setErrors({ 'exceedsTotal': true });
                 return;
-           
+
             }
 
            // this.publicVariable.dataForm.controls['creditMemoAmount'].setErrors({ 'exceedsTotal': true });
-        } 
+        }
         else {
 
             this.publicVariable.dataForm.controls['creditMemoAmount'].setErrors(null);
@@ -1293,6 +1296,7 @@ export class CreditmemoComponent implements OnInit {
                         formData.append('headerid', isUpdate ? newData.headerid : undefined);
                     }
                     formData.append('MemoType',newData.MemoType);
+                    formData.append('CreditMemoCancelRemarks',newData.CreditMemoCancelRemarks);
                     formData.append('memoAmount', newData.creditMemoAmount);
 
                     formData.append('isupdate', String(isUpdate));
@@ -1443,7 +1447,7 @@ export class CreditmemoComponent implements OnInit {
 
     markFormControlsAsTouched(): void {
         [
-            'invoice_no','MemoType','creditMemoAmount'
+            'invoice_no','MemoType','creditMemoAmount','CreditMemoCancelRemarks','ImpiHeaderRemarks'
         ].forEach(controlName => {
             this.publicVariable.dataForm.controls[controlName].markAsTouched();
         });
