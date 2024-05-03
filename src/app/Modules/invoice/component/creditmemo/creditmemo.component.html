@@ -75,6 +75,9 @@
                             <option value="Data Entry Mistake">Data Entry Mistake</option>
                         </select>
                     </div>
+                    <div *ngIf="shouldShowError('CreditMemoCancelRemarks','required')" class="text-danger">This field
+                        is required
+                    </div>
                 </div>
 
                 <div class="col-md-4 col-sm-6">
@@ -665,6 +668,9 @@
                     <label for="Remarks">Cancel Remarks</label>
                     <textarea class="form-control h-100" cols="2" rows="2" id="Remarks"
                         formControlName="ImpiHeaderRemarks"></textarea>
+                </div>
+                <div *ngIf="shouldShowError('ImpiHeaderRemarks','required')" class="text-danger">This field
+                    is required
                 </div>
             </div>
 
