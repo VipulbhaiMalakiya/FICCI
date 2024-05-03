@@ -373,7 +373,18 @@ export class CreditmemoComponent implements OnInit {
     onSelectInvoice(event: any) {
 
         this.amount = event.amount;
+        console.log(event);
+
         //let data  = event.invoice_no;
+
+
+
+        this.publicVariable.dataForm.patchValue({
+            MemoType:'',
+            creditMemoAmount: '',
+            CreditMemoCancelRemarks:''
+
+        });
 
         this.loadTaxInvoiceInformation(event.invoice_no);
 
@@ -1301,12 +1312,13 @@ export class CreditmemoComponent implements OnInit {
 
                     formData.append('isupdate', String(isUpdate));
                     this.publicVariable.selectedProjet = this.publicVariable.projectList.find(project => project.code == newData.ImpiHeaderProjectCode);
+
                    // this.publicVariable.selectCustomer = this.publicVariable.GetCustomerList.find(customer => customer.custName == newData.ImpiHeaderCustomerName);
                     formData.append('ImpiHeaderInvoiceType', newData.ImpiHeaderInvoiceType);
-                    formData.append('ImpiHeaderProjectCode', this.publicVariable.selectedProjet.code);
+                    formData.append('ImpiHeaderProjectCode', this.publicVariable?.selectedProjet?.code);
 
-                    formData.append('startDate', this.publicVariable.selectedProjet.startDate);
-                    formData.append('endDate', this.publicVariable.selectedProjet.endDate);
+                    formData.append('startDate', this.publicVariable.selectedProjet?.startDate);
+                    formData.append('endDate', this.publicVariable.selectedProjet?.endDate);
 
                     formData.append('ImpiHeaderPanNo', 'AAACF1282E');
                     formData.append('ImpiHeaderGstNo', '07AAACF1282E1Z1');
@@ -1331,15 +1343,15 @@ export class CreditmemoComponent implements OnInit {
                     if (newData.ImpiHeaderInvoiceType === 'Tax Invoice') {
                         formData.append('headerPiNo', newData.invoice_no);
                     }
-                    formData.append('ImpiHeaderTlApprover', this.publicVariable.selectedProjet.tlApprover);
-                    formData.append('ImpiHeaderClusterApprover', this.publicVariable.selectedProjet.chApprover);
-                    formData.append('ImpiHeaderFinanceApprover', this.publicVariable.selectedProjet.financeApprover);
-                    formData.append('ImpiHeaderSupportApprover', this.publicVariable.selectedProjet.supportApprover);
-                    formData.append('ImpiHeaderProjectName', this.publicVariable.selectedProjet.name);
-                    formData.append('ImpiHeaderProjectDivisionCode', this.publicVariable.selectedProjet.divisionCode);
-                    formData.append('ImpiHeaderProjectDivisionName', this.publicVariable.selectedProjet.divisionName);
-                    formData.append('ImpiHeaderProjectDepartmentCode', this.publicVariable.selectedProjet.departmentCode);
-                    formData.append('ImpiHeaderProjectDepartmentName', this.publicVariable.selectedProjet.departmentName);
+                    formData.append('ImpiHeaderTlApprover', this.publicVariable.selectedProjet?.tlApprover);
+                    formData.append('ImpiHeaderClusterApprover', this.publicVariable.selectedProjet?.chApprover);
+                    formData.append('ImpiHeaderFinanceApprover', this.publicVariable.selectedProjet?.financeApprover);
+                    formData.append('ImpiHeaderSupportApprover', this.publicVariable.selectedProjet?.supportApprover);
+                    formData.append('ImpiHeaderProjectName', this.publicVariable.selectedProjet?.name);
+                    formData.append('ImpiHeaderProjectDivisionCode', this.publicVariable.selectedProjet?.divisionCode);
+                    formData.append('ImpiHeaderProjectDivisionName', this.publicVariable.selectedProjet?.divisionName);
+                    formData.append('ImpiHeaderProjectDepartmentCode', this.publicVariable.selectedProjet?.departmentCode);
+                    formData.append('ImpiHeaderProjectDepartmentName', this.publicVariable.selectedProjet?.departmentName);
                     formData.append('RoleName', this.publicVariable.storedRole);
                     for (let i = 0; i < this.publicVariable.expenses.length; i++) {
                         const item = this.publicVariable.expenses[i];
