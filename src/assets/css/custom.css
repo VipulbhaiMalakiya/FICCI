@@ -1352,6 +1352,9 @@ header.login-page {
     vertical-align: middle;
 }
 
+
+.back-btn img{ max-height: 25px; }
+
 /*--------------media css------------*/
 
 @media (max-width:1180px) {
@@ -1546,7 +1549,7 @@ header.login-page {
 }
 
 #toast-container.toast-container {
-    
+
     position: fixed !important;
     top: 30% !important;
     left:50%;
