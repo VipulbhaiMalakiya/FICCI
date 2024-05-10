@@ -4,7 +4,8 @@
 
 <div class="inner-content">
 
-    <h3 class="content-title">Posted Tax Invoice</h3>
+    <!-- <h3 class="content-title"></h3> -->
+    <h3 class="content-title"><span class="back-btn" title="Back"><a routerLink="/invoice/tax-invoice"><img src="../assets/images/left-arrow.svg" alt=""></a></span> Posted Tax Invoice</h3>
 
     <!-- <div class="pipage-radio">
         <div class="form-check">
@@ -182,7 +183,7 @@
             <table class="table table-bordered text-nowrap">
                 <thead>
                     <tr>
-                        <th>#</th> 
+                        <th>#</th>
                         <th>File Type</th>
                         <th>Invoice No.</th>
                         <th *ngIf="!data.isDraft">Action</th>
@@ -190,7 +191,7 @@
                 </thead>
                 <tbody>
                   <tr *ngFor="let file of InvoiceAttachment; let i = index">
-                     
+
                         <td>{{i+1}}</td>
                         <td>.pdf</td>
                         <td>{{file.invoiceNo}}</td>

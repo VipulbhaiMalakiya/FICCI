@@ -4,7 +4,9 @@
 
 <div class="inner-content">
 
-    <h3 class="content-title">Posted PI Invoice</h3>
+    <!-- <h3 class="content-title"></h3> -->
+
+    <h3 class="content-title"><span class="back-btn" title="Back"><a routerLink="/invoice/pi-invoice"><img src="../assets/images/left-arrow.svg" alt=""></a></span> Posted PI Invoice</h3>
 
     <!-- <div class="pipage-radio">
         <div class="form-check">
@@ -198,7 +200,7 @@
                           <td *ngIf="!data.isDraft">
                               <a href="javascript:void(0)" (click)="downalodInvFile(InvAttachment,InvNo)"><img
                                       src="../assets/images/download-icon.svg" alt="" class="me-2"></a>
-  
+
                           </td>
                       </tr>
                   </tbody>
