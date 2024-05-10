@@ -610,7 +610,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
         const selectedCategory = this.publicVariable.dataForm.get('TypeofAttachment')?.value;
         if (!selectedCategory) {
             this.toastr.warning('Please select a category before selecting files.', 'Warning');
-           
+
 
             event.target.value = null;
             return;
@@ -1072,42 +1072,51 @@ export class NewPurchaseInvoiceComponent implements OnInit {
             this.publicVariable.dataForm.value.ImpiHeaderInvoiceType == ''
         ) {
             this.toastr.warning('Select the Invoice Type', 'Warning');
+            this.publicVariable.isProcess =false;
             return;
         }
-        
+
 
         else if (this.publicVariable.dataForm.value.ImpiHeaderdept == null ||
             this.publicVariable.dataForm.value.ImpiHeaderdept == undefined ||
             this.publicVariable.dataForm.value.ImpiHeaderdept == ''
         ) {
             this.toastr.warning('Select the Department', 'Warning');
+            this.publicVariable.isProcess =false;
+
             return;
         }
-        
+
 
        else if (this.publicVariable.dataForm.value.ImpiHeaderProjectCode == null ||
             this.publicVariable.dataForm.value.ImpiHeaderProjectCode == undefined ||
             this.publicVariable.dataForm.value.ImpiHeaderProjectCode == ''
         ) {
             this.toastr.warning('Select the Project Code', 'Warning');
+            this.publicVariable.isProcess =false;
+
             return;
         }
-        
+
 
         else if (this.publicVariable.dataForm.value.ImpiHeaderCustomerName == null ||
             this.publicVariable.dataForm.value.ImpiHeaderCustomerName == undefined ||
             this.publicVariable.dataForm.value.ImpiHeaderCustomerName == ''
         ) {
             this.toastr.warning('Select the Customer Name', 'Warning');
+            this.publicVariable.isProcess =false;
+
             return;
         }
 
- 
+
        else if (this.publicVariable.dataForm.value.ImpiHeaderCustomerContactPerson == null ||
             this.publicVariable.dataForm.value.ImpiHeaderCustomerContactPerson == undefined ||
             this.publicVariable.dataForm.value.ImpiHeaderCustomerContactPerson == ''
         ) {
             this.toastr.warning('Enter the Customer contact person', 'Warning');
+            this.publicVariable.isProcess =false;
+
             return;
         }
 
@@ -1116,6 +1125,8 @@ export class NewPurchaseInvoiceComponent implements OnInit {
             this.publicVariable.dataForm.value.ImpiHeaderCustomerEmailId == ''
         ) {
             this.toastr.warning('Enter the Customer Email Id', 'Warning');
+            this.publicVariable.isProcess =false;
+
             return;
         }
 
@@ -1124,6 +1135,8 @@ export class NewPurchaseInvoiceComponent implements OnInit {
             this.publicVariable.dataForm.value.ImpiHeaderCustomerPhoneNo == ''
         ) {
             this.toastr.warning('Enter the Customer Phone No.', 'Warning');
+            this.publicVariable.isProcess =false;
+
             return;
         }
 
@@ -1132,6 +1145,8 @@ export class NewPurchaseInvoiceComponent implements OnInit {
             this.publicVariable.dataForm.value.ImpiHeaderCustomerAddress == ''
         ) {
             this.toastr.warning('Enter the Address.', 'Warning');
+            this.publicVariable.isProcess =false;
+
             return;
         }
         else if (this.publicVariable.dataForm.value.ImpiHeaderCustomerAddress2 == null ||
@@ -1139,6 +1154,8 @@ export class NewPurchaseInvoiceComponent implements OnInit {
             this.publicVariable.dataForm.value.ImpiHeaderCustomerAddress2 == ''
         ) {
             this.toastr.warning('Enter the Address 2.', 'Warning');
+            this.publicVariable.isProcess =false;
+
             return;
         }
         else if (this.publicVariable.dataForm.value.ImpiHeaderCustomerState == null ||
@@ -1146,6 +1163,8 @@ export class NewPurchaseInvoiceComponent implements OnInit {
             this.publicVariable.dataForm.value.ImpiHeaderCustomerState == ''
         ) {
             this.toastr.warning('Enter the State.', 'Warning');
+            this.publicVariable.isProcess =false;
+
             return;
         }
         else if (this.publicVariable.dataForm.value.ImpiHeaderCustomerCity == null ||
@@ -1153,6 +1172,8 @@ export class NewPurchaseInvoiceComponent implements OnInit {
             this.publicVariable.dataForm.value.ImpiHeaderCustomerCity == ''
         ) {
             this.toastr.warning('Enter the city.', 'Warning');
+            this.publicVariable.isProcess =false;
+
             return;
         }
         else if (this.publicVariable.dataForm.value.ImpiHeaderCustomerPinCode == null ||
@@ -1160,6 +1181,8 @@ export class NewPurchaseInvoiceComponent implements OnInit {
             this.publicVariable.dataForm.value.ImpiHeaderCustomerPinCode == ''
         ) {
             this.toastr.warning('Enter the Post Code.', 'Warning');
+            this.publicVariable.isProcess =false;
+
             return;
         }
 
@@ -1169,6 +1192,8 @@ export class NewPurchaseInvoiceComponent implements OnInit {
                 this.markFormControlsAsTouched();
 
                 this.toastr.error("Enter the Customer contact person", 'Warning');
+                this.publicVariable.isProcess =false;
+
 
                 return;
             }
@@ -1178,12 +1203,16 @@ export class NewPurchaseInvoiceComponent implements OnInit {
 
         if (this.publicVariable.expenses.length === 0) {
             this.toastr.warning('Please add sales line before submitting.', 'Warning');
+            this.publicVariable.isProcess =false;
+
            // window.this.toastr.warning('Please add sales line before submitting.');
             return
         }
 
         if (Action !== 'Calculate' && !this.isCalculate) {
             this.toastr.warning("Please Calculate the tax details", 'Warning');
+            this.publicVariable.isProcess =false;
+
             return
         }
 
@@ -1305,7 +1334,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
                             next: (res: any) => {
                                 if (res.status === true) {
                                     this.data = res.request;
-                                    if (Action == "Calculate") 
+                                    if (Action == "Calculate")
                                     {
                                         this.patchFormData(this.data);
                                         this.toastr.success('Tax Calculated Successfully !!', 'Success');
@@ -1318,7 +1347,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
                                         this.router.navigate(['dashboard']);
                                         this.publicVariable.dataForm.reset();
                                     }
-                                    
+
 
                                    // this.toastr.success(res.message, 'Success');
 

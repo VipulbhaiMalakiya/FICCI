@@ -5,7 +5,7 @@
 
     <form [formGroup]="publicVariable.dataForm">
         <input type="hidden" formControlName="headerid">
-        <div class="pipage-radio">
+        <!-- <div class="pipage-radio">
             <div class="form-check">
                 <input class="form-check-input" formControlName="ImpiHeaderInvoiceType" type="radio"
                     name="ImpiHeaderInvoiceType" id="flexRadioDefault1" value="Proforma Invoice" />
@@ -22,16 +22,33 @@
                 </label>
             </div>
             <div *ngIf="shouldShowError('ImpiHeaderInvoiceType','required')" class="text-danger">
-                Invoice Type is required.             
+                Invoice Type is required.
             </div>
         </div>
 
          <div *ngIf="shouldShowError('ImpiHeaderdept','required')" class="text-danger">This field
                             is required
-                        </div>
+                        </div> -->
 
         <div class="mastersform-sec mb-0">
             <div class="row">
+
+                <div class="col-md-4 col-sm-6">
+                    <div class="form-group">
+                        <label for="projectCode"> Invoice Type <sup class="text-danger">*</sup></label>
+                        <select class="form-select" formControlName="ImpiHeaderInvoiceType">
+                            <option value="">Select Invoice</option>
+                            <option value="Proforma Invoice">Proforma Invoice</option>
+                            <option value="Tax Invoice">Tax Invoice</option>
+
+
+                        </select>
+                        <div *ngIf="shouldShowError('ImpiHeaderInvoiceType','required')" class="text-danger">This field
+                            is required
+                        </div>
+
+                    </div>
+                </div>
 
                 <div class="col-md-4 col-sm-6">
                     <div class="form-group">
@@ -90,24 +107,25 @@
                         <label for="department">Department <sup class="text-danger">*</sup></label>
                         <input type="text" id="department" placeholder="Department"
                             formControlName="ImpiHeaderDepartment" class="form-control" />
+                            <input type="hidden" id="division" placeholder="Division" formControlName="ImpiHeaderDivison"
+                            class="form-control" />
                         <div *ngIf="shouldShowError('ImpiHeaderDepartment','required')" class="text-danger">This field
                             is required
                         </div>
 
                     </div>
                 </div>
-
+<!--
                 <div class="col-md-4 col-sm-6">
                     <div class="form-group">
-                        <label for="division">Division <sup class="text-danger">*</sup></label>
-                        <input type="text" id="division" placeholder="Division" formControlName="ImpiHeaderDivison"
+                        <input type="hidden" id="division" placeholder="Division" formControlName="ImpiHeaderDivison"
                             class="form-control" />
                         <div *ngIf="shouldShowError('ImpiHeaderDivison','required')" class="text-danger">This field is
                             required
                         </div>
 
                     </div>
-                </div>
+                </div> -->
 
                 <div class="col-md-4 col-sm-6">
                     <div class="form-group">
@@ -654,7 +672,7 @@
                     <div class="input-group">
                         <input type="file" class="form-control" id="inputGroupFile02" accept=".pdf,.xlsx,.csv" multiple
                             (change)="onFilesSelected($event)" />
-                        <label class="input-group-text" for="inputGroupFile02">Upload</label>
+                        <!-- <label class="input-group-text" for="inputGroupFile02">Upload</label> -->
                     </div>
                 </div>
             </div>
