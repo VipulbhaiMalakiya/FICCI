@@ -69,7 +69,7 @@
                         <label for="CreditMemoCancelRemarks">Cancel Reason <sup class="text-danger">*</sup></label>
                         <select id="CreditMemoCancelRemarks"  formControlName="CreditMemoCancelRemarks" class="form-select"
                         >
-                            <option value="">Select Option</option>                         
+                            <option value="">Select Option</option>
                             <option value="Duplicate">Duplicate</option>
                             <option value="Data Entry Mistake">Data Entry Mistake</option>
                         </select>
@@ -78,7 +78,7 @@
                     <div *ngIf="shouldShowError('CreditMemoCancelRemarks','required')" class="text-danger">This field
                         is required
                     </div>
-                    
+
                 </div>
 
                 <div class="col-md-4 col-sm-6">
@@ -618,7 +618,7 @@
                     <div class="input-group">
                         <input type="file" class="form-control" id="inputGroupFile02" accept=".pdf,.xlsx,.csv" multiple
                             (change)="onFilesSelected($event)" />
-                        <label class="input-group-text" for="inputGroupFile02">Upload</label>
+                        <!-- <label class="input-group-text" for="inputGroupFile02">Upload</label> -->
                     </div>
                 </div>
             </div>
