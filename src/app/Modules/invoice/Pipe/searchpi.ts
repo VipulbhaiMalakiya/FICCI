@@ -34,6 +34,8 @@ export class SearchFilterPipe2 implements PipeTransform {
 
                 || (item.recordID && item.recordID.toLowerCase().includes(searchText))
 
+                || (item.headerPiNo && item.headerPiNo.toLowerCase().includes(searchText))
+
                 || (item.headerStatus && item.headerStatus.toLowerCase().includes(searchText));
         });
     }

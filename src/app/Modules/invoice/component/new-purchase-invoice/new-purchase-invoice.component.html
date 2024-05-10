@@ -21,7 +21,14 @@
                     Tax Invoice
                 </label>
             </div>
+            <div *ngIf="shouldShowError('ImpiHeaderInvoiceType','required')" class="text-danger">
+                Invoice Type is required.             
+            </div>
         </div>
+
+         <div *ngIf="shouldShowError('ImpiHeaderdept','required')" class="text-danger">This field
+                            is required
+                        </div>
 
         <div class="mastersform-sec mb-0">
             <div class="row">
@@ -244,8 +251,7 @@
                         <!-- <div class="add-btn"><a routerLink="/customer/new" target="_blank">+</a></div> -->
 
                         <div *ngIf="shouldShowError('ImpiHeaderCustomerGstNo','required')" class="text-danger">This
-                            field
-                            is required
+                            field is required.
                         </div>
                     </div>
                 </div>
@@ -434,11 +440,10 @@
                     <div class="col-md-4 col-sm-6">
                         <div class="form-group">
                             <label for="Quantity">Quantity <sup class="text-danger">*</sup></label>
-                            <input type="text" class="form-control" id="Quantity" placeholder="Quantity" maxlength="10"
+                            <input type="text" class="form-control" id="Quantity" placeholder="Quantity" maxlength="5"
                                 formControlName="impiQuantity" (input)="onInputChange($event)" />
                             <div *ngIf="shouldShowExpenseError('impiQuantity','required')" class="text-danger">This
-                                field is
-                                required</div>
+                                field is required</div>
                         </div>
                     </div>
 
@@ -471,7 +476,7 @@
                     <div class="col-md-4 col-sm-6">
                         <div class="form-group">
                             <label>Direct Unit Cost <sup class="text-danger">*</sup> (Exclusive GST)</label>
-                            <input type="text" class="form-control" placeholder="Direct Unit Cost" maxlength="10"
+                            <input type="text" class="form-control" placeholder="Direct Unit Cost" maxlength="9"
                                 formControlName="impiUnitPrice" (input)="priceValidator($event)">
                             <div *ngIf="shouldShowExpenseError('impiUnitPrice','required')" class="text-danger">This
                                 field is
@@ -532,7 +537,7 @@
                         <div class="col-md-4 col-sm-6">
                             <div class="form-group">
                                 <label>Total Base Amount</label>
-                                <input type="text" class="form-control" placeholder="Total Base Amount"
+                                <input type="text" class="form-control" placeholder="0"
                                     [value]="data?.impiHeaderTotalTDSAmount" disabled="">
                             </div>
                         </div>
@@ -540,7 +545,7 @@
                         <div class="col-md-4 col-sm-6">
                             <div class="form-group">
                                 <label>Total GST Amount</label>
-                                <input type="text" class="form-control" placeholder="Total GST Amount" disabled=""
+                                <input type="text" class="form-control" placeholder="0" disabled=""
                                     [value]="data?.impiHeaderTotalGSTAmount">
                             </div>
                         </div>
@@ -548,7 +553,7 @@
                         <div class="col-md-4 col-sm-6">
                             <div class="form-group">
                                 <label>Total Invoice Amount (Incl.GST)</label>
-                                <input type="text" class="form-control" placeholder="Total Invoice Amount (Incl.GST)"
+                                <input type="text" class="form-control" placeholder="0"
                                     disabled="" [value]="data?.impiHeaderTotalInvoiceAmount">
                             </div>
                         </div>
@@ -690,7 +695,7 @@
             <div class="col-md-9 mt-4" hidden>
                 <div class="form-group">
                     <label for="PaymentTerms">Description/Narration to Print on Invoice</label>
-                    <textarea class="form-control h-100" cols="2" rows="3" id="PaymentTerms" maxlength="100"
+                    <textarea class="form-control h-100" cols="2" rows="2" id="PaymentTerms" maxlength="100"
                         formControlName="ImpiHeaderPaymentTerms"></textarea>
                 </div>
             </div>
@@ -698,7 +703,7 @@
             <div class="col-md-9 mt-3">
                 <div class="form-group">
                     <label for="Remarks">Remarks for FICCI Accounts Team</label>
-                    <textarea class="form-control h-100" cols="2" rows="3" id="Remarks" maxlength="100"
+                    <textarea class="form-control h-100" cols="2" rows="2" id="Remarks" maxlength="100"
                         formControlName="ImpiHeaderRemarks"></textarea>
                 </div>
             </div>

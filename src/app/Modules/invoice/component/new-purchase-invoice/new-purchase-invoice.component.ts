@@ -57,7 +57,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
         this.publicVariable.dataForm = this.fb.group({
             headerid: [''],
             ImpiHeaderdept: [null, [Validators.required]],
-            ImpiHeaderInvoiceType: ['Proforma Invoice', Validators.required],
+            ImpiHeaderInvoiceType: ['', [Validators.required]],
             ImpiHeaderProjectCode: [null, [Validators.required]],
             Project: [{ value: '', disabled: true }, [Validators.required]],
             ImpiHeaderDepartment: [{ value: '', disabled: true }, [Validators.required]],
@@ -172,8 +172,6 @@ export class NewPurchaseInvoiceComponent implements OnInit {
             const subscription = this.API.getnavProjects(this.selectedDept).subscribe({
                 next: (response: any) => {
                     this.publicVariable.projectList = response.data;
-
-
                 },
                 error: (error) => {
                     console.error('Error loading project list:', error);
@@ -236,7 +234,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
 
                     console.log(response.data);
                     this.publicVariable.HSNSACList = response.data;
-                    // alert(gstCode.code);
+                    // this.toastr.warning(gstCode.code);
                     // this.publicVariable.expenseForm.controls["impiHsnsaccode"].setValue('');
                     if (gstCode.code == "SER-05") {
                         this.publicVariable.expenseForm.controls["impiHsnsaccode"].setValue('998363');
@@ -314,9 +312,9 @@ export class NewPurchaseInvoiceComponent implements OnInit {
             },
             error: (error: any) => {
                 if (error.name === 'TimeoutError') {
-                    this.toastr.error('Operation timed out after 40 seconds', error.name);
+                    this.toastr.error('Operation timed out after 2 minutes', error.error.message);
                 } else {
-                    this.toastr.error('Error loading user list', error.name);
+                    this.toastr.error('ERP API Not Working', error.error.message);
                 }
             }
         });
@@ -611,7 +609,9 @@ export class NewPurchaseInvoiceComponent implements OnInit {
         // Check if a category is selected
         const selectedCategory = this.publicVariable.dataForm.get('TypeofAttachment')?.value;
         if (!selectedCategory) {
-            alert('Please select a category before selecting files.');
+            this.toastr.warning('Please select a category before selecting files.', 'Warning');
+           
+
             event.target.value = null;
             return;
         }
@@ -627,14 +627,14 @@ export class NewPurchaseInvoiceComponent implements OnInit {
             const file = selectedFiles[i];
 
             if (!allowedTypes.includes(file.type)) {
-                alert('Only .doc, .csv, .xlsx, and .pdf files are allowed.');
+                this.toastr.warning('Only .doc, .csv, .xlsx, and .pdf files are allowed.', 'Warning');
                 // Clear the file input
                 event.target.value = null;
                 return;
             }
 
             if (file.size > maxSize) {
-                alert('File size exceeds 5MB limit.');
+                this.toastr.warning('File size exceeds 5MB limit.', 'Warning');
                 // Clear the file input
                 event.target.value = null;
                 return;
@@ -745,18 +745,18 @@ export class NewPurchaseInvoiceComponent implements OnInit {
                 this.publicVariable.expenses[this.publicVariable.editingIndex] = this.publicVariable.expenseForm.value;
                 this.publicVariable.editingIndex = -1;
                 this.toastr.success('Sales Line updated successfully', 'Success');
-                alert('Sales Line  updated successfully')
+               // this.toastr.warning('Sales Line  updated successfully')
             } else {
                 // Adding a new record
                 this.publicVariable.expenses.push(this.publicVariable.expenseForm.value);
                 this.toastr.success('Sales Line  added successfully', 'Success');
-                alert('Sales Line  added successfully')
+                //this.toastr.warning('Sales Line  added successfully')
             }
             this.publicVariable.expenseForm.reset();
             this.isEditing = false;
         } else {
             this.markexpenseFormControlsAsTouched();
-            this.toastr.error('Please fill out all required fields', 'Error');
+            this.toastr.warning('Please fill out all required fields', 'Warning');
         }
     }
 
@@ -832,7 +832,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
                         // You can update the UI to indicate that the PAN number is valid
                     } else {
                         // PAN number already exists
-                        alert('PAN number already exists');
+                        this.toastr.warning('PAN number already exists', 'Warning');
                         this.panExists = true;
                         return
                         // You can update the UI to indicate that the PAN number already exists
@@ -863,7 +863,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
                         // You can update the UI to indicate that the GST number is valid
                     } else {
                         // GST number already exists
-                        alert('GST number already exists');
+                        this.toastr.warning('GST number already exists', 'Warning');
                         this.gstHeaderExists = true;
                         return
                         // You can update the UI to indicate that the GST number already exists
@@ -927,7 +927,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
         //console.log(selectDATA.gstNumber);
 
         //this.CustomerGSTNo =selectDATA.gstNumber;
-        //alert(selectDATA.code);
+        //this.toastr.warning(selectDATA.code);
 
         // this.GetCustomerGSTList
 
@@ -1067,58 +1067,100 @@ export class NewPurchaseInvoiceComponent implements OnInit {
 
     onSubmit(Action: string): void {
 
+        if (this.publicVariable.dataForm.value.ImpiHeaderInvoiceType == null ||
+            this.publicVariable.dataForm.value.ImpiHeaderInvoiceType == undefined ||
+            this.publicVariable.dataForm.value.ImpiHeaderInvoiceType == ''
+        ) {
+            this.toastr.warning('Select the Invoice Type', 'Warning');
+            return;
+        }
+        
 
-        debugger;
-        if (this.publicVariable.dataForm.value.ImpiHeaderCustomerContactPerson == null ||
+        else if (this.publicVariable.dataForm.value.ImpiHeaderdept == null ||
+            this.publicVariable.dataForm.value.ImpiHeaderdept == undefined ||
+            this.publicVariable.dataForm.value.ImpiHeaderdept == ''
+        ) {
+            this.toastr.warning('Select the Department', 'Warning');
+            return;
+        }
+        
+
+       else if (this.publicVariable.dataForm.value.ImpiHeaderProjectCode == null ||
+            this.publicVariable.dataForm.value.ImpiHeaderProjectCode == undefined ||
+            this.publicVariable.dataForm.value.ImpiHeaderProjectCode == ''
+        ) {
+            this.toastr.warning('Select the Project Code', 'Warning');
+            return;
+        }
+        
+
+        else if (this.publicVariable.dataForm.value.ImpiHeaderCustomerName == null ||
+            this.publicVariable.dataForm.value.ImpiHeaderCustomerName == undefined ||
+            this.publicVariable.dataForm.value.ImpiHeaderCustomerName == ''
+        ) {
+            this.toastr.warning('Select the Customer Name', 'Warning');
+            return;
+        }
+
+ 
+       else if (this.publicVariable.dataForm.value.ImpiHeaderCustomerContactPerson == null ||
             this.publicVariable.dataForm.value.ImpiHeaderCustomerContactPerson == undefined ||
             this.publicVariable.dataForm.value.ImpiHeaderCustomerContactPerson == ''
         ) {
-            alert('Enter the Customer contact person');
+            this.toastr.warning('Enter the Customer contact person', 'Warning');
+            return;
         }
 
         else if (this.publicVariable.dataForm.value.ImpiHeaderCustomerEmailId == null ||
             this.publicVariable.dataForm.value.ImpiHeaderCustomerEmailId == undefined ||
             this.publicVariable.dataForm.value.ImpiHeaderCustomerEmailId == ''
         ) {
-            alert('Enter the Customer Email Id');
+            this.toastr.warning('Enter the Customer Email Id', 'Warning');
+            return;
         }
 
         else if (this.publicVariable.dataForm.value.ImpiHeaderCustomerPhoneNo == null ||
             this.publicVariable.dataForm.value.ImpiHeaderCustomerPhoneNo == undefined ||
             this.publicVariable.dataForm.value.ImpiHeaderCustomerPhoneNo == ''
         ) {
-            alert('Enter the Customer Phone No.');
+            this.toastr.warning('Enter the Customer Phone No.', 'Warning');
+            return;
         }
 
         else if (this.publicVariable.dataForm.value.ImpiHeaderCustomerAddress == null ||
             this.publicVariable.dataForm.value.ImpiHeaderCustomerAddress == undefined ||
             this.publicVariable.dataForm.value.ImpiHeaderCustomerAddress == ''
         ) {
-            alert('Enter the Address.');
+            this.toastr.warning('Enter the Address.', 'Warning');
+            return;
         }
         else if (this.publicVariable.dataForm.value.ImpiHeaderCustomerAddress2 == null ||
             this.publicVariable.dataForm.value.ImpiHeaderCustomerAddress2 == undefined ||
             this.publicVariable.dataForm.value.ImpiHeaderCustomerAddress2 == ''
         ) {
-            alert('Enter the Address 2.');
+            this.toastr.warning('Enter the Address 2.', 'Warning');
+            return;
         }
         else if (this.publicVariable.dataForm.value.ImpiHeaderCustomerState == null ||
             this.publicVariable.dataForm.value.ImpiHeaderCustomerState == undefined ||
             this.publicVariable.dataForm.value.ImpiHeaderCustomerState == ''
         ) {
-            alert('Enter the State.');
+            this.toastr.warning('Enter the State.', 'Warning');
+            return;
         }
         else if (this.publicVariable.dataForm.value.ImpiHeaderCustomerCity == null ||
             this.publicVariable.dataForm.value.ImpiHeaderCustomerCity == undefined ||
             this.publicVariable.dataForm.value.ImpiHeaderCustomerCity == ''
         ) {
-            alert('Enter the city.');
+            this.toastr.warning('Enter the city.', 'Warning');
+            return;
         }
         else if (this.publicVariable.dataForm.value.ImpiHeaderCustomerPinCode == null ||
             this.publicVariable.dataForm.value.ImpiHeaderCustomerPinCode == undefined ||
             this.publicVariable.dataForm.value.ImpiHeaderCustomerPinCode == ''
         ) {
-            alert('Enter the Pin card.');
+            this.toastr.warning('Enter the Post Code.', 'Warning');
+            return;
         }
 
         if (Action === 'Calculate') {
@@ -1126,7 +1168,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
                 this.publicVariable.isProcess = false;
                 this.markFormControlsAsTouched();
 
-                this.toastr.error("Enter the Customer contact person", "error");
+                this.toastr.error("Enter the Customer contact person", 'Warning');
 
                 return;
             }
@@ -1135,13 +1177,13 @@ export class NewPurchaseInvoiceComponent implements OnInit {
         // debugger;
 
         if (this.publicVariable.expenses.length === 0) {
-            this.toastr.error('Please add sales line before submitting.', 'Error');
-            window.alert('Please add sales line before submitting.');
+            this.toastr.warning('Please add sales line before submitting.', 'Warning');
+           // window.this.toastr.warning('Please add sales line before submitting.');
             return
         }
 
         if (Action !== 'Calculate' && !this.isCalculate) {
-            alert("Please Calculate the tax details");
+            this.toastr.warning("Please Calculate the tax details", 'Warning');
             return
         }
 
@@ -1171,7 +1213,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
                     formData.append('impiHeaderCustomerCode', this.selectCustomerNo );
                     formData.append('ImpiCustomerShiptocode',  this.selectCustomerCode);
 
-                    // alert(this.publicVariable.selectCustomer);
+                    // this.toastr.warning(this.publicVariable.selectCustomer);
                     //console.log(this.publicVariable.selectCustomer);
 
                     formData.append('ImpiHeaderInvoiceType', newData.ImpiHeaderInvoiceType);
@@ -1263,10 +1305,11 @@ export class NewPurchaseInvoiceComponent implements OnInit {
                             next: (res: any) => {
                                 if (res.status === true) {
                                     this.data = res.request;
-                                    if (Action == "Calculate") {
+                                    if (Action == "Calculate") 
+                                    {
                                         this.patchFormData(this.data);
                                         this.toastr.success('Tax Calculated Successfully !!', 'Success');
-                                        alert('Tax Calculated Successfully !!');
+                                      //  this.toastr.warning('Tax Calculated Successfully !!', 'Warning');
                                         // this.isCalculate =false;
                                     }
                                     else {
@@ -1275,8 +1318,9 @@ export class NewPurchaseInvoiceComponent implements OnInit {
                                         this.router.navigate(['dashboard']);
                                         this.publicVariable.dataForm.reset();
                                     }
+                                    
 
-                                    this.toastr.success(res.message, 'Success');
+                                   // this.toastr.success(res.message, 'Success');
 
                                     //  this.toastr.success(res.message, 'Success');
                                     //this.patchFormData( this.data)
@@ -1291,8 +1335,8 @@ export class NewPurchaseInvoiceComponent implements OnInit {
                             },
                             error: (error: any) => {
                                 this.publicVariable.isProcess = false;
-                                alert(error.error.message || 'An error occurred. Please try again later.');
-                                this.toastr.error(error.error.message || 'An error occurred. Please try again later.', 'Error');
+                                this.toastr.warning(error.error.message || 'An error occurred. Please try again later.', 'Warning');
+                               // this.toastr.error(error.error.message || 'An error occurred. Please try again later.', 'Error');
                             },
                             complete: () => {
                                 this.publicVariable.isProcess = false;
@@ -1304,14 +1348,14 @@ export class NewPurchaseInvoiceComponent implements OnInit {
                 }
             }
             else {
-                this.toastr.error('File is required.', 'Error');
-                window.alert('File is required.');
+               // this.toastr.error('File is required.', 'Error');
+                this.toastr.warning('Attachment is required.', 'Warning');
             }
 
         }
         else {
-            this.toastr.error('Please add expenses before submitting.', 'Error');
-            window.alert('Please add expenses before submitting.');
+            this.toastr.warning('Please add expenses before submitting.', 'Warning');
+           // window.this.toastr.warning('Please add expenses before submitting.');
             return
         }
 
@@ -1331,6 +1375,14 @@ export class NewPurchaseInvoiceComponent implements OnInit {
         return this.publicVariable.dataForm.controls[controlName].touched && this.publicVariable.dataForm.controls[controlName].hasError(errorName);
     }
 
+
+    resetDeletedRowValues(index: number) {
+        // Reset the values of the deleted row to default (0 or empty string)
+        this.data.impiHeaderTotalTDSAmount = 0; // Change this to empty string if needed
+        this.data.impiHeaderTotalGSTAmount = 0; // Change this to empty string if needed
+        this.data.impiHeaderTotalInvoiceAmount = 0; // Change this to empty string if needed
+    }
+
     deleteExpense(index: number) {
         const modalRef = this.modalService.open(ConfirmationDialogModalComponent, { size: "sm", centered: true, backdrop: "static" });
         var componentInstance = modalRef.componentInstance as ConfirmationDialogModalComponent;
@@ -1338,7 +1390,8 @@ export class NewPurchaseInvoiceComponent implements OnInit {
         modalRef.result.then((canDelete: boolean) => {
             if (canDelete) {
                 this.publicVariable.expenses.splice(index, 1);
-                this.toastr.success('Expense deleted successfully!', 'Success');
+                this.toastr.success('Sales Line deleted successfully!', 'Success');
+                this.resetDeletedRowValues(index);
             }
         }).catch(() => { });
     }

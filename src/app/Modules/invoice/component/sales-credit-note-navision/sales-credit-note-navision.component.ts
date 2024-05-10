@@ -7,6 +7,7 @@ import { publicVariable, AppService, CustomersService, ConfirmationDialogModalCo
 import { invoiceStatusModule } from '../../interface/invoice';
 import { InvoicesService } from '../../service/invoices.service';
 import { CreditSalesEmailComponent } from '../../send-email/credit-sales-email/credit-sales-email.component';
+import { FileService } from '../../service/FileService';
 
 @Component({
   selector: 'app-sales-credit-note-navision',
@@ -15,7 +16,8 @@ import { CreditSalesEmailComponent } from '../../send-email/credit-sales-email/c
 })
 export class SalesCreditNoteNavisionComponent implements OnInit {
     publicVariable = new publicVariable();
-    SalesCreditNoteSummaryData:any[] = []
+    SalesCreditNoteSummaryData:any[] = [];
+    InvoiceAttachment: any;
 
     constructor(private appService: AppService,
         private modalService: NgbModal,
@@ -23,7 +25,8 @@ export class SalesCreditNoteNavisionComponent implements OnInit {
         private toastr: ToastrService,
         private API: InvoicesService,
         private cdr: ChangeDetectorRef,
-        private CAPI: CustomersService
+        private CAPI: CustomersService,
+        private fileService: FileService
 
     ) {
 
@@ -33,6 +36,42 @@ export class SalesCreditNoteNavisionComponent implements OnInit {
         this.loadPurchaseInvoiceList();
         // this.loadStateList();
     }
+
+    downalodFile(fileUrl: any) {
+        this.publicVariable.isProcess = true;
+        this.PostedSalesCreditNoteAttachment(fileUrl);
+    }
+
+    PostedSalesCreditNoteAttachment(invoice: string) {
+        try {
+            const subscription = this.API.GetPITaxInvoiceAttachment(invoice).subscribe({
+                next: (response: any) => {
+
+                    if (response.data.length > 0) {
+                        this.InvoiceAttachment = response.data[0];
+
+
+                        const fileName = this.InvoiceAttachment.invoiceNo+'.pdf';
+                        const fileType = `application/pdf`;
+                        this.fileService.downloadFile(this.InvoiceAttachment.attachment, fileName, fileType);
+                        this.publicVariable.isProcess  = false;
+                    }
+                    this.handleLoadingError();
+                },
+                error: (error) => {
+                    console.error('Error loading project list:', error);
+                    this.handleLoadingError();
+                },
+            });
+
+            this.publicVariable.Subscription.add(subscription);
+        } catch (error) {
+            console.error('Error loading project list:', error);
+            this.handleLoadingError();
+        }
+    }
+
+
     loadPurchaseInvoiceList(): void {
         try {
             this.publicVariable.isProcess = true;

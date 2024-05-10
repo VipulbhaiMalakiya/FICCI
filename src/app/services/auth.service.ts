@@ -22,7 +22,25 @@ export class AuthService {
     login(email: string, password: string): Observable<any> {
         const body = { email: email, password: password };
         return this.http.post(`${this.apiUrl}`, body).pipe(
-            map((response: any) => {
+            map((responseData: any) => {
+
+                console.log(responseData);
+                 if(responseData.status =="InvalidLogin")                
+                {
+                    this.toastr.warning(responseData.message,"Warning");
+                    return;
+                }
+
+                 if(responseData.status =="Unauthorized")                
+                {
+                    this.toastr.warning(responseData.message,"Warning");
+                    this.router.navigate(['/unauthorized']);
+                    return;
+                }
+
+                //console.log(responseData);
+                let response= responseData.data;
+
                 if (response && response.token) {
                     const userRole = response.roleName;
                     const userEmail = response.email;
@@ -35,13 +53,20 @@ export class AuthService {
                     sessionStorage.setItem('IsFinance',response.invoice_IsFinanceApprover)
                     sessionStorage.setItem('navDepartment', response.navDepartment);
                     return { token: response.token, role: userRole };
-                } else {
-                    this.toastr.error('Invalid credentials', 'Error');
-                    return { error: 'Invalid credentials' };
+                } 
+               
+                else 
+                {
+
+                    this.toastr.warning(responseData.message,"Warning");
+                   // this.toastr.error('Invalid credentials', 'Error');
+                    return { error: responseData.message };
                 }
             }),
             catchError(error => {
                 //console.log(error);
+
+                
                  this.toastr.error(error.error.message,'Error');
                 // return of({ error: 'An error occurred during login' });
                 this.router.navigate(['/unauthorized']); // Redirect to the dashboard

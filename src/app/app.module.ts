@@ -43,6 +43,7 @@ import { InvoiceApprovalComponent } from './layouts/invoice-approval/invoice-app
             timeOut: 3000,
             progressAnimation: 'increasing',
             preventDuplicates: true,
+            disableTimeOut:true,
         }),
         SharedModule
     ]

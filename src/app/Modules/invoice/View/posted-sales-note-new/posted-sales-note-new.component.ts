@@ -68,7 +68,7 @@ export class PostedSalesNoteNewComponent {
                     this.filterTaxInvoiceByInvoiceNo(this.data.no);
 
                     // this.filterTaxInvoiceByInvoiceNo(this.data.no);
-                    //  this.loadTaxInvoiceAttachment(this.data.no)
+                     this.loadTaxInvoiceAttachment(this.data.no)
                     this.cd.detectChanges();
                 },
                 error: (error) => {

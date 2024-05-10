@@ -372,19 +372,14 @@ export class CreditmemoComponent implements OnInit {
 
     onSelectInvoice(event: any) {
 
-        this.amount = event.amount;
-        console.log(event);
-
-        //let data  = event.invoice_no;
-
-
-
         this.publicVariable.dataForm.patchValue({
             MemoType:'',
             creditMemoAmount: '',
             CreditMemoCancelRemarks:''
 
         });
+        this.amount = event.amount;
+        //let data  = event.invoice_no;
 
         this.loadTaxInvoiceInformation(event.invoice_no);
 
@@ -572,12 +567,13 @@ export class CreditmemoComponent implements OnInit {
     patchFormData(data: any): void {
 
 
+        console.log(data);
         this.amount = data.impiHeaderTotalInvoiceAmount;
 
         this.publicVariable.dataForm.patchValue({
 
             headerid: (data && data.headerId) || (data && data.headerid),
-            CreditMemoCancelRemarks:data.CreditMemoCancelRemarks,
+            CreditMemoCancelRemarks:data.cancelRemarks,
             ImpiHeaderInvoiceType: data.impiHeaderInvoiceType,
             ImpiHeaderProjectCode: data.impiHeaderProjectCode,
             ImpiHeaderDepartment: data.impiHeaderProjectDepartmentName,
@@ -1250,7 +1246,245 @@ export class CreditmemoComponent implements OnInit {
 
 
 
+    // onSubmit(Action: string): void {
+
+    //     const totalAmount = parseFloat(this.amount); // Assuming this.totalAmount holds the total amount
+
+    //     const CreditAmount = parseFloat(this.CreditAmount);
+
+    //     if (CreditAmount >= totalAmount) {
+
+    //         const totalAmount = parseFloat(this.amount); // Assuming this.totalAmount holds the total amount
+
+    //         const CreditAmount = parseFloat(this.CreditAmount);
+
+    //         console.log('total amount' +totalAmount);
+
+    //         if (CreditAmount >= totalAmount) {
+
+    //             console.log(CreditAmount);
+    //             alert('You have already created credit note of this invoice amount.');
+
+    //             this.publicVariable.dataForm.controls['creditMemoAmount'].setErrors({ 'exceedsTotal': true });
+    //             return;
+
+    //         }
+
+    //        // this.publicVariable.dataForm.controls['creditMemoAmount'].setErrors({ 'exceedsTotal': true });
+    //     }
+    //     else {
+
+    //         this.publicVariable.dataForm.controls['creditMemoAmount'].setErrors(null);
+    //     }
+
+
+
+
+    //  console.log(this.publicVariable.dataForm.value);
+
+    //     // if (Action !== 'Calculate' && !this.isCalculate) {
+    //     //     alert("Please Calculate the tax details");
+    //     //     return
+    //     // }
+
+    //     let action = true;
+    //     if (Action == "Submit")
+    //         action = false;
+
+    //     if (this.publicVariable.expenses.length > 0) {
+    //         if (action || this.uploadedFiles.length > 0) {
+    //             if (this.publicVariable.dataForm.valid && !this.gstExists && !this.panExists) {
+    //                 const newData = this.publicVariable.dataForm.value;
+    //                 const isUpdate = !!newData.headerid;
+    //                 let impiHeaderTotalInvoiceAmount = 0; // Initialize the total amount
+    //                 let lineNo = 10000;
+    //                 const formData = new FormData();
+    //                 if (isUpdate) {
+    //                     formData.append('headerid', isUpdate ? newData.headerid : undefined);
+    //                 }
+    //                 formData.append('MemoType',newData.MemoType);
+    //                 formData.append('CreditMemoCancelRemarks',newData.CreditMemoCancelRemarks);
+    //                 formData.append('memoAmount', newData.creditMemoAmount);
+
+    //                 formData.append('isupdate', String(isUpdate));
+    //                 this.publicVariable.selectedProjet = this.publicVariable.projectList.find(project => project.code == newData.ImpiHeaderProjectCode);
+    //                // this.publicVariable.selectCustomer = this.publicVariable.GetCustomerList.find(customer => customer.custName == newData.ImpiHeaderCustomerName);
+    //                 formData.append('ImpiHeaderInvoiceType', newData.ImpiHeaderInvoiceType);
+    //                 formData.append('ImpiHeaderProjectCode', this.publicVariable.selectedProjet.code);
+
+    //                 formData.append('startDate', this.publicVariable.selectedProjet.startDate);
+    //                 formData.append('endDate', this.publicVariable.selectedProjet.endDate);
+
+    //                 formData.append('ImpiHeaderPanNo', 'AAACF1282E');
+    //                 formData.append('ImpiHeaderGstNo', '07AAACF1282E1Z1');
+    //                 formData.append('ImpiHeaderCustomerName', newData.ImpiHeaderCustomerName);
+    //                 formData.append('ImpiHeaderCustomerCode', newData.CustNo);
+    //                 formData.append('ImpiHeaderCustomerAddress', newData.ImpiHeaderCustomerAddress);
+    //                 formData.append('ImpiHeaderCustomerCity', newData.ImpiHeaderCustomerCity);
+    //                 formData.append('ImpiHeaderCustomerState', newData.ImpiHeaderCustomerState);
+    //                 formData.append('ImpiHeaderCustomerPinCode', newData.ImpiHeaderCustomerPinCode);
+    //                 // formData.append('ImpiHeaderCustomerGstNo', this.CustomerGSTNo);
+    //                 formData.append('ImpiHeaderCustomerGstNo', newData.ImpiHeaderCustomerGstNo);
+    //                 formData.append('ImpiHeaderCustomerContactPerson', newData.ImpiHeaderCustomerContactPerson);
+    //                 formData.append('ImpiHeaderCustomerEmailId', newData.ImpiHeaderCustomerEmailId);
+    //                 formData.append('ImpiHeaderCustomerPhoneNo', newData.ImpiHeaderCustomerPhoneNo);
+    //                 formData.append('impiHeaderCreatedBy', this.publicVariable.storedEmail)
+    //                 formData.append('ImpiHeaderPaymentTerms', newData.ImpiHeaderPaymentTerms);
+    //                 formData.append('ImpiHeaderRemarks', newData.ImpiHeaderRemarks);
+
+    //                 formData.append('IsDraft', action.toString());
+    //                 formData.append('LoginId', this.publicVariable.storedEmail);
+    //                 // Check if ImpiHeaderInvoiceType is Tax Invoice, then include PINO
+    //                 if (newData.ImpiHeaderInvoiceType === 'Tax Invoice') {
+    //                     formData.append('headerPiNo', newData.invoice_no);
+    //                 }
+    //                 formData.append('ImpiHeaderTlApprover', this.publicVariable.selectedProjet.tlApprover);
+    //                 formData.append('ImpiHeaderClusterApprover', this.publicVariable.selectedProjet.chApprover);
+    //                 formData.append('ImpiHeaderFinanceApprover', this.publicVariable.selectedProjet.financeApprover);
+    //                 formData.append('ImpiHeaderSupportApprover', this.publicVariable.selectedProjet.supportApprover);
+    //                 formData.append('ImpiHeaderProjectName', this.publicVariable.selectedProjet.name);
+    //                 formData.append('ImpiHeaderProjectDivisionCode', this.publicVariable.selectedProjet.divisionCode);
+    //                 formData.append('ImpiHeaderProjectDivisionName', this.publicVariable.selectedProjet.divisionName);
+    //                 formData.append('ImpiHeaderProjectDepartmentCode', this.publicVariable.selectedProjet.departmentCode);
+    //                 formData.append('ImpiHeaderProjectDepartmentName', this.publicVariable.selectedProjet.departmentName);
+    //                 formData.append('RoleName', this.publicVariable.storedRole);
+    //                 for (let i = 0; i < this.publicVariable.expenses.length; i++) {
+    //                     const item = this.publicVariable.expenses[i];
+    //                     let GL: any = this.publicVariable.COAMasterList.find(gl => gl.no == item.impiGlNo);
+    //                     formData.append(`lineItem_Requests[${i}].ImpiNetTotal`, '0');
+    //                     formData.append(`lineItem_Requests[${i}].ImpiLocationCode`, 'FICCI-DL');
+    //                     formData.append(`lineItem_Requests[${i}].ImpiQuantity`, item.impiQuantity);
+    //                     formData.append(`lineItem_Requests[${i}].ImpiUnitPrice`, item.impiUnitPrice);
+    //                     formData.append(`lineItem_Requests[${i}].ImpiGstgroupCode`, item.impiGstgroupCode);
+    //                     formData.append(`lineItem_Requests[${i}].ImpiGstgroupType`, 'GOODS');
+    //                     formData.append(`lineItem_Requests[${i}].ImpiLineNo`, String(lineNo));
+    //                     formData.append(`lineItem_Requests[${i}].ImpiHsnsaccode`, item.impiHsnsaccode);
+    //                     formData.append(`lineItem_Requests[${i}].ImpiGlNo`, GL?.no);
+    //                     formData.append(`lineItem_Requests[${i}].documentType`, 'Invoice');
+    //                     formData.append(`lineItem_Requests[${i}].ImpiType`, 'G/L Account');
+    //                     formData.append(`lineItem_Requests[${i}].ImpiDocumentNo`, '');
+    //                     formData.append(`lineItem_Requests[${i}].ImpiGstBaseAmount`, '');
+    //                     formData.append(`lineItem_Requests[${i}].ImpiTotalGstAmount`, '');
+    //                     formData.append(`lineItem_Requests[${i}].ImpiNetTotal`, '');
+    //                     formData.append(`lineItem_Requests[${i}].ImpiLinePiNo`, '');
+
+
+    //                     // Calculate the amount here
+    //                     const impiQuantity = parseFloat(item.impiQuantity);
+    //                     const unitPrice = parseFloat(item.impiUnitPrice);
+    //                     const calculateAmount = impiQuantity * unitPrice;
+    //                     formData.append(`lineItem_Requests[${i}].ImpiLineAmount`, calculateAmount.toString());
+    //                     impiHeaderTotalInvoiceAmount += calculateAmount;
+    //                     // Increment line number for next iteration
+    //                     lineNo += 10000; // Increment by 10000 for each row
+    //                 }
+    //                 formData.append('impiHeaderTotalInvoiceAmount', String(impiHeaderTotalInvoiceAmount));
+
+
+    //                 for (let i = 0; i < this.inseetdFiles.length; i++) {
+    //                     const item = this.inseetdFiles[i];
+    //                     // Check if item.file is defined before appending
+    //                     if (item.file && item.category) {
+    //                         formData.append(`DocType[${i}].doctype`, item.category);
+    //                         formData.append(`DocType[${i}].content`, item.file);
+    //                     }
+    //                 }
+
+
+
+    //                 this.publicVariable.isProcess = true;
+    //                 // Submit the formData
+    //                 this.publicVariable.Subscription.add(
+    //                     this.API.createMemo(formData).subscribe({
+    //                         next: (res: any) => {
+    //                             if (res.status === true) {
+    //                                 this.data = res.request;
+
+    //                                 if (Action == "Calculate") {
+    //                                     this.patchFormData(this.data);
+    //                                     this.toastr.success('Tax Calculated Successfully !!', 'Success');
+    //                                     alert('Tax Calculated Successfully !!');
+    //                                 }
+    //                                 else {
+    //                                     this.toastr.success(res.message, 'Success');
+    //                                   //  this.router.navigate(['invoice/credit-memo-status']);
+    //                                   this.router.navigate(['dashboard']);
+    //                                     this.publicVariable.dataForm.reset();
+    //                                 }
+
+    //                                 this.toastr.success(res.message, 'Success');
+
+    //                                 //  this.toastr.success(res.message, 'Success');
+    //                                 //this.patchFormData( this.data)
+
+
+    //                                 //this.router.navigate(['invoice/status']);
+    //                                 // this.publicVariable.dataForm.reset();
+    //                             } else {
+    //                                 this.toastr.error(res.message, 'Error');
+    //                                 this.publicVariable.isProcess = false;
+    //                             }
+    //                         },
+    //                         error: (error: any) => {
+    //                             this.publicVariable.isProcess = false;
+    //                             this.toastr.error(error.error.message || 'An error occurred. Please try again later.', 'Error');
+    //                         },
+    //                         complete: () => {
+    //                             this.publicVariable.isProcess = false;
+    //                         }
+    //                     })
+    //                 );
+    //             } else {
+    //                 this.markFormControlsAsTouched();
+    //             }
+    //         }
+    //         else {
+    //             this.toastr.error('File is required.', 'Error');
+    //             ////////window.alert('File is required.');
+    //         }
+
+    //     }
+    //     else {
+    //         this.toastr.error('Please add expenses before submitting.', 'Error');
+    //         //////window.alert('Please add expenses before submitting.');
+    //         return
+    //     }
+
+    // }
+
     onSubmit(Action: string): void {
+
+
+        if (this.publicVariable.dataForm.value.invoice_no == null ||
+            this.publicVariable.dataForm.value.invoice_no == undefined ||
+            this.publicVariable.dataForm.value.invoice_no == ''
+        ) {
+            this.toastr.warning('Select the Invoice No.', 'Warning');
+            return;
+        }
+
+        else  if (this.publicVariable.dataForm.value.MemoType == null ||
+            this.publicVariable.dataForm.value.MemoType == undefined ||
+            this.publicVariable.dataForm.value.MemoType == ''
+        ) {
+            this.toastr.warning('Select the Credit Memo Type', 'Warning');
+            return;
+        }
+
+        else  if (this.publicVariable.dataForm.value.creditMemoAmount == null ||
+            this.publicVariable.dataForm.value.creditMemoAmount == undefined ||
+            this.publicVariable.dataForm.value.creditMemoAmount == ''
+        ) {
+            this.toastr.warning('Enter the Credit Memo Amount', 'Warning');
+            return;
+        }  
+        else  if (this.publicVariable.dataForm.value.ImpiHeaderRemarks == null ||
+            this.publicVariable.dataForm.value.ImpiHeaderRemarks == undefined ||
+            this.publicVariable.dataForm.value.ImpiHeaderRemarks == ''
+        ) {
+            this.toastr.warning('Enter the Cancel Remarks', 'Warning');
+            return;
+        }       
 
         const totalAmount = parseFloat(this.amount); // Assuming this.totalAmount holds the total amount
 
@@ -1444,14 +1678,14 @@ export class CreditmemoComponent implements OnInit {
                 }
             }
             else {
-                this.toastr.error('File is required.', 'Error');
-                window.alert('File is required.');
+                this.toastr.warning('File is required.', 'warning');
+                //////window.alert('File is required.');
             }
 
         }
         else {
-            this.toastr.error('Please add expenses before submitting.', 'Error');
-            window.alert('Please add expenses before submitting.');
+            this.toastr.warning('Please add expenses before submitting.', 'warning');
+            ////////window.alert('Please add expenses before submitting.');
             return
         }
 

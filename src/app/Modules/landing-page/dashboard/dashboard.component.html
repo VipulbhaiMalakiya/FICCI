@@ -27,25 +27,23 @@
                     (click)="loadCustomerStatusCountList()">Customer</button>
             </li>
 
-
-
-
-
-
         </ul>
         <div class="tab-content" id="pills-tabContent">
             <div class="tab-pane fade " id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
                 <div class="data-tabs" *ngIf="this.publicVariable.storedRole !== 'Accounts'">
                     <ul class="nav nav-pills" role="tablist">
                         <li class="nav-item" *ngIf="storedRole !== 'Admin'">
-                            <a class="nav-link tabbg-1" [class.active]="this.publicVariable.storedRole !== 'Admin'"
-                                data-bs-toggle="pill" href="#home" (click)="loadCustomerStatusList('DRAFT')">
+                            <a class="nav-link tabbg-1"
+                                data-bs-toggle="pill" href="#home" (click)="loadCustomerStatusList('DRAFT')"
+                                
+                                [class.active]="customerStatus =='DRAFT'"
+                                >
                                 <small>Draft</small>
                                 <span>{{this.isDRAFT }}</span>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link tabbg-2" [class.active]="this.publicVariable.storedRole == 'Admin'"
+                            <a class="nav-link tabbg-2" [class.active]="this.publicVariable.storedRole == 'Admin' && customerStatus =='PENDING WITH APPROVER'"
                                 data-bs-toggle="pill" href="#home"
                                 (click)="loadCustomerStatusList('PENDING WITH APPROVER')">
                                 <small>Pending Approval</small>
@@ -54,6 +52,8 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link tabbg-3" data-bs-toggle="pill" href="#home"
+
+                            [class.active]="this.publicVariable.storedRole == 'Admin' && customerStatus =='APPROVED BY ACCOUNTS APPROVER'"
                                 (click)="loadCustomerStatusList('APPROVED BY ACCOUNTS APPROVER')">
                                 <small>Approved By Accounts</small>
                                 <span>{{this.ApprovedAccounts }}</span>
@@ -61,6 +61,8 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link tabbg-4" data-bs-toggle="pill" href="#home"
+
+                            [class.active]="this.publicVariable.storedRole == 'Admin' && customerStatus =='REJECTED BY CH APPROVER'"
                                 (click)="loadCustomerStatusList('REJECTED BY CH APPROVER')">
                                 <small>Rejected By Accounts</small>
                                 <span>{{this.RejectedbyAccounts }}</span>
@@ -68,6 +70,8 @@
                         </li>
                         <li class="nav-item" *ngIf="isFinance">
                             <a class="nav-link tabbg-6" data-bs-toggle="pill" href="#home"
+
+                            [class.active]="customerStatus =='FOR APPROVAL'"
                                 (click)="loadCustomerStatusList('FOR APPROVAL')">
                                 <small>For Approval</small>
                                 <span>{{this.forapproval}}</span>
@@ -75,6 +79,7 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link tabbg-5" data-bs-toggle="pill" href="#home"
+                            [class.active]="customerStatus =='ALL'"
                                 (click)="loadCustomerStatusList('ALL')">
                                 <small>All</small>
                                 <span>{{this.ALL }}</span>
@@ -88,6 +93,7 @@
 
                         <li class="nav-item">
                             <a class="nav-link tabbg-6" data-bs-toggle="pill" href="#home"
+                            [class.active]="customerStatus =='FOR APPROVAL'"
                                 (click)="loadCustomerStatusList('FOR APPROVAL')">
                                 <small>For Approval</small>
                                 <span>{{this.forapproval}}</span>
@@ -96,6 +102,7 @@
 
                         <li class="nav-item">
                             <a class="nav-link tabbg-3" data-bs-toggle="pill" href="#home"
+                            [class.active]="customerStatus =='APPROVED BY ACCOUNTS APPROVER'"
                                 (click)="loadCustomerStatusList('APPROVED BY ACCOUNTS APPROVER')">
                                 <small>Approved</small>
                                 <span>{{this.ApprovedAccounts }}</span>
@@ -105,6 +112,7 @@
 
                         <li class="nav-item">
                             <a class="nav-link tabbg-4" data-bs-toggle="pill" href="#home"
+                            [class.active]="customerStatus =='REJECTED BY CH APPROVER'"
                                 (click)="loadCustomerStatusList('REJECTED BY CH APPROVER')">
                                 <small>Reject</small>
                                 <span>{{this.RejectedbyAccounts }}</span>
@@ -123,6 +131,7 @@
 
                         <li class="nav-item">
                             <a class="nav-link tabbg-5" data-bs-toggle="pill" href="#home"
+                            [class.active]="customerStatus =='ALL'"
                                 (click)="loadCustomerStatusList('ALL')">
                                 <small>All</small>
                                 <span>{{this.ALL }}</span>
@@ -287,7 +296,7 @@
 
                         <li class="nav-item" *ngIf="this.publicVariable.storedRole === 'Employee'">
                             <a class="nav-link  tabbg-1"
-                                [class.active]="this.publicVariable.storedRole === 'Employee' && headerStatus !=='Posted Tax Invoice' && headerStatus !=='Posted Proforma Invoice'"
+                                [class.active]="this.publicVariable.storedRole === 'Employee' && headerStatus =='DRAFT'"
                                 data-bs-toggle="pill" href="#PIhome"
                                 (click)="loadInoivceStatusList('DRAFT'); headerStatus = 'DRAFT'">
                                 <small>Draft</small>
@@ -296,14 +305,17 @@
                         </li>
 
                         <li class="nav-item" *ngIf="this.publicVariable.storedRole === 'Approver'">
-                            <a class="nav-link tabbg-6" [class.active]="this.publicVariable.storedRole === 'Approver'"
+                            <a class="nav-link tabbg-6" [class.active]="headerStatus =='FOR APPROVAL'"
                                 data-bs-toggle="pill" href="#PIhome" (click)="loadInoivceStatusList('FOR APPROVAL')">
                                 <small>For Approval</small>
                                 <span>{{this.PIforapproval}}</span>
                             </a>
                         </li>
                         <li class="nav-item" *ngIf="this.publicVariable.storedRole === 'Employee'">
-                            <a class="nav-link tabbg-2" data-bs-toggle="pill" href="#PIhome"
+                            <a class="nav-link tabbg-2"
+                            [class.active]="headerStatus =='PENDING WITH APPROVER'"
+                            
+                            data-bs-toggle="pill" href="#PIhome"
                                 (click)="loadInoivceStatusList('PENDING WITH APPROVER')">
                                 <small>Pending Approval</small>
                                 <span>{{PIPendingApproval}}</span>
@@ -311,7 +323,8 @@
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link  tabbg-3" [class.active]="this.publicVariable.storedRole === 'Admin'"
+                            <a class="nav-link  tabbg-3"
+                             [class.active]="this.publicVariable.storedRole === 'Admin' &&  headerStatus =='APPROVED BY ACCOUNTS APPROVER'"
                                 data-bs-toggle="pill" href="#PIhome"
                                 (click)="loadInoivceStatusList('APPROVED BY ACCOUNTS APPROVER')">
                                 <small>Approved </small>
@@ -321,13 +334,17 @@
 
                         <li class="nav-item">
                             <a class="nav-link tabbg-4" data-bs-toggle="pill" href="#PIhome"
+
+                            [class.active]="headerStatus =='REJECTED BY CH APPROVER'"
                                 (click)="loadInoivceStatusList('REJECTED BY CH APPROVER')">
                                 <small>Rejected </small>
                                 <span>{{PIRejectedbyAccounts}}</span>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link tabbg-4" data-bs-toggle="pill" href="#PIhome"
+                            <a class="nav-link tabbg-4"
+                            [class.active]="headerStatus =='Cancelled'"
+                            data-bs-toggle="pill" href="#PIhome"
                                 (click)="loadInoivceStatusList('Cancelled')">
                                 <small>Cancelled </small>
                                 <span>{{Cancelled}}</span>
@@ -335,7 +352,7 @@
                         </li>
                         <li class="nav-item" *ngIf="invoiceType === 'Tax Invoice'">
                             <a class="nav-link tabbg-5"
-                                [class.active]="invoiceType == 'Tax Invoice' && headerStatus =='Posted Tax Invoice' "
+                                [class.active]="headerStatus =='Posted Tax Invoice' "
                                 data-bs-toggle="pill" href="#menu4" (click)="loadInvoiceSummary()">
                                 <small>Posted Tax Invoice </small>
                                 <span>{{PostedTaxInvoiceCount}}</span>
@@ -343,7 +360,7 @@
                         </li>
                         <li class="nav-item" *ngIf="invoiceType === 'Proforma Invoice'">
                             <a class="nav-link tabbg-5"
-                                [class.active]="invoiceType == 'Proforma Invoice' && headerStatus =='Posted Proforma Invoice' "
+                                [class.active]="headerStatus =='Posted Proforma Invoice' "
                                 data-bs-toggle="pill" href="#menu5" (click)="PIloadInvoiceSummary()">
                                 <small>Posted Proforma Invoice </small>
                                 <span>{{PIPostedTaxInvoiceCount}}</span>
@@ -351,8 +368,9 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link tabbg-5" data-bs-toggle="pill" href="#PIhome"
+                            [class.active]="headerStatus =='ALL' "
                                 (click)="loadInoivceStatusList('ALL')">
-                                <small>All</small>
+                                <small>All </small>
                                 <span>{{PIALL}}</span>
                             </a>
                         </li>
@@ -473,7 +491,7 @@
 
                                                             publicVariable.storedEmail == d.impiHeaderCreatedBy &&
                                                                     (d.isDraft ||
-                                                                    d.headerStatus == 'REJECTED BY TL APPROVER'  ||
+                                                                   
                                                                     d.headerStatus == 'REJECTED BY CH APPROVER' ||
                                                                     d.headerStatus == 'REJECTED BY ACCOUNTS APPROVER'
                                                                     )" href="javascript:void(0);"
@@ -482,7 +500,7 @@
                                                             <a *ngIf="publicVariable.storedRole !== 'Admin' && publicVariable.storedRole !== 'Approver' &&
                                                                         publicVariable.storedEmail == d.impiHeaderCreatedBy &&
                                                                     (d.isDraft ||
-                                                                    d.headerStatus == 'REJECTED BY TL APPROVER'  ||
+                                                                   
                                                                     d.headerStatus == 'REJECTED BY CH APPROVER' ||
                                                                     d.headerStatus == 'REJECTED BY ACCOUNTS APPROVER'
                                                                   )" href="javascript:void(0)"
@@ -930,7 +948,8 @@
                                                     <th>Division</th>
                                                     <th>Customer Name</th>
                                                     <th>City</th>
-                                                    <th>Amount</th>
+                                                    <th>Inoice Amount</th>
+                                                    <th>Credit Memo Amount</th>
                                                     <th>TL Approver</th>
                                                     <!-- <th>CL Approver</th> -->
                                                     <!-- <th>Finance Approver</th> -->
@@ -958,6 +977,7 @@
                                                     <td>{{d.impiHeaderCustomerName | titlecase}}</td>
                                                     <td>{{d.impiHeaderCustomerCity | titlecase}}</td>
                                                     <td>{{d.impiHeaderTotalInvoiceAmount | number:'1.2-2' }}</td>
+                                                    <td>{{d.memoAmount | number:'1.2-2' }}</td>
                                                     <td>{{d.impiHeaderTlApprover | titlecase}}</td>
                                                     <!-- <td>{{d.impiHeaderClusterApprover | titlecase}}</td> -->
                                                     <!-- <td>{{d.impiHeaderFinanceApprover | titlecase}}</td> -->
@@ -1091,7 +1111,7 @@
                                                 <thead>
                                                     <tr>
                                                         <th>#</th>
-                                                        <th>No</th>
+                                                        <th>Credit Memo No</th>
                                                         <th>Posting Date</th>
                                                         <th>Applies To DocNo</th>
                                                         <th>Customer No</th>
@@ -1145,6 +1165,10 @@
                                                                     (click)="onCreditNoteView(d)"><img
                                                                         src="../assets/images/view-icon.svg"
                                                                         alt="" /></a>
+
+                                                                        <a href="javascript:void(0);"
+                                            (click)="PostedSalesCreditNotedownalodFile(d.no)"><img
+                                                src="../assets/images/download-icon.svg" alt="" /></a>
                                                                 <!-- <a *ngIf="publicVariable.storedRole !== 'Admin' &&
                                                                 (d.isDraft ||
                                                                 d.headerStatus == 'REJECTED BY TL APPROVER'  ||

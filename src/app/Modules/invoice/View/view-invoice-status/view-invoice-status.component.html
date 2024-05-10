@@ -353,7 +353,7 @@
 
     <form
 
-        [formGroup]="publicVariable.dataForm" *ngIf="data.headerStatus !== 'CANCELLATION APPROVED BY TL' && data.headerStatus !== 'REJECTED BY TL APPROVER' && data.headerStatus !== 'CANCELLATION APPROVED BY FINANCE'">
+        [formGroup]="publicVariable.dataForm" *ngIf="data.headerStatus !== 'CANCELLATION APPROVED BY TL' && data.headerStatus !== 'REJECTED BY TL APPROVER' && data.headerStatus !== 'CANCELLATION APPROVED BY FINANCE' && data.headerStatus !== 'REJECTED BY FINANCE APPROVER'">
         <div class="col-md-12 mt-3">
             <div class="form-group">
                 <label>Remarks <sup class="text-danger">*</sup></label>
@@ -372,7 +372,7 @@
 
                 <input type="checkbox" class="btn-check" formControlName="IsDraft" id="btn-check"
                 autocomplete="off">
-            <label class="common-btn w-auto me-2" for="btn-check"  *ngIf ="!(data.IsPostedTaxInvoice) && data.impiHeaderCreatedBy == this.publicVariable.storedEmail && data.headerStatus!='DRAFT'"
+            <label class="common-btn w-auto me-2" for="btn-check"  *ngIf ="!(data.IsPostedTaxInvoice) && data.impiHeaderCreatedBy == this.publicVariable.storedEmail && data.headerStatus =='APPROVED BY TL' "
             (click)="onSubmit(false)">Cancel Request
                 </label>
             <button type="submit" *ngIf ="!(data.impiHeaderInvoiceType=='Tax Invoice') && data.impiHeaderCreatedBy == this.publicVariable.storedEmail && (data.headerStatus =='APPROVED BY TL' || data.headerStatus =='APPROVED BY FINANCE') "

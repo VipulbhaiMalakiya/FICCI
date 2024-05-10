@@ -340,7 +340,9 @@ export class DashboardComponent {
                         item.customerStatus === 'PENDING WITH FINANCE APPROVER');
                 } else {
                     filteredData = this.dashboardData.filter((item: any) =>
-                        (item.createdBy === this.publicVariable.storedEmail ||
+                        (
+                            //item.createdBy === this.publicVariable.storedEmail ||
+
                             item.department === sessionStorage.getItem('department')) &&
                         (item.customerStatus === 'PENDING WITH TL APPROVER' ||
                             item.customerStatus === 'PENDING WITH CH APPROVER' ||
@@ -355,14 +357,14 @@ export class DashboardComponent {
             case 'APPROVED BY ACCOUNTS APPROVER':
                 filteredData = this.dashboardData.filter((item: any) =>
                     // item.department === sessionStorage.getItem('department') ||
-                    item.createdBy === this.publicVariable.storedEmail &&
+                   // item.createdBy === this.publicVariable.storedEmail &&
                     item.customerStatus === this.customerStatus || item.customerStatus === 'APPROVED BY FINANCE');
 
                 break;
             case 'REJECTED BY CH APPROVER':
                 filteredData = this.dashboardData.filter((item: any) =>
                     // item.department === sessionStorage.getItem('department') ||
-                    item.createdBy === this.publicVariable.storedEmail &&
+                  //  item.createdBy === this.publicVariable.storedEmail &&
                     (item.customerStatus === 'REJECTED BY TL APPROVER' ||
                         item.customerStatus === 'REJECTED BY CH APPROVER' ||
                         item.customerStatus === 'REJECTED BY ACCOUNTS APPROVER' ||
@@ -553,7 +555,8 @@ export class DashboardComponent {
             'FOR APPROVAL': 0,
             'Cancelled': 0,
             'Reversal': 0,
-            'ALL': 0
+            'ALL': 0,
+            'TAX INVOICE POSTED':0
         };
 
         this.invoiceType = invoiceType;
@@ -660,6 +663,7 @@ export class DashboardComponent {
     }
     loadInoivceStatusList(status: string): void {
         this.customerStatus = status;
+        this.headerStatus =status;
         let filteredData;
         switch (this.customerStatus) {
             case 'DRAFT':
@@ -689,6 +693,7 @@ export class DashboardComponent {
                             || item.headerStatus === 'MAIL SENT BY ACCOUNT TO CUSTOMER'
                             || item.headerStatus === 'APPROVED BY FINANCE'
                             || item.headerStatus === 'APPROVED BY TL'
+                            || item.headerStatus === 'TAX INVOICE POSTED'
                             || item.headerStatus === 'MAIL SENT BY FINANCE TO CUSTOMER'));
                 }
                 else {
@@ -698,6 +703,7 @@ export class DashboardComponent {
                             || item.headerStatus === 'MAIL SENT BY ACCOUNT TO CUSTOMER'
                             || item.headerStatus === 'APPROVED BY FINANCE'
                             || item.headerStatus === 'APPROVED BY TL'
+                            || item.headerStatus === 'TAX INVOICE POSTED'
                             || item.headerStatus === 'MAIL SENT BY FINANCE TO CUSTOMER'));
                 }
 
@@ -943,7 +949,8 @@ export class DashboardComponent {
             'FOR APPROVAL': 0,
             'Cancelled': 0,
             'Reversal': 0,
-            'ALL': 0
+            'ALL': 0,
+            'CREDIT MEMO POSTED': 0
         };
 
         // Filter data for each customer status
@@ -1043,6 +1050,7 @@ export class DashboardComponent {
                     || item.headerStatus === 'MAIL SENT BY ACCOUNT TO CUSTOMER'
                     || item.headerStatus === 'APPROVED BY FINANCE'
                     || item.headerStatus === 'APPROVED BY TL'
+                    || item.headerStatus === 'CREDIT MEMO POSTED'
                     || item.headerStatus === 'MAIL SENT BY FINANCE TO CUSTOMER'));
                 break;
             case 'REJECTED BY CH APPROVER':
@@ -1213,6 +1221,39 @@ export class DashboardComponent {
         }).catch(() => { });
 
     }
+
+    PostedSalesCreditNotedownalodFile(fileUrl: any) {
+        this.publicVariable.isProcess = true;
+        this.PostedSalesCreditNoteAttachment(fileUrl);
+    }
+
+    PostedSalesCreditNoteAttachment(invoice: string) {
+        try {
+            const subscription = this.IAPI.GetPITaxInvoiceAttachment(invoice).subscribe({
+                next: (response: any) => {
+
+                    if (response.data.length > 0) {
+                        this.InvoiceAttachment = response.data[0];
+                        const fileName = this.InvoiceAttachment.invoiceNo+'.pdf';
+                        const fileType = `application/pdf`;
+                        this.fileService.downloadFile(this.InvoiceAttachment.attachment, fileName, fileType);
+                        this.publicVariable.isProcess  = false;
+                    }
+                    this.handleLoadingError();
+                },
+                error: (error) => {
+                    console.error('Error loading project list:', error);
+                    this.handleLoadingError();
+                },
+            });
+
+            this.publicVariable.Subscription.add(subscription);
+        } catch (error) {
+            console.error('Error loading project list:', error);
+            this.handleLoadingError();
+        }
+    }
+
 
     onEdit(data: customerStatusListModel): void {
         if (data.customerId) {

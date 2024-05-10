@@ -52,7 +52,8 @@
                         <th>Division</th>
                         <th>Vendor Name</th>
                         <th>City</th>
-                        <th>Amount</th>
+                        <th>Invoice Amount</th>
+                        <th>Credit Memo Amount</th>
                         <th>TL Approver</th>
                         <!-- <th>CL Approver</th> -->
                         <!-- <th>Finance Approver</th> -->
@@ -77,6 +78,7 @@
                         <td>{{d.impiHeaderCustomerName | titlecase}}</td>
                         <td>{{d.impiHeaderCustomerCity | titlecase}}</td>
                         <td>{{d.impiHeaderTotalInvoiceAmount | number:'1.2-2' }}</td>
+                        <td>{{d.memoAmount | number:'1.2-2' }}</td>
                         <td>{{d.impiHeaderTlApprover | titlecase}}</td>
                         <!-- <td>{{d.impiHeaderClusterApprover | titlecase}}</td> -->
                         <!-- <td>{{d.impiHeaderFinanceApprover | titlecase}}</td> -->

@@ -43,6 +43,8 @@
                         <tr>
                             <th>#</th>
                             <th>Record No.</th>
+                            <th>Credit Memo No.</th>
+
                             <th>Invoice Type</th>
                             <th>Project Code</th>
                             <th>Project Name</th>
@@ -50,13 +52,15 @@
                             <th>Division</th>
                             <th>Vendor Name</th>
                             <th>City</th>
-                            <th>Amount</th>
-                            <th>TL Approver</th>
-                            <!-- <th>CL Approver</th> -->
-                            <th>Finance Approver</th>
+                            <th>Invoice Amount</th>
+                            <th>Credit Memo Amount</th>
+                           
                             <!-- <th>Accounts Approver </th> -->
                             <th>Created On</th>
                             <th>Created By</th>
+                            <th>TL Approver</th>
+                            <!-- <th>CL Approver</th> -->
+                            <th>Finance Approver</th>
                             <th>Status</th>
                             <th class="action-cl">Action</th>
                         </tr>
@@ -68,6 +72,7 @@
 
                             <td>{{d.recordID}}</td>
 
+                            <td>{{d.creditMemoNavNo}}</td>
                             <td>{{d.impiHeaderInvoiceType | titlecase}}</td>
                             <td>{{d.impiHeaderProjectCode}}</td>
                             <td>{{d.impiHeaderProjectName | titlecase}}</td>
@@ -76,12 +81,13 @@
                             <td>{{d.impiHeaderCustomerName | titlecase}}</td>
                             <td>{{d.impiHeaderCustomerCity | titlecase}}</td>
                             <td>{{d.impiHeaderTotalInvoiceAmount | number:'1.2-2' }}</td>
-                            <td>{{d.impiHeaderTlApprover | titlecase}}</td>
-                            <!-- <td>{{d.impiHeaderClusterApprover | titlecase}}</td> -->
-                            <td>{{d.impiHeaderFinanceApprover | titlecase}}</td>
+                            <td>{{d.memoAmount | number:'1.2-2' }}</td>                          
                             <!-- <td>{{d.accountApprover | titlecase}}</td> -->
                             <td>{{d.impiHeaderSubmittedDate | date:'medium':'IST'}}</td>
                             <td>{{d.impiHeaderCreatedBy | titlecase}}</td>
+                            <td>{{d.impiHeaderTlApprover | titlecase}}</td>
+                            <!-- <td>{{d.impiHeaderClusterApprover | titlecase}}</td> -->
+                            <td>{{d.impiHeaderFinanceApprover | titlecase}}</td>
                             <td>{{d.headerStatus }}</td>
 
                             <td>

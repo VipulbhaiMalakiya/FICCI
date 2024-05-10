@@ -30,8 +30,8 @@ export class SearchFilterPipe1 implements PipeTransform {
                 || (item.headerRecordID && item.headerRecordID.toLowerCase().includes(searchText))
                 || (item.sellToCustomerNo && item.sellToCustomerNo.toLowerCase().includes(searchText))
                 || (item.recordID && item.recordID.toLowerCase().includes(searchText))
-
-
+                || (item.creditMemoNavNo && item.creditMemoNavNo.toLowerCase().includes(searchText))
+                || (item.headerPiNo && item.headerPiNo.toLowerCase().includes(searchText))
                 || (item.headerStatus && item.headerStatus.toLowerCase().includes(searchText));
         });
 

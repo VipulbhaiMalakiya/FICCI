@@ -1542,4 +1542,19 @@ header.login-page {
     }
 
 
+
+}
+
+#toast-container.toast-container {
+    
+    position: fixed !important;
+    top: 30% !important;
+    left:50%;
+    transform: translate(-30%, -50%) !important;
+
+}
+
+.toast-container .ngx-toastr
+{
+    width: 400px;
 }

@@ -139,7 +139,9 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
             const pan = this.publicVariable.dataForm.get('PANNo')?.value;
 
             if (pan.length < 10) {
-                alert('Please enter Valid PAN No.');
+
+                this.toastr.warning('Please enter Valid PAN No.');
+               // this.toastr.warning('Please enter Valid PAN No.');
                 return;
             }
 
@@ -152,7 +154,7 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
                         // You can update the UI to indicate that the PAN number is valid
                     } else {
                         // PAN number already exists
-                        // alert('Customers with the same PAN Number and different GST Number already exist');
+                        // this.toastr.warning('Customers with the same PAN Number and different GST Number already exist');
                         this.panExists = true;
                         // return
                         // You can update the UI to indicate that the PAN number already exists
@@ -402,24 +404,14 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
 
     onSubmit(action: boolean): void {
 
-       if( !this.checkGst() ) return;
-
-        // if (this.publicVariable.dataForm.value.GSTCustomerType !== 2 && this.publicVariable.dataForm.value.GSTRegistrationNo == '') {
-        //     alert('GST number required!');
-        //     return
-        // }
-
-
-
-
-        else {
-
-
+      
             if (this.publicVariable.dataForm.valid) {
 
+                if( !this.checkGst() ) return;
                 const newData = this.publicVariable.dataForm.value;
                 if (newData.GSTCustomerType !== 2 && newData.GSTRegistrationNo == '') {
-                    alert('GST number required!');
+                    this.toastr.warning('GST number required!');
+                 
                     return
                 }
                 const isUpdate = !!newData.customerId;
@@ -476,7 +468,7 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
             } else {
                 this.markFormControlsAsTouched();
             }
-        }
+        
 
     }
 
@@ -486,7 +478,7 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
         try {
             const gst = this.publicVariable.dataForm.get('GSTRegistrationNo')?.value;
             // if (gst.length < 15) {
-            //     alert('Please enter Valid GST No.');
+            //     this.toastr.warning('Please enter Valid GST No.');
             //     return;
             // }
 
@@ -500,7 +492,7 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
                         // You can update the UI to indicate that the GST number is valid
                     } else {
                         // GST number already exists
-                        alert('GST number already exists');
+                        this.toastr.warning('GST number already exists');
                         this.gstExists = true;
                         return
                         // You can update the UI to indicate that the GST number already exists
@@ -524,7 +516,7 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
         let PANNo =  this.publicVariable.dataForm.get('PANNo')?.value.toUpperCase();
         let GSTNo =  this.publicVariable.dataForm.get('GSTRegistrationNo')?.value.toUpperCase();
 
-        if (PANNo == "") {
+        if (PANNo == "" || PANNo == undefined || PANNo == null) {
             this.toastr.warning('Please Enter PAN Number');
             this.panExists = false;
             this.gstExists = false;
@@ -600,12 +592,12 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
             'stateCode',
             'cityCode',
             'postCode',
-            // 'GSTCustomerType',
+            'GSTCustomerType',
             'email',
             'PrimaryContactNo',
             'contact',
-            'CustomerRemarks'
-            // 'PANNo',
+            'CustomerRemarks',
+             'PANNo',
         ].forEach((controlName) => {
             this.publicVariable.dataForm.controls[controlName].markAsTouched();
         });

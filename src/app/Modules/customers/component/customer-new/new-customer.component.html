@@ -19,14 +19,22 @@
                 </div>
                 <div class="col-md-3 col-sm-6">
                     <div class="form-group">
-                        <label>Name <sup class="text-danger">*</sup></label>
-                        <input type="text" class="form-control" placeholder="Name" formControlName="name" />
-                        <div *ngIf="shouldShowError('name', 'maxlength')" class="text-danger">
-                            Name must be less than 100 characters.
+                        <label>Customer Name <sup class="text-danger">*</sup></label>
+                        <input type="text" class="form-control" placeholder="Name" maxlength="100"                        
+                        formControlName="name" />
+                        <div *ngIf="shouldShowError('name', 'required')" class="text-danger">
+                            Customer Name  is required.
                         </div>
-                        <div *ngIf="shouldShowError('name', 'alphanumericWithSpaces')" class="text-danger">
+                        
+                        <div *ngIf="shouldShowError('name', 'alphanumericWithSpaces') && !shouldShowError('name', 'required')" class="text-danger">
+
+                            Customer Name must be alphanumeric.
+                        </div>
+
+
+                        <!-- <div *ngIf="shouldShowError('name', 'alphanumericWithSpaces')" class="text-danger">
                             Name must be alphanumeric.
-                        </div>
+                        </div> -->
                     </div>
                 </div>
                 <div class="col-md-3 col-sm-6">
@@ -34,6 +42,10 @@
                         <label>Name 2 </label>
                         <input type="text" class="form-control" placeholder="Name 2" formControlName="name2"
                             maxlength="100" />
+
+                            <div *ngIf="shouldShowError('name2', 'required')" class="text-danger">
+                                Address 2 is required.
+                            </div>
 
                         <div *ngIf="shouldShowError('name2', 'pattern')" class="text-danger">
                             Name2 must be alphanumeric.
@@ -43,7 +55,9 @@
                 <div class="col-md-3 col-sm-6">
                     <div class="form-group">
                         <label>Address <sup class="text-danger">*</sup></label>
-                        <input type="text" class="form-control" placeholder="Address" formControlName="address" />
+                        <input type="text" class="form-control"
+                         maxlength="100"
+                        placeholder="Address" formControlName="address" />
                         <div *ngIf="shouldShowError('address', 'required')" class="text-danger">
                             Address is required.
                         </div>
@@ -57,13 +71,16 @@
                 </div>
                 <div class="col-md-3 col-sm-6">
                     <div class="form-group">
-                        <label>Address 2 <sup class="text-danger">*</sup></label>
-                        <input type="text" class="form-control" placeholder="Address 2" formControlName="address2" />
-                        <div *ngIf="shouldShowError('address2', 'required')" class="text-danger">
-                            Address is required.
-                        </div>
+                        <label>Address 2 </label>
+                        <input type="text" class="form-control" placeholder="Address 2" 
+                        maxlength="100"
+                        
+                        formControlName="address2" />
+                        <!-- <div *ngIf="shouldShowError('address2', 'required')" class="text-danger">
+                            Address 2 is required.
+                        </div> -->
                         <div *ngIf="shouldShowError('address2', 'maxlength')" class="text-danger">
-                            address2 must be less than 100 characters.
+                            Address2 must be less than 100 characters.
                         </div>
                         <div *ngIf="shouldShowError('address2', 'forbiddenCharacters')" class="text-danger">
                             Special characters are not allowed in the address2
@@ -81,7 +98,7 @@
                             </ng-template>
                         </ng-select>
                         <div *ngIf="shouldShowError('countryCode', 'required')" class="text-danger">
-                            This field is required
+                            Country/Region Code is required
                         </div>
                     </div>
                 </div>
@@ -97,7 +114,7 @@
                             </ng-template>
                         </ng-select>
                         <div *ngIf="shouldShowError('stateCode', 'required')" class="text-danger">
-                            This field is required
+                            State is required
                         </div>
                     </div>
                 </div>
@@ -113,7 +130,7 @@
                             </ng-template>
                         </ng-select>
                         <div *ngIf="shouldShowError('cityCode', 'required')" class="text-danger">
-                            This field is required
+                            City is required
                         </div>
                     </div>
                 </div>
@@ -121,14 +138,12 @@
                     <div class="form-group">
                         <label>Post Code <sup class="text-danger">*</sup></label>
                         <input type="text" formControlName="postCode" class="form-control" placeholder="Pincode"
-                            (input)="onInputChange($event)" maxlength="15" (keyup)="onpostCodeSelectionChange($event)">
+                            (input)="onInputChange($event)" maxlength="10" (keyup)="onpostCodeSelectionChange($event)">
                         <div *ngIf="shouldShowError('postCode', 'required')" class="text-danger">
                             Post Code is required.
                         </div>
-                        <div *ngIf="shouldShowError('postCode','pattern')" class="text-danger"> Please
-                            enter a
-                            valid
-                            6-digit Pin Code.</div>
+                        <div *ngIf="shouldShowError('postCode','pattern')" class="text-danger"> 
+                            Please enter a valid 6-digit Pin Code.</div>
                     </div>
                 </div>
 
@@ -137,19 +152,19 @@
                         <label>E-Mail <sup class="text-danger">*</sup></label>
                         <input type="email" class="form-control" formControlName="email" placeholder="email"
                             maxlength="80" />
-                        <!-- <div *ngIf="shouldShowError('email', 'required')" class="text-danger">
+                        <div *ngIf="shouldShowError('email', 'required')" class="text-danger">
                             Email is required.
-                        </div> -->
+                        </div>
                         <!-- <div *ngIf="shouldShowError('email', 'email')" class="text-danger">
                             Please enter a valid email address.
                         </div> -->
 
-                        <div *ngIf="shouldShowError('email', 'invalidEmailFormat')" class="text-danger">
+                        <div *ngIf="shouldShowError('email', 'invalidEmailFormat') && !shouldShowError('email', 'required')" class="text-danger">
                             Please enter a valid email address.</div>
 
-                        <div *ngIf="shouldShowError('email', 'maxlength')" class="text-danger">
+                        <!-- <div *ngIf="shouldShowError('email', 'maxlength')" class="text-danger">
                             Email must be less than 80 characters.
-                        </div>
+                        </div> -->
                     </div>
                 </div>
                 <div class="col-md-3 col-sm-6">
@@ -158,7 +173,7 @@
                         <input type="text" class="form-control" formControlName="PrimaryContactNo"
                             placeholder="Primary Contact No" (input)="onInputChange($event)" maxlength="12" />
                         <div *ngIf="shouldShowError('PrimaryContactNo', 'required')" class="text-danger">
-                            Primary Contact No is required.
+                            Primary Contact No. is required.
                         </div>
                         <div *ngIf="shouldShowError('PrimaryContactNo', 'pattern')" class="text-danger">
                             Please enter a valid phone number.
@@ -168,15 +183,18 @@
                 <div class="col-md-3 col-sm-6">
                     <div class="form-group">
                         <label>Contact Person <sup class="text-danger">*</sup></label>
-                        <input type="text" class="form-control" formControlName="contact" placeholder="Contact" />
+                        <input type="text" class="form-control" formControlName="contact" placeholder="Contact"  maxlength="100" />
 
-                        <div *ngIf="shouldShowError('contact', 'alphanumericWithSpaces')" class="text-danger">
+                        <div *ngIf="shouldShowError('contact', 'required')" class="text-danger">
+                            Contact Person is required.
+                        </div>
+
+                     
+                        <div *ngIf="shouldShowError('contact', 'alphanumericWithSpaces')  && !shouldShowError('contact', 'required')" class="text-danger">
                             Contact must be alphanumeric with spaces.
                         </div>
 
-                        <div *ngIf="shouldShowError('contact', 'maxlength')" class="text-danger">
-                            Contact must be less than 100 characters.
-                        </div>
+                       
                     </div>
                 </div>
                 <div class="col-md-3 col-sm-6">
@@ -188,7 +206,7 @@
                             (change)="ongstTypeChange($event)" maxlength="20">
                         </ng-select>
                         <div *ngIf="shouldShowError('GSTCustomerType', 'required')" class="text-danger">
-                            This field is required
+                            GST Customer Type is required
                         </div>
                     </div>
                 </div>
@@ -197,9 +215,17 @@
                         <label>P.A.N. No. <sup class="text-danger">*</sup></label>
                         <input type="text" class="form-control" formControlName="PANNo" placeholder="P.A.N. No."
                             (change)="ValidatePAN()" maxlength="10" />
-                        <div *ngIf="shouldShowError('PANNo', 'invalidPAN')" class="text-danger">
+                        
+                            <div *ngIf="shouldShowError('PANNo', 'required')" class="text-danger">
+                                PAN No. is required.
+                            </div>
+                        
+                        
+                            <div *ngIf="shouldShowError('PANNo', 'invalidPAN')   && !shouldShowError('contact', 'required')" class="text-danger">
                             Please enter a valid PAN Number.
                         </div>
+
+
                         <div *ngIf="panExists" class="text-warning">
                             Customers with the same PAN Number and different GST Number already exist.
                         </div>
@@ -227,10 +253,10 @@
                 <div class="col-md-9">
                     <div class="form-group">
                         <label>Remarks <sup class="text-danger">*</sup></label>
-                        <textarea class="form-control h-100" cols="3" rows="3"
+                        <textarea class="form-control h-100" cols="3" rows="2" maxlength="100"
                             formControlName="CustomerRemarks"></textarea>
                         <div *ngIf="shouldShowError('CustomerRemarks', 'required')" class="text-danger">
-                            this fields required.
+                            Remarks is required.
                         </div>
                     </div>
                 </div>

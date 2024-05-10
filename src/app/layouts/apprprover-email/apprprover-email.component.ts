@@ -135,7 +135,7 @@ export class ApprproverEmailComponent {
 
                     } else {
                         this.toastr.error(res.message, 'Error');
-                        alert(res.message);
+                      //  alert(res.message);
                         this.router.navigate(['/']);
                         this.publicVariable.isProcess = false;
                         this.publicVariable.dataForm.reset();
@@ -167,7 +167,8 @@ export class ApprproverEmailComponent {
 
 
                     if (!response.status) {
-                        alert('data not found')
+                       // alert('data not found')
+                        this.toastr.warning("Record Not Found",'Warning');
                         return
                     }
                     this.data = response.data;
@@ -303,14 +304,14 @@ export class ApprproverEmailComponent {
                     next: (res: any) => {
                         if (res.status === true) {
                             this.toastr.success(res.message, 'Success');
-                            alert(res.message)
+                            //alert(res.message)
                             //this.router.navigate(['invoice/status']);
                             this.publicVariable.dataForm.reset();
                             window.location.reload();
 
                         } else {
                             this.toastr.error(res.message, 'Error');
-                            alert(res.message);
+                           // alert(res.message);
                             this.publicVariable.dataForm.reset();
 
                         }

@@ -5,7 +5,7 @@
 
     <form [formGroup]="publicVariable.dataForm">
         <input type="hidden" formControlName="headerid">
-        <div class="pipage-radio">
+        <div class="pipage-radio" hidden>
 
             <div class="form-check">
                 <input class="form-check-input" formControlName="ImpiHeaderInvoiceType" type="radio"
@@ -20,7 +20,7 @@
             <div class="row">
                 <div class="col-md-4 col-sm-6">
                     <div class="form-group">
-                        <label for="projectCode">Invoice No <sup class="text-danger">*</sup></label>
+                        <label for="projectCode">Posted Invoice No <sup class="text-danger">*</sup></label>
                         <ng-select [items]="InvoiceSummaryList" #select bindLabel="no" bindValue="no"
                         placeholder="{{InvoiceSummaryList.length>0 ?'Select Invoice':'Please wait...Data Loading...'}}" formControlName="invoice_no"
                             (change)="onSelectInvoice($event)" [searchable]="true" [searchFn]="custominvoiceSearchFn"
@@ -69,15 +69,16 @@
                         <label for="CreditMemoCancelRemarks">Cancel Reason <sup class="text-danger">*</sup></label>
                         <select id="CreditMemoCancelRemarks"  formControlName="CreditMemoCancelRemarks" class="form-select"
                         >
-                            <option value="">Select Option</option>
-                            <option value="Option">Option</option>
+                            <option value="">Select Option</option>                         
                             <option value="Duplicate">Duplicate</option>
                             <option value="Data Entry Mistake">Data Entry Mistake</option>
                         </select>
                     </div>
+
                     <div *ngIf="shouldShowError('CreditMemoCancelRemarks','required')" class="text-danger">This field
                         is required
                     </div>
+                    
                 </div>
 
                 <div class="col-md-4 col-sm-6">
@@ -669,6 +670,7 @@
                     <textarea class="form-control h-100" cols="2" rows="2" id="Remarks"
                         formControlName="ImpiHeaderRemarks"></textarea>
                 </div>
+
                 <div *ngIf="shouldShowError('ImpiHeaderRemarks','required')" class="text-danger">This field
                     is required
                 </div>

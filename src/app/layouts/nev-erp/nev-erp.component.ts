@@ -19,7 +19,8 @@ export class NevErpComponent implements OnInit {
 
         this.route.queryParams.subscribe(params => {
             console.log(params['id']);
-            this.email = params['id'];
+            this.email = atob(params['id']);
+            console.log(this.email);
         });
 
        // this.email = this.route.snapshot.paramMap.get('id')

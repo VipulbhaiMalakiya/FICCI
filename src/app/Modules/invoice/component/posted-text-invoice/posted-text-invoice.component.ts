@@ -46,9 +46,20 @@ export class PostedTextInvoiceComponent {
                 next: (response: any) => {
 
                     this.InvoiceAttachment = response.data[0];
+                   
+                    if(this.InvoiceAttachment.attachment != undefined && this.InvoiceAttachment.attachment !='' && this.InvoiceAttachment.attachment != null )
+                   {
                     const fileName = this.InvoiceAttachment.invoiceNo+'.pdf';
                     const fileType = `application/pdf`;
                     this.fileService.downloadFile(this.InvoiceAttachment.attachment, fileName, fileType);
+                   
+                   }
+                   else
+                   {
+
+                  this.toastr.warning('There is an issue with the download of the file from ERP.','File Not Found')
+                   }
+                    
                     this.publicVariable.isProcess  = false;
                 },
                 error: (error) => {

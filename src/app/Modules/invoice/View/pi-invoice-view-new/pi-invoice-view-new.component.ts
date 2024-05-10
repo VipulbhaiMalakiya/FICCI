@@ -138,9 +138,20 @@ export class PiInvoiceViewNewComponent {
 
     downalodInvFile(base64String: any,InvNo :any ='Invoice') {
 
-        const fileName = InvNo+'.pdf';
-        const fileType = `application/pdf`;
-        this.fileService.downloadFile(base64String, fileName, fileType);
+        // const fileName = InvNo+'.pdf';
+        // const fileType = `application/pdf`;
+        // this.fileService.downloadFile(base64String, fileName, fileType);
+
+        if (base64String != undefined && base64String != '' && base64String != null) {
+            const fileName = InvNo + '.pdf';
+            const fileType = `application/pdf`;
+            this.fileService.downloadFile(base64String, fileName, fileType);
+
+        }
+        else {
+
+            this.toastr.warning('There is an issue with the download of the file from ERP.', 'File Not Found')
+        }
     }
 
     handleLoadingError() {

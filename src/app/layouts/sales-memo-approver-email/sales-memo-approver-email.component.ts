@@ -110,7 +110,8 @@ export class SalesMemoApproverEmailComponent {
 
                     } else {
                         this.toastr.error(res.message, 'Error');
-                        alert(res.message);
+                        
+                       // alert(res.message);
                         this.router.navigate(['/']);
                         this.publicVariable.isProcess = false;
                         this.publicVariable.dataForm.reset();
@@ -145,7 +146,9 @@ export class SalesMemoApproverEmailComponent {
                     console.log(response);
 
                     if (!response.status) {
-                        alert('data not found')
+
+                        this.toastr.warning('Record Not Found','Warning')
+                        //alert('data not found')
                         return
                     }
 
@@ -279,7 +282,9 @@ export class SalesMemoApproverEmailComponent {
 
             if (!action && !newData.remarks) {
                 // Show JavaScript alert if action is false and remarks field is empty
-                window.alert('Remarks are required.');
+               // window.alert('Remarks are required.');
+
+                this.toastr.warning('Remarks are required.','Warning');
                 return;
             }
 
