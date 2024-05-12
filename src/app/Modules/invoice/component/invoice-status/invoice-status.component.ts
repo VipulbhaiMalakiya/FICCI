@@ -1,6 +1,7 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { AppService, ConfirmationDialogModalComponent, CustomersService, InvoicesService, NgbModal, Router, ToastrService, formatDate, publicVariable } from '../../Export/invoce';
 import { invoiceStatusModule } from '../../interface/invoice';
+import { FileService } from '../../service/FileService';
 
 @Component({
     selector: 'app-invoice-status',
@@ -9,6 +10,7 @@ import { invoiceStatusModule } from '../../interface/invoice';
 })
 export class InvoiceStatusComponent implements OnInit {
     publicVariable = new publicVariable();
+    InvoiceAttachment: any;
 
 
     constructor(private appService: AppService,
@@ -17,7 +19,8 @@ export class InvoiceStatusComponent implements OnInit {
         private toastr: ToastrService,
         private API: InvoicesService,
         private cdr: ChangeDetectorRef,
-        private CAPI: CustomersService
+        private CAPI: CustomersService,
+        private fileService: FileService
 
     ) {
 
@@ -63,6 +66,45 @@ export class InvoiceStatusComponent implements OnInit {
         } else {
             console.error('ID is undefined or null');
         }
+    }
+
+    downalodFile(fileUrl: any) {
+        this.publicVariable.isProcess  = true;
+
+        try {
+            const subscription = this.API.GetTaxInvoiceAttachment(fileUrl).subscribe({
+                next: (response: any) => {
+
+                    this.InvoiceAttachment = response.data[0];
+
+                    if(this.InvoiceAttachment.attachment != undefined && this.InvoiceAttachment.attachment !='' && this.InvoiceAttachment.attachment != null )
+                   {
+                    const fileName = this.InvoiceAttachment.invoiceNo+'.pdf';
+                    const fileType = `application/pdf`;
+                    this.fileService.downloadFile(this.InvoiceAttachment.attachment, fileName, fileType);
+
+                   }
+                   else
+                   {
+
+                  this.toastr.warning('There is an issue with the download of the file from ERP.','File Not Found')
+                   }
+
+                    this.publicVariable.isProcess  = false;
+                },
+                error: (error) => {
+                    console.error('Error loading project list:', error);
+                    // this.handleLoadingError();
+                },
+            });
+
+            this.publicVariable.Subscription.add(subscription);
+        } catch (error) {
+            console.error('Error loading project list:', error);
+            // this.handleLoadingError();
+        }
+
+
     }
 
     onDelete(id: any) {

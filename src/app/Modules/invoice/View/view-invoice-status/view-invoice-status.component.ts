@@ -44,12 +44,10 @@ export class ViewInvoiceStatusComponent {
         this.loadCOAMasterList();
         this.data = history.state.data;
 
-        if(this.data.postedInvoiceNumber){
-        this.loadTaxInvoiceAttachment(this.data.postedInvoiceNumber)
-        }
 
-        this.loadStateList();
+
         this.uploadedFiles = this.data.impiHeaderAttachment;
+        this.loadStateList();
 
         if (this.data.impiHeaderAttachment) {
             this.uploadedFiles = this.data.impiHeaderAttachment.map((file: any) => ({
@@ -65,7 +63,7 @@ export class ViewInvoiceStatusComponent {
                 createdOn: file.imadCreatedOn,
                 modifiedBy: file.imadModifiedBy,
                 modifiedOn: file.imadModifiedOn,
-                doctype:file.doctype
+                doctype: file.doctype
 
             }));
         } else {
@@ -86,7 +84,7 @@ export class ViewInvoiceStatusComponent {
                 next: (response: any) => {
 
                     this.InvoiceAttachment = response.data;
-                    this.publicVariable.isProcess =false;
+                    this.publicVariable.isProcess = false;
                     if (this.InvoiceAttachment.length > 0) {
                         this.InvNo = this.InvoiceAttachment[0].invoiceNo;
                         this.InvAttachment = this.InvoiceAttachment[0].attachment;
@@ -118,18 +116,22 @@ export class ViewInvoiceStatusComponent {
 
             this.toastr.warning('There is an issue with the download of the file from ERP.', 'File Not Found')
         }
-        }
+    }
 
     loadStateList() {
         try {
             const subscription = this.CAPI.getStateList().subscribe({
                 next: (response: any) => {
                     this.publicVariable.stateList = response.data;
-                    // this.handleLoadingError()
+                    if (this.data.postedInvoiceNumber) {
+                        this.loadTaxInvoiceAttachment(this.data.postedInvoiceNumber)
+                    }else{
+                        this.handleLoadingError();
+                    }
                 },
                 error: (error) => {
                     console.error('Error loading project list:', error);
-                    this.handleLoadingError()
+                    this.handleLoadingError();
                 },
             });
 
@@ -195,14 +197,14 @@ export class ViewInvoiceStatusComponent {
         return item ? item.name : '';
     }
 
-    onSubmit(action:any) {
+    onSubmit(action: any) {
         if (this.publicVariable.dataForm.valid) {
             const newData = this.publicVariable.dataForm.value;
             const newConfig: any = {
                 headerId: this.data.headerId,
                 loginId: this.publicVariable.storedEmail,
                 remarks: newData.remarks,
-                IsTaxInvoice:action
+                IsTaxInvoice: action
             }
 
 

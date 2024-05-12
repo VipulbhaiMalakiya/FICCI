@@ -1,3 +1,5 @@
+<app-loading *ngIf="publicVariable.isProcess"></app-loading>
+
 <div class="inner-content">
     <h3 class="content-title">Sales Invoice Status</h3>
 
@@ -93,7 +95,7 @@
                                     <a *ngIf="publicVariable.storedRole !== 'Admin' && publicVariable.storedEmail == d.impiHeaderCreatedBy
                                             &&
                                     (d.isDraft ||
-                                  
+
                                     d.headerStatus == 'REJECTED BY CH APPROVER' ||
                                     d.headerStatus == 'REJECTED BY ACCOUNTS APPROVER'
                                     )" href="javascript:void(0);" (click)="onEdit(d)"><img
@@ -103,12 +105,15 @@
                                     <a *ngIf="publicVariable.storedRole !== 'Admin' && publicVariable.storedEmail == d.impiHeaderCreatedBy
                                     &&
                                     (d.isDraft ||
-                                   
+
                                     d.headerStatus == 'REJECTED BY CH APPROVER' ||
                                     d.headerStatus == 'REJECTED BY ACCOUNTS APPROVER'
                                        )" href="javascript:void(0)" (click)="onDelete(d.headerId)"
                                         data-bs-toggle="modal" data-bs-target="#deleterecord-modal"><img
-                                            src="../assets/images/delete-icon.svg" alt=""  title="Delete Record"  /></a>
+                                            src="../assets/images/delete-icon.svg" alt="" title="Delete Record" /></a>
+
+                                    <a *ngIf="d.postedInvoiceNumber" href="javascript:void(0);" (click)="downalodFile(d.postedInvoiceNumber)"><img
+                                            src="../assets/images/download-icon.svg" alt="" title="Download" /></a>
                                 </span>
                             </td>
                         </tr>
