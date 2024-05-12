@@ -163,7 +163,7 @@
 
                                 <div class="dt-buttons"
                                     *ngIf="publicVariable.customerStatusList && publicVariable.customerStatusList.length > 0">
-                                    <button class="gray-btns" (click)="onDownload()" type="button"><img
+                                    <button class="gray-btns" (click)="onDownload()" type="button" title="Download"><img
                                             src="../assets/images/excel-icon.png" alt=""></button>
                                 </div>
                                 <div class="topbr-btns">
@@ -226,7 +226,7 @@
                                                     <td><span class="table-btns">
                                                             <a href="javascript:void(0);" (click)="onView(d)"
                                                                 *ngIf="customerStatus !== 'FOR APPROVAL'">
-                                                                <img src="../assets/images/view-icon.svg" alt="">
+                                                                <img src="../assets/images/view-icon.svg" alt="" title="View">
                                                             </a>
                                                             <a href="javascript:void(0);" (click)="onApproval(d)"
                                                                 *ngIf="customerStatus == 'FOR APPROVAL'">
@@ -237,7 +237,7 @@
                                                                 d.customerStatus == 'REJECTED BY CH APPROVER' ||
                                                                 d.customerStatus == 'REJECTED BY ACCOUNTS APPROVER')"
                                                                 href="javascript:void(0);" (click)="onEdit(d)">
-                                                                <img src="../assets/images/edit-icon.svg" alt="">
+                                                                <img src="../assets/images/edit-icon.svg" alt="" title="Edit">
                                                             </a>
                                                             <a *ngIf="publicVariable.storedRole !== 'Admin' && d.createdBy === this.publicVariable.storedEmail && (d.isDraft ||
                                                                 d.customerStatus == 'REJECTED BY TL APPROVER' ||
@@ -245,7 +245,7 @@
                                                                 d.customerStatus == 'REJECTED BY ACCOUNTS APPROVER')"
                                                                 href="javascript:void(0);"
                                                                 (click)="onDelete(d.customerId)"><img
-                                                                    src="../assets/images/delete-icon.svg" alt=""></a>
+                                                                    src="../assets/images/delete-icon.svg" alt="" title="Delete"></a>
                                                         </span>
                                                     </td>
                                                 </tr>
@@ -401,7 +401,7 @@
                                 </div>
 
                                 <div class="dt-buttons" *ngIf="invoiceStatuslistData.length > 0">
-                                    <button class="gray-btns" (click)="onDownloadPI()" type="button"><img
+                                    <button class="gray-btns" (click)="onDownloadPI()" type="button" title="Download"><img
                                             src="../assets/images/excel-icon.png" alt=""></button>
                                 </div>
                                 <div class="topbr-btns">

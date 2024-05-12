@@ -422,10 +422,10 @@
 
                                     <tr *ngFor="let i of this.data.workFlowHistory;let in = index">
                                         <td>{{in + 1}}</td>
-                                        <td>{{i.imwdPendingAt | titlecase}}</td>
+                                        <td>{{i.imwdPendingAt }}</td>
                                         <td>{{i.imwdPendingEmailAt | titlecase}}</td>
                                         <td>{{i.imwdInitiatedBy | titlecase}}</td>
-                                        <td>{{i.imwdRemarks | titlecase}}</td>
+                                        <td>{{i.imwdRemarks }}</td>
                                         <td>{{i.imwdCreatedOn | date:'medium':'IST'}}</td>
                                     </tr>
                                 </tbody>
