@@ -1,7 +1,9 @@
 <app-loading *ngIf="publicVariable.isProcess"></app-loading>
 
 <div class="inner-content">
-    <h3 class="content-title">Add New Customer</h3>
+    <!-- <h3 class="content-title">Add New Customer</h3> -->
+
+    <h3 class="content-title"><span class="back-btn"><a routerLink="/customer/status" title="Back"><img src="../assets/images/left-arrow.svg" alt=""></a></span> Add New Customer</h3>
 
     <div class="mastersform-sec">
         <form [formGroup]="publicVariable.dataForm">
@@ -20,12 +22,12 @@
                 <div class="col-md-3 col-sm-6">
                     <div class="form-group">
                         <label>Customer Name <sup class="text-danger">*</sup></label>
-                        <input type="text" class="form-control" placeholder="Name" maxlength="100"                        
+                        <input type="text" class="form-control" placeholder="Name" maxlength="100"
                         formControlName="name" />
                         <div *ngIf="shouldShowError('name', 'required')" class="text-danger">
                             Customer Name  is required.
                         </div>
-                        
+
                         <div *ngIf="shouldShowError('name', 'alphanumericWithSpaces') && !shouldShowError('name', 'required')" class="text-danger">
 
                             Customer Name must be alphanumeric.
@@ -72,9 +74,9 @@
                 <div class="col-md-3 col-sm-6">
                     <div class="form-group">
                         <label>Address 2 </label>
-                        <input type="text" class="form-control" placeholder="Address 2" 
+                        <input type="text" class="form-control" placeholder="Address 2"
                         maxlength="100"
-                        
+
                         formControlName="address2" />
                         <!-- <div *ngIf="shouldShowError('address2', 'required')" class="text-danger">
                             Address 2 is required.
@@ -142,7 +144,7 @@
                         <div *ngIf="shouldShowError('postCode', 'required')" class="text-danger">
                             Post Code is required.
                         </div>
-                        <div *ngIf="shouldShowError('postCode','pattern')" class="text-danger"> 
+                        <div *ngIf="shouldShowError('postCode','pattern')" class="text-danger">
                             Please enter a valid 6-digit Pin Code.</div>
                     </div>
                 </div>
@@ -189,12 +191,12 @@
                             Contact Person is required.
                         </div>
 
-                     
+
                         <div *ngIf="shouldShowError('contact', 'alphanumericWithSpaces')  && !shouldShowError('contact', 'required')" class="text-danger">
                             Contact must be alphanumeric with spaces.
                         </div>
 
-                       
+
                     </div>
                 </div>
                 <div class="col-md-3 col-sm-6">
@@ -215,12 +217,12 @@
                         <label>P.A.N. No. <sup class="text-danger">*</sup></label>
                         <input type="text" class="form-control" formControlName="PANNo" placeholder="P.A.N. No."
                             (change)="ValidatePAN()" maxlength="10" />
-                        
+
                             <div *ngIf="shouldShowError('PANNo', 'required')" class="text-danger">
                                 PAN No. is required.
                             </div>
-                        
-                        
+
+
                             <div *ngIf="shouldShowError('PANNo', 'invalidPAN')   && !shouldShowError('contact', 'required')" class="text-danger">
                             Please enter a valid PAN Number.
                         </div>
