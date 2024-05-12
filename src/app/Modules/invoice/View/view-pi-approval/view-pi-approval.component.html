@@ -5,12 +5,13 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="comments-history-icon" data-bs-toggle="modal" data-bs-target="#workflow-modal">
-                    <img src="../assets/images/file-history-icon.png" alt="">
+                    <img src="../assets/images/file-history-icon.png" alt="" title="Action History">
                 </div>
             </div>
         </div>
     </div>
-    <h3 class="content-title">Sales Invoice Approval Inbox</h3>
+    <!-- <h3 class="content-title">Sales Invoice Approval Inbox</h3> -->
+    <h3 class="content-title"><span class="back-btn" title="Back"><a routerLink="/invoice/approval"><img src="../assets/images/left-arrow.svg" alt=""></a></span> Sales Invoice Approval Inbox</h3>
     <div class="pipage-radio">
         <div class="form-check">
             <input class="form-check-input" type="radio" name="ImpiHeaderInvoiceType" id="flexRadioDefault1"
@@ -364,7 +365,8 @@
     <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <div class="modal-title text-center w-100 small-title">Workflow Histroy</div>
+                <div class="modal-title text-center w-100 small-title">Action History
+                </div>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body p-0">
@@ -390,7 +392,7 @@
 
                                     <tr *ngFor="let i of this.data.workFlowHistory;let in = index">
                                         <td>{{in + 1}}</td>
-                                        <td>{{i.imwdPendingAt | titlecase}}</td>
+                                        <td>{{i.imwdPendingAt }}</td>
                                         <td>{{i.imwdPendingEmailAt | titlecase}}</td>
                                         <td>{{i.imwdInitiatedBy | titlecase}}</td>
                                         <td>{{i.imwdRemarks | titlecase}}</td>
