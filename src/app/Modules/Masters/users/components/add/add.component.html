@@ -1,7 +1,9 @@
 <app-loading *ngIf="publicVariable.isProcess"></app-loading>
 
 <div class="inner-content">
-    <h3 class="content-title">Add New User Master</h3>
+    <!-- <h3 class="content-title">Add New User Master</h3> -->
+
+    <h3 class="content-title"><span class="back-btn"><a routerLink="/masters/users" title="Back"><img src="../assets/images/left-arrow.svg" alt=""></a></span> Add New User Master</h3>
     <div class="mastersform-sec">
         <form [formGroup]="publicVariable.dataForm" (ngSubmit)="onSubmit()">
             <div class="row">
