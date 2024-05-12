@@ -16,7 +16,7 @@
         </div>
 
         <div class="dt-buttons" *ngIf="InvoiceSummaryList.length > 0">
-            <button class="gray-btns" (click)="onDownloadInvoiceSummary()" type="button"><img
+            <button class="gray-btns" (click)="onDownloadInvoiceSummary()" type="button" title="Download"><img
                     src="../assets/images/excel-icon.png" alt=""></button>
         </div>
         <div class="topbr-btns">
@@ -66,16 +66,16 @@
                             <!-- <td>{{d.status}}</td> -->
                             <td><span class="table-btns">
                                     <a href="javascript:void(0);" (click)="InvoicedView(d)"><img
-                                            src="../assets/images/view-icon.svg" alt=""></a>
+                                            src="../assets/images/view-icon.svg" alt="" title="View"></a>
 
                                     <a href="javascript:void(0);" data-bs-toggle="modal"
                                         data-bs-target="#workflow-modal"
                                         (click)="loadTaxPaymentInvoiceSummary(d)"><img class="custom-rupee-icon"
-                                            src="../assets/images/rupee-icon.png" alt="" /></a>
+                                            src="../assets/images/rupee-icon.png" alt="" title="Payment" /></a>
 
                                     <a href="javascript:void(0);"
                                         (click)="downalodFile(d.no)"><img
-                                            src="../assets/images/download-icon.svg" alt="" /></a>
+                                            src="../assets/images/download-icon.svg" alt="" title="Download" /></a>
 
                                     <!-- <a href="javascript:void(0);" (click)="onSendEmail(d)"><img
                                             src="../assets/images/email-icon.svg" alt="" /></a> -->
