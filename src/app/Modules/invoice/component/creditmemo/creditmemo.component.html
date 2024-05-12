@@ -1,7 +1,9 @@
 <app-loading *ngIf="publicVariable.isProcess"></app-loading>
 
 <div class="inner-content">
-    <h3 class="content-title"> New Sales Credit Memo</h3>
+    <!-- <h3 class="content-title"> New Sales Credit Memo</h3> -->
+
+    <h3 class="content-title"><span class="back-btn" title="Back"><a routerLink="/invoice/credit-memo-status"><img src="../assets/images/left-arrow.svg" alt=""></a></span> New Sales Credit Memo</h3>
 
     <form [formGroup]="publicVariable.dataForm">
         <input type="hidden" formControlName="headerid">
