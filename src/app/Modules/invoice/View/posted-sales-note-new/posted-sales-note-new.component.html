@@ -4,8 +4,9 @@
 
 <div class="inner-content">
 
-    <h3 class="content-title">Posted Credit Memo Invoice</h3>
+    <!-- <h3 class="content-title">Posted Credit Memo Invoice</h3> -->
 
+    <h3 class="content-title"><span class="back-btn" title="Back"><a routerLink="/invoice/sales-navision"><img src="../assets/images/left-arrow.svg" alt=""></a></span>Posted Credit Memo Invoice</h3>
 
     <div class="mastersform-sec mb-0">
         <div class="row">
@@ -50,7 +51,7 @@
                     <input type="text"  [value]="TaxInvoiceinfo?.deptCode || 'N/A'" class="form-control" disabled="" readonly="">
                 </div>
             </div>
-            
+
             <div class="col-md-4 col-sm-6">
                 <div class="form-group">
                     <label>Division Code</label>
@@ -86,7 +87,7 @@
                 </div>
             </div>
 
-            
+
 
             <div class="col-md-4 col-sm-6" hidden>
                 <div class="form-group">
@@ -109,11 +110,11 @@
                 </div>
             </div>
 
-           
 
-           
 
-            
+
+
+
 
             <div class="col-md-4 col-sm-6" hidden>
                 <div class="form-group">
@@ -164,7 +165,7 @@
                 </div>
             </div>
 
-           
+
             <div class="col-md-4 col-sm-6" hidden>
                 <div class="form-group">
                     <label>appliesToID</label>
@@ -684,8 +685,8 @@
                         <th>Document No.</th>
                         <th>Document Type</th>
                         <th>Description</th>
-                        
-                        <th>Line No</th> 
+
+                        <th>Line No</th>
                         <th>Quantity</th>
                         <th>Unit Price</th>
                         <th>GST Group Code</th>
@@ -704,7 +705,7 @@
                         <td>{{i + 1}}</td>
                         <!-- <td>{{e.documentNo}}</td> -->
                         <!-- <td>{{e.gSTCredit}}</td> -->
-                       
+
                         <td>{{e.no_}}</td>
                         <td>{{e.type}}</td>
                         <td>{{e.documentNo}}</td>
@@ -712,7 +713,7 @@
                         <td>{{e.description}}</td>
                          <td>{{e.lineNo}}</td>
                          <td>{{e.quantity}}</td>
-                        
+
                         <td>{{e.unitPrice}}</td>
                         <td>{{e.gSTGroupCode}}</td>
                         <td>{{e.gST_Group_Type}}</td>
