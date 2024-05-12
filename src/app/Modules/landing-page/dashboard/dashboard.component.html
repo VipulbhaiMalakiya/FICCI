@@ -515,6 +515,9 @@
                                                                 *ngIf="d.headerStatus === 'MAIL SENT BY FINANCE TO CUSTOMER' && this.storedRole === 'Approver' "><img
                                                                     src="../assets/images/email-edit-icon.svg"
                                                                     alt="" title="Email"></a>
+
+                                                                    <a *ngIf="d.postedInvoiceNumber" href="javascript:void(0);" (click)="downalod1File(d.postedInvoiceNumber)"><img
+                                                                        src="../assets/images/download-icon.svg" alt="" title="Download" /></a>
                                                         </span>
                                                     </td>
                                                 </tr>
