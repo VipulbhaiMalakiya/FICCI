@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, CustomersService, FormBuilder, InvoicesService, Router, ToastrService, Validators, publicVariable } from '../../Export/invoce';
 import { environment } from 'src/environments/environment';
+import { FileService } from '../../service/FileService';
 
 @Component({
     selector: 'app-view-invoice-status',
@@ -13,12 +14,17 @@ export class ViewInvoiceStatusComponent {
     FilePath: any;
     publicVariable = new publicVariable();
     uploadedFiles: any[] = [];
+    InvNo: any;
+    InvAttachment: any;
+    InvoiceAttachment: any;
+
 
     constructor(private route: ActivatedRoute, private CAPI: CustomersService,
         private API: InvoicesService,
         private toastr: ToastrService,
         private router: Router,
         private fb: FormBuilder,
+        private fileService: FileService
     ) {
         this.initializeForm();
     }
@@ -37,8 +43,12 @@ export class ViewInvoiceStatusComponent {
         });
         this.loadCOAMasterList();
         this.data = history.state.data;
+
+        if(this.data.postedInvoiceNumber){
+        this.loadTaxInvoiceAttachment(this.data.postedInvoiceNumber)
+        }
+
         this.loadStateList();
-        console.log( this.data);
         this.uploadedFiles = this.data.impiHeaderAttachment;
 
         if (this.data.impiHeaderAttachment) {
@@ -60,7 +70,7 @@ export class ViewInvoiceStatusComponent {
             }));
         } else {
             this.uploadedFiles = [];
-            this.handleLoadingError()
+            // this.handleLoadingError()
 
         }
 
@@ -68,12 +78,54 @@ export class ViewInvoiceStatusComponent {
 
 
 
+
+    loadTaxInvoiceAttachment(invoice: string) {
+        try {
+            this.publicVariable.isProcess = true;
+            const subscription = this.API.GetTaxInvoiceAttachment(invoice).subscribe({
+                next: (response: any) => {
+
+                    this.InvoiceAttachment = response.data;
+                    this.publicVariable.isProcess =false;
+                    if (this.InvoiceAttachment.length > 0) {
+                        this.InvNo = this.InvoiceAttachment[0].invoiceNo;
+                        this.InvAttachment = this.InvoiceAttachment[0].attachment;
+                    }
+                    this.handleLoadingError();
+                },
+                error: (error) => {
+                    console.error('Error loading project list:', error);
+                    this.handleLoadingError();
+                },
+            });
+
+            this.publicVariable.Subscription.add(subscription);
+        } catch (error) {
+            console.error('Error loading project list:', error);
+            this.handleLoadingError();
+        }
+    }
+
+    downalodInvFile(base64String: any, InvNo: any = 'Invoice') {
+
+        if (base64String != undefined && base64String != '' && base64String != null) {
+            const fileName = InvNo + '.pdf';
+            const fileType = `application/pdf`;
+            this.fileService.downloadFile(base64String, fileName, fileType);
+
+        }
+        else {
+
+            this.toastr.warning('There is an issue with the download of the file from ERP.', 'File Not Found')
+        }
+        }
+
     loadStateList() {
         try {
             const subscription = this.CAPI.getStateList().subscribe({
                 next: (response: any) => {
                     this.publicVariable.stateList = response.data;
-                    this.handleLoadingError()
+                    // this.handleLoadingError()
                 },
                 error: (error) => {
                     console.error('Error loading project list:', error);
