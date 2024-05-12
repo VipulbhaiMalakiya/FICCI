@@ -16,7 +16,7 @@
         </div>
 
         <div class="dt-buttons" *ngIf="InvoiceSummaryList.length > 0">
-            <button class="gray-btns" (click)="onDownloadInvoiceSummary()" type="button"><img
+            <button class="gray-btns" (click)="onDownloadInvoiceSummary()" type="button" title="Download"><img
                     src="../assets/images/excel-icon.png" alt=""></button>
         </div>
         <div class="topbr-btns">
@@ -66,12 +66,12 @@
                             <td>{{d.status}}</td>
                             <td><span class="table-btns">
                                     <a href="javascript:void(0);" (click)="InvoicedView(d)"><img
-                                            src="../assets/images/view-icon.svg" alt=""></a>
+                                            src="../assets/images/view-icon.svg" alt="" title="View Record"></a>
 
 
                                     <a href="javascript:void(0);"
                                     (click)="downalodFile(d.no)"><img
-                                        src="../assets/images/download-icon.svg" alt="" /></a>
+                                        src="../assets/images/download-icon.svg" alt="" title="Download" /></a>
 
                                     <!-- <a href="javascript:void(0);" data-bs-toggle="modal"
                                         data-bs-target="#workflow-modal"><img src="../assets/images/download-icone.svg"
