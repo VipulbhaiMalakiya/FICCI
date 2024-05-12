@@ -4,6 +4,7 @@ import { finalize, timeout } from 'rxjs';
 import { invoiceStatusModule } from '../../interface/invoice';
 import { UpdateEmailComponent } from '../../update-email/update-email.component';
 import { EmailComponent } from '../../send-email/email/email.component';
+import { FileService } from '../../service/FileService';
 
 @Component({
     selector: 'app-approval-inbox',
@@ -12,6 +13,8 @@ import { EmailComponent } from '../../send-email/email/email.component';
 })
 export class ApprovalInboxComponent implements OnInit {
     publicVariable = new publicVariable();
+    InvoiceAttachment: any;
+
 
 
     constructor(private appService: AppService,
@@ -19,7 +22,8 @@ export class ApprovalInboxComponent implements OnInit {
         private router: Router,
         private toastr: ToastrService,
         private API: InvoicesService,
-        private CAPI: CustomersService
+        private CAPI: CustomersService,
+        private fileService: FileService
 
     ) {
 
@@ -63,6 +67,46 @@ export class ApprovalInboxComponent implements OnInit {
         });
 
         this.publicVariable.Subscription.add(subscription);
+    }
+
+
+    downalodFile(fileUrl: any) {
+        this.publicVariable.isProcess  = true;
+
+        try {
+            const subscription = this.API.GetTaxInvoiceAttachment(fileUrl).subscribe({
+                next: (response: any) => {
+
+                    this.InvoiceAttachment = response.data[0];
+
+                    if(this.InvoiceAttachment.attachment != undefined && this.InvoiceAttachment.attachment !='' && this.InvoiceAttachment.attachment != null )
+                   {
+                    const fileName = this.InvoiceAttachment.invoiceNo+'.pdf';
+                    const fileType = `application/pdf`;
+                    this.fileService.downloadFile(this.InvoiceAttachment.attachment, fileName, fileType);
+
+                   }
+                   else
+                   {
+
+                  this.toastr.warning('There is an issue with the download of the file from ERP.','File Not Found')
+                   }
+
+                    this.publicVariable.isProcess  = false;
+                },
+                error: (error) => {
+                    console.error('Error loading project list:', error);
+                    // this.handleLoadingError();
+                },
+            });
+
+            this.publicVariable.Subscription.add(subscription);
+        } catch (error) {
+            console.error('Error loading project list:', error);
+            // this.handleLoadingError();
+        }
+
+
     }
 
     onView(data: invoiceStatusModule): void {
