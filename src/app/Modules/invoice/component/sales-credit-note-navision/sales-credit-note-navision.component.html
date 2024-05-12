@@ -13,12 +13,12 @@
                 </option>
             </select>
         </div>
-
         <div class="dt-buttons">
-            <button class="gray-btns" type="button" (click)="onDownload()">
-                <img src="../assets/images/excel-icon.png" alt="" />
+            <button class="gray-btns" type="button" (click)="onDownload()" title="Download Excel">
+                <img src="../assets/images/excel-icon.png" alt="Excel Icon" />
             </button>
         </div>
+
 
         <!-- Example single danger button -->
         <div class="topbr-btns">
@@ -93,10 +93,10 @@
                                 <span class="table-btns">
                                     <a href="javascript:void(0);" (click)="onView(d)"><img
                                             src="../assets/images/view-icon.svg" alt=""  title="View Details" /></a>
-                                            
+
                                             <a href="javascript:void(0);"
                                             (click)="downalodFile(d.no)"><img
-                                                src="../assets/images/download-icon.svg" alt="" /></a>
+                                                src="../assets/images/download-icon.svg" alt="" title="Download Details" /></a>
                                     <!-- <a *ngIf="publicVariable.storedRole !== 'Admin' &&
                                     (d.isDraft ||
                                     d.headerStatus == 'REJECTED BY TL APPROVER'  ||
