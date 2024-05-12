@@ -65,7 +65,8 @@
                                         <div class="comments-history-icon" data-bs-toggle="modal"
                                             data-bs-target="#workflow-modal">
                                             <img src="../assets/images/file-history-icon.png" alt=""
-                                            title=" History">
+                                            title="Action History
+                                            ">
                                         </div>
                                     </div>
                                 </div>
@@ -434,7 +435,8 @@
                             <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <div class="modal-title text-center w-100 small-title">Workflow Histroy</div>
+                                        <div class="modal-title text-center w-100 small-title">Action History
+                                        </div>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                                             aria-label="Close"></button>
                                     </div>
@@ -462,7 +464,7 @@
                                                             <tr
                                                                 *ngFor="let i of this.data?.workFlowHistory;let in = index">
                                                                 <td>{{in + 1}}</td>
-                                                                <td>{{i.imwdPendingAt | titlecase}}</td>
+                                                                <td>{{i.imwdPendingAt }}</td>
                                                                 <td>{{i.imwdPendingEmailAt | titlecase}}</td>
                                                                 <td>{{i.imwdInitiatedBy | titlecase}}</td>
                                                                 <td>{{i.imwdRemarks | titlecase}}</td>
