@@ -17,7 +17,7 @@
 
     <div class="dt-buttons">
         <button class="gray-btns" type="button" (click)="onDownload()">
-            <img src="../assets/images/excel-icon.png" alt="" />
+            <img src="../assets/images/excel-icon.png" alt="" title="Download" />
         </button>
     </div>
 
@@ -90,11 +90,11 @@
                         <td>
                             <span class="table-btns">
                                 <a href="javascript:void(0);" (click)="onView(d)"><img
-                                        src="../assets/images/view-icon.svg" alt="" /></a>
+                                        src="../assets/images/view-icon.svg" alt="" title="View" /></a>
 
                                         <a hidden href="javascript:void(0);" (click)="onSendEmail(d)"
                                         *ngIf="d.headerStatus === 'APPROVED BY FINANCE' || 'APPROVED BY TL' "><img
-                                            src="../assets/images/email-icon.svg" alt="" /></a>
+                                            src="../assets/images/email-icon.svg" alt="" title="Email" /></a>
                                     <!-- <a href="javascript:void(0);" (click)="onediteEmail(d)"
                                         *ngIf="d.headerStatus === 'MAIL SENT BY FINANCE TO CUSTOMER' "><img
                                             src="../assets/images/email-edit-icon.svg" alt="" /></a> -->
