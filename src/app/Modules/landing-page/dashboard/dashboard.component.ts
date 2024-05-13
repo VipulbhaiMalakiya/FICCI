@@ -2282,8 +2282,11 @@ export class DashboardComponent {
         };
 
 
-        var startDate = model.startDate;
-        var endDate = model.endDate;
+        var startDate = model.startDate.toString();;
+        var endDate = model.endDate.toString();;
+
+        console.log(startDate,endDate);
+        
 
         var resultProductData = this.publicVariable.customerStatusList.filter(a => {
             var date = new Date(a.createdOn);
