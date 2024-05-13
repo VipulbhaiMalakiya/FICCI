@@ -662,9 +662,9 @@ textarea.form-control{ padding-top: 10px; padding-bottom: 10px; }
 
 /*------------new dashboard-----------*/
 
-.data-tabs .nav.nav-pills li.nav-item { flex-grow: 1; }
+.data-tabs .nav.nav-pills li.nav-item { width: 135px; }
 
-.data-tabs .nav-link{ background:url(../images/tabbg-1.png) no-repeat; color:#fff; background-size: 100% 100% !important; margin:0px 2px; }
+.data-tabs .nav-link{ background:url(../images/tabbg-1.png) no-repeat; color:#fff; background-size: 100% 100% !important; margin:0px 2px; height: 90px; border-radius: 15px; }
 
 .data-tabs .nav-pills .nav-link.active{ background-color:#fff; position: relative;  }
 .data-tabs .nav-pills .nav-link.active:after {
