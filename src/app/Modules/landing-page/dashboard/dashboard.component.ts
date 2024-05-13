@@ -505,9 +505,9 @@ export class DashboardComponent {
                         this.loadInvoiceSummary();
                     }
 
-                    else if (this.invoiceType == 'Proforma Invoice') {
-                        this.PIloadInvoiceSummary();
-                    }
+                    // else if (this.invoiceType == 'Proforma Invoice') {
+                    //     this.PIloadInvoiceSummary();
+                    // }
 
                     // Set default status to "DRAFT" if the invoice type changes
                     if ((invoiceType === 'Tax Invoice' || invoiceType === 'Proforma Invoice') && this.storedRole === 'Approver') {
