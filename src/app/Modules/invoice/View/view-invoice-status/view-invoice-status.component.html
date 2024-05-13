@@ -12,7 +12,8 @@
         </div>
     </div>
     <!-- <h3 class="content-title">Sales Invoice Status</h3> -->
-    <h3 class="content-title"><span class="back-btn" title="Back"><a routerLink="/invoice/status"><img src="../assets/images/left-arrow.svg" alt=""></a></span> Sales Invoice Status</h3>
+    <h3 class="content-title"><span class="back-btn" title="Back"><a routerLink="/invoice/status"><img
+                    src="../assets/images/left-arrow.svg" alt=""></a></span> Sales Invoice Status</h3>
 
 
     <div class="pipage-radio">
@@ -191,8 +192,7 @@
                 <div class="form-group">
                     <label>Total Base Amount</label>
                     <input type="text" class="form-control" placeholder="Total Base Amount"
-                     [value]="data.impiHeaderTotalTDSAmount"
-                        disabled="">
+                        [value]="data.impiHeaderTotalTDSAmount" disabled="">
                 </div>
             </div>
 
@@ -336,17 +336,17 @@
 
         <tbody>
             <!-- <tr *ngFor="let file of InvoiceAttachment; let i = index"> -->
-                  <tr  *ngIf="InvNo!=null || InvNo!=undefined">
-                  <td>1</td>
-                  <td>.pdf</td>
-                  <td>{{InvNo}}</td>
-                  <td *ngIf="!data.isDraft">
-                      <a href="javascript:void(0)" (click)="downalodInvFile(InvAttachment,InvNo)"><img
-                              src="../assets/images/download-icon.svg" alt="" class="me-2"></a>
+            <tr *ngIf="InvNo!=null || InvNo!=undefined">
+                <td>1</td>
+                <td>.pdf</td>
+                <td>{{InvNo}}</td>
+                <td *ngIf="!data.isDraft">
+                    <a href="javascript:void(0)" (click)="downalodInvFile(InvAttachment,InvNo)"><img
+                            src="../assets/images/download-icon.svg" alt="" class="me-2"></a>
 
-                  </td>
-              </tr>
-          </tbody>
+                </td>
+            </tr>
+        </tbody>
         <!-- <tbody>
             <tr *ngFor="let file of InvoiceAttachment; let i = index">
                 <td>{{ i + 1 }}</td>
@@ -425,9 +425,8 @@
 
     </div>
 
-    <form
-
-        [formGroup]="publicVariable.dataForm" *ngIf="data.headerStatus !== 'CANCELLATION APPROVED BY TL' && data.headerStatus !== 'REJECTED BY TL APPROVER' && data.headerStatus !== 'CANCELLATION APPROVED BY FINANCE' && data.headerStatus !== 'REJECTED BY FINANCE APPROVER'">
+    <form [formGroup]="publicVariable.dataForm"
+        *ngIf="data.headerStatus !== 'CANCELLATION APPROVED BY TL' && data.headerStatus !== 'REJECTED BY TL APPROVER' && data.headerStatus !== 'CANCELLATION APPROVED BY FINANCE' && data.headerStatus !== 'REJECTED BY FINANCE APPROVER'">
         <div class="col-md-12 mt-3">
             <div class="form-group">
                 <label>Remarks <sup class="text-danger">*</sup></label>
@@ -444,13 +443,14 @@
 
                 <button type="submit" class="common-btn w-auto" (click)="onSubmit('Submit')">Tax Invoice </button> -->
 
-                <input type="checkbox" class="btn-check" formControlName="IsDraft" id="btn-check"
-                autocomplete="off">
-            <label class="common-btn w-auto me-2" for="btn-check"  *ngIf ="!(data.IsPostedTaxInvoice) && data.impiHeaderCreatedBy == this.publicVariable.storedEmail && data.headerStatus =='APPROVED BY TL' || data.headerStatus =='APPROVED BY FINANCE' "
-            (click)="onSubmit(false)">Cancel Request
+                <input type="checkbox" class="btn-check" formControlName="IsDraft" id="btn-check" autocomplete="off">
+                <label class="common-btn w-auto me-2" for="btn-check"
+                    *ngIf="!(data.IsPostedTaxInvoice) && data.impiHeaderCreatedBy == this.publicVariable.storedEmail && data.headerStatus =='APPROVED BY TL' || data.headerStatus =='APPROVED BY FINANCE' "
+                    (click)="onSubmit(false)">Cancel Request
                 </label>
-            <button type="submit" *ngIf ="!(data.impiHeaderInvoiceType=='Tax Invoice') && data.impiHeaderCreatedBy == this.publicVariable.storedEmail && (data.headerStatus =='APPROVED BY TL' || data.headerStatus =='APPROVED BY FINANCE') "
-            class="btn btn-primary w-auto mb-0 me-2" (click)="onSubmit(true)">Request Tax Invoice</button>
+                <button type="submit"
+                    *ngIf="!(data.impiHeaderInvoiceType=='Tax Invoice') && data.impiHeaderCreatedBy == this.publicVariable.storedEmail && (data.headerStatus =='APPROVED BY TL' || data.headerStatus =='APPROVED BY FINANCE') "
+                    class="btn btn-primary w-auto mb-0 me-2" (click)="onSubmit(true)">Request Tax Invoice</button>
 
             </div>
         </div>

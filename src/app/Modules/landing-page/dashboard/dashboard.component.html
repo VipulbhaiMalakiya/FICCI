@@ -33,17 +33,15 @@
                 <div class="data-tabs" *ngIf="this.publicVariable.storedRole !== 'Accounts'">
                     <ul class="nav nav-pills" role="tablist">
                         <li class="nav-item" *ngIf="storedRole !== 'Admin'">
-                            <a class="nav-link tabbg-1"
-                                data-bs-toggle="pill" href="#home" (click)="loadCustomerStatusList('DRAFT')"
-
-                                [class.active]="customerStatus =='DRAFT'"
-                                >
+                            <a class="nav-link tabbg-1" data-bs-toggle="pill" href="#home"
+                                (click)="loadCustomerStatusList('DRAFT')" [class.active]="customerStatus =='DRAFT'">
                                 <small>Draft</small>
                                 <span>{{this.isDRAFT }}</span>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link tabbg-2" [class.active]="this.publicVariable.storedRole == 'Admin' && customerStatus =='PENDING WITH APPROVER'"
+                            <a class="nav-link tabbg-2"
+                                [class.active]="this.publicVariable.storedRole == 'Admin' && customerStatus =='PENDING WITH APPROVER'"
                                 data-bs-toggle="pill" href="#home"
                                 (click)="loadCustomerStatusList('PENDING WITH APPROVER')">
                                 <small>Pending Approval</small>
@@ -52,8 +50,7 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link tabbg-3" data-bs-toggle="pill" href="#home"
-
-                            [class.active]="this.publicVariable.storedRole == 'Admin' && customerStatus =='APPROVED BY ACCOUNTS APPROVER'"
+                                [class.active]="this.publicVariable.storedRole == 'Admin' && customerStatus =='APPROVED BY ACCOUNTS APPROVER'"
                                 (click)="loadCustomerStatusList('APPROVED BY ACCOUNTS APPROVER')">
                                 <small>Approved By Accounts</small>
                                 <span>{{this.ApprovedAccounts }}</span>
@@ -61,8 +58,7 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link tabbg-4" data-bs-toggle="pill" href="#home"
-
-                            [class.active]="this.publicVariable.storedRole == 'Admin' && customerStatus =='REJECTED BY CH APPROVER'"
+                                [class.active]="this.publicVariable.storedRole == 'Admin' && customerStatus =='REJECTED BY CH APPROVER'"
                                 (click)="loadCustomerStatusList('REJECTED BY CH APPROVER')">
                                 <small>Rejected By Accounts</small>
                                 <span>{{this.RejectedbyAccounts }}</span>
@@ -70,8 +66,7 @@
                         </li>
                         <li class="nav-item" *ngIf="isFinance">
                             <a class="nav-link tabbg-6" data-bs-toggle="pill" href="#home"
-
-                            [class.active]="customerStatus =='FOR APPROVAL'"
+                                [class.active]="customerStatus =='FOR APPROVAL'"
                                 (click)="loadCustomerStatusList('FOR APPROVAL')">
                                 <small>For Approval</small>
                                 <span>{{this.forapproval}}</span>
@@ -79,8 +74,7 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link tabbg-5" data-bs-toggle="pill" href="#home"
-                            [class.active]="customerStatus =='ALL'"
-                                (click)="loadCustomerStatusList('ALL')">
+                                [class.active]="customerStatus =='ALL'" (click)="loadCustomerStatusList('ALL')">
                                 <small>All</small>
                                 <span>{{this.ALL }}</span>
                             </a>
@@ -93,7 +87,7 @@
 
                         <li class="nav-item">
                             <a class="nav-link tabbg-6" data-bs-toggle="pill" href="#home"
-                            [class.active]="customerStatus =='FOR APPROVAL'"
+                                [class.active]="customerStatus =='FOR APPROVAL'"
                                 (click)="loadCustomerStatusList('FOR APPROVAL')">
                                 <small>For Approval</small>
                                 <span>{{this.forapproval}}</span>
@@ -102,7 +96,7 @@
 
                         <li class="nav-item">
                             <a class="nav-link tabbg-3" data-bs-toggle="pill" href="#home"
-                            [class.active]="customerStatus =='APPROVED BY ACCOUNTS APPROVER'"
+                                [class.active]="customerStatus =='APPROVED BY ACCOUNTS APPROVER'"
                                 (click)="loadCustomerStatusList('APPROVED BY ACCOUNTS APPROVER')">
                                 <small>Approved</small>
                                 <span>{{this.ApprovedAccounts }}</span>
@@ -112,7 +106,7 @@
 
                         <li class="nav-item">
                             <a class="nav-link tabbg-4" data-bs-toggle="pill" href="#home"
-                            [class.active]="customerStatus =='REJECTED BY CH APPROVER'"
+                                [class.active]="customerStatus =='REJECTED BY CH APPROVER'"
                                 (click)="loadCustomerStatusList('REJECTED BY CH APPROVER')">
                                 <small>Reject</small>
                                 <span>{{this.RejectedbyAccounts }}</span>
@@ -131,8 +125,7 @@
 
                         <li class="nav-item">
                             <a class="nav-link tabbg-5" data-bs-toggle="pill" href="#home"
-                            [class.active]="customerStatus =='ALL'"
-                                (click)="loadCustomerStatusList('ALL')">
+                                [class.active]="customerStatus =='ALL'" (click)="loadCustomerStatusList('ALL')">
                                 <small>All</small>
                                 <span>{{this.ALL }}</span>
                             </a>
@@ -159,6 +152,43 @@
                                         <option *ngFor="let size of publicVariable.tableSizes" [value]="size">{{ size }}
                                         </option>
                                     </select>
+                                </div>
+
+                                <div class="analytics-dropcols">
+                                    <div class="analdrop1 analdrop2">
+                                        <label>Select Date</label>
+                                        <select id="select-tags4" class="form-select" [(ngModel)]="selectedValue"
+                                            (change)="onValueChange($event)">
+                                            <option value="Today">Today</option>
+                                            <option value="Yesterday">Yesterday</option>
+                                            <option value="7">Last 7 days</option>
+                                            <option value="30">Last 30 days</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="analdrop1">
+                                        <div class="form-group">
+                                            <label for="startDate">From</label>
+                                            <input class="form-control" type="date" id="startDate" name="startDate"
+                                                [(ngModel)]="startDate" [max]="endDate">
+                                        </div>
+                                    </div>
+                                    <div class="analdrop1">
+                                        <div class="form-group">
+                                            <label for="endDate">To</label>
+                                            <input class="form-control" type="date" id="endDate" name="endDate"
+                                                [(ngModel)]="endDate" [max]="endDate">
+                                            <div *ngIf="dateRangeError" class="form-validate-err">
+                                                To Date must be after From Date
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="analdrop1">
+                                        <div class="form-group">
+                                            <label>&nbsp;</label>
+                                            <button class="btn common-btn" (click)="submitDateRange()">Submit</button>
+                                        </div>
+                                    </div>
                                 </div>
 
                                 <div class="dt-buttons"
@@ -208,7 +238,7 @@
                                             <tbody>
 
                                                 <tr
-                                                    *ngFor="let d of  this.publicVariable.customerStatusList | searchFilter: publicVariable.searchText| paginate: {id: 'pagination6',itemsPerPage: publicVariable.tableSize,currentPage: publicVariable.page,totalItems: publicVariable.count};let i = index">
+                                                    *ngFor="let d of  this.publicVariable.customerStatusList  | searchFilter: publicVariable.searchText| paginate: {id: 'pagination6',itemsPerPage: publicVariable.tableSize,currentPage: publicVariable.page,totalItems: publicVariable.count};let i = index">
                                                     <td>{{i + 1}}</td>
                                                     <td>{{d.recordID}}</td>
                                                     <td *ngIf="customerStatus=='APPROVED BY ACCOUNTS APPROVER'">
@@ -226,7 +256,8 @@
                                                     <td><span class="table-btns">
                                                             <a href="javascript:void(0);" (click)="onView(d)"
                                                                 *ngIf="customerStatus !== 'FOR APPROVAL'">
-                                                                <img src="../assets/images/view-icon.svg" alt="" title="View">
+                                                                <img src="../assets/images/view-icon.svg" alt=""
+                                                                    title="View">
                                                             </a>
                                                             <a href="javascript:void(0);" (click)="onApproval(d)"
                                                                 *ngIf="customerStatus == 'FOR APPROVAL'">
@@ -237,7 +268,8 @@
                                                                 d.customerStatus == 'REJECTED BY CH APPROVER' ||
                                                                 d.customerStatus == 'REJECTED BY ACCOUNTS APPROVER')"
                                                                 href="javascript:void(0);" (click)="onEdit(d)">
-                                                                <img src="../assets/images/edit-icon.svg" alt="" title="Edit">
+                                                                <img src="../assets/images/edit-icon.svg" alt=""
+                                                                    title="Edit">
                                                             </a>
                                                             <a *ngIf="publicVariable.storedRole !== 'Admin' && d.createdBy === this.publicVariable.storedEmail && (d.isDraft ||
                                                                 d.customerStatus == 'REJECTED BY TL APPROVER' ||
@@ -245,7 +277,8 @@
                                                                 d.customerStatus == 'REJECTED BY ACCOUNTS APPROVER')"
                                                                 href="javascript:void(0);"
                                                                 (click)="onDelete(d.customerId)"><img
-                                                                    src="../assets/images/delete-icon.svg" alt="" title="Delete"></a>
+                                                                    src="../assets/images/delete-icon.svg" alt=""
+                                                                    title="Delete"></a>
                                                         </span>
                                                     </td>
                                                 </tr>
@@ -268,10 +301,8 @@
                                                 publicVariable.count }}</b>
                                             entries
                                         </div>
-                                        <pagination-controls previousLabel="Prev"
-                                        id="pagination6"
-                                        class="pagination" nextLabel="Next"
-                                            (pageChange)="onTableDataChange($event,'Customer')">
+                                        <pagination-controls previousLabel="Prev" id="pagination6" class="pagination"
+                                            nextLabel="Next" (pageChange)="onTableDataChange($event,'Customer')">
                                         </pagination-controls>
                                     </div>
 
@@ -312,10 +343,8 @@
                             </a>
                         </li>
                         <li class="nav-item" *ngIf="this.publicVariable.storedRole === 'Employee'">
-                            <a class="nav-link tabbg-2"
-                            [class.active]="headerStatus =='PENDING WITH APPROVER'"
-
-                            data-bs-toggle="pill" href="#PIhome"
+                            <a class="nav-link tabbg-2" [class.active]="headerStatus =='PENDING WITH APPROVER'"
+                                data-bs-toggle="pill" href="#PIhome"
                                 (click)="loadInoivceStatusList('PENDING WITH APPROVER')">
                                 <small>Pending Approval</small>
                                 <span>{{PIPendingApproval}}</span>
@@ -324,42 +353,38 @@
 
                         <li class="nav-item">
                             <a class="nav-link  tabbg-3"
-                             [class.active]="this.publicVariable.storedRole === 'Admin' &&  headerStatus =='APPROVED BY ACCOUNTS APPROVER'"
+                                [class.active]="this.publicVariable.storedRole === 'Admin' &&  headerStatus =='APPROVED BY ACCOUNTS APPROVER'"
                                 data-bs-toggle="pill" href="#PIhome"
                                 (click)="loadInoivceStatusList('APPROVED BY ACCOUNTS APPROVER')">
-                                <small>Approved by TL  </small>
+                                <small>Approved by TL </small>
                                 <span>{{PIApprovedAccounts}}</span>
                             </a>
                         </li>
 
                         <li class="nav-item">
                             <a class="nav-link tabbg-4" data-bs-toggle="pill" href="#PIhome"
-
-                            [class.active]="headerStatus =='REJECTED BY CH APPROVER'"
+                                [class.active]="headerStatus =='REJECTED BY CH APPROVER'"
                                 (click)="loadInoivceStatusList('REJECTED BY CH APPROVER')">
                                 <small>Rejected </small>
                                 <span>{{PIRejectedbyAccounts}}</span>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link tabbg-4"
-                            [class.active]="headerStatus =='Cancelled'"
-                            data-bs-toggle="pill" href="#PIhome"
-                                (click)="loadInoivceStatusList('Cancelled')">
+                            <a class="nav-link tabbg-4" [class.active]="headerStatus =='Cancelled'"
+                                data-bs-toggle="pill" href="#PIhome" (click)="loadInoivceStatusList('Cancelled')">
                                 <small>Cancelled </small>
                                 <span>{{Cancelled}}</span>
                             </a>
                         </li>
 
                         <li class="nav-item" *ngIf="invoiceType === 'Tax Invoice'">
-                            <a class="nav-link tabbg-4"
-                            [class.active]="headerStatus =='Posted Tax Invoice new'"
-                            data-bs-toggle="pill" href="#PIhome"
+                            <a class="nav-link tabbg-4" [class.active]="headerStatus =='Posted Tax Invoice new'"
+                                data-bs-toggle="pill" href="#PIhome"
                                 (click)="loadInoivceStatusList('Posted Tax Invoice new')">
                                 <small>Posted Tax Invoice New </small>
-                                <span>{{PITEXTCOUNT}}</span>                            </a>
+                                <span>{{PITEXTCOUNT}}</span> </a>
                         </li>
-<!--  -->
+                        <!--  -->
                         <!-- <li class="nav-item" *ngIf="invoiceType === 'Tax Invoice'">
                             <a class="nav-link tabbg-5"
                                 [class.active]="headerStatus =='Posted Tax Invoice' "
@@ -369,10 +394,8 @@
                             </a>
                         </li> -->
                         <li class="nav-item" *ngIf="invoiceType === 'Proforma Invoice'">
-                            <a class="nav-link tabbg-4"
-                            [class.active]="headerStatus =='PI Processed'"
-                            data-bs-toggle="pill" href="#PIhome"
-                                (click)="loadInoivceStatusList('PI Processed')">
+                            <a class="nav-link tabbg-4" [class.active]="headerStatus =='PI Processed'"
+                                data-bs-toggle="pill" href="#PIhome" (click)="loadInoivceStatusList('PI Processed')">
                                 <small>PI Processed (Accounts) </small>
                                 <span>{{PIPROCESSEDCOUNT}}</span>
                             </a>
@@ -387,8 +410,7 @@
                         </li> -->
                         <li class="nav-item">
                             <a class="nav-link tabbg-5" data-bs-toggle="pill" href="#PIhome"
-                            [class.active]="headerStatus =='ALL' "
-                                (click)="loadInoivceStatusList('ALL')">
+                                [class.active]="headerStatus =='ALL' " (click)="loadInoivceStatusList('ALL')">
                                 <small>All </small>
                                 <span>{{PIALL}}</span>
                             </a>
@@ -420,8 +442,8 @@
                                 </div>
 
                                 <div class="dt-buttons" *ngIf="invoiceStatuslistData.length > 0">
-                                    <button class="gray-btns" (click)="onDownloadPI()" type="button" title="Download"><img
-                                            src="../assets/images/excel-icon.png" alt=""></button>
+                                    <button class="gray-btns" (click)="onDownloadPI()" type="button"
+                                        title="Download"><img src="../assets/images/excel-icon.png" alt=""></button>
                                 </div>
                                 <div class="topbr-btns">
                                     <div class="btn-group"
@@ -470,7 +492,7 @@
                                             <tbody>
                                                 <tr
                                                     *ngFor="let d of  this.invoiceStatuslistData | invoiceFilter: publicVariable.searchText| paginate: {id: 'pagination1',itemsPerPage: pitableSize,currentPage: pipage,totalItems: invoiceStatuslistData.length};let i = index">
-                                                <td>{{InvoicecalculateIndex(pipage, i)}}</td>
+                                                    <td>{{InvoicecalculateIndex(pipage, i)}}</td>
                                                     <td>{{d.headerRecordID}}</td>
                                                     <td *ngIf="customerStatus=='APPROVED BY ACCOUNTS APPROVER'">
                                                         {{d.headerPiNo}}</td>
@@ -494,15 +516,18 @@
                                                         <span class="table-btns">
                                                             <a href="javascript:void(0);" (click)="onViewPI(d)"
                                                                 *ngIf="customerStatus !== 'FOR APPROVAL'">
-                                                                <img src="../assets/images/view-icon.svg" alt="" title="View">
+                                                                <img src="../assets/images/view-icon.svg" alt=""
+                                                                    title="View">
                                                             </a>
                                                             <a href="javascript:void(0);" (click)="onApprovalPI(d)"
                                                                 *ngIf="customerStatus == 'FOR APPROVAL' &&  this.publicVariable.storedRole == 'Approver'">
-                                                                <img src="../assets/images/view-icon.svg" alt="" title="View">
+                                                                <img src="../assets/images/view-icon.svg" alt=""
+                                                                    title="View">
                                                             </a>
                                                             <a href="javascript:void(0);" (click)="onViewAccountPI(d)"
                                                                 *ngIf="customerStatus == 'FOR APPROVAL' &&  this.publicVariable.storedRole == 'Accounts'">
-                                                                <img src="../assets/images/view-icon.svg" alt="" title="View">
+                                                                <img src="../assets/images/view-icon.svg" alt=""
+                                                                    title="View">
                                                             </a>
 
                                                             <a *ngIf="publicVariable.storedRole !== 'Admin' && publicVariable.storedRole !== 'Approver' &&
@@ -525,7 +550,8 @@
                                                                   )" href="javascript:void(0)"
                                                                 (click)="onDeletePI(d.headerId)" data-bs-toggle="modal"
                                                                 data-bs-target="#deleterecord-modal"><img
-                                                                    src="../assets/images/delete-icon.svg" alt="" title="Delete" /></a>
+                                                                    src="../assets/images/delete-icon.svg" alt=""
+                                                                    title="Delete" /></a>
 
                                                             <!-- <a href="javascript:void(0);" (click)="onSendEmail(d)"
                                                                 *ngIf="d.headerStatus === 'APPROVED BY FINANCE' && this.storedRole === 'Approver' "><img
@@ -535,13 +561,19 @@
                                                                     src="../assets/images/email-edit-icon.svg"
                                                                     alt="" title="Email"></a> -->
 
-                                                                    <!-- <a *ngIf="d.postedInvoiceNumber" href="javascript:void(0);" (click)="downalod1File(d.postedInvoiceNumber)"><img
+                                                            <!-- <a *ngIf="d.postedInvoiceNumber" href="javascript:void(0);" (click)="downalod1File(d.postedInvoiceNumber)"><img
                                                                         src="../assets/images/download-icon.svg" alt="" title="Download" /></a> -->
 
-                                                                        <a *ngIf="(d.postedInvoiceNumber && d.impiHeaderInvoiceType == 'Tax Invoice') && (d.headerStatus == 'APPROVED BY FINANCE' || d.headerStatus == 'TAX INVOICE POSTED')" href="javascript:void(0);" (click)="downalod1File(d.postedInvoiceNumber)"><img
-                                                                            src="../assets/images/download-icon.svg" alt="" title="Download" /></a>
-                                                                            <a *ngIf="(d.headerPiNo && d.impiHeaderInvoiceType == 'Proforma Invoice') && (d.headerStatus == 'APPROVED BY FINANCE')"  href="javascript:void(0);" (click)="downalodFilePI(d.headerPiNo)"><img
-                                                                                src="../assets/images/download-icon.svg" alt="" title="Download" /></a>
+                                                            <a *ngIf="(d.postedInvoiceNumber && d.impiHeaderInvoiceType == 'Tax Invoice') && (d.headerStatus == 'APPROVED BY FINANCE' || d.headerStatus == 'TAX INVOICE POSTED')"
+                                                                href="javascript:void(0);"
+                                                                (click)="downalod1File(d.postedInvoiceNumber)"><img
+                                                                    src="../assets/images/download-icon.svg" alt=""
+                                                                    title="Download" /></a>
+                                                            <a *ngIf="(d.headerPiNo && d.impiHeaderInvoiceType == 'Proforma Invoice') && (d.headerStatus == 'APPROVED BY FINANCE')"
+                                                                href="javascript:void(0);"
+                                                                (click)="downalodFilePI(d.headerPiNo)"><img
+                                                                    src="../assets/images/download-icon.svg" alt=""
+                                                                    title="Download" /></a>
                                                         </span>
                                                     </td>
                                                 </tr>
@@ -563,12 +595,8 @@
                                                 invoiceStatuslistData.length }}</b>
                                             entries
                                         </div>
-                                        <pagination-controls
-
-                                            previousLabel="Prev" nextLabel="Next"
-
-                                            class="pagination" id="pagination1"
-                                            (pageChange)="onTableDataChange($event, 'invoice')">
+                                        <pagination-controls previousLabel="Prev" nextLabel="Next" class="pagination"
+                                            id="pagination1" (pageChange)="onTableDataChange($event, 'invoice')">
                                         </pagination-controls>
                                     </div>
 
@@ -648,18 +676,20 @@
                                                     <!-- <td>{{d.status}}</td> -->
                                                     <td><span class="table-btns">
                                                             <a href="javascript:void(0);" (click)="InvoicedView(d)"><img
-                                                                    src="../assets/images/view-icon.svg" alt="" title="View"></a>
+                                                                    src="../assets/images/view-icon.svg" alt=""
+                                                                    title="View"></a>
 
                                                             <a href="javascript:void(0);" data-bs-toggle="modal"
                                                                 (click)="loadTaxPaymentInvoiceSummary(d)"
                                                                 data-bs-target="#workflow-modal"><img
                                                                     class="custom-rupee-icon"
-                                                                    src="../assets/images/rupee-icon.png" alt="" title="Payment" /></a>
+                                                                    src="../assets/images/rupee-icon.png" alt=""
+                                                                    title="Payment" /></a>
 
                                                             <a href="javascript:void(0);"
                                                                 (click)="downalodpostedTexFile(d.no)"><img
-                                                                    src="../assets/images/download-icon.svg"
-                                                                    alt=""  title="Download"></a>
+                                                                    src="../assets/images/download-icon.svg" alt=""
+                                                                    title="Download"></a>
 
                                                             <!-- <a href="javascript:void(0);"
                                                                 (click)="onTextSendEmail(d)"><img
@@ -688,9 +718,8 @@
                                                 PostedTaxInvoiceCount }}</b>
                                             entries
                                         </div>
-                                        <pagination-controls previousLabel="Prev"
-                                        id="pagination2"
-                                        class="pagination" nextLabel="Next"
+                                        <pagination-controls previousLabel="Prev" id="pagination2" class="pagination"
+                                            nextLabel="Next"
                                             (pageChange)="onTableDataChange($event,'Posted Tax Invoice')">
                                         </pagination-controls>
                                     </div>
@@ -770,12 +799,13 @@
                                                     <td><span class="table-btns">
                                                             <a href="javascript:void(0);"
                                                                 (click)="PIInvoicedView(d)"><img
-                                                                    src="../assets/images/view-icon.svg" alt="" title="View"></a>
+                                                                    src="../assets/images/view-icon.svg" alt=""
+                                                                    title="View"></a>
 
                                                             <a href="javascript:void(0);"
                                                                 (click)="ProformaInvoicedownalodFile(d.no)"><img
-                                                                    src="../assets/images/download-icon.svg"
-                                                                    alt="" title="Download" /></a>
+                                                                    src="../assets/images/download-icon.svg" alt=""
+                                                                    title="Download" /></a>
                                                             <!--
                                                             <a href="javascript:void(0);" data-bs-toggle="modal"
                                                                 data-bs-target="#workflow-modal"><img
@@ -814,9 +844,7 @@
                                         </div>
                                         <pagination-controls
                                             *ngIf="PIInvoiceSummaryList && PIInvoiceSummaryList.length > 0"
-
-                                            id="pagination3"
-                                            previousLabel="Prev" class="pagination" nextLabel="Next"
+                                            id="pagination3" previousLabel="Prev" class="pagination" nextLabel="Next"
                                             (pageChange)="onTableDataChange($event,'Posted Proforma Invoice')">
                                         </pagination-controls>
                                     </div>
@@ -865,7 +893,7 @@
                         <li class="nav-item">
                             <a class="nav-link  tabbg-3" data-bs-toggle="pill" href="#Saleshome"
                                 (click)="loadInoivceSalesStatusList('APPROVED BY ACCOUNTS APPROVER')">
-                                <small>Approved by TL  </small>
+                                <small>Approved by TL </small>
                                 <span>{{PIApprovedAccounts}}</span>
                             </a>
                         </li>
@@ -1017,15 +1045,18 @@
                                                         <span class="table-btns">
                                                             <a href="javascript:void(0);" (click)="onViewSales(d)"
                                                                 *ngIf="customerStatus !== 'FOR APPROVAL'">
-                                                                <img src="../assets/images/view-icon.svg" alt="" title="View">
+                                                                <img src="../assets/images/view-icon.svg" alt=""
+                                                                    title="View">
                                                             </a>
                                                             <a href="javascript:void(0);" (click)="onViewSales(d)"
                                                                 *ngIf="customerStatus == 'FOR APPROVAL' &&  this.publicVariable.storedRole == 'Approver'">
-                                                                <img src="../assets/images/view-icon.svg" alt="" title="View">
+                                                                <img src="../assets/images/view-icon.svg" alt=""
+                                                                    title="View">
                                                             </a>
                                                             <a href="javascript:void(0);" (click)="onViewAccountPI(d)"
                                                                 *ngIf="customerStatus == 'FOR APPROVAL' &&  this.publicVariable.storedRole == 'Accounts'">
-                                                                <img src="../assets/images/view-icon.svg" alt="" title="View">
+                                                                <img src="../assets/images/view-icon.svg" alt=""
+                                                                    title="View">
                                                             </a>
 
                                                             <a *ngIf="publicVariable.storedRole !== 'Admin' && publicVariable.storedRole !== 'Approver' &&
@@ -1036,7 +1067,8 @@
                                                                 d.headerStatus == 'REJECTED BY ACCOUNTS APPROVER' ||  d.headerStatus == 'REJECTED BY FINANCE APPROVER'
                                                                 )" href="javascript:void(0);"
                                                                 (click)="onEditSI(d)"><img
-                                                                    src="../assets/images/edit-icon.svg" alt="" title="Edit" /></a>
+                                                                    src="../assets/images/edit-icon.svg" alt=""
+                                                                    title="Edit" /></a>
                                                             <a *ngIf="publicVariable.storedRole !== 'Admin' && publicVariable.storedRole !== 'Approver' &&
                                                             publicVariable.storedEmail === d.impiHeaderCreatedBy &&
                                                                 (d.isDraft ||
@@ -1046,7 +1078,8 @@
                                                               )" href="javascript:void(0)"
                                                                 (click)="onDeletePI(d.headerId)" data-bs-toggle="modal"
                                                                 data-bs-target="#deleterecord-modal"><img
-                                                                    src="../assets/images/delete-icon.svg" alt="" title="Delete" /></a>
+                                                                    src="../assets/images/delete-icon.svg" alt=""
+                                                                    title="Delete" /></a>
 
                                                             <!-- <a href="javascript:void(0);" (click)="onsalesSendEmail(d)"
                                                                 *ngIf="d.headerStatus === 'APPROVED BY TL' && this.storedRole === 'Approver' "><img
@@ -1076,7 +1109,8 @@
                                             publicVariable.count }}</b>
                                             entries
                                         </div>
-                                        <pagination-controls  id="pagination4" previousLabel="Prev" class="pagination" nextLabel="Next"
+                                        <pagination-controls id="pagination4" previousLabel="Prev" class="pagination"
+                                            nextLabel="Next"
                                             (pageChange)="onTableDataChange($event,'Sales Credit Note')">
                                         </pagination-controls>
                                     </div>
@@ -1190,12 +1224,13 @@
                                                             <span class="table-btns">
                                                                 <a href="javascript:void(0);"
                                                                     (click)="onCreditNoteView(d)"><img
-                                                                        src="../assets/images/view-icon.svg"
-                                                                        alt="" title="View" /></a>
+                                                                        src="../assets/images/view-icon.svg" alt=""
+                                                                        title="View" /></a>
 
-                                                                        <a href="javascript:void(0);"
-                                            (click)="PostedSalesCreditNotedownalodFile(d.no)"><img
-                                                src="../assets/images/download-icon.svg" alt="" title="Download" /></a>
+                                                                <a href="javascript:void(0);"
+                                                                    (click)="PostedSalesCreditNotedownalodFile(d.no)"><img
+                                                                        src="../assets/images/download-icon.svg" alt=""
+                                                                        title="Download" /></a>
                                                                 <!-- <a *ngIf="publicVariable.storedRole !== 'Admin' &&
                                                                 (d.isDraft ||
                                                                 d.headerStatus == 'REJECTED BY TL APPROVER'  ||
@@ -1246,9 +1281,7 @@
                                             <b>{{
                                                 publicVariable.count }}</b>
                                             entries</div>
-                                        <pagination-controls previousLabel="Prev"
-                                        id="pagination5"
-                                        class="pagination"
+                                        <pagination-controls previousLabel="Prev" id="pagination5" class="pagination"
                                             *ngIf="SalesCreditNoteSummaryData && SalesCreditNoteSummaryData.length > 0"
                                             nextLabel="Next"
                                             (pageChange)="onTableDataChange($event,'Sales Credit Note')">
@@ -1312,7 +1345,8 @@
 
                                     </tr>
                                 </thead>
-                                <tbody *ngIf="TaxInvoicePaymentSummaryList && TaxInvoicePaymentSummaryList.length > 0; else noDataMessage">
+                                <tbody
+                                    *ngIf="TaxInvoicePaymentSummaryList && TaxInvoicePaymentSummaryList.length > 0; else noDataMessage">
 
                                     <tr *ngFor="let i of TaxInvoicePaymentSummaryList;let in = index">
                                         <td>{{in + 1}}</td>

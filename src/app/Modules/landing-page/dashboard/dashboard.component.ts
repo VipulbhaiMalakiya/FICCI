@@ -11,6 +11,9 @@ import { PIEmailComponent } from '../../invoice/send-email/pi-email/pi-email.com
 import { CreditSalesEmailComponent } from '../../invoice/send-email/credit-sales-email/credit-sales-email.component';
 import { forEach } from 'lodash';
 import { FileService } from '../../invoice/service/FileService';
+import { DatePipe } from '@angular/common';
+import { mode } from 'crypto-js';
+
 
 
 @Component({
@@ -24,6 +27,11 @@ export class DashboardComponent {
     customerStatus: string = 'DRAFT';
     headerStatus: string = 'DRAFT';
     InvoiceAttachment: any;
+    startDate?: any;
+    endDate?: any;
+    dateRangeError: boolean = false;
+    selectedValue?: any = 7;
+
 
 
     ppitableSize: number = 10;
@@ -73,8 +81,8 @@ export class DashboardComponent {
     invoiceStatuslistData: invoiceStatusModule[] = [];
     creditNoteCount: number = 0;
     PICount: number = 0;
-    PIPROCESSEDCOUNT : number = 0;
-    PITEXTCOUNT:number = 0;
+    PIPROCESSEDCOUNT: number = 0;
+    PITEXTCOUNT: number = 0;
 
 
 
@@ -85,8 +93,24 @@ export class DashboardComponent {
         private API: CustomersService,
         private IAPI: InvoicesService,
         private cd: ChangeDetectorRef,
-        private fileService: FileService
-    ) { }
+        private fileService: FileService,
+        private datePipe: DatePipe
+    ) {
+        const oneWeekFromNow = new Date();
+        this.endDate = this.datePipe.transform(
+            oneWeekFromNow.toISOString().split('T')[0],
+            'yyyy-MM-dd'
+        );
+        oneWeekFromNow.setDate(oneWeekFromNow.getDate() - 7);
+        this.startDate = this.datePipe.transform(
+            oneWeekFromNow.toISOString().split('T')[0],
+            'yyyy-MM-dd'
+        );
+    }
+
+
+
+
 
     ngOnInit(): void {
         // this.loadCustomerStatusCountList();
@@ -361,19 +385,19 @@ export class DashboardComponent {
             case 'APPROVED BY ACCOUNTS APPROVER':
                 filteredData = this.dashboardData.filter((item: any) =>
                     // item.department === sessionStorage.getItem('department') ||
-                   // item.createdBy === this.publicVariable.storedEmail &&
+                    // item.createdBy === this.publicVariable.storedEmail &&
                     item.customerStatus === this.customerStatus || item.customerStatus === 'APPROVED BY FINANCE');
 
                 break;
             case 'REJECTED BY CH APPROVER':
                 filteredData = this.dashboardData.filter((item: any) =>
-                    // item.department === sessionStorage.getItem('department') ||
-                  //  item.createdBy === this.publicVariable.storedEmail &&
-                    (item.customerStatus === 'REJECTED BY TL APPROVER' ||
-                        item.customerStatus === 'REJECTED BY CH APPROVER' ||
-                        item.customerStatus === 'REJECTED BY ACCOUNTS APPROVER' ||
-                        item.customerStatus === 'REJECTED BY FINANCE APPROVER'
-                        || item.customerStatus === 'REJECTED BY FINANCE APPROVER'));
+                // item.department === sessionStorage.getItem('department') ||
+                //  item.createdBy === this.publicVariable.storedEmail &&
+                (item.customerStatus === 'REJECTED BY TL APPROVER' ||
+                    item.customerStatus === 'REJECTED BY CH APPROVER' ||
+                    item.customerStatus === 'REJECTED BY ACCOUNTS APPROVER' ||
+                    item.customerStatus === 'REJECTED BY FINANCE APPROVER'
+                    || item.customerStatus === 'REJECTED BY FINANCE APPROVER'));
                 break;
             case 'FOR APPROVAL':
                 filteredData = this.dashboardData.filter((item: any) => (item.customerStatus === 'PENDING WITH ACCOUNTS APPROVER' || item.customerStatus === 'PENDING WITH FINANCE APPROVER'));
@@ -560,9 +584,9 @@ export class DashboardComponent {
             'Cancelled': 0,
             'Reversal': 0,
             'ALL': 0,
-            'TAX INVOICE POSTED':0,
-            'PI PROCESSED':0,
-            'PI TEXT':0
+            'TAX INVOICE POSTED': 0,
+            'PI PROCESSED': 0,
+            'PI TEXT': 0
         };
 
         this.invoiceType = invoiceType;
@@ -597,7 +621,7 @@ export class DashboardComponent {
             const approvedData = data.filter(item => (item.impiHeaderInvoiceType == invoiceType) && (
                 // item.headerStatus === 'APPROVED BY ACCOUNTS APPROVER'
                 // || item.headerStatus === 'MAIL SENT BY FINANCE TO CUSTOMER'
-                 item.headerStatus === 'APPROVED BY TL'
+                item.headerStatus === 'APPROVED BY TL'
                 // || item.headerStatus === 'MAIL SENT BY ACCOUNT TO CUSTOMER'
                 // || item.headerStatus === 'APPROVED BY FINANCE'
             ));
@@ -607,7 +631,7 @@ export class DashboardComponent {
             const approvedData = data.filter(item => item.impiHeaderInvoiceType == invoiceType && (
                 // item.headerStatus === 'APPROVED BY ACCOUNTS APPROVER'
                 // || item.headerStatus === 'MAIL SENT BY FINANCE TO CUSTOMER'
-                 item.headerStatus === 'APPROVED BY TL'
+                item.headerStatus === 'APPROVED BY TL'
                 // || item.headerStatus === 'MAIL SENT BY ACCOUNT TO CUSTOMER'
                 // || item.headerStatus === 'APPROVED BY FINANCE'
             ));
@@ -712,11 +736,11 @@ export class DashboardComponent {
         this.Reversal = counts['Reversal'];
         this.publicVariable.count = counts['ALL']; // Total count
         this.PIPROCESSEDCOUNT = counts['PI PROCESSED'];
-        this.PITEXTCOUNT =  counts['PI TEXT'];
+        this.PITEXTCOUNT = counts['PI TEXT'];
     }
     loadInoivceStatusList(status: string): void {
         this.customerStatus = status;
-        this.headerStatus =status;
+        this.headerStatus = status;
         let filteredData;
         switch (this.customerStatus) {
             case 'DRAFT':
@@ -745,7 +769,7 @@ export class DashboardComponent {
                             // item.headerStatus === 'APPROVED BY ACCOUNTS APPROVER'
                             // || item.headerStatus === 'MAIL SENT BY ACCOUNT TO CUSTOMER'
                             // || item.headerStatus === 'APPROVED BY FINANCE'
-                             item.headerStatus === 'APPROVED BY TL'
+                            item.headerStatus === 'APPROVED BY TL'
                             // || item.headerStatus === 'TAX INVOICE POSTED'
                             // || item.headerStatus === 'MAIL SENT BY FINANCE TO CUSTOMER'
                         ));
@@ -756,11 +780,11 @@ export class DashboardComponent {
                             // item.headerStatus === 'APPROVED BY ACCOUNTS APPROVER'
                             // || item.headerStatus === 'MAIL SENT BY ACCOUNT TO CUSTOMER'
                             // || item.headerStatus === 'APPROVED BY FINANCE'
-                             item.headerStatus === 'APPROVED BY TL'
+                            item.headerStatus === 'APPROVED BY TL'
                             // || item.headerStatus === 'TAX INVOICE POSTED'
                             // || item.headerStatus === 'MAIL SENT BY FINANCE TO CUSTOMER'
                         )
-                        );
+                    );
                 }
 
                 break;
@@ -784,15 +808,15 @@ export class DashboardComponent {
                             item.headerStatus === 'APPROVED BY ACCOUNTS APPROVER'
                             || item.headerStatus === 'MAIL SENT BY ACCOUNT TO CUSTOMER'
                             || item.headerStatus === 'APPROVED BY FINANCE'
-                           // || item.headerStatus === 'TAX INVOICE POSTED'
+                            // || item.headerStatus === 'TAX INVOICE POSTED'
                             || item.headerStatus === 'MAIL SENT BY FINANCE TO CUSTOMER'
                         )
-                        );
+                    );
                 }
 
                 break;
 
-                case 'Posted Tax Invoice new':
+            case 'Posted Tax Invoice new':
                 if (this.publicVariable.storedRole == 'Approver' || this.publicVariable.storedRole == 'Admin') {
                     filteredData = this.dashboardData.filter((item: any) =>
                         (item.impiHeaderInvoiceType == this.invoiceType) && (
@@ -810,10 +834,10 @@ export class DashboardComponent {
                             item.headerStatus === 'APPROVED BY ACCOUNTS APPROVER'
                             || item.headerStatus === 'MAIL SENT BY ACCOUNT TO CUSTOMER'
                             || item.headerStatus === 'APPROVED BY FINANCE'
-                           || item.headerStatus === 'TAX INVOICE POSTED'
+                            || item.headerStatus === 'TAX INVOICE POSTED'
                             || item.headerStatus === 'MAIL SENT BY FINANCE TO CUSTOMER'
                         )
-                        );
+                    );
                 }
 
                 break;
@@ -1346,10 +1370,10 @@ export class DashboardComponent {
 
                     if (response.data.length > 0) {
                         this.InvoiceAttachment = response.data[0];
-                        const fileName = this.InvoiceAttachment.invoiceNo+'.pdf';
+                        const fileName = this.InvoiceAttachment.invoiceNo + '.pdf';
                         const fileType = `application/pdf`;
                         this.fileService.downloadFile(this.InvoiceAttachment.attachment, fileName, fileType);
-                        this.publicVariable.isProcess  = false;
+                        this.publicVariable.isProcess = false;
                     }
                     this.handleLoadingError();
                 },
@@ -1550,20 +1574,20 @@ export class DashboardComponent {
         this.appService.exportAsExcelFile(exportData, 'Customer Status', headers);
     }
 
-    onPIDownloadInvoiceSummary(){
+    onPIDownloadInvoiceSummary() {
         const exportData = this.PIInvoiceSummaryList.map((x) => ({
             "No": x?.no || '',
             "Customer No": x?.sellToCustomerNo || '',
-            "Customer" :x?.sellToCustomerName || '',
-            "Project Code":x?.projectCode || '',
-            "Department":x?.departmentName || '',
-            "Division":x?.divisionName || '',
-            "Amount":x?.amount || '',
-            'status':x?.status || '',
+            "Customer": x?.sellToCustomerName || '',
+            "Project Code": x?.projectCode || '',
+            "Department": x?.departmentName || '',
+            "Division": x?.divisionName || '',
+            "Amount": x?.amount || '',
+            'status': x?.status || '',
 
         }));
 
-        const headers = ['No','Customer No','Customer','Project Code','Department','Division','Amount','status'
+        const headers = ['No', 'Customer No', 'Customer', 'Project Code', 'Department', 'Division', 'Amount', 'status'
         ];
         this.appService.exportAsExcelFile(exportData, 'Proforma Invoice', headers);
     }
@@ -1584,7 +1608,7 @@ export class DashboardComponent {
 
         }));
 
-        const headers = ['No','Posting Date','Invoice No','Customer No','Customer','Project Code','Department','Division','Amount'
+        const headers = ['No', 'Posting Date', 'Invoice No', 'Customer No', 'Customer', 'Project Code', 'Department', 'Division', 'Amount'
         ];
         this.appService.exportAsExcelFile(exportData, 'Posted Tax Invoice', headers);
 
@@ -1601,7 +1625,7 @@ export class DashboardComponent {
     handleLoadingError() {
         this.publicVariable.isProcess = false; // Set status to false on error
     }
-    onDownloadSCN(){
+    onDownloadSCN() {
         const exportData = this.SalesCreditNoteSummaryData.map((x) => ({
             "No": x?.no || '',
             "Posting Date": x?.postingDate || '',
@@ -1611,11 +1635,11 @@ export class DashboardComponent {
             "Department": x?.deptCode || '',
             "Division": x?.divisionCode || '',
             "Project Code": x?.projectCode || '',
-            'Status':x?.status
+            'Status': x?.status
 
         }));
 
-        const headers = ['No','Posting Date','Applies To DocNo','Customer No','Customer Name','Department','Division','Project Code','Status'];
+        const headers = ['No', 'Posting Date', 'Applies To DocNo', 'Customer No', 'Customer Name', 'Department', 'Division', 'Project Code', 'Status'];
         this.appService.exportAsExcelFile(exportData, 'Posted Sales Credit Note', headers);
     }
     onDownloadPI() {
@@ -2145,7 +2169,7 @@ export class DashboardComponent {
     }
 
     downalod1File(fileUrl: any) {
-        this.publicVariable.isProcess  = true;
+        this.publicVariable.isProcess = true;
 
         try {
             const subscription = this.IAPI.GetTaxInvoiceAttachment(fileUrl).subscribe({
@@ -2153,20 +2177,18 @@ export class DashboardComponent {
 
                     this.InvoiceAttachment = response.data[0];
 
-                    if(this.InvoiceAttachment.attachment != undefined && this.InvoiceAttachment.attachment !='' && this.InvoiceAttachment.attachment != null )
-                   {
-                    const fileName = this.InvoiceAttachment.invoiceNo+'.pdf';
-                    const fileType = `application/pdf`;
-                    this.fileService.downloadFile(this.InvoiceAttachment.attachment, fileName, fileType);
+                    if (this.InvoiceAttachment.attachment != undefined && this.InvoiceAttachment.attachment != '' && this.InvoiceAttachment.attachment != null) {
+                        const fileName = this.InvoiceAttachment.invoiceNo + '.pdf';
+                        const fileType = `application/pdf`;
+                        this.fileService.downloadFile(this.InvoiceAttachment.attachment, fileName, fileType);
 
-                   }
-                   else
-                   {
+                    }
+                    else {
 
-                  this.toastr.warning('There is an issue with the download of the file from ERP.','File Not Found')
-                   }
+                        this.toastr.warning('There is an issue with the download of the file from ERP.', 'File Not Found')
+                    }
 
-                    this.publicVariable.isProcess  = false;
+                    this.publicVariable.isProcess = false;
                 },
                 error: (error) => {
                     console.error('Error loading project list:', error);
@@ -2184,7 +2206,7 @@ export class DashboardComponent {
     }
 
     downalodFilePI(fileUrl: any) {
-        this.publicVariable.isProcess  = true;
+        this.publicVariable.isProcess = true;
 
         try {
             const subscription = this.IAPI.GetPITaxInvoiceAttachment(fileUrl).subscribe({
@@ -2196,19 +2218,17 @@ export class DashboardComponent {
                     // this.fileService.downloadFile(this.InvoiceAttachment.attachment, fileName, fileType);
                     // this.publicVariable.isProcess  = false;
 
-                    if(this.InvoiceAttachment.attachment != undefined && this.InvoiceAttachment.attachment !='' && this.InvoiceAttachment.attachment != null )
-                    {
-                     const fileName = this.InvoiceAttachment.invoiceNo+'.pdf';
-                     const fileType = `application/pdf`;
-                     this.fileService.downloadFile(this.InvoiceAttachment.attachment, fileName, fileType);
+                    if (this.InvoiceAttachment.attachment != undefined && this.InvoiceAttachment.attachment != '' && this.InvoiceAttachment.attachment != null) {
+                        const fileName = this.InvoiceAttachment.invoiceNo + '.pdf';
+                        const fileType = `application/pdf`;
+                        this.fileService.downloadFile(this.InvoiceAttachment.attachment, fileName, fileType);
 
                     }
-                    else
-                    {
+                    else {
 
-                   this.toastr.warning('There is an issue with the download of the file from ERP.','File Not Found')
+                        this.toastr.warning('There is an issue with the download of the file from ERP.', 'File Not Found')
                     }
-                    this.publicVariable.isProcess  = false;
+                    this.publicVariable.isProcess = false;
 
                 },
                 error: (error) => {
@@ -2225,5 +2245,86 @@ export class DashboardComponent {
 
 
     }
+
+    onValueChange(event: Event) {
+        const target = event.target as HTMLSelectElement;
+        this.selectedValue = target.value;
+        const oneWeekFromNow = new Date();
+        if (this.selectedValue === 'Today') {
+            this.startDate = this.datePipe.transform(
+                oneWeekFromNow.toISOString().split('T')[0],
+                'yyyy-MM-dd'
+            );
+        } else if (this.selectedValue === 'Yesterday') {
+            oneWeekFromNow.setDate(oneWeekFromNow.getDate() - 1);
+            this.startDate = this.datePipe.transform(
+                oneWeekFromNow.toISOString().split('T')[0],
+                'yyyy-MM-dd'
+            );
+        } else if (this.selectedValue === '7') {
+            oneWeekFromNow.setDate(oneWeekFromNow.getDate() - 7);
+            this.startDate = this.datePipe.transform(
+                oneWeekFromNow.toISOString().split('T')[0],
+                'yyyy-MM-dd'
+            );
+        } else if (this.selectedValue === '30') {
+            oneWeekFromNow.setDate(oneWeekFromNow.getDate() - 30);
+            this.startDate = this.datePipe.transform(
+                oneWeekFromNow.toISOString().split('T')[0],
+                'yyyy-MM-dd'
+            );
+        }
+
+         this.publicVariable.isProcess = true;
+        var model: any = {
+            startDate: this.datePipe.transform(this.startDate, 'yyyy-MM-dd'),
+            endDate: this.datePipe.transform(this.endDate, 'yyyy-MM-dd'),
+        };
+
+
+        var startDate = model.startDate;
+        var endDate = model.endDate;
+
+        var resultProductData = this.publicVariable.customerStatusList.filter(a => {
+            var date = new Date(a.createdOn);
+            return (date >= startDate && date <= endDate);
+        });
+
+        console.log(resultProductData);
+        
+        this.publicVariable.customerStatusList = resultProductData;
+
+        console.log(  this.publicVariable.customerStatusList);
+        
+        this.publicVariable.isProcess = false;
+    }
+
+    submitDateRange() {
+        const start = new Date(this.startDate);
+        const end = new Date(this.endDate);
+        if (start > end) {
+            this.dateRangeError = true;
+        } else {
+            this.dateRangeError = false;
+            var model: any = {
+                startDate: this.datePipe.transform(this.startDate, 'yyyy-MM-dd'),
+                endDate: this.datePipe.transform(this.endDate, 'yyyy-MM-dd'),
+            };
+
+            var startDate = new Date(model.startDate);
+            var endDate = new Date(model.endDate);
+
+            var resultProductData = this.publicVariable.customerStatusList.filter(a => {
+                var date = new Date(a.createdOn);
+                return (date >= startDate && date <= endDate);
+            });
+
+            this.publicVariable.customerStatusList = resultProductData;
+
+            this.publicVariable.isProcess = false;
+
+        }
+    }
+
 
 }

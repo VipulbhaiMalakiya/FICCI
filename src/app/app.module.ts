@@ -12,6 +12,8 @@ import { ApprproverEmailComponent } from './layouts/apprprover-email/apprprover-
 import { NevErpComponent } from './layouts/nev-erp/nev-erp.component';
 import { SalesMemoApproverEmailComponent } from './layouts/sales-memo-approver-email/sales-memo-approver-email.component';
 import { InvoiceApprovalComponent } from './layouts/invoice-approval/invoice-approval.component';
+import { DatePipe } from '@angular/common';
+
 @NgModule({
     declarations: [
         AppComponent,
@@ -23,10 +25,11 @@ import { InvoiceApprovalComponent } from './layouts/invoice-approval/invoice-app
         NevErpComponent,
         SalesMemoApproverEmailComponent,
         InvoiceApprovalComponent,
-        
+
     ],
     providers: [
-        { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
+        { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+        DatePipe
     ],
     bootstrap: [AppComponent],
     imports: [
