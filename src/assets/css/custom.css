@@ -664,9 +664,9 @@ textarea.form-control{ padding-top: 10px; padding-bottom: 10px; }
 
 /*------------new dashboard-----------*/
 
-.data-tabs .nav.nav-pills li.nav-item { width: 135px; }
+.data-tabs .nav.nav-pills{ flex-wrap: nowrap; }
 
-.nav.nav-pills.cstm-dash li.nav-item{ width: 189px; }
+.data-tabs .nav.nav-pills li.nav-item { width: 100%; }
 .cstm-dash .nav-link{ height: 50px; }
 
 .data-tabs .nav-link{ background:url(../images/tabbg-1.png) no-repeat; color:#fff; background-size: 100% 100% !important; margin:0px 2px; height: 61px; border-radius: 15px; }
