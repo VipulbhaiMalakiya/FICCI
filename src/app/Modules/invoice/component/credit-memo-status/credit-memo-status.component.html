@@ -54,14 +54,16 @@
                             <th>City</th>
                             <th>Invoice Amount</th>
                             <th>Credit Memo Amount</th>
-                           
+
                             <!-- <th>Accounts Approver </th> -->
                             <th>Created On</th>
                             <th>Created By</th>
                             <th>TL Approver</th>
                             <!-- <th>CL Approver</th> -->
                             <th>Finance Approver</th>
+
                             <th>Status</th>
+                            <th>Total</th>
                             <th class="action-cl">Action</th>
                         </tr>
                     </thead>
@@ -81,14 +83,16 @@
                             <td>{{d.impiHeaderCustomerName | titlecase}}</td>
                             <td>{{d.impiHeaderCustomerCity | titlecase}}</td>
                             <td>{{d.impiHeaderTotalInvoiceAmount | number:'1.2-2' }}</td>
-                            <td>{{d.memoAmount | number:'1.2-2' }}</td>                          
+                            <td>{{d.memoAmount | number:'1.2-2' }}</td>
                             <!-- <td>{{d.accountApprover | titlecase}}</td> -->
                             <td>{{d.impiHeaderSubmittedDate | date:'medium':'IST'}}</td>
                             <td>{{d.impiHeaderCreatedBy | titlecase}}</td>
                             <td>{{d.impiHeaderTlApprover | titlecase}}</td>
                             <!-- <td>{{d.impiHeaderClusterApprover | titlecase}}</td> -->
                             <td>{{d.impiHeaderFinanceApprover | titlecase}}</td>
+
                             <td>{{d.headerStatus }}</td>
+                            <td>{{d.impiHeaderTotalInvoiceAmount | number}}</td>
 
                             <td>
                                 <span class="table-btns">
