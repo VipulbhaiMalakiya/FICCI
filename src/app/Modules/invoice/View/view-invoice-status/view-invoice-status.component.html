@@ -324,6 +324,45 @@
         </div>
     </div>
 
+    <table class="table table-bordered text-nowrap" *ngIf="data.impiHeaderInvoiceType== 'Proforma Invoice'">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>File Type</th>
+                <th>Invoice No.</th>
+                <th *ngIf="!data.isDraft">Action</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <!-- <tr *ngFor="let file of InvoiceAttachment; let i = index"> -->
+                  <tr  *ngIf="InvNo!=null || InvNo!=undefined">
+                  <td>1</td>
+                  <td>.pdf</td>
+                  <td>{{InvNo}}</td>
+                  <td *ngIf="!data.isDraft">
+                      <a href="javascript:void(0)" (click)="downalodInvFile(InvAttachment,InvNo)"><img
+                              src="../assets/images/download-icon.svg" alt="" class="me-2"></a>
+
+                  </td>
+              </tr>
+          </tbody>
+        <!-- <tbody>
+            <tr *ngFor="let file of InvoiceAttachment; let i = index">
+                <td>{{ i + 1 }}</td>
+                <td>{{ file.fileExtension }}</td>
+                <td>{{ file.fileName }}</td>
+                <td *ngIf="!data.isDraft">
+                    <a href="javascript:void(0)" (click)="downalodFile(file)"><img
+                            src="../assets/images/download-icon.svg" alt="" class="me-2"></a>
+
+                </td>
+            </tr>
+        </tbody> -->
+    </table>
+
+
+
     <div class="mastersform-sec mb-3">
 
 

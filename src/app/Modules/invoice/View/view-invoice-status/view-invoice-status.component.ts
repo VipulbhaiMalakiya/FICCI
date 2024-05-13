@@ -104,9 +104,38 @@ export class ViewInvoiceStatusComponent {
         }
     }
 
+    loadTaxInvoiceAttachmentTEXT(invoice: string) {
+        try {
+            const subscription = this.API.GetPITaxInvoiceAttachment(invoice).subscribe({
+                next: (response: any) => {
+
+                    if (response.data.length > 0) {
+                        this.InvoiceAttachment = response.data[0];
+                        this.InvNo = this.InvoiceAttachment.invoiceNo;
+                        this.InvAttachment = this.InvoiceAttachment.attachment;
+                        console.log(this.InvoiceAttachment);
+
+                        //alert(this.InvoiceAttachment.invoiceNo);
+                        this.handleLoadingError();
+                    }
+                    this.handleLoadingError();
+                },
+                error: (error) => {
+                    console.error('Error loading project list:', error);
+                    this.handleLoadingError();
+                },
+            });
+
+            this.publicVariable.Subscription.add(subscription);
+        } catch (error) {
+            console.error('Error loading project list:', error);
+            this.handleLoadingError();
+        }
+    }
+
     downalodInvFile(base64String: any, InvNo: any = 'Invoice') {
 
-        if (base64String != undefined && base64String != '' && base64String != null) {
+                if (base64String != undefined && base64String != '' && base64String != null) {
             const fileName = InvNo + '.pdf';
             const fileType = `application/pdf`;
             this.fileService.downloadFile(base64String, fileName, fileType);
@@ -118,14 +147,27 @@ export class ViewInvoiceStatusComponent {
         }
     }
 
+    downalodInvFileNew(data:any){
+        console.log(data);
+
+    }
+
     loadStateList() {
         try {
             const subscription = this.CAPI.getStateList().subscribe({
                 next: (response: any) => {
                     this.publicVariable.stateList = response.data;
-                    if (this.data.postedInvoiceNumber) {
-                        this.loadTaxInvoiceAttachment(this.data.postedInvoiceNumber)
-                    }else{
+                    if (this.data) {
+                        if (this.data.impiHeaderInvoiceType == 'Tax Invoice') {
+                            this.loadTaxInvoiceAttachment(this.data.postedInvoiceNumber)
+                        }
+                        else {
+
+                            this.loadTaxInvoiceAttachmentTEXT(this.data.headerPiNo);
+
+                        }
+
+                    } else {
                         this.handleLoadingError();
                     }
                 },

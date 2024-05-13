@@ -107,6 +107,49 @@ export class InvoiceStatusComponent implements OnInit {
 
     }
 
+    downalodFilePI(fileUrl: any) {
+        this.publicVariable.isProcess  = true;
+
+        try {
+            const subscription = this.API.GetPITaxInvoiceAttachment(fileUrl).subscribe({
+                next: (response: any) => {
+
+                    this.InvoiceAttachment = response.data[0];
+                    // const fileName = this.InvoiceAttachment.invoiceNo+'.pdf';
+                    // const fileType = `application/pdf`;
+                    // this.fileService.downloadFile(this.InvoiceAttachment.attachment, fileName, fileType);
+                    // this.publicVariable.isProcess  = false;
+
+                    if(this.InvoiceAttachment.attachment != undefined && this.InvoiceAttachment.attachment !='' && this.InvoiceAttachment.attachment != null )
+                    {
+                     const fileName = this.InvoiceAttachment.invoiceNo+'.pdf';
+                     const fileType = `application/pdf`;
+                     this.fileService.downloadFile(this.InvoiceAttachment.attachment, fileName, fileType);
+
+                    }
+                    else
+                    {
+
+                   this.toastr.warning('There is an issue with the download of the file from ERP.','File Not Found')
+                    }
+                    this.publicVariable.isProcess  = false;
+
+                },
+                error: (error) => {
+                    console.error('Error loading project list:', error);
+                    // this.handleLoadingError();
+                },
+            });
+
+            this.publicVariable.Subscription.add(subscription);
+        } catch (error) {
+            console.error('Error loading project list:', error);
+            // this.handleLoadingError();
+        }
+
+
+    }
+
     onDelete(id: any) {
         const modalRef = this.modalService.open(ConfirmationDialogModalComponent, { size: "sm", centered: true, backdrop: "static" });
         var componentInstance = modalRef.componentInstance as ConfirmationDialogModalComponent;
