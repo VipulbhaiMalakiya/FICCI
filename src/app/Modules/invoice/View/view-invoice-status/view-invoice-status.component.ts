@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, CustomersService, FormBuilder, InvoicesService, Router, ToastrService, Validators, publicVariable } from '../../Export/invoce';
 import { environment } from 'src/environments/environment';
 import { FileService } from '../../service/FileService';
+import { NgIf } from '@angular/common';
 
 @Component({
     selector: 'app-view-invoice-status',
@@ -159,11 +160,21 @@ export class ViewInvoiceStatusComponent {
                     this.publicVariable.stateList = response.data;
                     if (this.data) {
                         if (this.data.impiHeaderInvoiceType == 'Tax Invoice') {
-                            this.loadTaxInvoiceAttachment(this.data.postedInvoiceNumber)
+                            if(this.data.postedInvoiceNumber){
+                                this.loadTaxInvoiceAttachment(this.data.postedInvoiceNumber)
+                            }else{
+                                this.publicVariable.isProcess = false;
+                            }
                         }
                         else {
+                            if(this.data.headerPiNo){
+                                this.loadTaxInvoiceAttachmentTEXT(this.data.headerPiNo);
 
-                            this.loadTaxInvoiceAttachmentTEXT(this.data.headerPiNo);
+                            }
+                            else{
+                                this.publicVariable.isProcess = false;
+
+                            }
 
                         }
 
