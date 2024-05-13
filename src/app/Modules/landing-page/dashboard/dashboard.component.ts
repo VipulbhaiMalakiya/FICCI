@@ -588,20 +588,22 @@ export class DashboardComponent {
         counts['FOR APPROVAL'] = forapproval.length;
 
         if (this.publicVariable.storedRole == 'Approver' || this.publicVariable.storedRole == 'Admin') {
-            const approvedData = data.filter(item => (item.impiHeaderInvoiceType == invoiceType) && (item.headerStatus === 'APPROVED BY ACCOUNTS APPROVER'
-                || item.headerStatus === 'MAIL SENT BY FINANCE TO CUSTOMER'
-                || item.headerStatus === 'APPROVED BY TL'
-                || item.headerStatus === 'MAIL SENT BY ACCOUNT TO CUSTOMER'
-                || item.headerStatus === 'APPROVED BY FINANCE'
+            const approvedData = data.filter(item => (item.impiHeaderInvoiceType == invoiceType) && (
+                // item.headerStatus === 'APPROVED BY ACCOUNTS APPROVER'
+                // || item.headerStatus === 'MAIL SENT BY FINANCE TO CUSTOMER'
+                 item.headerStatus === 'APPROVED BY TL'
+                // || item.headerStatus === 'MAIL SENT BY ACCOUNT TO CUSTOMER'
+                // || item.headerStatus === 'APPROVED BY FINANCE'
             ));
             counts['PENDING WITH FINANCE APPROVER'] = approvedData.length;
         }
         else {
-            const approvedData = data.filter(item => item.impiHeaderInvoiceType == invoiceType && (item.headerStatus === 'APPROVED BY ACCOUNTS APPROVER'
-                || item.headerStatus === 'MAIL SENT BY FINANCE TO CUSTOMER'
-                || item.headerStatus === 'APPROVED BY TL'
-                || item.headerStatus === 'MAIL SENT BY ACCOUNT TO CUSTOMER'
-                || item.headerStatus === 'APPROVED BY FINANCE'
+            const approvedData = data.filter(item => item.impiHeaderInvoiceType == invoiceType && (
+                // item.headerStatus === 'APPROVED BY ACCOUNTS APPROVER'
+                // || item.headerStatus === 'MAIL SENT BY FINANCE TO CUSTOMER'
+                 item.headerStatus === 'APPROVED BY TL'
+                // || item.headerStatus === 'MAIL SENT BY ACCOUNT TO CUSTOMER'
+                // || item.headerStatus === 'APPROVED BY FINANCE'
             ));
             counts['PENDING WITH FINANCE APPROVER'] = approvedData.length;
         }
@@ -689,22 +691,25 @@ export class DashboardComponent {
                 if (this.publicVariable.storedRole == 'Approver' || this.publicVariable.storedRole == 'Admin') {
                     filteredData = this.dashboardData.filter((item: any) =>
                         (item.impiHeaderInvoiceType == this.invoiceType) && (
-                            item.headerStatus === 'APPROVED BY ACCOUNTS APPROVER'
-                            || item.headerStatus === 'MAIL SENT BY ACCOUNT TO CUSTOMER'
-                            || item.headerStatus === 'APPROVED BY FINANCE'
-                            || item.headerStatus === 'APPROVED BY TL'
-                            || item.headerStatus === 'TAX INVOICE POSTED'
-                            || item.headerStatus === 'MAIL SENT BY FINANCE TO CUSTOMER'));
+                            // item.headerStatus === 'APPROVED BY ACCOUNTS APPROVER'
+                            // || item.headerStatus === 'MAIL SENT BY ACCOUNT TO CUSTOMER'
+                            // || item.headerStatus === 'APPROVED BY FINANCE'
+                             item.headerStatus === 'APPROVED BY TL'
+                            // || item.headerStatus === 'TAX INVOICE POSTED'
+                            // || item.headerStatus === 'MAIL SENT BY FINANCE TO CUSTOMER'
+                        ));
                 }
                 else {
                     filteredData = this.dashboardData.filter((item: any) =>
                         (item.impiHeaderInvoiceType == this.invoiceType) && (
-                            item.headerStatus === 'APPROVED BY ACCOUNTS APPROVER'
-                            || item.headerStatus === 'MAIL SENT BY ACCOUNT TO CUSTOMER'
-                            || item.headerStatus === 'APPROVED BY FINANCE'
-                            || item.headerStatus === 'APPROVED BY TL'
-                            || item.headerStatus === 'TAX INVOICE POSTED'
-                            || item.headerStatus === 'MAIL SENT BY FINANCE TO CUSTOMER'));
+                            // item.headerStatus === 'APPROVED BY ACCOUNTS APPROVER'
+                            // || item.headerStatus === 'MAIL SENT BY ACCOUNT TO CUSTOMER'
+                            // || item.headerStatus === 'APPROVED BY FINANCE'
+                             item.headerStatus === 'APPROVED BY TL'
+                            // || item.headerStatus === 'TAX INVOICE POSTED'
+                            // || item.headerStatus === 'MAIL SENT BY FINANCE TO CUSTOMER'
+                        )
+                        );
                 }
 
                 break;

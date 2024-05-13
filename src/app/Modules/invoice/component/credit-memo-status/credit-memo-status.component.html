@@ -61,9 +61,9 @@
                             <th>TL Approver</th>
                             <!-- <th>CL Approver</th> -->
                             <th>Finance Approver</th>
-
+                            <th>Total Amount</th>
                             <th>Status</th>
-                            <th>Total</th>
+
                             <th class="action-cl">Action</th>
                         </tr>
                     </thead>
@@ -90,9 +90,9 @@
                             <td>{{d.impiHeaderTlApprover | titlecase}}</td>
                             <!-- <td>{{d.impiHeaderClusterApprover | titlecase}}</td> -->
                             <td>{{d.impiHeaderFinanceApprover | titlecase}}</td>
+                            <td>{{d.impiHeaderTotalInvoiceAmount | number}}</td>
 
                             <td>{{d.headerStatus }}</td>
-                            <td>{{d.impiHeaderTotalInvoiceAmount | number}}</td>
 
                             <td>
                                 <span class="table-btns">
