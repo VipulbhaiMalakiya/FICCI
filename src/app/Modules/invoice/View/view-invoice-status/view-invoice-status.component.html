@@ -287,10 +287,30 @@
 
                         </td>
                     </tr>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="dasboard-table pi-table mb-0" *ngIf="data.impiHeaderInvoiceType== 'Tax Invoice'">
+        <div class="table-responsive">
+            <table class="table table-bordered text-nowrap">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Category</th>
+                        <th>File Type</th>
+                        <th>File Name</th>
+                        <th *ngIf="!data.isDraft">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+
                     <tr *ngFor="let file of InvoiceAttachment; let i = index">
 
-                        <td>{{i+1}}</td>
-                        <td>Posted</td>
+                        <td>{{ i + 1 }}</td>
+                        <td>Posted Document</td>
                         <td>.pdf</td>
                         <td>{{file.invoiceNo}}</td>
                         <td *ngIf="!data.isDraft">
@@ -387,7 +407,7 @@
 
                 <input type="checkbox" class="btn-check" formControlName="IsDraft" id="btn-check"
                 autocomplete="off">
-            <label class="common-btn w-auto me-2" for="btn-check"  *ngIf ="!(data.IsPostedTaxInvoice) && data.impiHeaderCreatedBy == this.publicVariable.storedEmail && data.headerStatus =='APPROVED BY TL' "
+            <label class="common-btn w-auto me-2" for="btn-check"  *ngIf ="!(data.IsPostedTaxInvoice) && data.impiHeaderCreatedBy == this.publicVariable.storedEmail && data.headerStatus =='APPROVED BY TL' || data.headerStatus =='APPROVED BY FINANCE' "
             (click)="onSubmit(false)">Cancel Request
                 </label>
             <button type="submit" *ngIf ="!(data.impiHeaderInvoiceType=='Tax Invoice') && data.impiHeaderCreatedBy == this.publicVariable.storedEmail && (data.headerStatus =='APPROVED BY TL' || data.headerStatus =='APPROVED BY FINANCE') "
