@@ -50,6 +50,8 @@
         "PIALL",
         "pincode",
         "PINO",
+        "piprocessed",
+        "PIPROCESSEDCOUNT",
         "ppitable",
         "Projectapi",
         "Projet",

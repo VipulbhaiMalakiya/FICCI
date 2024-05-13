@@ -25,6 +25,7 @@ export class DashboardComponent {
     headerStatus: string = 'DRAFT';
     InvoiceAttachment: any;
 
+
     ppitableSize: number = 10;
     ppitableSizes: number[] = [10, 20, 50, 100];
     ppipage: number = 1;
@@ -72,6 +73,7 @@ export class DashboardComponent {
     invoiceStatuslistData: invoiceStatusModule[] = [];
     creditNoteCount: number = 0;
     PICount: number = 0;
+    PIPROCESSEDCOUNT : number = 0;
 
 
 
@@ -236,6 +238,7 @@ export class DashboardComponent {
             'REJECTED BY CH APPROVER': 0,
             'REJECTED BY ACCOUNTS APPROVER': 0,
             'FOR APPROVAL': 0,
+
             'ALL': 0
         };
 
@@ -556,7 +559,8 @@ export class DashboardComponent {
             'Cancelled': 0,
             'Reversal': 0,
             'ALL': 0,
-            'TAX INVOICE POSTED':0
+            'TAX INVOICE POSTED':0,
+            'PI PROCESSED':0,
         };
 
         this.invoiceType = invoiceType;
@@ -607,6 +611,27 @@ export class DashboardComponent {
             ));
             counts['PENDING WITH FINANCE APPROVER'] = approvedData.length;
         }
+
+        if (this.publicVariable.storedRole == 'Approver' || this.publicVariable.storedRole == 'Admin') {
+            const piprocessed = data.filter(item => (item.impiHeaderInvoiceType == invoiceType) && (
+                item.headerStatus === 'APPROVED BY ACCOUNTS APPROVER'
+                || item.headerStatus === 'MAIL SENT BY FINANCE TO CUSTOMER'
+                || item.headerStatus === 'MAIL SENT BY ACCOUNT TO CUSTOMER'
+                || item.headerStatus === 'APPROVED BY FINANCE'
+            ));
+            counts['PI PROCESSED'] = piprocessed.length;
+        }
+        else {
+            const piprocessed = data.filter(item => item.impiHeaderInvoiceType == invoiceType && (
+                item.headerStatus === 'APPROVED BY ACCOUNTS APPROVER'
+                || item.headerStatus === 'MAIL SENT BY FINANCE TO CUSTOMER'
+                || item.headerStatus === 'MAIL SENT BY ACCOUNT TO CUSTOMER'
+                || item.headerStatus === 'APPROVED BY FINANCE'
+            ));
+            counts['PI PROCESSED'] = piprocessed.length;
+        }
+
+
 
 
         const rejectedData = data.filter(item => item.impiHeaderInvoiceType == invoiceType && (item.headerStatus === 'REJECTED BY TL APPROVER'
@@ -662,6 +687,7 @@ export class DashboardComponent {
         this.Cancelled = counts['Cancelled'];
         this.Reversal = counts['Reversal'];
         this.publicVariable.count = counts['ALL']; // Total count
+        this.PIPROCESSEDCOUNT = counts['PI PROCESSED'];
     }
     loadInoivceStatusList(status: string): void {
         this.customerStatus = status;
@@ -708,6 +734,33 @@ export class DashboardComponent {
                              item.headerStatus === 'APPROVED BY TL'
                             // || item.headerStatus === 'TAX INVOICE POSTED'
                             // || item.headerStatus === 'MAIL SENT BY FINANCE TO CUSTOMER'
+                        )
+                        );
+                }
+
+                break;
+
+
+            case 'PI Processed':
+                if (this.publicVariable.storedRole == 'Approver' || this.publicVariable.storedRole == 'Admin') {
+                    filteredData = this.dashboardData.filter((item: any) =>
+                        (item.impiHeaderInvoiceType == this.invoiceType) && (
+                            item.headerStatus === 'APPROVED BY ACCOUNTS APPROVER'
+                            || item.headerStatus === 'MAIL SENT BY ACCOUNT TO CUSTOMER'
+                            || item.headerStatus === 'APPROVED BY FINANCE'
+
+                            || item.headerStatus === 'TAX INVOICE POSTED'
+                            || item.headerStatus === 'MAIL SENT BY FINANCE TO CUSTOMER'
+                        ));
+                }
+                else {
+                    filteredData = this.dashboardData.filter((item: any) =>
+                        (item.impiHeaderInvoiceType == this.invoiceType) && (
+                            item.headerStatus === 'APPROVED BY ACCOUNTS APPROVER'
+                            || item.headerStatus === 'MAIL SENT BY ACCOUNT TO CUSTOMER'
+                            || item.headerStatus === 'APPROVED BY FINANCE'
+                           // || item.headerStatus === 'TAX INVOICE POSTED'
+                            || item.headerStatus === 'MAIL SENT BY FINANCE TO CUSTOMER'
                         )
                         );
                 }
