@@ -535,8 +535,13 @@
                                                                     src="../assets/images/email-edit-icon.svg"
                                                                     alt="" title="Email"></a> -->
 
-                                                                    <a *ngIf="d.postedInvoiceNumber" href="javascript:void(0);" (click)="downalod1File(d.postedInvoiceNumber)"><img
-                                                                        src="../assets/images/download-icon.svg" alt="" title="Download" /></a>
+                                                                    <!-- <a *ngIf="d.postedInvoiceNumber" href="javascript:void(0);" (click)="downalod1File(d.postedInvoiceNumber)"><img
+                                                                        src="../assets/images/download-icon.svg" alt="" title="Download" /></a> -->
+
+                                                                        <a *ngIf="(d.postedInvoiceNumber && d.impiHeaderInvoiceType == 'Tax Invoice') && (d.headerStatus == 'APPROVED BY FINANCE' || d.headerStatus == 'TAX INVOICE POSTED')" href="javascript:void(0);" (click)="downalod1File(d.postedInvoiceNumber)"><img
+                                                                            src="../assets/images/download-icon.svg" alt="" title="Download" /></a>
+                                                                            <a *ngIf="(d.headerPiNo && d.impiHeaderInvoiceType == 'Proforma Invoice') && (d.headerStatus == 'APPROVED BY FINANCE')"  href="javascript:void(0);" (click)="downalodFilePI(d.headerPiNo)"><img
+                                                                                src="../assets/images/download-icon.svg" alt="" title="Download" /></a>
                                                         </span>
                                                     </td>
                                                 </tr>
