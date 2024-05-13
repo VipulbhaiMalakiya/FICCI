@@ -9,10 +9,8 @@ import { UpdateEmailComponent } from '../../invoice/update-email/update-email.co
 import { PostedEmailComponent } from '../../invoice/send-email/posted-email/posted-email.component';
 import { PIEmailComponent } from '../../invoice/send-email/pi-email/pi-email.component';
 import { CreditSalesEmailComponent } from '../../invoice/send-email/credit-sales-email/credit-sales-email.component';
-import { forEach } from 'lodash';
 import { FileService } from '../../invoice/service/FileService';
 import { DatePipe } from '@angular/common';
-import { mode } from 'crypto-js';
 
 
 
