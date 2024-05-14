@@ -45,6 +45,7 @@ export class ViewInvoiceStatusComponent {
         this.loadCOAMasterList();
         this.data = history.state.data;
 
+        console.log(this.data );
 
 
         this.uploadedFiles = this.data.impiHeaderAttachment;
