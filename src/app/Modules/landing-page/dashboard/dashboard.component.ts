@@ -2300,6 +2300,12 @@ export class DashboardComponent {
 
     }
 
+    reset(){
+          this.startDate = '';
+            this.endDate = '';
+            this.selectedValue = 'ALL';
+    }
+
     submitDateRange() {
         const start = new Date(this.startDate);
         const end = new Date(this.endDate);
