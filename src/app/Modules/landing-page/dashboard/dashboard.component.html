@@ -678,7 +678,7 @@
 
                             <div class="page-btns-col">
 
-                                <div class="tblsort" *ngIf="InvoiceSummaryList && InvoiceSummaryList.length > 0">
+                                <div class="tblsort" >
                                     <label class="col-form-label">Show</label>
                                     <select id="itemsPerPageSelect" class="form-select" [(ngModel)]="ptitableSize"
                                         (change)="onTableSizeChange($event,'Posted Tax Invoice')">
@@ -692,7 +692,7 @@
                                             src="../assets/images/excel-icon.png" alt="" title="Download"></button>
                                 </div>
                                 <div class="topbr-btns">
-                                    <div class="btn-group" *ngIf="InvoiceSummaryList && InvoiceSummaryList.length > 0">
+                                    <div class="btn-group" >
                                         <div class="table-search"><input type="text" class="form-control"
                                                 [(ngModel)]="publicVariable.searchText" name="name" id="name"
                                                 placeholder="Search here"></div>
@@ -799,7 +799,7 @@
 
                             <div class="page-btns-col">
 
-                                <div class="tblsort" *ngIf="PIInvoiceSummaryList && PIInvoiceSummaryList.length > 0">
+                                <div class="tblsort" >
                                     <label class="col-form-label">Show</label>
                                     <select id="itemsPerPageSelect" class="form-select" [(ngModel)]="ptitableSize"
                                         (change)="onTableSizeChange($event,'Posted Proforma Invoice')">
@@ -814,7 +814,7 @@
                                 </div>
                                 <div class="topbr-btns">
                                     <div class="btn-group"
-                                        *ngIf="PIInvoiceSummaryList && PIInvoiceSummaryList.length > 0">
+                                        >
                                         <div class="table-search"><input type="text" class="form-control"
                                                 [(ngModel)]="publicVariable.searchText" name="name" id="name"
                                                 placeholder="Search here"></div>
@@ -1084,7 +1084,7 @@
                                 </div>
                                 <div class="topbr-btns">
                                     <div class="btn-group"
-                                        *ngIf="invoiceStatuslistData && invoiceStatuslistData.length > 0">
+                                        >
                                         <div class="table-search"><input type="text" class="form-control"
                                                 [(ngModel)]="publicVariable.searchText" name="name" id="name"
                                                 placeholder="Search here"></div>
@@ -1239,7 +1239,7 @@
 
                         <div id="CreditNote" class="tab-pane"><br>
                             <div class="page-btns-col"
-                                *ngIf="SalesCreditNoteSummaryData && SalesCreditNoteSummaryData.length > 0">
+                              >
                                 <div class="tblsort">
                                     <label class="col-form-label">Show</label>
                                     <select id="itemsPerPageSelect" class="form-select"
