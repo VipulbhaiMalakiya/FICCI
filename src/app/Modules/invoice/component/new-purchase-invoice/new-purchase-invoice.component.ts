@@ -125,7 +125,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
     ngOnInit(): void {
 
         this.publicVariable.isProcess = false;
-        this.loadProjectList();
+        // this.loadProjectList();
         this.loadCustomerStatusList();
         this.navDepartment = sessionStorage.getItem('navDepartment')
         this.navDepartmentArray = this.navDepartment.split('|');
@@ -140,14 +140,16 @@ export class NewPurchaseInvoiceComponent implements OnInit {
             if (params && params['id']) {
                 let decrypted = params['id'];
                 this.Id = atob(decrypted);
-                //console.log("Decrypted ID:", this.Id); // Log the decrypted ID
-            } else {
-                // console.error("ID parameter does not exist.");
-            }
+            } else {            }
         });
 
         if (this.data = history.state.data) {
             this.patchFormData(this.data);
+
+
+            this.onSelectdept(this.data.impiHeaderProjectDepartmentName);
+
+
         }
         this.loadCOAMasterList();
         this.loadGetGSTGroupList();
@@ -159,6 +161,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
     onSelectdept(event: any) {
         this.selectedDept = event;
 
+        console.log(this.selectedDept);
 
         this.publicVariable.dataForm.patchValue({
             ImpiHeaderDepartment: null,
