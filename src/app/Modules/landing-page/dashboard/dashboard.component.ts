@@ -28,7 +28,7 @@ export class DashboardComponent {
     startDate?: any;
     endDate?: any;
     dateRangeError: boolean = false;
-    selectedValue?: any = 7;
+    selectedValue?: any = 'ALL';
 
 
 
@@ -2264,9 +2264,17 @@ export class DashboardComponent {
                 oneWeekFromNow.toISOString().split('T')[0],
                 'yyyy-MM-dd'
             );
+            this.endDate = this.datePipe.transform(
+                oneWeekFromNow.toISOString().split('T')[0],
+                'yyyy-MM-dd'
+            );
         } else if (this.selectedValue === 'Yesterday') {
             oneWeekFromNow.setDate(oneWeekFromNow.getDate() - 1);
             this.startDate = this.datePipe.transform(
+                oneWeekFromNow.toISOString().split('T')[0],
+                'yyyy-MM-dd'
+            );
+            this.endDate = this.datePipe.transform(
                 oneWeekFromNow.toISOString().split('T')[0],
                 'yyyy-MM-dd'
             );
@@ -2276,9 +2284,17 @@ export class DashboardComponent {
                 oneWeekFromNow.toISOString().split('T')[0],
                 'yyyy-MM-dd'
             );
+            this.endDate = this.datePipe.transform(
+                oneWeekFromNow.toISOString().split('T')[0],
+                'yyyy-MM-dd'
+            );
         } else if (this.selectedValue === '30') {
             oneWeekFromNow.setDate(oneWeekFromNow.getDate() - 30);
             this.startDate = this.datePipe.transform(
+                oneWeekFromNow.toISOString().split('T')[0],
+                'yyyy-MM-dd'
+            );
+            this.endDate = this.datePipe.transform(
                 oneWeekFromNow.toISOString().split('T')[0],
                 'yyyy-MM-dd'
             );

@@ -82,6 +82,8 @@ export class CustomersService {
 
     getCustomerStatusNew(data:any): Observable<any[]> {
 
+        console.log(data);
+        
         const url = `${this.getCustomerStatusNewURL}${sessionStorage.getItem('userEmail') ?? ''}&departmentName=${sessionStorage.getItem('department') ?? ''}`;
 
        // const url = `${this.getCustomerStatusNewURL}${sessionStorage.getItem('userEmail') ?? ''}&departmentName=ABC`;
