@@ -12,6 +12,55 @@
             </select>
         </div>
 
+        <div class="homefilterdt">
+            <div class="ficdrop1">
+                <div class="form-group">
+                    <label>Select Date</label>
+                    <select id="select-tags4" class="form-select" [(ngModel)]="selectedValue"
+                        (change)="onValueChange($event)">
+                        <option value="ALL">ALL</option>
+                        <option value="Today">Today</option>
+                        <option value="Yesterday">Yesterday</option>
+                        <option value="7">Last 7 days</option>
+                        <option value="30">Last 30 days</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="ficdrop1">
+                <div class="form-group">
+                    <label>From</label>
+                    <input class="form-control" type="date" id="startDate" name="startDate" [(ngModel)]="startDate"
+                        [max]="endDate"> </div>
+            </div>
+
+            <div class="ficdrop1">
+                <div class="form-group">
+                    <label>To</label>
+                    <input class="form-control" type="date" id="endDate" name="endDate" [(ngModel)]="endDate"
+                        [max]="endDate">
+                    <div *ngIf="dateRangeError" class="form-validate-err">
+                        To Date must be after From Date
+                    </div>
+                </div>
+            </div>
+
+            <div class="ficdrop1">
+                <div class="form-group">
+                    <label class="d-none d-sm-block">&nbsp;</label>
+                    <button type="reset" class="btn common-btn">Reset</button>
+                </div>
+            </div>
+
+            <div class="ficdrop1">
+                <div class="form-group">
+                    <label class="d-none d-sm-block">&nbsp;</label>
+                    <button type="submit" (click)="submitDateRange()" class="btn common-btn">Submit</button>
+                </div>
+            </div>
+
+        </div>
+
         <div class="dt-buttons"
             *ngIf="publicVariable.customerStatusList && publicVariable.customerStatusList.length > 0">
             <button class="gray-btns" (click)="onDownload()" type="button"><img src="../assets/images/excel-icon.png"
@@ -75,8 +124,7 @@
                             <td>{{d.customerStatus }}</td>
                             <td><span class="table-btns">
                                     <a href="javascript:void(0);" (click)="onView(d)"><img
-                                            src="../assets/images/view-icon.svg" alt=""
-                                            title="View Details"></a>
+                                            src="../assets/images/view-icon.svg" alt="" title="View Details"></a>
                                     <a *ngIf="publicVariable.storedRole !== 'Admin' &&
                                             (d.isDraft ||
                                             d.customerStatus == 'REJECTED BY TL APPROVER'  ||
@@ -84,13 +132,13 @@
                                             d.customerStatus == 'REJECTED BY ACCOUNTS APPROVER')"
                                         href="javascript:void(0);" (click)="onEdit(d)">
                                         <img src="../assets/images/edit-icon.svg" alt=""
-                                        [title]="publicVariable.storedRole !== 'Admin' ? 'Edit Details' : ''">
+                                            [title]="publicVariable.storedRole !== 'Admin' ? 'Edit Details' : ''">
                                     </a>
                                     <a *ngIf="publicVariable.storedRole !== 'Admin' && (d.isDraft ||
                                     d.customerStatus == 'REJECTED BY TL APPROVER' ||
                                     d.customerStatus == 'REJECTED BY CH APPROVER' ||
                                     d.customerStatus == 'REJECTED BY ACCOUNTS APPROVER')" href="javascript:void(0);"
-                                        (click)="onDelete(d.customerId)"  title="Delete Customer">
+                                        (click)="onDelete(d.customerId)" title="Delete Customer">
                                         <img src="../assets/images/delete-icon.svg" alt="">
                                     </a>
 

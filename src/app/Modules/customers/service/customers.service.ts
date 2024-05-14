@@ -80,7 +80,7 @@ export class CustomersService {
         return this.http.delete<any>(`${this.deleteURL}/${id}`);
     }
 
-    getCustomerStatusNew(): Observable<any[]> {
+    getCustomerStatusNew(data:any): Observable<any[]> {
 
         const url = `${this.getCustomerStatusNewURL}${sessionStorage.getItem('userEmail') ?? ''}&departmentName=${sessionStorage.getItem('department') ?? ''}`;
 

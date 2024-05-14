@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AppService, ConfirmationDialogModalComponent, formatDate, CustomersService, NgbModal, Router, ToastrService, customerStatusListModel, publicVariable } from '../../Export/new-customer'
 import { finalize, timeout } from 'rxjs';
+import { DatePipe } from '@angular/common';
 @Component({
     selector: 'app-status-customer',
     templateUrl: './status-customer.component.html',
@@ -8,28 +9,105 @@ import { finalize, timeout } from 'rxjs';
 })
 export class StatusCustomerComponent implements OnInit {
     publicVariable = new publicVariable();
+    startDate?: any;
+    endDate?: any;
+    dateRangeError: boolean = false;
+    selectedValue?: any = 7;
 
 
     constructor(private appService: AppService,
         private modalService: NgbModal,
         private router: Router,
         private toastr: ToastrService,
-        private API: CustomersService
+        private API: CustomersService,
+        private datePipe: DatePipe
 
     ) {
-
+        const oneWeekFromNow = new Date();
+        this.endDate = this.datePipe.transform(
+            oneWeekFromNow.toISOString().split('T')[0],
+            'yyyy-MM-dd'
+        );
+        oneWeekFromNow.setDate(oneWeekFromNow.getDate() - 7);
+        this.startDate = this.datePipe.transform(
+            oneWeekFromNow.toISOString().split('T')[0],
+            'yyyy-MM-dd'
+        );
     }
 
     ngOnInit(): void {
-        this.loadCustomerStatusList();
+        let model:any = {
+            'startDate' : this.startDate,
+            'endDate' : this.endDate
+        }
+        this.loadCustomerStatusList(model);
         this.publicVariable.storedEmail = sessionStorage.getItem('userEmail') ?? '';
     }
 
-    loadCustomerStatusList(): void {
-        const subscription = this.API.getCustomerStatusNew().pipe(
+    onValueChange(event: Event) {
+        const target = event.target as HTMLSelectElement;
+        this.selectedValue = target.value;
+        const oneWeekFromNow = new Date();
+        if (this.selectedValue === 'ALL') {
+            this.startDate = '';
+            this.endDate = ''
+        }
+        else if (this.selectedValue === 'Today') {
+            this.startDate = this.datePipe.transform(
+                oneWeekFromNow.toISOString().split('T')[0],
+                'yyyy-MM-dd'
+            );
+        } else if (this.selectedValue === 'Yesterday') {
+            oneWeekFromNow.setDate(oneWeekFromNow.getDate() - 1);
+            this.startDate = this.datePipe.transform(
+                oneWeekFromNow.toISOString().split('T')[0],
+                'yyyy-MM-dd'
+            );
+        } else if (this.selectedValue === '7') {
+            oneWeekFromNow.setDate(oneWeekFromNow.getDate() - 7);
+            this.startDate = this.datePipe.transform(
+                oneWeekFromNow.toISOString().split('T')[0],
+                'yyyy-MM-dd'
+            );
+        } else if (this.selectedValue === '30') {
+            oneWeekFromNow.setDate(oneWeekFromNow.getDate() - 30);
+            this.startDate = this.datePipe.transform(
+                oneWeekFromNow.toISOString().split('T')[0],
+                'yyyy-MM-dd'
+            );
+        }
+
+        // this.publicVariable.isProcess = true;
+        var model: any = {
+            startDate: this.datePipe.transform(this.startDate, 'yyyy-MM-dd'),
+            endDate: this.datePipe.transform(this.endDate, 'yyyy-MM-dd'),
+        };
+        this.loadCustomerStatusList(model);
+
+    }
+
+    submitDateRange() {
+        const start = new Date(this.startDate);
+        const end = new Date(this.endDate);
+        if (start > end) {
+            this.dateRangeError = true;
+        } else {
+            this.dateRangeError = false;
+            var model: any = {
+                startDate: this.datePipe.transform(this.startDate, 'yyyy-MM-dd'),
+                endDate: this.datePipe.transform(this.endDate, 'yyyy-MM-dd'),
+            };
+
+            this.loadCustomerStatusList(model);
+
+        }
+    }
+
+    loadCustomerStatusList(model:any): void {
+        const subscription = this.API.getCustomerStatusNew(model).pipe(
             timeout(120000), // Timeout set to 2 minutes (120000 milliseconds)
             finalize(() => {
-               this.publicVariable.isProcess = false;
+                this.publicVariable.isProcess = false;
             })
         ).subscribe({
             next: (response: any) => {
@@ -86,7 +164,12 @@ export class StatusCustomerComponent implements OnInit {
                     next: (res: any) => {
                         this.toastr.success(res.message, 'Success');
                         this.publicVariable.isProcess = false;
-                        this.loadCustomerStatusList();
+
+                        let model:any = {
+                            'startDate' : this.startDate,
+                            'endDate' : this.endDate
+                        }
+                        this.loadCustomerStatusList(model);
                     },
                     error: (error) => {
                         this.publicVariable.isProcess = false;
@@ -130,12 +213,12 @@ export class StatusCustomerComponent implements OnInit {
         const exportData = this.publicVariable.customerStatusList.map((x) => ({
             "Cust. No.": x?.customerCode || '',
             Name: x?.customerName ? this.toTitleCase(x.customerName) : '',
-            "Name 2":x?.customerLastName ? this.toTitleCase(x.customerLastName) : '',
+            "Name 2": x?.customerLastName ? this.toTitleCase(x.customerLastName) : '',
             Address: x?.address || '',
-            "Address 2":x.address2  || '',
-            State: x?.stateList.stateName ,
-            Country: x?.countryList.countryName ,
-            City: x?.cityList.cityName  ,
+            "Address 2": x.address2 || '',
+            State: x?.stateList.stateName,
+            Country: x?.countryList.countryName,
+            City: x?.cityList.cityName,
             Pincode: x?.pincode,
             "Contact Person": x && x.contact,
             "Phone Number": x?.phoneNumber || '',
@@ -150,10 +233,10 @@ export class StatusCustomerComponent implements OnInit {
             'Status': x.customerStatus ? this.toTitleCase(x.customerStatus) : '',
         }));
 
-        const headers = ['Cust. No.', 'Name','Name 2', 'Address','Address 2', 'Country', 'State', 'City',
-            'Pincode', 'Email','Phone Number','Contact Person',
-             'GST Customer Type', 'GST Registration No.', 'PAN Card',
-            'Created On', 'Created By', 'Last Updated On', 'Last Update By','Status'];
+        const headers = ['Cust. No.', 'Name', 'Name 2', 'Address', 'Address 2', 'Country', 'State', 'City',
+            'Pincode', 'Email', 'Phone Number', 'Contact Person',
+            'GST Customer Type', 'GST Registration No.', 'PAN Card',
+            'Created On', 'Created By', 'Last Updated On', 'Last Update By', 'Status'];
         this.appService.exportAsExcelFile(exportData, 'Customer Status', headers);
     }
     onTableDataChange(event: any) {

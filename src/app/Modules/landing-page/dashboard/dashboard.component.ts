@@ -28,7 +28,7 @@ export class DashboardComponent {
     startDate?: any;
     endDate?: any;
     dateRangeError: boolean = false;
-    selectedValue?: any = 7;
+    selectedValue?: any = 'ALL';
 
 
 
@@ -182,7 +182,11 @@ export class DashboardComponent {
 
     loadCustomerStatusCountList(): void {
         // Observable for the first API call
-        const statusSubscription = this.API.getCustomerStatusNew().pipe(
+        let model: any = {
+            'startDate': this.startDate,
+            'endDate': this.endDate
+        }
+        const statusSubscription = this.API.getCustomerStatusNew(model).pipe(
             timeout(120000),
             catchError((error: any) => {
                 if (error.name === 'TimeoutError') {
@@ -247,6 +251,10 @@ export class DashboardComponent {
                 this.toastr.error('Error loading user list', error.name);
             }
         });
+    }
+
+    CusterDateFilter() {
+
     }
 
     // Helper method to count data for each customer status
@@ -2071,7 +2079,6 @@ export class DashboardComponent {
 
     loadTaxPaymentInvoiceSummary(data: any) {
 
-        console.log(data);
         this.publicVariable.isProcess = true;
         const subscription = this.IAPI.getTaxPaymentDetails(data.no).pipe(
             timeout(120000), // Timeout set to 2 minutes (120000 milliseconds)
@@ -2244,81 +2251,59 @@ export class DashboardComponent {
 
     }
 
-    // onValueChange(event: Event) {
-    //     const target = event.target as HTMLSelectElement;
-    //     this.selectedValue = target.value;
-    //     const oneWeekFromNow = new Date();
-    //     if (this.selectedValue === 'Today') {
-    //         this.startDate = this.datePipe.transform(
-    //             oneWeekFromNow.toISOString().split('T')[0],
-    //             'yyyy-MM-dd'
-    //         );
-    //     } else if (this.selectedValue === 'Yesterday') {
-    //         oneWeekFromNow.setDate(oneWeekFromNow.getDate() - 1);
-    //         this.startDate = this.datePipe.transform(
-    //             oneWeekFromNow.toISOString().split('T')[0],
-    //             'yyyy-MM-dd'
-    //         );
-    //     } else if (this.selectedValue === '7') {
-    //         oneWeekFromNow.setDate(oneWeekFromNow.getDate() - 7);
-    //         this.startDate = this.datePipe.transform(
-    //             oneWeekFromNow.toISOString().split('T')[0],
-    //             'yyyy-MM-dd'
-    //         );
-    //     } else if (this.selectedValue === '30') {
-    //         oneWeekFromNow.setDate(oneWeekFromNow.getDate() - 30);
-    //         this.startDate = this.datePipe.transform(
-    //             oneWeekFromNow.toISOString().split('T')[0],
-    //             'yyyy-MM-dd'
-    //         );
-    //     }
+    onValueChange(event: Event) {
+        const target = event.target as HTMLSelectElement;
+        this.selectedValue = target.value;
+        const oneWeekFromNow = new Date();
+        if (this.selectedValue === 'Today') {
+            this.startDate = this.datePipe.transform(
+                oneWeekFromNow.toISOString().split('T')[0],
+                'yyyy-MM-dd'
+            );
+        } else if (this.selectedValue === 'Yesterday') {
+            oneWeekFromNow.setDate(oneWeekFromNow.getDate() - 1);
+            this.startDate = this.datePipe.transform(
+                oneWeekFromNow.toISOString().split('T')[0],
+                'yyyy-MM-dd'
+            );
+        } else if (this.selectedValue === '7') {
+            oneWeekFromNow.setDate(oneWeekFromNow.getDate() - 7);
+            this.startDate = this.datePipe.transform(
+                oneWeekFromNow.toISOString().split('T')[0],
+                'yyyy-MM-dd'
+            );
+        } else if (this.selectedValue === '30') {
+            oneWeekFromNow.setDate(oneWeekFromNow.getDate() - 30);
+            this.startDate = this.datePipe.transform(
+                oneWeekFromNow.toISOString().split('T')[0],
+                'yyyy-MM-dd'
+            );
+        }
 
-    //      this.publicVariable.isProcess = true;
-    //     var model: any = {
-    //         startDate: this.datePipe.transform(this.startDate, 'yyyy-MM-dd'),
-    //         endDate: this.datePipe.transform(this.endDate, 'yyyy-MM-dd'),
-    //     };
+        //this.publicVariable.isProcess = true;
+        var model: any = {
+            startDate: this.datePipe.transform(this.startDate, 'yyyy-MM-dd'),
+            endDate: this.datePipe.transform(this.endDate, 'yyyy-MM-dd'),
+        };
 
-    //     var resultProductData = this.publicVariable.customerStatusList.filter(a => {
-    //         var date = new Date(a.createdOn.toString().split('T')[0]);
-    //         return (date >=  new Date (model.startDate) && date <= new Date (model.endDate));
-    //     });
 
-    //     console.log(resultProductData);
+    }
 
-    //     this.publicVariable.customerStatusList = resultProductData;
+    submitDateRange() {
+        const start = new Date(this.startDate);
+        const end = new Date(this.endDate);
+        if (start > end) {
+            this.dateRangeError = true;
+        } else {
+            this.dateRangeError = false;
+            var model: any = {
+                startDate: this.datePipe.transform(this.startDate, 'yyyy-MM-dd'),
+                endDate: this.datePipe.transform(this.endDate, 'yyyy-MM-dd'),
+            };
 
-    //     console.log(  this.publicVariable.customerStatusList);
 
-    //     this.publicVariable.isProcess = false;
-    // }
-
-    // submitDateRange() {
-    //     const start = new Date(this.startDate);
-    //     const end = new Date(this.endDate);
-    //     if (start > end) {
-    //         this.dateRangeError = true;
-    //     } else {
-    //         this.dateRangeError = false;
-    //         var model: any = {
-    //             startDate: this.datePipe.transform(this.startDate, 'yyyy-MM-dd'),
-    //             endDate: this.datePipe.transform(this.endDate, 'yyyy-MM-dd'),
-    //         };
-
-    //         var startDate = new Date(model.startDate);
-    //         var endDate = new Date(model.endDate);
-
-    //         var resultProductData = this.publicVariable.customerStatusList.filter(a => {
-    //             var date = new Date(a.createdOn);
-    //             return (date >= startDate && date <= endDate);
-    //         });
-
-    //         this.publicVariable.customerStatusList = resultProductData;
-
-    //         this.publicVariable.isProcess = false;
-
-    //     }
-    // }
+        }
+    }
 
 
 }

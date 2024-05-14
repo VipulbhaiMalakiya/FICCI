@@ -154,12 +154,13 @@
                                     </select>
                                 </div>
                                 <!-- //Test -->
-                                <!-- <div class="homefilterdt">
+                                <div class="homefilterdt">
                                     <div class="ficdrop1">
                                         <div class="form-group">
                                             <label>Select Date</label>
                                             <select id="select-tags4" class="form-select" [(ngModel)]="selectedValue"
                                                 (change)="onValueChange($event)">
+                                                <option value="ALL">ALL</option>
                                                 <option value="Today">Today</option>
                                                 <option value="Yesterday">Yesterday</option>
                                                 <option value="7">Last 7 days</option>
@@ -200,9 +201,9 @@
                                         </div>
                                     </div>
 
-                                </div> -->
+                                </div>
 
-                              
+
 
                                 <div class="dt-buttons"
                                     *ngIf="publicVariable.customerStatusList && publicVariable.customerStatusList.length > 0">
