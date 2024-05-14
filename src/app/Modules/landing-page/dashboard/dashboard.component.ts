@@ -416,160 +416,169 @@ export class DashboardComponent {
 
     }
 
-    loadPurchaseInvoiceList(invoiceType: any): void {
+    model: any = {
+        'startDate': '',
+        'endDate': ''
+    }
+    loadPurchaseInvoiceList(invoiceType: any ): void {
         try {
-            this.cd.detectChanges();
             this.invoiceType = invoiceType;
-            this.dashboardData = [];
-
-            let model: any = {
-                'startDate': this.startDate,
-                'endDate': this.endDate
-            }
-
-            // Observable for the first API call
-            const purchaseInvoiceObservable = this.IAPI.getPurchaseInvoice_New(model).pipe(
-                catchError((error: any) => {
-                    console.error('Error loading purchase invoice list:', error);
-                    return throwError(error);
-                })
-            );
-
-
-            // Observable for the second API call
-            const approveInvoiceObservable = this.IAPI.getApproveInvoice().pipe(
-                timeout(120000), // Timeout set to 2 minutes (120000 milliseconds)
-                catchError((error: any) => {
-                    console.error('Error loading approve invoice list:', error);
-                    return throwError(error);
-                }),
-                finalize(() => {
-                    this.publicVariable.isProcess = false;
-                })
-            );
-
-
-
-            // Observable for the third API call
-            const accountInvoiceObservable = this.IAPI.getApproveAccountInvoice().pipe(
-                timeout(120000), // Timeout set to 2 minutes (120000 milliseconds)
-                catchError((error: any) => {
-                    console.error('Error loading approve invoice list:', error);
-                    return throwError(error);
-                }),
-                finalize(() => {
-                    this.publicVariable.isProcess = false;
-                })
-            );
-
-
-
-
-            // Combining both observables
-            forkJoin([purchaseInvoiceObservable, approveInvoiceObservable, accountInvoiceObservable]).subscribe({
-                next: ([purchaseResponse, approveResponse, accountResponse]: [any, any, any]) => {
-
-                    // Check if data is not null and iterable for purchaseResponse
-                    if (purchaseResponse.data && Array.isArray(purchaseResponse.data)) {
-                        this.dashboardData = purchaseResponse.data;
-
-
-
-                    }
-
-                    //debugger;
-                    if (approveResponse.data && Array.isArray(approveResponse.data))
-
-                        approveResponse.data.forEach((element: any) => {
-                            if (this.dashboardData.filter(x => x.headerId == element.headerId).length <= 0) {
-
-                                this.dashboardData.push(element);
-                            }
-                        });
-
-                    // //debugger;
-                    if (accountResponse.data && Array.isArray(accountResponse.data))
-                        accountResponse.data.forEach((element: any) => {
-                            if (this.dashboardData.filter(x => x.headerRecordID == element.headerRecordID) == undefined) {
-                                this.dashboardData.push(element);
-                            }
-                        });
-                    //  this.invoiceStatuslistData =this.dashboardData;
-                    // //debugger;
-                    // console.log(this.dashboardData);
-                    // this.invoiceStatuslistData = this.dashboardData.filter(x => (x.headerStatus === 'PENDING WITH TL APPROVER' ||
-                    // x.headerStatus === 'PENDING WITH CH APPROVER' ||
-                    // x.headerStatus === 'PENDING WITH ACCOUNTS APPROVER' ||
-                    // x.headerStatus === 'PENDING WITH FINANCE APPROVER' ||
-                    // x.headerStatus === 'DRAFT' || x.headerStatus === 'CANCEL BY EMPLOYEE') && x.impiHeaderInvoiceType == this.invoiceType);
-
-
-
-                    // Concatenate approveResponse.data with dashboardData if it's iterable
-                    // if (approveResponse.data && Array.isArray(approveResponse.data)) {
-                    //     this.dashboardData = [...this.dashboardData, ...approveResponse.data];
-                    // } else {
-                    //     console.warn('Approve response data is null or not iterable');
-                    // }
-
-                    // Concatenate accountResponse.data with dashboardData if it's iterable
-                    // if (accountResponse.data && Array.isArray(accountResponse.data)) {
-                    //     this.dashboardData = [...this.dashboardData, ...accountResponse.data];
-                    // } else {
-                    //     console.warn('Account response data is null or not iterable');
-                    // }
-
-
-
-
-
-
-                    // Processing the merged data
-
-                    this.publicVariable.isProcess = false;
-
-                    // if (this.invoiceType == 'Tax Invoice') {
-                    //     this.loadInvoiceSummary();
-                    // }
-
-                    // else if (this.invoiceType == 'Proforma Invoice') {
-                    //     this.PIloadInvoiceSummary();
-                    // }
-
-                    // Set default status to "DRAFT" if the invoice type changes
-                    if ((invoiceType === 'Tax Invoice' || invoiceType === 'Proforma Invoice') && this.storedRole === 'Approver') {
-                        this.headerStatus = 'FOR APPROVAL';
-                        this.invoiceType = 'Tax Invoice';
-                        this.loadInoivceStatusList('FOR APPROVAL');
-                    } else if ((invoiceType === 'Tax Invoice' || invoiceType === 'Proforma Invoice') && this.storedRole === 'Admin') {
-                        this.headerStatus = 'APPROVED BY ACCOUNTS APPROVER';
-                        this.invoiceType = 'Tax Invoice';
-                        this.loadInoivceStatusList('APPROVED BY ACCOUNTS APPROVER');
-                    } else {
-                        this.headerStatus = 'DRAFT';
-                        this.invoiceType = 'Tax Invoice';
-                        this.loadInoivceStatusList('DRAFT');
-                        this.cd.detectChanges();
-                    }
-
-
-                    this.countDataByInvoies(this.dashboardData, invoiceType);
-                    this.loadInoivceStatusList(this.customerStatus);
-
-                    //this.loadInvoiceSummary();
-                    //this.PIloadInvoiceSummary();
-                },
-                error: (error: any) => {
-                    this.toastr.error('Error loading invoice lists', error.name);
-                    this.publicVariable.isProcess = false;
-                }
-            });
+            this.invoiceDateFilter(this.model)
 
         } catch (error) {
             console.error('Error loading invoice lists:', error);
             this.publicVariable.isProcess = false;
         }
     }
+
+
+    invoiceDateFilter(model:any){
+        this.cd.detectChanges();
+      
+        this.dashboardData = [];
+
+     
+
+        // Observable for the first API call
+        const purchaseInvoiceObservable = this.IAPI.getPurchaseInvoice_New(model).pipe(
+            catchError((error: any) => {
+                console.error('Error loading purchase invoice list:', error);
+                return throwError(error);
+            })
+        );
+
+
+        // Observable for the second API call
+        const approveInvoiceObservable = this.IAPI.getApproveInvoice().pipe(
+            timeout(120000), // Timeout set to 2 minutes (120000 milliseconds)
+            catchError((error: any) => {
+                console.error('Error loading approve invoice list:', error);
+                return throwError(error);
+            }),
+            finalize(() => {
+                this.publicVariable.isProcess = false;
+            })
+        );
+
+
+
+        // Observable for the third API call
+        const accountInvoiceObservable = this.IAPI.getApproveAccountInvoice().pipe(
+            timeout(120000), // Timeout set to 2 minutes (120000 milliseconds)
+            catchError((error: any) => {
+                console.error('Error loading approve invoice list:', error);
+                return throwError(error);
+            }),
+            finalize(() => {
+                this.publicVariable.isProcess = false;
+            })
+        );
+
+
+
+
+        // Combining both observables
+        forkJoin([purchaseInvoiceObservable, approveInvoiceObservable, accountInvoiceObservable]).subscribe({
+            next: ([purchaseResponse, approveResponse, accountResponse]: [any, any, any]) => {
+
+                // Check if data is not null and iterable for purchaseResponse
+                if (purchaseResponse.data && Array.isArray(purchaseResponse.data)) {
+                    this.dashboardData = purchaseResponse.data;
+
+
+
+                }
+
+                //debugger;
+                if (approveResponse.data && Array.isArray(approveResponse.data))
+
+                    approveResponse.data.forEach((element: any) => {
+                        if (this.dashboardData.filter(x => x.headerId == element.headerId).length <= 0) {
+
+                            this.dashboardData.push(element);
+                        }
+                    });
+
+                // //debugger;
+                if (accountResponse.data && Array.isArray(accountResponse.data))
+                    accountResponse.data.forEach((element: any) => {
+                        if (this.dashboardData.filter(x => x.headerRecordID == element.headerRecordID) == undefined) {
+                            this.dashboardData.push(element);
+                        }
+                    });
+                //  this.invoiceStatuslistData =this.dashboardData;
+                // //debugger;
+                // console.log(this.dashboardData);
+                // this.invoiceStatuslistData = this.dashboardData.filter(x => (x.headerStatus === 'PENDING WITH TL APPROVER' ||
+                // x.headerStatus === 'PENDING WITH CH APPROVER' ||
+                // x.headerStatus === 'PENDING WITH ACCOUNTS APPROVER' ||
+                // x.headerStatus === 'PENDING WITH FINANCE APPROVER' ||
+                // x.headerStatus === 'DRAFT' || x.headerStatus === 'CANCEL BY EMPLOYEE') && x.impiHeaderInvoiceType == this.invoiceType);
+
+
+
+                // Concatenate approveResponse.data with dashboardData if it's iterable
+                // if (approveResponse.data && Array.isArray(approveResponse.data)) {
+                //     this.dashboardData = [...this.dashboardData, ...approveResponse.data];
+                // } else {
+                //     console.warn('Approve response data is null or not iterable');
+                // }
+
+                // Concatenate accountResponse.data with dashboardData if it's iterable
+                // if (accountResponse.data && Array.isArray(accountResponse.data)) {
+                //     this.dashboardData = [...this.dashboardData, ...accountResponse.data];
+                // } else {
+                //     console.warn('Account response data is null or not iterable');
+                // }
+
+
+
+
+
+
+                // Processing the merged data
+
+                this.publicVariable.isProcess = false;
+
+                // if (this.invoiceType == 'Tax Invoice') {
+                //     this.loadInvoiceSummary();
+                // }
+
+                // else if (this.invoiceType == 'Proforma Invoice') {
+                //     this.PIloadInvoiceSummary();
+                // }
+
+                // Set default status to "DRAFT" if the invoice type changes
+                if ((this.invoiceType === 'Tax Invoice' || this.invoiceType === 'Proforma Invoice') && this.storedRole === 'Approver') {
+                    this.headerStatus = 'FOR APPROVAL';
+                    this.invoiceType = 'Tax Invoice';
+                    this.loadInoivceStatusList('FOR APPROVAL');
+                } else if ((this.invoiceType === 'Tax Invoice' || this.invoiceType === 'Proforma Invoice') && this.storedRole === 'Admin') {
+                    this.headerStatus = 'APPROVED BY ACCOUNTS APPROVER';
+                    this.invoiceType = 'Tax Invoice';
+                    this.loadInoivceStatusList('APPROVED BY ACCOUNTS APPROVER');
+                } else {
+                    this.headerStatus = 'DRAFT';
+                    this.invoiceType = 'Tax Invoice';
+                    this.loadInoivceStatusList('DRAFT');
+                    this.cd.detectChanges();
+                }
+
+
+                this.countDataByInvoies(this.dashboardData, this.invoiceType);
+                this.loadInoivceStatusList(this.customerStatus);
+
+                //this.loadInvoiceSummary();
+                //this.PIloadInvoiceSummary();
+            },
+            error: (error: any) => {
+                this.toastr.error('Error loading invoice lists', error.name);
+                this.publicVariable.isProcess = false;
+            }
+        });
+    }
+
+
     countDataByInvoies(data: any[], invoiceType: any): void {
 
 
@@ -2389,6 +2398,9 @@ export class DashboardComponent {
         };
         // this.CustomerDateFilter(model)
 
+        this.invoiceDateFilter(model)
+        
+
 
     }
 
@@ -2404,7 +2416,7 @@ export class DashboardComponent {
                 endDate: this.datePipe.transform(this.endDate, 'yyyy-MM-dd'),
             };
 
-            // this.CustomerDateFilter(model)
+            this.invoiceDateFilter(model)
 
 
         }
