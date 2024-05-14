@@ -12,7 +12,7 @@ export class StatusCustomerComponent implements OnInit {
     startDate?: any;
     endDate?: any;
     dateRangeError: boolean = false;
-    selectedValue?: any = 7;
+    selectedValue?: any = 'ALL';
 
 
     constructor(private appService: AppService,
@@ -23,22 +23,13 @@ export class StatusCustomerComponent implements OnInit {
         private datePipe: DatePipe
 
     ) {
-        const oneWeekFromNow = new Date();
-        this.endDate = this.datePipe.transform(
-            oneWeekFromNow.toISOString().split('T')[0],
-            'yyyy-MM-dd'
-        );
-        oneWeekFromNow.setDate(oneWeekFromNow.getDate() - 7);
-        this.startDate = this.datePipe.transform(
-            oneWeekFromNow.toISOString().split('T')[0],
-            'yyyy-MM-dd'
-        );
+  
     }
 
     ngOnInit(): void {
         let model:any = {
-            'startDate' : this.startDate,
-            'endDate' : this.endDate
+            'startDate' : '',
+            'endDate' : ''
         }
         this.loadCustomerStatusList(model);
         this.publicVariable.storedEmail = sessionStorage.getItem('userEmail') ?? '';

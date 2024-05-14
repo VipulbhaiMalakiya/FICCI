@@ -84,7 +84,7 @@ export class CustomersService {
 
         console.log(data);
         
-        const url = `${this.getCustomerStatusNewURL}${sessionStorage.getItem('userEmail') ?? ''}&departmentName=${sessionStorage.getItem('department') ?? ''}`;
+        const url = `${this.getCustomerStatusNewURL}${sessionStorage.getItem('userEmail') ?? ''}&departmentName=${sessionStorage.getItem('department') ?? ''}&start=${data.startDate}&end=${data.endDate}`;
 
        // const url = `${this.getCustomerStatusNewURL}${sessionStorage.getItem('userEmail') ?? ''}&departmentName=ABC`;
 
