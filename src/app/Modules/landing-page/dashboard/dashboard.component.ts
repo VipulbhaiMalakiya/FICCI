@@ -174,7 +174,7 @@ export class DashboardComponent {
     loadCustomerStatusCountList(): void {
         let model: any = {
             'startDate': '',
-            'endDate':''
+            'endDate': ''
         }
         this.CustomerDateFilter(model)
     }
@@ -420,7 +420,7 @@ export class DashboardComponent {
         'startDate': '',
         'endDate': ''
     }
-    loadPurchaseInvoiceList(invoiceType: any ): void {
+    loadPurchaseInvoiceList(invoiceType: any): void {
         try {
             this.invoiceType = invoiceType;
             this.invoiceDateFilter(this.model)
@@ -432,12 +432,12 @@ export class DashboardComponent {
     }
 
 
-    invoiceDateFilter(model:any){
+    invoiceDateFilter(model: any) {
         this.cd.detectChanges();
-      
+
         this.dashboardData = [];
 
-     
+
 
         // Observable for the first API call
         const purchaseInvoiceObservable = this.IAPI.getPurchaseInvoice_New(model).pipe(
@@ -550,7 +550,7 @@ export class DashboardComponent {
 
                 // Set default status to "DRAFT" if the invoice type changes
 
-                if(!this.isfilterDefaultStatus){
+                if (!this.isfilterDefaultStatus) {
                     if ((this.invoiceType === 'Tax Invoice' || this.invoiceType === 'Proforma Invoice') && this.storedRole === 'Approver') {
                         this.headerStatus = 'FOR APPROVAL';
                         this.invoiceType = 'Tax Invoice';
@@ -566,7 +566,7 @@ export class DashboardComponent {
                         this.cd.detectChanges();
                     }
                 }
-               
+
 
 
                 this.countDataByInvoies(this.dashboardData, this.invoiceType);
@@ -1018,76 +1018,75 @@ export class DashboardComponent {
 
 
     //CreditNote
+
+
     loadSalesCreditNote(): void {
         try {
-            //this.invoiceStatuslistData = [];
-            // Observable for the first API call
-
-            let model:any = {
-                'startDate' : this.startDate,
-                'endDate' : this.endDate
-            }
-            const purchaseInvoiceObservable = this.IAPI.getSalesCreditMemo(model).pipe(
-                catchError((error: any) => {
-                    console.error('Error loading purchase invoice list:', error);
-                    return throwError(error);
-                })
-            );
-
-            // Observable for the second API call
-            const approveInvoiceObservable = this.IAPI.getApproveSalesInvoice().pipe(
-                timeout(120000), // Timeout set to 2 minutes (120000 milliseconds)
-                catchError((error: any) => {
-                    console.error('Error loading approve invoice list:', error);
-                    return throwError(error);
-                }),
-                finalize(() => {
-                    this.publicVariable.isProcess = false;
-                })
-            );
-
-            // Combining both observables
-            forkJoin([purchaseInvoiceObservable, approveInvoiceObservable]).subscribe({
-                next: ([purchaseResponse, approveResponse]: [any, any]) => {
-                    // Check if data is not null and iterable for purchaseResponse
-                    if (purchaseResponse.data && Array.isArray(purchaseResponse.data)) {
-                        this.CreditNotedashboardData = purchaseResponse.data;
-                    } else {
-                        console.warn('Purchase response data is null or not iterable');
-                        this.CreditNotedashboardData = [];
-                    }
-
-                    // Concatenate approveResponse.data with dashboardData if it's iterable
-                    if (approveResponse.data && Array.isArray(approveResponse.data)) {
-                        this.CreditNotedashboardData = [...this.CreditNotedashboardData, ...approveResponse.data];
-
-                    } else {
-                        console.warn('Approve response data is null or not iterable');
-                    }
-
-
-                    this.headerStatus = this.customerStatus;
-
-
-
-                    this.publicVariable.isProcess = false;
-
-                    this.countDataBySalesInvoies(this.CreditNotedashboardData);
-                    this.loadInoivceSalesStatusList(this.customerStatus);
-
-                    this.loadSalesCreditNoteSummary();
-
-                },
-                error: (error: any) => {
-                    this.toastr.error('Error loading invoice lists', error.name);
-                    this.publicVariable.isProcess = false;
-                }
-            });
-
+            this.SLFilterBYDate(this.model);
         } catch (error) {
             console.error('Error loading invoice lists:', error);
             this.publicVariable.isProcess = false;
         }
+    }
+
+
+    SLFilterBYDate(model:any) {
+        const purchaseInvoiceObservable = this.IAPI.getSalesCreditMemo(model).pipe(
+            catchError((error: any) => {
+                console.error('Error loading purchase invoice list:', error);
+                return throwError(error);
+            })
+        );
+
+        // Observable for the second API call
+        const approveInvoiceObservable = this.IAPI.getApproveSalesInvoice().pipe(
+            timeout(120000), // Timeout set to 2 minutes (120000 milliseconds)
+            catchError((error: any) => {
+                console.error('Error loading approve invoice list:', error);
+                return throwError(error);
+            }),
+            finalize(() => {
+                this.publicVariable.isProcess = false;
+            })
+        );
+
+        // Combining both observables
+        forkJoin([purchaseInvoiceObservable, approveInvoiceObservable]).subscribe({
+            next: ([purchaseResponse, approveResponse]: [any, any]) => {
+                // Check if data is not null and iterable for purchaseResponse
+                if (purchaseResponse.data && Array.isArray(purchaseResponse.data)) {
+                    this.CreditNotedashboardData = purchaseResponse.data;
+                } else {
+                    console.warn('Purchase response data is null or not iterable');
+                    this.CreditNotedashboardData = [];
+                }
+
+                // Concatenate approveResponse.data with dashboardData if it's iterable
+                if (approveResponse.data && Array.isArray(approveResponse.data)) {
+                    this.CreditNotedashboardData = [...this.CreditNotedashboardData, ...approveResponse.data];
+
+                } else {
+                    console.warn('Approve response data is null or not iterable');
+                }
+
+
+                this.headerStatus = this.customerStatus;
+
+
+
+                this.publicVariable.isProcess = false;
+
+                this.countDataBySalesInvoies(this.CreditNotedashboardData);
+                this.loadInoivceSalesStatusList(this.customerStatus);
+
+                this.loadSalesCreditNoteSummary();
+
+            },
+            error: (error: any) => {
+                this.toastr.error('Error loading invoice lists', error.name);
+                this.publicVariable.isProcess = false;
+            }
+        });
     }
 
 
@@ -2295,24 +2294,24 @@ export class DashboardComponent {
         } else if (this.selectedValue === '7') {
             const oneWeekFromNow = new Date();
             this.endDate = this.datePipe.transform(
-              oneWeekFromNow.toISOString().split('T')[0],
-              'yyyy-MM-dd'
+                oneWeekFromNow.toISOString().split('T')[0],
+                'yyyy-MM-dd'
             );
             oneWeekFromNow.setDate(oneWeekFromNow.getDate() - 7);
             this.startDate = this.datePipe.transform(
-              oneWeekFromNow.toISOString().split('T')[0],
-              'yyyy-MM-dd'
+                oneWeekFromNow.toISOString().split('T')[0],
+                'yyyy-MM-dd'
             );
         } else if (this.selectedValue === '30') {
             const oneWeekFromNow = new Date();
             this.endDate = this.datePipe.transform(
-              oneWeekFromNow.toISOString().split('T')[0],
-              'yyyy-MM-dd'
+                oneWeekFromNow.toISOString().split('T')[0],
+                'yyyy-MM-dd'
             );
             oneWeekFromNow.setDate(oneWeekFromNow.getDate() - 30);
             this.startDate = this.datePipe.transform(
-              oneWeekFromNow.toISOString().split('T')[0],
-              'yyyy-MM-dd'
+                oneWeekFromNow.toISOString().split('T')[0],
+                'yyyy-MM-dd'
             );
         }
 
@@ -2347,12 +2346,12 @@ export class DashboardComponent {
         }
     }
 
-    isfilterDefaultStatus:boolean = false;
+    isfilterDefaultStatus: boolean = false;
     onValueChangePI(event: Event) {
         const target = event.target as HTMLSelectElement;
 
-        if(this.headerStatus == 'DRAFT'){
-            this.isfilterDefaultStatus = true; 
+        if (this.headerStatus == 'DRAFT') {
+            this.isfilterDefaultStatus = true;
         }
         this.selectedValue = target.value;
         const oneWeekFromNow = new Date();
@@ -2382,24 +2381,24 @@ export class DashboardComponent {
         } else if (this.selectedValue === '7') {
             const oneWeekFromNow = new Date();
             this.endDate = this.datePipe.transform(
-              oneWeekFromNow.toISOString().split('T')[0],
-              'yyyy-MM-dd'
+                oneWeekFromNow.toISOString().split('T')[0],
+                'yyyy-MM-dd'
             );
             oneWeekFromNow.setDate(oneWeekFromNow.getDate() - 7);
             this.startDate = this.datePipe.transform(
-              oneWeekFromNow.toISOString().split('T')[0],
-              'yyyy-MM-dd'
+                oneWeekFromNow.toISOString().split('T')[0],
+                'yyyy-MM-dd'
             );
         } else if (this.selectedValue === '30') {
             const oneWeekFromNow = new Date();
             this.endDate = this.datePipe.transform(
-              oneWeekFromNow.toISOString().split('T')[0],
-              'yyyy-MM-dd'
+                oneWeekFromNow.toISOString().split('T')[0],
+                'yyyy-MM-dd'
             );
             oneWeekFromNow.setDate(oneWeekFromNow.getDate() - 30);
             this.startDate = this.datePipe.transform(
-              oneWeekFromNow.toISOString().split('T')[0],
-              'yyyy-MM-dd'
+                oneWeekFromNow.toISOString().split('T')[0],
+                'yyyy-MM-dd'
             );
         }
 
@@ -2412,11 +2411,11 @@ export class DashboardComponent {
 
         this.invoiceDateFilter(model);
 
-        console.log( this.customerStatus, this.headerStatus);
+        console.log(this.customerStatus, this.headerStatus);
 
 
-        
-        
+
+
 
 
     }
@@ -2436,6 +2435,85 @@ export class DashboardComponent {
             this.invoiceDateFilter(model)
 
 
+        }
+    }
+
+
+    onValueChangeSL(event: Event) {
+        const target = event.target as HTMLSelectElement;
+        this.selectedValue = target.value;
+        const oneWeekFromNow = new Date();
+        if (this.selectedValue === 'ALL') {
+            this.startDate = '';
+            this.endDate = ''
+        }
+        else if (this.selectedValue === 'Today') {
+            this.startDate = this.datePipe.transform(
+                oneWeekFromNow.toISOString().split('T')[0],
+                'yyyy-MM-dd'
+            );
+            this.endDate = this.datePipe.transform(
+                oneWeekFromNow.toISOString().split('T')[0],
+                'yyyy-MM-dd'
+            );
+        } else if (this.selectedValue === 'Yesterday') {
+            oneWeekFromNow.setDate(oneWeekFromNow.getDate() - 1);
+            this.startDate = this.datePipe.transform(
+                oneWeekFromNow.toISOString().split('T')[0],
+                'yyyy-MM-dd'
+            );
+            this.endDate = this.datePipe.transform(
+                oneWeekFromNow.toISOString().split('T')[0],
+                'yyyy-MM-dd'
+            );
+        } else if (this.selectedValue === '7') {
+            const oneWeekFromNow = new Date();
+            this.endDate = this.datePipe.transform(
+                oneWeekFromNow.toISOString().split('T')[0],
+                'yyyy-MM-dd'
+            );
+            oneWeekFromNow.setDate(oneWeekFromNow.getDate() - 7);
+            this.startDate = this.datePipe.transform(
+                oneWeekFromNow.toISOString().split('T')[0],
+                'yyyy-MM-dd'
+            );
+        } else if (this.selectedValue === '30') {
+            const oneWeekFromNow = new Date();
+            this.endDate = this.datePipe.transform(
+                oneWeekFromNow.toISOString().split('T')[0],
+                'yyyy-MM-dd'
+            );
+            oneWeekFromNow.setDate(oneWeekFromNow.getDate() - 30);
+            this.startDate = this.datePipe.transform(
+                oneWeekFromNow.toISOString().split('T')[0],
+                'yyyy-MM-dd'
+            );
+        }
+
+        //this.publicVariable.isProcess = true;
+        var model: any = {
+            startDate: this.datePipe.transform(this.startDate, 'yyyy-MM-dd'),
+            endDate: this.datePipe.transform(this.endDate, 'yyyy-MM-dd'),
+        };
+        this.SLFilterBYDate(model)
+
+    }
+
+
+
+    submitDateRangeSL() {
+        const start = new Date(this.startDate);
+        const end = new Date(this.endDate);
+        if (start > end) {
+            this.dateRangeError = true;
+        } else {
+            this.dateRangeError = false;
+            var model: any = {
+                startDate: this.datePipe.transform(this.startDate, 'yyyy-MM-dd'),
+                endDate: this.datePipe.transform(this.endDate, 'yyyy-MM-dd'),
+            };
+
+            this.SLFilterBYDate(model)
         }
     }
 

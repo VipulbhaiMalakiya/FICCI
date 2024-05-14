@@ -1019,7 +1019,7 @@
 
                             <div class="page-btns-col">
 
-                                <div class="tblsort" *ngIf="invoiceStatuslistData && invoiceStatuslistData.length > 0">
+                                <div class="tblsort">
                                     <label class="col-form-label">Show</label>
                                     <select id="itemsPerPageSelect" class="form-select"
                                         [(ngModel)]="publicVariable.tableSize"
@@ -1029,7 +1029,56 @@
                                     </select>
                                 </div>
 
-                                <div class="dt-buttons" *ngIf="invoiceStatuslistData.length > 0">
+                                <div class="homefilterdt">
+                                    <div class="ficdrop1">
+                                        <div class="form-group">
+                                            <label>Select Date</label>
+                                            <select id="select-tags4" class="form-select" [(ngModel)]="selectedValue"
+                                                (change)="onValueChangeSL($event)">
+                                                <option value="ALL">ALL</option>
+                                                <option value="Today">Today</option>
+                                                <option value="Yesterday">Yesterday</option>
+                                                <option value="7">Last 7 days</option>
+                                                <option value="30">Last 30 days</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                        
+                                    <div class="ficdrop1">
+                                        <div class="form-group">
+                                            <label>From</label>
+                                            <input class="form-control" type="date" id="startDate" name="startDate" [(ngModel)]="startDate"
+                                                [max]="endDate"> </div>
+                                    </div>
+                        
+                                    <div class="ficdrop1">
+                                        <div class="form-group">
+                                            <label>To</label>
+                                            <input class="form-control" type="date" id="endDate" name="endDate" [(ngModel)]="endDate"
+                                                [max]="endDate">
+                                            <div *ngIf="dateRangeError" class="form-validate-err">
+                                                To Date must be after From Date
+                                            </div>
+                                        </div>
+                                    </div>
+                        
+                                    <div class="ficdrop1">
+                                        <div class="form-group">
+                                            <label class="d-none d-sm-block">&nbsp;</label>
+                                            <button type="reset" (click)="reset()" class="btn common-btn">Reset</button>
+                                        </div>
+                                    </div>
+                        
+                                    <div class="ficdrop1">
+                                        <div class="form-group">
+                                            <label class="d-none d-sm-block">&nbsp;</label>
+                                            <button type="submit" (click)="submitDateRangeSL()" class="btn common-btn">Submit</button>
+                                        </div>
+                                    </div>
+                        
+                                </div>
+
+                                <div class="dt-buttons" >
                                     <button class="gray-btns" (click)="onDownloadPI()" type="button"><img
                                             src="../assets/images/excel-icon.png" alt="" title="Download"></button>
                                 </div>
