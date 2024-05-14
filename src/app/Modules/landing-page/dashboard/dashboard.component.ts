@@ -28,7 +28,7 @@ export class DashboardComponent {
     startDate?: any;
     endDate?: any;
     dateRangeError: boolean = false;
-    selectedValue?: any = 'ALL';
+    selectedValue?: any = 7;
 
 
 
@@ -2255,7 +2255,11 @@ export class DashboardComponent {
         const target = event.target as HTMLSelectElement;
         this.selectedValue = target.value;
         const oneWeekFromNow = new Date();
-        if (this.selectedValue === 'Today') {
+        if (this.selectedValue === 'ALL') {
+            this.startDate = '';
+            this.endDate = ''
+        }
+        else if (this.selectedValue === 'Today') {
             this.startDate = this.datePipe.transform(
                 oneWeekFromNow.toISOString().split('T')[0],
                 'yyyy-MM-dd'
