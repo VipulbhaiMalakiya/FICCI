@@ -180,8 +180,8 @@ export class InvoicesService {
         return this.http.delete<any>(`${this.FILEDELETE}${id}`);
     }
 
-    getApproveInvoice(): Observable<any[]> {
-        const url = `${this.ApproveInvoiceURL}${sessionStorage.getItem('userEmail') ?? ''}`;
+    getApproveInvoice(data:any): Observable<any[]> {
+        const url = `${this.ApproveInvoiceURL}${sessionStorage.getItem('userEmail') ?? ''}&start=${data.startDate}&end=${data.endDate}`;
         return this.http.get<any[]>(url);
     }
 

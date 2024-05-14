@@ -449,7 +449,7 @@ export class DashboardComponent {
 
 
         // Observable for the second API call
-        const approveInvoiceObservable = this.IAPI.getApproveInvoice().pipe(
+        const approveInvoiceObservable = this.IAPI.getApproveInvoice(model).pipe(
             timeout(120000), // Timeout set to 2 minutes (120000 milliseconds)
             catchError((error: any) => {
                 console.error('Error loading approve invoice list:', error);

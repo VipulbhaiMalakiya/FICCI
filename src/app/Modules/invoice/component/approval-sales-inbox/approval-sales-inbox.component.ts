@@ -12,9 +12,9 @@ import { UpdateEmailComponent } from '../../update-email/update-email.component'
 import { CreditSalesEmailComponent } from '../../send-email/credit-sales-email/credit-sales-email.component';
 
 @Component({
-  selector: 'app-approval-sales-inbox',
-  templateUrl: './approval-sales-inbox.component.html',
-  styleUrls: ['./approval-sales-inbox.component.css']
+    selector: 'app-approval-sales-inbox',
+    templateUrl: './approval-sales-inbox.component.html',
+    styleUrls: ['./approval-sales-inbox.component.css']
 })
 export class ApprovalSalesInboxComponent implements OnInit {
     publicVariable = new publicVariable();
@@ -37,9 +37,9 @@ export class ApprovalSalesInboxComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        let model:any = {
-            'startDate' : '',
-            'endDate' : ''
+        let model: any = {
+            'startDate': '',
+            'endDate': ''
         }
         this.loadApproveInvoiceList(model);
     }
@@ -56,7 +56,7 @@ export class ApprovalSalesInboxComponent implements OnInit {
             this.startDate = this.datePipe.transform(
                 oneWeekFromNow.toISOString().split('T')[0],
                 'yyyy-MM-dd'
-                
+
             );
             this.endDate = this.datePipe.transform(
                 oneWeekFromNow.toISOString().split('T')[0],
@@ -75,24 +75,24 @@ export class ApprovalSalesInboxComponent implements OnInit {
         } else if (this.selectedValue === '7') {
             const oneWeekFromNow = new Date();
             this.endDate = this.datePipe.transform(
-              oneWeekFromNow.toISOString().split('T')[0],
-              'yyyy-MM-dd'
+                oneWeekFromNow.toISOString().split('T')[0],
+                'yyyy-MM-dd'
             );
             oneWeekFromNow.setDate(oneWeekFromNow.getDate() - 7);
             this.startDate = this.datePipe.transform(
-              oneWeekFromNow.toISOString().split('T')[0],
-              'yyyy-MM-dd'
+                oneWeekFromNow.toISOString().split('T')[0],
+                'yyyy-MM-dd'
             );
         } else if (this.selectedValue === '30') {
             const oneWeekFromNow = new Date();
             this.endDate = this.datePipe.transform(
-              oneWeekFromNow.toISOString().split('T')[0],
-              'yyyy-MM-dd'
+                oneWeekFromNow.toISOString().split('T')[0],
+                'yyyy-MM-dd'
             );
             oneWeekFromNow.setDate(oneWeekFromNow.getDate() - 30);
             this.startDate = this.datePipe.transform(
-              oneWeekFromNow.toISOString().split('T')[0],
-              'yyyy-MM-dd'
+                oneWeekFromNow.toISOString().split('T')[0],
+                'yyyy-MM-dd'
             );
         }
 
@@ -101,7 +101,7 @@ export class ApprovalSalesInboxComponent implements OnInit {
             startDate: this.datePipe.transform(this.startDate, 'yyyy-MM-dd'),
             endDate: this.datePipe.transform(this.endDate, 'yyyy-MM-dd'),
         };
-       this.loadApproveInvoiceList(model);
+        this.loadApproveInvoiceList(model);
 
     }
 
@@ -123,13 +123,13 @@ export class ApprovalSalesInboxComponent implements OnInit {
             };
             this.publicVariable.isProcess = true;
 
-           this.loadApproveInvoiceList(model);
+            this.loadApproveInvoiceList(model);
 
         }
     }
 
 
-    loadApproveInvoiceList(model:any): void {
+    loadApproveInvoiceList(model: any): void {
         const subscription = this.API.getApproveSalesInvoice(model).pipe(
             timeout(120000), // Timeout set to 2 minutes (120000 milliseconds)
             finalize(() => {
@@ -216,7 +216,7 @@ export class ApprovalSalesInboxComponent implements OnInit {
     onDownload() {
         const exportData = this.publicVariable.invoiceStatuslistData.map((x) => ({
             "PO No.": x?.impiHeaderProjectCode || '',
-            'Project' :x?.impiHeaderProjectName ? this.toTitleCase(x.impiHeaderProjectName) : '',
+            'Project': x?.impiHeaderProjectName ? this.toTitleCase(x.impiHeaderProjectName) : '',
             Department: x?.impiHeaderProjectDepartmentName ? this.toTitleCase(x.impiHeaderProjectDepartmentName) : '',
             Divison: x?.impiHeaderProjectDivisionName ? this.toTitleCase(x.impiHeaderProjectDivisionName) : '',
             Category: x?.impiHeaderInvoiceType ? this.toTitleCase(x.impiHeaderInvoiceType) : '',
@@ -237,17 +237,17 @@ export class ApprovalSalesInboxComponent implements OnInit {
             'Cl Approver': x?.impiHeaderClusterApprover ? this.toTitleCase(x.impiHeaderClusterApprover) : '',
             'Finance Approver': x?.impiHeaderFinanceApprover ? this.toTitleCase(x.impiHeaderFinanceApprover) : '',
             'Accounts Approver': x?.accountApprover ? this.toTitleCase(x.accountApprover) : '',
-            'Created On':x?.impiHeaderSubmittedDate ? formatDate(x.impiHeaderSubmittedDate, 'medium', 'en-IN', 'IST') : '',
+            'Created On': x?.impiHeaderSubmittedDate ? formatDate(x.impiHeaderSubmittedDate, 'medium', 'en-IN', 'IST') : '',
             'Created By': x?.impiHeaderCreatedBy ? this.toTitleCase(x.impiHeaderCreatedBy) : '',
             "Update Date": x?.impiHeaderModifiedDate ? formatDate(x.impiHeaderModifiedDate, 'medium', 'en-IN', 'IST') : '',
-            'Status':x?.headerStatus ? this.toTitleCase(x?.headerStatus) : '',
+            'Status': x?.headerStatus ? this.toTitleCase(x?.headerStatus) : '',
         }));
 
         const headers = [
-            'PO No.','Project', 'Department', 'Divison', 'Category',
+            'PO No.', 'Project', 'Department', 'Divison', 'Category',
             'Vendor Name', 'Address', 'State', 'City', 'Pincode',
             'Phone No', "Email ID", 'Contact Person', 'Customer  GST Number', 'PAN No', 'Amount', 'Payment Terms',
-            'impiHeaderRemarks', 'Tl Approver', 'Cl Approver', 'Finance Approver','Accounts Approver', 'Created On', 'Created By','Update Date',
+            'impiHeaderRemarks', 'Tl Approver', 'Cl Approver', 'Finance Approver', 'Accounts Approver', 'Created On', 'Created By', 'Update Date',
             'Status'
         ];
         this.appService.exportAsExcelFile(exportData, 'PI Invoice Status', headers);
@@ -278,9 +278,9 @@ export class ApprovalSalesInboxComponent implements OnInit {
                 formData.append('MailSubject', newData.subject);
                 formData.append('MailBody', newData.body);
                 formData.append('LoginId', this.publicVariable.storedEmail);
-                formData.append('MailCC', dataItem.impiHeaderCreatedBy );
+                formData.append('MailCC', dataItem.impiHeaderCreatedBy);
                 formData.append('ResourceType', '1');
-                formData.append('ResourceId', dataItem.headerId );
+                formData.append('ResourceId', dataItem.headerId);
 
                 newData.attachment.forEach((file: any) => {
                     if (file instanceof File) {
@@ -300,9 +300,9 @@ export class ApprovalSalesInboxComponent implements OnInit {
                             if (res.status === true) {
                                 this.toastr.success(res.message, 'Success');
 
-                                let model:any = {
-                                    'startDate' : this.startDate,
-                                    'endDate' : this.endDate
+                                let model: any = {
+                                    'startDate': this.startDate,
+                                    'endDate': this.endDate
                                 }
                                 this.loadApproveInvoiceList(model);
                             } else {
@@ -370,10 +370,10 @@ export class ApprovalSalesInboxComponent implements OnInit {
                                 next: (res: any) => {
                                     if (res.status === true) {
                                         this.toastr.success(res.message, 'Success');
-                                        
-                                        let model:any = {
-                                            'startDate' : this.startDate,
-                                            'endDate' : this.endDate
+
+                                        let model: any = {
+                                            'startDate': this.startDate,
+                                            'endDate': this.endDate
                                         }
                                         this.loadApproveInvoiceList(model);
                                     } else {

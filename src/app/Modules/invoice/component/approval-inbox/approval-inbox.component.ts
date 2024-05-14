@@ -5,6 +5,7 @@ import { invoiceStatusModule } from '../../interface/invoice';
 import { UpdateEmailComponent } from '../../update-email/update-email.component';
 import { EmailComponent } from '../../send-email/email/email.component';
 import { FileService } from '../../service/FileService';
+import { DatePipe } from '@angular/common';
 
 @Component({
     selector: 'app-approval-inbox',
@@ -14,6 +15,10 @@ import { FileService } from '../../service/FileService';
 export class ApprovalInboxComponent implements OnInit {
     publicVariable = new publicVariable();
     InvoiceAttachment: any;
+    startDate?: any;
+    endDate?: any;
+    dateRangeError: boolean = false;
+    selectedValue?: any = 'ALL';
 
 
 
@@ -23,21 +28,111 @@ export class ApprovalInboxComponent implements OnInit {
         private toastr: ToastrService,
         private API: InvoicesService,
         private CAPI: CustomersService,
-        private fileService: FileService
+        private fileService: FileService,
+        private datePipe: DatePipe
 
     ) {
 
     }
 
     ngOnInit(): void {
-        this.loadApproveInvoiceList();
+        let model: any = {
+            'startDate': '',
+            'endDate': ''
+        }
+        this.loadApproveInvoiceList(model);
     }
+
+    onValueChange(event: Event) {
+        const target = event.target as HTMLSelectElement;
+        this.selectedValue = target.value;
+        const oneWeekFromNow = new Date();
+        if (this.selectedValue === 'ALL') {
+            this.startDate = '';
+            this.endDate = ''
+        }
+        else if (this.selectedValue === 'Today') {
+            this.startDate = this.datePipe.transform(
+                oneWeekFromNow.toISOString().split('T')[0],
+                'yyyy-MM-dd'
+
+            );
+            this.endDate = this.datePipe.transform(
+                oneWeekFromNow.toISOString().split('T')[0],
+                'yyyy-MM-dd'
+            );
+        } else if (this.selectedValue === 'Yesterday') {
+            oneWeekFromNow.setDate(oneWeekFromNow.getDate() - 1);
+            this.startDate = this.datePipe.transform(
+                oneWeekFromNow.toISOString().split('T')[0],
+                'yyyy-MM-dd'
+            );
+            this.endDate = this.datePipe.transform(
+                oneWeekFromNow.toISOString().split('T')[0],
+                'yyyy-MM-dd'
+            );
+        } else if (this.selectedValue === '7') {
+            const oneWeekFromNow = new Date();
+            this.endDate = this.datePipe.transform(
+                oneWeekFromNow.toISOString().split('T')[0],
+                'yyyy-MM-dd'
+            );
+            oneWeekFromNow.setDate(oneWeekFromNow.getDate() - 7);
+            this.startDate = this.datePipe.transform(
+                oneWeekFromNow.toISOString().split('T')[0],
+                'yyyy-MM-dd'
+            );
+        } else if (this.selectedValue === '30') {
+            const oneWeekFromNow = new Date();
+            this.endDate = this.datePipe.transform(
+                oneWeekFromNow.toISOString().split('T')[0],
+                'yyyy-MM-dd'
+            );
+            oneWeekFromNow.setDate(oneWeekFromNow.getDate() - 30);
+            this.startDate = this.datePipe.transform(
+                oneWeekFromNow.toISOString().split('T')[0],
+                'yyyy-MM-dd'
+            );
+        }
+
+        this.publicVariable.isProcess = true;
+        var model: any = {
+            startDate: this.datePipe.transform(this.startDate, 'yyyy-MM-dd'),
+            endDate: this.datePipe.transform(this.endDate, 'yyyy-MM-dd'),
+        };
+        this.loadApproveInvoiceList(model);
+
+    }
+
+    reset() {
+        this.startDate = '';
+        this.endDate = '';
+        this.selectedValue = 'ALL';
+    }
+    submitDateRange() {
+        const start = new Date(this.startDate);
+        const end = new Date(this.endDate);
+        if (start > end) {
+            this.dateRangeError = true;
+        } else {
+            this.dateRangeError = false;
+            var model: any = {
+                startDate: this.datePipe.transform(this.startDate, 'yyyy-MM-dd'),
+                endDate: this.datePipe.transform(this.endDate, 'yyyy-MM-dd'),
+            };
+            this.publicVariable.isProcess = true;
+
+            this.loadApproveInvoiceList(model);
+
+        }
+    }
+
 
     calculateIndex(page: number, index: number): number {
         return (page - 1) * this.publicVariable.tableSize + index + 1;
     }
-    loadApproveInvoiceList(): void {
-        const subscription = this.API.getApproveInvoice().pipe(
+    loadApproveInvoiceList(model:any): void {
+        const subscription = this.API.getApproveInvoice(model).pipe(
             timeout(120000), // Timeout set to 2 minutes (120000 milliseconds)
             finalize(() => {
                 this.publicVariable.isProcess = false;
@@ -242,7 +337,11 @@ export class ApprovalInboxComponent implements OnInit {
                         next: (res: any) => {
                             if (res.status === true) {
                                 this.toastr.success(res.message, 'Success');
-                                this.loadApproveInvoiceList();
+                                let model:any = {
+                                    'startDate' : this.startDate,
+                                    'endDate' : this.endDate
+                                }
+                                this.loadApproveInvoiceList(model);
                             } else {
                                 this.toastr.error(res.message, 'Error');
                             }
@@ -308,7 +407,12 @@ export class ApprovalInboxComponent implements OnInit {
                                 next: (res: any) => {
                                     if (res.status === true) {
                                         this.toastr.success(res.message, 'Success');
-                                        this.loadApproveInvoiceList();
+
+                                        let model:any = {
+                                            'startDate' : this.startDate,
+                                            'endDate' : this.endDate
+                                        }
+                                        this.loadApproveInvoiceList(model);
                                     } else {
                                         this.toastr.error(res.message, 'Error');
                                     }
