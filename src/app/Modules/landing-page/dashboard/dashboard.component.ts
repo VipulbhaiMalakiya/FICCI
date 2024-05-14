@@ -181,11 +181,15 @@ export class DashboardComponent {
 
 
     loadCustomerStatusCountList(): void {
-        // Observable for the first API call
         let model: any = {
             'startDate': this.startDate,
             'endDate': this.endDate
         }
+        this.CustomerDateFilter(model)
+    }
+
+
+    CustomerDateFilter(model: any) {
         const statusSubscription = this.API.getCustomerStatusNew(model).pipe(
             timeout(120000),
             catchError((error: any) => {
@@ -251,10 +255,6 @@ export class DashboardComponent {
                 this.toastr.error('Error loading user list', error.name);
             }
         });
-    }
-
-    CusterDateFilter() {
-
     }
 
     // Helper method to count data for each customer status
@@ -2285,7 +2285,7 @@ export class DashboardComponent {
             startDate: this.datePipe.transform(this.startDate, 'yyyy-MM-dd'),
             endDate: this.datePipe.transform(this.endDate, 'yyyy-MM-dd'),
         };
-
+        this.CustomerDateFilter(model)
 
     }
 
@@ -2301,7 +2301,7 @@ export class DashboardComponent {
                 endDate: this.datePipe.transform(this.endDate, 'yyyy-MM-dd'),
             };
 
-
+            this.CustomerDateFilter(model)
         }
     }
 
