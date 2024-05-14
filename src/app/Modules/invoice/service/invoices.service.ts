@@ -185,8 +185,8 @@ export class InvoicesService {
         return this.http.get<any[]>(url);
     }
 
-    getApproveSalesInvoice(): Observable<any[]> {
-        const url = `${this.ApproveSalesInvoiceURL}${sessionStorage.getItem('userEmail') ?? ''}`;
+    getApproveSalesInvoice(data:any): Observable<any[]> {
+        const url = `${this.ApproveSalesInvoiceURL}${sessionStorage.getItem('userEmail') ?? ''}&start=${data.startDate}&end=${data.endDate}`;
         return this.http.get<any[]>(url);
     }
 
