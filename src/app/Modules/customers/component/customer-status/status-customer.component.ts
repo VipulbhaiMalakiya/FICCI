@@ -85,7 +85,7 @@ export class StatusCustomerComponent implements OnInit {
             );
         }
 
-        // this.publicVariable.isProcess = true;
+        this.publicVariable.isProcess = true;
         var model: any = {
             startDate: this.datePipe.transform(this.startDate, 'yyyy-MM-dd'),
             endDate: this.datePipe.transform(this.endDate, 'yyyy-MM-dd'),
@@ -110,6 +110,7 @@ export class StatusCustomerComponent implements OnInit {
                 startDate: this.datePipe.transform(this.startDate, 'yyyy-MM-dd'),
                 endDate: this.datePipe.transform(this.endDate, 'yyyy-MM-dd'),
             };
+            this.publicVariable.isProcess = true;
 
             this.loadCustomerStatusList(model);
 
