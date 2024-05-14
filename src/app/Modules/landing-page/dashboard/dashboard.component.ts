@@ -173,8 +173,8 @@ export class DashboardComponent {
 
     loadCustomerStatusCountList(): void {
         let model: any = {
-            'startDate': this.startDate,
-            'endDate': this.endDate
+            'startDate': '',
+            'endDate':''
         }
         this.CustomerDateFilter(model)
     }
