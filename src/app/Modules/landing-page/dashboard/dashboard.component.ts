@@ -94,16 +94,7 @@ export class DashboardComponent {
         private fileService: FileService,
         private datePipe: DatePipe
     ) {
-        const oneWeekFromNow = new Date();
-        this.endDate = this.datePipe.transform(
-            oneWeekFromNow.toISOString().split('T')[0],
-            'yyyy-MM-dd'
-        );
-        oneWeekFromNow.setDate(oneWeekFromNow.getDate() - 7);
-        this.startDate = this.datePipe.transform(
-            oneWeekFromNow.toISOString().split('T')[0],
-            'yyyy-MM-dd'
-        );
+   
     }
 
 
