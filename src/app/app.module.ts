@@ -41,7 +41,7 @@ import { DatePipe } from '@angular/common';
         BrowserAnimationsModule,
         ToastrModule.forRoot({
             progressBar: true,
-            positionClass: 'toast-center-center',
+            positionClass: 'toast-top-right',
             closeButton: true,
             timeOut: 3000,
             progressAnimation: 'increasing',
