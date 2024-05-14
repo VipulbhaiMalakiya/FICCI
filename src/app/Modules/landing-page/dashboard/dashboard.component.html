@@ -144,7 +144,7 @@
                             <div class="page-btns-col">
 
                                 <div class="tblsort"
-                                    *ngIf="publicVariable.customerStatusList && publicVariable.customerStatusList.length > 0">
+                                    >
                                     <label class="col-form-label">Show</label>
                                     <select id="itemsPerPageSelect" class="form-select"
                                         [(ngModel)]="publicVariable.tableSize"
@@ -206,13 +206,13 @@
 
 
                                 <div class="dt-buttons"
-                                    *ngIf="publicVariable.customerStatusList && publicVariable.customerStatusList.length > 0">
+                                  >
                                     <button class="gray-btns" (click)="onDownload()" type="button" title="Download"><img
                                             src="../assets/images/excel-icon.png" alt=""></button>
                                 </div>
                                 <div class="topbr-btns">
                                     <div class="btn-group"
-                                        *ngIf="publicVariable.customerStatusList && publicVariable.customerStatusList.length > 0">
+                                       >
                                         <div class="table-search"><input type="text" class="form-control"
                                                 [(ngModel)]="publicVariable.searchText" name="name" id="name"
                                                 placeholder="Search here"></div>
@@ -446,7 +446,7 @@
 
                             <div class="page-btns-col">
 
-                                <div class="tblsort" *ngIf="invoiceStatuslistData && invoiceStatuslistData.length > 0">
+                                <div class="tblsort" >
                                     <label class="col-form-label">Show</label>
                                     <select id="itemsPerPageSelect" class="form-select" [(ngModel)]="pitableSize"
                                         (change)="onTableSizeChange($event , 'invoice')">
@@ -469,14 +469,14 @@
                                             </select>
                                         </div>
                                     </div>
-                        
+
                                     <div class="ficdrop1">
                                         <div class="form-group">
                                             <label>From</label>
                                             <input class="form-control" type="date" id="startDate" name="startDate" [(ngModel)]="startDate"
                                                 [max]="endDate"> </div>
                                     </div>
-                        
+
                                     <div class="ficdrop1">
                                         <div class="form-group">
                                             <label>To</label>
@@ -487,30 +487,30 @@
                                             </div>
                                         </div>
                                     </div>
-                        
+
                                     <div class="ficdrop1">
                                         <div class="form-group">
                                             <label class="d-none d-sm-block">&nbsp;</label>
                                             <button type="reset" (click)="reset()" class="btn common-btn">Reset</button>
                                         </div>
                                     </div>
-                        
+
                                     <div class="ficdrop1">
                                         <div class="form-group">
                                             <label class="d-none d-sm-block">&nbsp;</label>
                                             <button type="submit" (click)="submitDateRangePI()" class="btn common-btn">Submit</button>
                                         </div>
                                     </div>
-                        
+
                                 </div>
 
-                                <div class="dt-buttons" *ngIf="invoiceStatuslistData.length > 0">
+                                <div class="dt-buttons" >
                                     <button class="gray-btns" (click)="onDownloadPI()" type="button"
                                         title="Download"><img src="../assets/images/excel-icon.png" alt=""></button>
                                 </div>
                                 <div class="topbr-btns">
                                     <div class="btn-group"
-                                        *ngIf="invoiceStatuslistData && invoiceStatuslistData.length > 0">
+                                       >
                                         <div class="table-search"><input type="text" class="form-control"
                                                 [(ngModel)]="publicVariable.searchText" name="name" id="name"
                                                 placeholder="Search here"></div>
@@ -1043,14 +1043,14 @@
                                             </select>
                                         </div>
                                     </div>
-                        
+
                                     <div class="ficdrop1">
                                         <div class="form-group">
                                             <label>From</label>
                                             <input class="form-control" type="date" id="startDate" name="startDate" [(ngModel)]="startDate"
                                                 [max]="endDate"> </div>
                                     </div>
-                        
+
                                     <div class="ficdrop1">
                                         <div class="form-group">
                                             <label>To</label>
@@ -1061,21 +1061,21 @@
                                             </div>
                                         </div>
                                     </div>
-                        
+
                                     <div class="ficdrop1">
                                         <div class="form-group">
                                             <label class="d-none d-sm-block">&nbsp;</label>
                                             <button type="reset" (click)="reset()" class="btn common-btn">Reset</button>
                                         </div>
                                     </div>
-                        
+
                                     <div class="ficdrop1">
                                         <div class="form-group">
                                             <label class="d-none d-sm-block">&nbsp;</label>
                                             <button type="submit" (click)="submitDateRangeSL()" class="btn common-btn">Submit</button>
                                         </div>
                                     </div>
-                        
+
                                 </div>
 
                                 <div class="dt-buttons" >

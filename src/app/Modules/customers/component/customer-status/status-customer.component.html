@@ -62,14 +62,14 @@
         </div>
 
         <div class="dt-buttons"
-            *ngIf="publicVariable.customerStatusList && publicVariable.customerStatusList.length > 0">
+            >
             <button class="gray-btns" (click)="onDownload()" type="button"><img src="../assets/images/excel-icon.png"
                     alt="" title="Download Excel"></button>
         </div>
 
         <div class="topbr-btns">
             <div class="btn-group"
-                *ngIf="publicVariable.customerStatusList && publicVariable.customerStatusList.length > 0">
+              >
                 <div class="table-search"><input type="text" class="form-control"
                         [(ngModel)]="publicVariable.searchText" name="name" id="name" placeholder="Search here"></div>
             </div>

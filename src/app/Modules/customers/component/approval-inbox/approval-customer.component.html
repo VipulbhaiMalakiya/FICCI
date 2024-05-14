@@ -6,7 +6,7 @@
 
     <div class="page-btns-col" >
 
-        <div class="tblsort" *ngIf="publicVariable.ApproveCustomerList && publicVariable.ApproveCustomerList.length > 0">
+        <div class="tblsort" >
             <label class="col-form-label">Show</label>
             <select id="itemsPerPageSelect" class="form-select" [(ngModel)]="publicVariable.tableSize"
                 (change)="onTableSizeChange($event)">
@@ -14,12 +14,12 @@
             </select>
         </div>
 
-        <div class="dt-buttons" *ngIf="publicVariable.ApproveCustomerList && publicVariable.ApproveCustomerList.length > 0">
+        <div class="dt-buttons" >
             <button class="gray-btns" type="button" (click)="onDownload()"><img src="../assets/images/excel-icon.png"
                     alt="" title="Download Excel"></button>
         </div>
         <div class="topbr-btns" >
-            <div class="btn-group" *ngIf="publicVariable.ApproveCustomerList && publicVariable.ApproveCustomerList.length > 0">
+            <div class="btn-group" >
                 <div class="table-search"><input type="text" class="form-control"
                         [(ngModel)]="publicVariable.approvalsearchText" name="name" id="name" placeholder="Search here"></div>
             </div>
