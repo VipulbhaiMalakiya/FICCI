@@ -71,14 +71,15 @@ export class InvoiceStatusComponent implements OnInit {
                 'yyyy-MM-dd'
             );
         } else if (this.selectedValue === '7') {
+            const oneWeekFromNow = new Date();
+            this.endDate = this.datePipe.transform(
+              oneWeekFromNow.toISOString().split('T')[0],
+              'yyyy-MM-dd'
+            );
             oneWeekFromNow.setDate(oneWeekFromNow.getDate() - 7);
             this.startDate = this.datePipe.transform(
-                oneWeekFromNow.toISOString().split('T')[0],
-                'yyyy-MM-dd'
-            );
-            this.endDate = this.datePipe.transform(
-                oneWeekFromNow.toISOString().split('T')[0],
-                'yyyy-MM-dd'
+              oneWeekFromNow.toISOString().split('T')[0],
+              'yyyy-MM-dd'
             );
         } else if (this.selectedValue === '30') {
             oneWeekFromNow.setDate(oneWeekFromNow.getDate() - 30);
@@ -92,7 +93,7 @@ export class InvoiceStatusComponent implements OnInit {
             );
         }
 
-        // this.publicVariable.isProcess = true;
+        this.publicVariable.isProcess = true;
         var model: any = {
             startDate: this.datePipe.transform(this.startDate, 'yyyy-MM-dd'),
             endDate: this.datePipe.transform(this.endDate, 'yyyy-MM-dd'),
@@ -117,6 +118,7 @@ export class InvoiceStatusComponent implements OnInit {
                 startDate: this.datePipe.transform(this.startDate, 'yyyy-MM-dd'),
                 endDate: this.datePipe.transform(this.endDate, 'yyyy-MM-dd'),
             };
+            this.publicVariable.isProcess = true;
 
             this.loadPurchaseInvoiceList(model);
 
@@ -130,21 +132,25 @@ export class InvoiceStatusComponent implements OnInit {
                     if (response.data && Array.isArray(response.data)) {
                         this.publicVariable.invoiceStatuslistData = response.data;
                         this.publicVariable.count = response.data.length;
+                        this.publicVariable.isProcess = false;
                     } else {
                         // Handle case where response data is null or not an array
                         this.publicVariable.invoiceStatuslistData = [];
                         this.publicVariable.count = 0;
                         console.warn('Response data is null or not an array:', response.data);
+                        this.publicVariable.isProcess = false;
                     }
                 },
                 error: (error) => {
                     console.error('Error loading project list:', error);
+                    this.publicVariable.isProcess = false;
                 }
             });
 
             this.publicVariable.Subscription.add(subscription);
         } catch (error) {
             console.error('Error loading project list:', error);
+            this.publicVariable.isProcess = false;
         }
     }
 
