@@ -101,7 +101,7 @@ export class ApprovalSalesInboxComponent implements OnInit {
             startDate: this.datePipe.transform(this.startDate, 'yyyy-MM-dd'),
             endDate: this.datePipe.transform(this.endDate, 'yyyy-MM-dd'),
         };
-       // this.loadPurchaseInvoiceList(model);
+       this.loadApproveInvoiceList(model);
 
     }
 
