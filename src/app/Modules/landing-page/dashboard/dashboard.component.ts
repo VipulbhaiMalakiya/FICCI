@@ -422,8 +422,13 @@ export class DashboardComponent {
             this.invoiceType = invoiceType;
             this.dashboardData = [];
 
+            let model:any = {
+                'startDate' : this.startDate,
+                'endDate' : this.endDate
+            }
+
             // Observable for the first API call
-            const purchaseInvoiceObservable = this.IAPI.getPurchaseInvoice_New().pipe(
+            const purchaseInvoiceObservable = this.IAPI.getPurchaseInvoice_New(model).pipe(
                 catchError((error: any) => {
                     console.error('Error loading purchase invoice list:', error);
                     return throwError(error);

@@ -244,7 +244,9 @@ export class InvoicesService {
     //     return this.http.get<any[]>(`${this.Projectapi}`);
     // }
 
-    getPurchaseInvoice_New(): Observable<any[]> {
+    getPurchaseInvoice_New(data:any): Observable<any[]> {
+        console.log(data);
+        
         const url = `${this.PurchaseInvoice_New}${sessionStorage.getItem('userEmail') ?? ''}&departmentName=${sessionStorage.getItem('navDepartment') ?? ''}`;
         return this.http.get<any[]>(url);
     }

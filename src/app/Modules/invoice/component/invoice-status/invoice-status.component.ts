@@ -2,6 +2,7 @@ import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { AppService, ConfirmationDialogModalComponent, CustomersService, InvoicesService, NgbModal, Router, ToastrService, formatDate, publicVariable } from '../../Export/invoce';
 import { invoiceStatusModule } from '../../interface/invoice';
 import { FileService } from '../../service/FileService';
+import { DatePipe } from '@angular/common';
 
 @Component({
     selector: 'app-invoice-status',
@@ -11,6 +12,10 @@ import { FileService } from '../../service/FileService';
 export class InvoiceStatusComponent implements OnInit {
     publicVariable = new publicVariable();
     InvoiceAttachment: any;
+    startDate?: any;
+    endDate?: any;
+    dateRangeError: boolean = false;
+    selectedValue?: any = 'ALL';
 
 
     constructor(private appService: AppService,
@@ -20,19 +25,107 @@ export class InvoiceStatusComponent implements OnInit {
         private API: InvoicesService,
         private cdr: ChangeDetectorRef,
         private CAPI: CustomersService,
-        private fileService: FileService
+        private fileService: FileService,
+        private datePipe: DatePipe
 
     ) {
 
     }
 
     ngOnInit(): void {
-        this.loadPurchaseInvoiceList();
+        let model:any = {
+            'startDate' : '',
+            'endDate' : ''
+        }
+        this.loadPurchaseInvoiceList(model);
         this.loadStateList();
     }
-    loadPurchaseInvoiceList(): void {
+
+
+    onValueChange(event: Event) {
+        const target = event.target as HTMLSelectElement;
+        this.selectedValue = target.value;
+        const oneWeekFromNow = new Date();
+        if (this.selectedValue === 'ALL') {
+            this.startDate = '';
+            this.endDate = ''
+        }
+        else if (this.selectedValue === 'Today') {
+            this.startDate = this.datePipe.transform(
+                oneWeekFromNow.toISOString().split('T')[0],
+                'yyyy-MM-dd'
+                
+            );
+            this.endDate = this.datePipe.transform(
+                oneWeekFromNow.toISOString().split('T')[0],
+                'yyyy-MM-dd'
+            );
+        } else if (this.selectedValue === 'Yesterday') {
+            oneWeekFromNow.setDate(oneWeekFromNow.getDate() - 1);
+            this.startDate = this.datePipe.transform(
+                oneWeekFromNow.toISOString().split('T')[0],
+                'yyyy-MM-dd'
+            );
+            this.endDate = this.datePipe.transform(
+                oneWeekFromNow.toISOString().split('T')[0],
+                'yyyy-MM-dd'
+            );
+        } else if (this.selectedValue === '7') {
+            oneWeekFromNow.setDate(oneWeekFromNow.getDate() - 7);
+            this.startDate = this.datePipe.transform(
+                oneWeekFromNow.toISOString().split('T')[0],
+                'yyyy-MM-dd'
+            );
+            this.endDate = this.datePipe.transform(
+                oneWeekFromNow.toISOString().split('T')[0],
+                'yyyy-MM-dd'
+            );
+        } else if (this.selectedValue === '30') {
+            oneWeekFromNow.setDate(oneWeekFromNow.getDate() - 30);
+            this.startDate = this.datePipe.transform(
+                oneWeekFromNow.toISOString().split('T')[0],
+                'yyyy-MM-dd'
+            );
+            this.endDate = this.datePipe.transform(
+                oneWeekFromNow.toISOString().split('T')[0],
+                'yyyy-MM-dd'
+            );
+        }
+
+        // this.publicVariable.isProcess = true;
+        var model: any = {
+            startDate: this.datePipe.transform(this.startDate, 'yyyy-MM-dd'),
+            endDate: this.datePipe.transform(this.endDate, 'yyyy-MM-dd'),
+        };
+        this.loadPurchaseInvoiceList(model);
+
+    }
+
+    reset() {
+        this.startDate = '';
+        this.endDate = '';
+        this.selectedValue = 'ALL';
+    }
+    submitDateRange() {
+        const start = new Date(this.startDate);
+        const end = new Date(this.endDate);
+        if (start > end) {
+            this.dateRangeError = true;
+        } else {
+            this.dateRangeError = false;
+            var model: any = {
+                startDate: this.datePipe.transform(this.startDate, 'yyyy-MM-dd'),
+                endDate: this.datePipe.transform(this.endDate, 'yyyy-MM-dd'),
+            };
+
+            this.loadPurchaseInvoiceList(model);
+
+        }
+    }
+
+    loadPurchaseInvoiceList(model:any): void {
         try {
-            const subscription = this.API.getPurchaseInvoice_New().subscribe({
+            const subscription = this.API.getPurchaseInvoice_New(model).subscribe({
                 next: (response: any) => {
                     if (response.data && Array.isArray(response.data)) {
                         this.publicVariable.invoiceStatuslistData = response.data;
@@ -162,7 +255,11 @@ export class InvoiceStatusComponent implements OnInit {
                         this.toastr.success(res.message, 'Success');
                         this.publicVariable.isProcess = false;
                         this.cdr.detectChanges();
-                        this.loadPurchaseInvoiceList();
+                        let model:any = {
+                            'startDate' : this.startDate,
+                            'endDate' : this.endDate
+                        }
+                        this.loadPurchaseInvoiceList(model);
 
                     },
                     error: (error) => {
