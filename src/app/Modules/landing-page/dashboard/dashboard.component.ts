@@ -94,7 +94,7 @@ export class DashboardComponent {
         private fileService: FileService,
         private datePipe: DatePipe
     ) {
-   
+
     }
 
 
@@ -2300,10 +2300,10 @@ export class DashboardComponent {
 
     }
 
-    reset(){
-          this.startDate = '';
-            this.endDate = '';
-            this.selectedValue = 'ALL';
+    reset() {
+        this.startDate = '';
+        this.endDate = '';
+        this.selectedValue = 'ALL';
     }
 
     submitDateRange() {
