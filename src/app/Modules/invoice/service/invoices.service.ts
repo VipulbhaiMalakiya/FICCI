@@ -251,7 +251,7 @@ export class InvoicesService {
         return this.http.get<any[]>(url);
     }
 
-    getSalesCreditMemo(): Observable<any[]> {
+    getSalesCreditMemo(data:any): Observable<any[]> {
         const url = `${this.apiSalesCreditMemoUrl}${sessionStorage.getItem('userEmail') ?? ''}`;
         return this.http.get<any[]>(url);
     }

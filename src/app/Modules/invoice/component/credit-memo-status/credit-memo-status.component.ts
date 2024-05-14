@@ -1,4 +1,4 @@
-import { formatDate } from '@angular/common';
+import { DatePipe, formatDate } from '@angular/common';
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -14,6 +14,10 @@ import { InvoicesService } from '../../service/invoices.service';
 })
 export class CreditMemoStatusComponent implements OnInit {
     publicVariable = new publicVariable();
+    startDate?: any;
+    endDate?: any;
+    dateRangeError: boolean = false;
+    selectedValue?: any = 'ALL';
 
 
     constructor(private appService: AppService,
@@ -22,19 +26,105 @@ export class CreditMemoStatusComponent implements OnInit {
         private toastr: ToastrService,
         private API: InvoicesService,
         private cdr: ChangeDetectorRef,
-        private CAPI: CustomersService
+        private CAPI: CustomersService,
+        private datePipe: DatePipe
 
     ) {
 
     }
 
     ngOnInit(): void {
-        this.loadPurchaseInvoiceList();
+        let model:any = {
+            'startDate' : '',
+            'endDate' : ''
+        }
+        this.loadPurchaseInvoiceList(model);
         this.loadStateList();
     }
-    loadPurchaseInvoiceList(): void {
+
+    onValueChange(event: Event) {
+        const target = event.target as HTMLSelectElement;
+        this.selectedValue = target.value;
+        const oneWeekFromNow = new Date();
+        if (this.selectedValue === 'ALL') {
+            this.startDate = '';
+            this.endDate = ''
+        }
+        else if (this.selectedValue === 'Today') {
+            this.startDate = this.datePipe.transform(
+                oneWeekFromNow.toISOString().split('T')[0],
+                'yyyy-MM-dd'
+                
+            );
+            this.endDate = this.datePipe.transform(
+                oneWeekFromNow.toISOString().split('T')[0],
+                'yyyy-MM-dd'
+            );
+        } else if (this.selectedValue === 'Yesterday') {
+            oneWeekFromNow.setDate(oneWeekFromNow.getDate() - 1);
+            this.startDate = this.datePipe.transform(
+                oneWeekFromNow.toISOString().split('T')[0],
+                'yyyy-MM-dd'
+            );
+            this.endDate = this.datePipe.transform(
+                oneWeekFromNow.toISOString().split('T')[0],
+                'yyyy-MM-dd'
+            );
+        } else if (this.selectedValue === '7') {
+            oneWeekFromNow.setDate(oneWeekFromNow.getDate() - 7);
+            this.startDate = this.datePipe.transform(
+                oneWeekFromNow.toISOString().split('T')[0],
+                'yyyy-MM-dd'
+            );
+            this.endDate = this.datePipe.transform(
+                oneWeekFromNow.toISOString().split('T')[0],
+                'yyyy-MM-dd'
+            );
+        } else if (this.selectedValue === '30') {
+            oneWeekFromNow.setDate(oneWeekFromNow.getDate() - 30);
+            this.startDate = this.datePipe.transform(
+                oneWeekFromNow.toISOString().split('T')[0],
+                'yyyy-MM-dd'
+            );
+            this.endDate = this.datePipe.transform(
+                oneWeekFromNow.toISOString().split('T')[0],
+                'yyyy-MM-dd'
+            );
+        }
+
+        // this.publicVariable.isProcess = true;
+        var model: any = {
+            startDate: this.datePipe.transform(this.startDate, 'yyyy-MM-dd'),
+            endDate: this.datePipe.transform(this.endDate, 'yyyy-MM-dd'),
+        };
+        this.loadPurchaseInvoiceList(model);
+
+    }
+
+    reset() {
+        this.startDate = '';
+        this.endDate = '';
+        this.selectedValue = 'ALL';
+    }
+    submitDateRange() {
+        const start = new Date(this.startDate);
+        const end = new Date(this.endDate);
+        if (start > end) {
+            this.dateRangeError = true;
+        } else {
+            this.dateRangeError = false;
+            var model: any = {
+                startDate: this.datePipe.transform(this.startDate, 'yyyy-MM-dd'),
+                endDate: this.datePipe.transform(this.endDate, 'yyyy-MM-dd'),
+            };
+
+            this.loadPurchaseInvoiceList(model);
+
+        }
+    }
+    loadPurchaseInvoiceList(model:any): void {
         try {
-            const subscription = this.API.getSalesCreditMemo().subscribe({
+            const subscription = this.API.getSalesCreditMemo(model).subscribe({
                 next: (response: any) => {
                     if (response.data && Array.isArray(response.data)) {
                         console.log(response.data);
@@ -85,7 +175,11 @@ export class CreditMemoStatusComponent implements OnInit {
                         this.toastr.success(res.message, 'Success');
                         this.publicVariable.isProcess = false;
                         this.cdr.detectChanges();
-                        this.loadPurchaseInvoiceList();
+                        let model:any = {
+                            'startDate' : this.startDate,
+                            'endDate' : this.endDate
+                        }
+                        this.loadPurchaseInvoiceList(model);
 
                     },
                     error: (error) => {
