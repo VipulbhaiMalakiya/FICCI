@@ -2289,24 +2289,26 @@ export class DashboardComponent {
                 'yyyy-MM-dd'
             );
         } else if (this.selectedValue === '7') {
+            const oneWeekFromNow = new Date();
+            this.endDate = this.datePipe.transform(
+              oneWeekFromNow.toISOString().split('T')[0],
+              'yyyy-MM-dd'
+            );
             oneWeekFromNow.setDate(oneWeekFromNow.getDate() - 7);
             this.startDate = this.datePipe.transform(
-                oneWeekFromNow.toISOString().split('T')[0],
-                'yyyy-MM-dd'
-            );
-            this.endDate = this.datePipe.transform(
-                oneWeekFromNow.toISOString().split('T')[0],
-                'yyyy-MM-dd'
+              oneWeekFromNow.toISOString().split('T')[0],
+              'yyyy-MM-dd'
             );
         } else if (this.selectedValue === '30') {
+            const oneWeekFromNow = new Date();
+            this.endDate = this.datePipe.transform(
+              oneWeekFromNow.toISOString().split('T')[0],
+              'yyyy-MM-dd'
+            );
             oneWeekFromNow.setDate(oneWeekFromNow.getDate() - 30);
             this.startDate = this.datePipe.transform(
-                oneWeekFromNow.toISOString().split('T')[0],
-                'yyyy-MM-dd'
-            );
-            this.endDate = this.datePipe.transform(
-                oneWeekFromNow.toISOString().split('T')[0],
-                'yyyy-MM-dd'
+              oneWeekFromNow.toISOString().split('T')[0],
+              'yyyy-MM-dd'
             );
         }
 
@@ -2370,24 +2372,26 @@ export class DashboardComponent {
                 'yyyy-MM-dd'
             );
         } else if (this.selectedValue === '7') {
+            const oneWeekFromNow = new Date();
+            this.endDate = this.datePipe.transform(
+              oneWeekFromNow.toISOString().split('T')[0],
+              'yyyy-MM-dd'
+            );
             oneWeekFromNow.setDate(oneWeekFromNow.getDate() - 7);
             this.startDate = this.datePipe.transform(
-                oneWeekFromNow.toISOString().split('T')[0],
-                'yyyy-MM-dd'
-            );
-            this.endDate = this.datePipe.transform(
-                oneWeekFromNow.toISOString().split('T')[0],
-                'yyyy-MM-dd'
+              oneWeekFromNow.toISOString().split('T')[0],
+              'yyyy-MM-dd'
             );
         } else if (this.selectedValue === '30') {
+            const oneWeekFromNow = new Date();
+            this.endDate = this.datePipe.transform(
+              oneWeekFromNow.toISOString().split('T')[0],
+              'yyyy-MM-dd'
+            );
             oneWeekFromNow.setDate(oneWeekFromNow.getDate() - 30);
             this.startDate = this.datePipe.transform(
-                oneWeekFromNow.toISOString().split('T')[0],
-                'yyyy-MM-dd'
-            );
-            this.endDate = this.datePipe.transform(
-                oneWeekFromNow.toISOString().split('T')[0],
-                'yyyy-MM-dd'
+              oneWeekFromNow.toISOString().split('T')[0],
+              'yyyy-MM-dd'
             );
         }
 
