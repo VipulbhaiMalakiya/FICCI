@@ -247,7 +247,7 @@ export class InvoicesService {
     getPurchaseInvoice_New(data:any): Observable<any[]> {
         console.log(data);
         
-        const url = `${this.PurchaseInvoice_New}${sessionStorage.getItem('userEmail') ?? ''}&departmentName=${sessionStorage.getItem('navDepartment') ?? ''}`;
+        const url = `${this.PurchaseInvoice_New}${sessionStorage.getItem('userEmail') ?? ''}&departmentName=${sessionStorage.getItem('navDepartment') ?? ''}&start=${data.startDate}&end=${data.endDate}`;
         return this.http.get<any[]>(url);
     }
 
