@@ -549,20 +549,24 @@ export class DashboardComponent {
                 // }
 
                 // Set default status to "DRAFT" if the invoice type changes
-                if ((this.invoiceType === 'Tax Invoice' || this.invoiceType === 'Proforma Invoice') && this.storedRole === 'Approver') {
-                    this.headerStatus = 'FOR APPROVAL';
-                    this.invoiceType = 'Tax Invoice';
-                    this.loadInoivceStatusList('FOR APPROVAL');
-                } else if ((this.invoiceType === 'Tax Invoice' || this.invoiceType === 'Proforma Invoice') && this.storedRole === 'Admin') {
-                    this.headerStatus = 'APPROVED BY ACCOUNTS APPROVER';
-                    this.invoiceType = 'Tax Invoice';
-                    this.loadInoivceStatusList('APPROVED BY ACCOUNTS APPROVER');
-                } else {
-                    this.headerStatus = 'DRAFT';
-                    this.invoiceType = 'Tax Invoice';
-                    this.loadInoivceStatusList('DRAFT');
-                    this.cd.detectChanges();
+
+                if(!this.isfilterDefaultStatus){
+                    if ((this.invoiceType === 'Tax Invoice' || this.invoiceType === 'Proforma Invoice') && this.storedRole === 'Approver') {
+                        this.headerStatus = 'FOR APPROVAL';
+                        this.invoiceType = 'Tax Invoice';
+                        this.loadInoivceStatusList('FOR APPROVAL');
+                    } else if ((this.invoiceType === 'Tax Invoice' || this.invoiceType === 'Proforma Invoice') && this.storedRole === 'Admin') {
+                        this.headerStatus = 'APPROVED BY ACCOUNTS APPROVER';
+                        this.invoiceType = 'Tax Invoice';
+                        this.loadInoivceStatusList('APPROVED BY ACCOUNTS APPROVER');
+                    } else {
+                        this.headerStatus = 'DRAFT';
+                        this.invoiceType = 'Tax Invoice';
+                        this.loadInoivceStatusList('DRAFT');
+                        this.cd.detectChanges();
+                    }
                 }
+               
 
 
                 this.countDataByInvoies(this.dashboardData, this.invoiceType);
@@ -2343,9 +2347,13 @@ export class DashboardComponent {
         }
     }
 
-
+    isfilterDefaultStatus:boolean = false;
     onValueChangePI(event: Event) {
         const target = event.target as HTMLSelectElement;
+
+        if(this.headerStatus == 'DRAFT'){
+            this.isfilterDefaultStatus = true; 
+        }
         this.selectedValue = target.value;
         const oneWeekFromNow = new Date();
         if (this.selectedValue === 'ALL') {
@@ -2402,7 +2410,12 @@ export class DashboardComponent {
         };
         // this.CustomerDateFilter(model)
 
-        this.invoiceDateFilter(model)
+        this.invoiceDateFilter(model);
+
+        console.log( this.customerStatus, this.headerStatus);
+
+
+        
         
 
 
