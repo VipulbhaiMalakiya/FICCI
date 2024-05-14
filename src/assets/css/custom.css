@@ -399,6 +399,7 @@ header.main-header {
     display: flex;
     margin-left: auto;
     margin-right: 10px;
+    align-items: end;
 }
 
 .gray-btns{ border: none; background:none; }
@@ -489,10 +490,11 @@ header.main-header {
 .topbr-btns .form-control{  font-size: 13px; height: calc(1.2em + 0.75rem + 2px); width: 170px; }
 
 .tblsort {
-    width: 12%;
+    width: 8%;
     display: flex;
 	font-size: 14px;
 	align-items: center;
+    flex-direction: column;
 }
 
 .tblsort .col-form-label {
@@ -844,6 +846,7 @@ header.login-page{ position:absolute; top: 0; width:100%; z-index: 9; }
     height: calc(1.2em + 0.75rem + 2px);
     font-size: 13px;
     padding-left: 10px;
+    min-width: 125px;
 }
 .table-search label{ font-size: 13px; width: 100%; padding-bottom: 3px; } 
 .topbr-btns {

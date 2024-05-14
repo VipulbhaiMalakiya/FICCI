@@ -422,9 +422,9 @@ export class DashboardComponent {
             this.invoiceType = invoiceType;
             this.dashboardData = [];
 
-            let model:any = {
-                'startDate' : this.startDate,
-                'endDate' : this.endDate
+            let model: any = {
+                'startDate': this.startDate,
+                'endDate': this.endDate
             }
 
             // Observable for the first API call
@@ -2324,6 +2324,84 @@ export class DashboardComponent {
             };
 
             this.CustomerDateFilter(model)
+        }
+    }
+
+
+    onValueChangePI(event: Event) {
+        const target = event.target as HTMLSelectElement;
+        this.selectedValue = target.value;
+        const oneWeekFromNow = new Date();
+        if (this.selectedValue === 'ALL') {
+            this.startDate = '';
+            this.endDate = ''
+        }
+        else if (this.selectedValue === 'Today') {
+            this.startDate = this.datePipe.transform(
+                oneWeekFromNow.toISOString().split('T')[0],
+                'yyyy-MM-dd'
+            );
+            this.endDate = this.datePipe.transform(
+                oneWeekFromNow.toISOString().split('T')[0],
+                'yyyy-MM-dd'
+            );
+        } else if (this.selectedValue === 'Yesterday') {
+            oneWeekFromNow.setDate(oneWeekFromNow.getDate() - 1);
+            this.startDate = this.datePipe.transform(
+                oneWeekFromNow.toISOString().split('T')[0],
+                'yyyy-MM-dd'
+            );
+            this.endDate = this.datePipe.transform(
+                oneWeekFromNow.toISOString().split('T')[0],
+                'yyyy-MM-dd'
+            );
+        } else if (this.selectedValue === '7') {
+            oneWeekFromNow.setDate(oneWeekFromNow.getDate() - 7);
+            this.startDate = this.datePipe.transform(
+                oneWeekFromNow.toISOString().split('T')[0],
+                'yyyy-MM-dd'
+            );
+            this.endDate = this.datePipe.transform(
+                oneWeekFromNow.toISOString().split('T')[0],
+                'yyyy-MM-dd'
+            );
+        } else if (this.selectedValue === '30') {
+            oneWeekFromNow.setDate(oneWeekFromNow.getDate() - 30);
+            this.startDate = this.datePipe.transform(
+                oneWeekFromNow.toISOString().split('T')[0],
+                'yyyy-MM-dd'
+            );
+            this.endDate = this.datePipe.transform(
+                oneWeekFromNow.toISOString().split('T')[0],
+                'yyyy-MM-dd'
+            );
+        }
+
+        //this.publicVariable.isProcess = true;
+        var model: any = {
+            startDate: this.datePipe.transform(this.startDate, 'yyyy-MM-dd'),
+            endDate: this.datePipe.transform(this.endDate, 'yyyy-MM-dd'),
+        };
+        // this.CustomerDateFilter(model)
+
+
+    }
+
+    submitDateRangePI() {
+        const start = new Date(this.startDate);
+        const end = new Date(this.endDate);
+        if (start > end) {
+            this.dateRangeError = true;
+        } else {
+            this.dateRangeError = false;
+            var model: any = {
+                startDate: this.datePipe.transform(this.startDate, 'yyyy-MM-dd'),
+                endDate: this.datePipe.transform(this.endDate, 'yyyy-MM-dd'),
+            };
+
+            // this.CustomerDateFilter(model)
+
+
         }
     }
 
