@@ -252,7 +252,7 @@
                                             <tbody>
 
                                                 <tr
-                                                    *ngFor="let d of  this.publicVariable.customerStatusList  | searchFilter: publicVariable.searchText| paginate: {id: 'pagination6',itemsPerPage: publicVariable.tableSize,currentPage: publicVariable.page,totalItems: publicVariable.count};let i = index">
+                                                    *ngFor="let d of  this.publicVariable.customerStatusList  | searchFilter: publicVariable.searchText| paginate: {id: 'pagination6',itemsPerPage: publicVariable.tableSize,currentPage: publicVariable.page,totalItems: this.publicVariable.customerStatusList.length};let i = index">
                                                     <td>{{i + 1}}</td>
                                                     <td>{{d.recordID}}</td>
                                                     <td *ngIf="customerStatus=='APPROVED BY ACCOUNTS APPROVER'">
@@ -1129,7 +1129,7 @@
                                             </thead>
                                             <tbody>
                                                 <tr
-                                                    *ngFor="let d of  this.invoiceStatuslistData | salesnew: publicVariable.searchText| paginate: {id: 'pagination4',itemsPerPage: publicVariable.tableSize,currentPage: publicVariable.page,totalItems: publicVariable.count};let i = index">
+                                                    *ngFor="let d of  this.invoiceStatuslistData | salesnew: publicVariable.searchText| paginate: {id: 'pagination4',itemsPerPage: publicVariable.tableSize,currentPage: publicVariable.page,totalItems: invoiceStatuslistData.length};let i = index">
                                                     <td>{{i + 1}}</td>
                                                     <td>{{d.recordID}}</td>
                                                     <td *ngIf="customerStatus=='APPROVED BY ACCOUNTS APPROVER'">
@@ -1218,7 +1218,7 @@
                                         *ngIf="invoiceStatuslistData && invoiceStatuslistData.length > 0">
                                         <div class="hint-text">Showing <b>{{this.publicVariable.tableSize}}</b> out of
                                             <b>{{
-                                            publicVariable.count }}</b>
+                                                invoiceStatuslistData.length }}</b>
                                             entries
                                         </div>
                                         <pagination-controls id="pagination4" previousLabel="Prev" class="pagination"
