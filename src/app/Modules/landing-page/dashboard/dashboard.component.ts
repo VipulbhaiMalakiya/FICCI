@@ -11,6 +11,7 @@ import { PIEmailComponent } from '../../invoice/send-email/pi-email/pi-email.com
 import { CreditSalesEmailComponent } from '../../invoice/send-email/credit-sales-email/credit-sales-email.component';
 import { FileService } from '../../invoice/service/FileService';
 import { DatePipe } from '@angular/common';
+import { Roles } from '../../Masters/users/interface/role';
 
 
 
@@ -448,17 +449,21 @@ export class DashboardComponent {
         );
 
 
-        // Observable for the second API call
-        const approveInvoiceObservable = this.IAPI.getApproveInvoice(model).pipe(
-            timeout(120000), // Timeout set to 2 minutes (120000 milliseconds)
-            catchError((error: any) => {
-                console.error('Error loading approve invoice list:', error);
-                return throwError(error);
-            }),
-            finalize(() => {
-                this.publicVariable.isProcess = false;
-            })
-        );
+
+            // Observable for the second API call
+            const approveInvoiceObservable = this.IAPI.getApproveInvoice(model).pipe(
+                timeout(120000), // Timeout set to 2 minutes (120000 milliseconds)
+                catchError((error: any) => {
+                    console.error('Error loading approve invoice list:', error);
+                    return throwError(error);
+                }),
+                finalize(() => {
+                    this.publicVariable.isProcess = false;
+                })
+            );
+
+
+
 
 
 
@@ -1030,13 +1035,15 @@ export class DashboardComponent {
     }
 
 
-    SLFilterBYDate(model:any) {
+    SLFilterBYDate(model: any) {
         const purchaseInvoiceObservable = this.IAPI.getSalesCreditMemo(model).pipe(
             catchError((error: any) => {
                 console.error('Error loading purchase invoice list:', error);
                 return throwError(error);
             })
         );
+
+
 
         // Observable for the second API call
         const approveInvoiceObservable = this.IAPI.getApproveSalesInvoice(model).pipe(
@@ -1083,7 +1090,7 @@ export class DashboardComponent {
 
             },
             error: (error: any) => {
-                this.toastr.error('Error loading invoice lists', error.name);
+                // this.toastr.error('Error loading invoice lists', error.name);
                 this.publicVariable.isProcess = false;
             }
         });
