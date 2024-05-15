@@ -566,7 +566,7 @@ export class DashboardComponent {
                         this.loadInoivceStatusList('APPROVED BY ACCOUNTS APPROVER');
                     } else {
                         this.headerStatus = 'DRAFT';
-                        this.invoiceType = 'Tax Invoice';
+                        // this.invoiceType = 'Tax Invoice';
                         this.loadInoivceStatusList('DRAFT');
                         this.cd.detectChanges();
                     }
