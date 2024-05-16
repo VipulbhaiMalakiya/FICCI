@@ -115,6 +115,7 @@ export class CreditMemoStatusComponent implements OnInit {
 
     PostedSalesCreditNoteAttachment(invoice: string) {
         try {
+            this.publicVariable.isProcess = true;
             const subscription = this.API.GetPITaxInvoiceAttachment(invoice).subscribe({
                 next: (response: any) => {
 

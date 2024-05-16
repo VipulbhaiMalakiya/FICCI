@@ -1200,6 +1200,10 @@
                                                                     src="../assets/images/delete-icon.svg" alt=""
                                                                     title="Delete" /></a>
 
+                                                                    <a *ngIf="d.creditMemoNavNo && d.headerStatus == 'CREDIT MEMO POSTED' "href="javascript:void(0);"
+                                                                    (click)="SLLdownalodFile(d.creditMemoNavNo)"><img
+                                                                        src="../assets/images/download-icon.svg" alt="" title="Download Details" /></a>
+
                                                             <!-- <a href="javascript:void(0);" (click)="onsalesSendEmail(d)"
                                                                 *ngIf="d.headerStatus === 'APPROVED BY TL' && this.storedRole === 'Approver' "><img
                                                                     src="../assets/images/email-icon.svg" alt="" /></a> -->

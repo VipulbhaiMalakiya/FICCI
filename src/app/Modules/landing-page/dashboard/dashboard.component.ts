@@ -2519,5 +2519,40 @@ export class DashboardComponent {
         }
     }
 
+    SLLdownalodFile(fileUrl: any) {
+        this.publicVariable.isProcess = true;
+        this.PostedSalesCreditNoteAttachmentNEW(fileUrl);
+    }
+
+    PostedSalesCreditNoteAttachmentNEW(invoice: string) {
+        try {
+            this.publicVariable.isProcess = true;
+            const subscription = this.IAPI.GetPITaxInvoiceAttachment(invoice).subscribe({
+                next: (response: any) => {
+
+                    if (response.data.length > 0) {
+                        this.InvoiceAttachment = response.data[0];
+
+
+                        const fileName = this.InvoiceAttachment.invoiceNo+'.pdf';
+                        const fileType = `application/pdf`;
+                        this.fileService.downloadFile(this.InvoiceAttachment.attachment, fileName, fileType);
+                        this.publicVariable.isProcess  = false;
+                    }
+                    this.handleLoadingError();
+                },
+                error: (error) => {
+                    console.error('Error loading project list:', error);
+                    this.handleLoadingError();
+                },
+            });
+
+            this.publicVariable.Subscription.add(subscription);
+        } catch (error) {
+            console.error('Error loading project list:', error);
+            this.handleLoadingError();
+        }
+    }
+
 
 }
