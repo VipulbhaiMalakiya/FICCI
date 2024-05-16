@@ -41,7 +41,7 @@ export class InvoicesService {
     private TaxInvoiceInformationURL = `${environment.apiURL}NavERP/GetTaxInvoiceInformation?InvoiceNo=`;
     private GetTaxInvoiceAttachmentURL = `${environment.apiURL}NavERP/GetTaxInvoiceAttachment?InvoiceNo=`;
     private GetPITaxInvoiceAttachmentURL = `${environment.apiURL}NavERP/GetPIInvoiceAttachment?InvoiceNo=`;
-
+    private GetSalesCreditNoteAttachmentURL = `${environment.apiURL}NavERP/GetSalesCreditNoteAttachment?InvoiceNo=`;
     private ErpDetailCustNoURL = `${environment.apiURL}DropDown/ErpDetailCustNo?customerNo=`;
     private GstRegistrationNoURL = `${environment.apiURL}DropDown/GstRegistrationNo?gstNo=`;
     private GstRegistrationNoAllURL = `${environment.apiURL}DropDown/GstRegistrationNoAll`;
@@ -135,6 +135,14 @@ export class InvoicesService {
         const url = `${this.GetPITaxInvoiceAttachmentURL}${InvoiceNo}`;
         return this.http.get<any[]>(url);
     }
+
+    GetSLLTaxInvoiceAttachment(InvoiceNo: string): Observable<any[]> {
+        const userEmail = sessionStorage.getItem('userEmail');
+        const url = `${this.GetSalesCreditNoteAttachmentURL}${InvoiceNo}`;
+        return this.http.get<any[]>(url);
+    }
+
+
 
 
     GetTaxInvoiceInformation(InvoiceNo: string): Observable<any[]> {
@@ -246,7 +254,7 @@ export class InvoicesService {
 
     getPurchaseInvoice_New(data:any): Observable<any[]> {
         console.log(data);
-        
+
         const url = `${this.PurchaseInvoice_New}${sessionStorage.getItem('userEmail') ?? ''}&departmentName=${sessionStorage.getItem('navDepartment') ?? ''}&start=${data.startDate}&end=${data.endDate}`;
         return this.http.get<any[]>(url);
     }

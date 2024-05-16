@@ -1133,11 +1133,12 @@ export class DashboardComponent {
         ));
         counts['FOR APPROVAL'] = forapproval.length;
 
-        const approvedData = data.filter(item => (item.headerStatus === 'APPROVED BY ACCOUNTS APPROVER'
-            || item.headerStatus === 'MAIL SENT BY FINANCE TO CUSTOMER'
-            || item.headerStatus === 'APPROVED BY TL'
-            || item.headerStatus === 'MAIL SENT BY ACCOUNT TO CUSTOMER'
-            || item.headerStatus === 'APPROVED BY FINANCE'
+        const approvedData = data.filter(item => (
+            // item.headerStatus === 'APPROVED BY ACCOUNTS APPROVER'
+            // || item.headerStatus === 'MAIL SENT BY FINANCE TO CUSTOMER'
+            item.headerStatus === 'APPROVED BY TL'
+            // || item.headerStatus === 'MAIL SENT BY ACCOUNT TO CUSTOMER'
+            // || item.headerStatus === 'APPROVED BY FINANCE'
 
         ));
         counts['PENDING WITH FINANCE APPROVER'] = approvedData.length;
@@ -1203,18 +1204,20 @@ export class DashboardComponent {
             case 'APPROVED BY ACCOUNTS APPROVER':
                 filteredData = this.CreditNotedashboardData.filter((item: any) =>
                 (
-                    item.headerStatus === 'APPROVED BY ACCOUNTS APPROVER'
-                    || item.headerStatus === 'MAIL SENT BY ACCOUNT TO CUSTOMER'
-                    || item.headerStatus === 'APPROVED BY FINANCE'
-                    || item.headerStatus === 'APPROVED BY TL'
-                    || item.headerStatus === 'CREDIT MEMO POSTED'
-                    || item.headerStatus === 'MAIL SENT BY FINANCE TO CUSTOMER'));
+                   // item.headerStatus === 'APPROVED BY ACCOUNTS APPROVER'
+                    // || item.headerStatus === 'MAIL SENT BY ACCOUNT TO CUSTOMER'
+                    // || item.headerStatus === 'APPROVED BY FINANCE'
+                     item.headerStatus === 'APPROVED BY TL'
+                    // || item.headerStatus === 'CREDIT MEMO POSTED'
+                    // || item.headerStatus === 'MAIL SENT BY FINANCE TO CUSTOMER'
+                ));
                 break;
             case 'REJECTED BY CH APPROVER':
                 filteredData = this.CreditNotedashboardData.filter((item: any) =>
                 // item.createdBy === this.publicVariable.storedEmail &&
                 // item.impiHeaderInvoiceType == this.invoiceType &&
-                (item.headerStatus === 'REJECTED BY TL APPROVER' ||
+                (
+                    item.headerStatus === 'REJECTED BY TL APPROVER' ||
                     item.headerStatus === 'REJECTED BY CH APPROVER' ||
                     item.headerStatus === 'REJECTED BY ACCOUNTS APPROVER' ||
                     item.headerStatus === 'REJECTED BY FINANCE APPROVER'
@@ -2527,7 +2530,7 @@ export class DashboardComponent {
     PostedSalesCreditNoteAttachmentNEW(invoice: string) {
         try {
             this.publicVariable.isProcess = true;
-            const subscription = this.IAPI.GetPITaxInvoiceAttachment(invoice).subscribe({
+            const subscription = this.IAPI.GetSLLTaxInvoiceAttachment(invoice).subscribe({
                 next: (response: any) => {
 
                     if (response.data.length > 0) {

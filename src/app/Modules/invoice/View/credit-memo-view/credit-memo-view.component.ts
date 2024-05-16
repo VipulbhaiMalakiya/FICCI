@@ -80,7 +80,7 @@ export class CreditMemoViewComponent {
     loadTaxInvoiceAttachment(invoice: string) {
         try {
             this.publicVariable.isProcess = true;
-            const subscription = this.API.GetPITaxInvoiceAttachment(invoice).subscribe({
+            const subscription = this.API.GetSLLTaxInvoiceAttachment(invoice).subscribe({
                 next: (response: any) => {
 
                     console.log(response);
