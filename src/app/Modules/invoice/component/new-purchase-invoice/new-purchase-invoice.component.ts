@@ -163,18 +163,21 @@ export class NewPurchaseInvoiceComponent implements OnInit {
 
         console.log(this.selectedDept);
 
-        this.publicVariable.dataForm.patchValue({
-            ImpiHeaderDepartment: null,
-            ImpiHeaderProjectCode: null,
-            ImpiHeaderDivison: null,
-            Project: null,
-            startDate: null,
-            endDate: null
-        });
+        // this.publicVariable.dataForm.patchValue({
+        //     ImpiHeaderDepartment: null,
+        //     ImpiHeaderProjectCode: null,
+        //     ImpiHeaderDivison: null,
+        //     Project: null,
+        //     startDate: null,
+        //     endDate: null
+        // });
         try {
             const subscription = this.API.getnavProjects(this.selectedDept).subscribe({
                 next: (response: any) => {
                     this.publicVariable.projectList = response.data;
+
+                    console.log(  this.publicVariable.projectList);
+
                 },
                 error: (error) => {
                     console.error('Error loading project list:', error);
