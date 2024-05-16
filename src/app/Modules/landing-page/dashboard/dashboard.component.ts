@@ -60,6 +60,7 @@ export class DashboardComponent {
     PIPendingApproval: number = 0;
     PIApprovedAccounts: number = 0;
     PIRejectedbyAccounts: number = 0;
+    SNCSCOUNT: number = 0;
     SalesCreditNoteSummaryData: any[] = []
     PIALL: number = 0;
     PIforapproval: number = 0;
@@ -1107,7 +1108,8 @@ export class DashboardComponent {
             'Cancelled': 0,
             'Reversal': 0,
             'ALL': 0,
-            'CREDIT MEMO POSTED': 0
+            'CREDIT MEMO POSTED': 0,
+            'Posted Credit Note' : 0
         };
 
         // Filter data for each customer status
@@ -1142,6 +1144,17 @@ export class DashboardComponent {
 
         ));
         counts['PENDING WITH FINANCE APPROVER'] = approvedData.length;
+
+
+        const PostedCreditNote = data.filter(item => (
+            item.headerStatus === 'APPROVED BY ACCOUNTS APPROVER'
+            || item.headerStatus === 'MAIL SENT BY FINANCE TO CUSTOMER'
+            || item.headerStatus === 'MAIL SENT BY ACCOUNT TO CUSTOMER'
+            || item.headerStatus === 'APPROVED BY FINANCE'
+            || item.headerStatus   == 'CREDIT MEMO POSTED'
+
+        ));
+        counts['Posted Credit Note'] = PostedCreditNote.length;
 
         const rejectedData = data.filter(item => (item.headerStatus === 'REJECTED BY TL APPROVER'
             || item.headerStatus === 'REJECTED BY CH APPROVER'
@@ -1179,6 +1192,7 @@ export class DashboardComponent {
         this.PIALL = counts['ALL'];
         this.Cancelled = counts['Cancelled'];
         this.Reversal = counts['Reversal'];
+        this.SNCSCOUNT = counts['Posted Credit Note'];
         this.publicVariable.count = counts['ALL']; // Total count
     }
 
@@ -1212,6 +1226,20 @@ export class DashboardComponent {
                     // || item.headerStatus === 'MAIL SENT BY FINANCE TO CUSTOMER'
                 ));
                 break;
+
+                case 'Posted Credit Note':
+                filteredData = this.CreditNotedashboardData.filter((item: any) =>
+                (
+                   item.headerStatus === 'APPROVED BY ACCOUNTS APPROVER'
+                    || item.headerStatus === 'MAIL SENT BY ACCOUNT TO CUSTOMER'
+                    || item.headerStatus === 'APPROVED BY FINANCE'
+
+                    || item.headerStatus === 'CREDIT MEMO POSTED'
+                    || item.headerStatus === 'MAIL SENT BY FINANCE TO CUSTOMER'
+                ));
+                break;
+
+                //Posted Credit Note
             case 'REJECTED BY CH APPROVER':
                 filteredData = this.CreditNotedashboardData.filter((item: any) =>
                 // item.createdBy === this.publicVariable.storedEmail &&
