@@ -252,7 +252,7 @@
                                             <tbody>
 
                                                 <tr
-                                                    *ngFor="let d of  this.publicVariable.customerStatusList  | searchFilter: publicVariable.searchText| paginate: {id: 'pagination6',itemsPerPage: publicVariable.tableSize,currentPage: publicVariable.page,totalItems: publicVariable.count};let i = index">
+                                                    *ngFor="let d of  this.publicVariable.customerStatusList  | searchFilter: publicVariable.searchText| paginate: {id: 'pagination6',itemsPerPage: publicVariable.tableSize,currentPage: publicVariable.page,totalItems: this.publicVariable.customerStatusList.length};let i = index">
                                                     <td>{{i + 1}}</td>
                                                     <td>{{d.recordID}}</td>
                                                     <td *ngIf="customerStatus=='APPROVED BY ACCOUNTS APPROVER'">
@@ -546,14 +546,14 @@
                                                     <th>TL Approver</th>
                                                     <th>Record No</th>
                                                     <th>Posted Invoice No</th>
-                                                   
+
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <tr
                                                     *ngFor="let d of  this.invoiceStatuslistData | invoiceFilter: publicVariable.searchText| paginate: {id: 'pagination1',itemsPerPage: pitableSize,currentPage: pipage,totalItems: invoiceStatuslistData.length};let i = index">
                                                     <td>{{InvoicecalculateIndex(pipage, i)}}</td>
-                                                    
+
                                                     <td>
                                                         <span class="table-btns">
                                                             <a href="javascript:void(0);" (click)="onViewPI(d)"
@@ -619,7 +619,7 @@
                                                         </span>
                                                     </td>
                                                     <td>{{d.impiHeaderInvoiceType | titlecase}}</td>
-                                                   
+
                                                     <td>
                                                         {{d.headerPiNo}}</td>
                                                   <td>{{d.impiHeaderTotalInvoiceAmount | number:'1.2-2' }}</td>
@@ -628,9 +628,9 @@
                                                   <td>{{d.impiHeaderProjectDepartmentName | titlecase}}</td>
                                                     <td>{{d.impiHeaderProjectCode}}</td>
                                                     <td>{{d.impiHeaderProjectName | titlecase}}</td>
-                                                
+
                                                     <!-- <td>{{d.impiHeaderProjectDivisionName | titlecase}}</td> -->
-                                                  
+
                                                     <!-- <td>{{d.impiHeaderCustomerCity | titlecase}}</td> -->
                                                     <td>{{d.impiHeaderCreatedBy | titlecase}}</td>
                                                     <td>{{d.impiHeaderSubmittedDate | date:'medium':'IST'}}</td>
@@ -638,14 +638,14 @@
                                                     <!-- <td>{{d.impiHeaderClusterApprover | titlecase}}</td> -->
                                                     <!-- <td>{{d.impiHeaderFinanceApprover | titlecase}}</td> -->
                                                     <!-- <td>{{d.accountApprover | titlecase}}</td> -->
-                                                  
-                                                  
-                                                   
+
+
+
                                                     <td>{{d.headerRecordID}}</td>
 
                                                     <td>
                                                         {{d.postedInvoiceNumber}}</td>
-                                                  
+
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -1316,7 +1316,7 @@
                                                 </thead>
                                                 <tbody>
                                                     <tr
-                                                        *ngFor="let d of  SalesCreditNoteSummaryData | salessearchFilter: publicVariable.searchText| paginate: {id: 'pagination5',itemsPerPage: publicVariable.tableSize,currentPage: publicVariable.page,totalItems: publicVariable.count};let i = index">
+                                                        *ngFor="let d of  SalesCreditNoteSummaryData | salessearchFilter: publicVariable.searchText| paginate: {id: 'pagination5',itemsPerPage: publicVariable.tableSize,currentPage: publicVariable.page,totalItems: SalesCreditNoteSummaryData.length};let i = index">
                                                         <td>{{invoiceStatuscalculateIndex(publicVariable.page, i)}}</td>
                                                         <td>{{d.no}}</td>
                                                         <td>{{d.postingDate}}</td>
