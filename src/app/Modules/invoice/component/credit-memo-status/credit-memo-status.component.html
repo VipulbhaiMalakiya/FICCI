@@ -156,6 +156,10 @@
                                     )"
                                         href="javascript:void(0);" (click)="onEdit(d)" title="Edit"><img
                                             src="../assets/images/edit-icon.svg" alt="" /></a>
+
+                                            <a *ngIf="d.creditMemoNavNo && d.headerStatus == 'CREDIT MEMO POSTED' "href="javascript:void(0);"
+                                            (click)="downalodFile(d.creditMemoNavNo)"><img
+                                                src="../assets/images/download-icon.svg" alt="" title="Download Details" /></a>
                                     <!-- <a *ngIf="publicVariable.storedRole !== 'Admin' &&
                                     (d.isDraft ||
                                     d.headerStatus == 'REJECTED BY TL APPROVER'  ||
