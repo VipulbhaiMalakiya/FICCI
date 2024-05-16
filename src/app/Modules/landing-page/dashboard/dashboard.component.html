@@ -252,7 +252,7 @@
                                             <tbody>
 
                                                 <tr
-                                                    *ngFor="let d of  this.publicVariable.customerStatusList  | searchFilter: publicVariable.searchText| paginate: {id: 'pagination6',itemsPerPage: publicVariable.tableSize,currentPage: publicVariable.page,totalItems: this.publicVariable.customerStatusList.length};let i = index">
+                                                    *ngFor="let d of  this.publicVariable.customerStatusList  | searchFilter: publicVariable.searchText| paginate: {id: 'pagination6',itemsPerPage: publicVariable.tableSize,currentPage: publicVariable.page,totalItems: publicVariable.count};let i = index">
                                                     <td>{{i + 1}}</td>
                                                     <td>{{d.recordID}}</td>
                                                     <td *ngIf="customerStatus=='APPROVED BY ACCOUNTS APPROVER'">
@@ -531,50 +531,29 @@
                                             <thead>
                                                 <tr>
                                                     <th>#</th>
-                                                    <th>Record No</th>
-                                                    <th *ngIf="customerStatus=='APPROVED BY ACCOUNTS APPROVER'">PI No
-                                                    </th>
+                                                    <th class="action-cl">Action</th>
                                                     <th>Invoice Type</th>
+                                                    <th>Invoice No
+                                                    </th>
+                                                    <th>Invoice Amount</th>
+                                                    <th>Customer Name</th>
+                                                    <th>Status</th>
+                                                    <th>Department</th>
                                                     <th>Project Code</th>
                                                     <th>Project Name</th>
-                                                    <th>Department</th>
-                                                    <!-- <th>Division</th> -->
-                                                    <th>Customer Name</th>
-                                                    <th>City</th>
-                                                    <th>Amount</th>
-                                                    <th>TL Approver</th>
-                                                    <!-- <th>CL Approver</th> -->
-                                                    <!-- <th>Finance Approver</th> -->
-                                                    <!-- <th>Accounts Approver </th> -->
-                                                    <th>Created On</th>
                                                     <th>Created By</th>
-                                                    <th>Status</th>
-                                                    <th class="action-cl">Action</th>
+                                                    <th>Created On</th>
+                                                    <th>TL Approver</th>
+                                                    <th>Record No</th>
+                                                    <th>Posted Invoice No</th>
+                                                   
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <tr
                                                     *ngFor="let d of  this.invoiceStatuslistData | invoiceFilter: publicVariable.searchText| paginate: {id: 'pagination1',itemsPerPage: pitableSize,currentPage: pipage,totalItems: invoiceStatuslistData.length};let i = index">
                                                     <td>{{InvoicecalculateIndex(pipage, i)}}</td>
-                                                    <td>{{d.headerRecordID}}</td>
-                                                    <td *ngIf="customerStatus=='APPROVED BY ACCOUNTS APPROVER'">
-                                                        {{d.headerPiNo}}</td>
-                                                    <td>{{d.impiHeaderInvoiceType | titlecase}}</td>
-                                                    <td>{{d.impiHeaderProjectCode}}</td>
-                                                    <td>{{d.impiHeaderProjectName | titlecase}}</td>
-                                                    <td>{{d.impiHeaderProjectDepartmentName | titlecase}}</td>
-                                                    <!-- <td>{{d.impiHeaderProjectDivisionName | titlecase}}</td> -->
-                                                    <td>{{d.impiHeaderCustomerName | titlecase}}</td>
-                                                    <td>{{d.impiHeaderCustomerCity | titlecase}}</td>
-                                                    <td>{{d.impiHeaderTotalInvoiceAmount | number:'1.2-2' }}</td>
-                                                    <td>{{d.impiHeaderTlApprover | titlecase}}</td>
-                                                    <!-- <td>{{d.impiHeaderClusterApprover | titlecase}}</td> -->
-                                                    <!-- <td>{{d.impiHeaderFinanceApprover | titlecase}}</td> -->
-                                                    <!-- <td>{{d.accountApprover | titlecase}}</td> -->
-                                                    <td>{{d.impiHeaderSubmittedDate | date:'medium':'IST'}}</td>
-                                                    <td>{{d.impiHeaderCreatedBy | titlecase}}</td>
-                                                    <td>{{d.headerStatus}}</td>
-
+                                                    
                                                     <td>
                                                         <span class="table-btns">
                                                             <a href="javascript:void(0);" (click)="onViewPI(d)"
@@ -639,6 +618,34 @@
                                                                     title="Download" /></a>
                                                         </span>
                                                     </td>
+                                                    <td>{{d.impiHeaderInvoiceType | titlecase}}</td>
+                                                   
+                                                    <td>
+                                                        {{d.headerPiNo}}</td>
+                                                  <td>{{d.impiHeaderTotalInvoiceAmount | number:'1.2-2' }}</td>
+                                                  <td>{{d.impiHeaderCustomerName | titlecase}}</td>
+                                                  <td>{{d.headerStatus}}</td>
+                                                  <td>{{d.impiHeaderProjectDepartmentName | titlecase}}</td>
+                                                    <td>{{d.impiHeaderProjectCode}}</td>
+                                                    <td>{{d.impiHeaderProjectName | titlecase}}</td>
+                                                
+                                                    <!-- <td>{{d.impiHeaderProjectDivisionName | titlecase}}</td> -->
+                                                  
+                                                    <!-- <td>{{d.impiHeaderCustomerCity | titlecase}}</td> -->
+                                                    <td>{{d.impiHeaderCreatedBy | titlecase}}</td>
+                                                    <td>{{d.impiHeaderSubmittedDate | date:'medium':'IST'}}</td>
+                                                    <td>{{d.impiHeaderTlApprover | titlecase}}</td>
+                                                    <!-- <td>{{d.impiHeaderClusterApprover | titlecase}}</td> -->
+                                                    <!-- <td>{{d.impiHeaderFinanceApprover | titlecase}}</td> -->
+                                                    <!-- <td>{{d.accountApprover | titlecase}}</td> -->
+                                                  
+                                                  
+                                                   
+                                                    <td>{{d.headerRecordID}}</td>
+
+                                                    <td>
+                                                        {{d.postedInvoiceNumber}}</td>
+                                                  
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -980,7 +987,7 @@
                         <li class="nav-item">
                             <a class="nav-link tabbg-4" data-bs-toggle="pill" href="#CreditNote"
                                 (click)="loadSalesCreditNoteSummary()">
-                                <small> Credit Note </small>
+                                <small> Posted Credit Note </small>
                                 <span>{{this.creditNoteCount}}</span>
                             </a>
                         </li>
@@ -1116,7 +1123,7 @@
                                                     <th>Customer Name</th>
                                                     <th>City</th>
                                                     <th>Inoice Amount</th>
-                                                    <th>Credit Memo Amount</th>
+                                                    <th>Credit Note Amount</th>
                                                     <th>TL Approver</th>
                                                     <!-- <th>CL Approver</th> -->
                                                     <!-- <th>Finance Approver</th> -->
@@ -1129,7 +1136,7 @@
                                             </thead>
                                             <tbody>
                                                 <tr
-                                                    *ngFor="let d of  this.invoiceStatuslistData | salesnew: publicVariable.searchText| paginate: {id: 'pagination4',itemsPerPage: publicVariable.tableSize,currentPage: publicVariable.page,totalItems: invoiceStatuslistData.length};let i = index">
+                                                    *ngFor="let d of  this.invoiceStatuslistData | salesnew: publicVariable.searchText| paginate: {id: 'pagination4',itemsPerPage: publicVariable.tableSize,currentPage: publicVariable.page,totalItems: publicVariable.count};let i = index">
                                                     <td>{{i + 1}}</td>
                                                     <td>{{d.recordID}}</td>
                                                     <td *ngIf="customerStatus=='APPROVED BY ACCOUNTS APPROVER'">
@@ -1218,7 +1225,7 @@
                                         *ngIf="invoiceStatuslistData && invoiceStatuslistData.length > 0">
                                         <div class="hint-text">Showing <b>{{this.publicVariable.tableSize}}</b> out of
                                             <b>{{
-                                                invoiceStatuslistData.length }}</b>
+                                            publicVariable.count }}</b>
                                             entries
                                         </div>
                                         <pagination-controls id="pagination4" previousLabel="Prev" class="pagination"
@@ -1284,7 +1291,7 @@
                                                 <thead>
                                                     <tr>
                                                         <th>#</th>
-                                                        <th>Credit Memo No</th>
+                                                        <th>Credit Note No</th>
                                                         <th>Posting Date</th>
                                                         <th>Applies To DocNo</th>
                                                         <th>Customer No</th>

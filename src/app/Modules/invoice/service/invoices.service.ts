@@ -17,7 +17,7 @@ export class InvoicesService {
     private getCustomerStatusNewURL = `${environment.apiURL}Customer?email=`;
 
     private ProjectapiCreditMemo = `${environment.apiURL}DropDown/GetProjectCreditMemo?id=0`;
-    private Projectapi = `${environment.apiURL}DropDown/GetProject?department=`;
+    private Projectapi = `${environment.apiURL}NAVERP/GetProject?department=`;
     private PurchaseInvoice_New = `${environment.apiURL}PurchaseInvoice_New?email=`;
     private ApproveInvoiceURL = `${environment.apiURL}ApproveInvoice?email=`;
     private ApproveSalesInvoiceURL = `${environment.apiURL}ApproveCredit?email=`;

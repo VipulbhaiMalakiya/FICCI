@@ -11,6 +11,7 @@ export class NevErpComponent implements OnInit {
     error!: string;
     isProcess: boolean = false;
     email?: any;
+    ISValid: boolean =false;
     constructor(private router: Router, private authService: AuthService,private route: ActivatedRoute) { }
 
 
@@ -34,8 +35,11 @@ export class NevErpComponent implements OnInit {
                     if (response.error) {
                         this.error = response.error;
                         this.isProcess = false;
+
                     } else {
-                        this.router.navigate(['/dashboard']); // Redirect to the dashboard
+
+                        this.ISValid =true;
+                       // this.router.navigate(['/dashboard']); // Redirect to the dashboard
                         // this.toastr.success('Logged in successfully', 'Success');
                         this.isProcess = false;
 
