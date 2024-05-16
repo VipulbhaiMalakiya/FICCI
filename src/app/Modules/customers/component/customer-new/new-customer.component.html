@@ -73,17 +73,17 @@
                 </div>
                 <div class="col-md-3 col-sm-6">
                     <div class="form-group">
-                        <label>Address 2 </label>
+                        <label>Address 2 <sup class="text-danger">*</sup></label>
                         <input type="text" class="form-control" placeholder="Address 2"
                         maxlength="100"
 
                         formControlName="address2" />
-                        <!-- <div *ngIf="shouldShowError('address2', 'required')" class="text-danger">
+                        <div *ngIf="shouldShowError('address2', 'required')" class="text-danger">
                             Address 2 is required.
-                        </div> -->
-                        <div *ngIf="shouldShowError('address2', 'maxlength')" class="text-danger">
-                            Address2 must be less than 100 characters.
                         </div>
+                        <!-- <div *ngIf="shouldShowError('address2', 'maxlength')" class="text-danger">
+                            Address2 must be less than 100 characters.
+                        </div> -->
                         <div *ngIf="shouldShowError('address2', 'forbiddenCharacters')" class="text-danger">
                             Special characters are not allowed in the address2
                         </div>
@@ -243,7 +243,7 @@
                         <!-- <div *ngIf="shouldShowError('GSTRegistrationNo', 'invalidGST')" class="text-danger">
                             Please enter a valid GST Registration Number. (05AAACF1282E1Z5)
                         </div> -->
-                        <div *ngIf="gstExists" class="text-warning"> Customers with the same PAN Number and different GST
+                        <div *ngIf="gstExists" class="text-warning"> Customers with the same GST Number and different GST
                             Number already exist.
                         </div>
                     </div>
