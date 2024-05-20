@@ -67,10 +67,11 @@ export class AuthService {
                 console.log(error);
                 if (error.error && error.error.message) {
                   this.toastr.error(error.error.message, 'Error');
+                  this.router.navigate(['/unauthorized']);
                 } else {
-                  this.toastr.error('An unknown error occurred', 'Error');
+                  this.toastr.error('Network error. Please check your internet connection', 'Error');
                 }
-                this.router.navigate(['/unauthorized']);
+
                 return of({ error: 'An error occurred during login' });
               })
             );
@@ -106,10 +107,11 @@ export class AuthService {
                 console.log(error);
                 if (error.error && error.error.message) {
                   this.toastr.error(error.error.message, 'Error');
+                  this.router.navigate(['/unauthorized']);
+
                 } else {
-                  this.toastr.error('An unknown error occurred', 'Error');
+                  this.toastr.error('Network error. Please check your internet connection', 'Error');
                 }
-                this.router.navigate(['/unauthorized']);
                 return of({ error: 'An error occurred during login' });
               })
             );
