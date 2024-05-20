@@ -77,7 +77,7 @@ export class UsersComponent implements OnInit, OnDestroy {
             Name: x?.imeM_Name ? this.toTitleCase(x.imeM_Name) : '',
             Username: x?.imeM_Username ? this.toTitleCase(x.imeM_Username) : '',
             Department:x?.department ? this.toTitleCase(x.department) : '',
-            "Nav Department":x?.departmentName || '',
+            "Nav Department": Array.isArray(x?.departmentName) ? x.departmentName.join(', ') : '',
             Email: x?.imeM_Email ? this.toTitleCase(x.imeM_Email) : '',
             Active: x && x.isActive ? 'Yes' : 'No',
             Role: x?.roleName ? this.toTitleCase(x.roleName) : ''
