@@ -105,8 +105,14 @@ export class DashboardComponent {
         this.publicVariable.storedEmail = sessionStorage.getItem('userEmail') ?? '';
         this.storedRole = sessionStorage.getItem('userRole') ?? '';
         const isFinanceValue = sessionStorage.getItem('IsFinance');
+
+
         this.loadPurchaseInvoiceList(this.invoiceType);
         this.storeIsFinance = isFinanceValue === 'true'; // Convert string to boolean
+        const navDepartment = sessionStorage.getItem('navDepartment');
+        if (!navDepartment && this.storedRole != 'Admin') {
+            this.toastr.warning("Department Data not updated in User Master", "Warning");
+        }
     }
 
     ngOnDestroy(): void {
@@ -548,10 +554,10 @@ export class DashboardComponent {
                 // }
 
                 // Set default status to "DRAFT" if the invoice type changes
-               // console.log("without filter" ,this.dashboardData);
-                this.dashboardData =  this.dashboardData.filter(x=>x.impiHeaderInvoiceType == this.invoiceType);
+                // console.log("without filter" ,this.dashboardData);
+                this.dashboardData = this.dashboardData.filter(x => x.impiHeaderInvoiceType == this.invoiceType);
 
-                console.log("with filter" ,this.dashboardData);
+                console.log("with filter", this.dashboardData);
                 if (!this.isfilterDefaultStatus) {
                     if ((this.invoiceType === 'Tax Invoice' || this.invoiceType === 'Proforma Invoice') && this.storedRole === 'Approver') {
                         this.headerStatus = 'FOR APPROVAL';
@@ -588,7 +594,7 @@ export class DashboardComponent {
     countDataByInvoies(data: any[], invoiceType: any): void {
 
 
-        console.log(invoiceType,data);
+        console.log(invoiceType, data);
         const counts: any = {
             'DRAFT': 0,
             'PENDING WITH TL APPROVER': 0,
@@ -1033,7 +1039,7 @@ export class DashboardComponent {
     }
 
 
-    SLFilterBYDate(model:any) {
+    SLFilterBYDate(model: any) {
         const purchaseInvoiceObservable = this.IAPI.getSalesCreditMemo(model).pipe(
             catchError((error: any) => {
                 console.error('Error loading purchase invoice list:', error);
@@ -1086,7 +1092,7 @@ export class DashboardComponent {
 
             },
             error: (error: any) => {
-          //      this.toastr.error('Error loading invoice lists', error.name);
+                //      this.toastr.error('Error loading invoice lists', error.name);
                 this.publicVariable.isProcess = false;
             }
         });
@@ -1109,7 +1115,7 @@ export class DashboardComponent {
             'Reversal': 0,
             'ALL': 0,
             'CREDIT MEMO POSTED': 0,
-            'Posted Credit Note' : 0
+            'Posted Credit Note': 0
         };
 
         // Filter data for each customer status
@@ -1151,7 +1157,7 @@ export class DashboardComponent {
             || item.headerStatus === 'MAIL SENT BY FINANCE TO CUSTOMER'
             || item.headerStatus === 'MAIL SENT BY ACCOUNT TO CUSTOMER'
             || item.headerStatus === 'APPROVED BY FINANCE'
-            || item.headerStatus   == 'CREDIT MEMO POSTED'
+            || item.headerStatus == 'CREDIT MEMO POSTED'
 
         ));
         counts['Posted Credit Note'] = PostedCreditNote.length;
@@ -1218,19 +1224,19 @@ export class DashboardComponent {
             case 'APPROVED BY ACCOUNTS APPROVER':
                 filteredData = this.CreditNotedashboardData.filter((item: any) =>
                 (
-                   // item.headerStatus === 'APPROVED BY ACCOUNTS APPROVER'
+                    // item.headerStatus === 'APPROVED BY ACCOUNTS APPROVER'
                     // || item.headerStatus === 'MAIL SENT BY ACCOUNT TO CUSTOMER'
                     // || item.headerStatus === 'APPROVED BY FINANCE'
-                     item.headerStatus === 'APPROVED BY TL'
+                    item.headerStatus === 'APPROVED BY TL'
                     // || item.headerStatus === 'CREDIT MEMO POSTED'
                     // || item.headerStatus === 'MAIL SENT BY FINANCE TO CUSTOMER'
                 ));
                 break;
 
-                case 'Posted Credit Note':
+            case 'Posted Credit Note':
                 filteredData = this.CreditNotedashboardData.filter((item: any) =>
                 (
-                   item.headerStatus === 'APPROVED BY ACCOUNTS APPROVER'
+                    item.headerStatus === 'APPROVED BY ACCOUNTS APPROVER'
                     || item.headerStatus === 'MAIL SENT BY ACCOUNT TO CUSTOMER'
                     || item.headerStatus === 'APPROVED BY FINANCE'
 
@@ -1239,7 +1245,7 @@ export class DashboardComponent {
                 ));
                 break;
 
-                //Posted Credit Note
+            //Posted Credit Note
             case 'REJECTED BY CH APPROVER':
                 filteredData = this.CreditNotedashboardData.filter((item: any) =>
                 // item.createdBy === this.publicVariable.storedEmail &&
@@ -2565,10 +2571,10 @@ export class DashboardComponent {
                         this.InvoiceAttachment = response.data[0];
 
 
-                        const fileName = this.InvoiceAttachment.invoiceNo+'.pdf';
+                        const fileName = this.InvoiceAttachment.invoiceNo + '.pdf';
                         const fileType = `application/pdf`;
                         this.fileService.downloadFile(this.InvoiceAttachment.attachment, fileName, fileType);
-                        this.publicVariable.isProcess  = false;
+                        this.publicVariable.isProcess = false;
                     }
                     this.handleLoadingError();
                 },
