@@ -64,16 +64,17 @@ export class AuthService {
                 }
             }),
             catchError(error => {
-                //console.log(error);
-
-
-                 this.toastr.error(error.error.message,'Error');
-                // return of({ error: 'An error occurred during login' });
-                this.router.navigate(['/unauthorized']); // Redirect to the dashboard
-
+                console.log(error);
+                if (error.error && error.error.message) {
+                  this.toastr.error(error.error.message, 'Error');
+                } else {
+                  this.toastr.error('An unknown error occurred', 'Error');
+                }
+                this.router.navigate(['/unauthorized']);
                 return of({ error: 'An error occurred during login' });
-            })
-        );
+              })
+            );
+
     }
 
     navisionlogin(email: string): Observable<any> {
@@ -102,12 +103,17 @@ export class AuthService {
                 }
             }),
             catchError(error => {
-               // this.toastr.error('An error occurred during login', 'Error');
-                this.router.navigate(['/unauthorized']); // Redirect to the dashboard
-
+                console.log(error);
+                if (error.error && error.error.message) {
+                  this.toastr.error(error.error.message, 'Error');
+                } else {
+                  this.toastr.error('An unknown error occurred', 'Error');
+                }
+                this.router.navigate(['/unauthorized']);
                 return of({ error: 'An error occurred during login' });
-            })
-        );
+              })
+            );
+
     }
 
 

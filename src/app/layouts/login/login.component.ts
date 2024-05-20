@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -48,23 +49,37 @@ export class LoginComponent implements OnInit {
         if (this.dataForm.valid) {
             const { email, password } = this.dataForm.value;
             this.isProcess = true;
-            this.authService.login(email, password).subscribe(
-                (response) => {
-                    if (response.error) {
-                        this.error = response.error;
-                        this.isProcess = false;
-                    } else {
-                        this.router.navigate(['/dashboard']); // Redirect to the dashboard
-                        this.toastr.success('Logged in successfully', 'Success');
+                this.authService.login(email, password).subscribe(
+                    (response) => {
+                        if (response.error) {
+                            this.error = response.error;
+                            this.isProcess = false;
+                        } else {
+                            this.router.navigate(['/dashboard']); // Redirect to the dashboard
+                            this.toastr.success('Logged in successfully', 'Success');
+                            this.isProcess = false;
+
+                        }
+                    },
+                    // (error) => {
+                    //     this.isProcess = false;
+                    //     this.toastr.error('Login failed', 'Error')
+                    // }
+
+                    (error: HttpErrorResponse) => {
                         this.isProcess = false;
 
+                        if (error.error instanceof ErrorEvent) {
+                            // A client-side or network error occurred
+                            console.error('An error occurred:', error.error.message);
+                            this.toastr.error('Network error. Please check your internet connection.', 'Error');
+                        } else {
+                            // The backend returned an unsuccessful response code
+                            console.error(`Backend returned code ${error.status}, body was: ${error.error}`);
+                            this.toastr.error('Login failed', 'Error');
+                        }
                     }
-                },
-                (error) => {
-                    this.isProcess = false;
-                    this.toastr.error('Login failed', 'Error')
-                }
-            );
+                );
         } else {
             this.markFormControlsAsTouched();
         }
