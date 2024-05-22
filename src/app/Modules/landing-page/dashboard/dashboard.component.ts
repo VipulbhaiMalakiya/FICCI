@@ -198,24 +198,24 @@ export class DashboardComponent {
         );
 
         // Observable for the second API call
-        const accountSubscription = this.API.getCustomerStatuaccount().pipe(
-            timeout(120000),
-            catchError((error: any) => {
-                if (error.name === 'TimeoutError') {
-                    this.toastr.error('Operation timed out after 2 minutes', error.name);
-                } else {
-                    this.toastr.error('Error loading user list', error.name);
-                }
-                return throwError(error);
-            })
-        );
+        // const accountSubscription = this.API.getCustomerStatuaccount().pipe(
+        //     timeout(120000),
+        //     catchError((error: any) => {
+        //         if (error.name === 'TimeoutError') {
+        //             this.toastr.error('Operation timed out after 2 minutes', error.name);
+        //         } else {
+        //             this.toastr.error('Error loading user list', error.name);
+        //         }
+        //         return throwError(error);
+        //     })
+        // );
 
-        forkJoin([statusSubscription, accountSubscription]).subscribe({
-            next: ([statusResponse, accountResponse]: [any, any]) => {
+        forkJoin([statusSubscription]).subscribe({
+            next: ([statusResponse]: [any]) => {
                 // console.log(accountResponse);
 
                 // this.dashboardData = [...statusResponse.data, ...accountResponse.data];
-                const combinedData = [...statusResponse.data, ...accountResponse.data];
+                const combinedData = [...statusResponse.data];
 
 
                 // Create a map to store unique data by customerId
@@ -636,7 +636,7 @@ export class DashboardComponent {
                 || item.headerStatus === 'PENDING WITH ACCOUNTS APPROVER'
                 || item.headerStatus === 'PENDING WITH FINANCE APPROVER'
                 || item.headerStatus === 'CANCEL BY EMPLOYEE'
-            
+
             ));
         counts['FOR APPROVAL'] = forapproval.length;
 
@@ -1520,7 +1520,7 @@ export class DashboardComponent {
 
     onViewPI(data: invoiceStatusModule): void {
 
-        
+
         if (data.headerId)
          {
             if (data.impiHeaderCreatedBy == this.publicVariable.storedEmail) {
@@ -1562,7 +1562,7 @@ export class DashboardComponent {
             console.error('ID is undefined or null');
         }
     }
-  
+
 
 
     onViewAccountPI(data: invoiceStatusModule): void {
@@ -2564,7 +2564,7 @@ export class DashboardComponent {
             const subscription = this.IAPI.GetSLLTaxInvoiceAttachment(invoice).subscribe({
                 next: (response: any) => {
 console.log(response);
-                   
+
                     if (response.data.length > 0) {
                         this.InvoiceAttachment = response.data[0];
 
