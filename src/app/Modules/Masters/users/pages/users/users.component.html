@@ -41,29 +41,22 @@
                     <thead>
                         <tr>
                             <th>#</th>
+                            <th class="action-cl">Action</th>
+                            <th>Active</th>
                             <th>Employee ID</th>
                             <th>Name</th>
                             <!-- <th>Email</th> -->
                             <th>Department</th>
                             <th>Nav Department</th>
                             <th>Role</th>
-                            <th>Active</th>
-                            <th class="action-cl">Action</th>
+                          
+                           
                         </tr>
                     </thead>
                     <tbody>
                         <tr
                             *ngFor="let user of  this.publicVariable.userlist | searchFilter: publicVariable.searchText| paginate: {itemsPerPage: publicVariable.tableSize,currentPage: publicVariable.page,totalItems: publicVariable.count};let i = index">
                             <td>{{ calculateIndex(publicVariable.page, i)}}</td>
-                            <td>{{ user.imeM_EmpId }}</td>
-                            <td>{{ user.imeM_Name | titlecase}}</td>
-                            <!-- <td>{{ user.imeM_Email |titlecase}}</td> -->
-                            <td>{{ user.department |titlecase}}</td>
-                            <td>{{ user.departmentName}}</td>
-                            <td>{{ user.roleName | titlecase }}</td>
-                            <td [ngClass]="{'text-success': user.isActive, 'text-danger': !user.isActive}">
-                                <span class="status">•</span> {{ user.isActive ? 'Yes' : 'No' }}
-                            </td>
                             <td>
                                 <span class="table-btns">
                                     <a href="javascript:void(0);" title="Edit" (click)="onEdit(user)"><img src="../assets/images/edit-icon.svg" alt=""></a>
@@ -71,6 +64,17 @@
                                             alt="" title="Delete"></a>
                                 </span>
                             </td>
+                            <td [ngClass]="{'text-success': user.isActive, 'text-danger': !user.isActive}">
+                                <span class="status">•</span> {{ user.isActive ? 'Yes' : 'No' }}
+                            </td>
+                            <td>{{ user.imeM_EmpId }}</td>
+                            <td>{{ user.imeM_Name | titlecase}}</td>
+                            <!-- <td>{{ user.imeM_Email |titlecase}}</td> -->
+                            <td>{{ user.department |titlecase}}</td>
+                            <td>{{ user.departmentName}}</td>
+                            <td>{{ user.roleName | titlecase }}</td>
+                            
+                           
                         </tr>
                     </tbody>
                 </table>

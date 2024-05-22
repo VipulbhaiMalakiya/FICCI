@@ -8,7 +8,7 @@
                     <div class="form-group">
                         <label for="c_Code">Code</label>
                         <input type="text" id="c_Code" class="form-control" formControlName="c_Code"
-                            placeholder="enter code" />
+                            placeholder="Enter code" />
                         <div *ngIf="shouldShowError('c_Code','required')" class="text-danger">Please enter the Code.
                         </div>
                         <div *ngIf="shouldShowError('c_Code','minlength')" class="text-danger">Code must be at least 3
@@ -26,7 +26,7 @@
                     <div class="form-group">
                         <label for="c_Value">Value</label>
                         <input type="text" id="c_Value" class="form-control" formControlName="c_Value"
-                            placeholder="enter Value" />
+                            placeholder="Enter Value" />
                         <div *ngIf="shouldShowError('c_Value','required')" class="text-danger">Please enter Value.</div>
                         <div *ngIf="shouldShowError('c_Value','minlength')" class="text-danger">Value must be at least 5
                             characters

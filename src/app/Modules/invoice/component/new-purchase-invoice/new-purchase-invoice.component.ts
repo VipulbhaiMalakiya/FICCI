@@ -313,6 +313,11 @@ export class NewPurchaseInvoiceComponent implements OnInit {
         ).subscribe({
             next: (response: any) => {
                 this.publicVariable.GetCustomerList = response.data;
+                if( this.publicVariable.GetCustomerList.length>0)
+                {
+                    this.publicVariable.GetCustomerList = this.publicVariable.GetCustomerList.filter(x=>x.custName!='' && x.custName!=undefined )
+                }
+              
                 this.isButtonShow = true;
                 this.loadStateList();
             },

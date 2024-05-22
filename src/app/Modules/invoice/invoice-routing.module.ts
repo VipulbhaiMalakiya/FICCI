@@ -55,12 +55,12 @@ const routes: Routes = [
     {
         path: 'approval/view/:id', component: ViewPiApprovalComponent,
         canActivate: [AuthGuard],
-        data: { expectedRoles: ['Admin', 'Approver'] }
+        data: { expectedRoles: ['Admin', 'Approver', 'Employee', 'Accounts'] }
     },
     {
         path: 'accounts/view/:id', component: ViewPiAccountsInboxComponent,
         canActivate: [AuthGuard],
-        data: { expectedRoles: ['Admin','Accounts'] }
+        data: { expectedRoles: ['Admin', 'Approver', 'Employee', 'Accounts'] }
     },
     {
         path:'accounts/email',

@@ -32,7 +32,7 @@
 
             <div class="col-md-4 col-sm-6">
                 <div class="form-group">
-                    <label>Navision posted no</label>
+                    <label>Posted Document No.</label>
                     <input type="text" value="{{data.postedInvoiceNumber}}" class="form-control" disabled=""
                         readonly="">
                 </div>
@@ -224,6 +224,7 @@
 
     </div>
 
+    <div class="pi-pagetitle">Sales Line</div>
     <div class="dasboard-table pi-table">
 
         <div class="table-responsive">
@@ -270,7 +271,7 @@
 
     </div>
 
-
+    <div class="pi-pagetitle">Attachment</div>
     <div class="dasboard-table pi-table mb-0" *ngIf="uploadedFiles.length > 0">
         <div class="table-responsive">
             <table class="table table-bordered text-nowrap">
@@ -296,28 +297,9 @@
                         </td>
                     </tr>
 
-                </tbody>
-            </table>
-        </div>
-    </div>
-
-    <div class="dasboard-table pi-table mb-0" *ngIf="data.impiHeaderInvoiceType== 'Tax Invoice'">
-        <div class="table-responsive">
-            <table class="table table-bordered text-nowrap">
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Category</th>
-                        <th>File Type</th>
-                        <th>File Name</th>
-                        <th *ngIf="!data.isDraft">Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-
                     <tr *ngFor="let file of InvoiceAttachment; let i = index">
 
-                        <td>{{ i + 1 }}</td>
+                        <td>{{ InvoiceAttachment.length + 1 }}</td>
                         <td>Posted Document</td>
                         <td>.pdf</td>
                         <td>{{file.invoiceNo}}</td>
@@ -327,10 +309,13 @@
 
                         </td>
                     </tr>
+
                 </tbody>
             </table>
         </div>
     </div>
+
+  
 
     <table class="table table-bordered text-nowrap" *ngIf="data.impiHeaderInvoiceType== 'Proforma Invoice'">
         <thead>
@@ -369,8 +354,7 @@
         </tbody> -->
     </table>
 
-
-
+   
     <div class="mastersform-sec mb-3">
 
 
@@ -392,25 +376,25 @@
             </div>
             <div class="col-md-6" *ngIf="data.impiHeaderTlApproverRemarks">
                 <div class="form-group">
-                    <label>Tl Remarks </label>
+                    <label>TL Remarks </label>
                     <textarea class="form-control h-100" cols="2" rows="2" disabled=""
                         readonly="">{{data.impiHeaderTlApproverRemarks}}</textarea> </div>
             </div>
 
-            <div class="col-md-6" *ngIf="data.impiHeaderClusterApproverRemarks">
+            <!-- <div class="col-md-6" *ngIf="data.impiHeaderClusterApproverRemarks">
                 <div class="form-group">
                     <label>CH Remarks</label>
                     <textarea class="form-control h-100" cols="2" rows="2" disabled=""
                         readonly="">{{data.impiHeaderClusterApproverRemarks}}</textarea>
                 </div>
-            </div>
-            <div class="col-md-6" *ngIf="data.impiHeaderFinanceRemarks">
+            </div> -->
+            <!-- <div class="col-md-6" *ngIf="data.impiHeaderFinanceRemarks">
                 <div class="form-group">
                     <label>Finance Remarks</label>
                     <textarea class="form-control h-100" cols="2" rows="2" disabled=""
                         readonly="">{{data.impiHeaderFinanceRemarks}}</textarea>
                 </div>
-            </div>
+            </div> -->
 
             <div class="col-md-6" *ngIf="data.accountApproverRemarks">
                 <div class="form-group">
@@ -427,11 +411,10 @@
                         readonly="">{{data.cancelRemarks}}</textarea>
                 </div>
             </div>
-        </div>
-
-
-
+        </div>    
     </div>
+
+   
 
     <form [formGroup]="publicVariable.dataForm"
         *ngIf="data.headerStatus !== 'CANCELLATION APPROVED BY TL' && data.headerStatus !== 'REJECTED BY TL APPROVER' && data.headerStatus !== 'CANCELLATION APPROVED BY FINANCE' && data.headerStatus !== 'REJECTED BY FINANCE APPROVER'">
@@ -453,10 +436,11 @@
 
                 <input type="checkbox" class="btn-check" formControlName="IsDraft" id="btn-check" autocomplete="off">
                 <label class="common-btn w-auto me-2" for="btn-check"
-                    *ngIf="!(data.IsPostedTaxInvoice) && data.impiHeaderCreatedBy == this.publicVariable.storedEmail && data.headerStatus =='APPROVED BY TL' || data.headerStatus =='APPROVED BY FINANCE' "
-                    (click)="onSubmit(false)">Cancel Request
+                    *ngIf="!(data.IsPostedTaxInvoice) && data.impiHeaderCreatedBy == this.publicVariable.storedEmail && (data.headerStatus =='APPROVED BY TL' || data.headerStatus =='APPROVED BY FINANCE') "
+                    (click)="onSubmit(false)">Cancel Request                   
                 </label>
-                <button type="submit"
+
+                 <button type="submit"
                     *ngIf="!(data.impiHeaderInvoiceType=='Tax Invoice') && data.impiHeaderCreatedBy == this.publicVariable.storedEmail && (data.headerStatus =='APPROVED BY TL' || data.headerStatus =='APPROVED BY FINANCE') "
                     class="btn btn-primary w-auto mb-0 me-2" (click)="onSubmit(true)">Request Tax Invoice</button>
 

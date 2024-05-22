@@ -114,14 +114,14 @@
             </div>
             <div class="col-md-3 col-sm-6">
                 <div class="form-group">
-                    <label>GST Registration No.</label>
+                    <label>GST No.</label>
                     <input type="text" value="{{data.gstNumber}}" class="form-control" disabled readonly>
                 </div>
             </div>
 
             <div class="col-md-3 col-sm-6">
                 <div class="form-group">
-                    <label>P.A.N. No.</label>
+                    <label>PAN No.</label>
                     <input type="text" value="{{data.pan}}" class="form-control" disabled readonly>
                 </div>
             </div>
@@ -134,7 +134,7 @@
                 </div>
             </div>
 
-            <div class="col-md-3 col-sm-6">
+            <div class="col-md-4 col-sm-6">
                 <div class="form-group">
                     <label>Status</label>
                     <input type="text" value="{{data.customerStatus | titlecase}}" class="form-control"
@@ -144,7 +144,7 @@
 
             <div class="col-md-12" *ngIf="data.customerRemarks">
                 <div class="form-group">
-                    <label>Remarks</label>
+                    <label>Initiator Remarks</label>
                     <textarea class="form-control h-100" cols="3" rows="2"
                     value="{{data.customerRemarks | titlecase}}"
                     disabled readonly></textarea>

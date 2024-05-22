@@ -17,7 +17,6 @@ export class AuthService {
     private apiUrl = `${environment.apiURL}UserAuth`;
     private navisionUrl = `${environment.apiURL}UserAuth/LoginHRMS`;
 
-
     constructor(private http: HttpClient, private toastr: ToastrService, private router: Router) { }
     login(email: string, password: string): Observable<any> {
         const body = { email: email, password: password };
@@ -25,22 +24,22 @@ export class AuthService {
             map((responseData: any) => {
 
                 console.log(responseData);
-                 if(responseData.status =="InvalidLogin")
+                 if(responseData.status =="InvalidLogin")                
                 {
                     this.toastr.warning(responseData.message,"Warning");
                     return;
                 }
 
-                 if(responseData.status =="Unauthorized")
+                 if(responseData.status =="Unauthorized")                
                 {
                     this.toastr.warning(responseData.message,"Warning");
                     this.router.navigate(['/unauthorized']);
                     return;
                 }
 
+            
                 //console.log(responseData);
                 let response= responseData.data;
-
                 if (response && response.token) {
                     const userRole = response.roleName;
                     const userEmail = response.email;
@@ -53,9 +52,9 @@ export class AuthService {
                     sessionStorage.setItem('IsFinance',response.invoice_IsFinanceApprover)
                     sessionStorage.setItem('navDepartment', response.navDepartment);
                     return { token: response.token, role: userRole };
-                }
-
-                else
+                } 
+               
+                else 
                 {
 
                     this.toastr.warning(responseData.message,"Warning");
@@ -63,19 +62,32 @@ export class AuthService {
                     return { error: responseData.message };
                 }
             }),
+
             catchError(error => {
                 console.log(error);
-                if (error.error && error.error.message) {
-                  this.toastr.error(error.error.message, 'Error');
-                  this.router.navigate(['/unauthorized']);
-                } else {
-                  this.toastr.error('Network error. Please check your internet connection', 'Error');
-                }
-
+                if (error.error && error.error.message) 
+                {
+                  this.toastr.warning(error.error.message, 'warning');
+                 
+                } 
+                // else 
+                // {
+                //   this.toastr.warning('Network error. Please check your internet connection.', 'warning');
+                // }
+                this.router.navigate(['/unauthorized']);
                 return of({ error: 'An error occurred during login' });
               })
-            );
+        
+            // catchError(error => {
+            //     //console.log(error);
 
+                
+            //      this.toastr.error(error.error.message,'Error');
+            //     // return of({ error: 'An error occurred during login' });
+            //     this.router.navigate(['/unauthorized']); // Redirect to the dashboard
+            //     return of({ error: 'An error occurred during login' });
+            // })
+        );
     }
 
     navisionlogin(email: string): Observable<any> {
@@ -103,19 +115,26 @@ export class AuthService {
                     return { error: 'Invalid credentials' };
                 }
             }),
+
             catchError(error => {
                 console.log(error);
-                if (error.error && error.error.message) {
-                  this.toastr.error(error.error.message, 'Error');
-                  this.router.navigate(['/unauthorized']);
-
-                } else {
-                  this.toastr.error('Network error. Please check your internet connection', 'Error');
-                }
+                if (error.error && error.error.message)
+                 {
+                  this.toastr.warning(error.error.message, 'warning');
+                 
+                } 
+              
+                this.router.navigate(['/unauthorized']);
                 return of({ error: 'An error occurred during login' });
               })
-            );
+            
+            // catchError(error => {
+            //    // this.toastr.error('An error occurred during login', 'Error');
+            //     this.router.navigate(['/unauthorized']); // Redirect to the dashboard
 
+            //     return of({ error: 'An error occurred during login' });
+            // })
+        );
     }
 
 

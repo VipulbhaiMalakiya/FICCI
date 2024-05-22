@@ -93,50 +93,40 @@
                 <thead>
                     <tr>
                         <th>#</th>
-                        <th>Record No.</th>
-                        <th>Invoice No</th>
-                        <th>Invoice Type</th>
+                       
+                        <th class="action-cl">Action</th>
+                        <th>Status</th>
+                        <th>Tax Invoice No.</th>
+                        <th>Credit Note No.</th>
+                        <th>Posted Credit Note No.</th>
+                        <th>Customer Name</th>
+                        <th>Department</th>
+                        <!-- <th>Invoice Type</th> -->
                         <th>Project Code</th>
                         <th>Project Name</th>
-                        <th>Department</th>
+                      
                         <!-- <th>Division</th> -->
-                        <th>Vendor Name</th>
-                        <th>City</th>
+                      
+                        <!-- <th>City</th> -->
                         <th>Invoice Amount</th>
-                        <th>Credit Memo Amount</th>
-                        <th>TL Approver</th>
-                        <!-- <th>CL Approver</th> -->
-                        <!-- <th>Finance Approver</th> -->
+                        <th>Credit Note Amount</th>
+
                         <!-- <th>Accounts Approver </th> -->
                         <th>Created On</th>
                         <th>Created By</th>
-                        <th>Status</th>
-                        <th class="action-cl">Action</th>
+                        <th>TL Approver</th>
+                        <!-- <th>CL Approver</th> -->
+                        <!-- <th>Finance Approver</th> -->
+                        <!-- <th>Total Amount</th> -->
+                        <th>Record No.</th>
+
                     </tr>
                 </thead>
                 <tbody>
                     <tr
                         *ngFor="let d of  this.publicVariable.invoiceStatuslistData | searchFilter: publicVariable.searchText| paginate: {itemsPerPage: publicVariable.tableSize,currentPage: publicVariable.page,totalItems: publicVariable.count};let i = index">
                         <td>{{calculateIndex(publicVariable.page, i)}}</td>
-                        <td>{{d.recordID}}</td>
-                        <td>{{d.headerPiNo}}</td>
-                        <td>{{d.impiHeaderInvoiceType | titlecase}}</td>
-                        <td>{{d.impiHeaderProjectCode}}</td>
-                        <td>{{d.impiHeaderProjectName | titlecase}}</td>
-                        <td>{{d.impiHeaderProjectDepartmentName | titlecase}}</td>
-                        <!-- <td>{{d.impiHeaderProjectDivisionName | titlecase}}</td> -->
-                        <td>{{d.impiHeaderCustomerName | titlecase}}</td>
-                        <td>{{d.impiHeaderCustomerCity | titlecase}}</td>
-                        <td>{{d.impiHeaderTotalInvoiceAmount | number:'1.2-2' }}</td>
-                        <td>{{d.memoAmount | number:'1.2-2' }}</td>
-                        <td>{{d.impiHeaderTlApprover | titlecase}}</td>
-                        <!-- <td>{{d.impiHeaderClusterApprover | titlecase}}</td> -->
-                        <!-- <td>{{d.impiHeaderFinanceApprover | titlecase}}</td> -->
-                        <!-- <td>{{d.accountApprover | titlecase}}</td> -->
-                        <td>{{d.impiHeaderSubmittedDate | date:'medium':'IST'}}</td>
-                        <td>{{d.impiHeaderCreatedBy | titlecase}}</td>
-                        <td>{{d.headerStatus }}</td>
-
+                        
                         <td>
                             <span class="table-btns">
                                 <a href="javascript:void(0);" (click)="onView(d)"><img
@@ -151,6 +141,35 @@
 
                             </span>
                         </td>
+                        <td>{{d.headerStatus }}</td>
+                          
+                        <td>{{d.headerPiNo}}</td>
+
+                        <td>{{d.creditMemoNavNo}}</td>
+                        <td>{{d.postedCreditMemoNumber}}</td>
+                        <td>{{d.impiHeaderCustomerName | titlecase}}</td>
+                        <td>{{d.impiHeaderProjectDepartmentName | titlecase}}</td>
+                        <!-- <td>{{d.impiHeaderInvoiceType | titlecase}}</td> -->
+                        <td>{{d.impiHeaderProjectCode}}</td>
+                        <td>{{d.impiHeaderProjectName | titlecase}}</td>
+                      
+                        <!-- <td>{{d.impiHeaderProjectDivisionName | titlecase}}</td> -->
+                       
+                        <!-- <td>{{d.impiHeaderCustomerCity | titlecase}}</td> -->
+                        <td>{{d.impiHeaderTotalInvoiceAmount | number:'1.2-2' }}</td>
+                        <td>{{d.memoAmount | number:'1.2-2' }}</td>
+                        <!-- <td>{{d.accountApprover | titlecase}}</td> -->
+                        <td>{{d.impiHeaderSubmittedDate | date:'medium':'IST'}}</td>
+                        <td>{{d.impiHeaderCreatedBy | titlecase}}</td>
+                        <td>{{d.impiHeaderTlApprover | titlecase}}</td>
+                        <!-- <td>{{d.impiHeaderClusterApprover | titlecase}}</td> -->
+                        <!-- <td>{{d.impiHeaderFinanceApprover | titlecase}}</td> -->
+                        <!-- <td>{{d.impiHeaderTotalInvoiceAmount | number}}</td> -->
+
+                        <td>{{d.recordID}}</td>
+
+
+                    
                     </tr>
                 </tbody>
             </table>

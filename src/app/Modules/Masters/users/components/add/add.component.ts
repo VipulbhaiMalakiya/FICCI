@@ -34,8 +34,8 @@ export class AddComponent implements OnInit {
             username: [{ value: '', disabled: true }, , Validators.required],
             name: [{ value: '', disabled: true }, , Validators.required],
             email: [{ value: '', disabled: true }, , [Validators.required, Validators.email]],
-            isActive: [true] ,// Assuming default value is true
-            departmentName: [null, Validators.required],
+            isActive: [true] ,// Assuming default value is true         
+            departmentName: [null, Validators.required],       
             dept: [{ value: '', disabled: true }],
         });
     }
@@ -45,7 +45,7 @@ export class AddComponent implements OnInit {
 
         this.loadEmpoyeeList();
        // this.getRoles();
-
+      
         //this.GetDepartment();
         //this.publicVariable.isProcess = false;
         this.route.paramMap.pipe(
@@ -201,7 +201,7 @@ export class AddComponent implements OnInit {
             };
 
            // console.log(newConfig);
-
+          
             const successMessage = isUpdate ? 'Data updated successfully.' : 'Data created successfully.';
             this.handleApiRequest(this.API.create(newConfig), successMessage, 'Error submitting data:');
         } else {
@@ -246,15 +246,15 @@ export class AddComponent implements OnInit {
 
     findRoleId(roleName: string): number | null {
 
-
+        
         // Assuming you have an array of roles with id and name properties
         console.log(this.publicVariable.roles);
-
+        
         const role = this.publicVariable.roles.find(role => role.roleName === roleName);
-
+        
         return role ? role.role_id : null; // Return the role id if found, otherwise return null
     }
-
+    
     onEdit(data: any): void {
 
      debugger;
@@ -262,17 +262,17 @@ export class AddComponent implements OnInit {
         this.publicVariable.isEdit = true;
         this.cd.detectChanges();
 
-
+        
 
       let empdata = this.publicVariable.employeeList.find(x=>x.imeM_EmpId ==data.imeM_EmpId);
 
       console.log("employeedate",empdata);
 
       debugger;
-
+      
 
       if(empdata!=undefined)
-
+      
       {
 
         this.publicVariable.dataForm.patchValue({
@@ -329,10 +329,10 @@ export class AddComponent implements OnInit {
         return role ? role.role_id : undefined;
     }
 
-
+    
 
     markFormControlsAsTouched(): void {
-
+              
                 ['empId', 'username', 'name', 'email', 'roleId','departmentName','dept'].forEach(controlName => {
             this.publicVariable.dataForm.controls[controlName].markAsTouched();
         });

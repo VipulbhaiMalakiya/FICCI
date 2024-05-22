@@ -89,19 +89,21 @@
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th>Record No.</th>
+                            <th class="action-cl">Action</th>
+                            <th>Status</th>
+                       
                             <th>Customer Code</th>
                             <th>Name</th>
                             <th>Address</th>
                             <th>City</th>
                             <th>Contact</th>
-                            <th>GST No</th>
-                            <th>PAN No</th>
+                            <th>GST No.</th>
+                            <th>PAN No.</th>
                             <th>Created On</th>
                             <th>Created By</th>
                             <th>Remarks</th>
-                            <th>Status</th>
-                            <th class="action-cl">Action</th>
+                            <th>Record No.</th>
+                         
                         </tr>
                     </thead>
                     <tbody>
@@ -110,7 +112,25 @@
                             *ngFor="let d of  this.publicVariable.customerStatusList | searchFilter: publicVariable.searchText| paginate: {itemsPerPage: publicVariable.tableSize,currentPage: publicVariable.page,totalItems: publicVariable.count};let i = index">
                             <td>{{calculateIndex(publicVariable.page, i)}}</td>
 
-                            <td>{{d.recordID || ''}}</td>
+                            <td><span class="table-btns">
+                                <a href="javascript:void(0);" (click)="onView(d)"><img
+                                        src="../assets/images/view-icon.svg" alt="" title="View Details"></a>
+                                <a *ngIf="publicVariable.storedRole !== 'Admin' &&
+                                        (d.isDraft ) && (d.createdBy == this.publicVariable.storedEmail)"
+                                    href="javascript:void(0);" (click)="onEdit(d)">
+                                    <img src="../assets/images/edit-icon.svg" alt=""
+                                        [title]="publicVariable.storedRole !== 'Admin' ? 'Edit Details' : ''">
+                                </a>
+                                <a *ngIf="publicVariable.storedRole !== 'Admin' && (d.isDraf) && (d.createdBy == this.publicVariable.storedEmail)" href="javascript:void(0);"
+                                    (click)="onDelete(d.customerId)" title="Delete Customer">
+                                    <img src="../assets/images/delete-icon.svg" alt="">
+                                </a>
+
+                            </span>
+                        </td>
+                        <td>{{d.customerStatus }}</td>
+                          
+                           
                             <td>{{d.customerCode || ''}}</td>
                             <td>{{d.customerName |titlecase }}</td>
                             <td>{{d.address}}</td>
@@ -121,29 +141,7 @@
                             <td>{{d.createdOn | date:'medium':'IST' }}</td>
                             <td>{{d.createdBy}}</td>
                             <td>{{d.customerRemarks || ''}}</td>
-                            <td>{{d.customerStatus }}</td>
-                            <td><span class="table-btns">
-                                    <a href="javascript:void(0);" (click)="onView(d)"><img
-                                            src="../assets/images/view-icon.svg" alt="" title="View Details"></a>
-                                    <a *ngIf="publicVariable.storedRole !== 'Admin' &&
-                                            (d.isDraft ||
-                                            d.customerStatus == 'REJECTED BY TL APPROVER'  ||
-                                            d.customerStatus == 'REJECTED BY CH APPROVER' ||
-                                            d.customerStatus == 'REJECTED BY ACCOUNTS APPROVER')"
-                                        href="javascript:void(0);" (click)="onEdit(d)">
-                                        <img src="../assets/images/edit-icon.svg" alt=""
-                                            [title]="publicVariable.storedRole !== 'Admin' ? 'Edit Details' : ''">
-                                    </a>
-                                    <a *ngIf="publicVariable.storedRole !== 'Admin' && (d.isDraft ||
-                                    d.customerStatus == 'REJECTED BY TL APPROVER' ||
-                                    d.customerStatus == 'REJECTED BY CH APPROVER' ||
-                                    d.customerStatus == 'REJECTED BY ACCOUNTS APPROVER')" href="javascript:void(0);"
-                                        (click)="onDelete(d.customerId)" title="Delete Customer">
-                                        <img src="../assets/images/delete-icon.svg" alt="">
-                                    </a>
-
-                                </span>
-                            </td>
+                            <td>{{d.recordID || ''}}</td>
                         </tr>
                     </tbody>
                 </table>

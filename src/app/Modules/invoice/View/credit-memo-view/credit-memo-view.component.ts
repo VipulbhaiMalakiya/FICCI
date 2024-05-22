@@ -47,7 +47,7 @@ export class CreditMemoViewComponent {
         this.data = history.state.data;
         console.log( this.data);
 
-        this.loadTaxInvoiceAttachment(this.data.creditMemoNavNo)
+        this.loadTaxInvoiceAttachment(this.data.postedCreditMemoNumber)
 
         this.loadStateList();
         this.uploadedFiles = this.data.impiHeaderAttachment;
@@ -87,7 +87,7 @@ export class CreditMemoViewComponent {
 
                     if (response.data.length > 0) {
                         this.InvoiceAttachment = response.data[0];
-                        this.InvNo = this.InvoiceAttachment.invoiceNo;
+                        this.InvNo = this.InvoiceAttachment.salesCrMemoNo;
                         this.InvAttachment = this.InvoiceAttachment.attachment;
 
 

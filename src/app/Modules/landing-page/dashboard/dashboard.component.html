@@ -1,6 +1,7 @@
 <app-loading *ngIf="publicVariable.isProcess"></app-loading>
 <div class="inner-content">
     <h3 class="content-title">Dashboard</h3>
+    
     <div class="main-data-navs">
         <ul class="nav nav-pills main-data-nav1 mb-3" id="pills-tab" role="tablist">
             <li class="nav-item" role="presentation">
@@ -44,7 +45,7 @@
                                 [class.active]="this.publicVariable.storedRole == 'Admin' && customerStatus =='PENDING WITH APPROVER'"
                                 data-bs-toggle="pill" href="#home"
                                 (click)="loadCustomerStatusList('PENDING WITH APPROVER')">
-                                <small>Pending Approval</small>
+                                <small>Pending With Accounts</small>
                                 <span>{{this.PendingApproval }}</span>
                             </a>
                         </li>
@@ -233,7 +234,9 @@
                                             <thead>
                                                 <tr>
                                                     <th>#</th>
-                                                    <th>Record No </th>
+                                                    <th class="action-cl">Action</th>
+                                                    <th>Status</th>
+                                                    
                                                     <th *ngIf="customerStatus=='APPROVED BY ACCOUNTS APPROVER'">Customer
                                                         Code</th>
                                                     <th>Name</th>
@@ -245,8 +248,8 @@
                                                     <th>Created On</th>
                                                     <th>Created By</th>
                                                     <th>Remarks</th>
-                                                    <th>Status</th>
-                                                    <th class="action-cl">Action</th>
+                                                    <th>Record No. </th>
+                                                  
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -254,47 +257,45 @@
                                                 <tr
                                                     *ngFor="let d of  this.publicVariable.customerStatusList  | searchFilter: publicVariable.searchText| paginate: {id: 'pagination6',itemsPerPage: publicVariable.tableSize,currentPage: publicVariable.page,totalItems: this.publicVariable.customerStatusList.length};let i = index">
                                                     <td>{{i + 1}}</td>
-                                                    <td>{{d.recordID}}</td>
+                                                    <td><span class="table-btns">
+                                                        <a href="javascript:void(0);" (click)="onView(d)"
+                                                            *ngIf="customerStatus !== 'FOR APPROVAL'">
+                                                            <img src="../assets/images/view-icon.svg" alt=""
+                                                                title="View">
+                                                        </a>
+                                                        <a href="javascript:void(0);" (click)="onApproval(d)"
+                                                            *ngIf="customerStatus == 'FOR APPROVAL'">
+                                                            <img src="../assets/images/view-icon.svg" alt="">
+                                                        </a>
+                                                        <a *ngIf="publicVariable.storedRole !== 'Admin' && d.createdBy === this.publicVariable.storedEmail && (d.isDraft 
+                                                           )"
+                                                            href="javascript:void(0);" (click)="onEdit(d)">
+                                                            <img src="../assets/images/edit-icon.svg" alt=""
+                                                                title="Edit">
+                                                        </a>
+                                                        <a *ngIf="publicVariable.storedRole !== 'Admin' && d.createdBy === this.publicVariable.storedEmail && (d.isDraft 
+                                                           )"
+                                                            href="javascript:void(0);"
+                                                            (click)="onDelete(d.customerId)"><img
+                                                                src="../assets/images/delete-icon.svg" alt=""
+                                                                title="Delete"></a>
+                                                    </span>
+                                                </td>
+                                                <td>{{d.customerStatus }}</td>
+                                                 
                                                     <td *ngIf="customerStatus=='APPROVED BY ACCOUNTS APPROVER'">
                                                         {{d.customerCode || ''}}</td>
                                                     <td>{{d.customerName |titlecase }}</td>
                                                     <td>{{d.address}}</td>
-                                                    <td>{{ d.cityList.cityName}}</td>
+                                                    <td>{{ d.cityList?.cityName ??'' }}</td>
                                                     <td>{{d.phoneNumber}}</td>
                                                     <td>{{d.gstNumber}}</td>
                                                     <td>{{d.pan}}</td>
                                                     <td>{{d.createdOn | date:'medium':'IST' }}</td>
                                                     <td>{{d.createdBy}}</td>
                                                     <td>{{d.customerRemarks | titlecase}}</td>
-                                                    <td>{{d.customerStatus }}</td>
-                                                    <td><span class="table-btns">
-                                                            <a href="javascript:void(0);" (click)="onView(d)"
-                                                                *ngIf="customerStatus !== 'FOR APPROVAL'">
-                                                                <img src="../assets/images/view-icon.svg" alt=""
-                                                                    title="View">
-                                                            </a>
-                                                            <a href="javascript:void(0);" (click)="onApproval(d)"
-                                                                *ngIf="customerStatus == 'FOR APPROVAL'">
-                                                                <img src="../assets/images/view-icon.svg" alt="">
-                                                            </a>
-                                                            <a *ngIf="publicVariable.storedRole !== 'Admin' && d.createdBy === this.publicVariable.storedEmail && (d.isDraft ||
-                                                                d.customerStatus == 'REJECTED BY TL APPROVER' ||
-                                                                d.customerStatus == 'REJECTED BY CH APPROVER' ||
-                                                                d.customerStatus == 'REJECTED BY ACCOUNTS APPROVER')"
-                                                                href="javascript:void(0);" (click)="onEdit(d)">
-                                                                <img src="../assets/images/edit-icon.svg" alt=""
-                                                                    title="Edit">
-                                                            </a>
-                                                            <a *ngIf="publicVariable.storedRole !== 'Admin' && d.createdBy === this.publicVariable.storedEmail && (d.isDraft ||
-                                                                d.customerStatus == 'REJECTED BY TL APPROVER' ||
-                                                                d.customerStatus == 'REJECTED BY CH APPROVER' ||
-                                                                d.customerStatus == 'REJECTED BY ACCOUNTS APPROVER')"
-                                                                href="javascript:void(0);"
-                                                                (click)="onDelete(d.customerId)"><img
-                                                                    src="../assets/images/delete-icon.svg" alt=""
-                                                                    title="Delete"></a>
-                                                        </span>
-                                                    </td>
+                                                    <td>{{d.recordID}}</td>
+                                                   
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -319,8 +320,6 @@
                                             nextLabel="Next" (pageChange)="onTableDataChange($event,'Customer')">
                                         </pagination-controls>
                                     </div>
-
-
                                 </div>
                             </div>
 
@@ -360,7 +359,7 @@
                             <a class="nav-link tabbg-2" [class.active]="headerStatus =='PENDING WITH APPROVER'"
                                 data-bs-toggle="pill" href="#PIhome"
                                 (click)="loadInoivceStatusList('PENDING WITH APPROVER')">
-                                <small>Pending Approval</small>
+                                <small>Pending For TL Approval</small>
                                 <span>{{PIPendingApproval}}</span>
                             </a>
                         </li>
@@ -370,7 +369,7 @@
                                 [class.active]="this.publicVariable.storedRole === 'Admin' &&  headerStatus =='APPROVED BY ACCOUNTS APPROVER'"
                                 data-bs-toggle="pill" href="#PIhome"
                                 (click)="loadInoivceStatusList('APPROVED BY ACCOUNTS APPROVER')">
-                                <small>Approved by TL </small>
+                                <small>Pending with Accounts </small>
                                 <span>{{PIApprovedAccounts}}</span>
                             </a>
                         </li>
@@ -533,8 +532,9 @@
                                                     <th>#</th>
                                                     <th class="action-cl">Action</th>
                                                     <th>Invoice Type</th>
-                                                    <th>Invoice No
+                                                    <th *ngIf ="headerStatus !='DRAFT'">PI No.
                                                     </th>
+                                                    <th *ngIf ="(headerStatus =='Posted Tax Invoice new' || headerStatus =='ALL') && invoiceType =='Tax Invoice'">Tax Invoice No.</th>
                                                     <th>Invoice Amount</th>
                                                     <th>Customer Name</th>
                                                     <th>Status</th>
@@ -544,8 +544,8 @@
                                                     <th>Created By</th>
                                                     <th>Created On</th>
                                                     <th>TL Approver</th>
-                                                    <th>Record No</th>
-                                                    <th>Posted Invoice No</th>
+                                                    <th>Record No.</th>
+                                                  
 
                                                 </tr>
                                             </thead>
@@ -556,16 +556,26 @@
 
                                                     <td>
                                                         <span class="table-btns">
-                                                            <a href="javascript:void(0);" (click)="onViewPI(d)"
+                                                            <!-- <a href="javascript:void(0);" (click)="onViewPI(d)"
                                                                 *ngIf="customerStatus !== 'FOR APPROVAL'">
                                                                 <img src="../assets/images/view-icon.svg" alt=""
-                                                                    title="View">
-                                                            </a>
-                                                            <a href="javascript:void(0);" (click)="onApprovalPI(d)"
-                                                                *ngIf="customerStatus == 'FOR APPROVAL' &&  this.publicVariable.storedRole == 'Approver'">
+                                                                    title="View1">
+                                                            </a> -->
+
+                                                            <a href="javascript:void(0);" (click)="onViewPI(d)"
+                                                           >
+                                                            <img src="../assets/images/view-icon.svg" alt=""
+                                                                title="View1">
+                                                        </a>
+
+
+                                                            <!-- <a href="javascript:void(0);" (click)="onApprovalPI(d)"
+                                                                *ngIf="customerStatus == 'FOR APPROVAL' &&  this.publicVariable.storedRole == 'Approver'">                                                                
                                                                 <img src="../assets/images/view-icon.svg" alt=""
-                                                                    title="View">
-                                                            </a>
+                                                                    title="View2">
+
+                                                            </a> -->
+                                                            
                                                             <a href="javascript:void(0);" (click)="onViewAccountPI(d)"
                                                                 *ngIf="customerStatus == 'FOR APPROVAL' &&  this.publicVariable.storedRole == 'Accounts'">
                                                                 <img src="../assets/images/view-icon.svg" alt=""
@@ -573,8 +583,6 @@
                                                             </a>
 
                                                             <a *ngIf="publicVariable.storedRole !== 'Admin' && publicVariable.storedRole !== 'Approver' &&
-
-
                                                             publicVariable.storedEmail == d.impiHeaderCreatedBy &&
                                                                     (d.isDraft ||
 
@@ -620,8 +628,10 @@
                                                     </td>
                                                     <td>{{d.impiHeaderInvoiceType | titlecase}}</td>
 
-                                                    <td>
+                                                    <td *ngIf ="headerStatus !='DRAFT'">
                                                         {{d.headerPiNo}}</td>
+                                                        <td *ngIf ="(headerStatus =='Posted Tax Invoice new' || headerStatus =='ALL') && invoiceType =='Tax Invoice'">
+                                                            {{d.postedInvoiceNumber}}</td>
                                                   <td>{{d.impiHeaderTotalInvoiceAmount | number:'1.2-2' }}</td>
                                                   <td>{{d.impiHeaderCustomerName | titlecase}}</td>
                                                   <td>{{d.headerStatus}}</td>
@@ -643,8 +653,7 @@
 
                                                     <td>{{d.headerRecordID}}</td>
 
-                                                    <td>
-                                                        {{d.postedInvoiceNumber}}</td>
+                                                 
 
                                                 </tr>
                                             </tbody>
@@ -718,7 +727,7 @@
                                                     <th>#</th>
                                                     <th>No</th>
                                                     <th>Posting Date</th>
-                                                    <th>Invoice No</th>
+                                                    <th>PI No.</th>
                                                     <th>Customer No</th>
                                                     <th>Customer</th>
                                                     <th>Project Code</th>
@@ -955,7 +964,7 @@
                         <li class="nav-item" *ngIf="this.publicVariable.storedRole === 'Employee'">
                             <a class="nav-link tabbg-2" data-bs-toggle="pill" href="#Saleshome"
                                 (click)="loadInoivceSalesStatusList('PENDING WITH APPROVER')">
-                                <small>Pending Approval</small>
+                                <small>Pending For TL Approval</small>
                                 <span>{{PIPendingApproval}}</span>
                             </a>
                         </li>
@@ -963,7 +972,7 @@
                         <li class="nav-item">
                             <a class="nav-link  tabbg-3" data-bs-toggle="pill" href="#Saleshome"
                                 (click)="loadInoivceSalesStatusList('APPROVED BY ACCOUNTS APPROVER')">
-                                <small>Approved by TL </small>
+                                <small>Pending With Accounts</small>
                                 <span>{{PIApprovedAccounts}}</span>
                             </a>
                         </li>
@@ -1119,54 +1128,37 @@
                                             <thead>
                                                 <tr>
                                                     <th>#</th>
-                                                    <th>Record No</th>
-                                                    <th *ngIf="customerStatus=='APPROVED BY ACCOUNTS APPROVER'">Credit
-                                                        Memo No</th>
-                                                    <th>Invoice Type</th>
-                                                    <th>Project Code</th>
-                                                    <th>Project Name</th>
-                                                    <th>Department</th>
-                                                    <!-- <th>Division</th> -->
-                                                    <th>Customer Name</th>
-                                                    <th>City</th>
-                                                    <th>Inoice Amount</th>
-                                                    <th>Credit Note Amount</th>
-                                                    <th>TL Approver</th>
-                                                    <!-- <th>CL Approver</th> -->
-                                                    <!-- <th>Finance Approver</th> -->
-                                                    <!-- <th>Accounts Approver </th> -->
-                                                    <th>Created On</th>
-                                                    <th>Created By</th>
-                                                    <th>Status</th>
-                                                    <th class="action-cl">Action</th>
-                                                </tr>
+                            <th class="action-cl">Action</th>
+                            <th>Status</th>
+                            <th>Tax Invoice No.</th>
+                            <th *ngIf ="customerStatus !='DRAFT'">Credit Note No.</th>
+                            <th *ngIf ="customerStatus =='Posted Credit Note'|| customerStatus =='ALL'">Posted Credit Note No.</th>
+                            <th>Customer Name</th>
+                            <th>Department</th>
+                            <!-- <th>Invoice Type</th> -->
+                            <th>Project Code</th>
+                            <th>Project Name</th>
+                          
+                            <!-- <th>Division</th> -->
+                          
+                            <!-- <th>City</th> -->
+                            <th>Invoice Amount</th>
+                            <th>Credit Note Amount</th>
+
+                            <!-- <th>Accounts Approver </th> -->
+                            <th>Created On</th>
+                            <th>Created By</th>
+                            <th>TL Approver</th>
+                            <!-- <th>CL Approver</th> -->
+                            <!-- <th>Finance Approver</th> -->
+                            <!-- <th>Total Amount</th> -->
+                            <th>Record No.</th>
+                                               </tr>
                                             </thead>
                                             <tbody>
                                                 <tr
                                                     *ngFor="let d of  this.invoiceStatuslistData | salesnew: publicVariable.searchText| paginate: {id: 'pagination4',itemsPerPage: publicVariable.tableSize,currentPage: publicVariable.page,totalItems: publicVariable.count};let i = index">
                                                     <td>{{i + 1}}</td>
-                                                    <td>{{d.recordID}}</td>
-                                                    <td *ngIf="customerStatus=='APPROVED BY ACCOUNTS APPROVER'">
-                                                        {{d.creditMemoNavNo}}</td>
-
-
-                                                    <td>{{d.impiHeaderInvoiceType | titlecase}}</td>
-                                                    <td>{{d.impiHeaderProjectCode}}</td>
-                                                    <td>{{d.impiHeaderProjectName | titlecase}}</td>
-                                                    <td>{{d.impiHeaderProjectDepartmentName | titlecase}}</td>
-                                                    <!-- <td>{{d.impiHeaderProjectDivisionName | titlecase}}</td> -->
-                                                    <td>{{d.impiHeaderCustomerName | titlecase}}</td>
-                                                    <td>{{d.impiHeaderCustomerCity | titlecase}}</td>
-                                                    <td>{{d.impiHeaderTotalInvoiceAmount | number:'1.2-2' }}</td>
-                                                    <td>{{d.memoAmount | number:'1.2-2' }}</td>
-                                                    <td>{{d.impiHeaderTlApprover | titlecase}}</td>
-                                                    <!-- <td>{{d.impiHeaderClusterApprover | titlecase}}</td> -->
-                                                    <!-- <td>{{d.impiHeaderFinanceApprover | titlecase}}</td> -->
-                                                    <!-- <td>{{d.accountApprover | titlecase}}</td> -->
-                                                    <td>{{d.impiHeaderSubmittedDate | date:'medium':'IST'}}</td>
-                                                    <td>{{d.impiHeaderCreatedBy | titlecase}}</td>
-                                                    <td>{{d.headerStatus }}</td>
-
                                                     <td>
                                                         <span class="table-btns">
                                                             <a href="javascript:void(0);" (click)="onViewSales(d)"
@@ -1179,13 +1171,25 @@
                                                                 <img src="../assets/images/view-icon.svg" alt=""
                                                                     title="View">
                                                             </a>
-                                                            <a href="javascript:void(0);" (click)="onViewAccountPI(d)"
+                                                            <!-- <a href="javascript:void(0);" (click)="onViewAccountPI(d)"
                                                                 *ngIf="customerStatus == 'FOR APPROVAL' &&  this.publicVariable.storedRole == 'Accounts'">
                                                                 <img src="../assets/images/view-icon.svg" alt=""
                                                                     title="View">
-                                                            </a>
+                                                            </a> -->
 
                                                             <a *ngIf="publicVariable.storedRole !== 'Admin' && publicVariable.storedRole !== 'Approver' &&
+                                                            publicVariable.storedEmail === d.impiHeaderCreatedBy &&
+                                                            (d.isDraft
+                                                          
+                                                            )" href="javascript:void(0);"
+                                                            (click)="onEditSI(d)"><img
+                                                                src="../assets/images/edit-icon.svg" alt=""
+                                                                title="Edit" /></a>
+
+
+
+
+                                                            <!-- <a *ngIf="publicVariable.storedRole !== 'Admin' && publicVariable.storedRole !== 'Approver' &&
                                                                 publicVariable.storedEmail === d.impiHeaderCreatedBy &&
                                                                 (d.isDraft ||
                                                                 d.headerStatus == 'REJECTED BY TL APPROVER'  ||
@@ -1194,8 +1198,20 @@
                                                                 )" href="javascript:void(0);"
                                                                 (click)="onEditSI(d)"><img
                                                                     src="../assets/images/edit-icon.svg" alt=""
-                                                                    title="Edit" /></a>
-                                                            <a *ngIf="publicVariable.storedRole !== 'Admin' && publicVariable.storedRole !== 'Approver' &&
+                                                                    title="Edit" /></a> -->
+
+                                                                    <a *ngIf="publicVariable.storedRole !== 'Admin' && publicVariable.storedRole !== 'Approver' &&
+                                                                    publicVariable.storedEmail === d.impiHeaderCreatedBy &&
+                                                                        (d.isDraft
+                                                                      
+                                                                      )" href="javascript:void(0)"
+                                                                        (click)="onDeletePI(d.headerId)" data-bs-toggle="modal"
+                                                                        data-bs-target="#deleterecord-modal"><img
+                                                                            src="../assets/images/delete-icon.svg" alt=""
+                                                                            title="Delete" /></a>
+        
+                                                                    
+                                                            <!-- <a *ngIf="publicVariable.storedRole !== 'Admin' && publicVariable.storedRole !== 'Approver' &&
                                                             publicVariable.storedEmail === d.impiHeaderCreatedBy &&
                                                                 (d.isDraft ||
                                                                 d.headerStatus == 'REJECTED BY TL APPROVER'  ||
@@ -1205,10 +1221,10 @@
                                                                 (click)="onDeletePI(d.headerId)" data-bs-toggle="modal"
                                                                 data-bs-target="#deleterecord-modal"><img
                                                                     src="../assets/images/delete-icon.svg" alt=""
-                                                                    title="Delete" /></a>
+                                                                    title="Delete" /></a> -->
 
                                                                     <a *ngIf="d.creditMemoNavNo && d.headerStatus == 'CREDIT MEMO POSTED' "href="javascript:void(0);"
-                                                                    (click)="SLLdownalodFile(d.creditMemoNavNo)"><img
+                                                                    (click)="SLLdownalodFile(d.postedCreditMemoNumber)"><img
                                                                         src="../assets/images/download-icon.svg" alt="" title="Download Details" /></a>
 
                                                             <!-- <a href="javascript:void(0);" (click)="onsalesSendEmail(d)"
@@ -1220,6 +1236,35 @@
                                                                     alt="" /></a> -->
                                                         </span>
                                                     </td>
+                        
+                                                    <td>{{d.headerStatus }}</td>
+                                                  
+                                                    <td>{{d.headerPiNo}}</td>
+                        
+                                                    <td *ngIf ="customerStatus !='DRAFT'">{{d.creditMemoNavNo}}</td>
+                                                    <td *ngIf ="customerStatus =='Posted Credit Note' || customerStatus =='ALL'">{{d.postedCreditMemoNumber}}</td>
+                                                    <td>{{d.impiHeaderCustomerName | titlecase}}</td>
+                                                    <td>{{d.impiHeaderProjectDepartmentName | titlecase}}</td>
+                                                    <!-- <td>{{d.impiHeaderInvoiceType | titlecase}}</td> -->
+                                                    <td>{{d.impiHeaderProjectCode}}</td>
+                                                    <td>{{d.impiHeaderProjectName | titlecase}}</td>
+                                                  
+                                                    <!-- <td>{{d.impiHeaderProjectDivisionName | titlecase}}</td> -->
+                                                   
+                                                    <!-- <td>{{d.impiHeaderCustomerCity | titlecase}}</td> -->
+                                                    <td>{{d.impiHeaderTotalInvoiceAmount | number:'1.2-2' }}</td>
+                                                    <td>{{d.memoAmount | number:'1.2-2' }}</td>
+                                                    <!-- <td>{{d.accountApprover | titlecase}}</td> -->
+                                                    <td>{{d.impiHeaderSubmittedDate | date:'medium':'IST'}}</td>
+                                                    <td>{{d.impiHeaderCreatedBy | titlecase}}</td>
+                                                    <td>{{d.impiHeaderTlApprover | titlecase}}</td>
+                                                    <!-- <td>{{d.impiHeaderClusterApprover | titlecase}}</td> -->
+                                                    <!-- <td>{{d.impiHeaderFinanceApprover | titlecase}}</td> -->
+                                                    <!-- <td>{{d.impiHeaderTotalInvoiceAmount | number}}</td> -->
+                        
+                                                    <td>{{d.recordID}}</td>
+                        
+                                                                          
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -1464,7 +1509,7 @@
                                 <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th>Invoice No</th>
+                                        <th>PI No.</th>
                                         <th>Payment No</th>
                                         <th>Payment Date</th>
                                         <th>Bank Name</th>

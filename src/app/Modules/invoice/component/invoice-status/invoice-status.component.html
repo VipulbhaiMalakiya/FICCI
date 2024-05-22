@@ -93,48 +93,29 @@
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th>Record No.</th>
-                            <th>Invoice Type</th>
-                            <th>PI No</th>
-                            <th>Project Code</th>
-                            <th>Project Name</th>
-                            <th>Department</th>
-                            <!-- <th>Division</th> -->
-                            <th>Vendor Name</th>
-                            <th>City</th>
-                            <th>Amount</th>
-                            <th>TL Approver</th>
-                            <!-- <th>CL Approver</th> -->
-                            <th>Finance Approver</th>
-                            <!-- <th>Accounts Approver </th> -->
-                            <th>Created On</th>
-                            <th>Created By</th>
-                            <th>Status</th>
                             <th class="action-cl">Action</th>
+                                                    <th>Invoice Type</th>
+                                                    <th>PI No.
+                                                    </th>
+                                                    <th>Tax Invoice No.</th>
+                                                    <th>Invoice Amount</th>
+                                                    <th>Customer Name</th>
+                                                    <th>Status</th>
+                                                    <th>Department</th>
+                                                    <th>Project Code</th>
+                                                    <th>Project Name</th>
+                                                    <th>Created By</th>
+                                                    <th>Created On</th>
+                                                    <th>TL Approver</th>
+                                                    <th>Record No</th>
+                                              
+
                         </tr>
                     </thead>
                     <tbody>
                         <tr
                             *ngFor="let d of  this.publicVariable.invoiceStatuslistData | searchFilter: publicVariable.searchText| paginate: {itemsPerPage: publicVariable.tableSize,currentPage: publicVariable.page,totalItems: publicVariable.count};let i = index">
                             <td>{{calculateIndex(publicVariable.page, i)}}</td>
-                            <td>{{d.headerRecordID}}</td>
-                            <td>{{d.impiHeaderInvoiceType | titlecase}}</td>
-                            <td>{{d.headerPiNo | titlecase}}</td>
-                            <td>{{d.impiHeaderProjectCode}}</td>
-                            <td>{{d.impiHeaderProjectName | titlecase}}</td>
-                            <!-- <td>{{d.impiHeaderProjectDepartmentName | titlecase}}</td> -->
-                            <td>{{d.impiHeaderProjectDivisionName | titlecase}}</td>
-                            <td>{{d.impiHeaderCustomerName | titlecase}}</td>
-                            <td>{{d.impiHeaderCustomerCity | titlecase}}</td>
-                            <td>{{d.impiHeaderTotalInvoiceAmount | number:'1.2-2' }}</td>
-                            <td>{{d.impiHeaderTlApprover | titlecase}}</td>
-                            <!-- <td>{{d.impiHeaderClusterApprover | titlecase}}</td> -->
-                            <td>{{d.impiHeaderFinanceApprover | titlecase}}</td>
-                            <!-- <td>{{d.accountApprover | titlecase}}</td> -->
-                            <td>{{d.impiHeaderSubmittedDate | date:'medium':'IST'}}</td>
-                            <td>{{d.impiHeaderCreatedBy | titlecase}}</td>
-                            <td>{{d.headerStatus }}</td>
-
                             <td>
                                 <span class="table-btns">
                                     <a href="javascript:void(0);" (click)="onView(d)"><img
@@ -167,6 +148,38 @@
                                                 src="../assets/images/download-icon.svg" alt="" title="Download" /></a>
                                 </span>
                             </td>
+                           
+                           
+                            <td>{{d.impiHeaderInvoiceType | titlecase}}</td>
+
+                            <td>
+                                {{d.headerPiNo}}</td>
+                                <td>
+                                    {{d.postedInvoiceNumber}}</td>
+                          <td>{{d.impiHeaderTotalInvoiceAmount | number:'1.2-2' }}</td>
+                          <td>{{d.impiHeaderCustomerName | titlecase}}</td>
+                          <td>{{d.headerStatus}}</td>
+                          <td>{{d.impiHeaderProjectDepartmentName | titlecase}}</td>
+                            <td>{{d.impiHeaderProjectCode}}</td>
+                            <td>{{d.impiHeaderProjectName | titlecase}}</td>
+
+                            <!-- <td>{{d.impiHeaderProjectDivisionName | titlecase}}</td> -->
+
+                            <!-- <td>{{d.impiHeaderCustomerCity | titlecase}}</td> -->
+                            <td>{{d.impiHeaderCreatedBy | titlecase}}</td>
+                            <td>{{d.impiHeaderSubmittedDate | date:'medium':'IST'}}</td>
+                            <td>{{d.impiHeaderTlApprover | titlecase}}</td>
+                            <!-- <td>{{d.impiHeaderClusterApprover | titlecase}}</td> -->
+                            <!-- <td>{{d.impiHeaderFinanceApprover | titlecase}}</td> -->
+                            <!-- <td>{{d.accountApprover | titlecase}}</td> -->
+
+
+
+                            <td>{{d.headerRecordID}}</td>
+
+                         
+
+                           
                         </tr>
                     </tbody>
                 </table>
