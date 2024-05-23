@@ -123,7 +123,7 @@ export class CreditMemoStatusComponent implements OnInit {
                         this.InvoiceAttachment = response.data[0];
 
 
-                        const fileName = this.InvoiceAttachment.invoiceNo+'.pdf';
+                        const fileName = this.InvoiceAttachment.salesCrMemoNo+'.pdf';
                         const fileType = `application/pdf`;
                         this.fileService.downloadFile(this.InvoiceAttachment.attachment, fileName, fileType);
                         this.publicVariable.isProcess  = false;

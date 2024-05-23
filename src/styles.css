@@ -43,3 +43,8 @@ select.ng-valid.ng-touched {
 .custom-rupee-icon{
     height: 18px;
 }
+
+.mailer-piaccount .pi-table {
+    height: 400px;
+    overflow-y: auto;
+}

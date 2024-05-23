@@ -132,7 +132,7 @@
             <div class="col-md-4 col-sm-6">
                 <div class="form-group">
                     <label>GST Number</label>
-                    <input type="text" value="{{data.impiHeaderCustomerGstNo}}" class="form-control" disabled=""
+                    <input type="text" value="{{data.impiHeaderCustomerGstNo ?? ''}}" class="form-control" disabled=""
                         readonly="">
                 </div>
             </div>
@@ -315,7 +315,7 @@
         </div>
     </div>
 
-  
+
 
     <table class="table table-bordered text-nowrap" *ngIf="data.impiHeaderInvoiceType== 'Proforma Invoice'">
         <thead>
@@ -354,7 +354,7 @@
         </tbody> -->
     </table>
 
-   
+
     <div class="mastersform-sec mb-3">
 
 
@@ -411,10 +411,10 @@
                         readonly="">{{data.cancelRemarks}}</textarea>
                 </div>
             </div>
-        </div>    
+        </div>
     </div>
 
-   
+
 
     <form [formGroup]="publicVariable.dataForm"
         *ngIf="data.headerStatus !== 'CANCELLATION APPROVED BY TL' && data.headerStatus !== 'REJECTED BY TL APPROVER' && data.headerStatus !== 'CANCELLATION APPROVED BY FINANCE' && data.headerStatus !== 'REJECTED BY FINANCE APPROVER'">
@@ -437,7 +437,7 @@
                 <input type="checkbox" class="btn-check" formControlName="IsDraft" id="btn-check" autocomplete="off">
                 <label class="common-btn w-auto me-2" for="btn-check"
                     *ngIf="!(data.IsPostedTaxInvoice) && data.impiHeaderCreatedBy == this.publicVariable.storedEmail && (data.headerStatus =='APPROVED BY TL' || data.headerStatus =='APPROVED BY FINANCE') "
-                    (click)="onSubmit(false)">Cancel Request                   
+                    (click)="onSubmit(false)">Cancel Request
                 </label>
 
                  <button type="submit"
