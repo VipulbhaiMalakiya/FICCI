@@ -1141,7 +1141,7 @@ export class DashboardComponent {
         const pendingData = data.filter(item =>
             item.impiHeaderCreatedBy === this.publicVariable.storedEmail &&
             (item.headerStatus === 'PENDING WITH TL APPROVER' ||
-                item.headerStatus === 'PENDING WITH CH APPROVER' ||
+
                 item.headerStatus === 'PENDING WITH ACCOUNTS APPROVER' ||
                 item.headerStatus === 'PENDING WITH FINANCE APPROVER' ||
                 item.headerStatus == 'PENDING CANCELLATION REQUEST' ||
@@ -1163,6 +1163,7 @@ export class DashboardComponent {
         const approvedData = data.filter(item => (
             // item.headerStatus === 'APPROVED BY ACCOUNTS APPROVER'
             // || item.headerStatus === 'MAIL SENT BY FINANCE TO CUSTOMER'
+            item.headerStatus === 'PENDING WITH CH APPROVER' ||
             item.headerStatus === 'APPROVED BY TL'
             // || item.headerStatus === 'MAIL SENT BY ACCOUNT TO CUSTOMER'
             // || item.headerStatus === 'APPROVED BY FINANCE'
@@ -1238,7 +1239,7 @@ export class DashboardComponent {
                     item.impiHeaderCreatedBy === this.publicVariable.storedEmail &&
 
                     (item.headerStatus === 'PENDING WITH TL APPROVER' ||
-                        item.headerStatus === 'PENDING WITH CH APPROVER' ||
+
                         item.headerStatus === 'PENDING WITH ACCOUNTS APPROVER' ||
                         item.headerStatus === 'PENDING WITH FINANCE APPROVER'||
                         item.headerStatus === 'PENDING CANCELLATION REQUEST'||
@@ -1251,8 +1252,10 @@ export class DashboardComponent {
                    // item.headerStatus === 'APPROVED BY ACCOUNTS APPROVER'
                     // || item.headerStatus === 'MAIL SENT BY ACCOUNT TO CUSTOMER'
                     // || item.headerStatus === 'APPROVED BY FINANCE'
+                    item.headerStatus === 'PENDING WITH CH APPROVER' ||
                      item.headerStatus === 'APPROVED BY TL'
                      || item.headerStatus === 'TI PENDING WITH ACCOUNTS'
+
                     // || item.headerStatus === 'CREDIT MEMO POSTED'
                     // || item.headerStatus === 'MAIL SENT BY FINANCE TO CUSTOMER'
                 ));
