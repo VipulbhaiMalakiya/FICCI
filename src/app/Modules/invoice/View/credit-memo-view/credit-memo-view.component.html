@@ -4,14 +4,16 @@
     <div class="approver-form">
         <div class="row">
             <div class="col-md-12">
-                <div class="comments-history-icon" data-bs-toggle="modal" title="Action History " data-bs-target="#workflow-modal">
+                <div class="comments-history-icon" data-bs-toggle="modal" title="Action History "
+                    data-bs-target="#workflow-modal">
                     <img src="../assets/images/file-history-icon.png" alt="">
                 </div>
             </div>
         </div>
     </div>
 
-    <h3 class="content-title"><span class="back-btn" title="Back"><a routerLink="/invoice/credit-memo-status"><img src="../assets/images/left-arrow.svg" alt=""></a></span> Sales Credit Note Status</h3>
+    <h3 class="content-title"><span class="back-btn" title="Back"><a routerLink="/invoice/credit-memo-status"><img
+                    src="../assets/images/left-arrow.svg" alt=""></a></span> Sales Credit Note Status</h3>
     <div class="pipage-radio" hidden>
         <div class="form-check">
             <input class="form-check-input" type="radio" name="ImpiHeaderInvoiceType" id="flexRadioDefault1"
@@ -32,7 +34,7 @@
                         readonly="">
                 </div>
             </div>
-              <div class="col-md-4 col-sm-6">
+            <div class="col-md-4 col-sm-6">
                 <div class="form-group">
                     <label>Credit Note No.</label>
                     <input type="text" value="{{data.creditMemoNavNo}}" class="form-control" disabled="" readonly="">
@@ -41,33 +43,39 @@
             <div class="col-md-4 col-sm-6">
                 <div class="form-group">
                     <label>Posted Invoice No</label>
-                    <input type="text" value="{{data.headerPiNo}}" class="form-control" disabled=""
-                        readonly="">
+                    <input type="text" value="{{data.headerPiNo}}" class="form-control" disabled="" readonly="">
                 </div>
             </div>
             <div class="col-md-4 col-sm-6">
                 <div class="form-group">
                     <label>Credit Note Memo Type</label>
-                    <input type="text" value="{{data.memoType}}" class="form-control" disabled=""
-                        readonly="">
+                    <input type="text" value="{{data.memoType}}" class="form-control" disabled="" readonly="">
                 </div>
             </div>
             <div class="col-md-4 col-sm-6">
                 <div class="form-group">
                     <label>Credit Note Amount</label>
-                    <input type="text" value="{{data.memoAmount}}" class="form-control" disabled=""
-                        readonly="">
+                    <input type="text" value="{{data.memoAmount}}" class="form-control" disabled="" readonly="">
                 </div>
             </div>
 
+
+            <div class="col-md-4 col-sm-6">
+                <div class="form-group">
+                    <label>Refund Status</label>
+
+                    <input type="text" value="{{data.refundStatus}}" class="form-control" disabled="" readonly="">
+
+
+                </div>
+            </div>
             <div class="col-md-4 col-sm-6">
                 <div class="form-group">
                     <label>Cancel Reason</label>
 
-                    <input type="text" value="{{data.cancelRemarks}}" class="form-control" disabled=""
-                    readonly="">
+                    <input type="text" value="{{data.cancelRemarks}}" class="form-control" disabled="" readonly="">
 
-                   
+
                 </div>
             </div>
             <div class="col-md-4 col-sm-6">
@@ -129,7 +137,7 @@
                 </div>
             </div>
 
-          
+
 
             <!--show tax-invoice-only
             <div class="col-md-4 col-sm-6">
@@ -328,7 +336,7 @@
 
                         </td>
                     </tr>
-                    <tr  *ngIf="InvNo!=null || InvNo!=undefined">
+                    <tr *ngIf="InvNo!=null || InvNo!=undefined">
                         <td>{{uploadedFiles.length+1}}</td>
                         <td>Posted Credit Note</td>
                         <td>.pdf</td>
@@ -344,7 +352,7 @@
         </div>
     </div>
 
-   
+
 
     <div class="mastersform-sec mb-3">
 
@@ -395,7 +403,7 @@
                 </div>
             </div> -->
 
-           
+
         </div>
 
 

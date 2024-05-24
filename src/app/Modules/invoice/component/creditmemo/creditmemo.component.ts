@@ -519,6 +519,9 @@ export class CreditmemoComponent implements OnInit {
 
         this.amount = data.amount;
 
+        console.log(data);
+
+
         this.publicVariable.dataForm.patchValue({
 
             // headerid: '',
@@ -528,7 +531,8 @@ export class CreditmemoComponent implements OnInit {
             ImpiHeaderCustomerGstNo: data.gsT_No,
             ImpiHeaderCustomerAddress: data.sellToAddress,
             CustNo: data.sellToCustomerNo,
-            ImpiHeaderCustomerCity: data.sellToCity,
+            refundStatus: data.refundStatus,
+             ImpiHeaderCustomerCity: data.sellToCity,
             ImpiHeaderCustomerPinCode: data.sellToPostCode,
             ImpiHeaderCustomerName: data.sellToCustomerName,
 
@@ -604,6 +608,7 @@ export class CreditmemoComponent implements OnInit {
             ImpiHeaderPanNo: data.impiHeaderPanNo,
             ImpiHeaderGstNo: data.impiHeaderGstNo,
             CustNo: data.impiHeaderCustomerCode,
+            refundStatus: data.refundStatus,
             PINO: data.headerPiNo, //api missing
             ImpiHeaderCustomerName: data.impiHeaderCustomerName,
             ImpiHeaderCustomerCode: data.impiHeaderCustomerCode,
