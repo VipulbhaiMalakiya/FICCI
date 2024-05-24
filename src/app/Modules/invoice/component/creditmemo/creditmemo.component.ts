@@ -531,7 +531,7 @@ export class CreditmemoComponent implements OnInit {
             ImpiHeaderCustomerGstNo: data.gsT_No,
             ImpiHeaderCustomerAddress: data.sellToAddress,
             CustNo: data.sellToCustomerNo,
-            refundStatus: data.refundStatus,
+            // refundStatus: data.refundStatus,
              ImpiHeaderCustomerCity: data.sellToCity,
             ImpiHeaderCustomerPinCode: data.sellToPostCode,
             ImpiHeaderCustomerName: data.sellToCustomerName,
@@ -609,6 +609,7 @@ export class CreditmemoComponent implements OnInit {
             ImpiHeaderGstNo: data.impiHeaderGstNo,
             CustNo: data.impiHeaderCustomerCode,
             refundStatus: data.refundStatus,
+
             PINO: data.headerPiNo, //api missing
             ImpiHeaderCustomerName: data.impiHeaderCustomerName,
             ImpiHeaderCustomerCode: data.impiHeaderCustomerCode,
