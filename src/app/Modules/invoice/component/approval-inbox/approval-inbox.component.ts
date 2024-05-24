@@ -131,7 +131,7 @@ export class ApprovalInboxComponent implements OnInit {
     calculateIndex(page: number, index: number): number {
         return (page - 1) * this.publicVariable.tableSize + index + 1;
     }
-    loadApproveInvoiceList(model:any): void {
+    loadApproveInvoiceList(model: any): void {
         const subscription = this.API.getApproveInvoice(model).pipe(
             timeout(120000), // Timeout set to 2 minutes (120000 milliseconds)
             finalize(() => {
@@ -166,7 +166,7 @@ export class ApprovalInboxComponent implements OnInit {
 
 
     downalodFile(fileUrl: any) {
-        this.publicVariable.isProcess  = true;
+        this.publicVariable.isProcess = true;
 
         try {
             const subscription = this.API.GetTaxInvoiceAttachment(fileUrl).subscribe({
@@ -174,20 +174,18 @@ export class ApprovalInboxComponent implements OnInit {
 
                     this.InvoiceAttachment = response.data[0];
 
-                    if(this.InvoiceAttachment.attachment != undefined && this.InvoiceAttachment.attachment !='' && this.InvoiceAttachment.attachment != null )
-                   {
-                    const fileName = this.InvoiceAttachment.invoiceNo+'.pdf';
-                    const fileType = `application/pdf`;
-                    this.fileService.downloadFile(this.InvoiceAttachment.attachment, fileName, fileType);
+                    if (this.InvoiceAttachment.attachment != undefined && this.InvoiceAttachment.attachment != '' && this.InvoiceAttachment.attachment != null) {
+                        const fileName = this.InvoiceAttachment.invoiceNo + '.pdf';
+                        const fileType = `application/pdf`;
+                        this.fileService.downloadFile(this.InvoiceAttachment.attachment, fileName, fileType);
 
-                   }
-                   else
-                   {
+                    }
+                    else {
 
-                  this.toastr.warning('There is an issue with the download of the file from ERP.','File Not Found')
-                   }
+                        this.toastr.warning('There is an issue with the download of the file from ERP.', 'File Not Found')
+                    }
 
-                    this.publicVariable.isProcess  = false;
+                    this.publicVariable.isProcess = false;
                 },
                 error: (error) => {
                     console.error('Error loading project list:', error);
@@ -208,7 +206,7 @@ export class ApprovalInboxComponent implements OnInit {
         if (data.headerId) {
             const encryptedHeaderId = btoa(data.headerId.toString());
 
-            this.router.navigate(['invoice/approval/view',encryptedHeaderId], { state: { data: data } });
+            this.router.navigate(['invoice/approval/view', encryptedHeaderId], { state: { data: data } });
         } else {
             console.error('ID is undefined or null');
         }
@@ -254,7 +252,7 @@ export class ApprovalInboxComponent implements OnInit {
     onDownload() {
         const exportData = this.publicVariable.invoiceStatuslistData.map((x) => ({
             "PO No.": x?.impiHeaderProjectCode || '',
-            'Project' :x?.impiHeaderProjectName ? this.toTitleCase(x.impiHeaderProjectName) : '',
+            'Project': x?.impiHeaderProjectName ? this.toTitleCase(x.impiHeaderProjectName) : '',
             Department: x?.impiHeaderProjectDepartmentName ? this.toTitleCase(x.impiHeaderProjectDepartmentName) : '',
             Divison: x?.impiHeaderProjectDivisionName ? this.toTitleCase(x.impiHeaderProjectDivisionName) : '',
             Category: x?.impiHeaderInvoiceType ? this.toTitleCase(x.impiHeaderInvoiceType) : '',
@@ -275,17 +273,17 @@ export class ApprovalInboxComponent implements OnInit {
             'Cl Approver': x?.impiHeaderClusterApprover ? this.toTitleCase(x.impiHeaderClusterApprover) : '',
             'Finance Approver': x?.impiHeaderFinanceApprover ? this.toTitleCase(x.impiHeaderFinanceApprover) : '',
             'Accounts Approver': x?.accountApprover ? this.toTitleCase(x.accountApprover) : '',
-            'Created On':x?.impiHeaderSubmittedDate ? formatDate(x.impiHeaderSubmittedDate, 'medium', 'en-IN', 'IST') : '',
+            'Created On': x?.impiHeaderSubmittedDate ? formatDate(x.impiHeaderSubmittedDate, 'medium', 'en-IN', 'IST') : '',
             'Created By': x?.impiHeaderCreatedBy ? this.toTitleCase(x.impiHeaderCreatedBy) : '',
             "Update Date": x?.impiHeaderModifiedDate ? formatDate(x.impiHeaderModifiedDate, 'medium', 'en-IN', 'IST') : '',
-            'Status':x?.headerStatus ? this.toTitleCase(x?.headerStatus) : '',
+            'Status': x?.headerStatus ? this.toTitleCase(x?.headerStatus) : '',
         }));
 
         const headers = [
-            'PO No.','Project', 'Department', 'Divison', 'Category',
+            'PO No.', 'Project', 'Department', 'Divison', 'Category',
             'Vendor Name', 'Address', 'State', 'City', 'Pincode',
             'Phone No', "Email ID", 'Contact Person', 'Customer  GST Number', 'PAN No', 'Amount', 'Payment Terms',
-            'impiHeaderRemarks', 'Tl Approver', 'Cl Approver', 'Finance Approver','Accounts Approver', 'Created On', 'Created By','Update Date',
+            'impiHeaderRemarks', 'Tl Approver', 'Cl Approver', 'Finance Approver', 'Accounts Approver', 'Created On', 'Created By', 'Update Date',
             'Status'
         ];
         this.appService.exportAsExcelFile(exportData, 'PI Invoice Status', headers);
@@ -316,9 +314,9 @@ export class ApprovalInboxComponent implements OnInit {
                 formData.append('MailSubject', newData.subject);
                 formData.append('MailBody', newData.body);
                 formData.append('LoginId', this.publicVariable.storedEmail);
-                formData.append('MailCC', dataItem.impiHeaderCreatedBy );
-                formData.append('ResourceType', dataItem.impiHeaderInvoiceType );
-                formData.append('ResourceId', dataItem.headerId );
+                formData.append('MailCC', dataItem.impiHeaderCreatedBy);
+                formData.append('ResourceType', dataItem.impiHeaderInvoiceType);
+                formData.append('ResourceId', dataItem.headerId);
 
                 newData.attachment.forEach((file: any) => {
                     if (file instanceof File) {
@@ -337,9 +335,9 @@ export class ApprovalInboxComponent implements OnInit {
                         next: (res: any) => {
                             if (res.status === true) {
                                 this.toastr.success(res.message, 'Success');
-                                let model:any = {
-                                    'startDate' : this.startDate,
-                                    'endDate' : this.endDate
+                                let model: any = {
+                                    'startDate': this.startDate,
+                                    'endDate': this.endDate
                                 }
                                 this.loadApproveInvoiceList(model);
                             } else {
@@ -408,9 +406,9 @@ export class ApprovalInboxComponent implements OnInit {
                                     if (res.status === true) {
                                         this.toastr.success(res.message, 'Success');
 
-                                        let model:any = {
-                                            'startDate' : this.startDate,
-                                            'endDate' : this.endDate
+                                        let model: any = {
+                                            'startDate': this.startDate,
+                                            'endDate': this.endDate
                                         }
                                         this.loadApproveInvoiceList(model);
                                     } else {
