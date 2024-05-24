@@ -564,18 +564,18 @@ export class DashboardComponent {
                       //  this.invoiceType = 'Tax Invoice';
                         this.loadInoivceStatusList('FOR APPROVAL');
                     }
-                    
+
                     // else if ((this.invoiceType === 'Tax Invoice' || this.invoiceType === 'Proforma Invoice')) {
                     //     this.headerStatus = 'APPROVED BY ACCOUNTS APPROVER';
                     //   //  this.invoiceType = 'Tax Invoice';
                     //     this.loadInoivceStatusList('APPROVED BY ACCOUNTS APPROVER');
-                    // } 
+                    // }
 
                     else if ((this.invoiceType === 'Tax Invoice' || this.invoiceType === 'Proforma Invoice') && this.storedRole === 'Admin')
                     {
                         this.headerStatus = 'DRAFT';
                     }
-                    
+
                     else {
                         this.headerStatus = 'DRAFT';
                         //this.invoiceType = 'Tax Invoice';
@@ -624,8 +624,8 @@ export class DashboardComponent {
         // Filter data for each customer status
         const draftData = data.filter(item => item.headerStatus === 'DRAFT' && item.impiHeaderInvoiceType == invoiceType);
         counts['DRAFT'] = draftData.length;
-       
-       
+
+
         const pendingData = data.filter(item =>
             (
                 //item.impiHeaderCreatedBy === this.publicVariable.storedEmail &&
@@ -648,7 +648,7 @@ export class DashboardComponent {
                 || item.headerStatus === 'PENDING WITH FINANCE APPROVER'
                 || item.headerStatus === 'CANCEL BY EMPLOYEE'
                 || item.headerStatus === 'PENDING CANCELLATION REQUEST'
-            
+
             ));
         counts['FOR APPROVAL'] = forapproval.length;
 
@@ -760,8 +760,8 @@ export class DashboardComponent {
                 (item.impiHeaderInvoiceType == invoiceType && item.headerStatus != 'PENDING WITH TL APPROVER'));
                // (item.impiHeaderInvoiceType == invoiceType && item.headerStatus != 'DRAFT' && item.headerStatus != 'PENDING WITH TL APPROVER'));
         }
-        else 
-        
+        else
+
        {
             allData = data.filter(item =>
                 item.impiHeaderInvoiceType == invoiceType);
@@ -1144,7 +1144,7 @@ export class DashboardComponent {
                 item.headerStatus === 'PENDING WITH CH APPROVER' ||
                 item.headerStatus === 'PENDING WITH ACCOUNTS APPROVER' ||
                 item.headerStatus === 'PENDING WITH FINANCE APPROVER' ||
-                item.headerStatus == 'PENDING CANCELLATION REQUEST' ||                
+                item.headerStatus == 'PENDING CANCELLATION REQUEST' ||
             item.headerStatus === 'CANCEL BY EMPLOYEE'));
         counts['PENDING WITH TL APPROVER'] = pendingData.length;
 
@@ -1242,7 +1242,7 @@ export class DashboardComponent {
                         item.headerStatus === 'PENDING WITH ACCOUNTS APPROVER' ||
                         item.headerStatus === 'PENDING WITH FINANCE APPROVER'||
                         item.headerStatus === 'PENDING CANCELLATION REQUEST'||
-                       
+
                          item.headerStatus === 'CANCEL BY EMPLOYEE'));
                 break;
             case 'APPROVED BY ACCOUNTS APPROVER':
@@ -1552,7 +1552,7 @@ export class DashboardComponent {
 
     onViewPI(data: invoiceStatusModule): void {
 
-        
+
         if (data.headerId)
          {
             if (data.impiHeaderCreatedBy == this.publicVariable.storedEmail) {
@@ -1594,7 +1594,7 @@ export class DashboardComponent {
             console.error('ID is undefined or null');
         }
     }
-  
+
 
 
     onViewAccountPI(data: invoiceStatusModule): void {
@@ -1746,11 +1746,12 @@ export class DashboardComponent {
             "Created On": x?.impiHeaderSubmittedDate || '',
             "Created By": x?.impiHeaderCreatedBy || '',
             "Status": x?.headerStatus || '',
+            'Refund Status':x?.refundStatus ? this.toTitleCase(x.refundStatus) : '',
         }));
 
         const headers = [
             'Record No', 'Invoice Type', 'PI No', 'Project Code', 'Project Name', 'Department', 'Division',
-            'Vendor Name', 'City', 'Amount', 'TL Approver', 'Finance Approver', 'Created On', 'Created By', 'Status'
+            'Vendor Name', 'City', 'Amount', 'TL Approver', 'Finance Approver', 'Created On', 'Created By', 'Status','Refund Status'
         ];
         this.appService.exportAsExcelFile(exportData, 'Sales Invoice Status', headers);
     }
@@ -2596,7 +2597,7 @@ export class DashboardComponent {
             const subscription = this.IAPI.GetSLLTaxInvoiceAttachment(invoice).subscribe({
                 next: (response: any) => {
 console.log(response);
-                   
+
                     if (response.data.length > 0) {
                         this.InvoiceAttachment = response.data[0];
 
