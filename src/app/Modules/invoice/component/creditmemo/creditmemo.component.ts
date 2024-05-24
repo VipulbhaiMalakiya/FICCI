@@ -413,7 +413,9 @@ export class CreditmemoComponent implements OnInit {
         this.publicVariable.dataForm.patchValue({
             MemoType: '',
             creditMemoAmount: '',
-            CreditMemoCancelRemarks: ''
+            CreditMemoCancelRemarks: '',
+            refundStatus:''
+
 
         });
         this.amount = event.amount;
