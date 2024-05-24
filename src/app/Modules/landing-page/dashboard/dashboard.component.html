@@ -265,12 +265,12 @@
                                                                 *ngIf="customerStatus == 'FOR APPROVAL'">
                                                                 <img src="../assets/images/view-icon.svg" alt="">
                                                             </a>
-                                                            <a *ngIf="publicVariable.storedRole !== 'Admin' && d.createdBy === this.publicVariable.storedEmail && (d.isDraft 
+                                                            <a *ngIf="publicVariable.storedRole !== 'Admin' && d.createdBy === this.publicVariable.storedEmail && (d.isDraft
                                                            )" href="javascript:void(0);" (click)="onEdit(d)">
                                                                 <img src="../assets/images/edit-icon.svg" alt=""
                                                                     title="Edit">
                                                             </a>
-                                                            <a *ngIf="publicVariable.storedRole !== 'Admin' && d.createdBy === this.publicVariable.storedEmail && (d.isDraft 
+                                                            <a *ngIf="publicVariable.storedRole !== 'Admin' && d.createdBy === this.publicVariable.storedEmail && (d.isDraft
                                                            )" href="javascript:void(0);"
                                                                 (click)="onDelete(d.customerId)"><img
                                                                     src="../assets/images/delete-icon.svg" alt=""
@@ -568,7 +568,7 @@
 
 
                                                             <!-- <a href="javascript:void(0);" (click)="onApprovalPI(d)"
-                                                                *ngIf="customerStatus == 'FOR APPROVAL' &&  this.publicVariable.storedRole == 'Approver'">                                                                
+                                                                *ngIf="customerStatus == 'FOR APPROVAL' &&  this.publicVariable.storedRole == 'Approver'">
                                                                 <img src="../assets/images/view-icon.svg" alt=""
                                                                     title="View2">
 
@@ -1129,6 +1129,7 @@
                                                     <th>#</th>
                                                     <th class="action-cl">Action</th>
                                                     <th>Status</th>
+                                                    <th>Refund Status</th>
                                                     <th>Tax Invoice No.</th>
                                                     <th *ngIf="customerStatus !='DRAFT'">Credit Note No.</th>
                                                     <th
@@ -1181,7 +1182,7 @@
                                                             <a *ngIf="publicVariable.storedRole !== 'Admin' && publicVariable.storedRole !== 'Approver' &&
                                                             publicVariable.storedEmail === d.impiHeaderCreatedBy &&
                                                             (d.isDraft
-                                                          
+
                                                             )" href="javascript:void(0);" (click)="onEditSI(d)"><img
                                                                     src="../assets/images/edit-icon.svg" alt=""
                                                                     title="Edit" /></a>
@@ -1203,7 +1204,7 @@
                                                             <a *ngIf="publicVariable.storedRole !== 'Admin' && publicVariable.storedRole !== 'Approver' &&
                                                                     publicVariable.storedEmail === d.impiHeaderCreatedBy &&
                                                                         (d.isDraft
-                                                                      
+
                                                                       )" href="javascript:void(0)"
                                                                 (click)="onDeletePI(d.headerId)" data-bs-toggle="modal"
                                                                 data-bs-target="#deleterecord-modal"><img
@@ -1240,6 +1241,8 @@
                                                     </td>
 
                                                     <td>{{d.headerStatus }}</td>
+                                                    <td>{{d.refundStatus }}</td>
+
 
                                                     <td>{{d.headerPiNo}}</td>
 

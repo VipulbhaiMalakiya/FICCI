@@ -61,7 +61,8 @@ export interface invoiceStatusModule {
     impiHeaderClusterApproverRemarks:string
     accountApproverRemarks:string
     IsPostedTaxInvoice? :boolean;
-    headerRecordID?:any
+    headerRecordID?:any;
+    refundStatus:any;
 }
 
 export interface Attachment {
