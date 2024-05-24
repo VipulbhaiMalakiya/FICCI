@@ -130,16 +130,29 @@
                                 <span class="table-btns">
                                     <a href="javascript:void(0);" (click)="onView(d)"><img
                                             src="../assets/images/view-icon.svg" alt="" title="View" /></a>
-                                    <a *ngIf="publicVariable.storedRole !== 'Admin' &&
-                                    (d.isDraft ||
+                                   
+                                   
+                                              <a *ngIf="publicVariable.storedRole !== 'Admin' &&
+                                    (d.isDraft                                    
+                                    )"
+                                        href="javascript:void(0);" (click)="onEdit(d)" title="Edit"><img
+                                            src="../assets/images/edit-icon.svg" alt="" /></a>
+
+
+
+                                            <!-- <a *ngIf="publicVariable.storedRole !== 'Admin' &&
+                                    (d.isDraft 
+                                    ||
                                     d.headerStatus == 'REJECTED BY TL APPROVER'  ||
                                     d.headerStatus == 'REJECTED BY CH APPROVER' ||
                                     d.headerStatus == 'REJECTED BY ACCOUNTS APPROVER'
                                     ||d.headerStatus == 'REJECTED BY FINANCE APPROVER'
                                     )"
                                         href="javascript:void(0);" (click)="onEdit(d)" title="Edit"><img
-                                            src="../assets/images/edit-icon.svg" alt="" /></a>
+                                            src="../assets/images/edit-icon.svg" alt="" /></a> -->
 
+                                           
+                                           
                                             <a *ngIf="d.creditMemoNavNo && d.headerStatus == 'CREDIT MEMO POSTED' "href="javascript:void(0);"
                                             (click)="downalodFile(d.postedCreditMemoNumber)"><img
                                                 src="../assets/images/download-icon.svg" alt="" title="Download Details" /></a>

@@ -557,24 +557,32 @@ export class DashboardComponent {
                 this.dashboardData =  this.dashboardData.filter(x=>x.impiHeaderInvoiceType == this.invoiceType);
 
                 console.log("with filter" ,this.dashboardData);
-                if (!this.isfilterDefaultStatus) {
+                if (!this.isfilterDefaultStatus)
+                 {
                     if ((this.invoiceType === 'Tax Invoice' || this.invoiceType === 'Proforma Invoice') && this.storedRole === 'Approver') {
                         this.headerStatus = 'FOR APPROVAL';
                       //  this.invoiceType = 'Tax Invoice';
                         this.loadInoivceStatusList('FOR APPROVAL');
-                    } else if ((this.invoiceType === 'Tax Invoice' || this.invoiceType === 'Proforma Invoice') && this.storedRole === 'Admin') {
-                        this.headerStatus = 'APPROVED BY ACCOUNTS APPROVER';
-                      //  this.invoiceType = 'Tax Invoice';
-                        this.loadInoivceStatusList('APPROVED BY ACCOUNTS APPROVER');
-                    } else {
+                    }
+                    
+                    // else if ((this.invoiceType === 'Tax Invoice' || this.invoiceType === 'Proforma Invoice')) {
+                    //     this.headerStatus = 'APPROVED BY ACCOUNTS APPROVER';
+                    //   //  this.invoiceType = 'Tax Invoice';
+                    //     this.loadInoivceStatusList('APPROVED BY ACCOUNTS APPROVER');
+                    // } 
+
+                    else if ((this.invoiceType === 'Tax Invoice' || this.invoiceType === 'Proforma Invoice') && this.storedRole === 'Admin')
+                    {
+                        this.headerStatus = 'DRAFT';
+                    }
+                    
+                    else {
                         this.headerStatus = 'DRAFT';
                         //this.invoiceType = 'Tax Invoice';
                         this.loadInoivceStatusList('DRAFT');
                         this.cd.detectChanges();
                     }
                 }
-
-
 
                 this.countDataByInvoies(this.dashboardData, this.invoiceType);
                 this.loadInoivceStatusList(this.customerStatus);
@@ -591,7 +599,6 @@ export class DashboardComponent {
 
 
     countDataByInvoies(data: any[], invoiceType: any): void {
-
 
         console.log(invoiceType,data);
         const counts: any = {
@@ -617,6 +624,8 @@ export class DashboardComponent {
         // Filter data for each customer status
         const draftData = data.filter(item => item.headerStatus === 'DRAFT' && item.impiHeaderInvoiceType == invoiceType);
         counts['DRAFT'] = draftData.length;
+       
+       
         const pendingData = data.filter(item =>
             (
                 //item.impiHeaderCreatedBy === this.publicVariable.storedEmail &&
@@ -626,9 +635,11 @@ export class DashboardComponent {
                 item.headerStatus === 'PENDING WITH ACCOUNTS APPROVER' ||
                 item.headerStatus === 'PENDING WITH FINANCE APPROVER'
                 || item.headerStatus === 'CANCEL BY EMPLOYEE'
+                || item.headerStatus === 'PENDING CANCELLATION REQUEST'
                ));
 
         counts['PENDING WITH TL APPROVER'] = pendingData.length;
+
 
         const forapproval = data.filter(item => item.impiHeaderInvoiceType == invoiceType &&
             (item.headerStatus === 'PENDING WITH TL APPROVER'
@@ -636,7 +647,8 @@ export class DashboardComponent {
                 || item.headerStatus === 'PENDING WITH ACCOUNTS APPROVER'
                 || item.headerStatus === 'PENDING WITH FINANCE APPROVER'
                 || item.headerStatus === 'CANCEL BY EMPLOYEE'
-
+                || item.headerStatus === 'PENDING CANCELLATION REQUEST'
+            
             ));
         counts['FOR APPROVAL'] = forapproval.length;
 
@@ -689,6 +701,7 @@ export class DashboardComponent {
                 || item.headerStatus === 'MAIL SENT BY ACCOUNT TO CUSTOMER'
                 || item.headerStatus === 'APPROVED BY FINANCE'
                 || item.headerStatus == 'TAX INVOICE POSTED'
+                || item.headerStatus == 'POSTED TAX INVOICE'
             ));
             counts['PI TEXT'] = pitext.length;
         }
@@ -699,6 +712,7 @@ export class DashboardComponent {
                 || item.headerStatus == 'MAIL SENT BY ACCOUNT TO CUSTOMER'
                 || item.headerStatus == 'APPROVED BY FINANCE'
                 || item.headerStatus == 'TAX INVOICE POSTED'
+                || item.headerStatus == 'POSTED TAX INVOICE'
             ));
             counts['PI TEXT'] = pitext.length;
         }
@@ -736,16 +750,22 @@ export class DashboardComponent {
 
         if (this.storedRole == "Approver") {
             allData = data.filter(item =>
-                item.impiHeaderInvoiceType == invoiceType && item.headerStatus != 'DRAFT');
+               // item.impiHeaderInvoiceType == invoiceType && item.headerStatus != 'DRAFT');
+
+                item.impiHeaderInvoiceType == invoiceType);
         }
         else if (this.storedRole == "Admin") {
             allData = data.filter(item =>
-                (item.impiHeaderInvoiceType == invoiceType && item.headerStatus != 'DRAFT' && item.headerStatus != 'PENDING WITH TL APPROVER'));
+
+                (item.impiHeaderInvoiceType == invoiceType && item.headerStatus != 'PENDING WITH TL APPROVER'));
+               // (item.impiHeaderInvoiceType == invoiceType && item.headerStatus != 'DRAFT' && item.headerStatus != 'PENDING WITH TL APPROVER'));
         }
-        else {
+        else 
+        
+       {
             allData = data.filter(item =>
                 item.impiHeaderInvoiceType == invoiceType);
-        }
+       }
 
         counts['ALL'] = allData.length;
 
@@ -781,7 +801,8 @@ export class DashboardComponent {
                         item.headerStatus === 'PENDING WITH ACCOUNTS APPROVER' ||
                         item.headerStatus === 'PENDING WITH FINANCE APPROVER'
                         || item.headerStatus === 'CANCEL BY EMPLOYEE'
-                        || item.headerStatus == 'TI PENDING WITH ACCOUNTS'
+                        //|| item.headerStatus == 'TI PENDING WITH ACCOUNTS'
+                        || item.headerStatus === 'PENDING CANCELLATION REQUEST'
                     ));
                 break;
             case 'APPROVED BY ACCOUNTS APPROVER':
@@ -819,7 +840,6 @@ export class DashboardComponent {
                             item.headerStatus === 'APPROVED BY ACCOUNTS APPROVER'
                             || item.headerStatus === 'MAIL SENT BY ACCOUNT TO CUSTOMER'
                             || item.headerStatus === 'APPROVED BY FINANCE'
-
                             //|| item.headerStatus === 'TAX INVOICE POSTED'
                             || item.headerStatus === 'MAIL SENT BY FINANCE TO CUSTOMER'
                         ));
@@ -844,9 +864,10 @@ export class DashboardComponent {
                             item.headerStatus === 'APPROVED BY ACCOUNTS APPROVER'
                             || item.headerStatus === 'MAIL SENT BY ACCOUNT TO CUSTOMER'
                             || item.headerStatus === 'APPROVED BY FINANCE'
-
                             || item.headerStatus === 'TAX INVOICE POSTED'
                             || item.headerStatus === 'MAIL SENT BY FINANCE TO CUSTOMER'
+
+                            || item.headerStatus == 'POSTED TAX INVOICE'
                         ));
                 }
                 else {
@@ -857,6 +878,7 @@ export class DashboardComponent {
                             || item.headerStatus === 'APPROVED BY FINANCE'
                             || item.headerStatus === 'TAX INVOICE POSTED'
                             || item.headerStatus === 'MAIL SENT BY FINANCE TO CUSTOMER'
+                            || item.headerStatus == 'POSTED TAX INVOICE'
                         )
                     );
                 }
@@ -896,8 +918,9 @@ export class DashboardComponent {
                         item.headerStatus === 'PENDING WITH CH APPROVER' ||
                         item.headerStatus === 'PENDING WITH ACCOUNTS APPROVER' ||
                         item.headerStatus === 'PENDING WITH FINANCE APPROVER' ||
-                        item.headerStatus === 'CANCEL BY EMPLOYEE'
-                        || item.headerStatus == 'TI PENDING WITH ACCOUNTS'
+                        item.headerStatus === 'CANCEL BY EMPLOYEE' ||
+                         item.headerStatus === 'PENDING CANCELLATION REQUEST'
+                       // || item.headerStatus == 'TI PENDING WITH ACCOUNTS'
 
 
                     ));
@@ -906,19 +929,19 @@ export class DashboardComponent {
 
 
 
-                if (this.storedRole == "Approver") {
-                    filteredData = this.dashboardData.filter((item: any) =>
-                        item.impiHeaderInvoiceType == this.invoiceType && item.headerStatus != 'DRAFT');
-                }
-                else if (this.storedRole == "Admin") {
-                    filteredData = this.dashboardData.filter(item =>
-                        (item.impiHeaderInvoiceType == this.invoiceType && item.headerStatus != 'DRAFT' && item.headerStatus != 'PENDING WITH TL APPROVER'));
-                }
+                // if (this.storedRole == "Approver") {
+                //     filteredData = this.dashboardData.filter((item: any) =>
+                //         item.impiHeaderInvoiceType == this.invoiceType && item.headerStatus != 'DRAFT');
+                // }
+                // else if (this.storedRole == "Admin") {
+                //     filteredData = this.dashboardData.filter(item =>
+                //         (item.impiHeaderInvoiceType == this.invoiceType && item.headerStatus != 'DRAFT' && item.headerStatus != 'PENDING WITH TL APPROVER'));
+                // }
 
-                else {
+                // else {
                     filteredData = this.dashboardData.filter((item: any) =>
                         item.impiHeaderInvoiceType == this.invoiceType);
-                }
+               // }
                 break;
             default:
                 filteredData = this.dashboardData.filter((item: any) =>
@@ -1113,23 +1136,27 @@ export class DashboardComponent {
         // Filter data for each customer status
         const draftData = data.filter(item => item.headerStatus === 'DRAFT');
         counts['DRAFT'] = draftData.length;
+
+
         const pendingData = data.filter(item =>
             item.impiHeaderCreatedBy === this.publicVariable.storedEmail &&
-
-
             (item.headerStatus === 'PENDING WITH TL APPROVER' ||
                 item.headerStatus === 'PENDING WITH CH APPROVER' ||
                 item.headerStatus === 'PENDING WITH ACCOUNTS APPROVER' ||
-                item.headerStatus === 'PENDING WITH FINANCE APPROVER'
-                || item.headerStatus === 'CANCEL BY EMPLOYEE'));
+                item.headerStatus === 'PENDING WITH FINANCE APPROVER' ||
+                item.headerStatus == 'PENDING CANCELLATION REQUEST' ||                
+            item.headerStatus === 'CANCEL BY EMPLOYEE'));
         counts['PENDING WITH TL APPROVER'] = pendingData.length;
+
+
+
+        console.log( pendingData.length)
 
         const forapproval = data.filter(item => (item.headerStatus == 'PENDING WITH TL APPROVER'
             || item.headerStatus == 'PENDING WITH CH APPROVER'
             || item.headerStatus == 'PENDING WITH ACCOUNTS APPROVER'
             || item.headerStatus == 'PENDING WITH FINANCE APPROVER'
             || item.headerStatus === 'CANCEL BY EMPLOYEE'
-
         ));
         counts['FOR APPROVAL'] = forapproval.length;
 
@@ -1181,6 +1208,9 @@ export class DashboardComponent {
         const allData = data;
         counts['ALL'] = allData.length;
 
+        console.log('all data',allData);
+
+
         // Update counts
         this.PIisDRAFT = counts['DRAFT'];
         this.PIforapproval = counts['FOR APPROVAL'];
@@ -1210,8 +1240,10 @@ export class DashboardComponent {
                     (item.headerStatus === 'PENDING WITH TL APPROVER' ||
                         item.headerStatus === 'PENDING WITH CH APPROVER' ||
                         item.headerStatus === 'PENDING WITH ACCOUNTS APPROVER' ||
-                        item.headerStatus === 'PENDING WITH FINANCE APPROVER'
-                        || item.headerStatus === 'CANCEL BY EMPLOYEE'));
+                        item.headerStatus === 'PENDING WITH FINANCE APPROVER'||
+                        item.headerStatus === 'PENDING CANCELLATION REQUEST'||
+                       
+                         item.headerStatus === 'CANCEL BY EMPLOYEE'));
                 break;
             case 'APPROVED BY ACCOUNTS APPROVER':
                 filteredData = this.CreditNotedashboardData.filter((item: any) =>
@@ -1520,7 +1552,7 @@ export class DashboardComponent {
 
     onViewPI(data: invoiceStatusModule): void {
 
-
+        
         if (data.headerId)
          {
             if (data.impiHeaderCreatedBy == this.publicVariable.storedEmail) {
@@ -1562,7 +1594,7 @@ export class DashboardComponent {
             console.error('ID is undefined or null');
         }
     }
-
+  
 
 
     onViewAccountPI(data: invoiceStatusModule): void {
@@ -2564,7 +2596,7 @@ export class DashboardComponent {
             const subscription = this.IAPI.GetSLLTaxInvoiceAttachment(invoice).subscribe({
                 next: (response: any) => {
 console.log(response);
-
+                   
                     if (response.data.length > 0) {
                         this.InvoiceAttachment = response.data[0];
 

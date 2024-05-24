@@ -282,10 +282,6 @@ export class NewPurchaseInvoiceComponent implements OnInit {
         return concatenatedString.includes(term.toLowerCase());
     }
 
-
-
-
-
     loadProjectList(): void {
         try {
             const subscription = this.API.getProjects().subscribe({
@@ -379,7 +375,6 @@ export class NewPurchaseInvoiceComponent implements OnInit {
         return concatenatedString.includes(term.toLowerCase());
     }
 
-
     onSelectCustomer(): void {
 
         debugger;
@@ -426,8 +421,6 @@ export class NewPurchaseInvoiceComponent implements OnInit {
         }
     }
 
-
-
     getErpDetailCustNo(data: any) {
         try {
             const subscription = this.API.getErpDetailCustNo(data).subscribe({
@@ -463,13 +456,7 @@ export class NewPurchaseInvoiceComponent implements OnInit {
             ImpiHeaderCustomerCity: null,
         });
     }
-
-
-
     CustomerCode: string = '';
-
-
-
 
     loadgetGetDetails(): void {
         try {
@@ -1271,13 +1258,13 @@ export class NewPurchaseInvoiceComponent implements OnInit {
                     formData.append('ImpiHeaderCustomerState', newData.ImpiHeaderCustomerState);
                     formData.append('ImpiHeaderCustomerPinCode', newData.ImpiHeaderCustomerPinCode);
                     // formData.append('ImpiHeaderCustomerGstNo', this.CustomerGSTNo);
-                    formData.append('ImpiHeaderCustomerGstNo', newData.ImpiHeaderCustomerGstNo);
+                    formData.append('ImpiHeaderCustomerGstNo', newData.ImpiHeaderCustomerGstNo ?? '');
                     formData.append('ImpiHeaderCustomerContactPerson', newData.ImpiHeaderCustomerContactPerson);
                     formData.append('ImpiHeaderCustomerEmailId', newData.ImpiHeaderCustomerEmailId);
                     formData.append('ImpiHeaderCustomerPhoneNo', newData.ImpiHeaderCustomerPhoneNo);
                     formData.append('impiHeaderCreatedBy', this.publicVariable.storedEmail)
                     formData.append('ImpiHeaderPaymentTerms', newData.ImpiHeaderPaymentTerms);
-                    formData.append('ImpiHeaderRemarks', newData.ImpiHeaderRemarks);
+                    formData.append('ImpiHeaderRemarks', newData.ImpiHeaderRemarks ?? '');
 
                     formData.append('IsDraft', action.toString());
                     formData.append('LoginId', this.publicVariable.storedEmail);
@@ -1310,9 +1297,9 @@ export class NewPurchaseInvoiceComponent implements OnInit {
                         formData.append(`lineItem_Requests[${i}].documentType`, 'Invoice');
                         formData.append(`lineItem_Requests[${i}].ImpiType`, 'G/L Account');
                         formData.append(`lineItem_Requests[${i}].ImpiDocumentNo`, '');
-                        formData.append(`lineItem_Requests[${i}].ImpiGstBaseAmount`, '');
-                        formData.append(`lineItem_Requests[${i}].ImpiTotalGstAmount`, '');
-                        formData.append(`lineItem_Requests[${i}].ImpiNetTotal`, '');
+                        formData.append(`lineItem_Requests[${i}].ImpiGstBaseAmount`,item.impiGstBaseAmount ?? '');
+                        formData.append(`lineItem_Requests[${i}].ImpiTotalGstAmount`,item.impiTotalGstAmount ?? '');
+                        formData.append(`lineItem_Requests[${i}].ImpiNetTotal`,item.impiNetTotal ?? '');
                         formData.append(`lineItem_Requests[${i}].ImpiLinePiNo`, '');
                         formData.append(`lineItem_Requests[${i}].ImpiLineDescription`, item.impiDescription);
                         // Calculate the amount here

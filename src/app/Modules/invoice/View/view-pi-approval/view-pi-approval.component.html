@@ -27,7 +27,7 @@
         <div class="row">
             <div class="col-md-4 col-sm-6">
                 <div class="form-group">
-                    <label>Navision posted no</label>
+                    <label>Tax Invoice No.</label>
                     <input type="text" value="{{data.postedInvoiceNumber}}" class="form-control" disabled=""
                         readonly="">
                 </div>
@@ -344,7 +344,7 @@
     </div>
 
     <form [formGroup]="publicVariable.dataForm"
-        *ngIf="data.headerStatus == 'PENDING WITH FINANCE APPROVER' || data.headerStatus === 'PENDING WITH TL APPROVER' ||data.headerStatus ===  'PENDING WITH CH APPROVER' || data.headerStatus === 'PENDING WITH TL APPROVER' ||data.headerStatus ===  'CANCEL BY EMPLOYEE' || data.headerStatus === 'CANCELLATION APPROVED BY TL' || data.headerStatus == 'TI PENDING WITH ACCOUNTS' ">
+        *ngIf="data.headerStatus == 'PENDING WITH FINANCE APPROVER' || data.headerStatus === 'PENDING WITH TL APPROVER' ||data.headerStatus ===  'PENDING WITH CH APPROVER' || data.headerStatus === 'PENDING WITH TL APPROVER' ||data.headerStatus ===  'CANCEL BY EMPLOYEE' || data.headerStatus === 'CANCELLATION APPROVED BY TL'">
         <div class="col-md-12 mt-3">
             <div class="form-group">
                 <label>Remarks</label>

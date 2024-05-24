@@ -654,6 +654,11 @@ textarea.form-control{ padding-top: 10px; padding-bottom: 10px; }
     font-size: 13px;
 }
 
+.mailer-piaccount .pi-table {
+    height: 400px;
+    overflow-y: auto;
+}
+
 
 .inner-staticwrap{ text-align: center; }
 .gif img{ max-height:71vh; }

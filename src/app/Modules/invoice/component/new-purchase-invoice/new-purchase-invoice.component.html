@@ -429,7 +429,7 @@
                     <div class="form-group">
                         <label for="PhoneNo">Phone No. <sup class="text-danger">*</sup></label>
                         <input type="number" class="form-control" id="PhoneNo"
-                            placeholder="Phone No" formControlName="ImpiHeaderCustomerPhoneNo" maxlength="15" min="0" />
+                            placeholder="Phone No" formControlName="ImpiHeaderCustomerPhoneNo" maxlength="12" min="0" />
                         <div *ngIf="shouldShowError('ImpiHeaderCustomerPhoneNo','required')" class="text-danger">Phone
                             number is required.</div>
                         <div *ngIf="shouldShowError('ImpiHeaderCustomerPhoneNo','pattern')" class="text-danger">Invalid

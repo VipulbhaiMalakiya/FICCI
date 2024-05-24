@@ -1477,14 +1477,14 @@ export class CreditmemoComponent implements OnInit {
         ) {
             this.toastr.warning('Enter the Credit Memo Amount', 'Warning');
             return;
-        }
+        }  
         else  if (this.publicVariable.dataForm.value.ImpiHeaderRemarks == null ||
             this.publicVariable.dataForm.value.ImpiHeaderRemarks == undefined ||
             this.publicVariable.dataForm.value.ImpiHeaderRemarks == ''
         ) {
             this.toastr.warning('Enter the Cancel Remarks', 'Warning');
             return;
-        }
+        }       
 
         const totalAmount = parseFloat(this.amount); // Assuming this.totalAmount holds the total amount
 
@@ -1598,7 +1598,7 @@ export class CreditmemoComponent implements OnInit {
                         formData.append(`lineItem_Requests[${i}].ImpiGstgroupType`, 'GOODS');
                         formData.append(`lineItem_Requests[${i}].ImpiLineNo`, String(lineNo));
                         formData.append(`lineItem_Requests[${i}].ImpiHsnsaccode`, item.impiHsnsaccode);
-                        formData.append(`lineItem_Requests[${i}].ImpiGlNo`, GL?.no ?? '');
+                        formData.append(`lineItem_Requests[${i}].ImpiGlNo`, GL?.no);
                         formData.append(`lineItem_Requests[${i}].documentType`, 'Invoice');
                         formData.append(`lineItem_Requests[${i}].ImpiType`, 'G/L Account');
                         formData.append(`lineItem_Requests[${i}].ImpiDocumentNo`, '');
