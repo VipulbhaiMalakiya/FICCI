@@ -156,12 +156,20 @@ export class CreditmemoComponent implements OnInit {
 
 
 
+
+
+
     }
+
+
+
 
     toggleReadOnly() {
         const selectedMemoType = this.publicVariable.dataForm.get('MemoType')?.value;
         this.isReadOnly = selectedMemoType === 'full';
-
+        this.publicVariable.dataForm.get('creditMemoAmount')?.valueChanges.subscribe(value => {
+            this.checkCreditMemoAmount(value);
+        });
         if (this.isReadOnly) {
 
             this.publicVariable.dataForm.patchValue({
@@ -178,6 +186,15 @@ export class CreditmemoComponent implements OnInit {
 
                 creditMemoAmount: null,
             });
+        }
+    }
+
+    checkCreditMemoAmount(value: number): void {
+        const refundStatusControl = this.publicVariable.dataForm.get('refundStatus');
+        if (value > 50000) {
+            refundStatusControl?.setValue('Credit Note with amount refund');
+        } else  {
+            refundStatusControl?.setValue('Credit Note without amount refund');
         }
     }
 
@@ -532,7 +549,7 @@ export class CreditmemoComponent implements OnInit {
             ImpiHeaderCustomerAddress: data.sellToAddress,
             CustNo: data.sellToCustomerNo,
             // refundStatus: data.refundStatus,
-             ImpiHeaderCustomerCity: data.sellToCity,
+            ImpiHeaderCustomerCity: data.sellToCity,
             ImpiHeaderCustomerPinCode: data.sellToPostCode,
             ImpiHeaderCustomerName: data.sellToCustomerName,
 
