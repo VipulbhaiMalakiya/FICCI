@@ -119,8 +119,8 @@ export class CreditMemoStatusComponent implements OnInit {
             const subscription = this.API.GetSLLTaxInvoiceAttachment(invoice).subscribe({
                 next: (response: any) => {
 
-                    if (response.data.length > 0) 
-                    
+                    if (response.data.length > 0)
+
                     {
                         this.InvoiceAttachment = response.data[0];
 
@@ -129,14 +129,14 @@ export class CreditMemoStatusComponent implements OnInit {
                          const fileName = this.InvoiceAttachment.salesCrMemoNo+'.pdf';
                          const fileType = `application/pdf`;
                          this.fileService.downloadFile(this.InvoiceAttachment.attachment, fileName, fileType);
-     
+
                         }
                         else
                         {
-     
+
                        this.toastr.warning('There is an issue with the download of the file from ERP.','File Not Found')
                         }
-     
+
 
 
 
@@ -190,6 +190,7 @@ export class CreditMemoStatusComponent implements OnInit {
                         console.log(response.data);
 
                         this.publicVariable.invoiceStatuslistData = response.data;
+                        console.table(response.data)
                         this.publicVariable.count = response.data.length;
                         this.publicVariable.isProcess = false;
                     } else {

@@ -1587,9 +1587,7 @@ export class CreditmemoComponent implements OnInit {
                     formData.append('impiHeaderCreatedBy', this.publicVariable.storedEmail)
                     formData.append('ImpiHeaderPaymentTerms', newData.ImpiHeaderPaymentTerms);
                     formData.append('ImpiHeaderRemarks', newData.ImpiHeaderRemarks);
-                    formData.append('refundStatus', newData.refundStatus);
-
-
+                    formData.append('RefundStatus', newData.refundStatus);
                     formData.append('IsDraft', action.toString());
                     formData.append('LoginId', this.publicVariable.storedEmail);
                     // Check if ImpiHeaderInvoiceType is Tax Invoice, then include PINO

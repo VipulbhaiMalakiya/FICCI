@@ -95,6 +95,7 @@
                             <th>#</th>
                             <th class="action-cl">Action</th>
                             <th>Status</th>
+                            <th>Refund Status</th>
                             <th>Tax Invoice No.</th>
                             <th>Credit Note No.</th>
                             <th>Posted Credit Note No.</th>
@@ -103,9 +104,9 @@
                             <!-- <th>Invoice Type</th> -->
                             <th>Project Code</th>
                             <th>Project Name</th>
-                          
+
                             <!-- <th>Division</th> -->
-                          
+
                             <!-- <th>City</th> -->
                             <th>Invoice Amount</th>
                             <th>Credit Note Amount</th>
@@ -119,7 +120,7 @@
                             <!-- <th>Total Amount</th> -->
                             <th>Record No.</th>
 
-                          
+
                         </tr>
                     </thead>
                     <tbody>
@@ -130,10 +131,10 @@
                                 <span class="table-btns">
                                     <a href="javascript:void(0);" (click)="onView(d)"><img
                                             src="../assets/images/view-icon.svg" alt="" title="View" /></a>
-                                   
-                                   
+
+
                                               <a *ngIf="publicVariable.storedRole !== 'Admin' &&
-                                    (d.isDraft                                    
+                                    (d.isDraft
                                     )"
                                         href="javascript:void(0);" (click)="onEdit(d)" title="Edit"><img
                                             src="../assets/images/edit-icon.svg" alt="" /></a>
@@ -141,7 +142,7 @@
 
 
                                             <!-- <a *ngIf="publicVariable.storedRole !== 'Admin' &&
-                                    (d.isDraft 
+                                    (d.isDraft
                                     ||
                                     d.headerStatus == 'REJECTED BY TL APPROVER'  ||
                                     d.headerStatus == 'REJECTED BY CH APPROVER' ||
@@ -151,8 +152,8 @@
                                         href="javascript:void(0);" (click)="onEdit(d)" title="Edit"><img
                                             src="../assets/images/edit-icon.svg" alt="" /></a> -->
 
-                                           
-                                           
+
+
                                             <a *ngIf="d.creditMemoNavNo && d.headerStatus == 'CREDIT MEMO POSTED' "href="javascript:void(0);"
                                             (click)="downalodFile(d.postedCreditMemoNumber)"><img
                                                 src="../assets/images/download-icon.svg" alt="" title="Download Details" /></a>
@@ -169,7 +170,8 @@
                             </td>
 
                             <td>{{d.headerStatus }}</td>
-                          
+                            <td>{{d.refundStatus}}</td>
+
                             <td>{{d.headerPiNo}}</td>
 
                             <td>{{d.creditMemoNavNo}}</td>
@@ -179,9 +181,9 @@
                             <!-- <td>{{d.impiHeaderInvoiceType | titlecase}}</td> -->
                             <td>{{d.impiHeaderProjectCode}}</td>
                             <td>{{d.impiHeaderProjectName | titlecase}}</td>
-                          
+
                             <!-- <td>{{d.impiHeaderProjectDivisionName | titlecase}}</td> -->
-                           
+
                             <!-- <td>{{d.impiHeaderCustomerCity | titlecase}}</td> -->
                             <td>{{d.impiHeaderTotalInvoiceAmount | number:'1.2-2' }}</td>
                             <td>{{d.memoAmount | number:'1.2-2' }}</td>
@@ -195,7 +197,7 @@
 
                             <td>{{d.recordID}}</td>
 
-                           
+
                         </tr>
                     </tbody>
                 </table>
