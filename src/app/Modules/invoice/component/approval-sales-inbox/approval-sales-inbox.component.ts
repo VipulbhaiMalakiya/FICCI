@@ -241,6 +241,7 @@ export class ApprovalSalesInboxComponent implements OnInit {
             'Created By': x?.impiHeaderCreatedBy ? this.toTitleCase(x.impiHeaderCreatedBy) : '',
             "Update Date": x?.impiHeaderModifiedDate ? formatDate(x.impiHeaderModifiedDate, 'medium', 'en-IN', 'IST') : '',
             'Status': x?.headerStatus ? this.toTitleCase(x?.headerStatus) : '',
+            'Refund Status':x?.refundStatus ? this.toTitleCase(x.refundStatus) : '',
         }));
 
         const headers = [
@@ -248,7 +249,7 @@ export class ApprovalSalesInboxComponent implements OnInit {
             'Vendor Name', 'Address', 'State', 'City', 'Pincode',
             'Phone No', "Email ID", 'Contact Person', 'Customer  GST Number', 'PAN No', 'Amount', 'Payment Terms',
             'impiHeaderRemarks', 'Tl Approver', 'Cl Approver', 'Finance Approver', 'Accounts Approver', 'Created On', 'Created By', 'Update Date',
-            'Status'
+            'Status','Refund Status'
         ];
         this.appService.exportAsExcelFile(exportData, 'PI Invoice Status', headers);
     }
