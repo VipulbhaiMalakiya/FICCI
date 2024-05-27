@@ -60,6 +60,8 @@
                         <div *ngIf="publicVariable.dataForm.get('creditMemoAmount')?.hasError('exceedsTotal')"
                             class="text-danger">Credit Note amount can not be exceeded to total invoice amount</div>
 
+
+
                     </div>
 
                 </div>
@@ -79,6 +81,7 @@
                     <div *ngIf="shouldShowError('refundStatus','required')" class="text-danger">Refund Status
                         is required
                     </div>
+                    <div *ngIf="inputAmount >= 50000" class="text-warning"> Request will go for CH Approver</div>
 
                 </div>
 
@@ -99,6 +102,7 @@
                     <div *ngIf="shouldShowError('CreditMemoCancelRemarks','required')" class="text-danger">Cancel Reason
                         is required
                     </div>
+
 
                 </div>
 

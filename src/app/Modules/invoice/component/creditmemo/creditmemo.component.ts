@@ -239,6 +239,7 @@ export class CreditmemoComponent implements OnInit {
     }
 
 
+    inputAmount:number = 0;
     priceValidator(event: Event) {
         const inputValue = (event.target as HTMLInputElement).value;
         let numericValue = inputValue.replace(/[^0-9.]/g, '');
@@ -254,6 +255,7 @@ export class CreditmemoComponent implements OnInit {
 
 
         const enteredAmount = parseFloat(numericValue);
+        this.inputAmount = enteredAmount;
 
 
         const totalAmount = parseFloat(this.amount); // Assuming this.totalAmount holds the total amount
