@@ -52,7 +52,7 @@
                     <div class="form-group">
                         <label for="creditMemoAmount">Credit Note Amount <sup class="text-danger">*</sup></label>
                         <input type="text" placeholder="Credit Amount" formControlName="creditMemoAmount"
-                            class="form-control" (input)="priceValidator($event)" [readonly]="isReadOnly"
+                            class="form-control" maxlength="10" (input)="priceValidator($event)" [readonly]="isReadOnly"
                             [class.readonly]="isReadOnly">
                         <div *ngIf="shouldShowError('creditMemoAmount','required')" class="text-danger">Credit Note
                             Amount is required

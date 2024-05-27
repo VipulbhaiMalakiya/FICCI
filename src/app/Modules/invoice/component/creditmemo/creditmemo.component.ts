@@ -168,7 +168,7 @@ export class CreditmemoComponent implements OnInit {
         const selectedMemoType = this.publicVariable.dataForm.get('MemoType')?.value;
         this.isReadOnly = selectedMemoType === 'full';
         this.publicVariable.dataForm.get('creditMemoAmount')?.valueChanges.subscribe(value => {
-            this.checkCreditMemoAmount(value);
+           // this.checkCreditMemoAmount(value);
         });
         if (this.isReadOnly) {
 
