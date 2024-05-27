@@ -1082,6 +1082,7 @@ export class DashboardComponent {
                 }
 
                 // Concatenate approveResponse.data with dashboardData if it's iterable
+
                 if (approveResponse.data && Array.isArray(approveResponse.data)) {
                     this.CreditNotedashboardData = [...this.CreditNotedashboardData, ...approveResponse.data];
 
