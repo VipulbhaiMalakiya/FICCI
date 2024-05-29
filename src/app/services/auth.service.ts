@@ -39,6 +39,7 @@ export class AuthService {
 
                 //console.log(responseData);
                 let response= responseData.data;
+
                 if (response && response.token) {
                     const userRole = response.roleName;
                     const userEmail = response.email;
