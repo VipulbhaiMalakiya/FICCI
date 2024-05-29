@@ -52,6 +52,8 @@ export class AuthService {
                     sessionStorage.setItem('IsFinance',response.invoice_IsFinanceApprover)
                     sessionStorage.setItem('navDepartment', response.navDepartment);
 
+                    this.router.navigate(['/dashboard']); // Redirect to the dashboard
+                    this.toastr.success('Logged in successfully', 'Success');
                     return { token: response.token, role: userRole };
                 }
 

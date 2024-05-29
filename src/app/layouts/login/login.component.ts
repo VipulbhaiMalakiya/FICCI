@@ -50,19 +50,17 @@ export class LoginComponent implements OnInit {
             this.isProcess = true;
             this.authService.login(email, password).subscribe(
                 (response) => {
+                    this.isProcess = false;
+                    // if(response.status){}
+                    // if (response.error) {
+                    //     this.error = response.error;
+                    //     this.isProcess = false;
+                    // } else {
+                    //     this.router.navigate(['/dashboard']); // Redirect to the dashboard
+                    //     this.toastr.success('Logged in successfully', 'Success');
+                    //     this.isProcess = false;
 
-                    if (response.error) {
-                        this.error = response.error;
-                        this.isProcess = false;
-                    } else {
-
-                        console.log(response);
-
-                        this.router.navigate(['/dashboard']); // Redirect to the dashboard
-                        this.toastr.success('Logged in successfully', 'Success');
-                        this.isProcess = false;
-
-                    }
+                    // }
                 },
                 (error) => {
                     this.isProcess = false;
