@@ -50,6 +50,8 @@ export class LoginComponent implements OnInit {
             this.isProcess = true;
             this.authService.login(email, password).subscribe(
                 (response) => {
+                    console.log(response);
+
                     if (response.error) {
                         this.error = response.error;
                         this.isProcess = false;

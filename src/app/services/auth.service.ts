@@ -23,21 +23,20 @@ export class AuthService {
         return this.http.post(`${this.apiUrl}`, body).pipe(
             map((responseData: any) => {
 
-                console.log(responseData);
-                 if(responseData.status =="InvalidLogin")                
+                 if(responseData.status =="InvalidLogin")
                 {
                     this.toastr.warning(responseData.message,"Warning");
                     return;
                 }
 
-                 if(responseData.status =="Unauthorized")                
+                 if(responseData.status =="Unauthorized")
                 {
                     this.toastr.warning(responseData.message,"Warning");
                     this.router.navigate(['/unauthorized']);
                     return;
                 }
 
-            
+
                 //console.log(responseData);
                 let response= responseData.data;
                 if (response && response.token) {
@@ -51,10 +50,11 @@ export class AuthService {
                     sessionStorage.setItem('department', response.department);
                     sessionStorage.setItem('IsFinance',response.invoice_IsFinanceApprover)
                     sessionStorage.setItem('navDepartment', response.navDepartment);
+
                     return { token: response.token, role: userRole };
-                } 
-               
-                else 
+                }
+
+                else
                 {
 
                     this.toastr.warning(responseData.message,"Warning");
@@ -65,23 +65,23 @@ export class AuthService {
 
             catchError(error => {
                 console.log(error);
-                if (error.error && error.error.message) 
+                if (error.error && error.error.message)
                 {
                   this.toastr.warning(error.error.message, 'warning');
-                 
-                } 
-                // else 
+
+                }
+                // else
                 // {
                 //   this.toastr.warning('Network error. Please check your internet connection.', 'warning');
                 // }
                 this.router.navigate(['/unauthorized']);
                 return of({ error: 'An error occurred during login' });
               })
-        
+
             // catchError(error => {
             //     //console.log(error);
 
-                
+
             //      this.toastr.error(error.error.message,'Error');
             //     // return of({ error: 'An error occurred during login' });
             //     this.router.navigate(['/unauthorized']); // Redirect to the dashboard
@@ -121,13 +121,13 @@ export class AuthService {
                 if (error.error && error.error.message)
                  {
                   this.toastr.warning(error.error.message, 'warning');
-                 
-                } 
-              
+
+                }
+
                 this.router.navigate(['/unauthorized']);
                 return of({ error: 'An error occurred during login' });
               })
-            
+
             // catchError(error => {
             //    // this.toastr.error('An error occurred during login', 'Error');
             //     this.router.navigate(['/unauthorized']); // Redirect to the dashboard
