@@ -10,6 +10,7 @@ import { EmailComponent } from '../../send-email/email/email.component';
 import { InvoicesService } from '../../service/invoices.service';
 import { UpdateEmailComponent } from '../../update-email/update-email.component';
 import { CreditSalesEmailComponent } from '../../send-email/credit-sales-email/credit-sales-email.component';
+import { FileService } from '../../service/FileService';
 
 @Component({
     selector: 'app-approval-sales-inbox',
@@ -22,6 +23,7 @@ export class ApprovalSalesInboxComponent implements OnInit {
     endDate?: any;
     dateRangeError: boolean = false;
     selectedValue?: any = 'ALL';
+    InvoiceAttachment: any;
 
 
     constructor(private appService: AppService,
@@ -30,7 +32,8 @@ export class ApprovalSalesInboxComponent implements OnInit {
         private toastr: ToastrService,
         private API: InvoicesService,
         private CAPI: CustomersService,
-        private datePipe: DatePipe
+        private datePipe: DatePipe,
+        private fileService: FileService,
 
     ) {
 
@@ -241,7 +244,7 @@ export class ApprovalSalesInboxComponent implements OnInit {
             'Created By': x?.impiHeaderCreatedBy ? this.toTitleCase(x.impiHeaderCreatedBy) : '',
             "Update Date": x?.impiHeaderModifiedDate ? formatDate(x.impiHeaderModifiedDate, 'medium', 'en-IN', 'IST') : '',
             'Status': x?.headerStatus ? this.toTitleCase(x?.headerStatus) : '',
-            'Refund Status':x?.refundStatus ? this.toTitleCase(x.refundStatus) : '',
+            'Refund Status': x?.refundStatus ? this.toTitleCase(x.refundStatus) : '',
         }));
 
         const headers = [
@@ -249,7 +252,7 @@ export class ApprovalSalesInboxComponent implements OnInit {
             'Vendor Name', 'Address', 'State', 'City', 'Pincode',
             'Phone No', "Email ID", 'Contact Person', 'Customer  GST Number', 'PAN No', 'Amount', 'Payment Terms',
             'impiHeaderRemarks', 'Tl Approver', 'Cl Approver', 'Finance Approver', 'Accounts Approver', 'Created On', 'Created By', 'Update Date',
-            'Status','Refund Status'
+            'Status', 'Refund Status'
         ];
         this.appService.exportAsExcelFile(exportData, 'PI Invoice Status', headers);
     }
@@ -322,6 +325,84 @@ export class ApprovalSalesInboxComponent implements OnInit {
         }).catch(() => {
             this.publicVariable.isProcess = false;
         });
+    }
+
+    downalodFile(fileUrl: any) {
+        this.publicVariable.isProcess = true;
+
+        try {
+            const subscription = this.API.GetTaxInvoiceAttachment(fileUrl).subscribe({
+                next: (response: any) => {
+
+                    this.InvoiceAttachment = response.data[0];
+
+                    if (this.InvoiceAttachment.attachment != undefined && this.InvoiceAttachment.attachment != '' && this.InvoiceAttachment.attachment != null) {
+                        const fileName = this.InvoiceAttachment.invoiceNo + '.pdf';
+                        const fileType = `application/pdf`;
+                        this.fileService.downloadFile(this.InvoiceAttachment.attachment, fileName, fileType);
+
+                    }
+                    else {
+
+                        this.toastr.warning('There is an issue with the download of the file from ERP.', 'File Not Found')
+                    }
+
+                    this.publicVariable.isProcess = false;
+                },
+                error: (error) => {
+                    console.error('Error loading project list:', error);
+                    // this.handleLoadingError();
+                },
+            });
+
+            this.publicVariable.Subscription.add(subscription);
+        } catch (error) {
+            console.error('Error loading project list:', error);
+            // this.handleLoadingError();
+        }
+
+
+    }
+
+    downalodFilePI(fileUrl: any) {
+        this.publicVariable.isProcess = true;
+
+        try {
+            const subscription = this.API.GetPITaxInvoiceAttachment(fileUrl).subscribe({
+                next: (response: any) => {
+
+                    this.InvoiceAttachment = response.data[0];
+                    // const fileName = this.InvoiceAttachment.invoiceNo+'.pdf';
+                    // const fileType = `application/pdf`;
+                    // this.fileService.downloadFile(this.InvoiceAttachment.attachment, fileName, fileType);
+                    // this.publicVariable.isProcess  = false;
+
+                    if (this.InvoiceAttachment.attachment != undefined && this.InvoiceAttachment.attachment != '' && this.InvoiceAttachment.attachment != null) {
+                        const fileName = this.InvoiceAttachment.invoiceNo + '.pdf';
+                        const fileType = `application/pdf`;
+                        this.fileService.downloadFile(this.InvoiceAttachment.attachment, fileName, fileType);
+
+                    }
+                    else {
+
+                        this.toastr.warning('There is an issue with the download of the file from ERP.', 'File Not Found')
+                    }
+                    this.publicVariable.isProcess = false;
+
+                },
+                error: (error) => {
+                    console.error('Error loading project list:', error);
+                    // this.handleLoadingError();
+                },
+            });
+
+            this.publicVariable.Subscription.add(subscription);
+        } catch (error) {
+            console.error('Error loading project list:', error);
+            // this.handleLoadingError();
+        }
+
+
     }
 
 
