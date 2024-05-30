@@ -1587,14 +1587,14 @@ export class DashboardComponent {
             }
             else {
                 const encryptedHeaderId = btoa(data.headerId.toString());
-                console.log("Login by",this.publicVariable.storedEmail);
-                console.log("Status",data.headerStatus);
-                console.log("selected data" ,data)
-                if ((data.headerStatus == 'PENDING WITH TL APPROVER' && data.impiHeaderTlApprover.toLocaleLowerCase() == this.publicVariable.storedEmail.toLocaleLowerCase())  || (data.headerStatus == 'PENDING WITH CH APPROVER' && data.impiHeaderClusterApprover.toLocaleLowerCase() == this.publicVariable.storedEmail.toLocaleLowerCase())) {
+                console.log("Login by", this.publicVariable.storedEmail);
+                console.log("Status", data.headerStatus);
+                console.log("selected data", data)
+                if ((data.headerStatus == 'PENDING WITH TL APPROVER' && data.impiHeaderTlApprover.toLocaleLowerCase() == this.publicVariable.storedEmail.toLocaleLowerCase()) || (data.headerStatus == 'PENDING WITH CH APPROVER' && data.impiHeaderClusterApprover.toLocaleLowerCase() == this.publicVariable.storedEmail.toLocaleLowerCase())) {
 
                     this.router.navigate(['invoice/sales-approval/view', encryptedHeaderId], { state: { data: data } });
                 }
-                else{
+                else {
                     this.router.navigate(['invoice/credit-memo-status/view', encryptedHeaderId], { state: { data: data } });
 
                 }
@@ -2629,6 +2629,85 @@ export class DashboardComponent {
             console.error('Error loading project list:', error);
             this.handleLoadingError();
         }
+    }
+
+
+    downalodFile_New(fileUrl: any) {
+        this.publicVariable.isProcess = true;
+
+        try {
+            const subscription = this.IAPI.GetTaxInvoiceAttachment(fileUrl).subscribe({
+                next: (response: any) => {
+
+                    this.InvoiceAttachment = response.data[0];
+
+                    if (this.InvoiceAttachment.attachment != undefined && this.InvoiceAttachment.attachment != '' && this.InvoiceAttachment.attachment != null) {
+                        const fileName = this.InvoiceAttachment.invoiceNo + '.pdf';
+                        const fileType = `application/pdf`;
+                        this.fileService.downloadFile(this.InvoiceAttachment.attachment, fileName, fileType);
+
+                    }
+                    else {
+
+                        this.toastr.warning('There is an issue with the download of the file from ERP.', 'File Not Found')
+                    }
+
+                    this.publicVariable.isProcess = false;
+                },
+                error: (error) => {
+                    console.error('Error loading project list:', error);
+                    // this.handleLoadingError();
+                },
+            });
+
+            this.publicVariable.Subscription.add(subscription);
+        } catch (error) {
+            console.error('Error loading project list:', error);
+            // this.handleLoadingError();
+        }
+
+
+    }
+
+    downalodFilePI_New(fileUrl: any) {
+        this.publicVariable.isProcess = true;
+
+        try {
+            const subscription = this.IAPI.GetPITaxInvoiceAttachment(fileUrl).subscribe({
+                next: (response: any) => {
+
+                    this.InvoiceAttachment = response.data[0];
+                    // const fileName = this.InvoiceAttachment.invoiceNo+'.pdf';
+                    // const fileType = `application/pdf`;
+                    // this.fileService.downloadFile(this.InvoiceAttachment.attachment, fileName, fileType);
+                    // this.publicVariable.isProcess  = false;
+
+                    if (this.InvoiceAttachment.attachment != undefined && this.InvoiceAttachment.attachment != '' && this.InvoiceAttachment.attachment != null) {
+                        const fileName = this.InvoiceAttachment.invoiceNo + '.pdf';
+                        const fileType = `application/pdf`;
+                        this.fileService.downloadFile(this.InvoiceAttachment.attachment, fileName, fileType);
+
+                    }
+                    else {
+
+                        this.toastr.warning('There is an issue with the download of the file from ERP.', 'File Not Found')
+                    }
+                    this.publicVariable.isProcess = false;
+
+                },
+                error: (error) => {
+                    console.error('Error loading project list:', error);
+                    // this.handleLoadingError();
+                },
+            });
+
+            this.publicVariable.Subscription.add(subscription);
+        } catch (error) {
+            console.error('Error loading project list:', error);
+            // this.handleLoadingError();
+        }
+
+
     }
 
 
