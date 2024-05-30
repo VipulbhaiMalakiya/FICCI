@@ -36,6 +36,7 @@ export class CreditmemoComponent implements OnInit {
     amount: any;
     isReadOnly: boolean = true;
     CreditAmount: any = {};
+    refundStatus: any = '';
 
     constructor(private appService: AppService,
         private modalService: NgbModal,
@@ -168,7 +169,7 @@ export class CreditmemoComponent implements OnInit {
         const selectedMemoType = this.publicVariable.dataForm.get('MemoType')?.value;
         this.isReadOnly = selectedMemoType === 'full';
         this.publicVariable.dataForm.get('creditMemoAmount')?.valueChanges.subscribe(value => {
-           // this.checkCreditMemoAmount(value);
+            // this.checkCreditMemoAmount(value);
         });
         if (this.isReadOnly) {
 
@@ -193,7 +194,7 @@ export class CreditmemoComponent implements OnInit {
         const refundStatusControl = this.publicVariable.dataForm.get('refundStatus');
         if (value > 50000) {
             refundStatusControl?.setValue('Credit Note with amount refund');
-        } else  {
+        } else {
             refundStatusControl?.setValue('Credit Note without amount refund');
         }
     }
@@ -239,7 +240,7 @@ export class CreditmemoComponent implements OnInit {
     }
 
 
-    inputAmount:number = 0;
+    inputAmount: number = 0;
     priceValidator(event: Event) {
         const inputValue = (event.target as HTMLInputElement).value;
         let numericValue = inputValue.replace(/[^0-9.]/g, '');
@@ -416,7 +417,7 @@ export class CreditmemoComponent implements OnInit {
             MemoType: '',
             creditMemoAmount: '',
             CreditMemoCancelRemarks: '',
-            refundStatus:''
+            refundStatus: ''
 
 
         });
@@ -1798,5 +1799,13 @@ export class CreditmemoComponent implements OnInit {
     }
     shouldShowExpenseError(controlName: string, errorName: string): boolean {
         return this.publicVariable.expenseForm.controls[controlName].touched && this.publicVariable.expenseForm.controls[controlName].hasError(errorName);
+    }
+
+    onRefundStatusChange(event: Event) {
+        const selectedValue = (event.target as HTMLSelectElement).value;
+
+        this.refundStatus = selectedValue;
+        console.log(this.refundStatus);
+
     }
 }
