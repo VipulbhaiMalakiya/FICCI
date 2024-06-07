@@ -45,7 +45,16 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
 
     onCountryChange(event: any): void {
         this.selectedCountryCode = event.countryName;
-        console.log('Selected country code:', event);
+        this.toggleStateSelect(this.selectedCountryCode);
+    }
+
+    private toggleStateSelect(countryCode: string): void {
+        const stateCodeControl = this.publicVariable.dataForm.get('stateCode');
+        if (countryCode === 'India') {
+            stateCodeControl?.enable();
+        } else {
+            stateCodeControl?.disable();
+        }
     }
 
     private initializeForm(): void {
@@ -60,7 +69,7 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
             address: ['', [Validators.required, this.addressValidator(), Validators.maxLength(100)]],
             address2: ['', [this.addressValidator(), Validators.maxLength(100)]],
             countryCode: [null, [Validators.required]],
-            stateCode: [null, [Validators.required]],
+            stateCode: [{ value: null, disabled: true }, [Validators.required]],
             cityCode: [null, [Validators.required]],
             postCode: ['', [Validators.required, Validators.pattern(/^\d{6}$/)]],
             GSTRegistrationNo: [''],
@@ -410,6 +419,7 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
     }
 
     onSubmit(action: boolean): void {
+
 
 
         if (this.publicVariable.dataForm.valid) {

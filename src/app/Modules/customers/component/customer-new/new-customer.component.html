@@ -91,8 +91,8 @@
                 <div class="col-md-3 col-sm-6">
                     <div class="form-group">
                         <label>Country/Region Code <sup class="text-danger">*</sup></label>
-                        <ng-select [items]="publicVariable.countryList" #select bindLabel="countryName"
-                            (change)="onCountryChange($event)" bindValue="countryCode" placeholder="Select"
+                        <ng-select (change)="onCountryChange($event)" [items]="publicVariable.countryList" #select
+                            bindLabel="countryName" bindValue="countryCode" placeholder="Select"
                             formControlName="countryCode" [searchable]="true" [searchFn]="countrySearchFn"
                             [virtualScroll]="true" [bufferAmount]="10">
                             <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
@@ -107,16 +107,14 @@
                 <div class="col-md-3 col-sm-6">
                     <div class="form-group">
                         <label>State <sup class="text-danger">*</sup></label>
-                        <ng-select *ngIf="selectedCountryCode == 'India'" [items]="publicVariable.stateList" #select
-                            bindLabel="stateName" bindValue="stateCode" placeholder="Select "
+                        <ng-select [items]="publicVariable.stateList" #select bindLabel="stateName"
+                            [disabled]="selectedCountryCode != 'India'" bindValue="stateCode" placeholder="Select "
                             formControlName="stateCode" [searchable]="true" [searchFn]="stateSearchFn"
                             [virtualScroll]="true" [bufferAmount]="10" (change)="onSelectStateCustomer($event)">
                             <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
                                 <small>{{item.stateCode}} - {{item.stateName}}</small>
                             </ng-template>
                         </ng-select>
-                        <input type="text" *ngIf="selectedCountryCode != 'India'" class="form-control"
-                            placeholder="State" maxlength="100" formControlName="stateCode" />
                         <div *ngIf="shouldShowError('stateCode', 'required')" class="text-danger">
                             State is required
                         </div>
@@ -125,16 +123,14 @@
                 <div class="col-md-3 col-sm-6">
                     <div class="form-group">
                         <label>City <sup class="text-danger">*</sup></label>
-                        <ng-select [items]="publicVariable.cityList" *ngIf="selectedCountryCode == 'India'" #select
-                            bindLabel="cityName" bindValue="cityCode" placeholder="Select" formControlName="cityCode"
-                            [searchable]="true" [searchFn]="citySearchFn" [virtualScroll]="true" [bufferAmount]="10"
+                        <ng-select [items]="publicVariable.cityList" #select bindLabel="cityName" bindValue="cityCode"
+                            placeholder="Select" formControlName="cityCode" [searchable]="true"
+                            [searchFn]="citySearchFn" [virtualScroll]="true" [bufferAmount]="10"
                             (change)="onCitySelectionChange()">
                             <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
                                 <small>{{item.cityCode}} - {{item.cityName}}</small>
                             </ng-template>
                         </ng-select>
-                        <input type="text" *ngIf="selectedCountryCode != 'India'" class="form-control"
-                            placeholder="City" maxlength="100" formControlName="cityCode" />
                         <div *ngIf="shouldShowError('cityCode', 'required')" class="text-danger">
                             City is required
                         </div>
