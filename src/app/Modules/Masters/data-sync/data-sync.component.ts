@@ -20,6 +20,7 @@ export class DataSyncComponent implements OnInit, OnDestroy {
 
     }
     ngOnInit(): void {
+        this.publicVariable.isProcess = false;
     }
 
     ngOnDestroy() {
