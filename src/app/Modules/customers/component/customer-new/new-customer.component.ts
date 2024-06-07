@@ -44,7 +44,7 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
 
 
     onCountryChange(event: any): void {
-        this.selectedCountryCode = event;
+        this.selectedCountryCode = event.countryName;
         console.log('Selected country code:', event);
     }
 
@@ -116,9 +116,9 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
             if (params && params['id']) {
                 let decrypted = params['id'];
                 this.customerId = atob(decrypted);
-                console.log("Decrypted ID:", this.customerId); // Log the decrypted ID
+                // console.log("Decrypted ID:", this.customerId); // Log the decrypted ID
             } else {
-                console.error("ID parameter does not exist.");
+                // console.error("ID parameter does not exist.");
             }
         });
 
