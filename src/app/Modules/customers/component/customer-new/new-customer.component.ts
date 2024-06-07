@@ -26,6 +26,8 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
     panExists: boolean = false;
     gstStateCode: any;
     stateCode: any;
+    selectedCountryCode!: string;
+
     constructor(
         private fb: FormBuilder,
         private modalService: NgbModal,
@@ -41,7 +43,10 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
 
 
 
-
+    onCountryChange(event: any): void {
+        this.selectedCountryCode = event;
+        console.log('Selected country code:', event);
+    }
 
     private initializeForm(): void {
         this.publicVariable.dataForm = this.fb.group({
@@ -141,7 +146,7 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
             if (pan.length < 10) {
 
                 this.toastr.warning('Please enter Valid PAN No.');
-               // this.toastr.warning('Please enter Valid PAN No.');
+                // this.toastr.warning('Please enter Valid PAN No.');
                 return;
             }
 
@@ -243,6 +248,8 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
             this.handleLoadingError()
         }
     }
+
+
 
     loadCityList() {
         try {
@@ -404,71 +411,71 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
 
     onSubmit(action: boolean): void {
 
-      
-            if (this.publicVariable.dataForm.valid) {
 
-                if( !this.checkGst() ) return;
-                const newData = this.publicVariable.dataForm.value;
-                if (newData.GSTCustomerType !== 2 && newData.GSTRegistrationNo == '') {
-                    this.toastr.warning('GST number required!');
-                 
-                    return
-                }
-                const isUpdate = !!newData.customerId;
-                const newConfig: any = {
-                    isupdate: isUpdate,
-                    customerId: isUpdate ? newData.customerId : undefined,
-                    customerCode: newData.customerNo,
-                    customerName: newData.name.trim(),
-                    customerLastName: newData.name2.trim(),
-                    address: newData.address.trim(),
-                    address2: newData.address2.trim(),
-                    contact: newData.contact.trim(),
-                    phone: newData.PrimaryContactNo.trim(),
-                    pinCode: newData.postCode,
-                    email: newData.email.trim(),
-                    cityCode: newData.cityCode,
-                    stateCode: newData.stateCode,
-                    countryCode: newData.countryCode,
-                    isDraft: action,
-                    gstNumber: newData.GSTRegistrationNo,
-                    gstCustomerType: newData.GSTCustomerType,
-                    pan: newData.PANNo.trim(),
-                    loginId: this.publicVariable.storedEmail,
-                    roleName: this.publicVariable.storedRole,
-                    CustomerRemarks: newData.CustomerRemarks.trim(),
-                    Department: sessionStorage.getItem('department')
-                };
-                this.publicVariable.isProcess = true;
-                this.publicVariable.Subscription.add(
-                    this.API.create(newConfig).subscribe({
-                        next: (res: any) => {
-                            if (res.status === true) {
-                                this.toastr.success(res.message, 'Success');
-                                // this.router.navigate(['customer/status']);
-                                        this.router.navigate(['dashboard']);
-                                this.publicVariable.dataForm.reset();
-                            } else {
-                                this.toastr.error(res.message, 'Error');
-                            }
-                        },
-                        error: (error: any) => {
-                            this.toastr.error(
-                                error.error.message ||
-                                'An error occurred. Please try again later.',
-                                'Error'
-                            );
-                            this.publicVariable.isProcess = false;
-                        },
-                        complete: () => {
-                            this.publicVariable.isProcess = false;
-                        },
-                    })
-                );
-            } else {
-                this.markFormControlsAsTouched();
+        if (this.publicVariable.dataForm.valid) {
+
+            if (!this.checkGst()) return;
+            const newData = this.publicVariable.dataForm.value;
+            if (newData.GSTCustomerType !== 2 && newData.GSTRegistrationNo == '') {
+                this.toastr.warning('GST number required!');
+
+                return
             }
-        
+            const isUpdate = !!newData.customerId;
+            const newConfig: any = {
+                isupdate: isUpdate,
+                customerId: isUpdate ? newData.customerId : undefined,
+                customerCode: newData.customerNo,
+                customerName: newData.name.trim(),
+                customerLastName: newData.name2.trim(),
+                address: newData.address.trim(),
+                address2: newData.address2.trim(),
+                contact: newData.contact.trim(),
+                phone: newData.PrimaryContactNo.trim(),
+                pinCode: newData.postCode,
+                email: newData.email.trim(),
+                cityCode: newData.cityCode,
+                stateCode: newData.stateCode,
+                countryCode: newData.countryCode,
+                isDraft: action,
+                gstNumber: newData.GSTRegistrationNo,
+                gstCustomerType: newData.GSTCustomerType,
+                pan: newData.PANNo.trim(),
+                loginId: this.publicVariable.storedEmail,
+                roleName: this.publicVariable.storedRole,
+                CustomerRemarks: newData.CustomerRemarks.trim(),
+                Department: sessionStorage.getItem('department')
+            };
+            this.publicVariable.isProcess = true;
+            this.publicVariable.Subscription.add(
+                this.API.create(newConfig).subscribe({
+                    next: (res: any) => {
+                        if (res.status === true) {
+                            this.toastr.success(res.message, 'Success');
+                            // this.router.navigate(['customer/status']);
+                            this.router.navigate(['dashboard']);
+                            this.publicVariable.dataForm.reset();
+                        } else {
+                            this.toastr.error(res.message, 'Error');
+                        }
+                    },
+                    error: (error: any) => {
+                        this.toastr.error(
+                            error.error.message ||
+                            'An error occurred. Please try again later.',
+                            'Error'
+                        );
+                        this.publicVariable.isProcess = false;
+                    },
+                    complete: () => {
+                        this.publicVariable.isProcess = false;
+                    },
+                })
+            );
+        } else {
+            this.markFormControlsAsTouched();
+        }
+
 
     }
 
@@ -482,7 +489,7 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
             //     return;
             // }
 
-            if( !this.checkGst() ) return;
+            if (!this.checkGst()) return;
             const subscription = this.API.ValidateGST(gst).subscribe({
                 next: (response: any) => {
                     if (response.status) {
@@ -513,8 +520,8 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
 
     checkGst() {
 
-        let PANNo =  this.publicVariable.dataForm.get('PANNo')?.value.toUpperCase();
-        let GSTNo =  this.publicVariable.dataForm.get('GSTRegistrationNo')?.value.toUpperCase();
+        let PANNo = this.publicVariable.dataForm.get('PANNo')?.value.toUpperCase();
+        let GSTNo = this.publicVariable.dataForm.get('GSTRegistrationNo')?.value.toUpperCase();
 
         if (PANNo == "" || PANNo == undefined || PANNo == null) {
             this.toastr.warning('Please Enter PAN Number');
@@ -597,7 +604,7 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
             'PrimaryContactNo',
             'contact',
             'CustomerRemarks',
-             'PANNo',
+            'PANNo',
         ].forEach((controlName) => {
             this.publicVariable.dataForm.controls[controlName].markAsTouched();
         });
