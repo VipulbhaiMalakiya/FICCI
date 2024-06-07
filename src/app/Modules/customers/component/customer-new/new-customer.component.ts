@@ -265,6 +265,8 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
             const subscription = this.API.getCityList().subscribe({
                 next: (response: any) => {
                     this.publicVariable.cityList = response.data;
+                    // this.publicVariable.cityList = response.data.filter((city: any) => city.country_id == 1);
+
                     this.loadGstCustomerType()
                 },
                 error: (error) => {
