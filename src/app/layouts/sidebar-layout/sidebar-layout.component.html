@@ -71,9 +71,10 @@
 
                                     <h3><img src="../assets/images/credit-note-icon.png" alt=""> Sales Credit Note</h3>
                                     <a routerLink="/invoice/credit-memo" class="menu-list-title"
-                                        routerLinkActive="active" *ngIf="isEmployee || isApprover"> Create Sales Credit Note</a>
+                                        routerLinkActive="active" *ngIf="isEmployee || isApprover"> Create Sales Credit
+                                        Note</a>
                                     <a routerLink="/invoice/credit-memo-status" class="menu-list-title"
-                                        routerLinkActive="active" >Sales Credit Note
+                                        routerLinkActive="active">Sales Credit Note
                                         Status</a>
 
 
@@ -107,22 +108,27 @@
                                         routerLinkActive="active">Configuration List</a>
                                     <a routerLink="/masters/users" class="menu-list-title"
                                         routerLinkActive="active">User Master</a>
+                                    <a routerLink="/masters/data-sync" class="menu-list-title"
+                                        routerLinkActive="active">Data Sync</a>
                                 </div>
 
 
                                 <div class="left-men">
                                     <h3><img src="../assets/images/manual-icon.png" alt=""> Manual</h3>
-                                    <a [routerLink]="'/assets/Manual/Employee user Manual_FICCI.pdf'"  target="_blank"
+                                    <a [routerLink]="'/assets/Manual/Employee user Manual_FICCI.pdf'" target="_blank"
                                         class="menu-list-title"
-                                        (click)="openFile('/assets/Manual/Employee%20user%20Manual_FICCI.pdf')">Employee Manual</a>
+                                        (click)="openFile('/assets/Manual/Employee%20user%20Manual_FICCI.pdf')">Employee
+                                        Manual</a>
 
-                                    <a *ngIf="isAdmin || isApprover" [routerLink]="'/assets/Manual/Approver User Manual.pdf'"
-                                    target="_blank" class="menu-list-title"
-                                    (click)="openFile('/assets/Manual/Approver User Manual.pdf')">Approver Manual</a>
+                                    <a *ngIf="isAdmin || isApprover"
+                                        [routerLink]="'/assets/Manual/Approver User Manual.pdf'" target="_blank"
+                                        class="menu-list-title"
+                                        (click)="openFile('/assets/Manual/Approver User Manual.pdf')">Approver
+                                        Manual</a>
 
-                                    <a *ngIf="isAdmin" [routerLink]="'/assets/Manual/Admin Manual.pdf'"
-                                    target="_blank"  class="menu-list-title"
-                                    (click)="openFile('/assets/Manual/Admin Manual.pdf')">Admin Manual</a>
+                                    <a *ngIf="isAdmin" [routerLink]="'/assets/Manual/Admin Manual.pdf'" target="_blank"
+                                        class="menu-list-title"
+                                        (click)="openFile('/assets/Manual/Admin Manual.pdf')">Admin Manual</a>
                                 </div>
                             </div>
 

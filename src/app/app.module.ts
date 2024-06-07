@@ -13,6 +13,7 @@ import { NevErpComponent } from './layouts/nev-erp/nev-erp.component';
 import { SalesMemoApproverEmailComponent } from './layouts/sales-memo-approver-email/sales-memo-approver-email.component';
 import { InvoiceApprovalComponent } from './layouts/invoice-approval/invoice-approval.component';
 import { DatePipe } from '@angular/common';
+import { DataSyncComponent } from './Modules/Masters/data-sync/data-sync.component';
 
 @NgModule({
     declarations: [
@@ -25,6 +26,7 @@ import { DatePipe } from '@angular/common';
         NevErpComponent,
         SalesMemoApproverEmailComponent,
         InvoiceApprovalComponent,
+        DataSyncComponent,
 
     ],
     providers: [

@@ -9,6 +9,7 @@ import { ApprproverEmailComponent } from './layouts/apprprover-email/apprprover-
 import { NevErpComponent } from './layouts/nev-erp/nev-erp.component';
 import { SalesMemoApproverEmailComponent } from './layouts/sales-memo-approver-email/sales-memo-approver-email.component';
 import { InvoiceApprovalComponent } from './layouts/invoice-approval/invoice-approval.component';
+import { DataSyncComponent } from './Modules/Masters/data-sync/data-sync.component';
 
 
 const routes: Routes = [
@@ -18,24 +19,24 @@ const routes: Routes = [
     { path: 'login', component: LoginComponent },
 
     {
-        path:'approver/:email/:id/:action', 
-        component:ApprproverEmailComponent,
+        path: 'approver/:email/:id/:action',
+        component: ApprproverEmailComponent,
     },
     {
-        path:'approver/view/:email/:id',
-        component:InvoiceApprovalComponent,
+        path: 'approver/view/:email/:id',
+        component: InvoiceApprovalComponent,
     },
 
     {
-        path:'sales-approval/:email/:id/:action',
-        component:SalesMemoApproverEmailComponent,
+        path: 'sales-approval/:email/:id/:action',
+        component: SalesMemoApproverEmailComponent,
     },
 
     {
         path: '',
         component: SidebarLayoutComponent,
         canActivate: [AuthGuard],
-        data: { expectedRoles: ['Admin', 'Approver','Employee','Accounts'] }, // Define multiple expected roles
+        data: { expectedRoles: ['Admin', 'Approver', 'Employee', 'Accounts'] }, // Define multiple expected roles
 
         children: [
             {
@@ -45,9 +46,12 @@ const routes: Routes = [
                 children: [
                     { path: 'configuration-list', loadChildren: () => import('./Modules/Masters/configuration-list/configuration-list.module').then(m => m.ConfigurationListModule) },
                     { path: 'users', loadChildren: () => import('./Modules/Masters/users/users.module').then(m => m.UsersModule) },
+                    {
+                        path: 'data-sync', component: DataSyncComponent
+                    }
                 ]
             },
-            {path: '',redirectTo: 'dashboard',pathMatch: 'full'},
+            { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
 
             { path: 'dashboard', loadChildren: () => import('./Modules/landing-page/dashboard/dashboard.module').then(m => m.DashboardModule) },
             { path: 'customer', loadChildren: () => import('./Modules/customers/customers.module').then(m => m.CustomersModule) },
