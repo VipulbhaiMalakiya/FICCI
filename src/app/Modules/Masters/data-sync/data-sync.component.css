@@ -1,0 +1,25 @@
+.datasync-pg {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.datasync-pg a {
+    height: 300px;
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+    max-width: 28%;
+    flex: 0 0 28%;
+    justify-content: center;
+    background: #eee;
+    color: #111;
+    outline: 1px solid #ccc;
+    outline-offset: 10px;
+    margin: 0px 25px;
+}
+
+.datasync-pg a:hover {
+    background: green;
+    color: #fff;
+}

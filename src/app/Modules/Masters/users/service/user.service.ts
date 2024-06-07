@@ -10,6 +10,10 @@ import { addUpdateConfiguration } from '../../configuration-list/import';
 })
 export class UserService {
 
+    private syncCountryUrl = `${environment.apiURL}NavERP/GetCountry`;
+    private syncStateUrl = `${environment.apiURL}NavERP/GetState`;
+    private syncCityUrl = `${environment.apiURL}NavERP/GetCity`;
+
     private RolesList = `${environment.apiURL}DropDown/GetRole`;
     private EmployeeList = `${environment.apiURL}DropDown/GetEmployeeList`;
     private apiUrl = `${environment.apiURL}FICCI_User_Master/0`;
@@ -49,6 +53,16 @@ export class UserService {
 
     delete(id: number): Observable<any> {
         return this.http.delete<any>(`${this.deleteapiUrl}/${id}`);
+    }
+
+    syncCountry(): Observable<any[]> {
+        return this.http.get<any[]>(`${this.syncCountryUrl}`);
+    }
+    syncState(): Observable<any[]> {
+        return this.http.get<any[]>(`${this.syncStateUrl}`);
+    }
+    syncCity(): Observable<any[]> {
+        return this.http.get<any[]>(`${this.syncCityUrl}`);
     }
 
 }

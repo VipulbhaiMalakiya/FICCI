@@ -29,19 +29,57 @@ export class DataSyncComponent implements OnInit, OnDestroy {
         }
     }
 
-    loadUserList(): void {
-        const subscription = this.API.getUsers()
+    syncCountry(): void {
+        this.publicVariable.isProcess = true;
+        const subscription = this.API.syncCountry()
             .pipe(finalize(() => { this.publicVariable.isProcess = false; }))
             .subscribe({
                 next: (response: any) => {
+                    if (response.status) {
+                        this.toastr.success(response.message);
+                    }
                     this.publicVariable.isProcess = false;
                 },
                 error: (error: any) => {
-                    this.toastr.error(
-                        error.name === 'TimeoutError' ?
-                            'Operation timed out after 40 seconds' : 'Error loading user list',
-                        error.name
-                    );
+                    this.toastr.error(error.name === 'TimeoutError' ? 'Operation timed out after 40 seconds' : 'Error loading user list', error.name);
+                }
+            });
+
+        this.publicVariable.Subscription.add(subscription);
+    }
+
+    syncState(): void {
+        this.publicVariable.isProcess = true;
+        const subscription = this.API.syncState()
+            .pipe(finalize(() => { this.publicVariable.isProcess = false; }))
+            .subscribe({
+                next: (response: any) => {
+                    if (response.status) {
+                        this.toastr.success(response.message);
+                    }
+                    this.publicVariable.isProcess = false;
+                },
+                error: (error: any) => {
+                    this.toastr.error(error.name === 'TimeoutError' ? 'Operation timed out after 40 seconds' : 'Error loading user list', error.name);
+                }
+            });
+
+        this.publicVariable.Subscription.add(subscription);
+    }
+
+    syncCity(): void {
+        this.publicVariable.isProcess = true;
+        const subscription = this.API.syncCity()
+            .pipe(finalize(() => { this.publicVariable.isProcess = false; }))
+            .subscribe({
+                next: (response: any) => {
+                    if (response.status) {
+                        this.toastr.success(response.message);
+                    }
+                    this.publicVariable.isProcess = false;
+                },
+                error: (error: any) => {
+                    this.toastr.error(error.name === 'TimeoutError' ? 'Operation timed out after 40 seconds' : 'Error loading user list', error.name);
                 }
             });
 
