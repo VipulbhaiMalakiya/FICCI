@@ -333,6 +333,8 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
 
     onSelectStateCustomer(event: any) {
 
+        console.log(event);
+
         this.gstStateCode = event.gstStateCode;
         this.stateCode = event.stateCode;
 
@@ -507,6 +509,7 @@ export class NewCustomerComponent implements OnInit, OnDestroy {
                     if (response.status) {
                         // GST number does not exist
                         console.log('GST number does not exist');
+                        this.toastr.warning('GST number does not exist');
                         this.gstExists = false;
                         // You can update the UI to indicate that the GST number is valid
                     } else {
