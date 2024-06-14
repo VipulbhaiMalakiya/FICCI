@@ -19,7 +19,8 @@ export class AppComponent implements OnInit {
         if (sessionStorage.getItem('userEmail')) {
             this.router.navigate(['/']);
         }
-        this.bnIdle.startWatching(60).subscribe((isTimedOut: boolean) => {
+        //900 =  15 minutes in seconds
+        this.bnIdle.startWatching(900).subscribe((isTimedOut: boolean) => {
             if (isTimedOut) {
                 this.authService.logout();
             }
