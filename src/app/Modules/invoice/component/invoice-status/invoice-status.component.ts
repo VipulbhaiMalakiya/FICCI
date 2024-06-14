@@ -3,6 +3,7 @@ import { AppService, ConfirmationDialogModalComponent, CustomersService, Invoice
 import { invoiceStatusModule } from '../../interface/invoice';
 import { FileService } from '../../service/FileService';
 import { DatePipe } from '@angular/common';
+import { finalize, timeout } from 'rxjs';
 
 @Component({
     selector: 'app-invoice-status',
@@ -16,6 +17,7 @@ export class InvoiceStatusComponent implements OnInit {
     endDate?: any;
     dateRangeError: boolean = false;
     selectedValue?: any = 'ALL';
+    TaxInvoicePaymentSummaryList :any[]=[];
 
 
     constructor(private appService: AppService,
@@ -125,6 +127,46 @@ export class InvoiceStatusComponent implements OnInit {
 
         }
     }
+
+    loadTaxPaymentInvoiceSummary(data: any) 
+    {
+
+        this.publicVariable.isProcess = true;
+        const subscription = this.API.getTaxPaymentDetails(data.postedInvoiceNumber).pipe(
+            timeout(120000), // Timeout set to 2 minutes (120000 milliseconds)
+            finalize(() => {
+                this.publicVariable.isProcess = false;
+            })
+        ).subscribe({
+            next: (response: any) => {
+                if (response.data && Array.isArray(response.data)) {
+
+                    this.TaxInvoicePaymentSummaryList = response.data;
+                    console.log(response);
+                    this.publicVariable.isProcess = false;
+                    //this.PostedTaxInvoiceCount = response.data.length;
+                } else {
+                    // Handle case where response data is null or not an array
+                    this.TaxInvoicePaymentSummaryList = [];
+                    this.publicVariable.isProcess = false;
+                    //   this.PostedTaxInvoiceCount = 0;
+                    console.warn('Response data is null or not an array:', response.data);
+                }
+                this.publicVariable.isProcess = false;
+            },
+            error: (error: any) => {
+                if (error.name === 'TimeoutError') {
+                    this.toastr.error('Operation timed out after 2 minutes', error.name);
+                } else {
+                    this.toastr.error('Error loading user list', error.name);
+                }
+                this.publicVariable.isProcess = false;
+            }
+        });
+
+        this.publicVariable.Subscription.add(subscription);
+    }
+
 
     loadPurchaseInvoiceList(model:any): void {
         try {

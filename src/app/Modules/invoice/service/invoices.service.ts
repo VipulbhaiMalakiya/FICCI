@@ -24,7 +24,7 @@ export class InvoicesService {
 
     private ApproverURL = `${environment.apiURL}ApproveInvoice`;
     private ApproverAccountURL = `${environment.apiURL}Account/GetInvoice?loginid=`;
-    // private GetCustomerAPI = `${environment.apiURL}DropDown/GetCustomer`;
+   // private GetCustomerAPI = `${environment.apiURL}DropDown/GetCustomer`;
     private GetCustomerAPI = `${environment.apiURL}NAVERP/GetCustomerInformation`;
     private GetCOAMasterAPI = `${environment.apiURL}DropDown/GetCOAMaster`;
     private GetGSTGroupAPI = `${environment.apiURL}DropDown/GetGSTGroup`;
@@ -66,7 +66,7 @@ export class InvoicesService {
 
 
     GetCreditMemoApproverEmail(data: any): Observable<any[]> {
-        const url = `${this.CreditMemoApproverEmail}${data.email ?? ''}&id=${data.id}`;
+        const url = `${this.CreditMemoApproverEmail}${data.email ?? ''}&id=${data.id    }`;
         return this.http.get<any[]>(url);
     }
 
@@ -80,7 +80,7 @@ export class InvoicesService {
     }
 
 
-    getApproveSalesInvoiceNew(data: any): Observable<any[]> {
+    getApproveSalesInvoiceNew(data:any): Observable<any[]> {
         const url = `${this.ApproveSalesInvoiceURL}${data.email}`;
         return this.http.get<any[]>(url);
     }
@@ -88,12 +88,12 @@ export class InvoicesService {
 
 
     GetApproverEmail(data: any): Observable<any[]> {
-        const url = `${this.GetApproverEmailURL}${data.email ?? ''}&id=${data.id}`;
+        const url = `${this.GetApproverEmailURL}${data.email ?? ''}&id=${data.id    }`;
         return this.http.get<any[]>(url);
     }
 
     getGetDetails(data: any): Observable<any[]> {
-        const url = `${this.GetDetailsURL}${data.projectCode ?? ''}&customerCode=${data.customerCode}`;
+        const url = `${this.GetDetailsURL}${data.projectCode ?? ''}&customerCode=${data.customerCode    }`;
         return this.http.get<any[]>(url);
     }
 
@@ -188,12 +188,12 @@ export class InvoicesService {
         return this.http.delete<any>(`${this.FILEDELETE}${id}`);
     }
 
-    getApproveInvoice(data: any): Observable<any[]> {
+    getApproveInvoice(data:any): Observable<any[]> {
         const url = `${this.ApproveInvoiceURL}${sessionStorage.getItem('userEmail') ?? ''}&start=${data.startDate}&end=${data.endDate}`;
         return this.http.get<any[]>(url);
     }
 
-    getApproveSalesInvoice(data: any): Observable<any[]> {
+    getApproveSalesInvoice(data:any): Observable<any[]> {
         const url = `${this.ApproveSalesInvoiceURL}${sessionStorage.getItem('userEmail') ?? ''}&start=${data.startDate}&end=${data.endDate}`;
         return this.http.get<any[]>(url);
     }
@@ -225,16 +225,17 @@ export class InvoicesService {
     }
 
     getProjects(): Observable<any[]> {
-        //  return this.http.get<any[]>(`${this.Projectapi}${sessionStorage.getItem('department')}&id=0`);
-        let encodeUrl = encodeURIComponent(sessionStorage.getItem('navDepartment') ?? '');
+      //  return this.http.get<any[]>(`${this.Projectapi}${sessionStorage.getItem('department')}&id=0`);
+
+      let encodeUrl = encodeURIComponent(sessionStorage.getItem('navDepartment') ?? '');
         return this.http.get<any[]>(`${this.Projectapi}${encodeUrl}&id=0`);
 
     }
 
-    getnavProjects(data: any) {
+    getnavProjects(data:any){
 
         const encodedDepartment = encodeURIComponent(data);
-        // console.log(encodedDepartment);
+       // console.log(encodedDepartment);
 
         return this.http.get<any[]>(`${this.Projectapi}${encodedDepartment}&id=0`);
 
@@ -245,21 +246,25 @@ export class InvoicesService {
         //  return this.http.get<any[]>(`${this.Projectapi}${sessionStorage.getItem('department')}&id=0`);
 
         let encodeUrl = encodeURIComponent(sessionStorage.getItem('navDepartment') ?? '');
-        return this.http.get<any[]>(`${this.Projectapi}${encodeUrl}&id=0`);
+          return this.http.get<any[]>(`${this.Projectapi}${encodeUrl}&id=0`);
 
-    }
+      }
 
     // getProjects(): Observable<any[]> {
     //     return this.http.get<any[]>(`${this.Projectapi}`);
     // }
 
-    getPurchaseInvoice_New(data: any): Observable<any[]> {
+    getPurchaseInvoice_New(data:any): Observable<any[]> {
+        console.log(data);
 
         const url = `${this.PurchaseInvoice_New}${sessionStorage.getItem('userEmail') ?? ''}&departmentName=${encodeURIComponent(sessionStorage.getItem('navDepartment') ?? '')}&start=${data.startDate}&end=${data.endDate}`;
+
+      //  const url = `${this.PurchaseInvoice_New}${sessionStorage.getItem('userEmail') ?? ''}&departmentName=${sessionStorage.getItem('navDepartment') ?? ''}&start=${data.startDate}&end=${data.endDate}`;
+       console.log(url);
         return this.http.get<any[]>(url);
     }
 
-    getSalesCreditMemo(data: any): Observable<any[]> {
+    getSalesCreditMemo(data:any): Observable<any[]> {
         const url = `${this.apiSalesCreditMemoUrl}${sessionStorage.getItem('userEmail') ?? ''}&start=${data.startDate}&end=${data.endDate}`;
         return this.http.get<any[]>(url);
     }

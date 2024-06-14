@@ -108,7 +108,9 @@ export class DashboardComponent {
         this.loadPurchaseInvoiceList(this.invoiceType);
         this.storeIsFinance = isFinanceValue === 'true'; // Convert string to boolean
 
-        const navDepartment = sessionStorage.getItem('navDepartment');
+        const navDepartment =encodeURIComponent(sessionStorage.getItem('navDepartment')?? '');
+
+        
         if (!navDepartment && this.storedRole != 'Admin') {
             this.toastr.warning("Department Data not updated in User Master", "Warning");
         }
@@ -138,6 +140,8 @@ export class DashboardComponent {
     InvoicecalculateIndex(page: number, index: number): number {
         return (page - 1) * this.pitableSize + index + 1;
     }
+
+
 
     loadSalesCreditNoteSummary(): void {
         try {
@@ -1587,14 +1591,14 @@ export class DashboardComponent {
             }
             else {
                 const encryptedHeaderId = btoa(data.headerId.toString());
-                console.log("Login by", this.publicVariable.storedEmail);
-                console.log("Status", data.headerStatus);
-                console.log("selected data", data)
-                if ((data.headerStatus == 'PENDING WITH TL APPROVER' && data.impiHeaderTlApprover.toLocaleLowerCase() == this.publicVariable.storedEmail.toLocaleLowerCase()) || (data.headerStatus == 'PENDING WITH CH APPROVER' && data.impiHeaderClusterApprover.toLocaleLowerCase() == this.publicVariable.storedEmail.toLocaleLowerCase())) {
+                console.log("Login by",this.publicVariable.storedEmail);
+                console.log("Status",data.headerStatus);
+                console.log("selected data" ,data)
+                if ((data.headerStatus == 'PENDING WITH TL APPROVER' && data.impiHeaderTlApprover.toLocaleLowerCase() == this.publicVariable.storedEmail.toLocaleLowerCase())  || (data.headerStatus == 'PENDING WITH CH APPROVER' && data.impiHeaderClusterApprover.toLocaleLowerCase() == this.publicVariable.storedEmail.toLocaleLowerCase())) {
 
                     this.router.navigate(['invoice/sales-approval/view', encryptedHeaderId], { state: { data: data } });
                 }
-                else {
+                else{
                     this.router.navigate(['invoice/credit-memo-status/view', encryptedHeaderId], { state: { data: data } });
 
                 }
@@ -2171,7 +2175,7 @@ export class DashboardComponent {
     loadTaxPaymentInvoiceSummary(data: any) {
 
         this.publicVariable.isProcess = true;
-        const subscription = this.IAPI.getTaxPaymentDetails(data.no).pipe(
+        const subscription = this.IAPI.getTaxPaymentDetails(data.postedInvoiceNumber).pipe(
             timeout(120000), // Timeout set to 2 minutes (120000 milliseconds)
             finalize(() => {
                 this.publicVariable.isProcess = false;
@@ -2630,7 +2634,6 @@ export class DashboardComponent {
             this.handleLoadingError();
         }
     }
-
 
     downalodFile_New(fileUrl: any) {
         this.publicVariable.isProcess = true;

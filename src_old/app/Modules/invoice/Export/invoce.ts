@@ -1,0 +1,56 @@
+import { FormGroup } from "@angular/forms";
+import { Subscription } from "rxjs";
+import { COAMasterModel, GSTGroupModel, GetCustomerModel, HSNSACModel, InvoiceSummaryModel, invoiceApproveModule, invoiceStatusModule, projectModel } from "../interface/invoice";
+import { CityList, CountryList, StateList, customerStatusListModel } from "../../customers/interface/customers";
+
+export { FormBuilder, Validators } from '@angular/forms';
+export { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+export { ToastrService } from 'ngx-toastr';
+export { Router } from '@angular/router';
+export { AppService } from 'src/app/services/excel.service';
+export { ConfirmationDialogModalComponent } from 'src/app/Modules/shared/components/confirmation-dialog-modal/confirmation-dialog-modal.component';
+export { InvoicesService } from '../service/invoices.service';
+export { CustomersService } from 'src/app/Modules/customers/Export/new-customer';
+export { formatDate } from '@angular/common';
+export { ActivatedRoute } from 'src/app/Modules/customers/Export/new-customer';
+export { panValidator } from '../Validation/panValidator';
+export { alphanumericWithSpacesValidator } from '../Validation/alphanumericWithSpacesValidator';
+export { gstValidator } from '../Validation/gstValidator';
+
+export class publicVariable {
+    dataForm!: FormGroup;
+    mailForm!:FormGroup;
+    expenseForm!: FormGroup;
+
+    expenses: any[] = [];
+    editingIndex: number = -1;
+
+    isEdit: boolean = false;
+    page: number = 1;
+    roleId: any;
+    count: number = 0;
+    isProcess: boolean = true;
+    tableSize: number = 10;
+    tableSizes: number[] = [10, 20, 50, 100];
+    searchText: string = '';
+    Subscription: Subscription = new Subscription();
+    selectedProjet: any;
+    selectCustomer: any;
+    userData: any;
+    projectList: projectModel[] = [];
+    invoiceStatuslistData: invoiceStatusModule[] = [];
+    invoiceApprovelistData: invoiceApproveModule[] = [];
+    GetCustomerList: GetCustomerModel[] = [];
+    COAMasterList : COAMasterModel[] = []
+    InvoiceSummaryList : InvoiceSummaryModel[] = [];
+
+    customerStatusList: customerStatusListModel[] = [];
+    countryList: CountryList[] = [];
+    stateList: StateList[] = [];
+    GSTGroupList: GSTGroupModel[] = [];
+    HSNSACList : HSNSACModel[] = [];
+    cityList: CityList[] = [];
+    storedEmail:string =  sessionStorage.getItem('userEmail') ?? '';
+    storedRole: string = sessionStorage.getItem('userRole') ?? '';;
+
+}

@@ -1,0 +1,185 @@
+<app-loading *ngIf="publicVariable.isProcess"></app-loading>
+
+<div class="inner-content">
+
+  <h3 class="content-title">Sales Invoice Approval Inbox</h3>
+
+  <div class="page-btns-col" >
+    <div class="tblsort">
+        <label class="col-form-label">Show</label>
+        <select id="itemsPerPageSelect" class="form-select" [(ngModel)]="publicVariable.tableSize"
+            (change)="onTableSizeChange($event)">
+            <option *ngFor="let size of publicVariable.tableSizes" [value]="size">
+                {{ size }}
+            </option>
+        </select>
+    </div>
+
+    <div class="homefilterdt">
+        <div class="ficdrop1">
+            <div class="form-group">
+                <label>Select Date</label>
+                <select id="select-tags4" class="form-select" [(ngModel)]="selectedValue"
+                    (change)="onValueChange($event)">
+                    <option value="ALL">ALL</option>
+                    <option value="Today">Today</option>
+                    <option value="Yesterday">Yesterday</option>
+                    <option value="7">Last 7 days</option>
+                    <option value="30">Last 30 days</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="ficdrop1">
+            <div class="form-group">
+                <label>From</label>
+                <input class="form-control" type="date" id="startDate" name="startDate" [(ngModel)]="startDate"
+                    [max]="endDate"> </div>
+        </div>
+
+        <div class="ficdrop1">
+            <div class="form-group">
+                <label>To</label>
+                <input class="form-control" type="date" id="endDate" name="endDate" [(ngModel)]="endDate"
+                    [max]="endDate">
+                <div *ngIf="dateRangeError" class="form-validate-err">
+                    To Date must be after From Date
+                </div>
+            </div>
+        </div>
+
+        <div class="ficdrop1">
+            <div class="form-group">
+                <label class="d-none d-sm-block">&nbsp;</label>
+                <button type="reset" (click)="reset()" class="btn common-btn">Reset</button>
+            </div>
+        </div>
+
+        <div class="ficdrop1">
+            <div class="form-group">
+                <label class="d-none d-sm-block">&nbsp;</label>
+                <button type="submit" (click)="submitDateRange()" class="btn common-btn">Submit</button>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="dt-buttons">
+        <button class="gray-btns" type="button" (click)="onDownload()">
+            <img src="../assets/images/excel-icon.png" alt="" title="Download" />
+        </button>
+    </div>
+
+    <!-- Example single danger button -->
+    <div class="topbr-btns">
+        <div class="btn-group">
+            <div class="table-search">
+                <input type="text" class="form-control" [(ngModel)]="publicVariable.searchText" name="name"
+                    id="name" placeholder="Search here" />
+            </div>
+        </div>
+    </div>
+
+    <!-- <div class="common-box">
+        <a routerLink="/invoice/new" class="common-btn" *ngIf="this.publicVariable.storedRole !== 'Admin'">Add New</a>
+    </div> -->
+</div>
+
+  <div class="inner-middle-content">
+    <div class="dasboard-table">
+        <div class="table-responsive">
+            <table class="table text-nowrap">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        
+                        <th class="action-cl">Action</th>
+                        <th>Invoice Type</th>
+                        <th >PI No.
+                        </th>
+                        <th>Tax Invoice No.</th>
+                        <th>Invoice Amount</th>
+                        <th>Customer Name</th>
+                        <th>Status</th>
+                        <th>Department</th>
+                        <th>Project Code</th>
+                        <th>Project Name</th>
+                        <th>Created By</th>
+                        <th>Created On</th>
+                        <th>TL Approver</th>
+                        <th>Record No.</th>
+                    
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr
+                        *ngFor="let d of  this.publicVariable.invoiceStatuslistData | searchFilter: publicVariable.searchText| paginate: {itemsPerPage: publicVariable.tableSize,currentPage: publicVariable.page,totalItems: publicVariable.count};let i = index">
+                        <td>{{calculateIndex(publicVariable.page, i)}}</td>
+                        <td>
+                            <span class="table-btns">
+                                <a href="javascript:void(0);" (click)="onView(d)"><img
+                                        src="../assets/images/view-icon.svg" alt="" title="View" /></a>
+
+                                        <a href="javascript:void(0);" (click)="onSendEmail(d)"
+                                        *ngIf="d.headerStatus === 'APPROVED BY FINANCE' || '' "><img
+                                            src="../assets/images/email-icon.svg" alt="" title="Email" /></a>
+                                    <a href="javascript:void(0);" (click)="onediteEmail(d)"
+                                        *ngIf="d.headerStatus === 'MAIL SENT BY FINANCE TO CUSTOMER' "><img
+                                            src="../assets/images/email-edit-icon.svg" alt="" title="Email" /></a>
+                                            <a *ngIf="d.postedInvoiceNumber" href="javascript:void(0);" (click)="downalodFile(d.postedInvoiceNumber)"><img
+                                                src="../assets/images/download-icon.svg" alt="" title="Download" /></a>
+
+
+                            </span>
+                        </td>
+                      
+                        <td>{{d.impiHeaderInvoiceType | titlecase}}</td>
+                        <td>
+                            {{d.headerPiNo}}</td>
+                        <td >
+                                {{d.postedInvoiceNumber}}</td>
+                      <td>{{d.impiHeaderTotalInvoiceAmount | number:'1.2-2' }}</td>
+                      <td>{{d.impiHeaderCustomerName | titlecase}}</td>
+                      <td>{{d.headerStatus}}</td>
+                      <td>{{d.impiHeaderProjectDepartmentName | titlecase}}</td>
+                        <td>{{d.impiHeaderProjectCode}}</td>
+                        <td>{{d.impiHeaderProjectName | titlecase}}</td>
+
+                        <!-- <td>{{d.impiHeaderProjectDivisionName | titlecase}}</td> -->
+
+                        <!-- <td>{{d.impiHeaderCustomerCity | titlecase}}</td> -->
+                        <td>{{d.impiHeaderCreatedBy | titlecase}}</td>
+                        <td>{{d.impiHeaderSubmittedDate | date:'medium':'IST'}}</td>
+                        <td>{{d.impiHeaderTlApprover | titlecase}}</td>
+                        <!-- <td>{{d.impiHeaderClusterApprover | titlecase}}</td> -->
+                        <!-- <td>{{d.impiHeaderFinanceApprover | titlecase}}</td> -->
+                        <!-- <td>{{d.accountApprover | titlecase}}</td> -->
+                        <td>{{d.headerRecordID}}</td>
+
+
+                      
+                    </tr>
+                </tbody>
+            </table>
+            <div *ngIf="!publicVariable.invoiceStatuslistData || publicVariable.invoiceStatuslistData.length === 0">
+                <p>No data found.</p>
+            </div>
+            <div class="text-center"
+            *ngIf="(publicVariable.invoiceStatuslistData | searchFilter: publicVariable.searchText)?.length === 0 && publicVariable.invoiceStatuslistData.length > 0">
+                <span class="text-danger">No results found.</span>
+            </div>
+        </div>
+
+        <div class="clearfix">
+            <div class="hint-text">Showing <b>{{this.publicVariable.tableSize}}</b> out of <b>{{
+                    publicVariable.count }}</b>
+                entries</div>
+            <pagination-controls previousLabel="Prev" class="pagination"
+                *ngIf="publicVariable.invoiceStatuslistData && publicVariable.invoiceStatuslistData.length > 0"
+                nextLabel="Next" (pageChange)="onTableDataChange($event)">
+            </pagination-controls>
+        </div>
+    </div>
+</div>
+
+</div>

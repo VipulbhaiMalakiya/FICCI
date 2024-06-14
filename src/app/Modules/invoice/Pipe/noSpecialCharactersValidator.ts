@@ -18,7 +18,7 @@ export function noSpecialCharactersValidator(): ValidatorFn {
   return (control: AbstractControl): { [key: string]: any } | null => {
     const value = control.value;
     // Regular expression to allow only alphanumeric characters and spaces
-    const allowedCharsRegex = /^[a-zA-Z0-9\s]*$/;
+    const allowedCharsRegex = /^[a-zA-Z0-9 .,&_-\s]*$/;
 
     if (!allowedCharsRegex.test(value)) {
       return { 'specialCharactersNotAllowed': true };

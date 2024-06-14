@@ -1,0 +1,10 @@
+.text-danger {
+    font-size: 12px;
+}
+.text-warning{
+    font-size: 12px;
+}
+.readonly {
+    background-color: var(--bs-secondary-bg);
+    opacity: 1;
+}

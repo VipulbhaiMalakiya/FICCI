@@ -70,8 +70,9 @@
                 <div class="col-md-4 col-sm-6">
                     <div class="form-group">
                         <label for="refundStatus">Refund Status <sup class="text-danger">*</sup></label>
-                        <select id="refundStatus" formControlName="refundStatus" class="form-select"
-                            (change)="onRefundStatusChange($event)">
+                        <select id="refundStatus" formControlName="refundStatus" 
+                        (change)="onRefundStatusChange($event)"
+                            class="form-select">
                             <option value="">Select Option</option>
                             <option value="Credit Note with amount refund">Credit Note with amount refund</option>
                             <option value="Credit Note without amount refund">Credit Note without amount refund</option>
@@ -81,23 +82,24 @@
                     <div *ngIf="shouldShowError('refundStatus','required')" class="text-danger">Refund Status
                         is required
                     </div>
-                    <div *ngIf="this.refundStatus == 'Credit Note with amount refund' " class="text-warning"> Request
-                        will go for CH Approver</div>
-                    <!-- <div *ngIf="inputAmount >= 50000" class="text-warning"> Request will go for CH Approver</div> -->
+
+                    <div *ngIf="this.refundStatus == 'Credit Note with amount refund' " class="text-warning"> For refund more than 50000, request will go for CH Approval.</div>
+                    <!-- <div *ngIf="inputAmount >= 50000" class="text-warning"> For refund more than 50000, request will go for CH Approval.</div> -->
 
                 </div>
 
                 <div class="col-md-4 col-sm-6">
                     <div class="form-group">
-                        <label for="CreditMemoCancelRemarks">Cancel Reason <sup class="text-danger">*</sup></label>
+                        <label for="CreditMemoCancelRemarks">Cancellation Reason <sup class="text-danger">*</sup></label>
                         <select id="CreditMemoCancelRemarks" formControlName="CreditMemoCancelRemarks"
                             class="form-select">
                             <option value="">Select Option</option>
-                            <option value="Duplicate">Duplicate</option>
-                            <option value="Data Entry Mistake">Data Entry Mistake</option>
-                            <option value="Service not availed">Service not availed</option>
                             <option value="Amount Credited by Mistake">Amount Credited by Mistake</option>
                             <option value="Change in Invoice Date">Change in Invoice Date</option>
+                            <option value="Customer Cancelled Participation">Customer Cancelled Participation</option>
+                            <option value="Duplicate">Duplicate</option>
+                            <option value="Data Entry Mistake">Data Entry Mistake</option>
+                            <option value="Event Cancelled">Event Cancelled</option>
                         </select>
                     </div>
 
@@ -145,8 +147,7 @@
                         <label for="department">Department </label>
                         <input type="text" id="department" placeholder="Department"
                             formControlName="ImpiHeaderDepartment" class="form-control" />
-                        <div *ngIf="shouldShowError('ImpiHeaderDepartment','required')" class="text-danger">Department
-                            is required
+                        <div *ngIf="shouldShowError('ImpiHeaderDepartment','required')" class="text-danger">Department                             is required
                         </div>
 
                     </div>
@@ -179,8 +180,8 @@
                         <input type="text" placeholder="GST No" class="form-control" formControlName="ImpiHeaderGstNo"
                             maxlength="20" />
 
-                        <div *ngIf="shouldShowError('ImpiHeaderGstNo','invalidGST')" class="text-danger"> Please enter
-                            a valid GST Registration Number. (05AAACF1282E1Z5)</div>
+                        <!-- <div *ngIf="shouldShowError('ImpiHeaderGstNo','invalidGST')" class="text-danger"> Please enter
+                            a valid GST Registration Number. (05AAACF1282E1Z5)</div> -->
 
                     </div>
                 </div>

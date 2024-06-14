@@ -1,0 +1,63 @@
+<app-loading *ngIf="isProcess"></app-loading>
+
+<header class="login-page">
+    <div class="container">
+        <div class="header-logo"><a routerLink="/"><img src="../assets/images/logo.png" alt=""> </a></div>
+    </div>
+</header>
+
+<div class="login-wrapper main-content">
+
+    <div class="container">
+
+        <div class="innerlogin-sec">
+
+            <div class="login-vector"><img src="../assets/images/login-vector.jpg" alt=""></div>
+
+            <div class="home-search">
+                <h1>Login</h1>
+
+                <form class="login-form" [formGroup]="dataForm" (ngSubmit)="onSubmit()">
+                    <div class="form-group">
+                        <label>User Name</label>
+                        <input type="text" class="form-control" placeholder="user name" name="email"
+                            formControlName="email">
+                        <span class="login-ico"><img src="../assets/images/user-icon.png" alt=""></span>
+
+                        <div *ngIf="shouldShowError('email','required')" class="text-danger">User Name is required</div>
+                        <!-- <div *ngIf="shouldShowError('email','email')" class="text-danger">Please enter a valid email
+                            address</div> -->
+
+                    </div>
+
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="{{ hidePassword ? 'password' : 'text' }}" class="form-control"
+                            placeholder="Password" name="password" formControlName="password">
+                        <span class="login-ico" (click)="togglePasswordVisibility()">
+                            <img [src]="hidePassword ? '../assets/images/password-icon.png' : '../assets/images/password-icon2.png'"
+                                style="max-height:14px;" alt="">
+
+                        </span>
+
+                        <div *ngIf="shouldShowError('password','required')" class="text-danger">Password is required
+                        </div>
+                    </div>
+
+                    <div class="form-group mt-4">
+                        <button type="submit" class="common-btn w-auto">LOGIN</button>
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+
+
+        <p class="login-copyright">Federation of Indian Chambers of Commerce & Industry © 2024 | All rights reserved.
+        </p>
+
+    </div>
+
+</div>

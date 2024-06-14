@@ -1,0 +1,230 @@
+
+<app-loading *ngIf="publicVariable.isProcess"></app-loading>
+
+<div class="inner-content">
+    <div class="approver-form">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="comments-history-icon" title="Workflow History"  data-bs-toggle="modal" data-bs-target="#workflow-modal">
+                    <img src="../assets/images/file-history-icon.png" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+    <h3 class="content-title">Customer Accounts Remarks</h3>
+
+    <div class="mastersform-sec">
+        <div class="row">
+
+            <div class="col-md-3 col-sm-6">
+                <div class="form-group">
+                    <label>Customer No.</label>
+                    <input type="text" value="{{data.customerCode}}" class="form-control" disabled readonly>
+                </div>
+            </div>
+
+            <div class="col-md-3 col-sm-6">
+                <div class="form-group">
+                    <label>Name</label>
+                    <input type="text" value="{{data.customerName | titlecase}}" class="form-control" disabled readonly>
+                </div>
+            </div>
+
+            <div class="col-md-3 col-sm-6">
+                <div class="form-group">
+                    <label>Name 2</label>
+                    <input type="text" value="{{data.customerLastName | titlecase}}" class="form-control" disabled readonly>
+                </div>
+            </div>
+
+            <div class="col-md-3 col-sm-6">
+                <div class="form-group">
+                    <label>Address</label>
+                    <input type="text" value="{{data.address}}" class="form-control" disabled readonly>
+                </div>
+            </div>
+
+            <div class="col-md-3 col-sm-6">
+                <div class="form-group">
+                    <label>Address 2</label>
+                    <input type="text" value="{{data.address2}}" class="form-control" disabled readonly>
+                </div>
+            </div>
+
+            <div class="col-md-3 col-sm-6">
+                <div class="form-group">
+                    <label>Country/Region Code</label>
+                    <select class="form-select" disabled readonly>
+                        <option value="">{{data.countryList.countryName}}</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-md-3 col-sm-6">
+                <div class="form-group">
+                    <label>State</label>
+                    <select class="form-select" disabled readonly>
+                        <option value="">{{data.stateList.stateName}}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <div class="form-group">
+                    <label>City</label>
+                    <select class="form-select" disabled readonly>
+                        <option value="">{{data.cityList.cityName}}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <div class="form-group">
+                    <label>Post Code</label>
+                    <input type="text" value="{{data.pincode}}" class="form-control" disabled readonly>
+                </div>
+            </div>
+
+
+            <div class="col-md-3 col-sm-6">
+                <div class="form-group">
+                    <label>E-Mail</label>
+                    <input type="text" value="{{data.email | titlecase}}" class="form-control" disabled readonly>
+                </div>
+            </div>
+
+            <div class="col-md-3 col-sm-6">
+                <div class="form-group">
+                    <label>Primary Contact No.</label>
+                    <input type="text" value="{{data.phoneNumber}}" class="form-control" disabled readonly>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <div class="form-group">
+                    <label>Contact Person</label>
+                    <input type="text" value="{{data.contact | titlecase}}" class="form-control" disabled readonly>
+                </div>
+            </div>
+
+            <div class="col-md-3 col-sm-6">
+                <div class="form-group">
+                    <label>GST Customer Type</label>
+                    <select class="form-select" disabled readonly>
+                        <option value="">{{data.gstType.gstTypeName | titlecase}}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <div class="form-group">
+                    <label>GST Registration No.</label>
+                    <input type="text" value="{{data.gstNumber}}" class="form-control" disabled readonly>
+                </div>
+            </div>
+
+            <div class="col-md-3 col-sm-6">
+                <div class="form-group">
+                    <label>P.A.N. No.</label>
+                    <input type="text" value="{{data.pan}}" class="form-control" disabled readonly>
+                </div>
+            </div>
+
+            <!-- <div class="col-md-3 col-sm-6">
+                <div class="form-group">
+                    <label>Approved by</label>
+                    <input type="text" value="{{data.approvedBy | titlecase}}" class="form-control" disabled
+                        readonly>
+                </div>
+            </div> -->
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label>Remarks</label>
+                    <textarea class="form-control h-100" cols="3" rows="2"
+                    value="{{data.customerRemarks | titlecase}}"
+                    disabled readonly ></textarea>
+                </div>
+            </div>
+
+
+
+            <div class="col-md-12" *ngIf="data.accountsRemarks">
+                <div class="form-group">
+                    <label>Accounts Remarks</label>
+                    <textarea class="form-control h-100" cols="3"
+                    rows="2" value="{{data.accountsRemarks | titlecase}}"
+                    disabled readonly ></textarea>
+                </div>
+            </div>
+
+
+            <form [formGroup]="publicVariable.dataForm"  *ngIf="publicVariable.storedRole !== 'Admin' &&
+            (data.customerStatus == 'PENDING WITH ACCOUNTS APPROVER' || data.customerStatus == 'PENDING WITH FINANCE APPROVER')">
+                <div class="col-md-9">
+                    <div class="form-group">
+                        <label>Remarks <sup class="text-danger">*</sup></label>
+                        <textarea class="form-control h-100" cols="3" rows="5"  formControlName="remarks" ></textarea>
+                        <div *ngIf="shouldShowError('remarks', 'required')" class="text-danger">
+                            This field is required
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <div class="form-group mb-0 mt-2">
+                        <button type="submit" class="btn btn-danger w-auto me-2" (click)="onSubmit(false)">Reject</button>
+                        <button type="submit" class="common-btn w-auto"  (click)="onSubmit(true)">Approve</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+    </div>
+
+  </div>
+<!-----Modal----->
+
+<div class="modal fade common-modal" id="workflow-modal" tabindex="-1" role="dialog"
+    aria-labelledby="testimonialmodalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title text-center w-100 small-title">Workflow Histroy</div>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-0">
+
+                <div class="dashboard-data">
+
+                    <div class="dasboard-table mb-0">
+
+                        <div class="table-responsive">
+
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Status</th>
+                                        <th>Remarks By</th>
+                                        <th>Remarks On</th>
+                                        <th>Remarks</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let i of this.data.workFlowHistory;let in = index">
+                                        <td>{{in + 1}}</td>
+                                        <td>{{i.imwdPendingAt | titlecase}}</td>
+                                        <td>{{i.imwdInitiatedBy |titlecase}}</td>
+                                        <td>{{i.imwdCreatedOn | date:'medium':'IST'}}</td>
+                                        <td>{{i.imwdRemarks | titlecase}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>

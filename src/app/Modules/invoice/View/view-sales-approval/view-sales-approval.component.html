@@ -302,7 +302,6 @@
                     <tr>
                         <th>#</th>
                         <th>Category</th>
-
                         <th>File Type</th>
                         <th>File Name</th>
                         <th>Action</th>
@@ -316,6 +315,17 @@
                         <td>{{ file.name }}</td>
                         <td>
                             <a href="javascript:void(0)" (click)="downalodFile(file)"><img
+                                    src="../assets/images/download-icon.svg" alt="" class="me-2"></a>
+
+                        </td>
+                    </tr>
+                    <tr *ngIf="InvNo!=null || InvNo!=undefined">
+                        <td>{{uploadedFiles.length+1}}</td>
+                        <td>Posted Credit Note</td>
+                        <td>.pdf</td>
+                        <td>{{InvNo}}</td>
+                        <td *ngIf="!data.isDraft">
+                            <a href="javascript:void(0)" (click)="downalodInvFile(InvAttachment,InvNo)"><img
                                     src="../assets/images/download-icon.svg" alt="" class="me-2"></a>
 
                         </td>

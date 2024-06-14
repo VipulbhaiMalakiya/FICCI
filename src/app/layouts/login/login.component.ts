@@ -33,10 +33,6 @@ export class LoginComponent implements OnInit {
     }
 
 
-
-
-
-
     private initializeForm(): void {
         this.dataForm = this.fb.group({
             email: ['', [Validators.required]],
@@ -53,13 +49,18 @@ export class LoginComponent implements OnInit {
             const { email, password } = this.dataForm.value;
             this.isProcess = true;
             this.authService.login(email, password).subscribe(
-                (response) => {
+              
+                (response) => {                     
+              
+                    console.log(response);
                     this.isProcess = false;
-                    // if(response.status){}
-                    // if (response.error) {
+
+                    // if (response.status == "Unauthorized" || response.status == "InvaildLogin") 
+                    // {
                     //     this.error = response.error;
                     //     this.isProcess = false;
-                    // } else {
+                    // }                   
+                    // else {
                     //     this.router.navigate(['/dashboard']); // Redirect to the dashboard
                     //     this.toastr.success('Logged in successfully', 'Success');
                     //     this.isProcess = false;

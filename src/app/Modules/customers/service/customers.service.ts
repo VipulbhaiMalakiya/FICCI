@@ -13,7 +13,7 @@ export class CustomersService {
 
     private apiUrl = `${environment.apiURL}Customer`;
     private deleteURL = `${environment.apiURL}Customer/Delete`;
-    private GetPostCodeURL = `${environment.apiURL}NavERP/GetPostCode`;
+    private GetPostCodeURL = `${environment.apiURL}DropDown/GetPostCode`;
     private gustomerTypeURL = `${environment.apiURL}DropDown/GstCustomerType`;
     private getCustomerStatusURL = `${environment.apiURL}Customer/0`;
     private getCustomerStatusNewURL = `${environment.apiURL}Customer?email=`;

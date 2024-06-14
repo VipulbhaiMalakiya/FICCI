@@ -335,8 +335,10 @@
 
 
                         <li class="nav-item">
-                            <a class="nav-link  tabbg-1" [class.active]="headerStatus =='DRAFT'" data-bs-toggle="pill"
-                                href="#PIhome" (click)="loadInoivceStatusList('DRAFT'); headerStatus = 'DRAFT'">
+                            <a class="nav-link  tabbg-1"
+                                [class.active]="headerStatus =='DRAFT'"
+                                data-bs-toggle="pill" href="#PIhome"
+                                (click)="loadInoivceStatusList('DRAFT'); headerStatus = 'DRAFT'">
                                 <small>Draft</small>
                                 <span>{{PIisDRAFT}}</span>
                             </a>
@@ -564,17 +566,6 @@
                                                                     title="View1">
                                                             </a>
 
-                                                            <a *ngIf="( d.impiHeaderInvoiceType === 'Tax Invoice') && (d.headerStatus == 'APPROVED BY FINANCE' || d.headerStatus == 'POSTED TAX INVOICE')"
-                                                                href="javascript:void(0);"
-                                                                (click)="downalodFile_New(d.postedInvoiceNumber)"><img
-                                                                    src="../assets/images/download-icon.svg" alt=""
-                                                                    title="Download" /></a>
-
-                                                            <a *ngIf="(d.impiHeaderInvoiceType === 'Proforma Invoice') && (d.headerStatus == 'APPROVED BY FINANCE' || d.headerStatus == 'TAX INVOICE POSTED')"
-                                                                href="javascript:void(0);"
-                                                                (click)="downalodFilePI_New(d.headerPiNo)"><img
-                                                                    src="../assets/images/download-icon.svg" alt=""
-                                                                    title="Download" /></a>
 
                                                             <!-- <a href="javascript:void(0);" (click)="onApprovalPI(d)"
                                                                 *ngIf="customerStatus == 'FOR APPROVAL' &&  this.publicVariable.storedRole == 'Approver'">
@@ -631,6 +622,29 @@
                                                                 (click)="downalodFilePI(d.headerPiNo)"><img
                                                                     src="../assets/images/download-icon.svg" alt=""
                                                                     title="Download" /></a> -->
+
+
+<a *ngIf="( d.impiHeaderInvoiceType === 'Tax Invoice') && (d.headerStatus == 'APPROVED BY FINANCE' || d.headerStatus == 'POSTED TAX INVOICE')"
+href="javascript:void(0);"
+(click)="downalodFile_New(d.postedInvoiceNumber)"><img
+    src="../assets/images/download-icon.svg" alt=""
+    title="Download" /></a>
+
+<a *ngIf="(d.impiHeaderInvoiceType === 'Proforma Invoice') && (d.headerStatus == 'APPROVED BY FINANCE' || d.headerStatus == 'TAX INVOICE POSTED')"
+href="javascript:void(0);"
+(click)="downalodFilePI_New(d.headerPiNo)"><img
+    src="../assets/images/download-icon.svg" alt=""
+    title="Download" /></a>
+
+    <a *ngIf="( d.impiHeaderInvoiceType === 'Tax Invoice') && (d.headerStatus == 'APPROVED BY FINANCE' || d.headerStatus == 'POSTED TAX INVOICE')"
+    
+    href="javascript:void(0);" data-bs-toggle="modal"
+                                                                (click)="loadTaxPaymentInvoiceSummary(d)"
+                                                                data-bs-target="#workflow-modal"><img
+                                                                    class="custom-rupee-icon"
+                                                                    src="../assets/images/rupee-icon.png" alt=""
+                                                                    title="Payment" /></a>
+
                                                         </span>
                                                     </td>
                                                     <td>{{d.impiHeaderInvoiceType | titlecase}}</td>

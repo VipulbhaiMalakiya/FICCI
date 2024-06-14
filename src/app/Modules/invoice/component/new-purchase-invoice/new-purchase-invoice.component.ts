@@ -1138,51 +1138,51 @@ export class NewPurchaseInvoiceComponent implements OnInit {
             return;
         }
 
-        else if (this.publicVariable.dataForm.value.ImpiHeaderCustomerAddress == null ||
-            this.publicVariable.dataForm.value.ImpiHeaderCustomerAddress == undefined ||
-            this.publicVariable.dataForm.value.ImpiHeaderCustomerAddress == ''
-        ) {
-            this.toastr.warning('Enter the Address.', 'Warning');
-            this.publicVariable.isProcess =false;
+        // else if (this.publicVariable.dataForm.value.ImpiHeaderCustomerAddress == null ||
+        //     this.publicVariable.dataForm.value.ImpiHeaderCustomerAddress == undefined ||
+        //     this.publicVariable.dataForm.value.ImpiHeaderCustomerAddress == ''
+        // ) {
+        //     this.toastr.warning('Enter the Address.', 'Warning');
+        //     this.publicVariable.isProcess =false;
 
-            return;
-        }
-        else if (this.publicVariable.dataForm.value.ImpiHeaderCustomerAddress2 == null ||
-            this.publicVariable.dataForm.value.ImpiHeaderCustomerAddress2 == undefined ||
-            this.publicVariable.dataForm.value.ImpiHeaderCustomerAddress2 == ''
-        ) {
-            this.toastr.warning('Enter the Address 2.', 'Warning');
-            this.publicVariable.isProcess =false;
+        //     return;
+        // }
+        // else if (this.publicVariable.dataForm.value.ImpiHeaderCustomerAddress2 == null ||
+        //     this.publicVariable.dataForm.value.ImpiHeaderCustomerAddress2 == undefined ||
+        //     this.publicVariable.dataForm.value.ImpiHeaderCustomerAddress2 == ''
+        // ) {
+        //     this.toastr.warning('Enter the Address 2.', 'Warning');
+        //     this.publicVariable.isProcess =false;
 
-            return;
-        }
-        else if (this.publicVariable.dataForm.value.ImpiHeaderCustomerState == null ||
-            this.publicVariable.dataForm.value.ImpiHeaderCustomerState == undefined ||
-            this.publicVariable.dataForm.value.ImpiHeaderCustomerState == ''
-        ) {
-            this.toastr.warning('Enter the State.', 'Warning');
-            this.publicVariable.isProcess =false;
+        //     return;
+        // }
+        // else if (this.publicVariable.dataForm.value.ImpiHeaderCustomerState == null ||
+        //     this.publicVariable.dataForm.value.ImpiHeaderCustomerState == undefined ||
+        //     this.publicVariable.dataForm.value.ImpiHeaderCustomerState == ''
+        // ) {
+        //     this.toastr.warning('Enter the State.', 'Warning');
+        //     this.publicVariable.isProcess =false;
 
-            return;
-        }
-        else if (this.publicVariable.dataForm.value.ImpiHeaderCustomerCity == null ||
-            this.publicVariable.dataForm.value.ImpiHeaderCustomerCity == undefined ||
-            this.publicVariable.dataForm.value.ImpiHeaderCustomerCity == ''
-        ) {
-            this.toastr.warning('Enter the city.', 'Warning');
-            this.publicVariable.isProcess =false;
+        //     return;
+        // }
+        // else if (this.publicVariable.dataForm.value.ImpiHeaderCustomerCity == null ||
+        //     this.publicVariable.dataForm.value.ImpiHeaderCustomerCity == undefined ||
+        //     this.publicVariable.dataForm.value.ImpiHeaderCustomerCity == ''
+        // ) {
+        //     this.toastr.warning('Enter the city.', 'Warning');
+        //     this.publicVariable.isProcess =false;
 
-            return;
-        }
-        else if (this.publicVariable.dataForm.value.ImpiHeaderCustomerPinCode == null ||
-            this.publicVariable.dataForm.value.ImpiHeaderCustomerPinCode == undefined ||
-            this.publicVariable.dataForm.value.ImpiHeaderCustomerPinCode == ''
-        ) {
-            this.toastr.warning('Enter the Post Code.', 'Warning');
-            this.publicVariable.isProcess =false;
+        //     return;
+        // }
+        // else if (this.publicVariable.dataForm.value.ImpiHeaderCustomerPinCode == null ||
+        //     this.publicVariable.dataForm.value.ImpiHeaderCustomerPinCode == undefined ||
+        //     this.publicVariable.dataForm.value.ImpiHeaderCustomerPinCode == ''
+        // ) {
+        //     this.toastr.warning('Enter the Post Code.', 'Warning');
+        //     this.publicVariable.isProcess =false;
 
-            return;
-        }
+        //     return;
+        // }
 
         if (Action === 'Calculate') {
             if (!this.publicVariable.dataForm.valid) {

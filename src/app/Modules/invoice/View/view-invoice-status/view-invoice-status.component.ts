@@ -45,7 +45,7 @@ export class ViewInvoiceStatusComponent {
         this.loadCOAMasterList();
         this.data = history.state.data;
 
-        console.log(this.data);
+        console.log(this.data );
 
 
         this.uploadedFiles = this.data.impiHeaderAttachment;
@@ -137,7 +137,7 @@ export class ViewInvoiceStatusComponent {
 
     downalodInvFile(base64String: any, InvNo: any = 'Invoice') {
 
-        if (base64String != undefined && base64String != '' && base64String != null) {
+                if (base64String != undefined && base64String != '' && base64String != null) {
             const fileName = InvNo + '.pdf';
             const fileType = `application/pdf`;
             this.fileService.downloadFile(base64String, fileName, fileType);
@@ -149,6 +149,10 @@ export class ViewInvoiceStatusComponent {
         }
     }
 
+    downalodInvFileNew(data:any){
+        console.log(data);
+
+    }
 
     loadStateList() {
         try {
@@ -157,18 +161,18 @@ export class ViewInvoiceStatusComponent {
                     this.publicVariable.stateList = response.data;
                     if (this.data) {
                         if (this.data.impiHeaderInvoiceType == 'Tax Invoice') {
-                            if (this.data.postedInvoiceNumber) {
+                            if(this.data.postedInvoiceNumber){
                                 this.loadTaxInvoiceAttachment(this.data.postedInvoiceNumber)
-                            } else {
+                            }else{
                                 this.publicVariable.isProcess = false;
                             }
                         }
                         else {
-                            if (this.data.headerPiNo) {
+                            if(this.data.headerPiNo){
                                 this.loadTaxInvoiceAttachmentTEXT(this.data.headerPiNo);
 
                             }
-                            else {
+                            else{
                                 this.publicVariable.isProcess = false;
 
                             }
@@ -191,13 +195,6 @@ export class ViewInvoiceStatusComponent {
             this.handleLoadingError()
         }
     }
-
-
-    downalodInvFileNew(data: any) {
-        console.log(data);
-
-    }
-
 
 
     getStateNameById(stateId: string) {

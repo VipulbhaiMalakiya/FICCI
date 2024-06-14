@@ -1,0 +1,45 @@
+/*
+* Prefixed by https://autoprefixer.github.io
+* PostCSS: v8.4.14,
+* Autoprefixer: v10.4.7
+* Browsers: last 4 version
+*/
+
+/* You can add global styles to this file, and also import other style files */
+/* Vipul Css Start  */
+@import "~@ng-select/ng-select/themes/default.theme.css";
+@import url('./assets/css/bootstrap.min.css');
+@import url('./assets/css/custom.css');
+
+
+/* Red border for invalid inputs */
+input.ng-invalid.ng-touched,
+select.ng-invalid.ng-touched {
+    border-color: #dc3545 !important;
+}
+
+/* Green border for valid inputs */
+input.ng-valid.ng-touched,
+select.ng-valid.ng-touched {
+    border-color: #28a745 !important;
+}
+
+
+.modal-sm {
+    --bs-modal-width: 400px !important;
+}
+
+.ng-select.ng-select-single .ng-select-container {
+    height: 39px;
+    border: 1px solid #a5a5a5;
+    font-size: 13px;
+    color: #000;
+}
+
+.ng-dropdown-panel .ng-dropdown-panel-items .ng-option {
+    font-size: 13px;
+}
+
+.custom-rupee-icon{
+    height: 18px;
+}

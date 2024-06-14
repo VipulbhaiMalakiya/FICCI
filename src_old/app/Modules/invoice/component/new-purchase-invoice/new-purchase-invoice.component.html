@@ -1,0 +1,743 @@
+<app-loading *ngIf="publicVariable.isProcess"></app-loading>
+
+<div class="inner-content">
+    <!-- <h3 class="content-title"> New Sales Invoice</h3> -->
+    <h3 class="content-title"><span class="back-btn" title="Back"><a routerLink="/invoice/status"><img src="../assets/images/left-arrow.svg" alt=""></a></span> New Sales Invoice</h3>
+
+
+    <form [formGroup]="publicVariable.dataForm">
+        <input type="hidden" formControlName="headerid">
+        <!-- <div class="pipage-radio">
+            <div class="form-check">
+                <input class="form-check-input" formControlName="ImpiHeaderInvoiceType" type="radio"
+                    name="ImpiHeaderInvoiceType" id="flexRadioDefault1" value="Proforma Invoice" />
+                <label class="form-check-label" for="flexRadioDefault1">
+                    Proforma Invoice
+                </label>
+            </div>
+
+            <div class="form-check">
+                <input class="form-check-input" formControlName="ImpiHeaderInvoiceType" type="radio"
+                    name="ImpiHeaderInvoiceType" id="flexRadioDefault2" value="Tax Invoice" />
+                <label class="form-check-label" for="flexRadioDefault2">
+                    Tax Invoice
+                </label>
+            </div>
+            <div *ngIf="shouldShowError('ImpiHeaderInvoiceType','required')" class="text-danger">
+                Invoice Type is required.
+            </div>
+        </div>
+
+         <div *ngIf="shouldShowError('ImpiHeaderdept','required')" class="text-danger">This field
+                            is required
+                        </div> -->
+
+        <div class="mastersform-sec mb-0">
+            <div class="row">
+
+                <div class="col-md-4 col-sm-6">
+                    <div class="form-group">
+                        <label for="projectCode"> Invoice Type <sup class="text-danger">*</sup></label>
+                        <select class="form-select" formControlName="ImpiHeaderInvoiceType">
+                            <option value="">Select Invoice</option>
+                            <option value="Proforma Invoice">Proforma Invoice</option>
+                            <option value="Tax Invoice">Tax Invoice</option>
+
+
+                        </select>
+                        <div *ngIf="shouldShowError('ImpiHeaderInvoiceType','required')" class="text-danger">This field
+                            is required
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-sm-6">
+                    <div class="form-group">
+                        <label for="projectCode">Department <sup class="text-danger">*</sup></label>
+                        <ng-select [items]="navDepartmentArray" bindLabel="navDepartmentArray"
+                            bindValue="navDepartmentArray" placeholder="Select in department"
+                            formControlName="ImpiHeaderdept" (change)="onSelectdept($event)" [searchable]="true"
+                            [searchFn]="customSearchFn" [virtualScroll]="true" [bufferAmount]="10">
+
+                            <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
+                                <small>{{ item }}</small>
+                            </ng-template>
+
+                        </ng-select>
+
+                        <div *ngIf="shouldShowError('ImpiHeaderdept','required')" class="text-danger">This field
+                            is required
+                        </div>
+
+                    </div>
+                </div>
+
+
+                <div class="col-md-4 col-sm-6">
+                    <div class="form-group">
+                        <label for="projectCode">Project Code <sup class="text-danger">*</sup></label>
+                        <ng-select [items]="publicVariable.projectList" #select bindLabel="code" bindValue="code"
+                            placeholder="Select in Project Code" formControlName="ImpiHeaderProjectCode"
+                            (change)="onSelectProject()" [searchable]="true" [searchFn]="customSearchFn"
+                            [virtualScroll]="true" [bufferAmount]="10">
+
+                            <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
+                                <small>{{item.code}} - {{item.name}}</small>
+                            </ng-template>
+                        </ng-select>
+                        <div *ngIf="shouldShowError('ImpiHeaderProjectCode','required')" class="text-danger">This field
+                            is required
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-sm-6">
+                    <div class="form-group">
+                        <label for="Project">Project Name</label>
+                        <input type="text" id="Project" placeholder="Project" formControlName="Project"
+                            class="form-control" />
+                        <div *ngIf="shouldShowError('Project','required')" class="text-danger">This field
+                            is required
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="form-group">
+                        <label for="department">Department</label>
+                        <input type="text" id="department" placeholder="Department"
+                            formControlName="ImpiHeaderDepartment" class="form-control" />
+                            <input type="hidden" id="division" placeholder="Division" formControlName="ImpiHeaderDivison"
+                            class="form-control" />
+                        <div *ngIf="shouldShowError('ImpiHeaderDepartment','required')" class="text-danger">This field
+                            is required
+                        </div>
+
+                    </div>
+                </div>
+<!--
+                <div class="col-md-4 col-sm-6">
+                    <div class="form-group">
+                        <input type="hidden" id="division" placeholder="Division" formControlName="ImpiHeaderDivison"
+                            class="form-control" />
+                        <div *ngIf="shouldShowError('ImpiHeaderDivison','required')" class="text-danger">This field is
+                            required
+                        </div>
+
+                    </div>
+                </div> -->
+
+                <div class="col-md-4 col-sm-6">
+                    <div class="form-group">
+                        <label for="PANNo">FICCI PAN No.</label>
+                        <input type="text" id="PANNo" class="form-control" placeholder="FICCI PAN NO"
+                            formControlName="ImpiHeaderPanNo" />
+                    </div>
+                </div>
+
+
+                <div class="col-md-4 col-sm-6">
+                    <div class="form-group">
+                        <label>FICCI GST No.</label>
+                        <input type="text" placeholder="FICCI GST NO" class="form-control" formControlName="ImpiHeaderGstNo"
+                            maxlength="20" />
+
+                        <div *ngIf="shouldShowError('ImpiHeaderGstNo','invalidGST')" class="text-danger"> Please enter
+                            a valid GST Registration Number. (05AAACF1282E1Z5)</div>
+
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-sm-6">
+                    <div class="form-group">
+                        <label for="startDate">Project Start Date</label>
+                        <input type="text" id="startDate" placeholder="starting date" formControlName="startDate"
+                            class="form-control" />
+                        <div *ngIf="shouldShowError('startDate','required')" class="text-danger">This field
+                            is required
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-sm-6">
+                    <div class="form-group">
+                        <label for="endDate">Project End Date</label>
+                        <input type="text" id="endDate" placeholder="end date" formControlName="endDate"
+                            class="form-control" />
+                        <div *ngIf="shouldShowError('endDate','required')" class="text-danger">This field
+                            is required
+                        </div>
+
+                    </div>
+                </div>
+                <!-- show tax-invoice-only -->
+                <!-- <div class="col-md-4 col-sm-6"
+                    *ngIf="publicVariable.dataForm.get('ImpiHeaderInvoiceType')?.value === 'Tax Invoice'">
+                    <div class="form-group">
+                        <label>PI No</label>
+                        <input type="text" placeholder="PI No" class="form-control" formControlName="PINO" />
+                    </div>
+                </div> -->
+
+
+            </div>
+        </div>
+        <div class="pi-pagetitle">Customer Details</div>
+
+        <div class="mastersform-sec mb-0">
+            <div class="row">
+                <div class="col-md-8 col-sm-6">
+                    <div class="form-group">
+                        <label for="CustomerName">Customer Name
+                            <span style="color: red;">(Search by Customer Code,GST No.,Name)</span>
+                            <sup class="text-danger">*</sup>
+                        </label>
+                        <div class="flex-field">
+                            <ng-select [items]="publicVariable.GetCustomerList" #select class="w-100"
+                                bindLabel="custName" bindValue="custName"
+                                placeholder="{{publicVariable.GetCustomerList.length>0 ?'Select Customer':'Please wait...Data Loading...'}}"
+                                formControlName="ImpiHeaderCustomerName" (change)="onSelectGSTCustomer($event)"
+                                [searchable]="true" [searchFn]="customerSearchFn" [virtualScroll]="true">
+
+                                <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
+                                    <div><span>{{item.code}}</span>-<span>{{item.gstNumber}}</span> -
+                                        <span>{{item.customerName | titlecase}} </span></div>
+                                    <small>{{item.address | titlecase}} -{{item.address2 | titlecase}} -
+                                        {{item.city | titlecase}}- {{item.panNo}}</small>
+                                </ng-template>
+                                <!-- <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
+                                    <div><span>{{item.custNo}}</span> - <span>{{item.custName | titlecase}}</span></div>
+                                    <small *ngIf="item.panNo || item.gstregistrationNo">{{item.panNo}} -
+                                        {{item.gstregistrationNo}}</small>
+                                </ng-template> -->
+                            </ng-select>
+
+
+
+                            <div class="add-btn"><a routerLink="/customer/new"
+                                title="Add New Customer">+</a></div>
+                        </div>
+                        <div *ngIf="shouldShowError('ImpiHeaderCustomerName','required')" class="text-danger">This field
+                            is required
+                        </div>
+                    </div>
+                </div>
+
+                <!-- <div class="col-md-8 col-sm-6">
+                    <div class="form-group">
+                        <label for="ImpiHeaderCustomerGstNo">GST Number All <sup class="text-danger">*</sup></label>
+
+
+                            <ng-select [items]="loadgetGstRegistrationNoAll" #select class="w-100"
+                                bindLabel="gstNumber" bindValue="gstNumber"
+                                placeholder="Select customer" formControlName="ImpiHeaderCustomerGstNo"
+                                (change)="onSelectGSTCustomer($event)" [searchable]="true" [searchFn]="customerGSTSearchFn"
+                                [virtualScroll]="true" [bufferAmount]="10">
+
+                                <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
+                                    <div><span>{{item.code}}</span>-<span>{{item.gstNumber}}</span> - <span>{{item.customerName | titlecase}}</span></div>
+                                    <small >{{item.address | titlecase}} -{{item.address2 | titlecase}} - {{item.city | titlecase}}- {{item.pincode}}</small>
+                                </ng-template>
+                            </ng-select>
+
+
+
+                        <div *ngIf="shouldShowError('ImpiHeaderCustomerGstNo','required')" class="text-danger">This
+                            field
+                            is required
+                        </div>
+                    </div>
+                </div> -->
+
+                <div class="col-md-4 col-sm-6">
+                    <div class="form-group">
+                        <label for="ImpiHeaderCustomerGstNo">GST Number </label>
+
+                        <input type="text" id="ImpiHeaderCustomerGstNo" placeholder="GST No"
+                            formControlName="ImpiHeaderCustomerGstNo" class="form-control no-style" readonly />
+
+                        <!-- <ng-select [items]="GetCustomerGSTList" #select class="w-100"
+                                bindLabel="gstNumber" bindValue="gstNumber"
+                                placeholder="Select GST No" formControlName="ImpiHeaderCustomerGstNo"
+                                (change)="onSelectGSTCustomer($event)" [searchable]="true" [searchFn]="customerGSTSearchFn"
+                                [virtualScroll]="true" [bufferAmount]="10">
+
+                                <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
+                                    <div><span>{{item.code}}</span>-<span>{{item.gstNumber}}</span> - <span>{{item.customerName | titlecase}} </span></div>
+                                    <small >{{item.address | titlecase}} -{{item.address2 | titlecase}} - {{item.city | titlecase}}- {{item.pincode}}</small>
+                                </ng-template>
+                            </ng-select> -->
+
+                        <!-- <div class="add-btn"><a routerLink="/customer/new" target="_blank">+</a></div> -->
+
+                        <div *ngIf="shouldShowError('ImpiHeaderCustomerGstNo','required')" class="text-danger">This
+                            field is required.
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="form-group">
+                        <label for="address">Address</label>
+                        <input type="text" id="address" placeholder="Address" maxlength="50"
+                            formControlName="ImpiHeaderCustomerAddress" class="form-control no-style" readonly />
+
+                        <!-- <div *ngIf="shouldShowError('ImpiHeaderCustomerAddress', 'required')" class="text-danger">
+                            Address is required.
+                        </div> -->
+
+                        <div *ngIf="shouldShowError('ImpiHeaderCustomerAddress','required')" class="text-danger">This field
+                            is required
+                        </div>
+
+                        <!-- <div *ngIf="shouldShowError('ImpiHeaderCustomerAddress', 'forbiddenCharacters')" class="text-danger">
+                                Special characters are not allowed in the address
+                            </div> -->
+
+                        <div *ngIf="shouldShowError('ImpiHeaderCustomerAddress', 'maxlength')" class="text-danger">
+                            Email must be less than 80 characters.
+                        </div>
+
+                    </div>
+                </div>
+
+
+                <div class="col-md-4 col-sm-6">
+                    <div class="form-group">
+                        <label for="address2">Address 2</label>
+                        <input type="text" id="address2" placeholder="Address 2" maxlength="50"
+                            formControlName="ImpiHeaderCustomerAddress2" class="form-control no-style" readonly />
+
+                        <div *ngIf="shouldShowError('ImpiHeaderCustomerAddress2', 'required')" class="text-danger">
+                            Address2 is required.
+                        </div>
+
+                        <!-- <div *ngIf="shouldShowError('ImpiHeaderCustomerAddress', 'forbiddenCharacters')" class="text-danger">
+                                Special characters are not allowed in the address
+                            </div> -->
+
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-sm-6">
+                    <div class="form-group">
+                        <label for="state">State</label>
+                        <!-- <ng-select [items]="publicVariable.stateList" #select bindLabel="stateName"
+                            bindValue="stateCode" placeholder="Select " formControlName="ImpiHeaderCustomerState"
+                            (change)="onSelectStateCustomer()"  [searchable]="true" [searchFn]="stateSearchFn" [virtualScroll]="true" [bufferAmount]="10">
+                            <ng-template ng-option-tmp let-item="item" let-search="searchTerm"
+                            >
+                                <small>{{item.stateCode}} - {{item.stateName}}</small>
+                            </ng-template>
+                        </ng-select> -->
+
+                        <input type="text" id="state" placeholder="State" formControlName="ImpiHeaderCustomerState"
+                            class="form-control no-style" readonly />
+
+                        <div *ngIf="shouldShowError('ImpiHeaderCustomerState','required')" class="text-danger">This
+                            field is required</div>
+
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="form-group">
+                        <label for="city">City</label>
+                        <!-- <ng-select [items]="publicVariable.cityList" #select bindLabel="cityName" bindValue="cityName"
+                            placeholder="Select" formControlName="ImpiHeaderCustomerCity" [searchable]="true"
+                            [searchFn]="citySearchFn" [virtualScroll]="true" [bufferAmount]="10"
+                            (change)="onCitySelectionChange()">
+                            <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
+                                <small>{{item.cityCode}} - {{item.cityName}}</small>
+                            </ng-template>
+                        </ng-select> -->
+
+                        <input type="text" id="city" placeholder="City" formControlName="ImpiHeaderCustomerCity"
+                            class="form-control no-style" readonly />
+                        <div *ngIf="shouldShowError('ImpiHeaderCustomerCity','required')" class="text-danger">This field
+                            is required
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="form-group">
+                        <label for="pincode">Pincode</label>
+
+                        <input type="text" id="ImpiHeaderCustomerPinCode" placeholder="Pincode"
+                            formControlName="ImpiHeaderCustomerPinCode" class="form-control no-style" readonly />
+                        <!--
+                        <input type="text" formControlName="ImpiHeaderCustomerPinCode" placeholder="Pincode"
+                            (input)="onInputChange($event)" class="form-control" maxlength="15" readonly /> -->
+                        <div *ngIf="shouldShowError('ImpiHeaderCustomerPinCode','required')" class="text-danger"> Pin
+                            Code is required.
+                        </div>
+                        <!-- <div *ngIf="shouldShowError('ImpiHeaderCustomerPinCode','pattern')" class="text-danger"> Please
+                            enter a valid 6-digit Pin Code.</div> -->
+                    </div>
+                </div>
+
+                <!-- <div class="col-md-4 col-sm-6">
+                    <div class="form-group">
+                        <label for="GSTNumber">GST Number <sup class="text-danger">*</sup></label>
+                        <input type="text" class="form-control" id="GSTNumber" placeholder="GST Number"
+                            formControlName="ImpiHeaderCustomerGstNo" (blur)="validateGST()" />
+                        <div *ngIf="shouldShowError('ImpiHeaderCustomerGstNo','invalidGST')" class="text-danger"> Please
+                            enter a valid GST Registration Number. (05AAACF1282E1Z5)</div>
+                            <div *ngIf="gstExists" class="text-danger">
+                                GST number already exists.
+                            </div>
+                    </div>
+                </div> -->
+
+                <div class="col-md-4 col-sm-6">
+                    <div class="form-group">
+                        <label for="ContactPerson">Customer Contact Person <sup class="text-danger">*</sup></label>
+                        <input type="text" placeholder="Contact Person" id="ContactPerson" maxlength="100"
+                            formControlName="ImpiHeaderCustomerContactPerson" class="form-control" />
+                        <div *ngIf="shouldShowError('ImpiHeaderCustomerContactPerson', 'alphanumericWithSpaces')"
+                            class="text-danger">
+                            Please enter a valid alphanumeric value.
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-sm-6">
+                    <div class="form-group">
+                        <label for="EmailID">Customer Email Id (To Send Invoice) <sup class="text-danger">*</sup></label>
+                        <input type="email" placeholder="Email ID" id="EmailID" maxlength="100"
+                            formControlName="ImpiHeaderCustomerEmailId" class="form-control" />
+                        <div *ngIf="shouldShowError('ImpiHeaderCustomerEmailId','required')" class="text-danger">Email
+                            is required.
+                        </div>
+                        <!-- <div *ngIf="shouldShowError('ImpiHeaderCustomerEmailId', 'invalidEmailFormat')"
+                            class="text-danger">
+                            Please
+                            enter a valid email address.</div> -->
+                        <div *ngIf="shouldShowError('ImpiHeaderCustomerEmailId','email')" class="text-danger"> Please
+                            enter a valid email address.</div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-sm-6">
+                    <div class="form-group">
+                        <label for="PhoneNo">Phone No. <sup class="text-danger">*</sup></label>
+                        <input type="number" class="form-control" id="PhoneNo"
+                            placeholder="Phone No" formControlName="ImpiHeaderCustomerPhoneNo" maxlength="12" min="0" />
+                        <div *ngIf="shouldShowError('ImpiHeaderCustomerPhoneNo','required')" class="text-danger">Phone
+                            number is required.</div>
+                        <div *ngIf="shouldShowError('ImpiHeaderCustomerPhoneNo','pattern')" class="text-danger">Invalid
+                            phone number.</div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="pi-pagetitle">Sales Line</div>
+
+        <div class="mastersform-sec mb-0">
+            <form [formGroup]="publicVariable.expenseForm" (ngSubmit)="onAddLine()">
+                <div class="row">
+                    <div class="col-md-4 col-sm-6">
+                        <div class="form-group">
+                            <label>Nature of Income<sup class="text-danger">*</sup></label>
+                            <ng-select [items]="publicVariable.COAMasterList" #select bindLabel="name" bindValue="no"
+                                placeholder="Select " [searchable]="true" [virtualScroll]="true" [bufferAmount]="10"
+                                formControlName="impiGlNo" [searchFn]="gstSearchFn">
+                                <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
+                                    <small>{{item.no}} - {{item.name}}</small>
+                                </ng-template>
+                            </ng-select>
+                            <div *ngIf="shouldShowExpenseError('impiGlNo','required')" class="text-danger">This
+                                field is required</div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 col-sm-6">
+                        <div class="form-group">
+                            <label for="Quantity">Quantity <sup class="text-danger">*</sup></label>
+                            <input type="text" class="form-control" id="Quantity" placeholder="Quantity" maxlength="5"
+                                formControlName="impiQuantity" (input)="onInputChange($event)" />
+                            <div *ngIf="shouldShowExpenseError('impiQuantity','required')" class="text-danger">This
+                                field is required</div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 col-sm-6">
+                        <div class="form-group">
+                            <label>GST Group Code <sup class="text-danger">*</sup></label>
+                            <ng-select [items]="publicVariable.GSTGroupList" #select bindLabel="code" bindValue="code"
+                                placeholder="Select " [searchable]="true" [virtualScroll]="true" [bufferAmount]="10"
+                                (change)="onGSTGroupChange($event)" formControlName="impiGstgroupCode">
+                            </ng-select>
+                            <div *ngIf="shouldShowExpenseError('impiGstgroupCode','required')" class="text-danger">This
+                                field is required</div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 col-sm-6" hidden>
+                        <div class="form-group">
+                            <label>HSN/SAC Code </label>
+                            <ng-select [items]="publicVariable.HSNSACList" #select bindLabel="hsnCode"
+                                bindValue="hsnCode" placeholder="Select " [searchable]="true" [virtualScroll]="true"
+                                [bufferAmount]="10" formControlName="impiHsnsaccode">
+                                <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
+                                    <small>{{item.hsnCode}} - {{item.hsnGroup}}</small>
+                                </ng-template>
+                            </ng-select>
+
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 col-sm-6">
+                        <div class="form-group">
+                            <label>Direct Unit Cost <sup class="text-danger">*</sup> (Exclusive GST)</label>
+                            <input type="text" class="form-control" placeholder="Direct Unit Cost" maxlength="9"
+                                formControlName="impiUnitPrice" (input)="priceValidator($event)">
+                            <div *ngIf="shouldShowExpenseError('impiUnitPrice','required')" class="text-danger">This
+                                field is
+                                required</div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 col-sm-8">
+                        <div class="form-group">
+                            <label>Description/Narration to Print on Invoice <sup class="text-danger">*</sup></label>
+                            <input type="text" class="form-control" placeholder="Description" maxlength="100" id="impiDescription"
+                                formControlName="impiDescription" >
+                            <div *ngIf="shouldShowExpenseError('impiDescription','required')" class="text-danger">This
+                                field is
+                                required</div>
+
+                                <div *ngIf="shouldShowExpenseError('impiDescription', 'specialCharactersNotAllowed')"
+                                class="text-danger">
+                                Please enter a valid alphanumeric value.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 col-sm-6">
+                        <div class="form-group">
+                            <label>&nbsp;</label>
+                            <button class="common-btn w-auto"
+                                type="submit">{{ isEditing ? 'Update Line' : 'Add Line' }}</button>
+
+                        </div>
+                    </div>
+
+                    <!-- <div class="col-md-4 col-sm-6" *ngIf="publicVariable.expenses.length > 0">
+                        <div class="form-group">
+                            <label>(Total Base Amount)</label>
+                            <input type="text" class="form-control" [value]="calculateTotalBaseAmount()"
+                                placeholder="Total Base Amount" disabled="">
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 col-sm-6" *ngIf="publicVariable.expenses.length > 0">
+                        <div class="form-group">
+                            <label>(Total GST Amount)</label>
+                            <input type="text" class="form-control" [value]="calculateTotalGSTAmount()"
+                                placeholder="Total GST Amount" disabled="">
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 col-sm-6" *ngIf="publicVariable.expenses.length > 0">
+                        <div class="form-group">
+                            <label>(Net total)</label>
+                            <input type="text" class="form-control" [value]="calculateNetTotal()"
+                                placeholder="Net total" disabled="">
+                        </div>
+                    </div> -->
+
+                    <div class="row">
+                        <div class="col-md-4 col-sm-6">
+                            <div class="form-group">
+                                <label>Total Base Amount</label>
+                                <input type="text" class="form-control" placeholder="0"
+                                    [value]="data?.impiHeaderTotalTDSAmount" disabled="">
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 col-sm-6">
+                            <div class="form-group">
+                                <label>Total GST Amount</label>
+                                <input type="text" class="form-control" placeholder="0" disabled=""
+                                    [value]="data?.impiHeaderTotalGSTAmount">
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 col-sm-6">
+                            <div class="form-group">
+                                <label>Total Invoice Amount (Incl.GST)</label>
+                                <input type="text" class="form-control" placeholder="0"
+                                    disabled="" [value]="data?.impiHeaderTotalInvoiceAmount">
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </form>
+
+        </div>
+        <div class="dasboard-table pi-table mb-0" *ngIf="publicVariable.expenses && publicVariable.expenses.length > 0">
+
+            <div class="table-responsive">
+
+                <table class="table table-bordered text-nowrap">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th width="38%">Nature of Income</th>
+                            <th>Description</th>
+                            <th>Quantity</th>
+                            <th>Direct Unit Cost *(Exclusive GST)</th>
+                            <th>Line Amount</th>
+                            <th>GST Group Code</th>
+                            <th>HSN/SAC Code</th>
+                            <th>IGST Amount</th>
+                            <th>CGST Amount</th>
+                            <th>SGST Amount</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        <tr *ngFor="let e of publicVariable.expenses; let i = index">
+                            <td>{{i + 1}}</td>
+                            <td>{{ getNameById(e.impiGlNo) }}</td>
+                            <td>{{e.impiDescription}}</td>
+                            <td>{{e.impiQuantity}}</td>
+                            <td>{{e.impiUnitPrice}}</td>
+                            <td>{{e.impiUnitPrice * e.impiQuantity}}</td>
+                            <td>{{e.impiGstgroupCode }}</td>
+                            <td>{{e.impiHsnsaccode}}</td>
+                            <td>{{e.impiTotalGstAmount}}</td>
+                            <td>{{e.impiNetTotal}}</td>
+                            <td>{{e.impiGstBaseAmount}}</td>
+                            <!-- <td>{{ calculateGSTBaseAmount(e) }}</td>
+                            <td>{{ calculateGSTAmount(e) }}</td> -->
+                            <td><span class="table-btns">
+                                    <a href="javascript:void(0)" (click)="editExpense(e,i)"><img
+                                            src="../assets/images/edit-icon.svg" alt=""></a>
+                                    <a href="javascript:void(0)" (click)="deleteExpense(i)" data-bs-toggle="modal"
+                                        data-bs-target="#deleterecord-modal">
+                                        <img src="../assets/images/delete-icon.svg" alt="">
+                                    </a>
+                                </span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
+
+        </div>
+        <div class="text-end" *ngIf="publicVariable.expenses.length > 0 && isButtonShow"><a href="javascript:void(0)"
+                (click)="onCalculateClick('Calculate')" class="common-btn w-auto">Calculate</a>
+        </div>
+
+        <div class="text-end" *ngIf="publicVariable.expenses.length > 0 && !isButtonShow">
+            <button class="common-btn w-auto" disabled>Loading...</button>
+        </div>
+
+        <div class="note-para">
+            <p>Upload Attachments (PO,E-Mail Confirmation,LOI,Other Documents)<span class="text-danger">*(Max File Size
+                    5 MB
+                    only)</span></p>
+        </div>
+
+
+        <div class="col-md-12 col-xs-12 col-sm-12 attach-col">
+            <div class="row align-items-center">
+                <div class="col-sm-2"><b>Attachment <sup class="text-danger">*</sup></b></div>
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <select class="form-select" formControlName="TypeofAttachment">
+                            <option value="">Select</option>
+                            <option value="PO">PO</option>
+                            <option value="Email-confirmation">Email-confirmation</option>
+                            <option value="LOI">LOI</option>
+                            <option value="Others">Others</option>
+
+                        </select>
+                        <div *ngIf="shouldShowError('TypeofAttachment','required')" class="text-danger">This field is
+                            required
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-2 text-sm-end">Upload Document <sup class="text-danger">*</sup></div>
+                <div class="col-sm-5">
+                    <div class="input-group">
+                        <input type="file" class="form-control" id="inputGroupFile02" accept=".pdf,.xlsx,.csv" multiple
+                            (change)="onFilesSelected($event)" />
+                        <!-- <label class="input-group-text" for="inputGroupFile02">Upload</label> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="dasboard-table pi-table mb-0" *ngIf="uploadedFiles && uploadedFiles.length > 0">
+            <div class="table-responsive">
+                <table class="table table-bordered text-nowrap">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Category</th>
+                            <th>File Type</th>
+                            <th>File Name</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let file of uploadedFiles; let i = index">
+                            <td>{{ i + 1 }}</td>
+                            <td>{{file.category || file.doctype }}</td>
+                            <td>{{ getFileType(file.file?.type || file.type) }}</td>
+                            <td>{{ file.file?.name || file.name }}</td>
+
+                            <td>
+                                <a *ngIf="data" href="javascript:void(0)"
+                                    (click)="downalodFile(file?.file || file)"><img
+                                        src="../assets/images/download-icon.svg" alt="" class="me-2"></a>
+                                <a href="javascript:void(0)" (click)="deleteFile(i,file)"><img
+                                        src="../assets/images/delete-icon.svg" alt=""></a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="mastersform-sec mb-3">
+            <div class="col-md-9 mt-4" hidden>
+                <div class="form-group">
+                    <label for="PaymentTerms">Description/Narration to Print on Invoice</label>
+                    <textarea class="form-control h-100" cols="2" rows="2" id="PaymentTerms" maxlength="100"
+                        formControlName="ImpiHeaderPaymentTerms"></textarea>
+                </div>
+            </div>
+
+            <div class="col-md-9 mt-3">
+                <div class="form-group">
+                    <label for="Remarks">Remarks for FICCI Accounts Team</label>
+                    <textarea class="form-control h-100" cols="2" rows="2" id="Remarks" maxlength="100"
+                        formControlName="ImpiHeaderRemarks"></textarea>
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="form-group mb-0 mt-4">
+                    <input type="checkbox" class="btn-check" formControlName="IsDraft" id="btn-check"
+                        autocomplete="off">
+                    <label class="btn btn-secondary w-auto mb-0 me-2" for="btn-check" (click)="onSubmit('Draft')">Save
+                        as
+                        Draft</label>
+                    <button type="submit" class="common-btn w-auto" (click)="onSubmit('Submit')">Submit</button>
+                </div>
+            </div>
+        </div>
+    </form>
+
+</div>

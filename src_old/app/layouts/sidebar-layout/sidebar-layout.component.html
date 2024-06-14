@@ -1,0 +1,153 @@
+<div class="outer-bg">
+
+    <header class="main-header">
+        <div class="container-fluid">
+            <div class="row align-items-center">
+
+                <div class="col-lg-8 col-sm-6">
+                    <div class="main-logo"><a routerLink="/"><img src="../assets/images/logo.png" alt=""></a>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-sm-6">
+
+                    <div class="top-noti-user">
+
+                        <div class="top-user-profile">
+                            <a href="javascript:void(0);" class="dropdown-toggle" data-bs-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false">
+                                <p>{{ storeUsername }} <small>{{ storedRole }}</small></p>
+                            </a>
+
+                            <ul class="dropdown-menu">
+                                <li><a href="javascript:void(0);" (click)="logout()">Logout</a></li>
+                            </ul>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    </header>
+
+    <div class="main-wrapper">
+        <div class="container-fluid">
+            <div class="row">
+
+                <div class="col-lg-3 p-0 custom-3wdt">
+                    <aside class="left-menu">
+
+                        <div class="left-mobile-menu">Menu</div>
+
+                        <div class="side-filters menu-list">
+
+                            <div id="accordion">
+
+                                <div class="left-men" routerLinkActive="active">
+                                    <h3><a routerLink="dashboard" routerLinkActive="active"><img
+                                                src="../assets/images/dashboard-icon.png" alt=""> Dashboard</a></h3>
+                                </div>
+
+
+                                <div class="left-men" routerLinkActive="active" *ngIf="!isAccount">
+                                    <h3><img src="../assets/images/invoice-icon.png" alt=""> Sales Invoice</h3>
+                                    <a routerLink="/invoice/new" class="menu-list-title" routerLinkActive="active"
+                                        *ngIf="isEmployee || isApprover">Create Sales Invoice</a>
+                                    <a routerLink="/invoice/status" class="menu-list-title" routerLinkActive="active"
+                                        *ngIf="isAdmin || isEmployee|| isApprover">Sales Invoice Status</a>
+                                    <a routerLink="/invoice/approval" class="menu-list-title" routerLinkActive="active"
+                                        *ngIf="isApprover">Sales Invoice Approval Inbox</a>
+                                    <!-- <a routerLink="/invoice/tax-invoice" class="menu-list-title"
+                                        routerLinkActive="active" *ngIf=" isEmployee ">Posted Tax Invoice</a>
+                                    <a routerLink="/invoice/pi-invoice" class="menu-list-title"
+                                        routerLinkActive="active" *ngIf=" isEmployee ">Proforma Invoice</a> -->
+                                </div>
+
+                                <div class="left-men" routerLinkActive="active">
+
+                                    <h3><img src="../assets/images/credit-note-icon.png" alt=""> Sales Credit Note</h3>
+                                    <a routerLink="/invoice/credit-memo" class="menu-list-title"
+                                        routerLinkActive="active" *ngIf="isEmployee || isApprover"> Create Sales Credit
+                                        Note</a>
+                                    <a routerLink="/invoice/credit-memo-status" class="menu-list-title"
+                                        routerLinkActive="active">Sales Credit Note
+                                        Status</a>
+
+
+                                    <a routerLink="/invoice/sales-approval" class="menu-list-title"
+                                        routerLinkActive="active" *ngIf=" isApprover ">Approval Inbox</a>
+
+                                    <!-- <a routerLink="/invoice/sales-navision" class="menu-list-title"
+                                        routerLinkActive="active" *ngIf=" isEmployee ">Posted Sales Credit Note</a> -->
+
+
+                                </div>
+
+                                <div class="left-men" routerLinkActive="active">
+                                    <h3><img src="../assets/images/customer-icon.png" alt=""> Customer</h3>
+                                    <a routerLink="/customer/new" class="menu-list-title" routerLinkActive="active"
+                                        *ngIf="!isAdmin && !isAccount">Create Customer</a>
+                                    <a routerLink="/customer/status" class="menu-list-title" routerLinkActive="active"
+                                        *ngIf="!isAccount">Customer Status</a>
+                                    <!-- <a routerLink="/customer/approval" class="menu-list-title"
+                                        routerLinkActive="active"
+                                        *ngIf="isEmployee" >Approval
+                                        Inbox</a> -->
+                                    <a routerLink="/customer/accounts" class="menu-list-title" routerLinkActive="active"
+                                        *ngIf="isAccount || isFinance">Accounts
+                                        Inbox</a>
+                                </div>
+
+                                <div class="left-men" routerLinkActive="active" *ngIf="isAdmin">
+                                    <h3><img src="../assets/images/master-icon.png" alt=""> Masters</h3>
+                                    <a routerLink="/masters/configuration-list" class="menu-list-title"
+                                        routerLinkActive="active">Configuration List</a>
+                                    <a routerLink="/masters/users" class="menu-list-title"
+                                        routerLinkActive="active">User Master</a>
+                                    <a routerLink="/masters/data-sync" class="menu-list-title"
+                                        routerLinkActive="active">Data Sync</a>
+                                </div>
+
+
+                                <div class="left-men">
+                                    <h3><img src="../assets/images/manual-icon.png" alt=""> Manual</h3>
+                                    <a [routerLink]="'/assets/Manual/Employee user Manual_FICCI.pdf'" target="_blank"
+                                        class="menu-list-title"
+                                        (click)="openFile('/assets/Manual/Employee%20user%20Manual_FICCI.pdf')">Employee
+                                        Manual</a>
+
+                                    <a *ngIf="isAdmin || isApprover"
+                                        [routerLink]="'/assets/Manual/Approver User Manual.pdf'" target="_blank"
+                                        class="menu-list-title"
+                                        (click)="openFile('/assets/Manual/Approver User Manual.pdf')">Approver
+                                        Manual</a>
+
+                                    <a *ngIf="isAdmin" [routerLink]="'/assets/Manual/Admin Manual.pdf'" target="_blank"
+                                        class="menu-list-title"
+                                        (click)="openFile('/assets/Manual/Admin Manual.pdf')">Admin Manual</a>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </aside>
+
+                </div>
+
+
+                <div class="col-lg-9 custom-9wdt">
+                    <div class="content-wrapper white-bg">
+                        <router-outlet></router-outlet>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>

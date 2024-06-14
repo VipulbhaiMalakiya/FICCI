@@ -1,0 +1,1576 @@
+<app-loading *ngIf="publicVariable.isProcess"></app-loading>
+<div class="inner-content">
+    <h3 class="content-title">Dashboard</h3>
+    <div class="main-data-navs">
+        <ul class="nav nav-pills main-data-nav1 mb-3" id="pills-tab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="pills-profile-tab" data-bs-toggle="pill"
+                    data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile"
+                    aria-selected="false" (click)="loadPurchaseInvoiceList('Tax Invoice')">Tax
+                    Invoice</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link " id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile"
+                    type="button" role="tab" aria-controls="pills-profile" aria-selected="false"
+                    (click)="loadPurchaseInvoiceList('Proforma Invoice')">Proforma Invoice</button>
+            </li>
+
+            <li class="nav-item" role="presentation">
+                <button class="nav-link " id="pills-sales-tab" data-bs-toggle="pill"
+                    data-bs-target="#pills-sales-profile" type="button" role="tab" aria-controls="pills-sales-profile"
+                    aria-selected="false" (click)="loadSalesCreditNote()">Sales Credit Note</button>
+            </li>
+
+            <li class="nav-item" role="presentation">
+                <button class="nav-link " id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home"
+                    type="button" role="tab" aria-controls="pills-home" aria-selected="true"
+                    (click)="loadCustomerStatusCountList()">Customer</button>
+            </li>
+
+        </ul>
+        <div class="tab-content" id="pills-tabContent">
+            <div class="tab-pane fade " id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                <div class="data-tabs" *ngIf="this.publicVariable.storedRole !== 'Accounts'">
+                    <ul class="nav nav-pills cstm-dash" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link tabbg-1" data-bs-toggle="pill" href="#home"
+                                (click)="loadCustomerStatusList('DRAFT')" [class.active]="customerStatus =='DRAFT'">
+                                <small>Draft</small>
+                                <span>{{this.isDRAFT }}</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link tabbg-2"
+                                [class.active]="this.publicVariable.storedRole == 'Admin' && customerStatus =='PENDING WITH APPROVER'"
+                                data-bs-toggle="pill" href="#home"
+                                (click)="loadCustomerStatusList('PENDING WITH APPROVER')">
+                                <small>Pending With Accounts</small>
+                                <span>{{this.PendingApproval }}</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link tabbg-3" data-bs-toggle="pill" href="#home"
+                                [class.active]="this.publicVariable.storedRole == 'Admin' && customerStatus =='APPROVED BY ACCOUNTS APPROVER'"
+                                (click)="loadCustomerStatusList('APPROVED BY ACCOUNTS APPROVER')">
+                                <small>Approved By Accounts</small>
+                                <span>{{this.ApprovedAccounts }}</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link tabbg-4" data-bs-toggle="pill" href="#home"
+                                [class.active]="this.publicVariable.storedRole == 'Admin' && customerStatus =='REJECTED BY CH APPROVER'"
+                                (click)="loadCustomerStatusList('REJECTED BY CH APPROVER')">
+                                <small>Rejected By Accounts</small>
+                                <span>{{this.RejectedbyAccounts }}</span>
+                            </a>
+                        </li>
+                        <li class="nav-item" *ngIf="isFinance">
+                            <a class="nav-link tabbg-6" data-bs-toggle="pill" href="#home"
+                                [class.active]="customerStatus =='FOR APPROVAL'"
+                                (click)="loadCustomerStatusList('FOR APPROVAL')">
+                                <small>For Approval</small>
+                                <span>{{this.forapproval}}</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link tabbg-5" data-bs-toggle="pill" href="#home"
+                                [class.active]="customerStatus =='ALL'" (click)="loadCustomerStatusList('ALL')">
+                                <small>All</small>
+                                <span>{{this.ALL }}</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="data-tabs" *ngIf="this.publicVariable.storedRole == 'Accounts'">
+                    <ul class="nav nav-pills" role="tablist">
+
+                        <li class="nav-item">
+                            <a class="nav-link tabbg-6" data-bs-toggle="pill" href="#home"
+                                [class.active]="customerStatus =='FOR APPROVAL'"
+                                (click)="loadCustomerStatusList('FOR APPROVAL')">
+                                <small>For Approval</small>
+                                <span>{{this.forapproval}}</span>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link tabbg-3" data-bs-toggle="pill" href="#home"
+                                [class.active]="customerStatus =='APPROVED BY ACCOUNTS APPROVER'"
+                                (click)="loadCustomerStatusList('APPROVED BY ACCOUNTS APPROVER')">
+                                <small>Approved</small>
+                                <span>{{this.ApprovedAccounts }}</span>
+                            </a>
+                        </li>
+
+
+                        <li class="nav-item">
+                            <a class="nav-link tabbg-4" data-bs-toggle="pill" href="#home"
+                                [class.active]="customerStatus =='REJECTED BY CH APPROVER'"
+                                (click)="loadCustomerStatusList('REJECTED BY CH APPROVER')">
+                                <small>Reject</small>
+                                <span>{{this.RejectedbyAccounts }}</span>
+                            </a>
+                        </li>
+
+                        <!-- <li class="nav-item">
+                            <a class="nav-link tabbg-2" data-bs-toggle="pill" href="#home"
+                                (click)="loadCustomerStatusList('PENDING WITH APPROVER')">
+                                <small>Pending Approval</small>
+                                <span>{{this.PendingApproval }}</span>
+                            </a>
+                        </li> -->
+
+
+
+                        <li class="nav-item">
+                            <a class="nav-link tabbg-5" data-bs-toggle="pill" href="#home"
+                                [class.active]="customerStatus =='ALL'" (click)="loadCustomerStatusList('ALL')">
+                                <small>All</small>
+                                <span>{{this.ALL }}</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+
+                <div class="data-tabs-content">
+
+                    <!--Customer Tab  -->
+                    <div class="tab-content">
+
+                        <div id="home" class="tab-pane active"><br>
+
+                            <div class="page-btns-col">
+
+                                <div class="tblsort">
+                                    <label class="col-form-label">Show</label>
+                                    <select id="itemsPerPageSelect" class="form-select"
+                                        [(ngModel)]="publicVariable.tableSize"
+                                        (change)="onTableSizeChange($event,'Customer')">
+                                        <option *ngFor="let size of publicVariable.tableSizes" [value]="size">{{ size }}
+                                        </option>
+                                    </select>
+                                </div>
+                                <!-- //Test -->
+                                <div class="homefilterdt">
+                                    <div class="ficdrop1">
+                                        <div class="form-group">
+                                            <label>Select Date</label>
+                                            <select id="select-tags4" class="form-select" [(ngModel)]="selectedValue"
+                                                (change)="onValueChange($event)">
+                                                <option value="ALL">ALL</option>
+                                                <option value="Today">Today</option>
+                                                <option value="Yesterday">Yesterday</option>
+                                                <option value="7">Last 7 days</option>
+                                                <option value="30">Last 30 days</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="ficdrop1">
+                                        <div class="form-group">
+                                            <label>From</label>
+                                            <input class="form-control" type="date" id="startDate" name="startDate"
+                                                [(ngModel)]="startDate" [max]="endDate">
+                                        </div>
+                                    </div>
+
+                                    <div class="ficdrop1">
+                                        <div class="form-group">
+                                            <label>To</label>
+                                            <input class="form-control" type="date" id="endDate" name="endDate"
+                                                [(ngModel)]="endDate" [max]="endDate">
+                                            <div *ngIf="dateRangeError" class="form-validate-err">
+                                                To Date must be after From Date
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="ficdrop1">
+                                        <div class="form-group">
+                                            <label class="d-none d-sm-block">&nbsp;</label>
+                                            <button type="reset" (click)="reset()" class="btn common-btn">Reset</button>
+                                        </div>
+                                    </div>
+
+                                    <div class="ficdrop1">
+                                        <div class="form-group">
+                                            <label class="d-none d-sm-block">&nbsp;</label>
+                                            <button type="submit" (click)="submitDateRange()"
+                                                class="btn common-btn">Submit</button>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+
+
+                                <div class="dt-buttons">
+                                    <button class="gray-btns" (click)="onDownload()" type="button" title="Download"><img
+                                            src="../assets/images/excel-icon.png" alt=""></button>
+                                </div>
+                                <div class="topbr-btns">
+                                    <div class="btn-group">
+                                        <div class="table-search"><input type="text" class="form-control"
+                                                [(ngModel)]="publicVariable.searchText" name="name" id="name"
+                                                placeholder="Search here"></div>
+                                    </div>
+                                </div>
+
+                                <!-- <div class="common-box"><a routerLink="/customer/new" class="common-btn"
+                                        *ngIf="this.publicVariable.storedRole !== 'Admin'">Add New</a></div> -->
+
+                            </div>
+
+                            <div class="inner-middle-content">
+                                <div class="dasboard-table">
+
+                                    <div class="table-responsive">
+
+                                        <table class="table text-nowrap">
+                                            <thead>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th class="action-cl">Action</th>
+                                                    <th>Status</th>
+
+                                                    <th *ngIf="customerStatus=='APPROVED BY ACCOUNTS APPROVER'">Customer
+                                                        Code</th>
+                                                    <th>Name</th>
+                                                    <th>Address</th>
+                                                    <th>City</th>
+                                                    <th>Contact</th>
+                                                    <th>GST No</th>
+                                                    <th>PAN No</th>
+                                                    <th>Created On</th>
+                                                    <th>Created By</th>
+                                                    <th>Remarks</th>
+                                                    <th>Record No. </th>
+
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+
+                                                <tr
+                                                    *ngFor="let d of  this.publicVariable.customerStatusList  | searchFilter: publicVariable.searchText| paginate: {id: 'pagination6',itemsPerPage: publicVariable.tableSize,currentPage: publicVariable.page,totalItems: this.publicVariable.customerStatusList.length};let i = index">
+                                                    <td>{{i + 1}}</td>
+                                                    <td><span class="table-btns">
+                                                            <a href="javascript:void(0);" (click)="onView(d)"
+                                                                *ngIf="customerStatus !== 'FOR APPROVAL'">
+                                                                <img src="../assets/images/view-icon.svg" alt=""
+                                                                    title="View">
+                                                            </a>
+                                                            <a href="javascript:void(0);" (click)="onApproval(d)"
+                                                                *ngIf="customerStatus == 'FOR APPROVAL'">
+                                                                <img src="../assets/images/view-icon.svg" alt="">
+                                                            </a>
+                                                            <a *ngIf="publicVariable.storedRole !== 'Admin' && d.createdBy === this.publicVariable.storedEmail && (d.isDraft
+                                                           )" href="javascript:void(0);" (click)="onEdit(d)">
+                                                                <img src="../assets/images/edit-icon.svg" alt=""
+                                                                    title="Edit">
+                                                            </a>
+                                                            <a *ngIf="publicVariable.storedRole !== 'Admin' && d.createdBy === this.publicVariable.storedEmail && (d.isDraft
+                                                           )" href="javascript:void(0);"
+                                                                (click)="onDelete(d.customerId)"><img
+                                                                    src="../assets/images/delete-icon.svg" alt=""
+                                                                    title="Delete"></a>
+                                                        </span>
+                                                    </td>
+                                                    <td>{{d.customerStatus }}</td>
+
+                                                    <td *ngIf="customerStatus=='APPROVED BY ACCOUNTS APPROVER'">
+                                                        {{d.customerCode || ''}}</td>
+                                                    <td>{{d.customerName |titlecase }}</td>
+                                                    <td>{{d.address}}</td>
+                                                    <td>{{ d.cityList?.cityName ??'' }}</td>
+                                                    <td>{{d.phoneNumber}}</td>
+                                                    <td>{{d.gstNumber}}</td>
+                                                    <td>{{d.pan}}</td>
+                                                    <td>{{d.createdOn | date:'medium':'IST' }}</td>
+                                                    <td>{{d.createdBy}}</td>
+                                                    <td>{{d.customerRemarks | titlecase}}</td>
+                                                    <td>{{d.recordID}}</td>
+
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <div
+                                            *ngIf="!publicVariable.customerStatusList || publicVariable.customerStatusList.length === 0">
+                                            <div class="text-center my-3">No data found.</div>
+                                        </div>
+                                        <div class="text-center"
+                                            *ngIf="(publicVariable.customerStatusList | searchFilter: publicVariable.searchText).length === 0 && publicVariable.customerStatusList.length > 0">
+                                            <span class="text-danger">No results found.</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="clearfix"
+                                        *ngIf="publicVariable.customerStatusList && publicVariable.customerStatusList.length > 0">
+                                        <div class="hint-text">Showing <b>{{this.publicVariable.tableSize}}</b> out of
+                                            <b>{{
+                                                publicVariable.count }}</b>
+                                            entries
+                                        </div>
+                                        <pagination-controls previousLabel="Prev" id="pagination6" class="pagination"
+                                            nextLabel="Next" (pageChange)="onTableDataChange($event,'Customer')">
+                                        </pagination-controls>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+            <!--PI tab-pane-->
+
+            <div class="tab-pane fade show active" id="pills-profile" role="tabpanel"
+                aria-labelledby="pills-profile-tab">
+                <div class="data-tabs">
+                    <ul class="nav nav-pills" role="tablist">
+
+
+                        <li class="nav-item">
+                            <a class="nav-link  tabbg-1" [class.active]="headerStatus =='DRAFT'" data-bs-toggle="pill"
+                                href="#PIhome" (click)="loadInoivceStatusList('DRAFT'); headerStatus = 'DRAFT'">
+                                <small>Draft</small>
+                                <span>{{PIisDRAFT}}</span>
+                            </a>
+                        </li>
+
+                        <li class="nav-item" *ngIf="this.publicVariable.storedRole == 'Approver'">
+                            <a class="nav-link tabbg-6" [class.active]="headerStatus =='FOR APPROVAL'"
+                                data-bs-toggle="pill" href="#PIhome" (click)="loadInoivceStatusList('FOR APPROVAL')">
+                                <small>For Approval</small>
+                                <span>{{this.PIforapproval}}</span>
+                            </a>
+                        </li>
+                        <li class="nav-item" *ngIf="this.publicVariable.storedRole != 'Approver'">
+                            <a class="nav-link tabbg-2" [class.active]="headerStatus =='PENDING WITH APPROVER'"
+                                data-bs-toggle="pill" href="#PIhome"
+                                (click)="loadInoivceStatusList('PENDING WITH APPROVER')">
+                                <small>Pending For TL Approval</small>
+                                <span>{{PIPendingApproval}}</span>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link  tabbg-3"
+                                [class.active]="this.publicVariable.storedRole === 'Admin' &&  headerStatus =='APPROVED BY ACCOUNTS APPROVER'"
+                                data-bs-toggle="pill" href="#PIhome"
+                                (click)="loadInoivceStatusList('APPROVED BY ACCOUNTS APPROVER')">
+                                <small>Pending with Accounts </small>
+                                <span>{{PIApprovedAccounts}}</span>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link tabbg-4" data-bs-toggle="pill" href="#PIhome"
+                                [class.active]="headerStatus =='REJECTED BY CH APPROVER'"
+                                (click)="loadInoivceStatusList('REJECTED BY CH APPROVER')">
+                                <small>Rejected </small>
+                                <span>{{PIRejectedbyAccounts}}</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link tabbg-4" [class.active]="headerStatus =='Cancelled'"
+                                data-bs-toggle="pill" href="#PIhome" (click)="loadInoivceStatusList('Cancelled')">
+                                <small>Cancelled </small>
+                                <span>{{Cancelled}}</span>
+                            </a>
+                        </li>
+
+                        <li class="nav-item" *ngIf="invoiceType === 'Tax Invoice'">
+                            <a class="nav-link tabbg-4" [class.active]="headerStatus =='Posted Tax Invoice new'"
+                                data-bs-toggle="pill" href="#PIhome"
+                                (click)="loadInoivceStatusList('Posted Tax Invoice new')">
+                                <small>Posted Tax Invoice</small>
+                                <span>{{PITEXTCOUNT}}</span> </a>
+                        </li>
+                        <!--  -->
+                        <!-- <li class="nav-item" *ngIf="invoiceType === 'Tax Invoice'">
+                            <a class="nav-link tabbg-5"
+                                [class.active]="headerStatus =='Posted Tax Invoice' "
+                                data-bs-toggle="pill" href="#menu4" (click)="loadInvoiceSummary()">
+                                <small>Posted Tax Invoice </small>
+                                <span>{{PostedTaxInvoiceCount}}</span>
+                            </a>
+                        </li> -->
+                        <li class="nav-item" *ngIf="invoiceType === 'Proforma Invoice'">
+                            <a class="nav-link tabbg-4" [class.active]="headerStatus =='PI Processed'"
+                                data-bs-toggle="pill" href="#PIhome" (click)="loadInoivceStatusList('PI Processed')">
+                                <small>PI Processed (Accounts) </small>
+                                <span>{{PIPROCESSEDCOUNT}}</span>
+                            </a>
+                        </li>
+                        <!-- <li class="nav-item" *ngIf="invoiceType === 'Proforma Invoice'">
+                            <a class="nav-link tabbg-5"
+                                [class.active]="headerStatus =='Posted Proforma Invoice' "
+                                data-bs-toggle="pill" href="#menu5" (click)="PIloadInvoiceSummary()">
+                                <small>PI Processed (Accounts) </small>
+                                <span>{{PIPostedTaxInvoiceCount}}</span>
+                            </a>
+                        </li> -->
+                        <li class="nav-item">
+                            <a class="nav-link tabbg-5" data-bs-toggle="pill" href="#PIhome"
+                                [class.active]="headerStatus =='ALL' " (click)="loadInoivceStatusList('ALL')">
+                                <small>All </small>
+                                <span>{{PIALL}}</span>
+                            </a>
+                        </li>
+                    </ul>
+
+
+                </div>
+
+
+                <div class="data-tabs-content">
+
+                    <!-- Tab panes -->
+                    <div class="tab-content">
+
+                        <div id="PIhome" class="tab-pane"
+                            [class.active]="(this.publicVariable.storedRole === 'Employee' || this.publicVariable.storedRole === 'Approver' || this.publicVariable.storedRole === 'Admin')  && headerStatus !=='Posted Tax Invoice' && headerStatus !=='Posted Proforma Invoice'">
+                            <br>
+
+                            <div class="page-btns-col">
+
+                                <div class="tblsort">
+                                    <label class="col-form-label">Show</label>
+                                    <select id="itemsPerPageSelect" class="form-select" [(ngModel)]="pitableSize"
+                                        (change)="onTableSizeChange($event , 'invoice')">
+                                        <option *ngFor="let size of pitableSizes" [value]="size">{{ size }}
+                                        </option>
+                                    </select>
+                                </div>
+
+                                <div class="homefilterdt">
+                                    <div class="ficdrop1">
+                                        <div class="form-group">
+                                            <label>Select Date</label>
+                                            <select id="select-tags4" class="form-select" [(ngModel)]="selectedValue"
+                                                (change)="onValueChangePI($event)">
+                                                <option value="ALL">ALL</option>
+                                                <option value="Today">Today</option>
+                                                <option value="Yesterday">Yesterday</option>
+                                                <option value="7">Last 7 days</option>
+                                                <option value="30">Last 30 days</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="ficdrop1">
+                                        <div class="form-group">
+                                            <label>From</label>
+                                            <input class="form-control" type="date" id="startDate" name="startDate"
+                                                [(ngModel)]="startDate" [max]="endDate">
+                                        </div>
+                                    </div>
+
+                                    <div class="ficdrop1">
+                                        <div class="form-group">
+                                            <label>To</label>
+                                            <input class="form-control" type="date" id="endDate" name="endDate"
+                                                [(ngModel)]="endDate" [max]="endDate">
+                                            <div *ngIf="dateRangeError" class="form-validate-err">
+                                                To Date must be after From Date
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="ficdrop1">
+                                        <div class="form-group">
+                                            <label class="d-none d-sm-block">&nbsp;</label>
+                                            <button type="reset" (click)="reset()" class="btn common-btn">Reset</button>
+                                        </div>
+                                    </div>
+
+                                    <div class="ficdrop1">
+                                        <div class="form-group">
+                                            <label class="d-none d-sm-block">&nbsp;</label>
+                                            <button type="submit" (click)="submitDateRangePI()"
+                                                class="btn common-btn">Submit</button>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="dt-buttons">
+                                    <button class="gray-btns" (click)="onDownloadPI()" type="button"
+                                        title="Download"><img src="../assets/images/excel-icon.png" alt=""></button>
+                                </div>
+                                <div class="topbr-btns">
+                                    <div class="btn-group">
+                                        <div class="table-search"><input type="text" class="form-control"
+                                                [(ngModel)]="publicVariable.searchText" name="name" id="name"
+                                                placeholder="Search here"></div>
+                                    </div>
+                                </div>
+
+                                <!-- <div class="common-box"><a routerLink="/invoice/new" class="common-btn"
+                                        *ngIf="this.publicVariable.storedRole !== 'Admin'">Add New</a></div> -->
+
+                            </div>
+
+                            <div class="inner-middle-content">
+                                <div class="dasboard-table">
+
+                                    <div class="table-responsive">
+
+                                        <table class="table text-nowrap">
+                                            <thead>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th class="action-cl">Action</th>
+                                                    <th>Invoice Type</th>
+                                                    <th *ngIf="headerStatus !='DRAFT'">PI No.
+                                                    </th>
+                                                    <th
+                                                        *ngIf="(headerStatus =='Posted Tax Invoice new' || headerStatus =='ALL') && invoiceType =='Tax Invoice'">
+                                                        Tax Invoice No.</th>
+                                                    <th>Invoice Amount</th>
+                                                    <th>Customer Name</th>
+                                                    <th>Status</th>
+                                                    <th>Department</th>
+                                                    <th>Project Code</th>
+                                                    <th>Project Name</th>
+                                                    <th>Created By</th>
+                                                    <th>Created On</th>
+                                                    <th>TL Approver</th>
+                                                    <th>Record No.</th>
+
+
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr
+                                                    *ngFor="let d of  this.invoiceStatuslistData | invoiceFilter: publicVariable.searchText| paginate: {id: 'pagination1',itemsPerPage: pitableSize,currentPage: pipage,totalItems: invoiceStatuslistData.length};let i = index">
+                                                    <td>{{InvoicecalculateIndex(pipage, i)}}</td>
+
+                                                    <td>
+                                                        <span class="table-btns">
+                                                            <!-- <a href="javascript:void(0);" (click)="onViewPI(d)"
+                                                                *ngIf="customerStatus !== 'FOR APPROVAL'">
+                                                                <img src="../assets/images/view-icon.svg" alt=""
+                                                                    title="View1">
+                                                            </a> -->
+
+                                                            <a href="javascript:void(0);" (click)="onViewPI(d)">
+                                                                <img src="../assets/images/view-icon.svg" alt=""
+                                                                    title="View1">
+                                                            </a>
+
+                                                            <a *ngIf="( d.impiHeaderInvoiceType === 'Tax Invoice') && (d.headerStatus == 'APPROVED BY FINANCE' || d.headerStatus == 'POSTED TAX INVOICE')"
+                                                                href="javascript:void(0);"
+                                                                (click)="downalodFile_New(d.postedInvoiceNumber)"><img
+                                                                    src="../assets/images/download-icon.svg" alt=""
+                                                                    title="Download" /></a>
+
+                                                            <a *ngIf="(d.impiHeaderInvoiceType === 'Proforma Invoice') && (d.headerStatus == 'APPROVED BY FINANCE' || d.headerStatus == 'TAX INVOICE POSTED')"
+                                                                href="javascript:void(0);"
+                                                                (click)="downalodFilePI_New(d.headerPiNo)"><img
+                                                                    src="../assets/images/download-icon.svg" alt=""
+                                                                    title="Download" /></a>
+
+                                                            <!-- <a href="javascript:void(0);" (click)="onApprovalPI(d)"
+                                                                *ngIf="customerStatus == 'FOR APPROVAL' &&  this.publicVariable.storedRole == 'Approver'">
+                                                                <img src="../assets/images/view-icon.svg" alt=""
+                                                                    title="View2">
+
+                                                            </a> -->
+
+                                                            <a href="javascript:void(0);" (click)="onViewAccountPI(d)"
+                                                                *ngIf="customerStatus == 'FOR APPROVAL' &&  this.publicVariable.storedRole == 'Accounts'">
+                                                                <img src="../assets/images/view-icon.svg" alt=""
+                                                                    title="View">
+                                                            </a>
+
+                                                            <a *ngIf="publicVariable.storedRole !== 'Admin' && publicVariable.storedRole !== 'Approver' &&
+                                                            publicVariable.storedEmail == d.impiHeaderCreatedBy &&
+                                                                    (d.isDraft ||
+
+                                                                    d.headerStatus == 'REJECTED BY CH APPROVER' ||
+                                                                    d.headerStatus == 'REJECTED BY ACCOUNTS APPROVER'
+                                                                    )" href="javascript:void(0);"
+                                                                (click)="onEditPI(d)"><img
+                                                                    src="../assets/images/edit-icon.svg" alt="" /></a>
+                                                            <a *ngIf="publicVariable.storedRole !== 'Admin' && publicVariable.storedRole !== 'Approver' &&
+                                                                        publicVariable.storedEmail == d.impiHeaderCreatedBy &&
+                                                                    (d.isDraft ||
+
+                                                                    d.headerStatus == 'REJECTED BY CH APPROVER' ||
+                                                                    d.headerStatus == 'REJECTED BY ACCOUNTS APPROVER'
+                                                                  )" href="javascript:void(0)"
+                                                                (click)="onDeletePI(d.headerId)" data-bs-toggle="modal"
+                                                                data-bs-target="#deleterecord-modal"><img
+                                                                    src="../assets/images/delete-icon.svg" alt=""
+                                                                    title="Delete" /></a>
+
+                                                            <!-- <a href="javascript:void(0);" (click)="onSendEmail(d)"
+                                                                *ngIf="d.headerStatus === 'APPROVED BY FINANCE' && this.storedRole === 'Approver' "><img
+                                                                    src="../assets/images/email-icon.svg" alt="" /></a>
+                                                            <a href="javascript:void(0);" (click)="onediteEmail(d)"
+                                                                *ngIf="d.headerStatus === 'MAIL SENT BY FINANCE TO CUSTOMER' && this.storedRole === 'Approver' "><img
+                                                                    src="../assets/images/email-edit-icon.svg"
+                                                                    alt="" title="Email"></a> -->
+
+                                                            <!-- <a *ngIf="d.postedInvoiceNumber" href="javascript:void(0);" (click)="downalod1File(d.postedInvoiceNumber)"><img
+                                                                        src="../assets/images/download-icon.svg" alt="" title="Download" /></a> -->
+
+                                                            <!-- <a *ngIf="(d.postedInvoiceNumber && d.impiHeaderInvoiceType == 'Tax Invoice') && (d.headerStatus == 'APPROVED BY FINANCE' || d.headerStatus == 'TAX INVOICE POSTED')"
+                                                                href="javascript:void(0);"
+                                                                (click)="downalod1File(d.postedInvoiceNumber)"><img
+                                                                    src="../assets/images/download-icon.svg" alt=""
+                                                                    title="Download" /></a>
+                                                            <a *ngIf="(d.headerPiNo && d.impiHeaderInvoiceType == 'Proforma Invoice') && (d.headerStatus == 'APPROVED BY FINANCE')"
+                                                                href="javascript:void(0);"
+                                                                (click)="downalodFilePI(d.headerPiNo)"><img
+                                                                    src="../assets/images/download-icon.svg" alt=""
+                                                                    title="Download" /></a> -->
+                                                        </span>
+                                                    </td>
+                                                    <td>{{d.impiHeaderInvoiceType | titlecase}}</td>
+
+                                                    <td *ngIf="headerStatus !='DRAFT'">
+                                                        {{d.headerPiNo}}</td>
+                                                    <td
+                                                        *ngIf="(headerStatus =='Posted Tax Invoice new' || headerStatus =='ALL') && invoiceType =='Tax Invoice'">
+                                                        {{d.postedInvoiceNumber}}</td>
+                                                    <td>{{d.impiHeaderTotalInvoiceAmount | number:'1.2-2' }}</td>
+                                                    <td>{{d.impiHeaderCustomerName | titlecase}}</td>
+                                                    <td>{{d.headerStatus}}</td>
+                                                    <td>{{d.impiHeaderProjectDepartmentName | titlecase}}</td>
+                                                    <td>{{d.impiHeaderProjectCode}}</td>
+                                                    <td>{{d.impiHeaderProjectName | titlecase}}</td>
+
+                                                    <!-- <td>{{d.impiHeaderProjectDivisionName | titlecase}}</td> -->
+
+                                                    <!-- <td>{{d.impiHeaderCustomerCity | titlecase}}</td> -->
+                                                    <td>{{d.impiHeaderCreatedBy | titlecase}}</td>
+                                                    <td>{{d.impiHeaderSubmittedDate | date:'medium':'IST'}}</td>
+                                                    <td>{{d.impiHeaderTlApprover | titlecase}}</td>
+                                                    <!-- <td>{{d.impiHeaderClusterApprover | titlecase}}</td> -->
+                                                    <!-- <td>{{d.impiHeaderFinanceApprover | titlecase}}</td> -->
+                                                    <!-- <td>{{d.accountApprover | titlecase}}</td> -->
+
+
+
+                                                    <td>{{d.headerRecordID}}</td>
+
+
+
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <div *ngIf="!invoiceStatuslistData || invoiceStatuslistData.length === 0">
+                                            <div class="text-center my-3">No data found.</div>
+                                        </div>
+                                        <div class="text-center"
+                                            *ngIf="(invoiceStatuslistData | invoiceFilter: publicVariable.searchText).length === 0 && invoiceStatuslistData.length > 0">
+                                            <span class="text-danger">No results found.</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="clearfix"
+                                        *ngIf="invoiceStatuslistData && invoiceStatuslistData.length > 0">
+                                        <div class="hint-text">Showing <b>{{this.pitableSize}}</b> out of
+                                            <b>{{
+                                                invoiceStatuslistData.length }}</b>
+                                            entries
+                                        </div>
+                                        <pagination-controls previousLabel="Prev" nextLabel="Next" class="pagination"
+                                            id="pagination1" (pageChange)="onTableDataChange($event, 'invoice')">
+                                        </pagination-controls>
+                                    </div>
+
+
+                                </div>
+                            </div>
+
+
+
+                        </div>
+                        <!--tab-pane-->
+
+
+                        <div id="menu4" class="tab-pane fade"
+                            [class.active]="invoiceType == 'Tax Invoice' && headerStatus =='Posted Tax Invoice' "><br>
+
+                            <div class="page-btns-col">
+
+                                <div class="tblsort">
+                                    <label class="col-form-label">Show</label>
+                                    <select id="itemsPerPageSelect" class="form-select" [(ngModel)]="ptitableSize"
+                                        (change)="onTableSizeChange($event,'Posted Tax Invoice')">
+                                        <option *ngFor="let size of ptitableSizes" [value]="size">{{ size }}
+                                        </option>
+                                    </select>
+                                </div>
+
+                                <div class="dt-buttons" *ngIf="InvoiceSummaryList.length > 0">
+                                    <button class="gray-btns" (click)="onDownloadInvoiceSummary()" type="button"><img
+                                            src="../assets/images/excel-icon.png" alt="" title="Download"></button>
+                                </div>
+                                <div class="topbr-btns">
+                                    <div class="btn-group">
+                                        <div class="table-search"><input type="text" class="form-control"
+                                                [(ngModel)]="publicVariable.searchText" name="name" id="name"
+                                                placeholder="Search here"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="inner-middle-content">
+                                <div class="dasboard-table">
+
+                                    <div class="table-responsive">
+
+                                        <table class="table text-nowrap">
+                                            <thead>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>No</th>
+                                                    <th>Posting Date</th>
+                                                    <th>PI No.</th>
+                                                    <th>Customer No</th>
+                                                    <th>Customer</th>
+                                                    <th>Project Code</th>
+                                                    <th>Department</th>
+                                                    <!-- <th>Division </th> -->
+                                                    <th>Amount</th>
+                                                    <!-- <th>Status </th> -->
+                                                    <th class="action-cl">Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+
+                                                <tr
+                                                    *ngFor="let d of  this.InvoiceSummaryList | searchFilterNew: publicVariable.searchText| paginate: {id: 'pagination2',itemsPerPage: ptitableSize,currentPage: ptipage,totalItems: InvoiceSummaryList.length};let i = index">
+                                                    <td>{{PostTextInvoicecalculateIndex(ptipage, i)}}</td>
+                                                    <td>{{d.no}}</td>
+                                                    <td>{{d.postingDate}}</td>
+                                                    <td>{{d.invoice_no}}</td>
+                                                    <td>{{d.sellToCustomerNo}}</td>
+                                                    <td>{{d.sellToCustomerName}}</td>
+                                                    <td>{{d.projectCode}}</td>
+                                                    <td>{{d.departmentName}}</td>
+                                                    <!-- <td>{{d.divisionName}}</td> -->
+                                                    <td>{{d.amount}}</td>
+                                                    <!-- <td>{{d.status}}</td> -->
+                                                    <td><span class="table-btns">
+                                                            <a href="javascript:void(0);" (click)="InvoicedView(d)"><img
+                                                                    src="../assets/images/view-icon.svg" alt=""
+                                                                    title="View"></a>
+
+                                                            <a href="javascript:void(0);" data-bs-toggle="modal"
+                                                                (click)="loadTaxPaymentInvoiceSummary(d)"
+                                                                data-bs-target="#workflow-modal"><img
+                                                                    class="custom-rupee-icon"
+                                                                    src="../assets/images/rupee-icon.png" alt=""
+                                                                    title="Payment" /></a>
+
+                                                            <a href="javascript:void(0);"
+                                                                (click)="downalodpostedTexFile(d.no)"><img
+                                                                    src="../assets/images/download-icon.svg" alt=""
+                                                                    title="Download"></a>
+
+                                                            <!-- <a href="javascript:void(0);"
+                                                                (click)="onTextSendEmail(d)"><img
+                                                                    src="../assets/images/email-icon.svg" alt="" /></a> -->
+                                                        </span>
+                                                    </td>
+                                                </tr>
+
+
+
+                                            </tbody>
+                                        </table>
+                                        <div *ngIf="!InvoiceSummaryList || InvoiceSummaryList.length === 0">
+                                            <div class="text-center my-3">No data found.</div>
+                                        </div>
+                                        <div class="text-center"
+                                            *ngIf="(InvoiceSummaryList | searchFilterNew: publicVariable.searchText).length === 0 && InvoiceSummaryList.length > 0">
+                                            <span class="text-danger">No results found.</span>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="clearfix" *ngIf="InvoiceSummaryList && InvoiceSummaryList.length > 0">
+                                        <div class="hint-text">Showing <b>{{this.ptitableSize}}</b> out of
+                                            <b>{{
+                                                PostedTaxInvoiceCount }}</b>
+                                            entries
+                                        </div>
+                                        <pagination-controls previousLabel="Prev" id="pagination2" class="pagination"
+                                            nextLabel="Next"
+                                            (pageChange)="onTableDataChange($event,'Posted Tax Invoice')">
+                                        </pagination-controls>
+                                    </div>
+
+
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div id="menu5" class="tab-pane fade"
+                            [class.active]="invoiceType == 'Proforma Invoice' && headerStatus =='Posted Proforma Invoice' ">
+                            <br>
+
+                            <div class="page-btns-col">
+
+                                <div class="tblsort">
+                                    <label class="col-form-label">Show</label>
+                                    <select id="itemsPerPageSelect" class="form-select" [(ngModel)]="ptitableSize"
+                                        (change)="onTableSizeChange($event,'Posted Proforma Invoice')">
+                                        <option *ngFor="let size of ppitableSizes" [value]="size">{{ size }}
+                                        </option>
+                                    </select>
+                                </div>
+
+                                <div class="dt-buttons" *ngIf="PIInvoiceSummaryList.length > 0">
+                                    <button class="gray-btns" (click)="onPIDownloadInvoiceSummary()" type="button"><img
+                                            src="../assets/images/excel-icon.png" alt="" title="Download"></button>
+                                </div>
+                                <div class="topbr-btns">
+                                    <div class="btn-group">
+                                        <div class="table-search"><input type="text" class="form-control"
+                                                [(ngModel)]="publicVariable.searchText" name="name" id="name"
+                                                placeholder="Search here"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="inner-middle-content">
+                                <div class="dasboard-table">
+
+                                    <div class="table-responsive">
+
+                                        <table class="table text-nowrap">
+                                            <thead>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>No</th>
+                                                    <!-- <th>Posting Date</th>
+                                                    <th>Invoice No</th> -->
+                                                    <th>Customer No</th>
+                                                    <th>Customer</th>
+                                                    <th>Project Code</th>
+                                                    <th>Department</th>
+                                                    <!-- <th>Division </th> -->
+                                                    <th>Amount</th>
+                                                    <th>Status </th>
+                                                    <th class="action-cl">Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+
+                                                <tr
+                                                    *ngFor="let d of  this.PIInvoiceSummaryList | postedFilternew: publicVariable.searchText| paginate: {id: 'pagination3',itemsPerPage: ppitableSize,currentPage: ppipage,totalItems: PIInvoiceSummaryList.length};let i = index">
+                                                    <td>{{ calculateIndex(ppipage, i)}}</td>
+                                                    <td>{{d.no}}</td>
+                                                    <!-- <td>{{d.postingDate}}</td>
+                                                    <td>{{d.invoice_no}}</td> -->
+                                                    <td>{{d.sellToCustomerNo}}</td>
+                                                    <td>{{d.sellToCustomerName}}</td>
+                                                    <td>{{d.projectCode}}</td>
+                                                    <td>{{d.departmentName}}</td>
+                                                    <!-- <td>{{d.divisionName}}</td> -->
+                                                    <td>{{d.amount}}</td>
+                                                    <td>{{d.status}}</td>
+                                                    <td><span class="table-btns">
+                                                            <a href="javascript:void(0);"
+                                                                (click)="PIInvoicedView(d)"><img
+                                                                    src="../assets/images/view-icon.svg" alt=""
+                                                                    title="View"></a>
+
+                                                            <a href="javascript:void(0);"
+                                                                (click)="ProformaInvoicedownalodFile(d.no)"><img
+                                                                    src="../assets/images/download-icon.svg" alt=""
+                                                                    title="Download" /></a>
+                                                            <!--
+                                                            <a href="javascript:void(0);" data-bs-toggle="modal"
+                                                                data-bs-target="#workflow-modal"><img
+                                                                    src="../assets/images/download-icone.svg"
+                                                                    alt="" /></a> -->
+
+                                                            <!-- <a href="javascript:void(0);"
+                                                                (click)="onTextPISendEmail(d)"><img
+                                                                    src="../assets/images/email-icon.svg" alt="" /></a> -->
+                                                        </span>
+                                                    </td>
+                                                </tr>
+
+
+
+                                            </tbody>
+                                        </table>
+                                        <div *ngIf="!PIInvoiceSummaryList || PIInvoiceSummaryList.length === 0">
+                                            <div class="text-center my-3">No data found.</div>
+                                        </div>
+
+
+                                        <div class="text-center"
+                                            *ngIf="(PIInvoiceSummaryList | postedFilternew: publicVariable.searchText).length === 0 && PIInvoiceSummaryList.length > 0">
+                                            <span class="text-danger">No results found.</span>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="clearfix"
+                                        *ngIf="PIInvoiceSummaryList && PIInvoiceSummaryList.length > 0">
+                                        <div class="hint-text">Showing <b>{{this.ppitableSize}}</b> out of
+                                            <b>{{
+                                                PIInvoiceSummaryList.length }}</b>
+                                            entries
+                                        </div>
+                                        <pagination-controls
+                                            *ngIf="PIInvoiceSummaryList && PIInvoiceSummaryList.length > 0"
+                                            id="pagination3" previousLabel="Prev" class="pagination" nextLabel="Next"
+                                            (pageChange)="onTableDataChange($event,'Posted Proforma Invoice')">
+                                        </pagination-controls>
+                                    </div>
+
+
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+            </div>
+
+            <!--Sales credit note tab-pane-->
+            <div class="tab-pane fade" id="pills-sales-profile" role="tabpanel" aria-labelledby="pills-sales-tab">
+                <div class="data-tabs">
+                    <ul class="nav nav-pills" role="tablist">
+
+                        <li class="nav-item">
+                            <a class="nav-link  tabbg-1" [class.active]="this.publicVariable.storedRole === 'Employee'"
+                                data-bs-toggle="pill" href="#Saleshome" (click)="loadInoivceSalesStatusList('DRAFT')">
+                                <small>Draft</small>
+                                <span>{{PIisDRAFT}}</span>
+                            </a>
+                        </li>
+
+                        <li class="nav-item" *ngIf="this.publicVariable.storedRole != 'Employee'">
+                            <a class="nav-link tabbg-6" [class.active]="this.publicVariable.storedRole === 'Approver'"
+                                data-bs-toggle="pill" href="#Saleshome"
+                                (click)="loadInoivceSalesStatusList('FOR APPROVAL')">
+                                <small>For Approval</small>
+                                <span>{{this.PIforapproval}}</span>
+                            </a>
+                        </li>
+                        <li class="nav-item" *ngIf="this.publicVariable.storedRole === 'Employee'">
+                            <a class="nav-link tabbg-2" data-bs-toggle="pill" href="#Saleshome"
+                                (click)="loadInoivceSalesStatusList('PENDING WITH APPROVER')">
+                                <small>Pending For TL Approval</small>
+                                <span>{{PIPendingApproval}}</span>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link  tabbg-3" data-bs-toggle="pill" href="#Saleshome"
+                                (click)="loadInoivceSalesStatusList('APPROVED BY ACCOUNTS APPROVER')">
+                                <small>Pending With Accounts</small>
+                                <span>{{PIApprovedAccounts}}</span>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link tabbg-4" data-bs-toggle="pill" href="#Saleshome"
+                                (click)="loadInoivceSalesStatusList('REJECTED BY CH APPROVER')">
+                                <small>Rejected </small>
+                                <span>{{PIRejectedbyAccounts}}</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link tabbg-4" data-bs-toggle="pill" href="#Saleshome"
+                                (click)="loadInoivceSalesStatusList('Cancelled')">
+                                <small>Cancelled </small>
+                                <span>{{Cancelled}}</span>
+                            </a>
+                        </li>
+
+
+                        <li class="nav-item">
+                            <a class="nav-link tabbg-4" data-bs-toggle="pill" href="#Saleshome"
+                                (click)="loadInoivceSalesStatusList('Posted Credit Note')">
+                                <small>Posted Credit Note </small>
+                                <span>{{SNCSCOUNT}}</span>
+                            </a>
+                        </li>
+                        <!-- <li class="nav-item">
+                            <a class="nav-link tabbg-4" data-bs-toggle="pill" href="#CreditNote"
+                                (click)="loadSalesCreditNoteSummary()">
+                                <small> Posted Credit Note </small>
+                                <span>{{this.creditNoteCount}}</span>
+                            </a>
+                        </li> -->
+
+                        <!-- <li class="nav-item" *ngIf="this.publicVariable.storedRole === 'Accounts'">
+                        <a class="nav-link tabbg-6" data-bs-toggle="pill" href="#PIhome"
+                            (click)="loadInoivceStatusList('FOR APPROVAL')">
+                            <small>For Approval</small>
+                            <span>{{this.PIforapproval}}</span>
+                        </a>
+                    </li> -->
+
+
+                        <li class="nav-item">
+                            <a class="nav-link tabbg-5" data-bs-toggle="pill" href="#Saleshome"
+                                (click)="loadInoivceSalesStatusList('ALL')">
+                                <small>All</small>
+                                <span>{{PIALL}}</span>
+                            </a>
+                        </li>
+
+
+
+                    </ul>
+
+
+                </div>
+
+
+                <div class="data-tabs-content">
+
+                    <!-- Tab panes -->
+                    <div class="tab-content">
+
+                        <div id="Saleshome" class="tab-pane active"><br>
+
+                            <div class="page-btns-col">
+
+                                <div class="tblsort">
+                                    <label class="col-form-label">Show</label>
+                                    <select id="itemsPerPageSelect" class="form-select"
+                                        [(ngModel)]="publicVariable.tableSize"
+                                        (change)="onTableSizeChange($event,'Sales Credit Note')">
+                                        <option *ngFor="let size of publicVariable.tableSizes" [value]="size">{{ size }}
+                                        </option>
+                                    </select>
+                                </div>
+
+                                <div class="homefilterdt">
+                                    <div class="ficdrop1">
+                                        <div class="form-group">
+                                            <label>Select Date</label>
+                                            <select id="select-tags4" class="form-select" [(ngModel)]="selectedValue"
+                                                (change)="onValueChangeSL($event)">
+                                                <option value="ALL">ALL</option>
+                                                <option value="Today">Today</option>
+                                                <option value="Yesterday">Yesterday</option>
+                                                <option value="7">Last 7 days</option>
+                                                <option value="30">Last 30 days</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="ficdrop1">
+                                        <div class="form-group">
+                                            <label>From</label>
+                                            <input class="form-control" type="date" id="startDate" name="startDate"
+                                                [(ngModel)]="startDate" [max]="endDate">
+                                        </div>
+                                    </div>
+
+                                    <div class="ficdrop1">
+                                        <div class="form-group">
+                                            <label>To</label>
+                                            <input class="form-control" type="date" id="endDate" name="endDate"
+                                                [(ngModel)]="endDate" [max]="endDate">
+                                            <div *ngIf="dateRangeError" class="form-validate-err">
+                                                To Date must be after From Date
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="ficdrop1">
+                                        <div class="form-group">
+                                            <label class="d-none d-sm-block">&nbsp;</label>
+                                            <button type="reset" (click)="reset()" class="btn common-btn">Reset</button>
+                                        </div>
+                                    </div>
+
+                                    <div class="ficdrop1">
+                                        <div class="form-group">
+                                            <label class="d-none d-sm-block">&nbsp;</label>
+                                            <button type="submit" (click)="submitDateRangeSL()"
+                                                class="btn common-btn">Submit</button>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="dt-buttons">
+                                    <button class="gray-btns" (click)="onDownloadPI()" type="button"><img
+                                            src="../assets/images/excel-icon.png" alt="" title="Download"></button>
+                                </div>
+                                <div class="topbr-btns">
+                                    <div class="btn-group">
+                                        <div class="table-search"><input type="text" class="form-control"
+                                                [(ngModel)]="publicVariable.searchText" name="name" id="name"
+                                                placeholder="Search here"></div>
+                                    </div>
+                                </div>
+
+                                <!-- <div class="common-box"><a routerLink="/invoice/new" class="common-btn"
+                                    *ngIf="this.publicVariable.storedRole !== 'Admin'">Add New</a></div> -->
+
+                            </div>
+
+                            <div class="inner-middle-content">
+                                <div class="dasboard-table">
+
+                                    <div class="table-responsive">
+
+                                        <table class="table text-nowrap">
+                                            <thead>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th class="action-cl">Action</th>
+                                                    <th>Status</th>
+                                                    <th>Refund Status</th>
+                                                    <th>Tax Invoice No.</th>
+                                                    <th *ngIf="customerStatus !='DRAFT'">Credit Note No.</th>
+                                                    <th
+                                                        *ngIf="customerStatus =='Posted Credit Note'|| customerStatus =='ALL'">
+                                                        Posted Credit Note No.</th>
+                                                    <th>Customer Name</th>
+                                                    <th>Department</th>
+                                                    <!-- <th>Invoice Type</th> -->
+                                                    <th>Project Code</th>
+                                                    <th>Project Name</th>
+
+                                                    <!-- <th>Division</th> -->
+
+                                                    <!-- <th>City</th> -->
+                                                    <th>Invoice Amount</th>
+                                                    <th>Credit Note Amount</th>
+
+                                                    <!-- <th>Accounts Approver </th> -->
+                                                    <th>Created On</th>
+                                                    <th>Created By</th>
+                                                    <th>TL Approver</th>
+                                                    <!-- <th>CL Approver</th> -->
+                                                    <!-- <th>Finance Approver</th> -->
+                                                    <!-- <th>Total Amount</th> -->
+                                                    <th>Record No.</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr
+                                                    *ngFor="let d of  this.invoiceStatuslistData | salesnew: publicVariable.searchText| paginate: {id: 'pagination4',itemsPerPage: publicVariable.tableSize,currentPage: publicVariable.page,totalItems: publicVariable.count};let i = index">
+                                                    <td>{{i + 1}}</td>
+                                                    <td>
+                                                        <span class="table-btns">
+                                                            <a href="javascript:void(0);" (click)="onViewSales(d)"
+                                                                *ngIf="customerStatus !== 'FOR APPROVAL'">
+                                                                <img src="../assets/images/view-icon.svg" alt=""
+                                                                    title="View">
+                                                            </a>
+                                                            <a href="javascript:void(0);" (click)="onViewSales(d)"
+                                                                *ngIf="customerStatus == 'FOR APPROVAL' &&  this.publicVariable.storedRole != 'Employee'">
+                                                                <img src="../assets/images/view-icon.svg" alt=""
+                                                                    title="View">
+                                                            </a>
+                                                            <!-- <a href="javascript:void(0);" (click)="onViewAccountPI(d)"
+                                                                *ngIf="customerStatus == 'FOR APPROVAL' &&  this.publicVariable.storedRole == 'Accounts'">
+                                                                <img src="../assets/images/view-icon.svg" alt=""
+                                                                    title="View">
+                                                            </a> -->
+
+                                                            <a *ngIf="publicVariable.storedRole !== 'Admin' && publicVariable.storedRole !== 'Approver' &&
+                                                            publicVariable.storedEmail === d.impiHeaderCreatedBy &&
+                                                            (d.isDraft
+
+                                                            )" href="javascript:void(0);" (click)="onEditSI(d)"><img
+                                                                    src="../assets/images/edit-icon.svg" alt=""
+                                                                    title="Edit" /></a>
+
+
+
+
+                                                            <!-- <a *ngIf="publicVariable.storedRole !== 'Admin' && publicVariable.storedRole !== 'Approver' &&
+                                                                publicVariable.storedEmail === d.impiHeaderCreatedBy &&
+                                                                (d.isDraft ||
+                                                                d.headerStatus == 'REJECTED BY TL APPROVER'  ||
+                                                                d.headerStatus == 'REJECTED BY CH APPROVER' ||
+                                                                d.headerStatus == 'REJECTED BY ACCOUNTS APPROVER' ||  d.headerStatus == 'REJECTED BY FINANCE APPROVER'
+                                                                )" href="javascript:void(0);"
+                                                                (click)="onEditSI(d)"><img
+                                                                    src="../assets/images/edit-icon.svg" alt=""
+                                                                    title="Edit" /></a> -->
+
+                                                            <a *ngIf="publicVariable.storedRole !== 'Admin' && publicVariable.storedRole !== 'Approver' &&
+                                                                    publicVariable.storedEmail === d.impiHeaderCreatedBy &&
+                                                                        (d.isDraft
+
+                                                                      )" href="javascript:void(0)"
+                                                                (click)="onDeletePI(d.headerId)" data-bs-toggle="modal"
+                                                                data-bs-target="#deleterecord-modal"><img
+                                                                    src="../assets/images/delete-icon.svg" alt=""
+                                                                    title="Delete" /></a>
+
+
+                                                            <!-- <a *ngIf="publicVariable.storedRole !== 'Admin' && publicVariable.storedRole !== 'Approver' &&
+                                                            publicVariable.storedEmail === d.impiHeaderCreatedBy &&
+                                                                (d.isDraft ||
+                                                                d.headerStatus == 'REJECTED BY TL APPROVER'  ||
+                                                                d.headerStatus == 'REJECTED BY CH APPROVER' ||
+                                                                d.headerStatus == 'REJECTED BY ACCOUNTS APPROVER'  ||d.headerStatus == 'REJECTED BY FINANCE APPROVER'
+                                                              )" href="javascript:void(0)"
+                                                                (click)="onDeletePI(d.headerId)" data-bs-toggle="modal"
+                                                                data-bs-target="#deleterecord-modal"><img
+                                                                    src="../assets/images/delete-icon.svg" alt=""
+                                                                    title="Delete" /></a> -->
+
+                                                            <a *ngIf="d.creditMemoNavNo && d.headerStatus == 'CREDIT MEMO POSTED' "
+                                                                href="javascript:void(0);"
+                                                                (click)="SLLdownalodFile(d.postedCreditMemoNumber)"><img
+                                                                    src="../assets/images/download-icon.svg" alt=""
+                                                                    title="Download Details" /></a>
+
+                                                            <!-- <a href="javascript:void(0);" (click)="onsalesSendEmail(d)"
+                                                                *ngIf="d.headerStatus === 'APPROVED BY TL' && this.storedRole === 'Approver' "><img
+                                                                    src="../assets/images/email-icon.svg" alt="" /></a> -->
+                                                            <!-- <a href="javascript:void(0);" (click)="onediteEmail(d)"
+                                                                *ngIf="d.headerStatus === 'MAIL SENT BY FINANCE TO CUSTOMER' && this.storedRole === 'Approver' "><img
+                                                                    src="../assets/images/email-edit-icon.svg"
+                                                                    alt="" /></a> -->
+                                                        </span>
+                                                    </td>
+
+                                                    <td>{{d.headerStatus }}</td>
+                                                    <td>{{d.refundStatus }}</td>
+
+
+                                                    <td>{{d.headerPiNo}}</td>
+
+                                                    <td *ngIf="customerStatus !='DRAFT'">{{d.creditMemoNavNo}}</td>
+                                                    <td
+                                                        *ngIf="customerStatus =='Posted Credit Note' || customerStatus =='ALL'">
+                                                        {{d.postedCreditMemoNumber}}</td>
+                                                    <td>{{d.impiHeaderCustomerName | titlecase}}</td>
+                                                    <td>{{d.impiHeaderProjectDepartmentName | titlecase}}</td>
+                                                    <!-- <td>{{d.impiHeaderInvoiceType | titlecase}}</td> -->
+                                                    <td>{{d.impiHeaderProjectCode}}</td>
+                                                    <td>{{d.impiHeaderProjectName | titlecase}}</td>
+
+                                                    <!-- <td>{{d.impiHeaderProjectDivisionName | titlecase}}</td> -->
+
+                                                    <!-- <td>{{d.impiHeaderCustomerCity | titlecase}}</td> -->
+                                                    <td>{{d.impiHeaderTotalInvoiceAmount | number:'1.2-2' }}</td>
+                                                    <td>{{d.memoAmount | number:'1.2-2' }}</td>
+                                                    <!-- <td>{{d.accountApprover | titlecase}}</td> -->
+                                                    <td>{{d.impiHeaderSubmittedDate | date:'medium':'IST'}}</td>
+                                                    <td>{{d.impiHeaderCreatedBy | titlecase}}</td>
+                                                    <td>{{d.impiHeaderTlApprover | titlecase}}</td>
+                                                    <!-- <td>{{d.impiHeaderClusterApprover | titlecase}}</td> -->
+                                                    <!-- <td>{{d.impiHeaderFinanceApprover | titlecase}}</td> -->
+                                                    <!-- <td>{{d.impiHeaderTotalInvoiceAmount | number}}</td> -->
+
+                                                    <td>{{d.recordID}}</td>
+
+
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <div *ngIf="!invoiceStatuslistData || invoiceStatuslistData.length === 0">
+                                            <div class="text-center my-3">No data found.</div>
+                                        </div>
+                                        <div class="text-center"
+                                            *ngIf="(invoiceStatuslistData | salesnew: publicVariable.searchText).length === 0 && invoiceStatuslistData.length > 0">
+                                            <span class="text-danger">No results found.</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="clearfix"
+                                        *ngIf="invoiceStatuslistData && invoiceStatuslistData.length > 0">
+                                        <div class="hint-text">Showing <b>{{this.publicVariable.tableSize}}</b> out of
+                                            <b>{{
+                                                publicVariable.count }}</b>
+                                            entries
+                                        </div>
+                                        <pagination-controls id="pagination4" previousLabel="Prev" class="pagination"
+                                            nextLabel="Next"
+                                            (pageChange)="onTableDataChange($event,'Sales Credit Note')">
+                                        </pagination-controls>
+                                    </div>
+
+
+                                </div>
+                            </div>
+
+
+
+                        </div>
+                        <!--tab-pane-->
+
+
+                        <div id="CreditNote" class="tab-pane"><br>
+                            <div class="page-btns-col">
+                                <div class="tblsort">
+                                    <label class="col-form-label">Show</label>
+                                    <select id="itemsPerPageSelect" class="form-select"
+                                        [(ngModel)]="publicVariable.tableSize"
+                                        (change)="onTableSizeChange($event,'Sales Credit Note')">
+                                        <option *ngFor="let size of publicVariable.tableSizes" [value]="size">
+                                            {{ size }}
+                                        </option>
+                                    </select>
+                                </div>
+
+                                <div class="dt-buttons">
+                                    <button class="gray-btns" type="button" (click)="onDownloadSCN()">
+                                        <img src="../assets/images/excel-icon.png" alt="" title="Download" />
+                                    </button>
+                                </div>
+
+                                <!-- Example single danger button -->
+                                <div class="topbr-btns">
+                                    <div class="btn-group">
+                                        <div class="table-search">
+                                            <input type="text" class="form-control"
+                                                [(ngModel)]="publicVariable.searchText" name="name" id="name"
+                                                placeholder="Search here" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- <div class="common-box">
+                                    <a routerLink="/invoice/new" class="common-btn" *ngIf="this.publicVariable.storedRole !== 'Admin'">Add
+                                        New</a>
+                                </div> -->
+                            </div>
+
+                            <div class="inner-middle-content">
+                                <div class="dasboard-table">
+                                    <div class="table-responsive">
+
+
+                                        <div class="table-responsive">
+                                            <table class="table text-nowrap">
+                                                <thead>
+                                                    <tr>
+                                                        <th>#</th>
+                                                        <th>Credit Note No</th>
+                                                        <th>Posting Date</th>
+                                                        <th>Applies To DocNo</th>
+                                                        <th>Customer No</th>
+                                                        <th>Customer Name</th>
+                                                        <!-- <th>createdBy</th> -->
+                                                        <th>Department</th>
+                                                        <!-- <th>Division</th> -->
+                                                        <!-- <th>GST No</th>
+                                                        <th>invoicePortalOrder</th>
+                                                        <th>invoicePortalSubmitted</th> -->
+                                                        <th>Project Code</th>
+                                                        <th>Status</th>
+                                                        <!-- <th>PAN No</th>
+                                                        <th>Address</th>
+                                                        <th>City</th>
+                                                        <th>Post Code</th>
+                                                        <th>typeOfSupply</th>
+                                                        <th>yourReference</th> -->
+                                                        <!-- <th>Status</th> -->
+                                                        <th class="action-cl">Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr
+                                                        *ngFor="let d of  SalesCreditNoteSummaryData | salessearchFilter: publicVariable.searchText| paginate: {id: 'pagination5',itemsPerPage: publicVariable.tableSize,currentPage: publicVariable.page,totalItems: SalesCreditNoteSummaryData.length};let i = index">
+                                                        <td>{{invoiceStatuscalculateIndex(publicVariable.page, i)}}</td>
+                                                        <td>{{d.no}}</td>
+                                                        <td>{{d.postingDate}}</td>
+                                                        <td>{{d.appliesToDocNo}}</td>
+                                                        <td>{{d.sellToCustomerNo}}</td>
+                                                        <td>{{d.sellToCustomerName}}</td>
+                                                        <!-- <td>{{d.createdByUser}}</td> -->
+                                                        <td>{{d.deptCode}}</td>
+                                                        <!-- <td>{{d.divisionCode}}</td> -->
+                                                        <td>{{d.projectCode}}</td>
+                                                        <td>{{d.status}}</td>
+                                                        <!-- <td>{{d.Status}}</td> -->
+                                                        <!-- <td>{{d.gsT_No}}</td> -->
+                                                        <!-- <td>{{d.invoicePortalOrder}}</td>
+                                                        <td>{{d.invoicePortalSubmitted}}</td> -->
+                                                        <!-- <td>{{d.projectCode}}</td>
+                                                        <td>{{d.paN_NO}}</td>
+                                                        <td>{{d.sellToAddress}}</td>
+                                                        <td>{{d.sellToCity}}</td>
+                                                        <td>{{d.sellToPostCode}}</td>
+                                                        <td>{{d.typeOfSupply}}</td>
+                                                        <th>{{d.yourReference}}</th> -->
+                                                        <td>
+                                                            <span class="table-btns">
+                                                                <a href="javascript:void(0);"
+                                                                    (click)="onCreditNoteView(d)"><img
+                                                                        src="../assets/images/view-icon.svg" alt=""
+                                                                        title="View" /></a>
+
+                                                                <a href="javascript:void(0);"
+                                                                    (click)="PostedSalesCreditNotedownalodFile(d.no)"><img
+                                                                        src="../assets/images/download-icon.svg" alt=""
+                                                                        title="Download" /></a>
+                                                                <!-- <a *ngIf="publicVariable.storedRole !== 'Admin' &&
+                                                                (d.isDraft ||
+                                                                d.headerStatus == 'REJECTED BY TL APPROVER'  ||
+                                                                d.headerStatus == 'REJECTED BY CH APPROVER' ||
+                                                                d.headerStatus == 'REJECTED BY ACCOUNTS APPROVER'
+                                                                ||d.headerStatus == 'REJECTED BY FINANCE APPROVER'
+                                                                )" href="javascript:void(0);" (click)="onEdit(d)"><img
+                                                                        src="../assets/images/edit-icon.svg" alt="" /></a>
+                                                                        <a href="javascript:void(0);" (click)="onSendEmail(d)"><img
+                                                                            src="../assets/images/email-icon.svg" alt="" /></a> -->
+                                                                <!-- <a *ngIf="publicVariable.storedRole !== 'Admin' &&
+                                                                (d.isDraft ||
+                                                                d.headerStatus == 'REJECTED BY TL APPROVER'  ||
+                                                                d.headerStatus == 'REJECTED BY CH APPROVER' ||
+                                                                d.headerStatus == 'REJECTED BY ACCOUNTS APPROVER'   || d.headerStatus == 'REJECTED BY FINANCE APPROVER'
+                                                                   )"
+                                                                    href="javascript:void(0)" (click)="onDelete(d.headerId)" data-bs-toggle="modal"
+                                                                    data-bs-target="#deleterecord-modal"><img src="../assets/images/delete-icon.svg"
+                                                                        alt="" /></a> -->
+                                                            </span>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                            <div
+                                                *ngIf="!SalesCreditNoteSummaryData || SalesCreditNoteSummaryData.length === 0">
+                                                <p>No data found.</p>
+                                            </div>
+                                            <div class="text-center"
+                                                *ngIf="(SalesCreditNoteSummaryData | salessearchFilter: publicVariable.searchText).length === 0 && SalesCreditNoteSummaryData.length > 0">
+                                                <span class="text-danger">No results found.</span>
+                                            </div>
+                                        </div>
+
+
+                                        <div
+                                            *ngIf="!SalesCreditNoteSummaryData || SalesCreditNoteSummaryData.length === 0">
+                                            <p>No data found.</p>
+                                        </div>
+                                        <div class="text-center"
+                                            *ngIf="(SalesCreditNoteSummaryData | salessearchFilter: publicVariable.searchText).length === 0 && SalesCreditNoteSummaryData.length > 0">
+                                            <span class="text-danger">No results found.</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="clearfix">
+                                        <div class="hint-text">Showing <b>{{this.publicVariable.tableSize}}</b> out of
+                                            <b>{{
+                                                publicVariable.count }}</b>
+                                            entries
+                                        </div>
+                                        <pagination-controls previousLabel="Prev" id="pagination5" class="pagination"
+                                            *ngIf="SalesCreditNoteSummaryData && SalesCreditNoteSummaryData.length > 0"
+                                            nextLabel="Next"
+                                            (pageChange)="onTableDataChange($event,'Sales Credit Note')">
+                                        </pagination-controls>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                        </div>
+                        <!--tab-pane-->
+
+
+
+                    </div>
+
+
+                </div>
+            </div>
+            <!--tab-pane-->
+
+        </div>
+
+    </div>
+    <!--main-data-navs-->
+
+
+</div>
+
+<!-----Modal----->
+
+<div class="modal fade common-modal" id="workflow-modal" tabindex="-1" role="dialog"
+    aria-labelledby="testimonialmodalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title text-center w-100 small-title">Payment Information</div>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-0">
+                <app-loading *ngIf="publicVariable.isProcess"></app-loading>
+                <div class="dashboard-data">
+
+                    <div class="dasboard-table mb-0">
+
+                        <div class="table-responsive">
+
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>PI No.</th>
+                                        <th>Payment No</th>
+                                        <th>Payment Date</th>
+                                        <th>Bank Name</th>
+                                        <th>Bank A/C No.</th>
+                                        <th>UTR No.</th>
+                                        <th>TDS Amount</th>
+                                        <th>Payment Amount</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody
+                                    *ngIf="TaxInvoicePaymentSummaryList && TaxInvoicePaymentSummaryList.length > 0; else noDataMessage">
+
+                                    <tr *ngFor="let i of TaxInvoicePaymentSummaryList;let in = index">
+                                        <td>{{in + 1}}</td>
+                                        <td>{{i.taxInvoiceNo}}</td>
+                                        <td>{{i.receiptNo}}</td>
+                                        <td>{{i.paymentDate | date:'medium':'IST'}}</td>
+                                        <td>{{i.bankAccountName}}</td>
+                                        <td>{{i.bankAccountNo}}</td>
+                                        <td>{{i.utrNo}}</td>
+                                        <td>{{i.tdsAmount}}</td>
+                                        <td>{{i.paymentAmount}}</td>
+
+                                    </tr>
+                                </tbody>
+                                <ng-template #noDataMessage>
+                                    <tbody>
+                                        <tr>
+                                            <td colspan="9">No data found</td>
+                                        </tr>
+                                    </tbody>
+                                </ng-template>
+                            </table>
+
+                        </div>
+
+
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>

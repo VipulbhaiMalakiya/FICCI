@@ -14,6 +14,7 @@ import { SalesMemoApproverEmailComponent } from './layouts/sales-memo-approver-e
 import { InvoiceApprovalComponent } from './layouts/invoice-approval/invoice-approval.component';
 import { DatePipe } from '@angular/common';
 import { DataSyncComponent } from './Modules/Masters/data-sync/data-sync.component';
+import { BnNgIdleService } from 'bn-ng-idle'; // import bn-ng-idle service
 
 @NgModule({
     declarations: [
@@ -31,7 +32,7 @@ import { DataSyncComponent } from './Modules/Masters/data-sync/data-sync.compone
     ],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
-        DatePipe
+        DatePipe, BnNgIdleService
     ],
     bootstrap: [AppComponent],
     imports: [
@@ -48,7 +49,7 @@ import { DataSyncComponent } from './Modules/Masters/data-sync/data-sync.compone
             timeOut: 3000,
             progressAnimation: 'increasing',
             preventDuplicates: true,
-            disableTimeOut:true,
+            disableTimeOut: true,
         }),
         SharedModule
     ]

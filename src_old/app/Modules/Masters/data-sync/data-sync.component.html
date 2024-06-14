@@ -1,0 +1,11 @@
+<app-loading *ngIf="publicVariable.isProcess"></app-loading>
+<div class="inner-content">
+    <h3 class="content-title pb-4">Data sync</h3>
+    <div class="datasync-pg">
+        <a href="javascript:void(0);" class="common-btn w-auto" (click)="syncCountry()">Country Sync</a>
+        <a href="javascript:void(0);" class="common-btn w-auto mx-3" (click)="syncState()">State Sync</a>
+        <a href="javascript:void(0);" class="common-btn w-auto" (click)="syncCity()">City Sync</a>
+
+
+    </div>
+</div>

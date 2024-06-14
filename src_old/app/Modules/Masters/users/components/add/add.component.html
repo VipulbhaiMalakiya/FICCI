@@ -1,0 +1,169 @@
+<app-loading *ngIf="publicVariable.isProcess"></app-loading>
+
+<div class="inner-content">
+    <!-- <h3 class="content-title">Add New User Master</h3> -->
+
+    <h3 class="content-title"><span class="back-btn"><a routerLink="/masters/users" title="Back"><img src="../assets/images/left-arrow.svg" alt=""></a></span> Add New User Master</h3>
+    <div class="mastersform-sec">
+        <form [formGroup]="publicVariable.dataForm" (ngSubmit)="onSubmit()">
+            <div class="row">
+                <div class="col-md-3 col-sm-6">
+                    <div class="form-group">
+                        <label>User ID</label>
+                        <ng-select [items]="publicVariable.employeeList" #select bindLabel="imeM_EmpId"
+                            bindValue="imeM_EmpId" placeholder="Select employee " formControlName="empId"
+                            (change)="onSelectEmployee()"
+                            [searchFn]="customSearchFn" >
+                            <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
+                                <small>{{item.imeM_EmpId}} - {{item.imeM_Name}}</small>
+                            </ng-template>
+                        </ng-select>
+                        <div *ngIf="shouldShowError('empId','required')" class="text-danger">This field is required
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3 col-sm-6">
+                    <div class="form-group">
+                        <label for="username">Login ID</label>
+                        <input type="text" id="username" class="form-control" formControlName="username" readonly>
+                        <div *ngIf="shouldShowError('username','required')" class="text-danger">This field is required
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3 col-sm-6">
+                    <div class="form-group">
+                        <label for="name">User Name</label>
+                        <input type="text" class="form-control" id="name" formControlName="name" readonly>
+                        <div *ngIf="shouldShowError('name','required')" class="text-danger">This field is required</div>
+                    </div>
+                </div>
+
+                <div class="col-md-3 col-sm-6">
+                    <div class="form-group">
+                        <label for="email">User Email</label>
+                        <input type="email" class="form-control" id="email" formControlName="email" readonly>
+                        <div *ngIf="shouldShowError('email','required')" class="text-danger">This field is required
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="col-md-3 col-sm-6">
+                    <div class="form-group">
+                        <label for="dept">User Department</label>
+                        <input type="text" class="form-control" id="dept" formControlName="dept" readonly>
+                        <div *ngIf="shouldShowError('dept','required')" class="text-danger">Employee Department is required
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="col-md-3 col-sm-6">
+                    <div class="form-group">
+                        <label> Navision Department</label>
+                        <ng-select [items]="deparment" bindLabel="departmentName" bindValue="departmentName"
+                            placeholder="Select Department" formControlName="departmentName"
+                            [searchFn]="customSearchFn1" [multiple]="true">
+                            <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
+                                <small>{{item.departmentCode}} - {{item.departmentName}}</small>
+                            </ng-template>
+                        </ng-select>
+
+
+                        <div *ngIf="shouldShowError('departmentName','required')" class="text-danger">Navision Department is required
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    <div class="form-group">
+                        <label>User Role</label>
+                        <ng-select [items]="publicVariable.roles" formControlName="roleId" [bindLabel]="'roleName'"
+                            [bindValue]="'role_id'" placeholder="Select Role"></ng-select>
+
+                        <div *ngIf="shouldShowError('roleId','required')" class="text-danger">User Role is required
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3 col-sm-6">
+                    <div class="form-group">
+                        <label for="isActive">Active</label>
+                        <select id="isActive" id="isActive" formControlName="isActive" class="form-select">
+                            <option [ngValue]="true">Yes</option>
+                            <option [ngValue]="false">No</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-md-3 col-sm-6">
+                    <div class="form-group mb-0">
+                        <label>&nbsp;</label>
+                        <button type="submit" class="common-btn">{{ publicVariable.isEdit ? 'Update' : 'Save'
+                            }}</button>
+
+                    </div>
+                </div>
+
+
+            </div>
+        </form>
+
+
+    </div><!--mastersform-sec-->
+
+    <div class="inner-middle-content">
+        <div class="dasboard-table">
+
+            <div class="table-responsive">
+
+                <table class="table" *ngIf="publicVariable.userData">
+                    <thead>
+                        <tr>
+                            <th hidden>ID</th>
+                            <th>Login ID</th>
+                            <th>User ID</th>                         
+                            <th>User Name</th>
+                            <!-- <th>Email</th> -->
+                            <th>User Department</th>
+                            <th>Navision Department</th>
+                            <th>User Role</th>
+                            <th>Active</th>
+                            <th class="action-cl">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td hidden>{{ publicVariable.userData.imeM_ID }}</td>
+                            <td>{{ publicVariable.userData.imeM_Username }}</td>
+                            <td>{{ publicVariable.userData.imeM_EmpId }}</td>
+                           
+                            <td>{{ publicVariable.userData.imeM_Name }}</td>
+                            <!-- <td>{{ publicVariable.userData.imeM_Email }}</td> -->
+                            <td>{{ publicVariable.userData.department }}</td>
+                            <td>{{ publicVariable.userData.departmentName }}</td>
+                            <td>{{ publicVariable.userData.roleName }}</td>
+                            <td
+                                [ngClass]="{'text-success': publicVariable.userData.isActive, 'text-danger': !publicVariable.userData.isActive}">
+                                <span class="status">•</span> {{ publicVariable.userData.isActive ? 'Yes' : 'No' }}
+                            </td>
+
+                            <td>
+                                <span class="table-btns">
+                                    <a (click)="onEdit(publicVariable.userData)"><img
+                                            src="../assets/images/edit-icon.svg" alt="" title="Edit"></a>
+                                    <a (click)="onDelete(publicVariable.userData.imeM_ID)"><img
+                                            src="../assets/images/delete-icon.svg" alt="" title="Delete"></a>
+                                </span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
+
+        </div>
+    </div>
+
+</div>

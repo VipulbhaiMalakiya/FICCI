@@ -3,8 +3,7 @@
 <div class="inner-content">
     <!-- <h3 class="content-title">Add New Customer</h3> -->
 
-    <h3 class="content-title"><span class="back-btn"><a routerLink="/customer/status" title="Back"><img
-                    src="../assets/images/left-arrow.svg" alt=""></a></span> Add New Customer</h3>
+    <h3 class="content-title"><span class="back-btn"><a routerLink="/customer/status" title="Back"><img src="../assets/images/left-arrow.svg" alt=""></a></span> Add New Customer</h3>
 
     <div class="mastersform-sec">
         <form [formGroup]="publicVariable.dataForm">
@@ -24,15 +23,14 @@
                     <div class="form-group">
                         <label>Customer Name <sup class="text-danger">*</sup></label>
                         <input type="text" class="form-control" placeholder="Name" maxlength="100"
-                            formControlName="name" />
+                        formControlName="name" />
                         <div *ngIf="shouldShowError('name', 'required')" class="text-danger">
-                            Customer Name is required.
+                            Customer Name  is required.
                         </div>
 
-                        <div *ngIf="shouldShowError('name', 'alphanumericWithSpaces') && !shouldShowError('name', 'required')"
-                            class="text-danger">
+                        <div *ngIf="shouldShowError('name', 'alphanumericWithSpaces') && !shouldShowError('name', 'required')" class="text-danger">
 
-                            Customer Name must be alphanumeric.
+                            Customer Name must be alphanumeric along with (,-&._.) characters.
                         </div>
 
 
@@ -47,20 +45,21 @@
                         <input type="text" class="form-control" placeholder="Name 2" formControlName="name2"
                             maxlength="100" />
 
-                        <div *ngIf="shouldShowError('name2', 'required')" class="text-danger">
-                            Address 2 is required.
-                        </div>
+                            <div *ngIf="shouldShowError('name2', 'required')" class="text-danger">
+                                Address 2 is required.
+                            </div>
 
                         <div *ngIf="shouldShowError('name2', 'pattern')" class="text-danger">
-                            Name2 must be alphanumeric.
+                            Name2 must be alphanumeric along with(,-&._.) characters..
                         </div>
                     </div>
                 </div>
                 <div class="col-md-3 col-sm-6">
                     <div class="form-group">
                         <label>Address <sup class="text-danger">*</sup></label>
-                        <input type="text" class="form-control" maxlength="100" placeholder="Address"
-                            formControlName="address" />
+                        <input type="text" class="form-control"
+                         maxlength="100"
+                        placeholder="Address" formControlName="address" />
                         <div *ngIf="shouldShowError('address', 'required')" class="text-danger">
                             Address is required.
                         </div>
@@ -75,8 +74,10 @@
                 <div class="col-md-3 col-sm-6">
                     <div class="form-group">
                         <label>Address 2 <sup class="text-danger">*</sup></label>
-                        <input type="text" class="form-control" placeholder="Address 2" maxlength="100"
-                            formControlName="address2" />
+                        <input type="text" class="form-control" placeholder="Address 2"
+                        maxlength="100"
+
+                        formControlName="address2" />
                         <div *ngIf="shouldShowError('address2', 'required')" class="text-danger">
                             Address 2 is required.
                         </div>
@@ -91,10 +92,12 @@
                 <div class="col-md-3 col-sm-6">
                     <div class="form-group">
                         <label>Country/Region Code <sup class="text-danger">*</sup></label>
-                        <ng-select (change)="onCountryChange($event)" [items]="publicVariable.countryList" #select
-                            bindLabel="countryName" bindValue="countryCode" placeholder="Select"
-                            formControlName="countryCode" [searchable]="true" [searchFn]="countrySearchFn"
-                            [virtualScroll]="true" [bufferAmount]="10">
+                        <ng-select [items]="publicVariable.countryList" #select bindLabel="countryName"
+                            bindValue="countryCode" placeholder="Select" formControlName="countryCode"
+
+                            (change)="onCountryChange($event)"
+
+                            [searchable]="true" [searchFn]="countrySearchFn" [virtualScroll]="true" [bufferAmount]="10">
                             <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
                                 <small>{{item.countryCode}} - {{item.countryName}}</small>
                             </ng-template>
@@ -106,11 +109,14 @@
                 </div>
                 <div class="col-md-3 col-sm-6">
                     <div class="form-group">
-                        <label>State <sup class="text-danger">*</sup></label>
+                        <label>State<sup class="text-danger">*</sup></label>
                         <ng-select [items]="publicVariable.stateList" #select bindLabel="stateName"
-                            [disabled]="selectedCountryCode != 'India'" bindValue="stateCode" placeholder="Select "
-                            formControlName="stateCode" [searchable]="true" [searchFn]="stateSearchFn"
-                            [virtualScroll]="true" [bufferAmount]="10" (change)="onSelectStateCustomer($event)">
+                            bindValue="stateCode" placeholder="Select " formControlName="stateCode" 
+                            [disabled]="(selectedCountryCode != 'India')" 
+
+                            [searchable]="true"
+                            [searchFn]="stateSearchFn" [virtualScroll]="true" [bufferAmount]="10"
+                            (change)="onSelectStateCustomer($event)">
                             <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
                                 <small>{{item.stateCode}} - {{item.stateName}}</small>
                             </ng-template>
@@ -161,8 +167,7 @@
                             Please enter a valid email address.
                         </div> -->
 
-                        <div *ngIf="shouldShowError('email', 'invalidEmailFormat') && !shouldShowError('email', 'required')"
-                            class="text-danger">
+                        <div *ngIf="shouldShowError('email', 'invalidEmailFormat') && !shouldShowError('email', 'required')" class="text-danger">
                             Please enter a valid email address.</div>
 
                         <!-- <div *ngIf="shouldShowError('email', 'maxlength')" class="text-danger">
@@ -186,17 +191,15 @@
                 <div class="col-md-3 col-sm-6">
                     <div class="form-group">
                         <label>Contact Person <sup class="text-danger">*</sup></label>
-                        <input type="text" class="form-control" formControlName="contact" placeholder="Contact"
-                            maxlength="100" />
+                        <input type="text" class="form-control" formControlName="contact" placeholder="Contact"  maxlength="100" />
 
                         <div *ngIf="shouldShowError('contact', 'required')" class="text-danger">
                             Contact Person is required.
                         </div>
 
 
-                        <div *ngIf="shouldShowError('contact', 'alphanumericWithSpaces')  && !shouldShowError('contact', 'required')"
-                            class="text-danger">
-                            Contact must be alphanumeric with spaces.
+                        <div *ngIf="shouldShowError('contact', 'alphanumericWithSpaces')  && !shouldShowError('contact', 'required')" class="text-danger">
+                            Contact must be alphanumeric along with(,-&._.) characters.
                         </div>
 
 
@@ -217,36 +220,49 @@
                 </div>
                 <div class="col-md-3 col-sm-6">
                     <div class="form-group">
-                        <label>P.A.N. No. <sup class="text-danger">*</sup></label>
+                        <label>PAN No. <sup class="text-danger" 
+                            *ngIf="publicVariable.dataForm.get('GSTCustomerType')?.value == 1 
+                            || publicVariable.dataForm.get('GSTCustomerType')?.value == 6 
+                            || publicVariable.dataForm.get('GSTCustomerType')?.value == 7 "
+                            >*</sup></label>
                         <input type="text" class="form-control" formControlName="PANNo" placeholder="P.A.N. No."
                             (change)="ValidatePAN()" maxlength="10" />
 
-                        <div *ngIf="shouldShowError('PANNo', 'required')" class="text-danger">
-                            PAN No. is required.
-                        </div>
+                            <div *ngIf="shouldShowError('PANNo', 'required')" class="text-danger">
+                                PAN No. is required.
+                            </div>
 
 
-                        <div *ngIf="shouldShowError('PANNo', 'invalidPAN')   && !shouldShowError('contact', 'required')"
-                            class="text-danger">
+                            <div *ngIf="shouldShowError('PANNo', 'invalidPAN') && !shouldShowError('PANNo', 'required')" class="text-danger">
                             Please enter a valid PAN Number.
                         </div>
 
 
-                        <div *ngIf="panExists" class="text-warning">
+                        <div *ngIf="panExists && !shouldShowError('PANNo', 'required')" class="text-warning">
                             Customers with the same PAN Number and different GST Number already exist.
                         </div>
                     </div>
                 </div>
                 <div class="col-md-3 col-sm-6">
                     <div class="form-group">
-                        <label>GST Registration No. <sup class="text-danger">*</sup></label>
+                        <label>GST Registration No. <sup class="text-danger"
+                            *ngIf="publicVariable.dataForm.get('GSTCustomerType')?.value == 1 
+                            || publicVariable.dataForm.get('GSTCustomerType')?.value == 6 
+                            || publicVariable.dataForm.get('GSTCustomerType')?.value == 7 "
+                            >*</sup></label>
                         <input type="text" class="form-control" placeholder="GST Registration No."
-                            formControlName="GSTRegistrationNo" (change)="validateGST()" maxlength="16"
+                            formControlName="GSTRegistrationNo" maxlength="16" (change)="validateGST()"
                             [readonly]="publicVariable.dataForm.get('GSTCustomerType')?.value === 2 || !publicVariable.dataForm.get('GSTCustomerType')?.value || !publicVariable.dataForm.get('PANNo')?.value"
                             [class.readonly]="publicVariable.dataForm.get('GSTCustomerType')?.value === 2 || !publicVariable.dataForm.get('GSTCustomerType')?.value || !publicVariable.dataForm.get('PANNo')?.value" />
                         <!-- <div *ngIf="shouldShowError('GSTRegistrationNo', 'invalidGST')" class="text-danger">
                             Please enter a valid GST Registration Number. (05AAACF1282E1Z5)
                         </div> -->
+
+                        <div *ngIf="shouldShowError('GSTRegistrationNo', 'required')" class="text-danger">
+                            GST No. is required.
+                        </div>
+
+
                         <div *ngIf="gstExists" class="text-warning"> Customers with the same GST Number already exist.
                         </div>
                     </div>

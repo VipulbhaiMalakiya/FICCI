@@ -269,10 +269,9 @@
                     <tr>
                         <th>#</th>
                         <th>Category</th>
-
                         <th>File Type</th>
                         <th>File Name</th>
-                        <th>Action</th>
+                        <th *ngIf="!data.isDraft">Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -283,6 +282,18 @@
                         <td>{{ file.name }}</td>
                         <td>
                             <a href="javascript:void(0)" (click)="downalodFile(file)"><img
+                                    src="../assets/images/download-icon.svg" alt="" class="me-2"></a>
+
+                        </td>
+                    </tr>
+                    <tr *ngFor="let file of InvoiceAttachment; let i = index">
+
+                        <td>{{ InvoiceAttachment.length + 1 }}</td>
+                        <td>Posted Document</td>
+                        <td>.pdf</td>
+                        <td>{{file.invoiceNo}}</td>
+                        <td *ngIf="!data.isDraft">
+                            <a href="javascript:void(0)" (click)="downalodInvFile(file.attachment,file.invoiceNo)"><img
                                     src="../assets/images/download-icon.svg" alt="" class="me-2"></a>
 
                         </td>

@@ -1,0 +1,139 @@
+<app-loading *ngIf="publicVariable.isProcess"></app-loading>
+
+<div class="common-modal green-modal">
+    <div class="modal-header">
+      <h1 class="modal-title fs-5">Mailer Information</h1>
+      <button type="button" class="btn-close" (click)="onCancel()" data-bs-dismiss="modal" aria-label="Close"></button>
+    </div>
+    <div class="modal-body mb-0">
+      <form class="common-modal-form" [formGroup]="publicVariable.mailForm" (ngSubmit)="onSendEmail()">
+        <div class="mailer-piaccount">
+
+            <div class="mb-3 row">
+                <label for="email" class="col-sm-2 col-form-label">Mail to</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control" id="email" placeholder="Mail to"
+                        formControlName="emailTo">
+                    <div *ngIf="shouldShowError('emailTo','required')" class="text-danger">Mail to is required.</div>
+                    <div *ngIf="shouldShowError('emailTo', 'invalidEmailFormat')" class="text-danger">
+                        Please enter a valid email address.</div>
+
+                    <div *ngIf="shouldShowError('emailTo', 'maxlength')" class="text-danger">
+                        Email must be less than 80 characters.
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-3 row">
+                <label for="MailCC" class="col-sm-2 col-form-label">MailCC</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control" id="MailCC" placeholder="MailCC"
+                        formControlName="MailCC">
+                    <div *ngIf="shouldShowError('MailCC','required')" class="text-danger">Mail CC is required.</div>
+                    <div *ngIf="shouldShowError('MailCC', 'invalidEmailFormat')" class="text-danger">
+                        Please enter a valid email address.</div>
+
+                    <div *ngIf="shouldShowError('MailCC', 'maxlength')" class="text-danger">
+                        Email must be less than 80 characters.
+                    </div>
+                </div>
+            </div>
+            <div class="mb-3 row">
+                <label for="Subject" class="col-sm-2 col-form-label">Subject</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control" placeholder="Subject" formControlName="subject"
+                        id="Subject">
+                    <div *ngIf="shouldShowError('subject','required')" class="text-danger">Subject is required.</div>
+                </div>
+            </div>
+
+            <div class="mb-3 row">
+                <label for="Body" class="col-sm-2 col-form-label">Body</label>
+                <div class="col-sm-9">
+
+                    <div class="NgxEditor__Wrapper">
+                        <angular-editor [config]="editorConfig" id="Body" formControlName="body"></angular-editor>
+                        <div *ngIf="shouldShowError('body','required')" class="text-danger">Body is required.</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-3 row attach-col2">
+                <label for="formFile" class="col-sm-2 col-form-label">Attachment</label>
+                <div class="col-sm-9">
+                    <input class="form-control" type="file" id="formFile" formControlName="attachment" accept=".pdf" multiple
+                    (change)="onFilesSelected($event)">
+                </div>
+            </div>
+
+            <div class="dasboard-table pi-table mb-0">
+                <div class="table-responsive">
+                    <!-- <table class="table table-bordered text-nowrap">
+                        <thead>
+                          <tr>
+                            <th>#</th>
+                            <th>File Name</th>
+                            <th>Action</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let file of uploadedFiles; let i = index">
+                            <td>{{ i + 1 }}</td>
+                            <td>{{ file.name }}</td>
+                            <td>
+                              <a href="javascript:void(0)" (click)="downalodFile(file)"><img src="../assets/images/download-icon.svg" alt="" class="me-2"></a>
+                              <a href="javascript:void(0)" (click)="deleteFile(i,file)"><img src="../assets/images/delete-icon.svg"
+                                  alt=""></a>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table> -->
+
+                      <table class="table table-bordered text-nowrap">
+                        <thead>
+                            <tr>
+                                <th>#</th> 
+                                <th>File Type</th>
+                                <th>Invoice No.</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                          <!-- <tr *ngFor="let file of InvoiceAttachment; let i = index"> -->
+                                <tr *ngIf="InvNo!='' || InvNo!=undefined ">
+                                <td>1</td>
+                                <td>.pdf</td>
+                                <td>{{InvNo}}</td>
+                                <td>
+                                    <a href="javascript:void(0)" (click)="downalodInvFile(InvAttachment,InvNo)"><img
+                                            src="../assets/images/download-icon.svg" alt="" class="me-2"></a>
+        
+                                </td>
+                            </tr>
+                            <tr *ngFor="let file of uploadedFiles; let i = index">
+                                <td>{{ i + 2 }}</td>
+                                <td>.pdf</td>
+                                <td>{{ file.name }}</td>                                
+                                <td>
+                                  <a href="javascript:void(0)" (click)="downalodFile(file)"><img src="../assets/images/download-icon.svg" alt="" class="me-2"></a>
+                                  <a href="javascript:void(0)" (click)="deleteFile(i,file)"><img src="../assets/images/delete-icon.svg"
+                                      alt=""></a>
+                                </td>
+                              </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="form-group mb-0 mt-4">
+                    <input type="checkbox" class="btn-check" id="btn-check" autocomplete="off">
+
+                    <button type="submit" class="common-btn w-auto">Submit</button>
+                </div>
+            </div>
+
+        </div>
+      </form>
+    </div>
+  </div>

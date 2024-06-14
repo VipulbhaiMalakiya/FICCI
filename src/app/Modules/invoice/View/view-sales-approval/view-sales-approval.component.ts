@@ -6,6 +6,7 @@ import { ToastrService } from 'ngx-toastr';
 import { environment } from 'src/environments/environment';
 import { publicVariable, CustomersService } from '../../Export/invoce';
 import { InvoicesService } from '../../service/invoices.service';
+import { FileService } from '../../service/FileService';
 
 @Component({
     selector: 'app-view-sales-approval',
@@ -19,6 +20,11 @@ export class ViewSalesApprovalComponent {
     publicVariable = new publicVariable();
     uploadedFiles: any[] = [];
 
+    InvoiceAttachment: any;
+    InvNo: any;
+    InvAttachment: any;
+
+
 
     constructor(private fb: FormBuilder,
         private modalService: NgbModal,
@@ -27,7 +33,8 @@ export class ViewSalesApprovalComponent {
         private cd: ChangeDetectorRef,
         private API: InvoicesService,
         private route: ActivatedRoute,
-        private CAPI: CustomersService
+        private CAPI: CustomersService,
+        private fileService: FileService
     ) {
         this.initializeForm();
     }
@@ -50,6 +57,7 @@ export class ViewSalesApprovalComponent {
 
         this.loadStateList();
         this.loadCOAMasterList();
+        this.loadTaxInvoiceAttachment(this.data.postedCreditMemoNumber)
         this.uploadedFiles = this.data.impiHeaderAttachment
         if (this.data.impiHeaderAttachment) {
 
@@ -77,6 +85,47 @@ export class ViewSalesApprovalComponent {
         }
     }
 
+
+    downalodInvFile(base64String: any, InvNo: any = 'Invoice') {
+
+        const fileName = InvNo + '.pdf';
+        const fileType = `application/pdf`;
+        this.fileService.downloadFile(base64String, fileName, fileType);
+    }
+
+    loadTaxInvoiceAttachment(invoice: string) {
+        try {
+            this.publicVariable.isProcess = true;
+            const subscription = this.API.GetSLLTaxInvoiceAttachment(invoice).subscribe({
+                next: (response: any) => {
+
+                    console.log(response);
+
+                    if (response.data.length > 0) {
+                        this.InvoiceAttachment = response.data[0];
+                        this.InvNo = this.InvoiceAttachment.salesCrMemoNo;
+                        this.InvAttachment = this.InvoiceAttachment.attachment;
+
+
+                        console.log(this.InvoiceAttachment);
+
+                        //alert(this.InvoiceAttachment.invoiceNo);
+                        this.handleLoadingError();
+                    }
+                    this.handleLoadingError();
+                },
+                error: (error) => {
+                    console.error('Error loading project list:', error);
+                    this.handleLoadingError();
+                },
+            });
+
+            this.publicVariable.Subscription.add(subscription);
+        } catch (error) {
+            console.error('Error loading project list:', error);
+            this.handleLoadingError();
+        }
+    }
     loadCOAMasterList(): void {
         try {
             const subscription = this.API.GetCOAMasterList().subscribe({
