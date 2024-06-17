@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { BnNgIdleService } from 'bn-ng-idle';
 import { AuthService } from './services/auth.service';
@@ -8,7 +8,7 @@ import { AuthService } from './services/auth.service';
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, OnDestroy {
     title = 'FICCI';
 
 
@@ -39,5 +39,8 @@ export class AppComponent implements OnInit {
             }
         });
 
+    }
+    ngOnDestroy(): void {
+        this.authService.logout();
     }
 }
