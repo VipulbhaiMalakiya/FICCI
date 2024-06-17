@@ -19,7 +19,7 @@ export { gstValidator } from '../Validation/gstValidator';
 
 export class publicVariable {
     dataForm!: FormGroup;
-    mailForm!:FormGroup;
+    mailForm!: FormGroup;
     expenseForm!: FormGroup;
 
     expenses: any[] = [];
@@ -41,16 +41,16 @@ export class publicVariable {
     invoiceStatuslistData: invoiceStatusModule[] = [];
     invoiceApprovelistData: invoiceApproveModule[] = [];
     GetCustomerList: GetCustomerModel[] = [];
-    COAMasterList : COAMasterModel[] = []
-    InvoiceSummaryList : InvoiceSummaryModel[] = [];
+    COAMasterList: COAMasterModel[] = []
+    InvoiceSummaryList: InvoiceSummaryModel[] = [];
 
     customerStatusList: customerStatusListModel[] = [];
     countryList: CountryList[] = [];
     stateList: StateList[] = [];
     GSTGroupList: GSTGroupModel[] = [];
-    HSNSACList : HSNSACModel[] = [];
+    HSNSACList: HSNSACModel[] = [];
     cityList: CityList[] = [];
-    storedEmail:string =  sessionStorage.getItem('userEmail') ?? '';
-    storedRole: string = sessionStorage.getItem('userRole') ?? '';;
+    storedEmail: string = localStorage.getItem('userEmail') ?? '';
+    storedRole: string = localStorage.getItem('userRole') ?? '';;
 
 }

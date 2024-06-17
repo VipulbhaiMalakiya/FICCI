@@ -23,16 +23,16 @@ export class StatusCustomerComponent implements OnInit {
         private datePipe: DatePipe
 
     ) {
-  
+
     }
 
     ngOnInit(): void {
-        let model:any = {
-            'startDate' : '',
-            'endDate' : ''
+        let model: any = {
+            'startDate': '',
+            'endDate': ''
         }
         this.loadCustomerStatusList(model);
-        this.publicVariable.storedEmail = sessionStorage.getItem('userEmail') ?? '';
+        this.publicVariable.storedEmail = localStorage.getItem('userEmail') ?? '';
     }
 
     onValueChange(event: Event) {
@@ -47,7 +47,7 @@ export class StatusCustomerComponent implements OnInit {
             this.startDate = this.datePipe.transform(
                 oneWeekFromNow.toISOString().split('T')[0],
                 'yyyy-MM-dd'
-                
+
             );
             this.endDate = this.datePipe.transform(
                 oneWeekFromNow.toISOString().split('T')[0],
@@ -66,24 +66,24 @@ export class StatusCustomerComponent implements OnInit {
         } else if (this.selectedValue === '7') {
             const oneWeekFromNow = new Date();
             this.endDate = this.datePipe.transform(
-              oneWeekFromNow.toISOString().split('T')[0],
-              'yyyy-MM-dd'
+                oneWeekFromNow.toISOString().split('T')[0],
+                'yyyy-MM-dd'
             );
             oneWeekFromNow.setDate(oneWeekFromNow.getDate() - 7);
             this.startDate = this.datePipe.transform(
-              oneWeekFromNow.toISOString().split('T')[0],
-              'yyyy-MM-dd'
+                oneWeekFromNow.toISOString().split('T')[0],
+                'yyyy-MM-dd'
             );
         } else if (this.selectedValue === '30') {
             const oneWeekFromNow = new Date();
             this.endDate = this.datePipe.transform(
-              oneWeekFromNow.toISOString().split('T')[0],
-              'yyyy-MM-dd'
+                oneWeekFromNow.toISOString().split('T')[0],
+                'yyyy-MM-dd'
             );
             oneWeekFromNow.setDate(oneWeekFromNow.getDate() - 30);
             this.startDate = this.datePipe.transform(
-              oneWeekFromNow.toISOString().split('T')[0],
-              'yyyy-MM-dd'
+                oneWeekFromNow.toISOString().split('T')[0],
+                'yyyy-MM-dd'
             );
         }
 
@@ -119,7 +119,7 @@ export class StatusCustomerComponent implements OnInit {
         }
     }
 
-    loadCustomerStatusList(model:any): void {
+    loadCustomerStatusList(model: any): void {
         const subscription = this.API.getCustomerStatusNew(model).pipe(
             timeout(120000), // Timeout set to 2 minutes (120000 milliseconds)
             finalize(() => {
@@ -181,9 +181,9 @@ export class StatusCustomerComponent implements OnInit {
                         this.toastr.success(res.message, 'Success');
                         this.publicVariable.isProcess = false;
 
-                        let model:any = {
-                            'startDate' : this.startDate,
-                            'endDate' : this.endDate
+                        let model: any = {
+                            'startDate': this.startDate,
+                            'endDate': this.endDate
                         }
                         this.loadCustomerStatusList(model);
                     },

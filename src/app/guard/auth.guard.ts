@@ -15,7 +15,7 @@ export class AuthGuard implements CanActivate {
             const expectedRoles = route.data['expectedRoles'] as string[];
 
             // Get the user's role
-            const userRole =  sessionStorage.getItem('userRole') ?? ''
+            const userRole = localStorage.getItem('userRole') ?? ''
 
             // Check if the user's role matches any of the expected roles
             if (expectedRoles && expectedRoles.includes(userRole)) {

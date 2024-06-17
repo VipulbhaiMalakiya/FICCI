@@ -24,7 +24,7 @@ export class LoginComponent implements OnInit {
 
     ngOnInit(): void {
         // Check if the email is stored in local storage
-        const storedEmail = sessionStorage.getItem('userEmail');
+        const storedEmail = localStorage.getItem('userEmail');
         if (storedEmail) {
             this.router.navigate(['/dashboard']); // Redirect to the dashboard
         } else {
@@ -49,17 +49,17 @@ export class LoginComponent implements OnInit {
             const { email, password } = this.dataForm.value;
             this.isProcess = true;
             this.authService.login(email, password).subscribe(
-              
-                (response) => {                     
-              
+
+                (response) => {
+
                     console.log(response);
                     this.isProcess = false;
 
-                    // if (response.status == "Unauthorized" || response.status == "InvaildLogin") 
+                    // if (response.status == "Unauthorized" || response.status == "InvaildLogin")
                     // {
                     //     this.error = response.error;
                     //     this.isProcess = false;
-                    // }                   
+                    // }
                     // else {
                     //     this.router.navigate(['/dashboard']); // Redirect to the dashboard
                     //     this.toastr.success('Logged in successfully', 'Success');

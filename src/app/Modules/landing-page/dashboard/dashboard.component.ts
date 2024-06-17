@@ -102,15 +102,15 @@ export class DashboardComponent {
 
     ngOnInit(): void {
         // this.loadCustomerStatusCountList();
-        this.publicVariable.storedEmail = sessionStorage.getItem('userEmail') ?? '';
-        this.storedRole = sessionStorage.getItem('userRole') ?? '';
-        const isFinanceValue = sessionStorage.getItem('IsFinance');
+        this.publicVariable.storedEmail = localStorage.getItem('userEmail') ?? '';
+        this.storedRole = localStorage.getItem('userRole') ?? '';
+        const isFinanceValue = localStorage.getItem('IsFinance');
         this.loadPurchaseInvoiceList(this.invoiceType);
         this.storeIsFinance = isFinanceValue === 'true'; // Convert string to boolean
 
-        const navDepartment =encodeURIComponent(sessionStorage.getItem('navDepartment')?? '');
+        const navDepartment = encodeURIComponent(localStorage.getItem('navDepartment') ?? '');
 
-        
+
         if (!navDepartment && this.storedRole != 'Admin') {
             this.toastr.warning("Department Data not updated in User Master", "Warning");
         }
@@ -273,12 +273,12 @@ export class DashboardComponent {
         };
 
         // Filter data for each customer status
-        const draftData = data.filter(item => (item.customerStatus === 'DRAFT') && (item.department === sessionStorage.getItem('department')));
+        const draftData = data.filter(item => (item.customerStatus === 'DRAFT') && (item.department === localStorage.getItem('department')));
         counts['DRAFT'] = draftData.length;
 
         const foraprovalData = data.filter((item: any) =>
             (item.customerStatus === 'PENDING WITH ACCOUNTS APPROVER' || item.customerStatus === 'PENDING WITH FINANCE APPROVER')
-            && (item.department === sessionStorage.getItem('department'))
+            && (item.department === localStorage.getItem('department'))
         );
         counts['FOR APPROVAL'] = foraprovalData.length;
 
@@ -294,7 +294,7 @@ export class DashboardComponent {
         } else {
             pendingData = data.filter((item: any) =>
                 (item.createdBy === this.publicVariable.storedEmail ||
-                    item.department === sessionStorage.getItem('department')) &&
+                    item.department === localStorage.getItem('department')) &&
                 (item.customerStatus === 'PENDING WITH TL APPROVER' ||
                     item.customerStatus === 'PENDING WITH CH APPROVER' ||
                     item.customerStatus === 'PENDING WITH ACCOUNTS APPROVER' ||
@@ -307,7 +307,7 @@ export class DashboardComponent {
         const approvedData = data.filter(item => (item.customerStatus === 'APPROVED BY ACCOUNTS APPROVER'
             || item.customerStatus === 'APPROVED BY FINANCE')
 
-            // && item.department === sessionStorage.getItem('department')
+            // && item.department === localStorage.getItem('department')
         );
         counts['APPROVED BY ACCOUNTS APPROVER'] = approvedData.length;
 
@@ -315,7 +315,7 @@ export class DashboardComponent {
             || item.customerStatus === 'REJECTED BY CH APPROVER'
             || item.customerStatus === 'REJECTED BY ACCOUNTS APPROVER'
             || item.customerStatus === 'REJECTED BY FINANCE APPROVER')
-            //&& item.department === sessionStorage.getItem('department')
+            //&& item.department === localStorage.getItem('department')
         );
         counts['REJECTED BY CH APPROVER'] = rejectedData.length;
 
@@ -358,7 +358,7 @@ export class DashboardComponent {
         switch (this.customerStatus) {
             case 'DRAFT':
                 filteredData = this.dashboardData.filter((item: any) =>
-                    (item.department === sessionStorage.getItem('department') ||
+                    (item.department === localStorage.getItem('department') ||
                         item.createdBy === this.publicVariable.storedEmail) &&
                     item.customerStatus === 'DRAFT');
                 break;
@@ -376,7 +376,7 @@ export class DashboardComponent {
                         (
                             //item.createdBy === this.publicVariable.storedEmail ||
 
-                            item.department === sessionStorage.getItem('department')) &&
+                            item.department === localStorage.getItem('department')) &&
                         (item.customerStatus === 'PENDING WITH TL APPROVER' ||
                             item.customerStatus === 'PENDING WITH CH APPROVER' ||
                             item.customerStatus === 'PENDING WITH ACCOUNTS APPROVER' ||
@@ -389,14 +389,14 @@ export class DashboardComponent {
 
             case 'APPROVED BY ACCOUNTS APPROVER':
                 filteredData = this.dashboardData.filter((item: any) =>
-                    // item.department === sessionStorage.getItem('department') ||
+                    // item.department === localStorage.getItem('department') ||
                     // item.createdBy === this.publicVariable.storedEmail &&
                     item.customerStatus === this.customerStatus || item.customerStatus === 'APPROVED BY FINANCE');
 
                 break;
             case 'REJECTED BY CH APPROVER':
                 filteredData = this.dashboardData.filter((item: any) =>
-                // item.department === sessionStorage.getItem('department') ||
+                // item.department === localStorage.getItem('department') ||
                 //  item.createdBy === this.publicVariable.storedEmail &&
                 (item.customerStatus === 'REJECTED BY TL APPROVER' ||
                     item.customerStatus === 'REJECTED BY CH APPROVER' ||
@@ -1591,14 +1591,14 @@ export class DashboardComponent {
             }
             else {
                 const encryptedHeaderId = btoa(data.headerId.toString());
-                console.log("Login by",this.publicVariable.storedEmail);
-                console.log("Status",data.headerStatus);
-                console.log("selected data" ,data)
-                if ((data.headerStatus == 'PENDING WITH TL APPROVER' && data.impiHeaderTlApprover.toLocaleLowerCase() == this.publicVariable.storedEmail.toLocaleLowerCase())  || (data.headerStatus == 'PENDING WITH CH APPROVER' && data.impiHeaderClusterApprover.toLocaleLowerCase() == this.publicVariable.storedEmail.toLocaleLowerCase())) {
+                console.log("Login by", this.publicVariable.storedEmail);
+                console.log("Status", data.headerStatus);
+                console.log("selected data", data)
+                if ((data.headerStatus == 'PENDING WITH TL APPROVER' && data.impiHeaderTlApprover.toLocaleLowerCase() == this.publicVariable.storedEmail.toLocaleLowerCase()) || (data.headerStatus == 'PENDING WITH CH APPROVER' && data.impiHeaderClusterApprover.toLocaleLowerCase() == this.publicVariable.storedEmail.toLocaleLowerCase())) {
 
                     this.router.navigate(['invoice/sales-approval/view', encryptedHeaderId], { state: { data: data } });
                 }
-                else{
+                else {
                     this.router.navigate(['invoice/credit-memo-status/view', encryptedHeaderId], { state: { data: data } });
 
                 }

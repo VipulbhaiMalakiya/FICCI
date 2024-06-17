@@ -2,9 +2,9 @@ import { Component } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
-  selector: 'app-forbidden',
-  templateUrl: './forbidden.component.html',
-  styleUrls: ['./forbidden.component.css']
+    selector: 'app-forbidden',
+    templateUrl: './forbidden.component.html',
+    styleUrls: ['./forbidden.component.css']
 })
 export class ForbiddenComponent {
     storedRole: string = '';
@@ -15,9 +15,9 @@ export class ForbiddenComponent {
 
 
     ngOnInit(): void {
-        this.storedRole = sessionStorage.getItem('userRole') ?? '';
-        this.storedEmail = sessionStorage.getItem('userEmail') ?? '';
-        this.storeUsername = sessionStorage.getItem('userName') ?? '';
+        this.storedRole = localStorage.getItem('userRole') ?? '';
+        this.storedEmail = localStorage.getItem('userEmail') ?? '';
+        this.storeUsername = localStorage.getItem('userName') ?? '';
     }
 
     logout(): void {

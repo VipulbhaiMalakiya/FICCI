@@ -8,23 +8,23 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class SidebarLayoutComponent {
 
-    storedRole: string = '';
-    storedEmail:string = '';
-    storeUsername:string = '';
-    storeIsFinance!:boolean;
+  storedRole: string = '';
+  storedEmail: string = '';
+  storeUsername: string = '';
+  storeIsFinance!: boolean;
   constructor(private authService: AuthService) { }
 
   ngOnInit(): void {
-    this.storedRole = sessionStorage.getItem('userRole') ?? '';
-    this.storedEmail = sessionStorage.getItem('userEmail') ?? '';
-    this.storeUsername =  sessionStorage.getItem('userName') ?? '';
-    const isFinanceValue = sessionStorage.getItem('IsFinance');
+    this.storedRole = localStorage.getItem('userRole') ?? '';
+    this.storedEmail = localStorage.getItem('userEmail') ?? '';
+    this.storeUsername = localStorage.getItem('userName') ?? '';
+    const isFinanceValue = localStorage.getItem('IsFinance');
     this.storeIsFinance = isFinanceValue === 'true'; // Convert string to boolean
 
     $(".left-mobile-menu").click(function () {
-        $(".menu-list").toggle();
+      $(".menu-list").toggle();
     });
-}
+  }
 
   logout(): void {
     this.authService.logout();
@@ -46,7 +46,7 @@ export class SidebarLayoutComponent {
     return this.storedRole == 'Accounts';
   }
 
-  get isFinance(){
+  get isFinance() {
     return this.storeIsFinance == true;
   }
 

@@ -34,13 +34,13 @@ export class PiInvoiceComponent {
     ) { }
 
     ngOnInit(): void {
-        this.publicVariable.storedEmail = sessionStorage.getItem('userEmail') ?? '';
-        this.storedRole = sessionStorage.getItem('userRole') ?? '';
+        this.publicVariable.storedEmail = localStorage.getItem('userEmail') ?? '';
+        this.storedRole = localStorage.getItem('userRole') ?? '';
         this.loadInvoiceSummary();
     }
 
     downalodFile(fileUrl: any) {
-        this.publicVariable.isProcess  = true;
+        this.publicVariable.isProcess = true;
 
         try {
             const subscription = this.IAPI.GetPITaxInvoiceAttachment(fileUrl).subscribe({
@@ -52,19 +52,17 @@ export class PiInvoiceComponent {
                     // this.fileService.downloadFile(this.InvoiceAttachment.attachment, fileName, fileType);
                     // this.publicVariable.isProcess  = false;
 
-                    if(this.InvoiceAttachment.attachment != undefined && this.InvoiceAttachment.attachment !='' && this.InvoiceAttachment.attachment != null )
-                    {
-                     const fileName = this.InvoiceAttachment.invoiceNo+'.pdf';
-                     const fileType = `application/pdf`;
-                     this.fileService.downloadFile(this.InvoiceAttachment.attachment, fileName, fileType);
-                    
+                    if (this.InvoiceAttachment.attachment != undefined && this.InvoiceAttachment.attachment != '' && this.InvoiceAttachment.attachment != null) {
+                        const fileName = this.InvoiceAttachment.invoiceNo + '.pdf';
+                        const fileType = `application/pdf`;
+                        this.fileService.downloadFile(this.InvoiceAttachment.attachment, fileName, fileType);
+
                     }
-                    else
-                    {
- 
-                   this.toastr.warning('There is an issue with the download of the file from ERP.','File Not Found')
+                    else {
+
+                        this.toastr.warning('There is an issue with the download of the file from ERP.', 'File Not Found')
                     }
-                    this.publicVariable.isProcess  = false;
+                    this.publicVariable.isProcess = false;
 
                 },
                 error: (error) => {
@@ -152,16 +150,16 @@ export class PiInvoiceComponent {
         const exportData = this.InvoiceSummaryList.map((x) => ({
             "No": x?.no || '',
             "Customer No": x?.sellToCustomerNo || '',
-            "Customer" :x?.sellToCustomerName || '',
-            "Project Code":x?.projectCode || '',
-            "Department":x?.departmentName || '',
-            "Division":x?.divisionName || '',
-            "Amount":x?.amount || '',
-            'status':x?.status || '',
+            "Customer": x?.sellToCustomerName || '',
+            "Project Code": x?.projectCode || '',
+            "Department": x?.departmentName || '',
+            "Division": x?.divisionName || '',
+            "Amount": x?.amount || '',
+            'status': x?.status || '',
 
         }));
 
-        const headers = ['No','Customer No','Customer','Project Code','Department','Division','Amount','status'
+        const headers = ['No', 'Customer No', 'Customer', 'Project Code', 'Department', 'Division', 'Amount', 'status'
         ];
         this.appService.exportAsExcelFile(exportData, 'Proforma Invoice', headers);
     }

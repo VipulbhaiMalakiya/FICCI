@@ -16,7 +16,7 @@ export class AppComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        if (sessionStorage.getItem('userEmail')) {
+        if (localStorage.getItem('userEmail')) {
             this.router.navigate(['/']);
         }
         //900 =  15 minutes in seconds

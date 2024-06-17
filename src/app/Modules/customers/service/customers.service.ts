@@ -80,20 +80,20 @@ export class CustomersService {
         return this.http.delete<any>(`${this.deleteURL}/${id}`);
     }
 
-    getCustomerStatusNew(data:any): Observable<any[]> {
+    getCustomerStatusNew(data: any): Observable<any[]> {
 
         console.log(data);
-        
-        const url = `${this.getCustomerStatusNewURL}${sessionStorage.getItem('userEmail') ?? ''}&departmentName=${sessionStorage.getItem('department') ?? ''}&start=${data.startDate}&end=${data.endDate}`;
 
-       // const url = `${this.getCustomerStatusNewURL}${sessionStorage.getItem('userEmail') ?? ''}&departmentName=ABC`;
+        const url = `${this.getCustomerStatusNewURL}${localStorage.getItem('userEmail') ?? ''}&departmentName=${localStorage.getItem('department') ?? ''}&start=${data.startDate}&end=${data.endDate}`;
 
-      //  https://localhost:44386/api/Customer?email=test%40te&departmentName=ABC
+        // const url = `${this.getCustomerStatusNewURL}${localStorage.getItem('userEmail') ?? ''}&departmentName=ABC`;
+
+        //  https://localhost:44386/api/Customer?email=test%40te&departmentName=ABC
         return this.http.get<any[]>(url);
     }
 
     ApproveCustomer(): Observable<any[]> {
-        const url = `${this.ApproveCustomerURL}${sessionStorage.getItem('userEmail') ?? ''}`;
+        const url = `${this.ApproveCustomerURL}${localStorage.getItem('userEmail') ?? ''}`;
         return this.http.get<any[]>(url);
     }
 
@@ -103,12 +103,12 @@ export class CustomersService {
     }
 
     AccountsCustomer(): Observable<any[]> {
-        const url = `${this.ApproveCustomerURL}${sessionStorage.getItem('userEmail') ?? ''}`;
+        const url = `${this.ApproveCustomerURL}${localStorage.getItem('userEmail') ?? ''}`;
         return this.http.get<any[]>(url);
     }
 
     getCustomerStatuaccount(): Observable<any[]> {
-        const url = `${this.AccountURL}${sessionStorage.getItem('userEmail') ?? ''}`;
+        const url = `${this.AccountURL}${localStorage.getItem('userEmail') ?? ''}`;
         return this.http.get<any[]>(url);
     }
 }

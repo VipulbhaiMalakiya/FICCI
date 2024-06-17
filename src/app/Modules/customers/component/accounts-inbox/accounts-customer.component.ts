@@ -23,7 +23,7 @@ export class AccountsCustomerComponent {
 
     ngOnInit(): void {
         this.loadCustomerStatusList();
-        this.publicVariable.storedEmail = sessionStorage.getItem('userEmail') ?? '';
+        this.publicVariable.storedEmail = localStorage.getItem('userEmail') ?? '';
     }
 
     loadCustomerStatusList(): void {
@@ -72,14 +72,14 @@ export class AccountsCustomerComponent {
         const exportData = this.publicVariable.customerStatusList.map((x) => ({
             "Cust. No.": x?.customerCode || '',
             Name: x?.customerName ? this.toTitleCase(x.customerName) : '',
-            "Name 2":x?.customerLastName ? this.toTitleCase(x.customerLastName) : '',
+            "Name 2": x?.customerLastName ? this.toTitleCase(x.customerLastName) : '',
 
             Address: x?.address || '',
-            "Address 2":x.address2  || '',
+            "Address 2": x.address2 || '',
 
-            State: x?.stateList.stateName ,
+            State: x?.stateList.stateName,
             Country: x.countryList.countryName,
-            City: x?.cityList.cityName ,
+            City: x?.cityList.cityName,
             Pincode: x?.pincode,
             "Contact Person": x && x.contact,
             "Phone Number": x?.phoneNumber || '',
@@ -94,8 +94,8 @@ export class AccountsCustomerComponent {
             'Status': x.customerStatus ? this.toTitleCase(x.customerStatus) : '',
         }));
 
-        const headers = ['Cust. No.', 'Name','Name 2', 'Address', 'Address 2','Country', 'State', 'City',
-            'Pincode', 'Contact Person',  'Email','Phone Number',
+        const headers = ['Cust. No.', 'Name', 'Name 2', 'Address', 'Address 2', 'Country', 'State', 'City',
+            'Pincode', 'Contact Person', 'Email', 'Phone Number',
             'GST Customer Type', 'gstNumber', 'PAN Card',
             'Created On', 'Created By', 'Last Updated On', 'Last Update By', 'Status'];
         this.appService.exportAsExcelFile(exportData, 'Customer Status', headers);

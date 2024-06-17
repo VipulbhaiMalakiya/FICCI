@@ -26,19 +26,19 @@ export class publicVariable {
     tableSize: number = 10;
     tableSizes: number[] = [10, 20, 50, 100];
     searchText: string = '';
-    approvalsearchText:string = '';
+    approvalsearchText: string = '';
     Subscription: Subscription = new Subscription();
     selectedEmployee: any;
     userData: any;
     countryList: CountryList[] = [];
-    ApproveCustomerList:ApproveCustomerList[] = [];
+    ApproveCustomerList: ApproveCustomerList[] = [];
     stateList: StateList[] = [];
     cityList: CityList[] = [];
     postCodeList: PostCodeList[] = [];
     customerTypeList: GstCustomerTypeList[] = [];
     customerStatusList: customerStatusListModel[] = [];
-    storedEmail:string =  sessionStorage.getItem('userEmail') ?? '';
-    storedRole: string = sessionStorage.getItem('userRole') ?? '';;
+    storedEmail: string = localStorage.getItem('userEmail') ?? '';
+    storedRole: string = localStorage.getItem('userRole') ?? '';;
 
 
 }
