@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { BnNgIdleService } from 'bn-ng-idle';
 import { AuthService } from './services/auth.service';
@@ -11,11 +11,24 @@ import { AuthService } from './services/auth.service';
 export class AppComponent implements OnInit {
     title = 'FICCI';
 
+
     constructor(private router: Router, private bnIdle: BnNgIdleService, private authService: AuthService) {
 
     }
+    // @HostListener('window:beforeunload', ['$event'])
+    // unloadHandler(event: Event) {
+    //     const isPageRefreshOrInternalNavigation = event instanceof BeforeUnloadEvent;
+    //     const isLoggedIn = !!localStorage.getItem('userEmail');
+    //     const isTabClose = !isPageRefreshOrInternalNavigation;
+    //     if (!isLoggedIn || isTabClose) {
+    //         this.authService.logout();
+    //     }
+    // }
+
 
     ngOnInit(): void {
+
+
         if (localStorage.getItem('userEmail')) {
             this.router.navigate(['/']);
         }
