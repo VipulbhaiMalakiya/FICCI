@@ -4,7 +4,7 @@
     <h3 class="content-title">Customer Status</h3>
     <div class="page-btns-col">
 
-        <div class="tblsort" >
+        <div class="tblsort">
             <label class="col-form-label">Show</label>
             <select id="itemsPerPageSelect" class="form-select" [(ngModel)]="publicVariable.tableSize"
                 (change)="onTableSizeChange($event)">
@@ -61,17 +61,16 @@
 
         </div>
 
-        <div class="dt-buttons"
-            >
+        <div class="dt-buttons">
             <button class="gray-btns" (click)="onDownload()" type="button"><img src="../assets/images/excel-icon.png"
                     alt="" title="Download Excel"></button>
         </div>
 
         <div class="topbr-btns">
-            <div class="btn-group"
-              >
+            <div class="btn-group">
                 <div class="table-search"><input type="text" class="form-control"
-                        [(ngModel)]="publicVariable.searchText" name="name" id="name" placeholder="Search here"></div>
+                        [(ngModel)]="publicVariable.searchText" name="name" id="name" placeholder="Search here"
+                        (input)="updateFilteredUserList()"></div>
             </div>
         </div>
 
@@ -91,7 +90,7 @@
                             <th>#</th>
                             <th class="action-cl">Action</th>
                             <th>Status</th>
-                       
+
                             <th>Customer Code</th>
                             <th>Name</th>
                             <th>Address</th>
@@ -103,7 +102,7 @@
                             <th>Created By</th>
                             <th>Remarks</th>
                             <th>Record No.</th>
-                         
+
                         </tr>
                     </thead>
                     <tbody>
@@ -113,24 +112,25 @@
                             <td>{{calculateIndex(publicVariable.page, i)}}</td>
 
                             <td><span class="table-btns">
-                                <a href="javascript:void(0);" (click)="onView(d)"><img
-                                        src="../assets/images/view-icon.svg" alt="" title="View Details"></a>
-                                <a *ngIf="publicVariable.storedRole !== 'Admin' &&
+                                    <a href="javascript:void(0);" (click)="onView(d)"><img
+                                            src="../assets/images/view-icon.svg" alt="" title="View Details"></a>
+                                    <a *ngIf="publicVariable.storedRole !== 'Admin' &&
                                         (d.isDraft ) && (d.createdBy == this.publicVariable.storedEmail)"
-                                    href="javascript:void(0);" (click)="onEdit(d)">
-                                    <img src="../assets/images/edit-icon.svg" alt=""
-                                        [title]="publicVariable.storedRole !== 'Admin' ? 'Edit Details' : ''">
-                                </a>
-                                <a *ngIf="publicVariable.storedRole !== 'Admin' && (d.isDraf) && (d.createdBy == this.publicVariable.storedEmail)" href="javascript:void(0);"
-                                    (click)="onDelete(d.customerId)" title="Delete Customer">
-                                    <img src="../assets/images/delete-icon.svg" alt="">
-                                </a>
+                                        href="javascript:void(0);" (click)="onEdit(d)">
+                                        <img src="../assets/images/edit-icon.svg" alt=""
+                                            [title]="publicVariable.storedRole !== 'Admin' ? 'Edit Details' : ''">
+                                    </a>
+                                    <a *ngIf="publicVariable.storedRole !== 'Admin' && (d.isDraf) && (d.createdBy == this.publicVariable.storedEmail)"
+                                        href="javascript:void(0);" (click)="onDelete(d.customerId)"
+                                        title="Delete Customer">
+                                        <img src="../assets/images/delete-icon.svg" alt="">
+                                    </a>
 
-                            </span>
-                        </td>
-                        <td>{{d.customerStatus }}</td>
-                          
-                           
+                                </span>
+                            </td>
+                            <td>{{d.customerStatus }}</td>
+
+
                             <td>{{d.customerCode || ''}}</td>
                             <td>{{d.customerName |titlecase }}</td>
                             <td>{{d.address}}</td>

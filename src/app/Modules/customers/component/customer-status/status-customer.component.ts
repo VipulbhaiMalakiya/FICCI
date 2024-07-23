@@ -13,6 +13,8 @@ export class StatusCustomerComponent implements OnInit {
     endDate?: any;
     dateRangeError: boolean = false;
     selectedValue?: any = 'ALL';
+    public filteredCustomerStatusList: any[] = [];
+
 
 
     constructor(private appService: AppService,
@@ -131,6 +133,7 @@ export class StatusCustomerComponent implements OnInit {
                     this.publicVariable.customerStatusList = response.data;
                     this.publicVariable.count = response.data.length;
                     this.publicVariable.isProcess = false;
+                    this.updateFilteredUserList();
                 } else {
 
                     this.publicVariable.customerStatusList = response.data;
@@ -155,6 +158,43 @@ export class StatusCustomerComponent implements OnInit {
 
         this.publicVariable.Subscription.add(subscription);
     }
+
+    updateFilteredUserList(): void {
+        const searchText = this.publicVariable.searchText.toLowerCase();
+
+        this.filteredCustomerStatusList = this.publicVariable.customerStatusList.filter((customer: any) => {
+            const nameMatch = (customer.customerName ?? '').toLowerCase().includes(searchText);
+            const addressMatch = (customer.address ?? '').toLowerCase().includes(searchText);
+            const phoneNumberMatch = (customer.phoneNumber ?? '').toLowerCase().includes(searchText);
+            const emailMatch = (customer.email ?? '').toLowerCase().includes(searchText);
+            const gstNumberMatch = (customer.gstNumber ?? '').toLowerCase().includes(searchText);
+            const panMatch = (customer.pan ?? '').toLowerCase().includes(searchText);
+            const statusMatch = (customer.customerStatus ?? '').toLowerCase().includes(searchText);
+            const remarksMatch = (customer.customerRemarks ?? '').toLowerCase().includes(searchText);
+            const recordIDMatch = (customer.recordID ?? '').toLowerCase().includes(searchText);
+
+            // Handle nested objects
+            const cityNameMatch = (customer.cityList?.cityName ?? '').toLowerCase().includes(searchText);
+            const stateNameMatch = (customer.stateList?.stateName ?? '').toLowerCase().includes(searchText);
+            const countryNameMatch = (customer.countryList?.countryName ?? '').toLowerCase().includes(searchText);
+
+            // Handle arrays
+            const workFlowHistoryMatch = customer.workFlowHistory?.some((history: any) =>
+                (history.imwdRemarks ?? '').toLowerCase().includes(searchText) ||
+                (history.imwdPendingAt ?? '').toLowerCase().includes(searchText) ||
+                (history.imwdCreatedBy ?? '').toLowerCase().includes(searchText)
+            ) ?? false;
+
+            return nameMatch || addressMatch || phoneNumberMatch || emailMatch || gstNumberMatch ||
+                panMatch || statusMatch || remarksMatch || recordIDMatch || cityNameMatch ||
+                stateNameMatch || countryNameMatch || workFlowHistoryMatch;
+        });
+
+        // Calculate the total count for filtered items
+
+        this.publicVariable.count = this.filteredCustomerStatusList.length;
+    }
+
 
 
     getCityName(cityId: string): string | undefined {
@@ -257,7 +297,8 @@ export class StatusCustomerComponent implements OnInit {
     }
     onTableDataChange(event: any) {
         this.publicVariable.page = event;
-        this.publicVariable.customerStatusList
+        this.publicVariable.customerStatusList;
+
     }
     onTableSizeChange(event: any): void {
         this.publicVariable.tableSize = event.target.value;
