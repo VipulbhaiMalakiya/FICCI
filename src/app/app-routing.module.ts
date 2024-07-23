@@ -52,6 +52,7 @@ const routes: Routes = [
                     }
                 ]
             },
+
             { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
 
             { path: 'dashboard', loadChildren: () => import('./Modules/landing-page/dashboard/dashboard.module').then(m => m.DashboardModule) },
@@ -66,7 +67,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-    imports: [RouterModule.forRoot(routes)],
+    imports: [RouterModule.forRoot(routes, { useHash: false })],
     exports: [RouterModule]
 })
 export class AppRoutingModule { }
