@@ -548,8 +548,10 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr
-                                                    *ngFor="let d of  this.invoiceStatuslistData | invoiceFilter: publicVariable.searchText| paginate: {id: 'pagination1',itemsPerPage: pitableSize,currentPage: pipage,totalItems: invoiceStatuslistData.length};let i = index">
+                                                <tr *ngFor="let d of invoicefilteredList | invoiceFilter:
+                                                    publicVariable.searchText| paginate: {id:
+                                                    'pagination1',itemsPerPage: pitableSize,currentPage:
+                                                    pipage,totalItems: invoicefilteredList.length};let i = index">
                                                     <td>{{InvoicecalculateIndex(pipage, i)}}</td>
 
                                                     <td>
@@ -691,7 +693,7 @@
                                         *ngIf="invoiceStatuslistData && invoiceStatuslistData.length > 0">
                                         <div class="hint-text">Showing <b>{{this.pitableSize}}</b> out of
                                             <b>{{
-                                                invoiceStatuslistData.length }}</b>
+                                                invoicefilteredList.length }}</b>
                                             entries
                                         </div>
                                         <pagination-controls previousLabel="Prev" nextLabel="Next" class="pagination"
