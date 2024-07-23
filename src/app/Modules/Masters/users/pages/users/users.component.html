@@ -15,7 +15,8 @@
             </select>
         </div>
 
-        <div class="dt-buttons" title="Download Excel" *ngIf="publicVariable.userlist && publicVariable.userlist.length > 0">
+        <div class="dt-buttons" title="Download Excel"
+            *ngIf="publicVariable.userlist && publicVariable.userlist.length > 0">
             <button class="gray-btns" type="button" (click)="onDownload()"><img src="../assets/images/excel-icon.png"
                     alt=""></button>
         </div>
@@ -23,8 +24,9 @@
         <!-- Example single danger button -->
         <div class="topbr-btns">
             <div class="btn-group">
-                <div class="table-search" *ngIf="publicVariable.userlist && publicVariable.userlist.length > 0"><input type="text" class="form-control"
-                        [(ngModel)]="publicVariable.searchText" name="name" id="name" placeholder="Search here"></div>
+                <div class="table-search" *ngIf="publicVariable.userlist && publicVariable.userlist.length > 0"><input
+                        type="text" class="form-control" [(ngModel)]="publicVariable.searchText" name="name" id="name"
+                        placeholder="Search here" (input)="updateFilteredUserList()"></div>
             </div>
         </div>
 
@@ -49,8 +51,8 @@
                             <th>Department</th>
                             <th>Nav Department</th>
                             <th>Role</th>
-                          
-                           
+
+
                         </tr>
                     </thead>
                     <tbody>
@@ -59,9 +61,10 @@
                             <td>{{ calculateIndex(publicVariable.page, i)}}</td>
                             <td>
                                 <span class="table-btns">
-                                    <a href="javascript:void(0);" title="Edit" (click)="onEdit(user)"><img src="../assets/images/edit-icon.svg" alt=""></a>
-                                    <a href="javascript:void(0);"  (click)="onDelete(user.imeM_ID)"><img src="../assets/images/delete-icon.svg"
-                                            alt="" title="Delete"></a>
+                                    <a href="javascript:void(0);" title="Edit" (click)="onEdit(user)"><img
+                                            src="../assets/images/edit-icon.svg" alt=""></a>
+                                    <a href="javascript:void(0);" (click)="onDelete(user.imeM_ID)"><img
+                                            src="../assets/images/delete-icon.svg" alt="" title="Delete"></a>
                                 </span>
                             </td>
                             <td [ngClass]="{'text-success': user.isActive, 'text-danger': !user.isActive}">
@@ -73,8 +76,8 @@
                             <td>{{ user.department |titlecase}}</td>
                             <td>{{ user.departmentName}}</td>
                             <td>{{ user.roleName | titlecase }}</td>
-                            
-                           
+
+
                         </tr>
                     </tbody>
                 </table>

@@ -9,6 +9,8 @@ import { finalize, timeout } from 'rxjs';
 })
 export class UsersComponent implements OnInit, OnDestroy {
     publicVariable = new publicVariable();
+    filteredUserList: any[] = [];
+
     constructor(private appService: AppService,
         private modalService: NgbModal,
         private router: Router,
@@ -32,29 +34,47 @@ export class UsersComponent implements OnInit, OnDestroy {
 
     loadUserList(): void {
         const subscription = this.API.getUsers()
-          .pipe(
-            timeout(120000),
-            finalize(() => {
-              this.publicVariable.isProcess = false;
-            })
-          )
-          .subscribe({
-            next: (response: any) => {
-              this.publicVariable.userlist = response.data;
-              this.publicVariable.count = response.data.length;
-            },
-            error: (error: any) => {
-              this.toastr.error(
-                error.name === 'TimeoutError' ?
-                'Operation timed out after 40 seconds' : 'Error loading user list',
-                error.name
-              );
-            }
-          });
+            .pipe(
+                timeout(120000),
+                finalize(() => {
+                    this.publicVariable.isProcess = false;
+                })
+            )
+            .subscribe({
+                next: (response: any) => {
+                    this.publicVariable.userlist = response.data;
+                    this.publicVariable.count = response.data.length;
+                    this.updateFilteredUserList();
+                },
+                error: (error: any) => {
+                    this.toastr.error(
+                        error.name === 'TimeoutError' ?
+                            'Operation timed out after 40 seconds' : 'Error loading user list',
+                        error.name
+                    );
+                }
+            });
 
         this.publicVariable.Subscription.add(subscription);
-      }
+    }
+    updateFilteredUserList(): void {
+        const searchText = this.publicVariable.searchText.toLowerCase();
+        this.filteredUserList = this.publicVariable.userlist.filter(user => {
+            const nameMatch = user.imeM_Name.toLowerCase().includes(searchText);
+            const departmentMatch = user.department ? user.department.toLowerCase().includes(searchText) : false;
+            const roleMatch = user.roleName.toLowerCase().includes(searchText);
 
+            // Check if departmentName is an array before joining and searching
+            const departmentNamesMatch = Array.isArray(user.departmentName)
+                ? user.departmentName.join(', ').toLowerCase().includes(searchText)
+                : false;
+
+            return nameMatch || departmentMatch || departmentNamesMatch || roleMatch;
+        });
+
+        // Calculate the total count for filtered items
+        this.publicVariable.count = this.filteredUserList.length;
+    }
 
     onTableDataChange(event: any) {
         this.publicVariable.page = event;
@@ -76,14 +96,14 @@ export class UsersComponent implements OnInit, OnDestroy {
             "Employee ID	": x?.imeM_EmpId || '',
             Name: x?.imeM_Name ? this.toTitleCase(x.imeM_Name) : '',
             Username: x?.imeM_Username ? this.toTitleCase(x.imeM_Username) : '',
-            Department:x?.department ? this.toTitleCase(x.department) : '',
+            Department: x?.department ? this.toTitleCase(x.department) : '',
             "Nav Department": Array.isArray(x?.departmentName) ? x.departmentName.join(', ') : '',
             Email: x?.imeM_Email ? this.toTitleCase(x.imeM_Email) : '',
             Active: x && x.isActive ? 'Yes' : 'No',
             Role: x?.roleName ? this.toTitleCase(x.roleName) : ''
         }));
 
-        const headers = ['Employee ID	', 'Name', 'Email', 'Username', 'Department','Nav Department','Role', 'Active'];
+        const headers = ['Employee ID	', 'Name', 'Email', 'Username', 'Department', 'Nav Department', 'Role', 'Active'];
         this.appService.exportAsExcelFile(
             exportData,
             'Users',
