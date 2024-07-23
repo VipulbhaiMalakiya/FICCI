@@ -162,7 +162,9 @@ export class StatusCustomerComponent implements OnInit {
     updateFilteredUserList(): void {
         const searchText = this.publicVariable.searchText.toLowerCase();
 
-        this.filteredCustomerStatusList = this.publicVariable.customerStatusList.filter((customer: any) => {
+        console.log('Search Text:', searchText);
+
+        const filteredData = this.publicVariable.customerStatusList.filter((customer: any) => {
             const nameMatch = (customer.customerName ?? '').toLowerCase().includes(searchText);
             const addressMatch = (customer.address ?? '').toLowerCase().includes(searchText);
             const phoneNumberMatch = (customer.phoneNumber ?? '').toLowerCase().includes(searchText);
@@ -173,12 +175,10 @@ export class StatusCustomerComponent implements OnInit {
             const remarksMatch = (customer.customerRemarks ?? '').toLowerCase().includes(searchText);
             const recordIDMatch = (customer.recordID ?? '').toLowerCase().includes(searchText);
 
-            // Handle nested objects
             const cityNameMatch = (customer.cityList?.cityName ?? '').toLowerCase().includes(searchText);
             const stateNameMatch = (customer.stateList?.stateName ?? '').toLowerCase().includes(searchText);
             const countryNameMatch = (customer.countryList?.countryName ?? '').toLowerCase().includes(searchText);
 
-            // Handle arrays
             const workFlowHistoryMatch = customer.workFlowHistory?.some((history: any) =>
                 (history.imwdRemarks ?? '').toLowerCase().includes(searchText) ||
                 (history.imwdPendingAt ?? '').toLowerCase().includes(searchText) ||
@@ -190,10 +190,15 @@ export class StatusCustomerComponent implements OnInit {
                 stateNameMatch || countryNameMatch || workFlowHistoryMatch;
         });
 
-        // Calculate the total count for filtered items
 
-        this.publicVariable.count = this.filteredCustomerStatusList.length;
+        this.publicVariable.count = filteredData.length;
+
+        const startIndex = (this.publicVariable.page - 1) * this.publicVariable.tableSize;
+        const endIndex = startIndex + this.publicVariable.tableSize;
+        this.filteredCustomerStatusList = filteredData.slice(startIndex, endIndex);
+
     }
+
 
 
 
@@ -297,7 +302,8 @@ export class StatusCustomerComponent implements OnInit {
     }
     onTableDataChange(event: any) {
         this.publicVariable.page = event;
-        this.publicVariable.customerStatusList;
+        // this.publicVariable.customerStatusList;
+        this.updateFilteredUserList();
 
     }
     onTableSizeChange(event: any): void {
