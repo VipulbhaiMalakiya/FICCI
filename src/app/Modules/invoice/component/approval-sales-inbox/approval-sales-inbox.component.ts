@@ -22,6 +22,7 @@ export class ApprovalSalesInboxComponent implements OnInit {
     endDate?: any;
     dateRangeError: boolean = false;
     selectedValue?: any = 'ALL';
+    public filteredData: any[] = [];
 
 
     constructor(private appService: AppService,
@@ -141,6 +142,8 @@ export class ApprovalSalesInboxComponent implements OnInit {
                     this.publicVariable.invoiceStatuslistData = response.data;
                     this.publicVariable.count = response.data.length;
                     this.loadStateList();
+                    this.updateFilteredUserList();
+
                 } else {
                     // Handle case where response data is null or not an array
                     this.publicVariable.invoiceStatuslistData = [];
@@ -160,6 +163,25 @@ export class ApprovalSalesInboxComponent implements OnInit {
         });
 
         this.publicVariable.Subscription.add(subscription);
+    }
+
+    updateFilteredUserList(): void {
+        const searchText = this.publicVariable.searchText.toLowerCase();
+
+
+        const filteredData = this.publicVariable.invoiceStatuslistData.filter(item =>
+            Object.values(item).some(val =>
+                typeof val === 'string' && val.toLowerCase().includes(searchText)
+            )
+        );
+
+
+        this.publicVariable.count = filteredData.length;
+
+        const startIndex = (this.publicVariable.page - 1) * this.publicVariable.tableSize;
+        const endIndex = startIndex + this.publicVariable.tableSize;
+        this.filteredData = filteredData.slice(startIndex, endIndex);
+
     }
 
     calculateIndex(page: number, index: number): number {
@@ -241,7 +263,7 @@ export class ApprovalSalesInboxComponent implements OnInit {
             'Created By': x?.impiHeaderCreatedBy ? this.toTitleCase(x.impiHeaderCreatedBy) : '',
             "Update Date": x?.impiHeaderModifiedDate ? formatDate(x.impiHeaderModifiedDate, 'medium', 'en-IN', 'IST') : '',
             'Status': x?.headerStatus ? this.toTitleCase(x?.headerStatus) : '',
-            'Refund Status':x?.refundStatus ? this.toTitleCase(x.refundStatus) : '',
+            'Refund Status': x?.refundStatus ? this.toTitleCase(x.refundStatus) : '',
         }));
 
         const headers = [
@@ -249,19 +271,19 @@ export class ApprovalSalesInboxComponent implements OnInit {
             'Vendor Name', 'Address', 'State', 'City', 'Pincode',
             'Phone No', "Email ID", 'Contact Person', 'Customer  GST Number', 'PAN No', 'Amount', 'Payment Terms',
             'impiHeaderRemarks', 'Tl Approver', 'Cl Approver', 'Finance Approver', 'Accounts Approver', 'Created On', 'Created By', 'Update Date',
-            'Status','Refund Status'
+            'Status', 'Refund Status'
         ];
         this.appService.exportAsExcelFile(exportData, 'PI Invoice Status', headers);
     }
 
     onTableDataChange(event: any) {
         this.publicVariable.page = event;
-        this.publicVariable.invoiceStatuslistData
+        this.updateFilteredUserList();
     }
     onTableSizeChange(event: any): void {
         this.publicVariable.tableSize = event.target.value;
         this.publicVariable.page = 1;
-        this.publicVariable.invoiceStatuslistData
+        this.publicVariable.invoiceStatuslistData;
 
     }
 
