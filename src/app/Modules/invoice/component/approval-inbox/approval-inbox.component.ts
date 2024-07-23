@@ -19,6 +19,7 @@ export class ApprovalInboxComponent implements OnInit {
     endDate?: any;
     dateRangeError: boolean = false;
     selectedValue?: any = 'ALL';
+    public filteredData: any[] = [];
 
 
 
@@ -143,6 +144,8 @@ export class ApprovalInboxComponent implements OnInit {
                     this.publicVariable.invoiceStatuslistData = response.data;
                     this.publicVariable.count = response.data.length;
                     this.loadStateList();
+                    this.updateFilteredUserList();
+
                 } else {
                     // Handle case where response data is null or not an array
                     this.publicVariable.invoiceStatuslistData = [];
@@ -162,6 +165,25 @@ export class ApprovalInboxComponent implements OnInit {
         });
 
         this.publicVariable.Subscription.add(subscription);
+    }
+
+    updateFilteredUserList(): void {
+        const searchText = this.publicVariable.searchText.toLowerCase();
+
+
+        const filteredData = this.publicVariable.invoiceStatuslistData.filter(item =>
+            Object.values(item).some(val =>
+                typeof val === 'string' && val.toLowerCase().includes(searchText)
+            )
+        );
+
+
+        this.publicVariable.count = filteredData.length;
+
+        const startIndex = (this.publicVariable.page - 1) * this.publicVariable.tableSize;
+        const endIndex = startIndex + this.publicVariable.tableSize;
+        this.filteredData = filteredData.slice(startIndex, endIndex);
+
     }
 
 
@@ -291,12 +313,12 @@ export class ApprovalInboxComponent implements OnInit {
 
     onTableDataChange(event: any) {
         this.publicVariable.page = event;
-        this.publicVariable.invoiceStatuslistData
+        this.updateFilteredUserList();
     }
     onTableSizeChange(event: any): void {
         this.publicVariable.tableSize = event.target.value;
         this.publicVariable.page = 1;
-        this.publicVariable.invoiceStatuslistData
+        this.publicVariable.invoiceStatuslistData;
 
     }
 
