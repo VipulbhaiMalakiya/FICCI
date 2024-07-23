@@ -1181,8 +1181,11 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr
-                                                    *ngFor="let d of  this.invoiceStatuslistData | salesnew: publicVariable.searchText| paginate: {id: 'pagination4',itemsPerPage: publicVariable.tableSize,currentPage: publicVariable.page,totalItems: publicVariable.count};let i = index">
+                                                <tr *ngFor="let d of this.SalesCreditNote | salesnew:
+                                                    publicVariable.searchText| paginate: {id:
+                                                    'pagination4',itemsPerPage: publicVariable.tableSize,currentPage:
+                                                    publicVariable.page,totalItems: SalesCreditNote.length};let i =
+                                                    index">
                                                     <td>{{i + 1}}</td>
                                                     <td>
                                                         <span class="table-btns">
@@ -1311,7 +1314,7 @@
                                         *ngIf="invoiceStatuslistData && invoiceStatuslistData.length > 0">
                                         <div class="hint-text">Showing <b>{{this.publicVariable.tableSize}}</b> out of
                                             <b>{{
-                                                publicVariable.count }}</b>
+                                                SalesCreditNote.length }}</b>
                                             entries
                                         </div>
                                         <pagination-controls id="pagination4" previousLabel="Prev" class="pagination"
