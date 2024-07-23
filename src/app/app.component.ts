@@ -29,9 +29,9 @@ export class AppComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
 
 
-        if (localStorage.getItem('userEmail')) {
-            this.router.navigate(['/']);
-        }
+        // if (localStorage.getItem('userEmail')) {
+        //     this.router.navigate(['/']);
+        // }
         //900 =  15 minutes in seconds
         this.bnIdle.startWatching(900).subscribe((isTimedOut: boolean) => {
             if (isTimedOut) {
