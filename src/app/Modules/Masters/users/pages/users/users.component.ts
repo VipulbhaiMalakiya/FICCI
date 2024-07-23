@@ -16,6 +16,7 @@ export class UsersComponent implements OnInit, OnDestroy {
         private router: Router,
         private API: UserService,
         private toastr: ToastrService,
+        private cd: ChangeDetectorRef
 
     ) {
 
@@ -59,7 +60,7 @@ export class UsersComponent implements OnInit, OnDestroy {
     }
     updateFilteredUserList(): void {
         const searchText = this.publicVariable.searchText.toLowerCase();
-        this.filteredUserList = this.publicVariable.userlist.filter(user => {
+        const filteredData = this.publicVariable.userlist.filter(user => {
             const nameMatch = user.imeM_Name.toLowerCase().includes(searchText);
             const departmentMatch = user.department ? user.department.toLowerCase().includes(searchText) : false;
             const roleMatch = user.roleName.toLowerCase().includes(searchText);
@@ -72,18 +73,26 @@ export class UsersComponent implements OnInit, OnDestroy {
             return nameMatch || departmentMatch || departmentNamesMatch || roleMatch;
         });
 
-        // Calculate the total count for filtered items
-        this.publicVariable.count = this.filteredUserList.length;
+        // Set the total count for filtered items
+        this.publicVariable.count = filteredData.length;
+
+        // Apply pagination
+        const startIndex = (this.publicVariable.page - 1) * this.publicVariable.tableSize;
+        const endIndex = startIndex + this.publicVariable.tableSize;
+        this.filteredUserList = filteredData.slice(startIndex, endIndex);
+
+        this.cd.detectChanges(); // Trigger change detection manually
     }
 
     onTableDataChange(event: any) {
         this.publicVariable.page = event;
-        this.publicVariable.userlist
+        this.updateFilteredUserList();
+
     }
     onTableSizeChange(event: any): void {
-        this.publicVariable.tableSize = event.target.value;
-        this.publicVariable.page = 1;
-        this.publicVariable.userlist
+        this.publicVariable.tableSize = Number(event.target.value);
+        this.publicVariable.page = 1; // Reset to first page
+        this.updateFilteredUserList();
 
     }
 

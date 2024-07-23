@@ -143,6 +143,8 @@ export class StatusCustomerComponent implements OnInit {
                     //this.publicVariable.customerStatusList = filteredData;
                     //this.publicVariable.count = filteredData.length;
                     this.publicVariable.isProcess = false;
+                    this.updateFilteredUserList();
+
 
                 }
 
@@ -162,7 +164,6 @@ export class StatusCustomerComponent implements OnInit {
     updateFilteredUserList(): void {
         const searchText = this.publicVariable.searchText.toLowerCase();
 
-        console.log('Search Text:', searchText);
 
         const filteredData = this.publicVariable.customerStatusList.filter((customer: any) => {
             const nameMatch = (customer.customerName ?? '').toLowerCase().includes(searchText);
@@ -192,6 +193,8 @@ export class StatusCustomerComponent implements OnInit {
 
 
         this.publicVariable.count = filteredData.length;
+
+
 
         const startIndex = (this.publicVariable.page - 1) * this.publicVariable.tableSize;
         const endIndex = startIndex + this.publicVariable.tableSize;
@@ -309,7 +312,7 @@ export class StatusCustomerComponent implements OnInit {
     onTableSizeChange(event: any): void {
         this.publicVariable.tableSize = event.target.value;
         this.publicVariable.page = 1;
-        this.publicVariable.customerStatusList
+        this.publicVariable.customerStatusList;
 
     }
 

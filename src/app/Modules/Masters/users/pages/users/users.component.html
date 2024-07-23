@@ -56,8 +56,9 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr
-                            *ngFor="let user of  this.publicVariable.userlist | searchFilter: publicVariable.searchText| paginate: {itemsPerPage: publicVariable.tableSize,currentPage: publicVariable.page,totalItems: publicVariable.count};let i = index">
+                        <tr *ngFor="let user of filteredUserList | searchFilter: publicVariable.searchText| paginate:
+                            {itemsPerPage: publicVariable.tableSize,currentPage: publicVariable.page,totalItems:
+                            publicVariable.count};let i = index">
                             <td>{{ calculateIndex(publicVariable.page, i)}}</td>
                             <td>
                                 <span class="table-btns">
