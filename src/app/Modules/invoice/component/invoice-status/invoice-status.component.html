@@ -3,8 +3,7 @@
 <div class="inner-content">
     <h3 class="content-title">Sales Invoice Status</h3>
 
-    <div class="page-btns-col"
-        >
+    <div class="page-btns-col">
         <div class="tblsort">
             <label class="col-form-label">Show</label>
             <select id="itemsPerPageSelect" class="form-select" [(ngModel)]="publicVariable.tableSize"
@@ -75,7 +74,7 @@
             <div class="btn-group">
                 <div class="table-search">
                     <input type="text" class="form-control" [(ngModel)]="publicVariable.searchText" name="name"
-                        id="name" placeholder="Search here" />
+                        id="name" placeholder="Search here" (input)="updateFilteredUserList()" />
                 </div>
             </div>
         </div>
@@ -94,27 +93,28 @@
                         <tr>
                             <th>#</th>
                             <th class="action-cl">Action</th>
-                                                    <th>Invoice Type</th>
-                                                    <th>PI No.
-                                                    </th>
-                                                    <th>Tax Invoice No.</th>
-                                                    <th>Invoice Amount</th>
-                                                    <th>Customer Name</th>
-                                                    <th>Status</th>
-                                                    <th>Department</th>
-                                                    <th>Project Code</th>
-                                                    <th>Project Name</th>
-                                                    <th>Created By</th>
-                                                    <th>Created On</th>
-                                                    <th>TL Approver</th>
-                                                    <th>Record No</th>
-                                              
+                            <th>Invoice Type</th>
+                            <th>PI No.
+                            </th>
+                            <th>Tax Invoice No.</th>
+                            <th>Invoice Amount</th>
+                            <th>Customer Name</th>
+                            <th>Status</th>
+                            <th>Department</th>
+                            <th>Project Code</th>
+                            <th>Project Name</th>
+                            <th>Created By</th>
+                            <th>Created On</th>
+                            <th>TL Approver</th>
+                            <th>Record No</th>
+
 
                         </tr>
                     </thead>
                     <tbody>
-                        <tr
-                            *ngFor="let d of  this.publicVariable.invoiceStatuslistData | searchFilter: publicVariable.searchText| paginate: {itemsPerPage: publicVariable.tableSize,currentPage: publicVariable.page,totalItems: publicVariable.count};let i = index">
+                        <tr *ngFor="let d of filteredData | searchFilter: publicVariable.searchText| paginate:
+                            {itemsPerPage: publicVariable.tableSize,currentPage: publicVariable.page,totalItems:
+                            publicVariable.count};let i = index">
                             <td>{{calculateIndex(publicVariable.page, i)}}</td>
                             <td>
                                 <span class="table-btns">
@@ -142,23 +142,20 @@
                                         data-bs-toggle="modal" data-bs-target="#deleterecord-modal"><img
                                             src="../assets/images/delete-icon.svg" alt="" title="Delete Record" /></a>
 
-                                            <a *ngIf="( d.impiHeaderInvoiceType == 'Tax Invoice') && (d.headerStatus == 'APPROVED BY FINANCE' || d.headerStatus == 'POSTED TAX INVOICE')"
+                                    <a *ngIf="( d.impiHeaderInvoiceType == 'Tax Invoice') && (d.headerStatus == 'APPROVED BY FINANCE' || d.headerStatus == 'POSTED TAX INVOICE')"
                                         href="javascript:void(0);" (click)="downalodFile(d.postedInvoiceNumber)"><img
                                             src="../assets/images/download-icon.svg" alt="" title="Download" /></a>
                                     <a *ngIf="(d.headerPiNo && d.impiHeaderInvoiceType == 'Proforma Invoice') && (d.headerStatus == 'APPROVED BY FINANCE' || d.headerStatus == 'TAX INVOICE POSTED')"
                                         href="javascript:void(0);" (click)="downalodFilePI(d.headerPiNo)"><img
                                             src="../assets/images/download-icon.svg" alt="" title="Download" /></a>
 
-                                            <a *ngIf="( d.impiHeaderInvoiceType === 'Tax Invoice') && (d.headerStatus == 'APPROVED BY FINANCE' || d.headerStatus == 'POSTED TAX INVOICE')"
-    
-    href="javascript:void(0);" data-bs-toggle="modal"
-                                                                (click)="loadTaxPaymentInvoiceSummary(d)"
-                                                                data-bs-target="#workflow-modal"><img
-                                                                    class="custom-rupee-icon"
-                                                                    src="../assets/images/rupee-icon.png" alt=""
-                                                                    title="Payment" /></a>
+                                    <a *ngIf="( d.impiHeaderInvoiceType === 'Tax Invoice') && (d.headerStatus == 'APPROVED BY FINANCE' || d.headerStatus == 'POSTED TAX INVOICE')"
+                                        href="javascript:void(0);" data-bs-toggle="modal"
+                                        (click)="loadTaxPaymentInvoiceSummary(d)" data-bs-target="#workflow-modal"><img
+                                            class="custom-rupee-icon" src="../assets/images/rupee-icon.png" alt=""
+                                            title="Payment" /></a>
 
-<!-- 
+                                    <!--
 
                                     <a *ngIf="(d.postedInvoiceNumber && d.impiHeaderInvoiceType == 'Tax Invoice') && (d.headerStatus == 'APPROVED BY FINANCE' || d.headerStatus == 'TAX INVOICE POSTED')" href="javascript:void(0);" (click)="downalodFile(d.postedInvoiceNumber)"><img
                                             src="../assets/images/download-icon.svg" alt="" title="Download" /></a>
@@ -166,18 +163,18 @@
                                                 src="../assets/images/download-icon.svg" alt="" title="Download" /></a> -->
                                 </span>
                             </td>
-                           
-                           
+
+
                             <td>{{d.impiHeaderInvoiceType | titlecase}}</td>
 
                             <td>
                                 {{d.headerPiNo}}</td>
-                                <td>
-                                    {{d.postedInvoiceNumber}}</td>
-                          <td>{{d.impiHeaderTotalInvoiceAmount | number:'1.2-2' }}</td>
-                          <td>{{d.impiHeaderCustomerName | titlecase}}</td>
-                          <td>{{d.headerStatus}}</td>
-                          <td>{{d.impiHeaderProjectDepartmentName | titlecase}}</td>
+                            <td>
+                                {{d.postedInvoiceNumber}}</td>
+                            <td>{{d.impiHeaderTotalInvoiceAmount | number:'1.2-2' }}</td>
+                            <td>{{d.impiHeaderCustomerName | titlecase}}</td>
+                            <td>{{d.headerStatus}}</td>
+                            <td>{{d.impiHeaderProjectDepartmentName | titlecase}}</td>
                             <td>{{d.impiHeaderProjectCode}}</td>
                             <td>{{d.impiHeaderProjectName | titlecase}}</td>
 
@@ -195,9 +192,9 @@
 
                             <td>{{d.headerRecordID}}</td>
 
-                         
 
-                           
+
+
                         </tr>
                     </tbody>
                 </table>

@@ -17,7 +17,8 @@ export class InvoiceStatusComponent implements OnInit {
     endDate?: any;
     dateRangeError: boolean = false;
     selectedValue?: any = 'ALL';
-    TaxInvoicePaymentSummaryList :any[]=[];
+    TaxInvoicePaymentSummaryList: any[] = [];
+    public filteredData: any[] = [];
 
 
     constructor(private appService: AppService,
@@ -35,9 +36,9 @@ export class InvoiceStatusComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        let model:any = {
-            'startDate' : '',
-            'endDate' : ''
+        let model: any = {
+            'startDate': '',
+            'endDate': ''
         }
         this.loadPurchaseInvoiceList(model);
         this.loadStateList();
@@ -56,7 +57,7 @@ export class InvoiceStatusComponent implements OnInit {
             this.startDate = this.datePipe.transform(
                 oneWeekFromNow.toISOString().split('T')[0],
                 'yyyy-MM-dd'
-                
+
             );
             this.endDate = this.datePipe.transform(
                 oneWeekFromNow.toISOString().split('T')[0],
@@ -75,24 +76,24 @@ export class InvoiceStatusComponent implements OnInit {
         } else if (this.selectedValue === '7') {
             const oneWeekFromNow = new Date();
             this.endDate = this.datePipe.transform(
-              oneWeekFromNow.toISOString().split('T')[0],
-              'yyyy-MM-dd'
+                oneWeekFromNow.toISOString().split('T')[0],
+                'yyyy-MM-dd'
             );
             oneWeekFromNow.setDate(oneWeekFromNow.getDate() - 7);
             this.startDate = this.datePipe.transform(
-              oneWeekFromNow.toISOString().split('T')[0],
-              'yyyy-MM-dd'
+                oneWeekFromNow.toISOString().split('T')[0],
+                'yyyy-MM-dd'
             );
         } else if (this.selectedValue === '30') {
             const oneWeekFromNow = new Date();
             this.endDate = this.datePipe.transform(
-              oneWeekFromNow.toISOString().split('T')[0],
-              'yyyy-MM-dd'
+                oneWeekFromNow.toISOString().split('T')[0],
+                'yyyy-MM-dd'
             );
             oneWeekFromNow.setDate(oneWeekFromNow.getDate() - 30);
             this.startDate = this.datePipe.transform(
-              oneWeekFromNow.toISOString().split('T')[0],
-              'yyyy-MM-dd'
+                oneWeekFromNow.toISOString().split('T')[0],
+                'yyyy-MM-dd'
             );
         }
 
@@ -128,8 +129,7 @@ export class InvoiceStatusComponent implements OnInit {
         }
     }
 
-    loadTaxPaymentInvoiceSummary(data: any) 
-    {
+    loadTaxPaymentInvoiceSummary(data: any) {
 
         this.publicVariable.isProcess = true;
         const subscription = this.API.getTaxPaymentDetails(data.postedInvoiceNumber).pipe(
@@ -142,8 +142,8 @@ export class InvoiceStatusComponent implements OnInit {
                 if (response.data && Array.isArray(response.data)) {
 
                     this.TaxInvoicePaymentSummaryList = response.data;
-                    console.log(response);
                     this.publicVariable.isProcess = false;
+
                     //this.PostedTaxInvoiceCount = response.data.length;
                 } else {
                     // Handle case where response data is null or not an array
@@ -168,13 +168,15 @@ export class InvoiceStatusComponent implements OnInit {
     }
 
 
-    loadPurchaseInvoiceList(model:any): void {
+    loadPurchaseInvoiceList(model: any): void {
         try {
             const subscription = this.API.getPurchaseInvoice_New(model).subscribe({
                 next: (response: any) => {
                     if (response.data && Array.isArray(response.data)) {
                         this.publicVariable.invoiceStatuslistData = response.data;
                         this.publicVariable.count = response.data.length;
+                        this.updateFilteredUserList();
+
                         this.publicVariable.isProcess = false;
                     } else {
                         // Handle case where response data is null or not an array
@@ -197,6 +199,28 @@ export class InvoiceStatusComponent implements OnInit {
         }
     }
 
+
+    updateFilteredUserList(): void {
+        const searchText = this.publicVariable.searchText.toLowerCase();
+
+
+        const filteredData = this.publicVariable.invoiceStatuslistData.filter(item =>
+            Object.values(item).some(val =>
+                typeof val === 'string' && val.toLowerCase().includes(searchText)
+            )
+        );
+
+
+        this.publicVariable.count = filteredData.length;
+
+        const startIndex = (this.publicVariable.page - 1) * this.publicVariable.tableSize;
+        const endIndex = startIndex + this.publicVariable.tableSize;
+        this.filteredData = filteredData.slice(startIndex, endIndex);
+
+    }
+
+
+
     toTitleCase(str: string): string {
         return str.toLowerCase().split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
     }
@@ -211,7 +235,7 @@ export class InvoiceStatusComponent implements OnInit {
     }
 
     downalodFile(fileUrl: any) {
-        this.publicVariable.isProcess  = true;
+        this.publicVariable.isProcess = true;
 
         try {
             const subscription = this.API.GetTaxInvoiceAttachment(fileUrl).subscribe({
@@ -219,20 +243,18 @@ export class InvoiceStatusComponent implements OnInit {
 
                     this.InvoiceAttachment = response.data[0];
 
-                    if(this.InvoiceAttachment.attachment != undefined && this.InvoiceAttachment.attachment !='' && this.InvoiceAttachment.attachment != null )
-                   {
-                    const fileName = this.InvoiceAttachment.invoiceNo+'.pdf';
-                    const fileType = `application/pdf`;
-                    this.fileService.downloadFile(this.InvoiceAttachment.attachment, fileName, fileType);
+                    if (this.InvoiceAttachment.attachment != undefined && this.InvoiceAttachment.attachment != '' && this.InvoiceAttachment.attachment != null) {
+                        const fileName = this.InvoiceAttachment.invoiceNo + '.pdf';
+                        const fileType = `application/pdf`;
+                        this.fileService.downloadFile(this.InvoiceAttachment.attachment, fileName, fileType);
 
-                   }
-                   else
-                   {
+                    }
+                    else {
 
-                  this.toastr.warning('There is an issue with the download of the file from ERP.','File Not Found')
-                   }
+                        this.toastr.warning('There is an issue with the download of the file from ERP.', 'File Not Found')
+                    }
 
-                    this.publicVariable.isProcess  = false;
+                    this.publicVariable.isProcess = false;
                 },
                 error: (error) => {
                     console.error('Error loading project list:', error);
@@ -250,7 +272,7 @@ export class InvoiceStatusComponent implements OnInit {
     }
 
     downalodFilePI(fileUrl: any) {
-        this.publicVariable.isProcess  = true;
+        this.publicVariable.isProcess = true;
 
         try {
             const subscription = this.API.GetPITaxInvoiceAttachment(fileUrl).subscribe({
@@ -262,19 +284,17 @@ export class InvoiceStatusComponent implements OnInit {
                     // this.fileService.downloadFile(this.InvoiceAttachment.attachment, fileName, fileType);
                     // this.publicVariable.isProcess  = false;
 
-                    if(this.InvoiceAttachment.attachment != undefined && this.InvoiceAttachment.attachment !='' && this.InvoiceAttachment.attachment != null )
-                    {
-                     const fileName = this.InvoiceAttachment.invoiceNo+'.pdf';
-                     const fileType = `application/pdf`;
-                     this.fileService.downloadFile(this.InvoiceAttachment.attachment, fileName, fileType);
+                    if (this.InvoiceAttachment.attachment != undefined && this.InvoiceAttachment.attachment != '' && this.InvoiceAttachment.attachment != null) {
+                        const fileName = this.InvoiceAttachment.invoiceNo + '.pdf';
+                        const fileType = `application/pdf`;
+                        this.fileService.downloadFile(this.InvoiceAttachment.attachment, fileName, fileType);
 
                     }
-                    else
-                    {
+                    else {
 
-                   this.toastr.warning('There is an issue with the download of the file from ERP.','File Not Found')
+                        this.toastr.warning('There is an issue with the download of the file from ERP.', 'File Not Found')
                     }
-                    this.publicVariable.isProcess  = false;
+                    this.publicVariable.isProcess = false;
 
                 },
                 error: (error) => {
@@ -304,9 +324,9 @@ export class InvoiceStatusComponent implements OnInit {
                         this.toastr.success(res.message, 'Success');
                         this.publicVariable.isProcess = false;
                         this.cdr.detectChanges();
-                        let model:any = {
-                            'startDate' : this.startDate,
-                            'endDate' : this.endDate
+                        let model: any = {
+                            'startDate': this.startDate,
+                            'endDate': this.endDate
                         }
                         this.loadPurchaseInvoiceList(model);
 
@@ -392,12 +412,12 @@ export class InvoiceStatusComponent implements OnInit {
 
     onTableDataChange(event: any) {
         this.publicVariable.page = event;
-        this.publicVariable.invoiceStatuslistData
+        this.updateFilteredUserList();
     }
     onTableSizeChange(event: any): void {
         this.publicVariable.tableSize = event.target.value;
         this.publicVariable.page = 1;
-        this.publicVariable.invoiceStatuslistData
+        this.publicVariable.invoiceStatuslistData;
 
     }
 }
