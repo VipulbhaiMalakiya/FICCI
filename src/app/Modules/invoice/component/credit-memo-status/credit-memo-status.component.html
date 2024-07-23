@@ -3,8 +3,7 @@
 <div class="inner-content">
     <h3 class="content-title">Sales Credit Note Status</h3>
 
-    <div class="page-btns-col"
-        >
+    <div class="page-btns-col">
         <div class="tblsort">
             <label class="col-form-label">Show</label>
             <select id="itemsPerPageSelect" class="form-select" [(ngModel)]="publicVariable.tableSize"
@@ -133,15 +132,14 @@
                                             src="../assets/images/view-icon.svg" alt="" title="View" /></a>
 
 
-                                              <a *ngIf="publicVariable.storedRole !== 'Admin' &&
+                                    <a *ngIf="publicVariable.storedRole !== 'Admin' &&
                                     (d.isDraft
-                                    )"
-                                        href="javascript:void(0);" (click)="onEdit(d)" title="Edit"><img
+                                    )" href="javascript:void(0);" (click)="onEdit(d)" title="Edit"><img
                                             src="../assets/images/edit-icon.svg" alt="" /></a>
 
 
 
-                                            <!-- <a *ngIf="publicVariable.storedRole !== 'Admin' &&
+                                    <!-- <a *ngIf="publicVariable.storedRole !== 'Admin' &&
                                     (d.isDraft
                                     ||
                                     d.headerStatus == 'REJECTED BY TL APPROVER'  ||
@@ -154,9 +152,10 @@
 
 
 
-                                            <a *ngIf="d.creditMemoNavNo && d.headerStatus == 'CREDIT MEMO POSTED' "href="javascript:void(0);"
-                                            (click)="downalodFile(d.postedCreditMemoNumber)"><img
-                                                src="../assets/images/download-icon.svg" alt="" title="Download Details" /></a>
+                                    <a *ngIf="d.creditMemoNavNo && d.headerStatus == 'CREDIT MEMO POSTED' "
+                                        href="javascript:void(0);" (click)="downalodFile(d.postedCreditMemoNumber)"><img
+                                            src="../assets/images/download-icon.svg" alt=""
+                                            title="Download Details" /></a>
                                     <!-- <a *ngIf="publicVariable.storedRole !== 'Admin' &&
                                     (d.isDraft ||
                                     d.headerStatus == 'REJECTED BY TL APPROVER'  ||
@@ -214,9 +213,8 @@
                 <div class="hint-text">Showing <b>{{this.publicVariable.tableSize}}</b> out of <b>{{
                         publicVariable.count }}</b>
                     entries</div>
-                <pagination-controls previousLabel="Prev" class="pagination"
-                    *ngIf="publicVariable.invoiceStatuslistData && publicVariable.invoiceStatuslistData.length > 0"
-                    nextLabel="Next" (pageChange)="onTableDataChange($event)">
+                <pagination-controls previousLabel="Prev" class="pagination" nextLabel="Next"
+                    (pageChange)="onTableDataChange($event)">
                 </pagination-controls>
             </div>
         </div>
