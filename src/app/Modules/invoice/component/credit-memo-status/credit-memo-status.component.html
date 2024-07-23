@@ -74,7 +74,7 @@
             <div class="btn-group">
                 <div class="table-search">
                     <input type="text" class="form-control" [(ngModel)]="publicVariable.searchText" name="name"
-                        id="name" placeholder="Search here" />
+                        id="name" placeholder="Search here" (input)="updateFilteredUserList()" />
                 </div>
             </div>
         </div>
@@ -123,8 +123,9 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr
-                            *ngFor="let d of  this.publicVariable.invoiceStatuslistData | searchFilter: publicVariable.searchText| paginate: {itemsPerPage: publicVariable.tableSize,currentPage: publicVariable.page,totalItems: publicVariable.count};let i = index">
+                        <tr *ngFor="let d of filteredData | searchFilter: publicVariable.searchText| paginate:
+                            {itemsPerPage: publicVariable.tableSize,currentPage: publicVariable.page,totalItems:
+                            publicVariable.count};let i = index">
                             <td>{{i + 1}}</td>
                             <td>
                                 <span class="table-btns">

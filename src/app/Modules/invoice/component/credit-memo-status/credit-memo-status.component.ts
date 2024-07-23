@@ -9,15 +9,17 @@ import { InvoicesService } from '../../service/invoices.service';
 import { FileService } from '../../service/FileService';
 
 @Component({
-  selector: 'app-credit-memo-status',
-  templateUrl: './credit-memo-status.component.html',
-  styleUrls: ['./credit-memo-status.component.css']
+    selector: 'app-credit-memo-status',
+    templateUrl: './credit-memo-status.component.html',
+    styleUrls: ['./credit-memo-status.component.css']
 })
 export class CreditMemoStatusComponent implements OnInit {
     publicVariable = new publicVariable();
     startDate?: any;
     endDate?: any;
     dateRangeError: boolean = false;
+    public filteredData: any[] = [];
+
     selectedValue?: any = 'ALL';
     InvoiceAttachment: any;
 
@@ -39,9 +41,9 @@ export class CreditMemoStatusComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        let model:any = {
-            'startDate' : '',
-            'endDate' : ''
+        let model: any = {
+            'startDate': '',
+            'endDate': ''
         }
         this.loadPurchaseInvoiceList(model);
         this.loadStateList();
@@ -78,24 +80,24 @@ export class CreditMemoStatusComponent implements OnInit {
         } else if (this.selectedValue === '7') {
             const oneWeekFromNow = new Date();
             this.endDate = this.datePipe.transform(
-              oneWeekFromNow.toISOString().split('T')[0],
-              'yyyy-MM-dd'
+                oneWeekFromNow.toISOString().split('T')[0],
+                'yyyy-MM-dd'
             );
             oneWeekFromNow.setDate(oneWeekFromNow.getDate() - 7);
             this.startDate = this.datePipe.transform(
-              oneWeekFromNow.toISOString().split('T')[0],
-              'yyyy-MM-dd'
+                oneWeekFromNow.toISOString().split('T')[0],
+                'yyyy-MM-dd'
             );
         } else if (this.selectedValue === '30') {
             const oneWeekFromNow = new Date();
             this.endDate = this.datePipe.transform(
-              oneWeekFromNow.toISOString().split('T')[0],
-              'yyyy-MM-dd'
+                oneWeekFromNow.toISOString().split('T')[0],
+                'yyyy-MM-dd'
             );
             oneWeekFromNow.setDate(oneWeekFromNow.getDate() - 30);
             this.startDate = this.datePipe.transform(
-              oneWeekFromNow.toISOString().split('T')[0],
-              'yyyy-MM-dd'
+                oneWeekFromNow.toISOString().split('T')[0],
+                'yyyy-MM-dd'
             );
         }
 
@@ -119,22 +121,18 @@ export class CreditMemoStatusComponent implements OnInit {
             const subscription = this.API.GetSLLTaxInvoiceAttachment(invoice).subscribe({
                 next: (response: any) => {
 
-                    if (response.data.length > 0)
-
-                    {
+                    if (response.data.length > 0) {
                         this.InvoiceAttachment = response.data[0];
 
-                        if(this.InvoiceAttachment.attachment != undefined && this.InvoiceAttachment.attachment !='' && this.InvoiceAttachment.attachment != null )
-                        {
-                         const fileName = this.InvoiceAttachment.salesCrMemoNo+'.pdf';
-                         const fileType = `application/pdf`;
-                         this.fileService.downloadFile(this.InvoiceAttachment.attachment, fileName, fileType);
+                        if (this.InvoiceAttachment.attachment != undefined && this.InvoiceAttachment.attachment != '' && this.InvoiceAttachment.attachment != null) {
+                            const fileName = this.InvoiceAttachment.salesCrMemoNo + '.pdf';
+                            const fileType = `application/pdf`;
+                            this.fileService.downloadFile(this.InvoiceAttachment.attachment, fileName, fileType);
 
                         }
-                        else
-                        {
+                        else {
 
-                       this.toastr.warning('There is an issue with the download of the file from ERP.','File Not Found')
+                            this.toastr.warning('There is an issue with the download of the file from ERP.', 'File Not Found')
                         }
 
 
@@ -143,7 +141,7 @@ export class CreditMemoStatusComponent implements OnInit {
                         // const fileName = this.InvoiceAttachment.invoiceNo+'.pdf';
                         // const fileType = `application/pdf`;
                         // this.fileService.downloadFile(this.InvoiceAttachment.attachment, fileName, fileType);
-                        this.publicVariable.isProcess  = false;
+                        this.publicVariable.isProcess = false;
                     }
                     this.handleLoadingError();
                 },
@@ -182,17 +180,17 @@ export class CreditMemoStatusComponent implements OnInit {
 
         }
     }
-    loadPurchaseInvoiceList(model:any): void {
+    loadPurchaseInvoiceList(model: any): void {
         try {
             const subscription = this.API.getSalesCreditMemo(model).subscribe({
                 next: (response: any) => {
                     if (response.data && Array.isArray(response.data)) {
-                        console.log(response.data);
 
                         this.publicVariable.invoiceStatuslistData = response.data;
-                        console.table(response.data)
                         this.publicVariable.count = response.data.length;
                         this.publicVariable.isProcess = false;
+                        this.updateFilteredUserList();
+
                     } else {
                         // Handle case where response data is null or not an array
                         this.publicVariable.invoiceStatuslistData = [];
@@ -215,6 +213,28 @@ export class CreditMemoStatusComponent implements OnInit {
             this.publicVariable.isProcess = false;
 
         }
+    }
+
+
+
+
+    updateFilteredUserList(): void {
+        const searchText = this.publicVariable.searchText.toLowerCase();
+
+
+        const filteredData = this.publicVariable.invoiceStatuslistData.filter(item =>
+            Object.values(item).some(val =>
+                typeof val === 'string' && val.toLowerCase().includes(searchText)
+            )
+        );
+
+
+        this.publicVariable.count = filteredData.length;
+
+        const startIndex = (this.publicVariable.page - 1) * this.publicVariable.tableSize;
+        const endIndex = startIndex + this.publicVariable.tableSize;
+        this.filteredData = filteredData.slice(startIndex, endIndex);
+
     }
 
     toTitleCase(str: string): string {
@@ -243,9 +263,9 @@ export class CreditMemoStatusComponent implements OnInit {
                         this.toastr.success(res.message, 'Success');
                         this.publicVariable.isProcess = false;
                         this.cdr.detectChanges();
-                        let model:any = {
-                            'startDate' : this.startDate,
-                            'endDate' : this.endDate
+                        let model: any = {
+                            'startDate': this.startDate,
+                            'endDate': this.endDate
                         }
                         this.loadPurchaseInvoiceList(model);
 
@@ -292,7 +312,7 @@ export class CreditMemoStatusComponent implements OnInit {
         }
     }
 
-    getStateNameById(stateId:string) {
+    getStateNameById(stateId: string) {
         const state = this.publicVariable.stateList.find(state => state.stateCode === stateId);
         return state ? state.stateName : null;
     }
@@ -304,7 +324,7 @@ export class CreditMemoStatusComponent implements OnInit {
     onDownload() {
         const exportData = this.publicVariable.invoiceStatuslistData.map((x) => ({
             "PO No.": x?.impiHeaderProjectCode || '',
-            'Project' :x?.impiHeaderProjectName ? this.toTitleCase(x.impiHeaderProjectName) : '',
+            'Project': x?.impiHeaderProjectName ? this.toTitleCase(x.impiHeaderProjectName) : '',
             Department: x?.impiHeaderProjectDepartmentName ? this.toTitleCase(x.impiHeaderProjectDepartmentName) : '',
             Divison: x?.impiHeaderProjectDivisionName ? this.toTitleCase(x.impiHeaderProjectDivisionName) : '',
             Category: x?.impiHeaderInvoiceType ? this.toTitleCase(x.impiHeaderInvoiceType) : '',
@@ -325,32 +345,32 @@ export class CreditMemoStatusComponent implements OnInit {
             'Cl Approver': x?.impiHeaderClusterApprover ? this.toTitleCase(x.impiHeaderClusterApprover) : '',
             'Finance Approver': x?.impiHeaderFinanceApprover ? this.toTitleCase(x.impiHeaderFinanceApprover) : '',
             'Accounts Approver': x?.accountApprover ? this.toTitleCase(x.accountApprover) : '',
-            'Refund Status':x?.refundStatus ? this.toTitleCase(x.refundStatus) : '',
-            'Created On':x?.impiHeaderSubmittedDate ? formatDate(x.impiHeaderSubmittedDate, 'medium', 'en-IN', 'IST') : '',
+            'Refund Status': x?.refundStatus ? this.toTitleCase(x.refundStatus) : '',
+            'Created On': x?.impiHeaderSubmittedDate ? formatDate(x.impiHeaderSubmittedDate, 'medium', 'en-IN', 'IST') : '',
             'Created By': x?.impiHeaderCreatedBy ? this.toTitleCase(x.impiHeaderCreatedBy) : '',
             "Update Date": x?.impiHeaderModifiedDate ? formatDate(x.impiHeaderModifiedDate, 'medium', 'en-IN', 'IST') : '',
-            'Status':x?.headerStatus ? this.toTitleCase(x?.headerStatus) : ''
+            'Status': x?.headerStatus ? this.toTitleCase(x?.headerStatus) : ''
 
         }));
 
         const headers = [
-            'PO No.','Project', 'Department', 'Divison', 'Category',
+            'PO No.', 'Project', 'Department', 'Divison', 'Category',
             'Vendor Name', 'Address', 'State', 'City', 'Pincode',
             'Phone No', "Email ID", 'Contact Person', 'Customer  GST Number', 'PAN No', 'Amount', 'Payment Terms',
-            'impiHeaderRemarks', 'Tl Approver', 'Cl Approver', 'Finance Approver', 'Accounts Approver','Created On', 'Created By','Update Date',
-            'Status','Refund Status'
+            'impiHeaderRemarks', 'Tl Approver', 'Cl Approver', 'Finance Approver', 'Accounts Approver', 'Created On', 'Created By', 'Update Date',
+            'Status', 'Refund Status'
         ];
         this.appService.exportAsExcelFile(exportData, 'PI Invoice Status', headers);
     }
 
     onTableDataChange(event: any) {
         this.publicVariable.page = event;
-        this.publicVariable.invoiceStatuslistData
+        this.updateFilteredUserList();
     }
     onTableSizeChange(event: any): void {
         this.publicVariable.tableSize = event.target.value;
         this.publicVariable.page = 1;
-        this.publicVariable.invoiceStatuslistData
+        this.publicVariable.invoiceStatuslistData;
 
     }
 }
